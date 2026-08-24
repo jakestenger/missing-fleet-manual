@@ -38,8 +38,12 @@ FN_NAME="${ROLE}-rewrite"
 FN_CODE='function handler(event) {
   var req = event.request;
   var uri = req.uri;
-  if (uri.endsWith("/")) { req.uri = uri + "index.html"; }
-  else if (!uri.includes(".")) { req.uri = uri + "/index.html"; }
+  if (uri.endsWith("/")) { req.uri = uri + "index.html"; return req; }
+  // Section slugs contain dots (1.1-what-fleet-is, 8.14-degradation, a.6-glossary),
+  // so "contains a dot" cannot mean "is a file". Test the last segment for a real
+  // extension instead, or every section 403s while the homepage works.
+  var last = uri.substring(uri.lastIndexOf("/") + 1);
+  if (!/\.[A-Za-z0-9]{2,5}$/.test(last)) { req.uri = uri + "/index.html"; }
   return req;
 }'
 if ! aws cloudfront describe-function --name "$FN_NAME" >/dev/null 2>&1; then
@@ -121,14 +125,29 @@ if ! aws iam get-open-id-connect-provider --open-id-connect-provider-arn "$OIDC_
   echo "created GitHub OIDC provider"
 fi
 
+# GitHub issues an *immutable* subject claim that embeds numeric owner and repo ids:
+#   repo:owner@1234/name@5678:ref:refs/heads/main
+# Every trust-policy example published for AWS uses the plain repo:owner/name form,
+# which silently fails to match. Derive the real one.
+OWNER="${REPO%%/*}"; NAME="${REPO##*/}"
+OWNER_ID=$(gh api "/users/$OWNER" --jq .id 2>/dev/null || echo "")
+REPO_ID=$(gh api "/repos/$REPO" --jq .id 2>/dev/null || echo "")
+if [ -n "$OWNER_ID" ] && [ -n "$REPO_ID" ]; then
+  SUB="repo:$OWNER@$OWNER_ID/$NAME@$REPO_ID:ref:refs/heads/main"
+else
+  echo "warning: gh unavailable, falling back to the mutable sub form" >&2
+  SUB="repo:$REPO:ref:refs/heads/main"
+fi
+echo "trusting sub $SUB"
+
 cat > /tmp/trust.json <<JSON
 {"Version":"2012-10-17","Statement":[{
   "Effect":"Allow","Principal":{"Federated":"$OIDC_ARN"},
   "Action":"sts:AssumeRoleWithWebIdentity",
-  "Condition":{
-    "StringEquals":{"token.actions.githubusercontent.com:aud":"sts.amazonaws.com"},
-    "StringLike":{"token.actions.githubusercontent.com:sub":"repo:$REPO:ref:refs/heads/main"}
-  }}]}
+  "Condition":{"StringEquals":{
+    "token.actions.githubusercontent.com:aud":"sts.amazonaws.com",
+    "token.actions.githubusercontent.com:sub":"$SUB"
+  }}}]}
 JSON
 if ! aws iam get-role --role-name "$ROLE" >/dev/null 2>&1; then
   aws iam create-role --role-name "$ROLE" \

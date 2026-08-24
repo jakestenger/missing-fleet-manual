@@ -87,10 +87,20 @@ before assuming a real inconsistency. Renames in particular confuse its watcher.
 CloudFront distribution in front of it, and an IAM role GitHub Actions assumes through OIDC
 so no long-lived AWS keys are stored in GitHub.
 
-One detail that is easy to get wrong if you rebuild this: Docusaurus emits
-`some/path/index.html`, and the S3 REST origin that origin access control requires does not
-serve index documents for subdirectories. Without the CloudFront function that appends
-`index.html`, every page below the root returns 404 while the homepage works fine.
+Two things bit us standing this up, both worth knowing if you ever rebuild it.
+
+**Docusaurus emits `some/path/index.html`,** and the S3 REST origin that origin access
+control requires does not serve index documents for subdirectories. A CloudFront function
+appends `index.html`. Its file-versus-directory test checks the last path segment for a real
+extension, **not** whether the URL contains a dot, because every section slug here has one:
+`1.1-what-fleet-is`, `8.14-degradation`, `a.6-glossary`. With the naive dot check, the
+homepage works and every section returns 403.
+
+**GitHub issues an immutable OIDC subject claim** that embeds numeric owner and repository
+ids, `repo:owner@1234/name@5678:ref:refs/heads/main`. Published AWS trust-policy examples all
+use the plain `repo:owner/name:ref:...` form, which silently fails to match and produces
+`Not authorized to perform sts:AssumeRoleWithWebIdentity`. The setup script derives the real
+value from the GitHub API.
 
 ## What not to put in this repository
 
