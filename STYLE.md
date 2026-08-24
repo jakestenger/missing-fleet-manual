@@ -551,6 +551,43 @@ Find them with:
 grep -rn "SCREENSHOT:\|DIAGRAM:" manual/
 ```
 
+### Every image comment carries a state marker
+
+**Added 2026-08-24.** Jake feeds these comments to an image model, so each one has to say
+what it wants done. Three markers, all greppable:
+
+| Marker | Means |
+|---|---|
+| `IMAGE-TODO:` | No image exists yet. Generate one from the prompt below |
+| `IMAGE-REDO:` | An image exists and should be replaced. A `WHY:` line says what is wrong with it, then the corrected prompt |
+| `IMAGE-OK:` | Reviewed and kept. **Do not delete this comment**; the prompt is retained so the image can be regenerated later |
+
+Format:
+
+```markdown
+<!-- IMAGE-REDO: assets/1.2-five-channels.webp
+     WHY: uses eight saturated hues and a photorealistic server icon.
+     PROMPT: ...the corrected brief...
+     PALETTE, strictly: ...the palette block from §13... -->
+![Alt text](assets/1.2-five-channels.webp)
+```
+
+Find outstanding work with `grep -rn "IMAGE-REDO:\|IMAGE-TODO:" manual/`.
+
+**`IMAGE-OK` exists because these comments keep getting deleted.** They render as nothing,
+so an edit pass loses them silently, and the 1.6 prompts were removed three separate times
+while their images stayed. A marker that says "keep me" is easier to respect than a
+convention someone has to remember.
+
+### Two standing instructions every prompt needs
+
+Both learned the hard way, both cheap to include:
+
+- **"Fleet" is a software product, not vehicles.** An image model asked to draw a box
+  labelled Fleet produced a laptop displaying cars, vans and trucks. Say it explicitly.
+- **No em-dashes in rendered text.** The manual does not use them, and text inside an image
+  cannot be fixed by a later editing pass.
+
 ### Never commit a placeholder image
 
 **Jake's rule, 2026-08-24.** Do not generate stand-in artwork, not even neat stand-in
