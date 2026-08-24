@@ -80,6 +80,18 @@ Two things worth knowing when the site misbehaves:
 If the browser shows something that contradicts what is on disk, restart the dev server
 before assuming a real inconsistency. Renames in particular confuse its watcher.
 
+## Deploying
+
+`main` deploys automatically. The infrastructure behind it is created once by
+`build/aws-setup.sh`, which is idempotent and safe to re-run: a private S3 bucket, a
+CloudFront distribution in front of it, and an IAM role GitHub Actions assumes through OIDC
+so no long-lived AWS keys are stored in GitHub.
+
+One detail that is easy to get wrong if you rebuild this: Docusaurus emits
+`some/path/index.html`, and the S3 REST origin that origin access control requires does not
+serve index documents for subdirectories. Without the CloudFront function that appends
+`index.html`, every page below the root returns 404 while the homepage works fine.
+
 ## What not to put in this repository
 
 - Customer names, account names, or any detail that would identify a customer from an
