@@ -22,3 +22,6 @@ INTAKE.md
 salvage/
 research/0*.md
 research/RESEARCH_PLAN.md
+
+# Temporary salvage-merge proposals for manual comparison. Not for commit.
+manual/*/*--MERGE.md
