@@ -152,11 +152,6 @@ What changed and in which release. Source: release notes at the tag, not `CHANGE
 a branch (`STYLE.md` §9). Record agent versions separately when they differ; Orbit ships on
 its own cadence.
 
-## See also
-
-Adjacent chapters, and the appendices this chapter pushed reference material into. Official
-docs go in `further_reading` above.
-
 <!--
 BEFORE MARKING THIS CHAPTER DONE
 
@@ -170,5 +165,6 @@ BEFORE MARKING THIS CHAPTER DONE
   - No code-level references: no file paths, package names, Go identifiers      §8
   - Positive voice; boundaries framed as design, not as missing features        §15
   - Cross-part links resolve (see the check in OUTLINE.md)
+  - No "See also" section; links live in the prose that needs them      §21
   - status: and verified_*: honest, per the rule at the top                     §9
 -->

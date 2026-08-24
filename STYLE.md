@@ -697,6 +697,23 @@ reader without knowing whether it worked or who watches it next week.
 Start with the model and the decision. Procedure, platform differences, and verification
 follow (§12, narrative register).
 
+## 21. No "See also" sections
+
+**Jake's rule, 2026-08-24.** Do not end a chapter with a list of adjacent chapters. The
+sidebar already does that job, and better, because it shows where the reader is.
+
+A link earns its place **inside** the prose, at the moment the reader would want it, with a
+sentence saying what they will find there. "1.3 explains why a global label can cross fleets
+and a fleet label cannot" is worth following. A bare link under a "See also" heading is not,
+and 70 chapters carrying one was 192 lines of navigation nobody needed.
+
+Two things this does **not** cover, and both stay:
+
+- **The troubleshooting handoff.** A short pointer into Part VIII naming which sections apply
+  and why is required by §19, and it is content rather than navigation.
+- **`further_reading` in frontmatter.** Those are external documentation URLs, not internal
+  navigation, and the site can render them separately.
+
 ## 20. One paragraph, one line
 
 **Jake's rule, 2026-08-24.** Do not hand-wrap prose. Write each paragraph as a single line

@@ -70,6 +70,3 @@ This is why documentation, forum posts, and scripts written before March 2026 us
 A related change in the same release: `no-team.yml` in GitOps was deprecated in favour of `unassigned.yml`.
 
 ## Documentation maintenance
-
-## See also
-

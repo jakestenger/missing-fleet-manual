@@ -24,6 +24,3 @@ Structured placeholder. Replace this outline with release-verified guidance for 
 ## Configuration ownership
 
 ## Reference tables
-
-## See also
-

@@ -31,9 +31,3 @@ permissions, scope, examples, output, exit behavior, and related API endpoints.
 ## Server administration and diagnostics commands
 
 ## Command-to-API cross-reference
-
-## See also
-
-- [6.2 Manage Fleet with GitOps](../06-automate-fleet/6.2-manage-fleet-with-gitops.md)
-- [6.4 Use fleetctl](../06-automate-fleet/6.4-use-fleetctl.md)
-- [A.8 API action and endpoint reference](a.8-api-action-and-endpoint-reference.md)

@@ -32,9 +32,3 @@ errors, idempotency, and equivalent fleetctl or GitOps action where one exists.
 ## Pagination, filtering, errors, and rate limits
 
 ## API-to-fleetctl cross-reference
-
-## See also
-
-- [6.3 Use the Fleet REST API](../06-automate-fleet/6.3-use-the-fleet-rest-api.md)
-- [6.4 Use fleetctl](../06-automate-fleet/6.4-use-fleetctl.md)
-- [A.7 fleetctl command reference](a.7-fleetctl-command-reference.md)
