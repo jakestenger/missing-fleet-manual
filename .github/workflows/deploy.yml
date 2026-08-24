@@ -1,0 +1,64 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  id-token: write     # for AWS OIDC, so no long-lived keys live in GitHub
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+
+      - name: Install
+        working-directory: website
+        run: npm ci
+
+      - name: Build
+        working-directory: website
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: npm run build
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      # Hashed assets are immutable and cached hard; html and json must revalidate
+      # so a deploy is visible immediately rather than after a cache expiry.
+      - name: Sync immutable assets
+        run: |
+          aws s3 sync website/build "s3://${{ vars.S3_BUCKET }}" \
+            --delete \
+            --exclude "*.html" --exclude "*.json" --exclude "sitemap.xml" \
+            --cache-control "public,max-age=31536000,immutable"
+
+      - name: Sync html and metadata
+        run: |
+          aws s3 sync website/build "s3://${{ vars.S3_BUCKET }}" \
+            --delete \
+            --exclude "*" \
+            --include "*.html" --include "*.json" --include "sitemap.xml" \
+            --cache-control "public,max-age=0,must-revalidate"
+
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --paths "/*"

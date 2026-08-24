@@ -1,0 +1,24 @@
+# Docusaurus
+website/node_modules/
+website/.docusaurus/
+website/build/
+.cache-loader/
+
+# OS / editor
+.DS_Store
+.obsidian/
+*.swp
+
+# Local backups and scratch
+.bak-*
+.*.bak
+
+# Working material kept deliberately out of the public repo.
+# Lives in ../missing-fleet-manual-private. These entries are a guard in case a
+# copy ever lands back here: derived from private support data, or internal detail
+# with no value to a contributor.
+PROJECT_STATUS.md
+INTAKE.md
+salvage/
+research/0*.md
+research/RESEARCH_PLAN.md

@@ -1,0 +1,30 @@
+name: Build check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+
+      - name: Install
+        working-directory: website
+        run: npm ci
+
+      - name: Build
+        working-directory: website
+        run: npm run build
+
+      # A missing image is a hard webpack failure, and a renamed heading silently
+      # breaks every anchor pointing into it. Both have bitten this repo.
+      - name: Check links, anchors and images
+        run: python3 build/check-links.py
