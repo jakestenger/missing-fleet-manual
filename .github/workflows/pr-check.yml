@@ -28,3 +28,9 @@ jobs:
       # breaks every anchor pointing into it. Both have bitten this repo.
       - name: Check links, anchors and images
         run: python3 build/check-links.py
+
+      # check-links.py proves a target exists. It cannot tell whether "as 2.9 notes, X"
+      # is true of 2.9. One such claim shipped and was caught by review, not tooling.
+      # Advisory: this always exits 0 and prints for a human to judge.
+      - name: Check cross-reference attributions
+        run: python3 build/check-crossrefs.py
