@@ -62,9 +62,6 @@ It renders as nothing, and it is the only record of what the picture is meant to
 grep -rn "IMAGE-REDO:\|IMAGE-TODO:" manual/     # what still needs artwork
 ```
 
-`build/chatgpt-image-brief.md` is the preamble to paste into an image model before sending it
-any briefs. It explains the markers, the palette, and the standing rules.
-
 Use the Fleet brand palette, in hex, and Cloud City for illustration. Both are in
 `STYLE.md` §13.
 
