@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Check that attributive cross-references are plausible.
+"""Advisory prose-integrity checks.
+
+Two checks, both advisory. Neither gates CI; both print for a human to judge.
+
+1. Attributive cross-references.
 
 check-links.py verifies that a link target exists. It cannot tell whether a sentence like
 "as [2.9](...) notes, escrowed Linux disk encryption data" is true of 2.9. That defect class
@@ -9,6 +13,11 @@ The check is deliberately fuzzy and advisory. For every cross-reference whose se
 attributes content to the target ("notes", "covers", "explains" ...), it collects the
 distinctive words of that sentence and warns when the target file contains none of them.
 Zero overlap is a strong signal; partial overlap is not, so only zero is reported.
+
+2. Eaten code spans. Writing a chapter through an unquoted heredoc lets the shell
+   consume a `backticked` span via command substitution, leaving a double space where the
+   code used to be. That happened once, shipped, and stayed live until an external review
+   read the sentence. The signature is a double space mid-sentence outside code and tables.
 
 Exits 0 always. This informs a human, it does not gate CI.
 """
@@ -63,8 +72,29 @@ for path in sorted(MANUAL.rglob("*.md")):
             if not hits:
                 warnings.append((path, target, sent.strip()[:150], sorted(terms)[:8]))
 
+# --- check 2: double space mid-sentence, the signature of a shell-eaten code span ---
+spans = []
+for path in sorted(MANUAL.rglob("*.md")):
+    incode = False
+    for n, line in enumerate(path.read_text().split("\n"), 1):
+        s = line.strip()
+        if s.startswith("```"):
+            incode = not incode
+            continue
+        if incode or s.startswith(("|", "<!--", "#", ">")):
+            continue
+        if re.search(r"\S  +\S", line.lstrip()):
+            spans.append((path, n, s[:120]))
+
+if spans:
+    print(f"{len(spans)} internal double-space(s), possible eaten code span:\n")
+    for path, n, s in spans:
+        print(f"  {path}:{n}\n    {s}\n")
+else:
+    print("prose: no suspicious internal double spaces")
+
 if warnings:
-    print(f"{len(warnings)} cross-reference(s) with no term overlap in the target:\n")
+    print(f"\n{len(warnings)} cross-reference(s) with no term overlap in the target:\n")
     for src, tgt, sent, terms in warnings:
         print(f"  {src}")
         print(f"    -> {tgt.relative_to(pathlib.Path.cwd())}")
