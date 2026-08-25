@@ -406,9 +406,24 @@ values rather than colour names, because an image model asked for "teal" will in
 | Lighter blue | `#E8F1F6` | Backgrounds, fills |
 | Fleet Green | `#009A7D` | **One** accent. Fleet reserves it for calls to action and links |
 
-The palette is deliberately quiet: soft blue fills, muted greys, and a single saturated
-green. **Fleet Green is the only strong colour, so a diagram that uses it everywhere loses
-the thing it is for.** Use it to mark the one element that matters, or leave it out.
+The palette is quiet, and quiet is not the same as flat. The first pass of Part I artwork
+came back drawn almost entirely in `#192147` hairlines on `#F9FAFC`, which is technically
+on-brand and visually dead.
+
+**Use the whole ramp.** Fleet Black has five tints for a reason. `#515774` for ordinary
+labels, `#8B8FA2` and `#C5C7D1` for secondary structure, `#E2E4EA` for grouping bands. A
+diagram using only the darkest tint on the lightest background has thrown away its hierarchy.
+
+**Give something a solid fill.** At least one element should be filled rather than outlined,
+in solid `#192147` or solid `#009A7D` with white text. Hairline outlines everywhere is what
+makes a diagram look unfinished.
+
+**`#D3E8F3` reads as a fill. `#E8F1F6` reads as white.** Pick accordingly.
+
+**Fleet Green may repeat if it means one thing.** The rule is not one green shape per image;
+it is that green means one consistent, obvious thing. Green on every durable store is good.
+Green scattered for decoration is not. What stays forbidden is inventing hues, and giving
+each item its own colour as a way of telling items apart.
 
 Paste this into every brief:
 
