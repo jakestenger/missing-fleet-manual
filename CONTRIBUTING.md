@@ -39,6 +39,37 @@ verified_source: "unverified: drafted from prior work, not checked at a tag"
 An honest unverified stamp is worth more than a confident wrong one. Sections have twice
 shipped here claiming verification that never ran.
 
+## Verification is necessary and not sufficient
+
+**Established 2026-08-25.** All twelve Part II chapters carried `status: verified`, a citation
+ledger, and a check performed against the tag. An independent review then found a material defect
+in every one. Five were correct readings of a source followed by a conclusion the source did not
+support; two were chapters contradicting themselves; two were headings asserting more than the
+paragraph beneath them.
+
+None of those is a sourcing failure, which is why checking sources did not find them. An author
+cannot reliably audit the distance between what a source said and what they concluded from it,
+because by the time they check, the conclusion has become their belief about the source.
+
+**So `verified` now requires an independent review pass as well as a source check.** Both, with
+the findings resolved or explicitly declined in the notes file. Add to the frontmatter:
+
+```yaml
+reviewed_by:            # e.g. codex gpt-5.6-sol
+reviewed_on:            # YYYY-MM-DD
+```
+
+`build/check-verified.py` reports any section stamped `verified` without them.
+
+The review must not work from `STYLE.md`. A reviewer following our own rules returns our own
+opinion with more steps. See `review/BRIEFING.md`, which was written by the reviewer from its own
+context for exactly that reason.
+
+Two things follow that are easy to get wrong. The review happens **before** the stamp, not as a
+later audit of chapters already published. And where the reviewer disagrees with a rule in
+`STYLE.md`, surface the disagreement rather than applying the rule silently: the rules are ours,
+they are not evidence, and one of them has already turned out to be wrong.
+
 ## Visuals
 
 Mark every place a screenshot or diagram would help, even if you cannot make the image

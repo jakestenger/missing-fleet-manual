@@ -34,3 +34,9 @@ jobs:
       # Advisory: this always exits 0 and prints for a human to judge.
       - name: Check cross-reference attributions
         run: python3 build/check-crossrefs.py
+
+      # A gate, not advice. status: verified now means a source check AND an
+      # independent review pass. Twelve chapters once carried the stamp on the
+      # first alone and an external review found a defect in every one.
+      - name: Check verified stamps are backed by evidence
+        run: python3 build/check-verified.py

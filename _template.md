@@ -7,6 +7,8 @@ status: outline         # outline | drafting | written | verified
 verified_against:       # e.g. Fleet 4.90.1 — see the rule below
 verified_on:            # YYYY-MM-DD
 verified_source:        # e.g. git tag fleet-v4.90.1
+reviewed_by:            # independent review is required for `verified` — see CONTRIBUTING
+reviewed_on:            # YYYY-MM-DD
 further_reading:        # official docs URLs — NOT load-bearing; the section stands alone
 feature_requests:       # drives the website's open-FR widget; see PLATFORM.md
   labels: []            #   e.g. [":product", "#g-apple-at-work"]
