@@ -406,24 +406,49 @@ values rather than colour names, because an image model asked for "teal" will in
 | Lighter blue | `#E8F1F6` | Backgrounds, fills |
 | Fleet Green | `#009A7D` | **One** accent. Fleet reserves it for calls to action and links |
 
-The palette is quiet, and quiet is not the same as flat. The first pass of Part I artwork
-came back drawn almost entirely in `#192147` hairlines on `#F9FAFC`, which is technically
-on-brand and visually dead.
+The palette has two halves, and the second one was missing from this guide until
+2026-08-24, which is why the first pass of Part I artwork came back drawn almost entirely in
+`#192147` hairlines on `#F9FAFC`.
 
-**Use the whole ramp.** Fleet Black has five tints for a reason. `#515774` for ordinary
-labels, `#8B8FA2` and `#C5C7D1` for secondary structure, `#E2E4EA` for grouping bands. A
-diagram using only the darkest tint on the lightest background has thrown away its hierarchy.
+### The structure set
 
-**Give something a solid fill.** At least one element should be filled rather than outlined,
-in solid `#192147` or solid `#009A7D` with white text. Hairline outlines everywhere is what
-makes a diagram look unfinished.
+The Fleet Black ramp and the neutrals above. All text lives here. Use the whole ramp rather
+than only its extremes: `#515774` for ordinary labels, `#8B8FA2` and `#C5C7D1` for secondary
+structure, `#E2E4EA` for grouping bands. **`#D3E8F3` reads as a fill; `#E8F1F6` reads as
+white.** Pick accordingly.
 
-**`#D3E8F3` reads as a fill. `#E8F1F6` reads as white.** Pick accordingly.
+### The Fleet dots
 
-**Fleet Green may repeat if it means one thing.** The rule is not one green shape per image;
-it is that green means one consistent, obvious thing. Green on every durable store is good.
-Green scattered for decoration is not. What stays forbidden is inventing hues, and giving
-each item its own colour as a way of telling items apart.
+Fleet's logo mark is six coloured dots, and those six are brand colours as much as the navy
+is. Extracted from the brand asset:
+
+| Dot | Hex |
+|---|---|
+| Sky blue | `#5CABDF` |
+| Mint | `#3AEFC4` |
+| Green | `#63C740` |
+| Lavender | `#C98DEF` |
+| Apricot | `#FAA669` |
+| Rose | `#D66C7B` |
+
+They are soft enough to take `#192147` text on top, so they work as fills rather than only
+as strokes. Fleet Green `#009A7D` sits alongside them as the CTA colour.
+
+**Use them for categories, not decoration.** One colour per thing a reader has to tell apart,
+used consistently within the image, and only as many as there are categories. Five channels
+gets five dots. Four items do not get six colours to look lively. If nothing in the picture
+needs distinguishing, use none and let the structure set carry it.
+
+This is the correction to an earlier over-reaction. A diagram once came back using eight
+invented hues, and the response here was "exactly one accent, no other hues at all", which
+produced flat pictures. **The sin was inventing colours, not colour-coding.** Colour-coding
+from the dots is on-brand and is often exactly what a diagram needs.
+
+### Give it weight
+
+At least one element per diagram should be a solid filled shape rather than an outline, so
+the composition has an anchor. Vary stroke weight so the primary flow reads heavier than the
+scaffolding.
 
 Paste this into every brief:
 
