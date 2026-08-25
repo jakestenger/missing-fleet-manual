@@ -434,6 +434,16 @@ is. Extracted from the brand asset:
 They are soft enough to take `#192147` text on top, so they work as fills rather than only
 as strokes. Fleet Green `#009A7D` sits alongside them as the CTA colour.
 
+**Match strength to area.** Full saturation is for small marks: an arrow, a chip, a filled
+icon. Over a large panel, use the dot at roughly a 20 to 25 percent tint. The first attempt
+at this put five dots at full strength across five large panels and the result looked like a
+children's infographic. The same colours as thin arrows, in the five-channels diagram, work
+perfectly. Area is the variable, not the colour.
+
+**Do not colour an empty container.** One diagram came back with three large saturated
+panels, two of which had nothing inside them. Colour has to carry meaning; an empty coloured
+box is noise.
+
 **Use them for categories, not decoration.** One colour per thing a reader has to tell apart,
 used consistently within the image, and only as many as there are categories. Five channels
 gets five dots. Four items do not get six colours to look lively. If nothing in the picture
