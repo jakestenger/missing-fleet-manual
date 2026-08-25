@@ -1013,3 +1013,66 @@ write the paragraph as ordinary prose.
 **This does not reopen §12.** A numbered list of named things is not a table, and this rule is
 not a licence to fragment explanation into bullets. The de-tabling pass was about data that
 should have been prose; a catalogue with a stated count is a list.
+
+## 27. What a citation ledger has to separate
+
+**Written 2026-08-25, after an external review found a material defect in every one of the twelve
+Part II chapters.** Each chapter had a citation ledger and had been verified against the release
+tag. The process was followed and it did not work. This section records why.
+
+### The ledgers recorded sourcing and could not record reasoning
+
+A row saying "claim X, source `file.go:123`, confidence high" is true and insufficient. It does
+not say whether X is *what the source states* or *what was concluded from it*, and the majority of
+the defects were the second kind:
+
+| Written | Source said | Gap |
+|---|---|---|
+| GCP is not highly available | The sizing table lists `Nodes: 1` | One HA instance is one node |
+| Neither carves nor installers survive a second instance | Carves fall back to MySQL, installers to local disk | MySQL is shared |
+| Technician can do this and nothing else | The role's *write* permissions | Its read permissions are much wider |
+| Nothing is replayed | Plugins drop oversized records | Write failures are retried |
+
+Every one is a correct reading followed by a wrong inference. Confidence was recorded as high
+because the source really did say what it was quoted as saying.
+
+**Every ledger row now carries one of three bases.** Borrowed from an external reviewer that
+caught what this process missed:
+
+- **Stated** — the source says this. Quote or cite it precisely.
+- **Derived** — the book concluded this from what the source says. Give the reasoning, not just
+  the source, so a reader can check the step and not just the citation.
+- **Unverified** — could not be established at the tag. Say so in the chapter too (§8).
+
+A derived row is not weaker than a stated one. Some of the best material in this book is derived.
+But it is a different kind of claim and it fails in a different way, so it has to be visible as
+one.
+
+### Headings and tables are claims, and were never checked
+
+Two defects had correct prose under an incorrect heading, or correct prose beside a table cell
+that overstated it. Per-claim verification is structurally blind to this, because the verified
+claim is the one in the paragraph.
+
+**Check every heading, table cell and summary line against the text it summarises**, as a
+separate pass. Ask what the heading asserts on its own, to someone skimming, and whether the
+paragraph supports exactly that.
+
+### Nothing checked a chapter against itself
+
+Two chapters contradicted themselves: one said a setting was per-token and later per-platform
+"not per token"; another told the same reader both to verify a domain and that they need not.
+Both halves had been verified in isolation. Consistency is not a property of any single claim, so
+no per-claim process can see it.
+
+**Read the finished chapter once, whole, looking only for passages that disagree with each
+other.** This is the cheapest of the three checks and it caught nothing for twelve chapters
+because it was never performed.
+
+### And a note on where these came from
+
+An independent reviewer found all of it, working from its own briefing and explicitly not from
+this style guide. The lesson is not that review is useful, which is obvious. It is that a
+verification process can be followed correctly and still be blind in a specific, describable
+direction, and that the blindness is invisible from inside the process. Build the checks that
+look where you do not.
