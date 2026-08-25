@@ -882,3 +882,134 @@ The same goes for announcing what is coming. **One exception**, and it is a real
 when you are deliberately holding something back, so the reader knows the gap is intentional
 and where it gets filled. "The exact flag list is in `a.7`" is useful. "We will look at
 identity later" is not.
+
+## 24. Two sentence patterns to delete on sight
+
+**Jake's rule, 2026-08-25.** Both of these are conspicuous machine-writing tells. Both survive
+review easily because each individual instance reads fine. The damage is cumulative.
+
+### The lesson sentence
+
+A sentence whose only job is to tell the reader that the fact next to it was important.
+
+> That order is the point.
+> The distinction worth internalising is that ...
+> That last item is the one people skip, and it is the one that matters most.
+> This deserves reading twice.
+
+Delete it and let the fact stand. If the fact needs an announcement to register, the fact is
+underwritten and the fix is upstream. If it does not, the announcement is padding that also
+sounds automated.
+
+**Test.** Cover the sentence. Does the paragraph lose any information? If not, it goes.
+
+### Definition by denial
+
+Defining something by first denying an adjacent thing the reader never proposed.
+
+> This is an operational choice, not a feature choice.
+> This is not a rehearsal. It is the first real deployment.
+> Not a server. A set of standing obligations.
+> This sounds like bureaucracy and is not.
+> It is not a criticism of the module.
+
+The tell is that the "not B" half carries no information. B was invented to give A something to
+push against, and the reader was never going to think B in the first place. Say A.
+
+**This is not a ban on contrast.** A contrast is legitimate when both halves name real things
+the reader could actually encounter or choose between, and the denied half carries information:
+
+> Fleet sends the wipe command rather than the delete command, because delete expires after
+> thirty days.
+> Linux hosts encrypt escrowed data with the server private key; Windows hosts use the WSTEP
+> certificate.
+
+Both of those lose something real if you cut the second half. "This is not a rehearsal" loses
+nothing.
+
+**Test.** Ask whether a reasonable reader would have believed B before you denied it. If not,
+B is a foil. Cut it and keep A.
+
+### Related forms worth catching in the same pass
+
+- "It is worth stating plainly that ..." leading into an ordinary statement
+- "not just B, but A", where B is a strawman
+- "This is not X, it is Y" as a section's opening move
+- Any paragraph that opens by characterising the sentence it is about to deliver
+
+## 25. Claims about the reader's organization
+
+**Jake's rule, 2026-08-25.** The manual can state what Fleet does, because that is verifiable at
+the tag. It cannot state what your company is like, what most companies are like, or what will
+happen to you eighteen months from now. When it does, it is inventing field experience it does
+not have, and the invention is audible.
+
+> Both are cheap to settle now and awkward to unpick once a few thousand devices are enrolled
+> and a support team has built habits around them.
+> There are two ways to run Fleet, and for most organizations the choice is made for them.
+> Your identity provider was almost certainly chosen years ago by someone else.
+> That is the destination most organizations want.
+> A consequence people miss.
+> The failure mode this prevents is the common one where ...
+
+None of that is checkable. "A few thousand devices" is a number with no source. "Most
+organizations" has no survey behind it. The reader's support team may not exist.
+
+**Test.** Ask what would have to be true for the sentence to be verified, and whether this book
+could verify it. A statement about Fleet can be checked against the release. A statement about
+what most teams do cannot be checked against anything.
+
+### What to write instead
+
+Replace the assumed experience with the verified consequence, which is almost always both
+shorter and stronger:
+
+> ~~Changing this later is painful once you are at scale.~~
+> Changing the server URL after Apple devices have MDM turned on requires an end user to turn
+> MDM off and back on, per device, by hand.
+
+The second sentence does everything the first was reaching for, and it is true.
+
+### The exception, and it is a real one
+
+**Jake has this experience and the book is his.** A claim drawn from actual field work is
+legitimate and is often the most valuable thing on the page. The rule is about who is speaking.
+Write those claims so they own their source, and do not manufacture new ones to match the tone:
+
+> In deployments I have seen, the renewal calendar is the first thing to lapse.
+
+If a passage needs a claim like that and Jake has not made it, leave the gap and flag it rather
+than filling it with a plausible-sounding generalization.
+
+### Related forms
+
+- "in practice", "in the real world", "more often than not", used to introduce an unsourced claim
+- Invented failure scenes: "usually at 2am", "you will find out on a Tuesday"
+- "nobody", "everyone", "people", used as a demographic rather than about a specific mechanism.
+  "A Fleet with no global admin has nobody who can create one" is a product fact and is fine.
+  "A layer nobody on the team wants to operate" is a guess about the reader's team.
+
+## 26. If you state a count, make the items findable
+
+**Jake's rule, 2026-08-25.** Announcing "Fleet has six roles" or "three named exceptions" is a
+promise that the reader can locate each one. Deliver on it.
+
+A numbered list is the right answer when the items are a closed set of named things the reader
+will refer to individually, as with Fleet's six roles. Bold lead-in paragraphs are equally good
+when each item needs a few sentences of its own, as with the three reasons for external log
+delivery. Either satisfies the rule, because either makes item three findable at a glance.
+
+What fails is announcing a count and then running the items together in a paragraph:
+
+> ... with three named exceptions.
+>
+> Experimental features can change, and they are tagged as such in the API documentation.
+> Security fixes may break compatibility when there is no alternative. And default values
+> occasionally change ...
+
+The reader now has to parse the count back out of the prose. Enumerate, or drop the count and
+write the paragraph as ordinary prose.
+
+**This does not reopen §12.** A numbered list of named things is not a table, and this rule is
+not a licence to fragment explanation into bullets. The de-tabling pass was about data that
+should have been prose; a catalogue with a stated count is a list.
