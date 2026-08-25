@@ -46,9 +46,14 @@ Sections have twice shipped carrying stamps for verification that never happened
 > apply, add what does (`STYLE.md` §11). What is **not** optional is the set of
 > elements in `STYLE.md` §19.
 >
-> Read before writing: **§18** (this feature has one canonical home — is it here, or
-> are you linking to it?), **§17** (reference material goes to an appendix), **§12**
-> (narrative register: model and decision first, not a table first).
+> Read before writing: **§18** (this feature has one canonical home, so is it here or are
+> you linking to it?), **§17** (reference material goes to an appendix), **§12** (narrative
+> register: model and decision first, not a table first), **§22** (headings name a subject,
+> not a conclusion).
+>
+> Every section opens with a category badge, at the start of its first paragraph:
+> `![Explanation](../_assets/icons/explanation.svg)` and likewise `howto`, `reference`,
+> `troubleshooting`. See §16.
 
 ## Purpose and scope
 
@@ -166,5 +171,8 @@ BEFORE MARKING THIS CHAPTER DONE
   - Positive voice; boundaries framed as design, not as missing features        §15
   - Cross-part links resolve (see the check in OUTLINE.md)
   - No "See also" section; links live in the prose that needs them      §21
+  - Every section opens with a category badge                          §16
+  - Headings name a subject, not a conclusion                          §22
+  - No meta-commentary about the document itself                       §23
   - status: and verified_*: honest, per the rule at the top                     §9
 -->

@@ -601,6 +601,22 @@ Find them with:
 grep -rn "SCREENSHOT:\|DIAGRAM:" manual/
 ```
 
+### Category icons on every section, Parts 0 to VII
+
+Each section carries a small icon marking which of the four kinds of material it holds
+(§19): explanation, how-to, reference, or troubleshooting. They live in
+`manual/_assets/icons/` and are referenced as `../_assets/icons/<kind>.svg`.
+
+Place the badge at the **start of the section's first paragraph**, never in the heading,
+because heading text generates the anchor. Where a section opens with a list rather than a
+paragraph, put the badge on its own line above the list.
+
+**Part VIII is excluded.** It is a reference chapter whose sections are all diagnostic, so
+every badge would say the same thing.
+
+Do not force an even spread. Foundations chapters come out almost entirely explanation, and
+that is the correct signal: it tells a skimmer there are no procedures in them.
+
 ### Every image comment carries a state marker
 
 **Added 2026-08-24.** Jake feeds these comments to an image model, so each one has to say
@@ -784,23 +800,6 @@ reader without knowing whether it worked or who watches it next week.
 Start with the model and the decision. Procedure, platform differences, and verification
 follow (§12, narrative register).
 
-## 21. No "See also" sections
-
-**Jake's rule, 2026-08-24.** Do not end a chapter with a list of adjacent chapters. The
-sidebar already does that job, and better, because it shows where the reader is.
-
-A link earns its place **inside** the prose, at the moment the reader would want it, with a
-sentence saying what they will find there. "1.3 explains why a global label can cross fleets
-and a fleet label cannot" is worth following. A bare link under a "See also" heading is not,
-and 70 chapters carrying one was 192 lines of navigation nobody needed.
-
-Two things this does **not** cover, and both stay:
-
-- **The troubleshooting handoff.** A short pointer into Part VIII naming which sections apply
-  and why is required by §19, and it is content rather than navigation.
-- **`further_reading` in frontmatter.** Those are external documentation URLs, not internal
-  navigation, and the site can render them separately.
-
 ## 20. One paragraph, one line
 
 **Jake's rule, 2026-08-24.** Do not hand-wrap prose. Write each paragraph as a single line
@@ -827,3 +826,59 @@ This applies to prose, list items, and blockquote paragraphs.
 whitespace-normalised signature of every file before and after, so a change that would alter
 the rendered output fails loudly rather than silently. Run it as
 `python3 build/unwrap.py dryrun` first, then `apply`.
+## 21. No "See also" sections
+
+**Jake's rule, 2026-08-24.** Do not end a chapter with a list of adjacent chapters. The
+sidebar already does that job, and better, because it shows where the reader is.
+
+A link earns its place **inside** the prose, at the moment the reader would want it, with a
+sentence saying what they will find there. "1.3 explains why a global label can cross fleets
+and a fleet label cannot" is worth following. A bare link under a "See also" heading is not,
+and 70 chapters carrying one was 192 lines of navigation nobody needed.
+
+Two things this does **not** cover, and both stay:
+
+- **The troubleshooting handoff.** A short pointer into Part VIII naming which sections apply
+  and why is required by §19, and it is content rather than navigation.
+- **`further_reading` in frontmatter.** Those are external documentation URLs, not internal
+  navigation, and the site can render them separately.
+
+## 22. Headings say what the section contains
+
+**Jake's rule, 2026-08-24.** A heading is a navigation aid before it is anything else. Someone
+skimming should be able to tell from it whether this section holds what they came for.
+
+That rules out headings that state a conclusion instead of naming a subject. "Three
+questions", "A useful mental model", "Two records describe one piece of work" all read well
+in sequence and tell a skimmer nothing. Compare:
+
+| Instead of | Write |
+|---|---|
+| Three questions | What does Fleet do? |
+| A useful mental model | The five components, and what each one does |
+| Two records describe one piece of work | Activity records and host results |
+| The two flows administrators operate | Desired state out, observed state in |
+| Terms you will encounter | Fleets and teams, reports and queries |
+| Three ways to get at it | Reading the record: in Fleet, by webhook, or streamed |
+
+The test: read the heading with no surrounding text and ask what the section is about. If the
+answer is "something to do with the chapter", rewrite it.
+
+A heading that states a finding is fine when the finding **is** the subject, as in "Read-only
+is not the same as harmless" or "Fleet supports exactly one database writer". The failure is
+abstraction, not assertion.
+
+**Renaming a heading breaks every anchor into it.** Run `python3 build/check-links.py` after
+any heading change.
+
+## 23. No meta-commentary about the writing
+
+The reader does not need to be told why a table is a table, that a comparison deserves one, or
+that the prose is about to hand off to a diagram. Cut anything that describes the document
+rather than the product: "this is a genuine comparison, so it earns a table", "with that story
+in mind, the reference version", "one caption is enough here".
+
+The same goes for announcing what is coming. **One exception**, and it is a real one: say so
+when you are deliberately holding something back, so the reader knows the gap is intentional
+and where it gets filled. "The exact flag list is in `a.7`" is useful. "We will look at
+identity later" is not.

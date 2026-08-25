@@ -23,9 +23,10 @@ Judge status by **evidence, not by frontmatter**. The reorganization rewrote eve
 | ● | written | complete prose, reads start to finish |
 | ✔ | verified | written **and** checked against a release tag, with a citation ledger in `research/section-notes/` |
 
-**Nothing in the book is ✔ right now.** Part VIII is ● written and was verified against
-Fleet 4.90.0, but the re-verification against tag `fleet-v4.90.1` is outstanding, so it
-does not qualify. See `STYLE.md` §9.
+**Current state, 2026-08-24.** Part I and 2.1 to 2.5 are ✔ verified against tag
+`fleet-v4.90.1`, each with a ledger in `research/section-notes/`. Part VIII is ● written and
+was checked against Fleet 4.90.0, so its re-verification at the tag is still outstanding and
+it does not yet qualify. Everything else is ○ or ◐. See `STYLE.md` §9.
 
 **Priority** is based on **hidden machinery** — how much Fleet does behind the scenes, how
 many edge cases and precedence rules there are, and how often customers ask "but how does
@@ -80,9 +81,9 @@ Per `STYLE.md` §18, Part I owns the *mental model* for each of these. Organizat
 setup lives in Part II, and targeting in practice lives in 5.1. Those chapters link here
 rather than restating.
 
-**Salvage.** Three sections were written and source-verified, then overwritten during the
-reorganization. The recovered prose is kept outside this repository and is pending a merge
-that has to be reconciled with edits made since.
+**Salvage, resolved.** Three Part I chapters were overwritten during the 2026-08-23
+reorganization and recovered from the rendered site. All three were merged back on
+2026-08-24 and the recovered copies are no longer needed.
 
 
 ## Part II — Administer and deploy Fleet
@@ -331,15 +332,13 @@ of data, hits-per-section replaces it with something real.
 
 ## Write order
 
-1. **Merge the salvage** into 1.2, 1.3 and 1.6, routing reference material to the
-   appendices as it goes (`STYLE.md` §17). This recovers verified work rather than
-   generating new claims, so it is the cheapest real progress available.
-2. **Finish Part I** — 1.1, 1.4, 1.5.
-3. **Re-verify Part VIII** against tag `fleet-v4.90.1` and move it from ● to ✔.
-4. Then by reader demand and the churn table above: 5.4, 4.2, 3.1, 5.2, 6.2.
-
-Part II 2.1 to 2.6 already carry initial narrative content and are the natural
-continuation once Part I is whole.
+1. ~~Merge the salvage into 1.2, 1.3 and 1.6.~~ **Done 2026-08-24.**
+2. ~~Finish Part I.~~ **Done.** All six chapters written and verified.
+3. **Finish Part II.** 2.1 to 2.5 are verified; 2.6 to 2.12 are outlines. In progress on an
+   hourly schedule, one chapter per run, each verified at the tag with its own ledger.
+4. **Re-verify Part VIII** against tag `fleet-v4.90.1` and move it from ● to ✔. This is the
+   largest outstanding debt in the book: fourteen written sections carrying a 4.90.0 stamp.
+5. Then by reader demand and the churn table below: 5.4, 4.2, 3.1, 5.2, 6.2.
 
 Appendices are written as their feeder chapters are written, never batched at the end.
 
