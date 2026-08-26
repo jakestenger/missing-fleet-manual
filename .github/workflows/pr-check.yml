@@ -51,3 +51,8 @@ jobs:
       # fleetctl trigger. Same shape as the activity check.
       - name: Check schedule names exist in Fleet's source
         run: python3 build/check-schedule-names.py
+
+      # Part VIII prints SQL a reader runs during an incident. A table that was
+      # renamed or never existed sends them to an error at the worst moment.
+      - name: Check queried tables exist in Fleet's schema
+        run: python3 build/check-table-names.py
