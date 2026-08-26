@@ -34,7 +34,7 @@ The two words describe different layers of the same action. Running a live repor
 | osquery's distributed channel | distributed query | osquery's own term, unchanged |
 | An entry in `osquery_schedule` | scheduled query | osquery's own term, unchanged |
 | The MySQL table | `queries` | The schema was not renamed |
-| The Redis key | `live_query` | Internal naming was not renamed |
+| The Redis key prefix | `livequery:` | Internal naming was not renamed |
 | SQL text | query | Generic |
 
 Part VIII works at all of these layers at once, which is why both words appear there. Its opening section carries a note explaining the split in context.
@@ -62,7 +62,7 @@ The old field names are **deprecated rather than removed**, so integrations writ
 | UI, API paths, CLI, GitOps | fleets, reports | `/api/v1/fleet/reports`, `fleetctl report` |
 | API field names | fleets, reports | Old names deprecated, still accepted |
 | MySQL tables | `teams`, `queries` | Schema unchanged |
-| Redis keys | `live_query` | Unchanged |
+| Redis key prefix | `livequery:` | Unchanged |
 | osquery | query | osquery is a separate project and renamed nothing |
 
 This is why documentation, forum posts, and scripts written before March 2026 use the older words for the same things, and why Fleet's own documentation still contains both.
