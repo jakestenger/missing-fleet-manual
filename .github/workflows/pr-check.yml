@@ -40,3 +40,9 @@ jobs:
       # first alone and an external review found a defect in every one.
       - name: Check verified stamps are backed by evidence
         run: python3 build/check-verified.py
+
+      # Three invented activity names shipped in reference tables, where a reader
+      # would reasonably build monitoring on them. Skips silently without a local
+      # Fleet checkout, so it is advisory here and authoritative locally.
+      - name: Check activity names exist in Fleet's source
+        run: python3 build/check-activity-names.py
