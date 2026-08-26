@@ -46,3 +46,8 @@ jobs:
       # Fleet checkout, so it is advisory here and authoritative locally.
       - name: Check activity names exist in Fleet's source
         run: python3 build/check-activity-names.py
+
+      # Two invented schedule names shipped in a list a reader would use with
+      # fleetctl trigger. Same shape as the activity check.
+      - name: Check schedule names exist in Fleet's source
+        run: python3 build/check-schedule-names.py
