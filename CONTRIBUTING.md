@@ -179,3 +179,37 @@ value from the GitHub API.
 - Host identifiers: serial numbers, UUIDs, host IDs.
 - Infrastructure access details, addresses, or credentials.
 - Anything from Fleet's private repositories or internal systems.
+
+## The checks, and where each came from
+
+Every script in `build/` exists because a specific defect shipped. None was written from imagining
+what might go wrong, and that has turned out to matter: the rules written from imagination in
+`STYLE.md` have twice failed on their own author within hours of being written, while the checks
+have caught something on nearly every run.
+
+| Script | Gates CI | Built after |
+|---|---|---|
+| `check-links.py` | Yes | A renamed heading silently broke every anchor into it |
+| `check-verified.py` | Yes | Twelve chapters carried `status: verified` on a source check alone, and a review found a defect in every one |
+| `check-crossrefs.py` | Advisory | "As 2.9 notes, escrowed Linux disk encryption data", where 2.9 said no such thing. Also carries the §8 and eaten-code-span checks |
+| `check-activity-names.py` | Advisory | `user_mfa_requested`, documented in two chapters, exists nowhere in Fleet |
+| `check-schedule-names.py` | Advisory | `software_checksum_migration`, given an interval and a description, exists nowhere in Fleet |
+| `check-absolutes.py` | Advisory | Five defects that were universal claims built from a partial reading |
+| `check-headings.py` | Advisory | Headings asserting more than the paragraph beneath them |
+| `claims.py` | Run by hand | Two chapters contradicting each other while each was internally consistent |
+
+`claims.py` is the odd one and the most useful when writing. It takes a term and prints every
+sentence in the manual that mentions it, grouped by chapter:
+
+```sh
+python3 build/claims.py cooldown
+python3 build/claims.py "enroll secret"
+```
+
+Run it before writing about a mechanism another chapter probably already covers. §27 says to read
+a new chapter against the book, and nobody does that reliably from memory across seventy files.
+Its first run found the same setting spelled two ways in three chapters.
+
+**The pattern worth continuing.** When a defect is found, ask whether its class is detectable. If
+it is, write the check before fixing the instance, and read the canonical values from Fleet's own
+source so the check tracks the release rather than a snapshot.

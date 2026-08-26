@@ -14,7 +14,11 @@ attributes content to the target ("notes", "covers", "explains" ...), it collect
 distinctive words of that sentence and warns when the target file contains none of them.
 Zero overlap is a strong signal; partial overlap is not, so only zero is reported.
 
-2. Eaten code spans. Writing a chapter through an unquoted heredoc lets the shell
+2. Source-file citations in prose. STYLE §8 keeps them in the ledger, where a reader can check
+   the verification, and out of the chapter, where they date the text and help nobody. Seven had
+   accumulated in two chapters before an external review prompted a look.
+
+3. Eaten code spans. Writing a chapter through an unquoted heredoc lets the shell
    consume a `backticked` span via command substitution, leaving a double space where the
    code used to be. That happened once, shipped, and stayed live until an external review
    read the sentence. The signature is a double space mid-sentence outside code and tables.
@@ -72,7 +76,28 @@ for path in sorted(MANUAL.rglob("*.md")):
             if not hits:
                 warnings.append((path, target, sent.strip()[:150], sorted(terms)[:8]))
 
-# --- check 2: double space mid-sentence, the signature of a shell-eaten code span ---
+# --- check 2: source files cited in prose (STYLE §8) ---
+sources = []
+SRC_RE = re.compile(r"`([a-z][a-z0-9_/-]*\.(?:go|tsx|ts|rego|sql|py))`")
+for path in sorted(MANUAL.rglob("*.md")):
+    body = re.sub(r"<!--.*?-->", " ", path.read_text(), flags=re.S)
+    body = re.sub(r"```.*?```", " ", body, flags=re.S)
+    for n, line in enumerate(body.split("\n"), 1):
+        s = line.strip()
+        if s.startswith(("|", "#")):
+            continue
+        for m in SRC_RE.finditer(line):
+            sources.append((path.name, n, m.group(1)))
+
+if sources:
+    print(f"{len(sources)} source-file citation(s) in prose, which belong in the ledger:\n")
+    for name, n, f in sources:
+        print(f"  {name}:{n}  {f}")
+    print()
+else:
+    print("prose: no source files cited outside the ledger")
+
+# --- check 3: double space mid-sentence, the signature of a shell-eaten code span ---
 spans = []
 for path in sorted(MANUAL.rglob("*.md")):
     incode = False
