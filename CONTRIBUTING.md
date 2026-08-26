@@ -213,3 +213,25 @@ Its first run found the same setting spelled two ways in three chapters.
 **The pattern worth continuing.** When a defect is found, ask whether its class is detectable. If
 it is, write the check before fixing the instance, and read the canonical values from Fleet's own
 source so the check tracks the release rather than a snapshot.
+
+### One that did not work, and why it was dropped
+
+8.13's worked escalation example named `nano_command_queue`. No such table exists; the real one is
+`nano_enrollment_queue`. `check-table-names.py` could not see it, because the name was in a prose
+blockquote rather than in a SQL block, so the obvious move was to extend the checker to backticked
+snake_case identifiers in prose.
+
+It was written and it does not work. Fleet legitimately spells config keys, MDM asset names,
+webhook names, activity types, and column names in exactly that shape, in exactly that position,
+in the same paragraphs. Suppressing every known one of those still left **37 false positives and
+zero true positives** across the manual. Similarity scoring against the real table names does not
+separate them either: the genuine error scores 0.774 against its nearest real table, while
+`vpp_token`, a correct reference to an MDM asset, scores 0.947.
+
+There is no signal here to tune toward, and tuning until the one known answer appears is fitting
+the test set, which §27 already warns against. A checker with that ratio teaches you to skip its
+output, which costs more than the single catch is worth. It was reverted rather than shipped.
+
+**So: not every defect class is checkable.** When the honest answer is that a rule would fire on
+correct prose more often than on wrong prose, say so and leave the check unwritten. Note it here
+so nobody spends the afternoon rediscovering it.
