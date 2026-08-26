@@ -1058,6 +1058,31 @@ claim is the one in the paragraph.
 separate pass. Ask what the heading asserts on its own, to someone skimming, and whether the
 paragraph supports exactly that.
 
+### "Stated" is a claim about scope, not just about content
+
+**Added 2026-08-25, after the rule above failed on the chapter written to test it.**
+
+A ledger row read: *the retry is limited to three consecutive attempts followed by a 24 hour
+cooldown*, filed as **stated**, citing `retry.NewLimitedWithCooldown(3, 24*time.Hour)`.
+
+That line does say three, and it does say 24 hours. What it does not say is **per what**. The
+retries turned out to be tracked per artifact hash, one file away, which changes the operational
+meaning completely: a host failing on one download is not silenced for everything else, and a
+corrected build is not held by the old one's cooldown.
+
+The row was cited correctly and was still wrong, because citing a line establishes its content
+and not its scope.
+
+**So a row is only `stated` when the cited source establishes the claim's boundaries as well as
+its substance.** Ask what the claim quietly asserts about *when*, *where*, *to whom* and *per
+what*, and whether the citation covers each. If it covers the number but not the unit, the row is
+**derived**, and the derivation is the part worth writing down.
+
+The same failure has a ledger-scale version. That ledger also asserted *"No claim in this chapter
+is unverified."* Asserting completeness is itself a claim, and it required having read the
+adjacent material, which had not happened. **A ledger can overstate its own coverage exactly as a
+chapter can overstate a fact.** Say what was checked; do not certify what was not.
+
 ### Nothing checked a chapter against itself
 
 Two chapters contradicted themselves: one said a setting was per-token and later per-platform
@@ -1068,6 +1093,18 @@ no per-claim process can see it.
 **Read the finished chapter once, whole, looking only for passages that disagree with each
 other.** This is the cheapest of the three checks and it caught nothing for twelve chapters
 because it was never performed.
+
+**And read it against the book, not only against itself.** Added 2026-08-25: a chapter written
+under this rule still contradicted a different chapter of the same manual. 3.1 stated that an
+enroll secret determines where a host lands, which is true on the fleetd path; 2.7 had already
+documented that automatic Apple enrollment places hosts by a default fleet on the Apple Business
+token instead. Both chapters were internally consistent and the book was not.
+
+A within-chapter read cannot see this by construction. Any chapter that generalizes, and any
+chapter whose scope line says words like *any*, *every*, *all* or *common to*, needs its general
+claims checked against what the book already says elsewhere. `build/check-crossrefs.py` catches
+the case where a reference names a target that does not support it; it does not catch two
+chapters quietly disagreeing, and nothing mechanical currently does.
 
 ### And a note on where these came from
 

@@ -39,6 +39,35 @@ verified_source: "unverified: drafted from prior work, not checked at a tag"
 An honest unverified stamp is worth more than a confident wrong one. Sections have twice
 shipped here claiming verification that never ran.
 
+## What "complete" means here
+
+**Jake's decision, 2026-08-25.** The manual is meant to be complete and correct, and length is
+not a target in either direction. The test is whether someone who has never used Fleet can work
+through this book and come out close to expert, as close as anyone gets without operating a real
+estate.
+
+That resolves a question the appendices kept raising. **Completeness is about the reader's path,
+not about matching Fleet's reference page for page.**
+
+An appendix is complete when it carries the things that make someone competent and that are not
+collected anywhere else: how a surface is organized, how authentication and scoping work, what is
+reachable from where, what the precedence rules are, and how one interface maps onto another.
+Those are conceptual, they are durable across releases, and assembling them is genuine work no
+existing document does.
+
+An appendix does not become more complete by reproducing per-endpoint field lists or per-flag
+tables from Fleet's own reference. That material is lookup rather than learning, Fleet maintains
+it correctly and continuously, and a copy here would be stale within a release and wrong in a way
+this manual could not detect. Point at it instead, precisely.
+
+Applied to the appendix with the most inbound references: a.8 should teach the shape of Fleet's
+API, its authentication and scoping model, and the matrix of what must be reachable from where,
+which is real and uncollected. It should not restate every endpoint's parameters.
+
+The same test settles a recurring question in the chapters. Where a reader needs to *understand*,
+the manual explains. Where a reader needs to *look something up mid-task*, the manual sends them
+somewhere that is maintained.
+
 ## Verification is necessary and not sufficient
 
 **Established 2026-08-25.** All twelve Part II chapters carried `status: verified`, a citation
