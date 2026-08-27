@@ -1078,6 +1078,28 @@ its substance.** Ask what the claim quietly asserts about *when*, *where*, *to w
 what*, and whether the citation covers each. If it covers the number but not the unit, the row is
 **derived**, and the derivation is the part worth writing down.
 
+### A `stated` row cites Fleet, not this manual
+
+**Added 2026-08-27, after a first review found a chapter's organising claim inverted.**
+
+3.2 said Fleet delivers fleetd on the ADE path and that manual enrollments need a package
+delivered by hand. Fleet sends the same agent-install command after **both**, and only ADE has an
+opt-out. The chapter had it backwards on both halves, and its decision table was built on it.
+
+The ledger shows how it got in. The row sat under **stated**, and its source column read: *"Re-verified with 8.1, 8.4 and 8.8, and `fleetdm/fleet#47793`."* That is not a source. It cites this
+manual's own prior belief, held in three chapters that had all inherited the same assumption, plus
+an issue title. A claim can be re-verified across four documents that never checked it and end up
+looking better cited than one read straight out of the server's source.
+
+**A `stated` row cites Fleet's source at the tag, and nothing else.** Not another chapter, not a
+ledger, not an issue, not this manual at an earlier date. Agreement with a neighbouring chapter is
+worth recording, but it is consistency and not verification, and it belongs in the prose or under
+**derived** where the reasoning is visible.
+
+The asymmetry is the point. `claims.py` finds chapters that **disagree**. Nothing finds chapters
+that agree with each other and are all wrong together, and that is precisely what a chain of
+"re-verified with" citations manufactures.
+
 The same failure has a ledger-scale version. That ledger also asserted *"No claim in this chapter
 is unverified."* Asserting completeness is itself a claim, and it required having read the
 adjacent material, which had not happened. **A ledger can overstate its own coverage exactly as a
