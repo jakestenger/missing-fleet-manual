@@ -56,3 +56,15 @@ jobs:
       # renamed or never existed sends them to an error at the worst moment.
       - name: Check queried tables exist in Fleet's schema
         run: python3 build/check-table-names.py
+
+      # A column name is as easy to get wrong as a table name and fails the same
+      # way: an error in the middle of an incident, from a query the manual
+      # supplied.
+      - name: Check queried columns exist in Fleet's schema
+        run: python3 build/check-column-names.py
+
+      # The manual states what one release does. A link to blob/main promises a
+      # source and hands the reader a file that has since changed, which is
+      # worse than no link: it looks like a citation and behaves like a guess.
+      - name: Check repository links are pinned to the verified tag
+        run: python3 build/check-pinned-links.py
