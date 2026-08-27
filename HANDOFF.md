@@ -380,19 +380,23 @@ because what it found changes how to weigh the rest.
   every one because the file exists. `build/check-outline-deferrals.py` lists them and now
   separates the two failures, which are not equally serious:
 
-  - **10 are promises**, naming content that does not exist: "the full action-by-action breakdown
-    for all six roles at both scopes", "every setting, what it defaults to, and what wins when two
-    levels disagree". A reader follows those and finds a heading list.
-  - **19 sit in chapters stamped `verified`**, and the overlap is the finding: **a verified
-    chapter promising content that was never written is a defect in a verified chapter.** Part II
-    is the part this project considers finished, and it is where most of them are.
+  - ~~10 are promises~~ **All closed 2026-08-27.** They named content that does not exist: "the
+    full action-by-action breakdown for all six roles at both scopes", "every setting, what it
+    defaults to, and what wins when two levels disagree". Each now says the target is not written
+    yet and names what answers the question today, which for a.4 is 2.3 itself and for a.3 is
+    Fleet's configuration reference read with 8.14's caveat about its defaults. The checker
+    suppresses a promise that disclaims itself, so it reports zero and will report any new one.
+  - **19 still sit in chapters stamped `verified`**, now as bare pointers rather than promises.
+    Tolerable, and worth watching: a verified chapter that points into a stub is one edit away
+    from promising again.
 
-  A bare forward pointer into a planned chapter is legitimate and should stay. A promise is not:
-  either write the target or stop naming content that does not exist. Four a.7 promises were fixed
-  on 2026-08-27 by pointing at `fleetctl package --help` instead.
+  Also on 2026-08-27, **a.6 moved from `outline` to `drafting`**, because its terminology section
+  is written and linked from seventeen places in Part VIII. Its two genuinely empty sections,
+  Feature availability and Version boundaries, now say so in the file rather than presenting as
+  headings with content on the way.
 
   **a.3 and a.4 are the most-referenced by a wide margin**, which is the answer to which appendix
-  to write next, and writing either would clear most of the promises in one go.
+  to write next.
 - 12 SCREENSHOT briefs await real console captures. Those are the owner's to take.
 - 1.1's lifecycle diagram needs regenerating; em-dashes are baked into the rendered asset.
 - Apple Business Manager vs ABM terminology is inconsistent across chapters.

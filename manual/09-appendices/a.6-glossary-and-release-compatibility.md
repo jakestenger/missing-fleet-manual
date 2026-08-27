@@ -3,17 +3,15 @@ title: "Glossary and release compatibility"
 chapter: "Appendices and indexes"
 section: "A.6"
 sidebar_position: 6
-status: outline
+status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-08-24
-verified_source: "partial: the 4.82.0 rename is verified at git tag fleet-v4.90.1; the rest of this appendix is an outline"
+verified_source: "partial: the terminology section and the 4.82.0 rename are verified at git tag fleet-v4.90.1; feature availability and version boundaries are still outline"
 ---
 
 # Glossary and release compatibility
 
-<!--
-Structured placeholder. Replace this outline with release-verified guidance for Fleet 4.90.1.
--->
+**Two of the five sections below are written and three are not.** Terminology and the deprecated-names section carry verified content; **Feature availability** and **Version boundaries** are headings with nothing under them, and a chapter that sends you to this appendix for either is sending you nowhere yet.
 
 ## Terminology
 
@@ -96,7 +94,11 @@ Part VIII works at all of these layers at once, which is why both words appear t
 
 ## Feature availability
 
+**Not written.** Which capabilities are Fleet Free and which are Fleet Premium is currently stated per chapter, where each was verified, rather than gathered here.
+
 ## Version boundaries
+
+**Not written.** Minimum supported OS versions, minimum fleetd versions per feature, and Fleet's own version support window belong here. Several chapters state a specific floor they verified, such as fleetd 1.36.0 for Linux disk-encryption escrow; none of that is collected.
 
 ## Deprecated names and APIs
 

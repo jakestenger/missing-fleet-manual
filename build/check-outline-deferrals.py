@@ -28,6 +28,11 @@ PROMISE = re.compile(
     r"\b(?:every|full|complete|exact|exhaustive|all (?:six|the)|action-by-action|per-action|"
     r"enumerat\w+|the detail|detailed)\b", re.I)
 
+# A sentence that says the target does not exist yet has answered the promise: the reader is
+# told where the content will live and that it is not there, which is the honest form and the
+# fix this check asks for. Keep the pointer, drop the flag.
+DISCLAIMED = re.compile(r"not (?:yet )?written|is not written|will live|belongs in .{0,40}(?:not written|which is not)", re.I)
+
 hits = []
 LINK = re.compile(r"\[[^\]]+\]\(([^)]+\.md)(?:#[^)]*)?\)")
 for path in sorted(MANUAL.rglob("*.md")):
@@ -40,8 +45,8 @@ for path in sorted(MANUAL.rglob("*.md")):
         for m in LINK.finditer(line):
             target = pathlib.PurePath(m.group(1)).name
             if target in outline:
-                hits.append((path, i, target, line.strip()[:120],
-                             bool(PROMISE.search(line)), verified))
+                promise = bool(PROMISE.search(line)) and not DISCLAIMED.search(line)
+                hits.append((path, i, target, line.strip()[:120], promise, verified))
 
 if hits:
     promises = [h for h in hits if h[4]]
