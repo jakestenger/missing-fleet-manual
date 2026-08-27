@@ -25,7 +25,7 @@ for path in MANUAL.rglob("*.md"):
 # stub. "The full action-by-action breakdown for all six roles is in a.4" tells them the answer
 # exists and names it, which is the one that wastes their time and misrepresents the manual.
 PROMISE = re.compile(
-    r"\b(?:every|full|complete|exact|exhaustive|all (?:six|the)|action-by-action|per-action|"
+    r"\b(?:every|everything|full|complete|exact|exhaustive|all (?:six|the)|action-by-action|per-action|"
     r"enumerat\w+|the detail|detailed)\b", re.I)
 
 # A sentence that says the target does not exist yet has answered the promise: the reader is
