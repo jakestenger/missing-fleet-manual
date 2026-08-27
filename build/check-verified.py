@@ -8,6 +8,17 @@ carried the stamp on the first alone, and an external review found a material de
 Checks that a verified section has its `verified_*` fields, a notes file, and `reviewed_by` /
 `reviewed_on`. Exits 1 on a section that overclaims, because this one is a gate rather than
 advice.
+
+**A freeze is in force from 2026-08-27, by the owner's decision: nothing carries `verified`
+until every part is drafted and every chapter has had at least one review round.** The reason
+is that the stamp kept going stale through no fault of the chapter carrying it. Writing a Part
+III chapter found real errors in Part I; reviewing Part I found real errors in Part II. Twelve
+chapters were demoted in one day, eight of them because a neighbour's review corrected them
+hours after their own verdict. A stamp that a neighbour can invalidate is not measuring what it
+claims to, and while whole parts are still outlines every chapter has neighbours that do not
+exist yet.
+
+Lift the freeze by deleting FREEZE below, once the condition it names is met.
 """
 import re, sys, pathlib
 
@@ -21,6 +32,11 @@ problems = []
 LADDER = {"outline", "drafting", "verified"}
 offladder = []
 
+# See the module docstring. Set to False once every part is drafted and every chapter has had a
+# review round; until then a `verified` stamp is premature by definition rather than by evidence.
+FREEZE = True
+frozen = []
+
 for path in sorted(MANUAL.rglob("*.md")):
     head = path.read_text().split("---")
     if len(head) < 3:
@@ -31,6 +47,8 @@ for path in sorted(MANUAL.rglob("*.md")):
         offladder.append((path, "no status field"))
     elif m.group(1) not in LADDER:
         offladder.append((path, m.group(1)))
+    elif FREEZE and m.group(1) == "verified":
+        frozen.append(path)
     if not re.search(r"^status:\s*verified\s*$", fm, re.M):
         continue
     def has(field):
@@ -63,8 +81,21 @@ if problems:
             print(f"    missing: {m}")
         print()
 
-if problems or offladder:
+if frozen:
+    print(f"{len(frozen)} section(s) stamped verified while the freeze is in force:\n")
+    for path in frozen:
+        print(f"  {path}")
+    print("\nNothing carries `verified` until every part is drafted and every chapter has had a\n"
+          "review round. Set it to `drafting`, or lift the freeze in this file if the condition\n"
+          "has actually been met.\n")
+
+if problems or offladder or frozen:
     sys.exit(1)
-print("verified stamps: all backed by a source check and a review pass; "
-      "every status is on the ladder")
+
+if FREEZE:
+    print("verified stamps: none, and none permitted while the freeze holds; "
+          "every status is on the ladder")
+else:
+    print("verified stamps: all backed by a source check and a review pass; "
+          "every status is on the ladder")
 sys.exit(0)

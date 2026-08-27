@@ -178,6 +178,28 @@ reviewer and second opinion and myself as the final arbiter."*
 
 Reviews run through ChatGPT's Codex CLI, invoked directly, with no human relaying anything.
 
+### The verification freeze
+
+**Set by the owner on 2026-08-27:**
+
+> Let's demote anything listed as "verified" to drafting until we've completed drafting all the
+> parts and have done at least one round of review on every chapter.
+
+So **nothing carries `verified` right now**, and `build/check-verified.py` enforces that with a
+`FREEZE` flag rather than leaving it to discipline. Twelve chapters were demoted on the day the
+freeze was set: eight because a neighbour's review had corrected them hours after their own verdict,
+and four because the stamp no longer meant anything once the other eight had gone.
+
+The reasoning is worth keeping, because it is the clearest lesson of the whole session. **A stamp
+that a neighbour can invalidate is not measuring what it claims to.** Writing a Part III chapter
+found real errors in Part I. Reviewing Part I found real errors in Part II. Reviewing Part I again
+found errors in Part VIII. While whole parts are still outlines, every chapter has neighbours that
+do not exist yet, and a chapter cannot be finished before the chapters that contradict it have been
+written.
+
+Lift the freeze by deleting the flag in `check-verified.py`, once every part is drafted and every
+chapter has had at least one review round. Not before, and not chapter by chapter.
+
 ### How many rounds a chapter gets
 
 **Set by the owner on 2026-08-27, after Part I failed two full rounds and Part VIII four.**
