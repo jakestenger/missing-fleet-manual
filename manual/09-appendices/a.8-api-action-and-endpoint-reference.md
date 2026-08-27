@@ -98,7 +98,9 @@ A proxy configuration written on the assumption that everything Fleet serves liv
 
 **For Windows device management**, add the four Microsoft protocol paths under `/api/mdm/microsoft/`, which are `management`, `discovery`, `policy` and `enroll`, plus `/api/mdm/microsoft/tos` for automatic enrollment. [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) covers why exposing some but not all of these fails partway rather than cleanly.
 
-**For iOS and iPadOS**, add `/enroll` and `/api/*/fleet/enrollment_profiles/ota`, with in-house app delivery adding `/api/*/fleet/software/titles/*/in_house_app`. Account-driven user enrollment adds the `/api/mdm/apple/account_driven_enroll` family, its SSO paths, and `/mdm/apple/service_discovery`.
+**For any Apple device enrolled by link**, which is macOS as well as iOS and iPadOS, add `/enroll` and `/api/*/fleet/enrollment_profiles/ota`. Those two are the over-the-air enrollment path and are not platform-specific; a reverse proxy that exposes them only for mobile will block a Mac enrolling from the **Add hosts** link ([3.2](../03-connect-devices/3.2-enroll-macos-devices.md), [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md)).
+
+**For iOS and iPadOS specifically**, in-house app delivery adds `/api/*/fleet/software/titles/*/in_house_app`, and account-driven user enrollment adds the `/api/mdm/apple/account_driven_enroll` family, its SSO paths, and `/mdm/apple/service_discovery`.
 
 **For Android**, add `/enroll`, `/api/*/fleet/android_enterprise/enrollment_token`, and `/api/*/fleet/android_enterprise/pubsub`, the last of which is how Google delivers device events and is why [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) requires a publicly reachable server URL.
 
