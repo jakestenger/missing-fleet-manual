@@ -340,6 +340,32 @@ phrasing of the claim you changed — not the sentence, the claim — and then r
 for the neighbours.** The second half matters as much as the first: correcting `secret.txt` in one
 chapter while another still says it exists on Linux is the same defect at a larger scale.
 
+**Part I's foundations chapters failed in a shape the later parts do not.** Both 1.1 and 1.2 came
+back NOT READY on 2026-08-27 with seven and ten factual defects respectively, and almost none of
+them were details. In 1.2, nearly every defect was **a true statement about a fully enrolled Mac
+promoted to a universal**: five channels, query work belongs to osquery, online means queries work,
+hardware migration recovers itself, if Orbit is down osquery is down. Each holds on the host the
+author was picturing and fails on Linux, on mobile, on ChromeOS, or on Windows. In 1.1 the defects
+were **tidy framings that survived because they sounded quotable**: the reading half and the writing
+half, expected state over there and actual state over here, a missing capability means the platform
+offers no mechanism.
+
+Two things follow for anyone writing foundations material. A sentence that generalises is making a
+claim about every platform in the book, and it needs checking against the *worst* case rather than
+the typical one; the applicability matrix now in 1.2 exists because no amount of hedging replaces
+enumerating. And a framing that sounds like a principle should be suspected precisely because it
+sounds like one, since a reader will carry it into chapters that were never checked against it.
+
+**Licence claims are the least reliable claim class in the project and no checker catches them.**
+Five wrong in one session, in both directions: 3.5 said ADE's licensing was undocumented when ADE is
+Premium, then said owner mapping was free when end-user authentication is Premium; 2.8 gated
+company-owned Android when it is not gated; 1.2's rollout table listed lock, wipe and LUKS escrow
+with no gate at all when every lock is Premium, every wipe except company-owned Android is Premium,
+and disk encryption is Premium; and 1.1 presented a platform table that read as an edition promise.
+A licence gate presents as an absence rather than as an error, which is why it is guessed at rather
+than checked. **Check every licence claim against its own validation in the source. There is no
+single rule to infer from: Fleet gates feature by feature, and scope by scope within a feature.**
+
 **The most dangerous defects are the confident, copyable ones.** 8.10 recommended deleting an
 Android enterprise as general remediation, which would have destroyed every work profile in an
 estate. 8.13's worked example, presented as *the model of a good ticket*, named a table that does
