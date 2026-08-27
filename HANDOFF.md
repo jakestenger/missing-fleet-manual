@@ -348,9 +348,15 @@ because what it found changes how to weigh the rest.
    **The gate is the six chapters corrected since their last verdict: 8.2, 8.4, 8.8, 8.9, 8.11,
    8.13.** One more confirming round over those six, at roughly 190k tokens each, is what stands
    between here and a defensible stamp. Everything else is done.
-   Full record at `reviews/2026-08-27/README.md` and `reviews/2026-08-27/confirm2/`. Part I still
-   needs its `reviewed_by`/`reviewed_on`, and 1.2 carries a correction recorded only in 8.1's
-   ledger.
+   Full record at `reviews/2026-08-27/README.md` and `reviews/2026-08-27/confirm2/`.
+
+   **Part I is further from `verified` than the bookkeeping suggests.** It still needs its
+   `reviewed_by`/`reviewed_on`, and 1.2 has now taken **five** corrections found while writing
+   Part III, four of them factual: the Linux passphrase prompt is Orbit's rather than Fleet
+   Desktop's, Linux lock and wipe exist as scripts, the Orbit-against-MDM split is about mechanism
+   rather than capability, and what Fleet knows about an iPhone has a wider provenance than the MDM
+   channel. Each is recorded in the relevant Part III ledger and none in 1.2's own. **1.2 needs a
+   fresh review, not a stamp**, and the rest of Part I should be assumed to be in the same state.
 4. **Confirming round over Part III.** All five first reviews are back, all NOT READY, and all
    findings are applied. **Every verdict on record now describes older text**, which is the same
    gate Part VIII is behind. Run the confirming prompt over 3.2 to 3.6, and **include 3.7**, which
