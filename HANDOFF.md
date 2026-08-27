@@ -350,6 +350,16 @@ the source and not against its neighbours, and the reviewer's finding gives a fa
 passage is now the settled one. A hedge feels safer than an absolute, so "X is the cause" becomes "X
 is usually the cause", which is a *new* claim about frequency that the source almost never supports.
 
+**A reviewer's proposed wording is a claim, not a citation, and adopting it unchecked is its own
+defect class.** Added 2026-08-27 after 1.1's third round, where three of eight findings were the
+reviewer retracting round-two claims that had gone into the chapter verbatim on its authority: that
+the report row cap "freezes" storage, that Apple gates profile variables individually while Windows
+gates them wholesale, and that FileVault escrow is Orbit's work. All three were wrong, and all three
+would have been caught by opening the file the review cited. The same happened twice in 1.5. The
+reviewer retracting its own findings is the system working; paying for a whole extra round to
+discover it is not. **Treat a suggested replacement exactly like your own draft sentence: source it
+before it lands.**
+
 **The countermeasure is to re-read the whole chapter after applying, as if reviewing it fresh, rather
 than reading the diff.** The diff is exactly the view that hides this. And before writing a
 replacement sentence, ask what it now asserts that the old one did not: a proportion, a ranking, an
