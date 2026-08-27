@@ -269,6 +269,31 @@ false positives and 0 true positives. It was reverted and the reasoning written 
 `CONTRIBUTING.md`. When a rule would fire on correct prose more often than wrong prose, do not
 ship it. Tuning until the one known answer appears is fitting the test set.
 
+**A new chapter's organising claim is the most likely thing in it to be wrong, and writing one is the
+best test the neighbours ever get.** Four of Part III's five first reviews came back NOT READY on the
+sentence the chapter is built around, not on a detail:
+
+| Chapter | Said | Actually |
+|---|---|---|
+| 3.2 | Fleet delivers the agent on ADE; manual enrollments need a package by hand | It delivers on **both**. Only ADE has an opt-out |
+| 3.3 | Windows MDM brings disk-encryption enforcement | It is set in the **Orbit** config response; MDM is a gate, and it never appears in the MDM queue |
+| 3.4 | Linux has one channel, and no lock or wipe | It has no *MDM* channel and three others, and Premium **can** lock and wipe Linux, as scripts |
+| 3.5 | ADE's licensing on Free is undocumented | ADE is **Premium**, because Apple Business tokens are, which 2.7 had said all along |
+
+Every one is the natural inference from a true adjacent fact, which is why it survived drafting: no MDM
+therefore no lock; ADE installs the agent therefore only ADE does; MDM does disk encryption elsewhere
+therefore it does here.
+
+**And each correction rippled.** Writing and reviewing five new chapters produced corrections in **ten
+already-reviewed chapters**: 1.2 four separate times, plus 2.7, 2.8, 3.1, 3.2, 8.1, 8.2, 8.4 and 8.8.
+A reviewed chapter is not a verified one, and the cheapest way to find what a reviewed chapter got wrong
+turns out to be writing its neighbour.
+
+**So, before drafting a chapter: write its organising sentence down and check that one sentence against
+Fleet's source directly.** Not against a neighbouring chapter, not against the inference that makes it
+plausible. Doing exactly that to 3.4 and 3.6 before their reviews found a wrong claim in each, and in
+3.4's case the same wrong claim sitting in 1.2.
+
 **Half-applied corrections are the project's signature defect, across four sessions now.** Not
 wrong facts: every finding was applied correctly at the passage it cited. What was left behind was
 the same claim in a table two sections up, in a summary paragraph, in a start-here row. That is a
