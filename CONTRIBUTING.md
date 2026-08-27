@@ -220,6 +220,20 @@ Its first run found the same setting spelled two ways in three chapters.
 it is, write the check before fixing the instance, and read the canonical values from Fleet's own
 source so the check tracks the release rather than a snapshot.
 
+**Correct the ledger row, not just the chapter.** When a review overturns a claim, the fix has two
+halves and the second gets skipped: the chapter gets corrected, and an "applied" section gets
+appended to the ledger describing what changed, while the original **Stated** row still asserts the
+superseded claim with its original citation. A reviewer reading the ledger then finds two
+incompatible accounts and no way to tell which is current, and the next writer citing that row
+reintroduces the error.
+
+This was found in 3.3's ledger on 2026-08-27, where four rows still carried a coupling model the
+chapter had abandoned, an hourly-retry claim that was wrong in both directions, a grace period
+described backwards, and three external claims sourced to a neighbouring chapter. **Edit the row in
+place**, say what it now claims and that it was corrected, and keep the original error visible in
+the row rather than only in the appended section. The ledger is a record of what is believed and
+why, not a changelog.
+
 **One operational hazard, recorded because it cost a file.** Bulk edits in this repository are
 usually done with a throwaway Python script. `io.open(path, "w")` **truncates immediately**, so a
 script shaped like
