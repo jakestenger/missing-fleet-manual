@@ -240,7 +240,8 @@ Worth reading before you write, because these are expensive lessons.
 **Verification runs downstream of belief formation.** By the time you check a citation, your
 inference has already become your belief about what the source says. This is why the independent
 reviewer finds things you cannot: it arrives with no prior belief. Running total across the
-project: **44 chapters reviewed, 43 with material defects.** Assume your chapter has one.
+project: **50 chapters reviewed, 49 with material defects.** Part I contributed six for six on
+2026-08-27, on the chapters the rest of the book inherits from. Assume your chapter has one.
 
 **A review round is not a formality either, and "applied" is a claim worth checking.** The
 2026-08-25 index said 8.1 through 8.10 were processed and applied. Spot-checking that before
@@ -357,14 +358,35 @@ enumerating. And a framing that sounds like a principle should be suspected prec
 sounds like one, since a reader will carry it into chapters that were never checked against it.
 
 **Licence claims are the least reliable claim class in the project and no checker catches them.**
-Five wrong in one session, in both directions: 3.5 said ADE's licensing was undocumented when ADE is
+**Seven wrong on 2026-08-27 alone**, in both directions and in every part of the book: 3.5 said ADE's licensing was undocumented when ADE is
 Premium, then said owner mapping was free when end-user authentication is Premium; 2.8 gated
 company-owned Android when it is not gated; 1.2's rollout table listed lock, wipe and LUKS escrow
 with no gate at all when every lock is Premium, every wipe except company-owned Android is Premium,
 and disk encryption is Premium; and 1.1 presented a platform table that read as an edition promise.
+1.3 described named fleets, fleet-scoped labels and label targeting as generally available when all
+are gated; 1.4 split one licence claim into two gates and left two more out, including the one that
+refuses an API-only user *any* fleet role regardless of which role it is; 8.9 stated the BitLocker
+reserved-LocURI exception without saying that enabling custom disk encryption is Premium; 8.11 told
+readers to scope a profile or installer to a one-host label, in a chapter whose own throwaway recipe
+ships a blank licence key; and 1.6 presented a fallback table for three artifact types that Free
+cannot create at all.
+
 A licence gate presents as an absence rather than as an error, which is why it is guessed at rather
 than checked. **Check every licence claim against its own validation in the source. There is no
 single rule to infer from: Fleet gates feature by feature, and scope by scope within a feature.**
+Two of the seven were *omissions* rather than assertions, which is the harder kind: there is no
+sentence to check, so the only way to find them is to ask, of every capability a passage tells a
+reader to use, which licence it needs.
+
+**The strongest single instance of the correction-introduces-the-next-defect pattern, for the
+record.** On 2026-08-27 the author corrected 1.2 to say lock and wipe are MDM commands on macOS and
+Windows and scripts on Linux, generalising correctly from a Linux finding to a two-way split that
+does not exist: **Windows lock is a script**, gated on scripts being enabled, and only Windows wipe
+is an MDM command. The wrong version went into the chapter *and into the ledger row justifying it*,
+where it would have outlived the prose. Separately, correcting 8.4's hardware-migration finding into
+8.2 produced a fresh false claim, that `hardware-uuid.txt` is written on Windows and Linux and merely
+not acted on, within an hour of reading the `darwin` branch that disproves it. **A correction is a
+new claim. It inherits none of the original's checking, and it needs all of it.**
 
 **The most dangerous defects are the confident, copyable ones.** 8.10 recommended deleting an
 Android enterprise as general remediation, which would have destroyed every work profile in an
@@ -419,30 +441,60 @@ because what it found changes how to weigh the rest.
    before. 8.1, 8.2, 8.6 and 8.10 took real corrections and should be re-read at minimum. 8.4, 8.8
    and 8.11 need a fourth round.
 
-   **The cheap option** is a fourth round over the seven in the bottom two rows, which is half the
-   cost of a full round. **The expensive and complete option** is one more round over all fourteen,
-   which is the only thing that produces "every chapter reviewed at the text that shipped".
+   ~~**The cheap option** is a fourth round over the seven in the bottom two rows.~~ **Done
+   2026-08-27, over six of them** (8.2, 8.4, 8.8, 8.9, 8.11, 8.13), at `confirm4/`. Three came back
+   READY WITH MINOR CHANGES and three NOT READY, and **all six were then corrected**, so Part VIII
+   is back in the same position one rung higher: every finding applied, no chapter reviewed at its
+   current text. A fifth round over those six is what would settle it.
 
-   Full record at `reviews/2026-08-27/README.md`, `confirm/`, `confirm2/` and `confirm3/`.
+   What the fourth round found is the reason it was worth running. **Round three's own corrections
+   were the largest source of new defects**, and the reviewer said so in as many words twice: "the
+   fourth review's one-hour-retention conclusion was wrong", and "the fourth review was wrong to
+   call the SCEP wording fully correct". Concretely: 8.8's new `skipNotNow` passage confused one
+   response cycle with persistent queue state; 8.9's queue retention became "one hour" when the
+   cleanup makes a row *eligible* at one hour on an hourly schedule, so nearly two; 8.9's
+   certificate-lifetime fix over-corrected into "enrollment age is useless as a proxy" while the
+   chapter relied on enrollment age three paragraphs later; and three frequency claims in 8.8 had
+   replaced universals during earlier rounds.
 
-   **Part I is further from `verified` than its bookkeeping suggests, and is now the part to worry
-   about.** It still needs its `reviewed_by`/`reviewed_on`, and that is the least of it: **1.2 took
-   five corrections during this session and 1.1 took one**, every one found while writing or
-   reviewing a Part III chapter rather than by looking at Part I.
+   **8.11's Compose blocker is closed.** The recipe had never been executed; it has now been run end
+   to end and torn down. Docker creates `certs/fleet.crt` and `certs/fleet.key` as **empty
+   directories** when they are absent, the stack comes up perfectly healthy with TLS off so nothing
+   warns you, and switching TLS on later gives `read /fleet/fleet.crt: is a directory` in a restart
+   loop. Also measured: healthy in about a minute rather than the fifteen the chapter guessed, the
+   Compose file pins no Fleet version (`image: fleetdm/fleet`, so `latest`, which happened to be
+   4.90.1 that day), and **a Free instance starts 21 of the 34 cron schedules**, which is a useful
+   diagnostic and corroborates the Premium gating from the running product.
 
-   | Chapter | Correction | Found while |
-   |---|---|---|
-   | 1.2 | The Linux passphrase prompt is Orbit's, through `zenity` or `kdialog`, not Fleet Desktop's, and escrow does not require Desktop | writing 3.4 |
-   | 1.2 | Linux lock and wipe exist, as scripts on Premium | applying 3.4's review |
-   | 1.2 | The Orbit-against-MDM split is about mechanism, not capability | applying 3.4's review |
-   | 1.2 | What Fleet *knows* about an iPhone has a wider provenance than the MDM channel | applying 3.5's review |
-   | 1.2 | Fleet Desktop is the one optional component of the bundle | applying 3.7's review |
-   | 1.1 | Same, plus the bundle's contents | applying 3.7's review |
+   Full record at `reviews/2026-08-27/README.md`, `confirm/`, `confirm2/`, `confirm3/` and
+   `confirm4/`.
 
-   Not one of those is recorded in 1.1's or 1.2's own ledger, which is itself a defect: the ledgers
-   for Part I no longer describe what those chapters claim. **Part I needs a review round, not a
-   stamp**, and the rest of it should be assumed to be in the same state as 1.2 until one runs.
-   This is task 21.
+   **Part I was further from `verified` than its bookkeeping suggested, and a round on 2026-08-27
+   proved it: all six chapters came back NOT READY, with six to ten factual defects each.** That is
+   a worse result than Part VIII's first full re-review, on chapters that everything else in the
+   book inherits from. Every finding is applied and a second round is running at `part1b/`.
+
+   The two failure shapes were distinct and both worth recognising elsewhere:
+
+   - **1.2, 1.3, 1.5 and 1.6 promoted a true statement about one configuration into a universal.**
+     Five channels (a fully enrolled Mac or Windows machine only); query work belongs to osquery
+     (fleetd hosts only); one targeting model (four items, no two agreeing); a fleet duplicates
+     everything (profiles and software only, while policies, reports and labels inherit from
+     global); activities record what Fleet did (device-originated rows are routine and carry no
+     actor); losing Redis costs a retry (pending failing-policy notifications are not
+     reconstructed).
+   - **1.1 and 1.4 stated tidy framings that survived because they sounded quotable.** The reading
+     half and the writing half; the asset system holds expected state and Fleet holds actual;
+     a missing capability means the platform offers no mechanism; the IdP is the directory so Fleet
+     keeps no accounts; two questions decide authorization.
+
+   The most useful single addition to come out of it is **the four-way capability check in 1.1**:
+   when something is missing for a platform, the reason is the OS, or Fleet's implementation at this
+   release, or your edition, or an unmet prerequisite, and earlier drafts assumed the first by
+   default. That framing is worth applying anywhere the manual says a platform cannot do something.
+
+   Full record at `reviews/2026-08-27/part1/`. This is task 21, now complete; the second round is
+   task 25.
 
 4. **Part III has had two review rounds and every finding applied.** Five first reviews, five
    confirming reviews, and a first review of 3.7, which had never had one. All twelve verdicts and
