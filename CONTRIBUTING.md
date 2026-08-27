@@ -311,3 +311,41 @@ used in a query. That is the case CONTRIBUTING already says is unfixable by rule
 **The general lesson.** A checker is worth writing when the thing it needs to know is declared in
 the text rather than guessed from it. `FROM upcoming_activities ua` declares it. A backtick in a
 paragraph does not.
+
+## A scripted edit can delete far more than you asked it to
+
+This has now happened twice, in the same shape, and the second time no checker noticed.
+
+**2026-08-25.** `io.open(p,'w').write(s.replace(a,b,1))` truncated `HANDOFF.md` to zero,
+because `'w'` empties the file before the expression on the right is evaluated and that
+expression raised. Recovered from git. Open for writing only after the new content exists.
+
+**2026-08-27.** A `re.sub` with `re.S` and a non-greedy `.*?` deleted **131 lines and two
+whole sections** from 1.2. The pattern was meant to remove a short note; its lookahead
+matched a phrase 131 lines further down, and `.*?` cheerfully spanned everything between.
+
+```python
+# what was written                          # what it matched
+r'\n\s+NOTE 2026-08-27:.*?'                # a note inside a SCREENSHOT comment
+r'(?=\n\s+(?:IMAGE-OK-WAS:|Until it))'     # a phrase 131 lines later
+```
+
+**Every existing check passed afterwards.** Links resolved, because the deleted text held
+no unique target. Anchors resolved. The frequency, em-dash, pinning and placeholder
+checkers were all happy. An independent reviewer found it a round later, by noticing that
+the chapter "jumps from the bundle introduction straight into a diagram whose terms are no
+longer defined in visible prose". A reader would have hit the same wall.
+
+So:
+
+- **Prefer an exact `str.replace` with an asserted anchor** over a regex. Nearly every edit
+  in this project is a known-string substitution and does not need one.
+- **If a regex is genuinely needed, do not combine `re.S` with `.*?` and a lookahead.**
+  Bound it: match within a single comment block, or capture and inspect the span first.
+- **Run `python3 build/check-chapter-shrink.py` before committing a scripted edit.** It
+  reports any chapter that lost more than 15 percent of its lines against a git ref, which
+  is what a swallowed section looks like and what ordinary tightening does not.
+- **When you do restore lost text, re-source-check it.** It is old text, not verified text,
+  and the reviewer that found this loss said so explicitly: "do not blindly restore every
+  sentence."
+
