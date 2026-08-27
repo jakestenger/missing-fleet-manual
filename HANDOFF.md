@@ -377,12 +377,22 @@ because what it found changes how to weigh the rest.
   without ordering them, or to say why one is worth testing first on grounds of cost rather than
   frequency, which is a claim you can actually support.
 - **45 references point into chapters that are still outline stubs**, and `check-links.py` passes
-  every one of them because the file exists. "Exact flags are in a.7" reads as a promise and
-  delivers a heading list. `build/check-outline-deferrals.py` lists them; it is advisory rather
-  than a gate, because a forward reference to a planned chapter is legitimate and the fix is to
-  say so rather than to delete the pointer. Four a.7 deferrals were fixed on 2026-08-27 by
-  pointing at `fleetctl package --help` instead; the other 41 are outstanding. **a.4 and a.3 are
-  the most-referenced**, which is a signal about which appendix to write next.
+  every one because the file exists. `build/check-outline-deferrals.py` lists them and now
+  separates the two failures, which are not equally serious:
+
+  - **10 are promises**, naming content that does not exist: "the full action-by-action breakdown
+    for all six roles at both scopes", "every setting, what it defaults to, and what wins when two
+    levels disagree". A reader follows those and finds a heading list.
+  - **19 sit in chapters stamped `verified`**, and the overlap is the finding: **a verified
+    chapter promising content that was never written is a defect in a verified chapter.** Part II
+    is the part this project considers finished, and it is where most of them are.
+
+  A bare forward pointer into a planned chapter is legitimate and should stay. A promise is not:
+  either write the target or stop naming content that does not exist. Four a.7 promises were fixed
+  on 2026-08-27 by pointing at `fleetctl package --help` instead.
+
+  **a.3 and a.4 are the most-referenced by a wide margin**, which is the answer to which appendix
+  to write next, and writing either would clear most of the promises in one go.
 - 12 SCREENSHOT briefs await real console captures. Those are the owner's to take.
 - 1.1's lifecycle diagram needs regenerating; em-dashes are baked into the rendered asset.
 - Apple Business Manager vs ABM terminology is inconsistent across chapters.
