@@ -197,6 +197,11 @@ have caught something on nearly every run.
 | `check-column-names.py` | Advisory | Part VIII prints column inventories for ~20 tables; `check-table-names.py` covered table names and nothing covered columns |
 | `check-absolutes.py` | Advisory | Five defects that were universal claims built from a partial reading |
 | `check-headings.py` | Advisory | Headings asserting more than the paragraph beneath them |
+| `check-em-dashes.py` | Yes | Eleven accumulated in one session in a manual whose STYLE forbids them, which is what a rule with no check behind it looks like |
+| `check-pinned-links.py` | Yes | Sixteen links to `blob/main` in a manual that states what one release does. A moving link looks like a citation and behaves like a guess |
+| `check-shell-placeholders.py` | Yes | `--enroll-secret=<secret>` in the primary macOS install command: unquoted, the shell reads `<` as redirection and it fails before Fleet is contacted. Twelve commands had it |
+| `check-frequency-claims.py` | Advisory | Correcting "X is the cause" to "X is *usually* the cause" reads as a hedge and invents a triage order the source does not supply. Flagged by reviewers in seven chapters |
+| `check-outline-deferrals.py` | Advisory | "The full action-by-action breakdown is in a.4", where a.4 is a stub. `check-links.py` passes because the file exists |
 | `claims.py` | Run by hand | Two chapters contradicting each other while each was internally consistent |
 
 `claims.py` is the odd one and the most useful when writing. It takes a term and prints every
@@ -214,6 +219,18 @@ Its first run found the same setting spelled two ways in three chapters.
 **The pattern worth continuing.** When a defect is found, ask whether its class is detectable. If
 it is, write the check before fixing the instance, and read the canonical values from Fleet's own
 source so the check tracks the release rather than a snapshot.
+
+**One operational hazard, recorded because it cost a file.** Bulk edits in this repository are
+usually done with a throwaway Python script. `io.open(path, "w")` **truncates immediately**, so a
+script shaped like
+
+```python
+io.open(p, "w").write(s.replace(a, b, 1))
+```
+
+destroys the file if anything in the expression raises. That happened to `HANDOFF.md` on
+2026-08-27, from a typo in the replacement variable; git had it, so nothing was lost. Build the
+new text into a variable first, then open and write, and the failure mode disappears.
 
 ### One that did not work, and why it was dropped
 
