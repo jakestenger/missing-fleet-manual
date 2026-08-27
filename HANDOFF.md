@@ -415,7 +415,7 @@ missing-fleet-manual/            (public, git, deploys from main)
 ├── manual/                      78 chapter files, 41 written
 ├── research/section-notes/      citation ledgers, one per chapter
 ├── review/BRIEFING.md           the reviewer's own briefing, written by it
-├── build/                       10 checkers, unwrap.py, claims.py
+├── build/                       14 checkers, unwrap.py, claims.py
 ├── website/                     Docusaurus; root .md files are NOT published
 ├── STYLE.md                     28 sections, non-negotiable
 ├── CONTRIBUTING.md              the review gate and checker provenance
