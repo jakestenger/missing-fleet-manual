@@ -320,11 +320,26 @@ because what it found changes how to weigh the rest.
    Full record at `reviews/2026-08-27/README.md` and `reviews/2026-08-27/confirm2/`. Part I still
    needs its `reviewed_by`/`reviewed_on`, and 1.2 carries a correction recorded only in 8.1's
    ledger.
-4. **Review Part III.** 3.2 through 3.6 were written on 2026-08-27 with ledgers and have had **no
-   independent review at all**. Five reviews are queued at
-   `reviews/2026-08-27/part3/`. Given that 33 of 34 reviewed chapters on this project had material
-   defects, treat these five as unverified regardless of how finished they read. 3.1 and 3.7 were
-   reviewed earlier and are `drafting` on the same bookkeeping gap as Part I.
+4. **Finish reviewing Part III.** 3.2 and 3.3 have been reviewed and corrected; **3.4, 3.5 and
+   3.6 have not been reviewed at all.** Reviews run at `reviews/2026-08-27/part3/`.
+
+   Both completed reviews came back NOT READY **on the chapter's organising claim**, not on
+   details, and both corrections rippled into chapters that were already reviewed:
+
+   - 3.2 said Fleet delivers the agent on ADE and not on manual macOS enrollment. It delivers on
+     both; only ADE has an opt-out. That made the half-enrolled state look ADE-specific in 8.1,
+     8.4 and 8.8 as well.
+   - 3.3 said Windows MDM brings BitLocker enforcement. Enforcement is set in the **Orbit**
+     configuration response with MDM enrollment as a gate, so it never appears in the MDM command
+     queue, and 1.2 had it right all along.
+
+   **The lesson for the remaining three is specific and worth acting on before the reviews land:**
+   take each chapter's organising sentence and check it against Fleet's source directly, not
+   against what a neighbouring chapter says. Doing exactly that to 3.4 before its review found its
+   escrow prerequisites wrong in both directions, and found the same error sitting in 1.2, a
+   chapter already reviewed once.
+
+   3.1 and 3.7 were reviewed earlier and are `drafting` on the same bookkeeping gap as Part I.
 5. **a.4, the roles and permissions matrix.** Highest-demand remaining appendix, and
    `check-crossrefs.py` still reports 2.3's deferral to it as reaching nothing.
 6. **Parts IV through VII**, with review in the loop per chapter. This is the bulk of the
