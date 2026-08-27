@@ -42,7 +42,7 @@ frontmatter block, and a sentence of intent. Do not mistake the file count for p
 | V. Manage devices | 8 | **All stubs** |
 | VI. Automate Fleet | 5 | **All stubs** |
 | VII. Operate Fleet | 6 | **All stubs** |
-| VIII. Troubleshooting | 14 | Written, all 14 reviewed and corrected. Stamped `drafting` |
+| VIII. Troubleshooting | 14 | Written, all 14 reviewed and corrected, **all 14 tag-verified at 4.90.1**. Stamped `drafting` |
 | IX. Appendices | 8 | a.8 partial. **a.1 to a.7 are stubs** |
 
 So: Part II is finished, Parts I and VIII are written and reviewed but not stamped, and roughly
@@ -57,16 +57,23 @@ chapter claims `verified` without all of:
 - `reviewed_by`, `reviewed_on`
 - a notes file at `research/section-notes/<section>-notes.md`
 
-**Parts I and VIII are stuck on the bookkeeping, not the substance.** They have been reviewed and
-corrected; they lack `reviewed_by`/`reviewed_on`, and Part VIII has notes files for only 8.11
-through 8.14. Promoting them is a real task with a real gate, not a formality: adding the fields
-without writing the ledgers would be exactly the overclaim the gate exists to stop.
+**Part I is stuck on the bookkeeping, not the substance.** It has been reviewed and corrected; it
+lacks `reviewed_by`/`reviewed_on`. Promoting it is a real task with a real gate, not a formality:
+adding the fields without writing the ledgers would be exactly the overclaim the gate exists to
+stop.
 
-### The other outstanding item on Part VIII
+**Part VIII now has all fourteen ledgers and all fourteen `reviewed_by`/`reviewed_on` fields, and
+is still deliberately `drafting`.** The reason is on the record in every one of those ledgers: each
+Sol review predates the 2026-08-26 tag sweep that corrected the chapter, so the text as it now
+stands has had a source check and no independent review. Promoting Part VIII means reviewing the
+current text, not stamping the old review. See section 7.
 
-Only 8.11 through 8.14 carry a `verified_against: Fleet 4.90.1` stamp. **8.1 through 8.10 still
-say 4.90.0 with `NOT tag-verified`.** That is accurate rather than stale: their review findings
-were applied, but the chapters were never swept against the tag as a whole. Ten chapters.
+### Part VIII's version debt is closed
+
+All fourteen chapters carry `verified_against: Fleet 4.90.1` and `verified_source: git tag
+fleet-v4.90.1`. 8.1 through 8.10 were swept on 2026-08-26; nine of the ten had material defects,
+and three of those existed only because the check ran at 4.90.1 rather than at the `main` checkout
+the chapters were first verified against. Details in `PROJECT_STATUS.md`.
 
 ---
 
@@ -125,6 +132,7 @@ python3 build/check-headings.py
 python3 build/check-activity-names.py
 python3 build/check-schedule-names.py
 python3 build/check-table-names.py
+python3 build/check-column-names.py
 ```
 
 **9. Unwrap, build, commit, push, confirm the deploy.**
@@ -209,7 +217,14 @@ Worth reading before you write, because these are expensive lessons.
 **Verification runs downstream of belief formation.** By the time you check a citation, your
 inference has already become your belief about what the source says. This is why the independent
 reviewer finds things you cannot: it arrives with no prior belief. Running total across the
-project: **34 chapters reviewed, 33 with material defects.** Assume your chapter has one.
+project: **44 chapters reviewed, 43 with material defects.** Assume your chapter has one.
+
+**Re-verifying at a new tag is not bookkeeping.** The 2026-08-26 sweep of ten already-reviewed,
+already-corrected chapters found defects in nine, and three of those were only visible at the new
+tag: a bug fixed in the patch release had been live and undocumented when the chapter was written,
+so the chapter documented a world that no longer existed and gave the wrong cause for a symptom
+that still occurs. A stamp that says 4.90.0 on a chapter checked against `main` is not a small
+inaccuracy; it is a claim about which release's behaviour is described.
 
 **Cross-chapter contradiction is the dominant defect class, and the most dangerous.** In the last
 session: 8.11 contradicted 8.1 on log ordering and contradicted *itself* three sections later;
@@ -236,16 +251,26 @@ reads as authoritative and is wrong does more damage than prose that is merely t
 
 ## 7. What to do next
 
-In the order I would take them.
+In the order I would take them. Item 1 was done on 2026-08-26 and is left here with its outcome,
+because what it found changes how to weigh the rest.
 
-1. **Re-verify 8.1 through 8.10 at `fleet-v4.90.1`.** Ten chapters whose stamps currently
-   understate them. Cheapest real progress available, and it closes out Part VIII's correctness.
+1. ~~**Re-verify 8.1 through 8.10 at `fleet-v4.90.1`.**~~ **Done 2026-08-26.** Nine of ten had
+   material defects. Three were version drift invisible at the old ref, including a 4.90.0 Apple
+   reconciler bug that silently stopped considering a fixed set of hosts. Ten ledgers written, one
+   new checker, one `unwrap.py` bug that had eaten a code block and passed its own safety check.
 2. **Part VIII structural pass.** The reviewer made the same recommendation for 8.11, 8.12, 8.13
    and 8.14 independently: lead with the incident workflow, move schema and command catalogs
    behind it, stop duplicating 8.5 and 2.5. Deferred four times on purpose, because it is one
-   decision about the part's shape and should be taken once, across the part.
-3. **Promote Parts I and VIII to `verified`** by writing the missing ledgers and adding
-   `reviewed_by`/`reviewed_on`. Do not add the fields without the ledgers.
+   decision about the part's shape and should be taken once, across the part. Two small
+   contradictions surfaced by the sweep want resolving in the same pass: 8.11 restates 8.1's Orbit
+   poll as a flat 30 seconds, and 8.9 calls the Windows queue-cleanup cron undocumented while 8.6
+   names the job.
+3. **Promote Parts I and VIII to `verified`.** Part VIII now has all fourteen ledgers and both
+   review fields, so the remaining gate is real rather than clerical: **every Sol review predates
+   the corrections that chapter now carries.** Promoting means a fresh review of the current text,
+   which is a bigger job than it was before the sweep, and the sweep is exactly why. Part I still
+   needs its `reviewed_by`/`reviewed_on`, and 1.2 carries a correction recorded only in 8.1's
+   ledger.
 4. **a.4, the roles and permissions matrix.** Highest-demand remaining appendix, and
    `check-crossrefs.py` still reports 2.3's deferral to it as reaching nothing.
 5. **Finish Part III** (3.2 to 3.6), then Parts IV through VII, with review in the loop per
@@ -257,6 +282,10 @@ In the order I would take them.
 - 1.1's lifecycle diagram needs regenerating; em-dashes are baked into the rendered asset.
 - Apple Business Manager vs ABM terminology is inconsistent across chapters.
 - `STYLE.md` still contains 20 pre-existing em-dashes, in a file that forbids them.
+- **`further_reading` reaches no reader.** 35 chapters carry it, roughly 70 URLs, and the site has
+  no code referencing the field. §21 permits it on the understanding that "the site can render
+  them separately", which is not true today, so every one of those links fails the airplane test.
+  A website change rather than a content one, and the cheapest reader-facing win on this list.
 
 ---
 
