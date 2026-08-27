@@ -399,19 +399,36 @@ because what it found changes how to weigh the rest.
 
    Full record at `reviews/2026-08-27/README.md`, `confirm/`, `confirm2/` and `confirm3/`.
 
-   **Part I is further from `verified` than its bookkeeping suggests.** It still needs its
-   `reviewed_by`/`reviewed_on`, and 1.2 has taken **five** corrections found while writing Part III,
-   four of them factual: the Linux passphrase prompt is Orbit's rather than Fleet Desktop's, Linux
-   lock and wipe exist as scripts, the Orbit-against-MDM split is about mechanism rather than
-   capability, and what Fleet knows about an iPhone has a wider provenance than the MDM channel.
-   Each is recorded in the relevant Part III ledger and none in 1.2's own. **1.2 needs a fresh
-   review, not a stamp**, and the rest of Part I should be assumed to be in the same state.
+   **Part I is further from `verified` than its bookkeeping suggests, and is now the part to worry
+   about.** It still needs its `reviewed_by`/`reviewed_on`, and that is the least of it: **1.2 took
+   five corrections during this session and 1.1 took one**, every one found while writing or
+   reviewing a Part III chapter rather than by looking at Part I.
 
-4. **Confirming round over Part III.** All five first reviews are back, all NOT READY, and all
-   findings are applied. **Every verdict on record now describes older text**, which is the same
-   gate Part VIII is behind. Run the confirming prompt over 3.2 to 3.6, and **include 3.7**, which
-   was corrected from source and has never been reviewed at current text.
-   Reviews at `reviews/2026-08-27/part3/`.
+   | Chapter | Correction | Found while |
+   |---|---|---|
+   | 1.2 | The Linux passphrase prompt is Orbit's, through `zenity` or `kdialog`, not Fleet Desktop's, and escrow does not require Desktop | writing 3.4 |
+   | 1.2 | Linux lock and wipe exist, as scripts on Premium | applying 3.4's review |
+   | 1.2 | The Orbit-against-MDM split is about mechanism, not capability | applying 3.4's review |
+   | 1.2 | What Fleet *knows* about an iPhone has a wider provenance than the MDM channel | applying 3.5's review |
+   | 1.2 | Fleet Desktop is the one optional component of the bundle | applying 3.7's review |
+   | 1.1 | Same, plus the bundle's contents | applying 3.7's review |
+
+   Not one of those is recorded in 1.1's or 1.2's own ledger, which is itself a defect: the ledgers
+   for Part I no longer describe what those chapters claim. **Part I needs a review round, not a
+   stamp**, and the rest of it should be assumed to be in the same state as 1.2 until one runs.
+   This is task 21.
+
+4. **Part III has had two review rounds and every finding applied.** Five first reviews, five
+   confirming reviews, and a first review of 3.7, which had never had one. All twelve verdicts and
+   their findings are at `reviews/2026-08-27/part3/` and `part3-confirm/`.
+
+   It is in exactly the position Part VIII is: **every chapter was corrected after its last
+   verdict**, so nothing is stampable without one more round. 3.3 is the only chapter whose
+   confirming verdict was READY WITH MINOR CHANGES.
+
+   **What the second round found is the reason to read those files rather than the verdicts.**
+   Almost nothing was left behind from the first round; almost everything was written during the
+   corrections. §6 above has the shapes.
 
 5. **a.4, the roles and permissions matrix.** Highest-demand remaining appendix, and
    `check-crossrefs.py` still reports 2.3's deferral to it as reaching nothing.
