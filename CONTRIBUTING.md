@@ -194,6 +194,7 @@ have caught something on nearly every run.
 | `check-crossrefs.py` | Advisory | "As 2.9 notes, escrowed Linux disk encryption data", where 2.9 said no such thing. Also carries the §8 and eaten-code-span checks |
 | `check-activity-names.py` | Advisory | `user_mfa_requested`, documented in two chapters, exists nowhere in Fleet |
 | `check-schedule-names.py` | Advisory | `software_checksum_migration`, given an interval and a description, exists nowhere in Fleet |
+| `check-column-names.py` | Advisory | Part VIII prints column inventories for ~20 tables; `check-table-names.py` covered table names and nothing covered columns |
 | `check-absolutes.py` | Advisory | Five defects that were universal claims built from a partial reading |
 | `check-headings.py` | Advisory | Headings asserting more than the paragraph beneath them |
 | `claims.py` | Run by hand | Two chapters contradicting each other while each was internally consistent |
@@ -235,3 +236,27 @@ output, which costs more than the single catch is worth. It was reverted rather 
 **So: not every defect class is checkable.** When the honest answer is that a rule would fire on
 correct prose more often than on wrong prose, say so and leave the check unwritten. Note it here
 so nobody spends the afternoon rediscovering it.
+
+### And one that does work, for the reason the other one failed
+
+`check-column-names.py`, written 2026-08-26, verifies column names rather than table names. It
+succeeds where the prose experiment failed, and the difference is worth stating because it is the
+rule for whether the next checker is worth writing.
+
+It never reads prose. It reads only ` ```sql ` fenced blocks, and within them only `alias.column`
+references where the alias is bound by a `FROM` or `JOIN` in the same block. **The binding is what
+removes the ambiguity**: the table is not inferred from the identifier's shape, it is declared two
+lines above. Unaliased columns are ignored on purpose, because attributing them in a multi-table
+query needs real SQL scope analysis and guessing is what generates noise.
+
+Current coverage is 146 distinct table-and-column pairs across 27 tables, from 99 SQL blocks, with
+zero findings on the manual as it stands. Backtested by seeding three plausible wrong columns into
+8.6: all three caught, correct line numbers, no false positives elsewhere.
+
+What it does **not** cover, and what still needs a human: the column inventory *tables* in Part
+VIII's prose, where columns are listed as backticked identifiers in a markdown table rather than
+used in a query. That is the case CONTRIBUTING already says is unfixable by rule.
+
+**The general lesson.** A checker is worth writing when the thing it needs to know is declared in
+the text rather than guessed from it. `FROM upcoming_activities ua` declares it. A backtick in a
+paragraph does not.
