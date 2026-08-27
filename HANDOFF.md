@@ -394,6 +394,22 @@ because what it found changes how to weigh the rest.
 
 ### Backlog
 
+- **Licence claims are the least reliable class of claim in this manual, and there is no check for
+  them.** Part III's confirming reviews found one chapter asserting a capability was Premium and
+  then, forty lines later, asserting a related one was free; both were wrong, in opposite
+  directions. Sweeping the rest found two more: 8.6's schedule table omitted Premium on
+  `send_recovery_lock_commands` and `google_workspace_sync`, and **2.8, a `verified` chapter, called
+  company-owned Android enrollment Premium when nothing in Fleet's Android module checks a licence
+  at all.**
+
+  Each licence gate lives in its own validation, so none is checkable from any other, and a wrong
+  one is expensive in both directions: it either tells a Free deployment it cannot do something it
+  can, or has it plan around a capability it does not have. **Check every new licence claim against
+  the specific validation that enforces it**, and treat "X is Premium" in an existing chapter as
+  unverified until you have found that validation. A checker is not obviously possible here, which
+  is why this is a habit rather than a script.
+
+
 - ~~13 frequency claims rank a cause without a source.~~ **Cleared 2026-08-27** in one pass across
   nine chapters, and `build/check-frequency-claims.py` now reports none. Keep it that way: the
   checker is deliberately narrow, so anything it flags is a real candidate. The fix is almost never
