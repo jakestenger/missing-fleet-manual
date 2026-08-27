@@ -336,27 +336,51 @@ because what it found changes how to weigh the rest.
    chapter that needed one got a short `8.x.0 Start here` routing a symptom to the section that
    answers it. No existing section moved, so no anchor broke. Both contradictions noted here are
    also closed: 8.9 and 8.6 now agree on `cleanup_windows_mdm_command_queue`.
-3. **Promote Parts I and VIII to `verified`.** Part VIII has now had three rounds: a full
-   re-review at the tagged text (eleven of fourteen NOT READY), a confirming round, and a second
-   confirming round over the six still NOT READY. **All fourteen have their findings applied at
-   the current text.**
+3. **Promote Part VIII to `verified`, or decide deliberately not to yet.** This is a judgement
+   call and it is the owner's, so here are the facts rather than a recommendation dressed as one.
 
-   The loop demonstrably terminates. Three chapters reached a clean confirming verdict at text
-   that has not changed since (8.12 `READY`, 8.1 and 8.5 `READY WITH MINOR CHANGES`, applied), and
-   8.2 went NOT READY → READY WITH MINOR CHANGES on its second confirm, with those minors applied.
+   **Part VIII has had four review rounds.** A full re-review at the tagged text (11 of 14 NOT
+   READY), a confirming round, a second over the six still failing, and a third over the six
+   corrected after that. **Every finding from every round is applied.** The loop demonstrably
+   terminates: 8.9 carried more findings than any chapter in the part, was NOT READY three rounds
+   running, and came back on the fourth with everything resolved and one leftover positional word.
 
-   **The gate is the six chapters corrected since their last verdict: 8.2, 8.4, 8.8, 8.9, 8.11,
-   8.13.** One more confirming round over those six, at roughly 190k tokens each, is what stands
-   between here and a defensible stamp. Everything else is done.
-   Full record at `reviews/2026-08-27/README.md` and `reviews/2026-08-27/confirm2/`.
+   **What blocks a clean stamp is that no chapter's exact current text has been reviewed**, and
+   that is true of all fourteen rather than of a stubborn few. The cross-cutting sweeps done on
+   2026-08-27, pinning repository links, quoting shell placeholders, linking the glossary, and
+   clearing frequency claims, touched almost every chapter after its verdict. So did the
+   corrections that Part III's reviews forced back into Part VIII.
 
-   **Part I is further from `verified` than the bookkeeping suggests.** It still needs its
-   `reviewed_by`/`reviewed_on`, and 1.2 has now taken **five** corrections found while writing
-   Part III, four of them factual: the Linux passphrase prompt is Orbit's rather than Fleet
-   Desktop's, Linux lock and wipe exist as scripts, the Orbit-against-MDM split is about mechanism
-   rather than capability, and what Fleet knows about an iPhone has a wider provenance than the MDM
-   channel. Each is recorded in the relevant Part III ledger and none in 1.2's own. **1.2 needs a
-   fresh review, not a stamp**, and the rest of Part I should be assumed to be in the same state.
+   The chapters differ in **what kind** of change landed after their last verdict, which is what
+   the decision should turn on:
+
+   | State | Chapters | What changed since the verdict |
+   |---|---|---|
+   | Verdict was clean and nothing has changed since | **8.5** | Nothing. Its confirming minors were applied in the same commit |
+   | Verdict was READY WITH MINOR, those exact minors applied, nothing else | **8.9, 8.13** | One word and one sentence respectively, both named in the verdict as the acceptance condition |
+   | Clean verdict, then editorial-only sweeps | **8.3, 8.7, 8.12, 8.14** | Link pinning, glossary links, frequency-claim rewording |
+   | Clean verdict, then a **factual** correction from elsewhere | **8.1, 8.2, 8.6, 8.10** | Part III's reviews found real errors in these: the half-enrolled framing, `secret.txt`, `Failed profile`, and two Android diagnostics |
+   | Last verdict was NOT READY, findings applied since | **8.4, 8.8, 8.11** | Substantive. These are the ones a reviewer has genuinely not seen |
+
+   **The defensible reading:** 8.5, 8.9 and 8.13 meet the standard now. 8.3, 8.7, 8.12 and 8.14
+   meet it unless you hold that any edit invalidates a verdict, which the project has not held
+   before. 8.1, 8.2, 8.6 and 8.10 took real corrections and should be re-read at minimum. 8.4, 8.8
+   and 8.11 need a fourth round.
+
+   **The cheap option** is a fourth round over the seven in the bottom two rows, which is half the
+   cost of a full round. **The expensive and complete option** is one more round over all fourteen,
+   which is the only thing that produces "every chapter reviewed at the text that shipped".
+
+   Full record at `reviews/2026-08-27/README.md`, `confirm/`, `confirm2/` and `confirm3/`.
+
+   **Part I is further from `verified` than its bookkeeping suggests.** It still needs its
+   `reviewed_by`/`reviewed_on`, and 1.2 has taken **five** corrections found while writing Part III,
+   four of them factual: the Linux passphrase prompt is Orbit's rather than Fleet Desktop's, Linux
+   lock and wipe exist as scripts, the Orbit-against-MDM split is about mechanism rather than
+   capability, and what Fleet knows about an iPhone has a wider provenance than the MDM channel.
+   Each is recorded in the relevant Part III ledger and none in 1.2's own. **1.2 needs a fresh
+   review, not a stamp**, and the rest of Part I should be assumed to be in the same state.
+
 4. **Confirming round over Part III.** All five first reviews are back, all NOT READY, and all
    findings are applied. **Every verdict on record now describes older text**, which is the same
    gate Part VIII is behind. Run the confirming prompt over 3.2 to 3.6, and **include 3.7**, which
