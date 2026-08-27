@@ -74,3 +74,8 @@ jobs:
       # manual's primary macOS installation command.
       - name: Check fenced shell commands have no unquoted placeholders
         run: python3 build/check-shell-placeholders.py
+
+      # STYLE forbids em-dashes. Eleven accumulated in one long session, which
+      # is what a rule with no check behind it looks like.
+      - name: Check for em-dashes
+        run: python3 build/check-em-dashes.py
