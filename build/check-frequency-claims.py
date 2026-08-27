@@ -29,7 +29,11 @@ PATTERNS = [
     rf"\b{CAUSE}\b[^.]{{0,60}}\b(?:usually|typically|normally|generally|most often|"
     rf"nearly always|almost always|in most cases|more often than not|rarely|seldom)\b",
     r"\bthe usual (?:cause|causes|reason|reasons|suspect|suspects)\b",
-    r"\bthe most common (?:cause|reason|failure|misdiagnosis|shape)\b",
+    # "the most common X" ranks whatever X is. 3.2 got past the narrower form with
+    # 'the most common "it did not work"', which ranks a symptom rather than a cause and
+    # is the same invented ordering.
+    r"\bthe most common\b",
+    r"\bis (?:usually|typically|normally) about\b",
 ]
 RX = re.compile("|".join(PATTERNS), re.I)
 
