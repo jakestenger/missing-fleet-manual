@@ -1,6 +1,6 @@
 # Handoff: The Missing Fleet Manual
 
-Written 2026-08-26. Current as of commit `f620ec8`.
+Written 2026-08-26, updated 2026-08-27.
 
 Read this, then `CONTRIBUTING.md`, then `STYLE.md`. This file says where the project is and how
 the work is done. Those two say what the work has to satisfy.
@@ -42,7 +42,7 @@ frontmatter block, and a sentence of intent. Do not mistake the file count for p
 | V. Manage devices | 8 | **All stubs** |
 | VI. Automate Fleet | 5 | **All stubs** |
 | VII. Operate Fleet | 6 | **All stubs** |
-| VIII. Troubleshooting | 14 | Written, all 14 reviewed and corrected, **all 14 tag-verified at 4.90.1**. Stamped `drafting` |
+| VIII. Troubleshooting | 14 | Written, tag-verified at 4.90.1, restructured, and re-reviewed at current text. 11 of 14 verdicts were NOT READY and are corrected but unconfirmed. Stamped `drafting` |
 | IX. Appendices | 8 | a.8 partial. **a.1 to a.7 are stubs** |
 
 So: Part II is finished, Parts I and VIII are written and reviewed but not stamped, and roughly
@@ -62,18 +62,22 @@ lacks `reviewed_by`/`reviewed_on`. Promoting it is a real task with a real gate,
 adding the fields without writing the ledgers would be exactly the overclaim the gate exists to
 stop.
 
-**Part VIII now has all fourteen ledgers and all fourteen `reviewed_by`/`reviewed_on` fields, and
-is still deliberately `drafting`.** The reason is on the record in every one of those ledgers: each
-Sol review predates the 2026-08-26 tag sweep that corrected the chapter, so the text as it now
-stands has had a source check and no independent review. Promoting Part VIII means reviewing the
-current text, not stamping the old review. See section 7.
+**Part VIII has all fourteen ledgers and both review fields, has been re-reviewed in full at the
+corrected text, and is still deliberately `drafting`.** On 2026-08-27 Sol was asked directly
+whether each chapter is finished to this standard. Eleven of fourteen said NOT READY, three said
+READY WITH MINOR CHANGES, and 8.14 was still running. Findings are applied for thirteen of them.
+
+The remaining gate is one specific thing, and it is not clerical: **no chapter has been reviewed
+since its corrections were applied.** Every verdict on record describes older text. See section 7
+and `reviews/2026-08-27/README.md`.
 
 ### Part VIII's version debt is closed
 
 All fourteen chapters carry `verified_against: Fleet 4.90.1` and `verified_source: git tag
 fleet-v4.90.1`. 8.1 through 8.10 were swept on 2026-08-26; nine of the ten had material defects,
 and three of those existed only because the check ran at 4.90.1 rather than at the `main` checkout
-the chapters were first verified against. Details in `PROJECT_STATUS.md`.
+the chapters were first verified against. A further round on 2026-08-27 found more, including seven
+errors in prose written during that sweep. Details in `PROJECT_STATUS.md`.
 
 ---
 
@@ -219,6 +223,11 @@ inference has already become your belief about what the source says. This is why
 reviewer finds things you cannot: it arrives with no prior belief. Running total across the
 project: **44 chapters reviewed, 43 with material defects.** Assume your chapter has one.
 
+**A review round is not a formality either, and "applied" is a claim worth checking.** The
+2026-08-25 index said 8.1 through 8.10 were processed and applied. Spot-checking that before
+spending quota found it was not: a corrected string had never made it into 8.5. Check the
+instance, not the index.
+
 **Re-verifying at a new tag is not bookkeeping.** The 2026-08-26 sweep of ten already-reviewed,
 already-corrected chapters found defects in nine, and three of those were only visible at the new
 tag: a bug fixed in the patch release had been live and undocumented when the chapter was written,
@@ -265,12 +274,16 @@ because what it found changes how to weigh the rest.
    contradictions surfaced by the sweep want resolving in the same pass: 8.11 restates 8.1's Orbit
    poll as a flat 30 seconds, and 8.9 calls the Windows queue-cleanup cron undocumented while 8.6
    names the job.
-3. **Promote Parts I and VIII to `verified`.** Part VIII now has all fourteen ledgers and both
-   review fields, so the remaining gate is real rather than clerical: **every Sol review predates
-   the corrections that chapter now carries.** Promoting means a fresh review of the current text,
-   which is a bigger job than it was before the sweep, and the sweep is exactly why. Part I still
-   needs its `reviewed_by`/`reviewed_on`, and 1.2 carries a correction recorded only in 8.1's
-   ledger.
+3. **Promote Parts I and VIII to `verified`.** Part VIII was re-reviewed in full on 2026-08-27,
+   at the corrected text, with Sol asked directly whether each chapter is finished to the
+   `verified` standard. **Eleven of fourteen came back NOT READY**, three came back READY WITH
+   MINOR CHANGES, and 8.14's review was still running. Findings are applied for thirteen.
+
+   The gate is now one specific thing: **no chapter has been re-reviewed since its corrections
+   were applied**, so every verdict on record describes older text. A confirming round costs
+   roughly 2.6M tokens of Pro quota and is the only thing between here and a defensible stamp.
+   Full record at `reviews/2026-08-27/README.md`. Part I still needs its
+   `reviewed_by`/`reviewed_on`, and 1.2 carries a correction recorded only in 8.1's ledger.
 4. **a.4, the roles and permissions matrix.** Highest-demand remaining appendix, and
    `check-crossrefs.py` still reports 2.3's deferral to it as reaching nothing.
 5. **Finish Part III** (3.2 to 3.6), then Parts IV through VII, with review in the loop per
