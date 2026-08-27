@@ -1014,6 +1014,26 @@ write the paragraph as ordinary prose.
 not a licence to fragment explanation into bullets. The de-tabling pass was about data that
 should have been prose; a catalogue with a stated count is a list.
 
+### The same discipline applies to a stated path
+
+**Added 2026-08-27, after one table row was wrong in three different ways across three review
+rounds.**
+
+8.2's Orbit-root inventory gave the osqueryd binary as `bin/osqueryd/<os>/<channel>/osqueryd`.
+That path exists on no platform. Corrected once, it still said "the last two segments differ by
+platform" when the platform token itself differs. Corrected again, it omitted the ARM64 variants,
+so two of the five real paths were unaccounted for.
+
+The failure is not carelessness about osqueryd. **A path in a table reads as a fact and is
+actually a template**, and a template is wrong until every variable in it is enumerated. The
+reader cannot tell which parts are literal, so a path with an unstated variable sends them looking
+for a directory that is not there, in the middle of whatever went wrong.
+
+**So: if a path contains a placeholder, enumerate every value it takes, or give the real paths
+instead of the template.** The same goes for a command with a platform-dependent flag and a table
+name with a suffix. If the list is too long to enumerate, that is a signal the table cell is the
+wrong home for it.
+
 ## 27. What a citation ledger has to separate
 
 **Written 2026-08-25, after an external review found a material defect in every one of the twelve
