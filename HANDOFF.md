@@ -300,6 +300,32 @@ Fleet's source directly.** Not against a neighbouring chapter, not against the i
 plausible. Doing exactly that to 3.4 and 3.6 before their reviews found a wrong claim in each, and in
 3.4's case the same wrong claim sitting in 1.2.
 
+**Correcting a chapter is the most reliable way to introduce the next defect in it.** This is the
+strongest evidence the project has produced, and it is not the same thing as half-application. Across
+Part VIII's four review rounds and Part III's two, **the dominant remaining finding at every stage
+after the first was introduced by the previous round's correction.** Not left behind: written.
+
+The shape is consistent and recognisable:
+
+| The correction | What it became | Where |
+|---|---|---|
+| A wrong universal | The opposite universal | 3.2 "Fleet installs on every enrollment"; 3.4 "settled when the image is built" |
+| A wrong universal | A frequency claim | 8.4 "usually permissions"; 3.6 "almost everything Fleet knows" |
+| A missing caveat | A new absolute nearby | 8.8's DDM bypass added above a sentence denying it |
+| A new section | A sentence contradicting the section it introduces | 8.13, three rounds running |
+
+**Why it happens is worth understanding, because it predicts where to look.** A correction is written
+with the finding in hand and the rest of the chapter out of mind. The new sentence is checked against
+the source and not against its neighbours, and the reviewer's finding gives a false sense that this
+passage is now the settled one. A hedge feels safer than an absolute, so "X is the cause" becomes "X
+is usually the cause", which is a *new* claim about frequency that the source almost never supports.
+
+**The countermeasure is to re-read the whole chapter after applying, as if reviewing it fresh, rather
+than reading the diff.** The diff is exactly the view that hides this. And before writing a
+replacement sentence, ask what it now asserts that the old one did not: a proportion, a ranking, an
+exhaustive list, a direction. If the source does not establish that new thing, say what the reading
+is *consistent with* instead.
+
 **Half-applied corrections are the project's signature defect, across four sessions now.** Not
 wrong facts: every finding was applied correctly at the passage it cited. What was left behind was
 the same claim in a table two sections up, in a summary paragraph, in a start-here row. That is a
