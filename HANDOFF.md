@@ -178,6 +178,35 @@ reviewer and second opinion and myself as the final arbiter."*
 
 Reviews run through ChatGPT's Codex CLI, invoked directly, with no human relaying anything.
 
+### How many rounds a chapter gets
+
+**Set by the owner on 2026-08-27, after Part I failed two full rounds and Part VIII four.**
+
+> Keep running rounds until a chapter comes back clean or until it hits 5 rounds, then cap it for
+> now and keep it in `drafting`. We'll run another full review again at the end of completing the
+> initial draft of every chapter in a part.
+
+So the rule is: **clean verdict, or five rounds, whichever comes first.** A capped chapter stays at
+`drafting` and is not a failure; it is a chapter whose remaining defects cost more to find than the
+next unwritten chapter costs to draft. Record the cap in the chapter's ledger with the round count
+and the last verdict, so a later reader knows the difference between *not reviewed* and *reviewed
+five times and still imperfect*.
+
+**"Clean" means READY, or READY WITH MINOR CHANGES where the minors are applied and nothing else
+has changed since.** That second clause is what has blocked every stamp so far: chapters keep
+taking corrections from a neighbour's review after their own verdict.
+
+The point of the cap is that this loop does not converge to zero, and the evidence is now
+substantial. Round three of 1.2 still produced eight items. What changed was their **character**:
+rounds one and two found fabricated claims, round three found mostly *propagation* failures, the
+same claim surviving in a table or a neighbouring chapter after the prose was fixed. That class is
+cheaper to attack with `claims.py` and a grep than with another review, which is a large part of
+why five is a sensible ceiling rather than an arbitrary one.
+
+The full-review-per-part at the end of drafting is the real safety net. A part reviewed once its
+chapters all exist gets something no per-chapter round can give: reviewers who can see every
+cross-reference land somewhere real.
+
 ```sh
 /Applications/ChatGPT.app/Contents/Resources/codex exec \
   -m gpt-5.6-sol \
