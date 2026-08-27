@@ -240,7 +240,7 @@ Worth reading before you write, because these are expensive lessons.
 **Verification runs downstream of belief formation.** By the time you check a citation, your
 inference has already become your belief about what the source says. This is why the independent
 reviewer finds things you cannot: it arrives with no prior belief. Running total across the
-project: **50 chapters reviewed, 49 with material defects.** Part I contributed six for six on
+project: **56 chapters reviewed, 55 with material defects.** Part I contributed six for six on
 2026-08-27, on the chapters the rest of the book inherits from. Assume your chapter has one.
 
 **A review round is not a formality either, and "applied" is a claim worth checking.** The
@@ -496,8 +496,31 @@ because what it found changes how to weigh the rest.
    release, or your edition, or an unmet prerequisite, and earlier drafts assumed the first by
    default. That framing is worth applying anywhere the manual says a platform cannot do something.
 
-   Full record at `reviews/2026-08-27/part1/`. This is task 21, now complete; the second round is
-   task 25.
+   **The second round returned NOT READY on all six again**, at `part1b/`, and this is the single
+   most useful number the project has produced. Round one's findings were almost all confirmed
+   resolved. What failed the chapters a second time was **the corrections themselves**: seven new
+   defects in 1.2, seven in 1.3, eight in 1.5, eight in 1.6, six in 1.4, seven in 1.1. The reviewer
+   named the shapes without being told them, and they are the four already tabulated above.
+
+   Some of the worst were operationally dangerous rather than merely wrong. 1.2 gained a table row
+   telling readers to pin osquery by naming only the `osqueryd` key, which silently moves Orbit and
+   Desktop to `stable`. 1.3 said an exclusion withholds an item from everybody until hosts report,
+   when the guard is evaluated **per host**, so a rollout stalls raggedly rather than uniformly, and
+   said software is uninstalled when a host leaves scope, which it is not. 1.6 conflated Redis being
+   unreachable with Redis losing what it held, across three passages.
+
+   **Three of Part I's images were found asserting claims the prose had withdrawn**, which nothing
+   checked for. `build/check-image-regeneration.py` now exists, and an `IMAGE-REGENERATE` marker
+   blocks a `verified` stamp. An accepted image is accepted against the prose as it stood.
+
+   **Eight Part II chapters were demoted from `verified` to `drafting`**, having taken factual
+   corrections today from the Part I and Part III work. The clearest case: 2.2, whose whole subject
+   is identity, stated that SCIM deprovisioning does not require Premium. It does, and Fleet only
+   registers the SCIM routes when the server starts with a Premium licence.
+
+   Full record at `reviews/2026-08-27/part1/` and `part1b/`. Tasks 21 and 25, both complete. A third
+   round is the open question, and the honest expectation from two data points is that it will find
+   fewer defects but not none.
 
 4. **Part III has had two review rounds and every finding applied.** Five first reviews, five
    confirming reviews, and a first review of 3.7, which had never had one. All twelve verdicts and
