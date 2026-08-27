@@ -120,7 +120,27 @@ It renders as nothing, and it is the only record of what the picture is meant to
 
 ```sh
 grep -rn "IMAGE-REDO:\|IMAGE-TODO:" manual/     # what still needs artwork
+python3 build/check-image-redo.py                # and what an IMAGE-REDO is blocking
 ```
+
+**An `IMAGE-OK` is accepted against the prose as it stood, and a correction can invalidate it.**
+This is not hypothetical. On 2026-08-27 three Part I diagrams were found asserting claims their
+chapters had withdrawn hours earlier: the five-channel picture still captioned "They fail
+independently" with a cadence of "every 10 to 30 seconds", the access-gates picture still labelling
+scope "which devices?" and drawing the interface as an authorization gate, and the service state
+model still summarising Redis as "loss costs a retry". Every prose checker passed the whole time,
+because none of them can read a `.webp`.
+
+So **when a correction touches something a picture shows, change the marker to `IMAGE-REDO:` in the
+same commit**, write the `WHY:` line saying what the picture now asserts that the prose does not,
+and correct the `PROMPT:` block while the reason is fresh. `build/check-image-redo.py` makes an
+outstanding `IMAGE-REDO` block a `verified` stamp and rejects one with no `WHY:` line.
+
+**Diagrams are the independent reviewer's to write, screenshots are the owner's.** The prompt for a
+diagram gets the same treatment as prose: drafted against the chapter as it currently reads,
+verified at the tag, and checked for the claims it makes. `scratchpad/imageprompts.sh` is the shape
+of that request. Do not hand-edit a prompt and consider it done; a hand-edited prompt is a new claim
+like any other correction, and this project's whole record says those need checking.
 
 Use the Fleet brand palette, in hex, and Cloud City for illustration. Both are in
 `STYLE.md` §13.
