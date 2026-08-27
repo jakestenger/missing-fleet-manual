@@ -9,6 +9,10 @@ QUOTE  = re.compile(r'^\s*>')
 INDENT = re.compile(r'^ {4,}\S')          # indented code block
 HARDBR = re.compile(r'\S {2,}$')          # trailing double space = hard break
 
+def quote_body(ln):
+    """The content of a blockquote line, with its '>' markers removed."""
+    return re.sub(r'^\s*>+\s?', '', ln)
+
 def unwrap(text):
     lines = text.split('\n')
     out, i, n = [], 0, len(lines)
@@ -64,8 +68,23 @@ def unwrap(text):
         if m:                                     # new list item
             flush(); prefix = m.group(0); buf = [ln[len(m.group(0)):]]; i += 1; continue
 
+        if QUOTE.match(ln) and FENCE.match(quote_body(ln)):
+            # A code fence inside a blockquote. FENCE.match(ln) above misses it, because the
+            # line starts with '>', so without this branch the fence and its contents fall
+            # through to the blockquote branch and get joined into one unrunnable line. That
+            # happened to 8.1's cron_stats query and shipped, because sig() strips '>' markers
+            # and so compared the wreckage equal to the original.
+            flush()
+            close = FENCE.match(quote_body(ln)).group(1)
+            out.append(ln); i += 1
+            while i < n:
+                out.append(lines[i])
+                if quote_body(lines[i]).strip().startswith(close): i += 1; break
+                i += 1
+            continue
+
         if QUOTE.match(ln):                       # blockquote
-            body = re.sub(r'^\s*>\s?', '', ln)
+            body = quote_body(ln)
             if not body.strip():                  # '>' alone separates quote paragraphs
                 flush(); out.append(ln); i += 1; continue
             if prefix.strip().startswith('>'):
