@@ -370,12 +370,12 @@ because what it found changes how to weigh the rest.
 
 ### Backlog
 
-- **13 frequency claims rank a cause without a source.** `build/check-frequency-claims.py` lists
-  them. This is the defect class that has survived the most review rounds: correcting "X is the
-  cause" to "X is *usually* the cause" reads as a hedge and is a new claim the tag rarely
-  establishes, and it silently invents a triage order. The checker is deliberately narrow, so
-  treat all 13 as real candidates rather than noise, and do them in one pass rather than the few
-  that happen to be in the chapter you are editing.
+- ~~13 frequency claims rank a cause without a source.~~ **Cleared 2026-08-27** in one pass across
+  nine chapters, and `build/check-frequency-claims.py` now reports none. Keep it that way: the
+  checker is deliberately narrow, so anything it flags is a real candidate. The fix is almost never
+  a weaker hedge. It is to say what the reading is *consistent with*, or to name the candidates
+  without ordering them, or to say why one is worth testing first on grounds of cost rather than
+  frequency, which is a claim you can actually support.
 - **45 references point into chapters that are still outline stubs**, and `check-links.py` passes
   every one of them because the file exists. "Exact flags are in a.7" reads as a promise and
   delivers a heading list. `build/check-outline-deferrals.py` lists them; it is advisory rather
