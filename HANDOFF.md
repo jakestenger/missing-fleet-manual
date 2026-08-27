@@ -371,8 +371,11 @@ readers to scope a profile or installer to a one-host label, in a chapter whose 
 ships a blank licence key; and 1.6 presented a fallback table for three artifact types that Free
 cannot create at all.
 
-A licence gate presents as an absence rather than as an error, which is why it is guessed at rather
-than checked. **Check every licence claim against its own validation in the source. There is no
+**One caveat on that, added after 1.1's second review corrected me on it.** The validators are
+mostly explicit: they return a licence error rather than failing obscurely, so a licence gate is
+usually cheap to confirm by trying the operation. What makes these claims unreliable is not that
+Fleet hides them, it is that the manual asserts them from memory of how a product this shape
+*usually* gates things instead of reading the validation. **Check every licence claim against its own validation in the source. There is no
 single rule to infer from: Fleet gates feature by feature, and scope by scope within a feature.**
 Two of the seven were *omissions* rather than assertions, which is the harder kind: there is no
 sentence to check, so the only way to find them is to ask, of every capability a passage tells a
