@@ -193,7 +193,7 @@ These are not preferences.
   only `fleet-public` is in scope.
 - **No commits to any Fleet repository and nothing touching Fleet's AWS.** Findings about Fleet
   get recorded in the manual's own notes. Six Fleet documentation bugs have been found and **none
-  filed** — that is the owner's call, not yours.
+  filed**. That is the owner's call, not yours.
 - **Host identifiers** (serial numbers, UUIDs, host IDs) travel on a private channel and are never
   put in a public repository. This repo is public.
 - **`op` CLI** is a service account limited to the vaults "Claude Code" and "Home Network".
