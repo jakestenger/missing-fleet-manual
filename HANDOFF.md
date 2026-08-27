@@ -103,8 +103,11 @@ chapter contradicts it. Eight of the fourteen findings in the last session were 
 **3. Verify every product claim against the tag**, in `~/Source/Fleet/fleet-public` at
 `fleet-v4.90.1` (commit `dd0200f062`). Not against memory, not against fleetdm.com, and not
 against `main`. Fleet's published documentation is wrong often enough to matter: six documentation
-bugs found so far, including a config default documented as `1h` that the server registers as
-`2m`, and an audit-log reference that omits 34 of 191 activity types.
+bugs found so far, including three separate settings where the generated reference disagrees with
+what the server registers: a default documented as `1h` that registers as `2m`, an Android batch
+size documented as 1,000 that registers as 100, and `app_enable_report_stats`, which the server
+does not bind at all. **Read configuration defaults out of `config.go`, never out of the
+reference.**
 
 **4. Write the chapter.** `STYLE.md` is 28 sections and non-negotiable. The ones most often
 violated: no em-dashes; never cite a Fleet source file in prose (§8); if you state a count, make
@@ -119,7 +122,13 @@ against the book, not only against itself*.
 
 **6. Send it for independent review.** See section 4.
 
-**7. Apply the review, then verify the reviewer.** The reviewer is right often but not always.
+**7. Apply the review, then verify the reviewer, then run `claims.py` again.** The second `claims.py`
+pass is not optional and it is new: on 2026-08-27, correcting three chapters generated three fresh
+cross-chapter contradictions, because a fix that is right for one chapter contradicts a neighbour
+that still says the old thing. `claims.py` found all three in seconds. Run it on every term you
+changed, not only on the terms you were about to write about.
+
+The reviewer is right often but not always.
 In the last session it correctly caught an inverted conclusion in 8.11 and missed four timing
 errors in the same table; it also recommended deleting an `[!internal]` callout convention it had
 no way to know was manual-wide. Check its source citations. Record what you rejected and why, in
@@ -276,12 +285,17 @@ because what it found changes how to weigh the rest.
    names the job.
 3. **Promote Parts I and VIII to `verified`.** Part VIII was re-reviewed in full on 2026-08-27,
    at the corrected text, with Sol asked directly whether each chapter is finished to the
-   `verified` standard. **Eleven of fourteen came back NOT READY**, three came back READY WITH
-   MINOR CHANGES, and 8.14's review was still running. Findings are applied for thirteen.
+   `verified` standard. **Eleven of fourteen came back NOT READY.** All fourteen now have their
+   findings applied.
 
-   The gate is now one specific thing: **no chapter has been re-reviewed since its corrections
-   were applied**, so every verdict on record describes older text. A confirming round costs
-   roughly 2.6M tokens of Pro quota and is the only thing between here and a defensible stamp.
+   A confirming round then ran over the three closest chapters, and all three came back with
+   **every prior finding resolved**: 8.12 `READY`, 8.1 and 8.5 `READY WITH MINOR CHANGES` with one
+   or two small items each, since applied. So the loop terminates and the verdicts measured
+   remaining work, not divergence.
+
+   The gate is now one specific thing: **the other eleven have not been re-reviewed since their
+   corrections.** That round costs roughly 2.1M tokens of Pro quota and is the only thing between
+   here and a defensible stamp.
    Full record at `reviews/2026-08-27/README.md`. Part I still needs its
    `reviewed_by`/`reviewed_on`, and 1.2 carries a correction recorded only in 8.1's ledger.
 4. **a.4, the roles and permissions matrix.** Highest-demand remaining appendix, and
