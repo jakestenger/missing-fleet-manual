@@ -68,6 +68,14 @@ def unwrap(text):
         if m:                                     # new list item
             flush(); prefix = m.group(0); buf = [ln[len(m.group(0)):]]; i += 1; continue
 
+        if QUOTE.match(ln) and (TABLE.match(quote_body(ln)) or HEAD.match(quote_body(ln))):
+            # A table row or heading inside a blockquote. Same root cause as the fence case
+            # below: the structural regexes are anchored at start of line and a quoted line
+            # starts with '>', so without this branch every row of a quoted table is joined
+            # into one line and stops rendering as a table. Found in 8.6 by review on
+            # 2026-08-27, one day after the same bug was found and fixed for fences alone.
+            flush(); out.append(ln); i += 1; continue
+
         if QUOTE.match(ln) and FENCE.match(quote_body(ln)):
             # A code fence inside a blockquote. FENCE.match(ln) above misses it, because the
             # line starts with '>', so without this branch the fence and its contents fall
