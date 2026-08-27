@@ -14,11 +14,23 @@ import re, sys, pathlib
 MANUAL, NOTES = pathlib.Path("manual"), pathlib.Path("research/section-notes")
 problems = []
 
+# The ladder has exactly three rungs. A section reached `status: written` once, which is not a
+# rung, so it sat outside every check here: it claimed nothing this file tests and nothing the
+# ladder means. Anything that is not one of these three is a typo or an invention, and both
+# are worth failing on.
+LADDER = {"outline", "drafting", "verified"}
+offladder = []
+
 for path in sorted(MANUAL.rglob("*.md")):
     head = path.read_text().split("---")
     if len(head) < 3:
         continue
     fm = head[1]
+    m = re.search(r"^status:\s*(\S+)\s*$", fm, re.M)
+    if not m:
+        offladder.append((path, "no status field"))
+    elif m.group(1) not in LADDER:
+        offladder.append((path, m.group(1)))
     if not re.search(r"^status:\s*verified\s*$", fm, re.M):
         continue
     def has(field):
@@ -36,6 +48,13 @@ for path in sorted(MANUAL.rglob("*.md")):
     if missing:
         problems.append((path, missing))
 
+if offladder:
+    print(f"{len(offladder)} section(s) with a status outside the ladder "
+          "(outline, drafting, verified):\n")
+    for path, got in offladder:
+        print(f"  {path}: {got}")
+    print()
+
 if problems:
     print(f"{len(problems)} section(s) stamped verified without the evidence:\n")
     for path, missing in problems:
@@ -43,6 +62,9 @@ if problems:
         for m in missing:
             print(f"    missing: {m}")
         print()
+
+if problems or offladder:
     sys.exit(1)
-print("verified stamps: all backed by a source check and a review pass")
+print("verified stamps: all backed by a source check and a review pass; "
+      "every status is on the ladder")
 sys.exit(0)
