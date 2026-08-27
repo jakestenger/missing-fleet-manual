@@ -79,3 +79,9 @@ jobs:
       # is what a rule with no check behind it looks like.
       - name: Check for em-dashes
         run: python3 build/check-em-dashes.py
+
+      # Advisory, like check-crossrefs. Prints frequency claims that rank causes,
+      # which is what a corrected universal turns into and which the source
+      # almost never establishes.
+      - name: List unsourced frequency claims
+        run: python3 build/check-frequency-claims.py
