@@ -330,8 +330,15 @@ because what it found changes how to weigh the rest.
 6. **Parts IV through VII**, with review in the loop per chapter. This is the bulk of the
    remaining book: 26 chapters, none started.
 
-### Backlog, unchanged
+### Backlog
 
+- **45 references point into chapters that are still outline stubs**, and `check-links.py` passes
+  every one of them because the file exists. "Exact flags are in a.7" reads as a promise and
+  delivers a heading list. `build/check-outline-deferrals.py` lists them; it is advisory rather
+  than a gate, because a forward reference to a planned chapter is legitimate and the fix is to
+  say so rather than to delete the pointer. Four a.7 deferrals were fixed on 2026-08-27 by
+  pointing at `fleetctl package --help` instead; the other 41 are outstanding. **a.4 and a.3 are
+  the most-referenced**, which is a signal about which appendix to write next.
 - 12 SCREENSHOT briefs await real console captures. Those are the owner's to take.
 - 1.1's lifecycle diagram needs regenerating; em-dashes are baked into the rendered asset.
 - Apple Business Manager vs ABM terminology is inconsistent across chapters.
