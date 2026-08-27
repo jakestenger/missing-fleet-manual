@@ -29,24 +29,24 @@ chapter is long enough.
 
 ## 2. Where the work actually stands
 
-**36 chapters written, 42 still outline stubs.** The stubs are 50 to 90 words each: a title, a
+**41 chapters written, 33 still outline stubs.** The stubs are 50 to 90 words each: a title, a
 frontmatter block, and a sentence of intent. Do not mistake the file count for progress.
 
 | Part | Chapters | State |
 |---|---|---|
-| 0. Introduction | 1 | Written |
+| 0. Introduction | 1 | Written. Stamped `drafting` |
 | I. Foundations | 6 | Written, reviewed, corrected. Stamped `drafting` |
 | II. Administer and deploy | 12 | **Complete. All 12 `verified`** |
-| III. Connect devices | 7 | 3.1 and 3.7 written and reviewed. **3.2 to 3.6 are stubs** |
+| III. Connect devices | 7 | **All 7 written.** 3.1 and 3.7 reviewed; 3.2 to 3.6 written 2026-08-27 with ledgers and **no independent review yet**. All `drafting` |
 | IV. Know your devices | 7 | **All stubs** |
 | V. Manage devices | 8 | **All stubs** |
 | VI. Automate Fleet | 5 | **All stubs** |
 | VII. Operate Fleet | 6 | **All stubs** |
-| VIII. Troubleshooting | 14 | Written, tag-verified at 4.90.1, restructured, and re-reviewed at current text. 11 of 14 verdicts were NOT READY and are corrected but unconfirmed. Stamped `drafting` |
-| IX. Appendices | 8 | a.8 partial. **a.1 to a.7 are stubs** |
+| VIII. Troubleshooting | 14 | Written, tag-verified at 4.90.1, restructured, and re-reviewed twice. **Every chapter now has its findings applied at current text.** Stamped `drafting` |
+| IX. Appendices | 8 | a.6's terminology section written 2026-08-27; a.8 partial. **a.1 to a.5 and a.7 are stubs** |
 
-So: Part II is finished, Parts I and VIII are written and reviewed but not stamped, and roughly
-half the book has not been written at all.
+So: Part II is finished, Parts I, III and VIII are written but not stamped, and Parts IV to VII
+have not been started.
 
 ### The status ladder
 
@@ -62,14 +62,24 @@ lacks `reviewed_by`/`reviewed_on`. Promoting it is a real task with a real gate,
 adding the fields without writing the ledgers would be exactly the overclaim the gate exists to
 stop.
 
-**Part VIII has all fourteen ledgers and both review fields, has been re-reviewed in full at the
-corrected text, and is still deliberately `drafting`.** On 2026-08-27 Sol was asked directly
-whether each chapter is finished to this standard. Eleven of fourteen said NOT READY, three said
-READY WITH MINOR CHANGES, and 8.14 was still running. Findings are applied for thirteen of them.
+**Part VIII has all fourteen ledgers and both review fields, has now been through three review
+rounds, and is still deliberately `drafting`.** The rounds were: a full re-review at the tagged
+text (eleven of fourteen NOT READY), a confirming round asking whether the corrections landed,
+and a second confirming round over the six that were still NOT READY. **Every chapter's findings
+are applied at the current text.**
 
-The remaining gate is one specific thing, and it is not clerical: **no chapter has been reviewed
-since its corrections were applied.** Every verdict on record describes older text. See section 7
+What remains before it can be stamped is narrow but real: **8.2, 8.4, 8.8, 8.9, 8.11 and 8.13 have
+corrections applied since their last verdict, so their last verdict again describes older text.**
+Three chapters (8.1, 8.5, 8.12) have a clean confirming verdict at text that has not changed since.
+Stamping the rest now would repeat the mistake `check-verified.py` exists to prevent. See section 7
 and `reviews/2026-08-27/README.md`.
+
+**The dominant defect across all three rounds was not wrong facts, it was half-applied
+corrections.** Every finding was applied correctly at the passage it cited, and the same claim was
+left standing elsewhere in the chapter — which leaves the chapter arguing with itself, a worse
+state than the original error. If you take one working rule from this file, take this one: after
+applying a finding, grep the chapter for every phrasing of the claim you just changed, then run
+`claims.py` on it for the neighbours.
 
 ### Part VIII's version debt is closed
 
@@ -259,6 +269,20 @@ false positives and 0 true positives. It was reverted and the reasoning written 
 `CONTRIBUTING.md`. When a rule would fire on correct prose more often than wrong prose, do not
 ship it. Tuning until the one known answer appears is fitting the test set.
 
+**Half-applied corrections are the project's signature defect, across four sessions now.** Not
+wrong facts: every finding was applied correctly at the passage it cited. What was left behind was
+the same claim in a table two sections up, in a summary paragraph, in a start-here row. That is a
+worse state than the original error, because the chapter now argues with itself and the reader
+cannot tell which half to believe. Concrete instances from 2026-08-27 alone: an osqueryd path that
+exists on no platform, left in 8.2's inventory table after the command below it was fixed; 8.4's
+Orbit-root shape still called proof in the summary after the table said it was evidence; 8.8's DDM
+absolute standing two lines above the bypass that contradicts it; and 8.9 with three at once.
+
+The countermeasure is mechanical and cheap. **After applying a finding, grep the chapter for every
+phrasing of the claim you changed — not the sentence, the claim — and then run `claims.py` on it
+for the neighbours.** The second half matters as much as the first: correcting `secret.txt` in one
+chapter while another still says it exists on Linux is the same defect at a larger scale.
+
 **The most dangerous defects are the confident, copyable ones.** 8.10 recommended deleting an
 Android enterprise as general remediation, which would have destroyed every work profile in an
 estate. 8.13's worked example, presented as *the model of a good ticket*, named a table that does
@@ -276,32 +300,35 @@ because what it found changes how to weigh the rest.
    material defects. Three were version drift invisible at the old ref, including a 4.90.0 Apple
    reconciler bug that silently stopped considering a fixed set of hosts. Ten ledgers written, one
    new checker, one `unwrap.py` bug that had eaten a code block and passed its own safety check.
-2. **Part VIII structural pass.** The reviewer made the same recommendation for 8.11, 8.12, 8.13
-   and 8.14 independently: lead with the incident workflow, move schema and command catalogs
-   behind it, stop duplicating 8.5 and 2.5. Deferred four times on purpose, because it is one
-   decision about the part's shape and should be taken once, across the part. Two small
-   contradictions surfaced by the sweep want resolving in the same pass: 8.11 restates 8.1's Orbit
-   poll as a flat 30 seconds, and 8.9 calls the Windows queue-cleanup cron undocumented while 8.6
-   names the job.
-3. **Promote Parts I and VIII to `verified`.** Part VIII was re-reviewed in full on 2026-08-27,
-   at the corrected text, with Sol asked directly whether each chapter is finished to the
-   `verified` standard. **Eleven of fourteen came back NOT READY.** All fourteen now have their
-   findings applied.
+2. ~~**Part VIII structural pass.**~~ **Done 2026-08-27, additively.** Fourteen independent
+   reviews made the same recommendation, so the decision was taken once across the part: each
+   chapter that needed one got a short `8.x.0 Start here` routing a symptom to the section that
+   answers it. No existing section moved, so no anchor broke. Both contradictions noted here are
+   also closed: 8.9 and 8.6 now agree on `cleanup_windows_mdm_command_queue`.
+3. **Promote Parts I and VIII to `verified`.** Part VIII has now had three rounds: a full
+   re-review at the tagged text (eleven of fourteen NOT READY), a confirming round, and a second
+   confirming round over the six still NOT READY. **All fourteen have their findings applied at
+   the current text.**
 
-   A confirming round then ran over the three closest chapters, and all three came back with
-   **every prior finding resolved**: 8.12 `READY`, 8.1 and 8.5 `READY WITH MINOR CHANGES` with one
-   or two small items each, since applied. So the loop terminates and the verdicts measured
-   remaining work, not divergence.
+   The loop demonstrably terminates. Three chapters reached a clean confirming verdict at text
+   that has not changed since (8.12 `READY`, 8.1 and 8.5 `READY WITH MINOR CHANGES`, applied), and
+   8.2 went NOT READY → READY WITH MINOR CHANGES on its second confirm, with those minors applied.
 
-   The gate is now one specific thing: **the other eleven have not been re-reviewed since their
-   corrections.** That round costs roughly 2.1M tokens of Pro quota and is the only thing between
-   here and a defensible stamp.
-   Full record at `reviews/2026-08-27/README.md`. Part I still needs its
-   `reviewed_by`/`reviewed_on`, and 1.2 carries a correction recorded only in 8.1's ledger.
-4. **a.4, the roles and permissions matrix.** Highest-demand remaining appendix, and
+   **The gate is the six chapters corrected since their last verdict: 8.2, 8.4, 8.8, 8.9, 8.11,
+   8.13.** One more confirming round over those six, at roughly 190k tokens each, is what stands
+   between here and a defensible stamp. Everything else is done.
+   Full record at `reviews/2026-08-27/README.md` and `reviews/2026-08-27/confirm2/`. Part I still
+   needs its `reviewed_by`/`reviewed_on`, and 1.2 carries a correction recorded only in 8.1's
+   ledger.
+4. **Review Part III.** 3.2 through 3.6 were written on 2026-08-27 with ledgers and have had **no
+   independent review at all**. Five reviews are queued at
+   `reviews/2026-08-27/part3/`. Given that 33 of 34 reviewed chapters on this project had material
+   defects, treat these five as unverified regardless of how finished they read. 3.1 and 3.7 were
+   reviewed earlier and are `drafting` on the same bookkeeping gap as Part I.
+5. **a.4, the roles and permissions matrix.** Highest-demand remaining appendix, and
    `check-crossrefs.py` still reports 2.3's deferral to it as reaching nothing.
-5. **Finish Part III** (3.2 to 3.6), then Parts IV through VII, with review in the loop per
-   chapter. This is the bulk of the remaining book.
+6. **Parts IV through VII**, with review in the loop per chapter. This is the bulk of the
+   remaining book: 26 chapters, none started.
 
 ### Backlog, unchanged
 
@@ -320,10 +347,10 @@ because what it found changes how to weigh the rest.
 
 ```
 missing-fleet-manual/            (public, git, deploys from main)
-├── manual/                      78 chapter files, 36 written
+├── manual/                      78 chapter files, 41 written
 ├── research/section-notes/      citation ledgers, one per chapter
 ├── review/BRIEFING.md           the reviewer's own briefing, written by it
-├── build/                       8 checkers, unwrap.py, claims.py
+├── build/                       10 checkers, unwrap.py, claims.py
 ├── website/                     Docusaurus; root .md files are NOT published
 ├── STYLE.md                     28 sections, non-negotiable
 ├── CONTRIBUTING.md              the review gate and checker provenance
