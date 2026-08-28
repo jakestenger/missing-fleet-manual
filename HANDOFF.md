@@ -686,6 +686,30 @@ because what it found changes how to weigh the rest.
   is why this is a habit rather than a script.
 
 
+- **`8.11:47` publishes a timeout claim that traces back to a stale Fleet code comment.** Found
+  2026-08-28 while researching 5.4, before drafting rather than after, which is the only reason it
+  did not get reinforced in a second chapter. The table row says the 1-hour software timeout covers
+  "every step … and an explicit uninstall", and adds that the `script_execution_timeout` agent option
+  "does not apply to this path". The explicit uninstall appears to be the one step it does **not**
+  cover, which would make the agent-option sentence wrong in the same row.
+
+  The chain, at the tag: an uninstall queues as `activity_type = 'software_uninstall'` and activates
+  into `host_script_results` with `is_internal = 1`; `listUpcomingHostScriptExecutions`
+  (`server/datastore/mysql/scripts.go:322,347,352`) selects
+  `activity_type IN ('script','software_uninstall')`, commented "software_uninstalls are implicitly
+  internal"; that pipeline's runner times out on `r.ScriptExecutionTimeout`
+  (`orbit/pkg/scripts/scripts.go:121`), set from `MaxHostExecutionTime`, 5 minutes, at
+  `orbit/pkg/update/notifications.go:425-428`. `orbit/pkg/installer/installer.go` is the sole consumer
+  of the 1-hour constant and mentions uninstall only inside the post-install rollback block at
+  532-541. **Fleet's own comment at `pkg/scripts/scripts.go:17-23` asserts the opposite**, which is
+  where both Fleet's docs and this manual appear to have taken it from.
+
+  Sent to the independent reviewer for a ruling on 2026-08-28 (`reviews/2026-08-28/part5/`), because
+  the reviewer asserted the same stale claim from the same comment when reviewing 5.4's outline.
+  **Fix 8.11 once that ruling lands; do not fix it from this note alone.** If confirmed it is the
+  eleventh Fleet documentation error and the first found in a code comment rather than generated
+  reference output, which extends the standing rule: read the executed path, not the comment above it.
+
 - ~~13 frequency claims rank a cause without a source.~~ **Cleared 2026-08-27** in one pass across
   nine chapters, and `build/check-frequency-claims.py` now reports none. Keep it that way: the
   checker is deliberately narrow, so anything it flags is a real candidate. The fix is almost never
