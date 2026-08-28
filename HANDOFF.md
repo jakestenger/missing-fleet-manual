@@ -78,7 +78,7 @@ Treat a stale artifact as an unfinished step.
 
 ## 2. Where the work actually stands
 
-**49 chapters written, 26 still outline stubs.** The stubs are 50 to 90 words each: a title, a
+**57 chapters written, 18 still outline stubs.** The stubs are 50 to 90 words each: a title, a
 frontmatter block, and section headings. Do not mistake the file count for progress.
 
 | Part | Chapters | State |
@@ -88,7 +88,7 @@ frontmatter block, and section headings. Do not mistake the file count for progr
 | II. Administer and deploy | 12 | Written. Was `verified`; **demoted to `drafting` under the freeze** |
 | III. Connect devices | 7 | Written, reviewed to the cap, corrected. `drafting` |
 | IV. Know your devices | 7 | **All 7 written 2026-08-27**, each with one review round applied and a ledger. `drafting` |
-| V. Manage devices | 9 | **In progress.** 5.1, 5.2, 5.3 drafted 2026-08-27, one review round each, `drafting`. 5.4 to 5.9 still stubs. Structure agreed with the reviewer, at `research/part5-structure.md` |
+| V. Manage devices | 9 | **In progress.** 5.1 through 5.8 drafted, one review round applied each, ledgers written, `drafting`. **5.9 is the only stub left in the part**, and its outline is agreed. Structure at `research/part5-structure.md`, revised for 5.9 on 2026-08-28 |
 | VI. Automate Fleet | 5 | **All stubs** |
 | VII. Operate Fleet | 6 | **All stubs** |
 | VIII. Troubleshooting | 14 | Written, reviewed to the cap, corrected. `drafting` |
@@ -266,6 +266,23 @@ project — whereas a clumsy sentence does not survive one.
    generates the actual images himself afterward, separately and on his own schedule. Launch with
    `nohup ... &`, note the job, then start the next chapter without waiting for it to finish.
 6. **Move to the next stub chapter and repeat from step 1.**
+
+**Where this loop had got to, 2026-08-28.** 5.4 through 5.8 are done: outline agreed, research
+agreed, drafted, one review round applied, ledger written, diagram prompt installed. Every one of
+the five came back NOT READY on its single round, and in four of them the finding was a fact rather
+than a sentence. **5.9 is the last chapter of the part.** Its outline is agreed, in one round, with
+two consequences worth carrying forward if this has to be picked up cold:
+
+- The chapter is **retitled "Automate responses to policy failures"** in frontmatter, filename
+  unchanged, because "remediation" names only the two responses that touch a host and Fleet also
+  offers webhooks, tickets, calendar events and conditional access.
+- Its organising claim, the reviewer's: **a policy automation is not a general workflow engine.** It
+  turns a scheduled per-host failure into one or more predefined responses, and it is safe only when
+  the response, the trigger mode, and the policy's own definition of success form a bounded loop.
+
+Research for 5.9 is in `../missing-fleet-manual-private/research-sensitive/5.9-scratch-*.md`, in
+three files, and is unusually rich: the main automations have no cron at all and fire synchronously
+inside the osquery write, which is the structural fact the chapter is built on.
 
 **Refresh the status artifact after every step** (see the standing rule above) — after the outline
 is agreed, after research is agreed, after the draft lands, after the review is applied, and after
