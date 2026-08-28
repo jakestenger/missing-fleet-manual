@@ -1,0 +1,532 @@
+<title>Missing Fleet Manual Build Status</title>
+<style>
+  :root {
+    --ink:      #192147;
+    --muted:    #515774;
+    --faint:    #8B8FA2;
+    --rule:     #C5C7D1;
+    --band:     #E2E4EA;
+    --ground:   #F9FAFC;
+    --panel:    #FFFFFF;
+    --tint:     #E8F1F6;
+    --tint-2:   #D3E8F3;
+
+    --s-outline:  #8B8FA2;
+    --s-drafting: #2E86C6;
+    --s-capped:   #C4732C;
+    --s-clean:    #3F8F2E;
+    --s-blocked:  #B14A5C;
+    --s-verified: #009A7D;
+
+    --shadow: 0 1px 2px rgba(25,33,71,.06), 0 8px 24px -16px rgba(25,33,71,.28);
+
+    --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans:  ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --mono:  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink:    #E7ECF8;
+      --muted:  #A7AFC8;
+      --faint:  #7B84A0;
+      --rule:   #333C60;
+      --band:   #262E4C;
+      --ground: #11172C;
+      --panel:  #181F39;
+      --tint:   #1D2645;
+      --tint-2: #232D51;
+
+      --s-outline:  #7B84A0;
+      --s-drafting: #6DB6E8;
+      --s-capped:   #E8A567;
+      --s-clean:    #7FCB63;
+      --s-blocked:  #E08296;
+      --s-verified: #3FC9AB;
+
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink:    #E7ECF8;
+    --muted:  #A7AFC8;
+    --faint:  #7B84A0;
+    --rule:   #333C60;
+    --band:   #262E4C;
+    --ground: #11172C;
+    --panel:  #181F39;
+    --tint:   #1D2645;
+    --tint-2: #232D51;
+
+    --s-outline:  #7B84A0;
+    --s-drafting: #6DB6E8;
+    --s-capped:   #E8A567;
+    --s-clean:    #7FCB63;
+    --s-blocked:  #E08296;
+    --s-verified: #3FC9AB;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 44px 24px 88px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* ---- masthead ---- */
+  .masthead { display: flex; flex-direction: column; gap: 14px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(30px, 4.4vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -.015em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .standfirst {
+    margin: 0;
+    max-width: 62ch;
+    color: var(--muted);
+    font-size: 16px;
+  }
+
+  /* ---- governing rules ---- */
+  .rules { display: flex; flex-wrap: wrap; gap: 12px; }
+  .rule-card {
+    flex: 1 1 260px;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    box-shadow: var(--shadow);
+  }
+  .rule-card .k {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .rule-card .v { font-weight: 600; font-size: 15px; }
+  .rule-card .n { color: var(--muted); font-size: 13.5px; }
+
+  /* ---- summary ---- */
+  .totals {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .tot { background: var(--panel); padding: 15px 16px; display: flex; flex-direction: column; gap: 3px; }
+  .tot .num {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -.02em;
+  }
+  .tot .lab {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  /* ---- part sections ---- */
+  .part { display: flex; flex-direction: column; gap: 12px; }
+  .part-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .part-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .1em;
+    color: var(--faint);
+    padding-top: 2px;
+  }
+  .part-head h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 21px;
+    letter-spacing: -.01em;
+    margin: 0;
+  }
+  .part-meta {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .scroller { overflow-x: auto; border: 1px solid var(--rule); border-radius: 3px; background: var(--panel); }
+  table { border-collapse: collapse; width: 100%; min-width: 660px; }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--band); vertical-align: middle; }
+  thead th {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 500;
+    background: var(--tint);
+    border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.sec {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+    white-space: nowrap;
+    width: 1%;
+  }
+  td.title { font-weight: 500; }
+  td.num {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+    color: var(--muted);
+  }
+
+  /* status pill */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--sc, var(--muted));
+  }
+  .pill::before {
+    content: "";
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--sc, var(--faint));
+    flex: none;
+  }
+  .s-outline  { --sc: var(--s-outline); }
+  .s-drafting { --sc: var(--s-drafting); }
+  .s-capped   { --sc: var(--s-capped); }
+  .s-clean    { --sc: var(--s-clean); }
+  .s-blocked  { --sc: var(--s-blocked); }
+
+  /* round meter: five cells because the cap is exactly five */
+  .meter { display: inline-flex; gap: 3px; align-items: center; }
+  .meter i {
+    width: 9px; height: 14px;
+    border-radius: 1px;
+    background: var(--band);
+    display: block;
+  }
+  .meter i.on { background: var(--mc, var(--s-drafting)); }
+  .meter.full i.on { background: var(--s-capped); }
+  .meter-none { color: var(--faint); font-family: var(--mono); font-size: 11.5px; }
+
+  /* collapsed outline parts */
+  .stub {
+    border: 1px dashed var(--rule);
+    border-radius: 3px;
+    background: transparent;
+    padding: 13px 16px;
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .stub strong { color: var(--ink); font-weight: 600; }
+  .stub .list { font-size: 13.5px; color: var(--faint); }
+
+  .note {
+    font-size: 13.5px;
+    color: var(--muted);
+    max-width: 76ch;
+    margin: 0;
+  }
+  .note code, td code {
+    font-family: var(--mono);
+    font-size: .92em;
+    background: var(--tint);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    padding-top: 4px;
+    border-top: 1px solid var(--band);
+    margin-top: 4px;
+  }
+  footer { color: var(--faint); font-size: 13px; border-top: 1px solid var(--band); padding-top: 18px; }
+  footer p { margin: 0 0 6px; }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">Fleet 4.90.1 &middot; tag fleet-v4.90.1 &middot; 27 August 2026</div>
+    <h1>The Missing Fleet Manual: build status</h1>
+    <p class="standfirst">Seventy-four chapters across nine parts. Four parts are drafted and under review; four are still outline. Nothing carries a verified stamp, by design.</p>
+  </header>
+
+  <section class="rules" aria-label="Governing rules">
+    <div class="rule-card">
+      <span class="k">Verification freeze</span>
+      <span class="v">In force</span>
+      <span class="n">No chapter carries <code>verified</code> until every part is drafted and every chapter has had a review round. Enforced by <code>check-verified.py</code>.</span>
+    </div>
+    <div class="rule-card">
+      <span class="k">Review cap</span>
+      <span class="v">Five rounds per chapter</span>
+      <span class="n">Rounds run until a chapter comes back clean or hits five, then it stays at <code>drafting</code> and waits for the whole-part review.</span>
+    </div>
+    <div class="rule-card">
+      <span class="k">Defect record</span>
+      <span class="v">27 chapters reviewed, 27 with defects</span>
+      <span class="n">112 rounds recorded. No chapter has yet passed a round without a material finding.</span>
+    </div>
+  </section>
+
+  <section class="totals" aria-label="Book totals">
+    <div class="tot"><span class="num">74</span><span class="lab">Chapters</span></div>
+    <div class="tot"><span class="num">42</span><span class="lab">Drafting</span></div>
+    <div class="tot"><span class="num">32</span><span class="lab">Outline</span></div>
+    <div class="tot"><span class="num">0</span><span class="lab">Verified</span></div>
+    <div class="tot"><span class="num">161k</span><span class="lab">Words</span></div>
+    <div class="tot"><span class="num">112</span><span class="lab">Review rounds</span></div>
+  </section>
+
+  <!-- PART 0 -->
+  <section class="part">
+    <div class="part-head">
+      <span class="part-num">0</span>
+      <h2>Introduction</h2>
+      <span class="part-meta">1 chapter &middot; 1,125 words</span>
+    </div>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>&sect;</th><th>Chapter</th><th>Status</th><th>Rounds</th><th>Last verdict</th><th style="text-align:right">Words</th></tr></thead>
+        <tbody>
+          <tr><td class="sec">0.1</td><td class="title">How to use this manual</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter-none">&mdash;</span></td><td><span class="meter-none">not reviewed</span></td><td class="num">1,125</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PART I -->
+  <section class="part">
+    <div class="part-head">
+      <span class="part-num">I</span>
+      <h2>Foundations</h2>
+      <span class="part-meta">6 chapters &middot; 23,996 words &middot; 25 rounds</span>
+    </div>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>&sect;</th><th>Chapter</th><th>Status</th><th>Rounds</th><th>Last verdict</th><th style="text-align:right">Words</th></tr></thead>
+        <tbody>
+          <tr><td class="sec">1.1</td><td class="title">What Fleet is</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">3,287</td></tr>
+          <tr><td class="sec">1.2</td><td class="title">How Fleet reaches a device</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">6,142</td></tr>
+          <tr><td class="sec">1.3</td><td class="title">Hosts, fleets, labels, and targeting</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">4,848</td></tr>
+          <tr><td class="sec">1.4</td><td class="title">Identity and roles</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">2,736</td></tr>
+          <tr><td class="sec">1.5</td><td class="title">Audit and activity</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">2,615</td></tr>
+          <tr><td class="sec">1.6</td><td class="title">The Fleet server</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">4,368</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Round five is running now. Three chapters carry an <code>IMAGE-REDO</code> marker: 1.2, 1.4 and 1.6 each have a diagram asserting something the prose has since withdrawn. Reviewer-written replacement prompts are installed and waiting to be rendered.</p>
+  </section>
+
+  <!-- PART II -->
+  <section class="part">
+    <div class="part-head">
+      <span class="part-num">II</span>
+      <h2>Administer and deploy Fleet</h2>
+      <span class="part-meta">12 chapters &middot; 29,164 words &middot; 12 rounds (25 Aug)</span>
+    </div>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>&sect;</th><th>Chapter</th><th>Status</th><th>Rounds</th><th>Last verdict</th><th style="text-align:right">Words</th></tr></thead>
+        <tbody>
+          <tr><td class="sec">2.1</td><td class="title">Administration model and deployment choices</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span class="meter-none">25 Aug, not retained</span></td><td class="num">1,669</td></tr>
+          <tr><td class="sec">2.2</td><td class="title">Identity providers, SSO, SCIM, and role sync</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span class="meter-none">25 Aug, not retained</span></td><td class="num">2,869</td></tr>
+          <tr><td class="sec">2.3</td><td class="title">User accounts, roles, and service identities</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span class="meter-none">25 Aug, not retained</span></td><td class="num">1,754</td></tr>
+          <tr><td class="sec">2.4</td><td class="title">Organization and server settings</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span class="meter-none">25 Aug, not retained</span></td><td class="num">1,903</td></tr>
+          <tr><td class="sec">2.5</td><td class="title">Activity, audit logs, and log delivery</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span class="meter-none">25 Aug, not retained</span></td><td class="num">2,067</td></tr>
+          <tr><td class="sec">2.6</td><td class="title">MDM architecture and foundations</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span class="meter-none">25 Aug, not retained</span></td><td class="num">1,708</td></tr>
+          <tr><td class="sec">2.7</td><td class="title">Apple MDM configuration</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span class="meter-none">25 Aug, not retained</span></td><td class="num">2,184</td></tr>
+          <tr><td class="sec">2.8</td><td class="title">Windows and Android management configuration</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span class="meter-none">25 Aug, not retained</span></td><td class="num">4,234</td></tr>
+          <tr><td class="sec">2.9</td><td class="title">Self-hosting architecture and capacity</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span class="meter-none">25 Aug, not retained</span></td><td class="num">2,920</td></tr>
+          <tr><td class="sec">2.10</td><td class="title">Deploy on AWS or GCP</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span class="meter-none">25 Aug, not retained</span></td><td class="num">2,589</td></tr>
+          <tr><td class="sec">2.11</td><td class="title">Deploy with containers or virtual machines</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span class="meter-none">25 Aug, not retained</span></td><td class="num">2,549</td></tr>
+          <tr><td class="sec">2.12</td><td class="title">Production readiness and handoff</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td><span class="meter-none">25 Aug, not retained</span></td><td class="num">2,718</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">All twelve were stamped <code>verified</code> until today. Eight took factual corrections from the Part&nbsp;I and Part&nbsp;III reviews, including 2.2 stating that SCIM deprovisioning does not require Premium when it does; the remaining four were demoted with them under the freeze. Their 25 August review files are not on disk, so the round counter reads them from chapter frontmatter rather than from a verdict.</p>
+  </section>
+
+  <!-- PART III -->
+  <section class="part">
+    <div class="part-head">
+      <span class="part-num">III</span>
+      <h2>Connect devices</h2>
+      <span class="part-meta">7 chapters &middot; 21,306 words &middot; 27 rounds</span>
+    </div>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>&sect;</th><th>Chapter</th><th>Status</th><th>Rounds</th><th>Last verdict</th><th style="text-align:right">Words</th></tr></thead>
+        <tbody>
+          <tr><td class="sec">3.1</td><td class="title">Enrollment design and host lifecycle</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">2,678</td></tr>
+          <tr><td class="sec">3.2</td><td class="title">Enroll macOS devices</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">2,929</td></tr>
+          <tr><td class="sec">3.3</td><td class="title">Enroll Windows devices</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">3,562</td></tr>
+          <tr><td class="sec">3.4</td><td class="title">Enroll Linux devices</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">3,387</td></tr>
+          <tr><td class="sec">3.5</td><td class="title">Enroll iOS and iPadOS devices</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">3,131</td></tr>
+          <tr><td class="sec">3.6</td><td class="title">Enroll Android and ChromeOS devices</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">2,880</td></tr>
+          <tr><td class="sec">3.7</td><td class="title">Manage fleetd, Orbit, and updates</td><td><span class="pill s-drafting">drafting</span></td><td><span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">2,739</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Round five is running now. 3.5 is the only chapter in the book whose every licence claim has been checked and found correct &mdash; licence claims were wrong nine times elsewhere today.</p>
+  </section>
+
+  <!-- PART VIII -->
+  <section class="part">
+    <div class="part-head">
+      <span class="part-num">VIII</span>
+      <h2>Troubleshooting Fleet</h2>
+      <span class="part-meta">14 chapters &middot; 82,118 words &middot; 60 rounds &middot; all capped</span>
+    </div>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>&sect;</th><th>Chapter</th><th>Status</th><th>Rounds</th><th>Last verdict</th><th style="text-align:right">Words</th></tr></thead>
+        <tbody>
+          <tr><td class="sec">8.1</td><td class="title">The diagnostic method</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-clean">minor changes</span></td><td class="num">4,107</td></tr>
+          <tr><td class="sec">8.2</td><td class="title">The log surfaces</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-clean">minor changes</span></td><td class="num">6,352</td></tr>
+          <tr><td class="sec">8.3</td><td class="title">Fleet server logs</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-clean">minor changes</span></td><td class="num">5,143</td></tr>
+          <tr><td class="sec">8.4</td><td class="title">Host-side investigation</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">7,931</td></tr>
+          <tr><td class="sec">8.5</td><td class="title"><code>fleetctl debug</code> and the debug archive</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-clean">minor changes</span></td><td class="num">5,584</td></tr>
+          <tr><td class="sec">8.6</td><td class="title">Inspecting server state</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-clean">minor changes</span></td><td class="num">8,744</td></tr>
+          <tr><td class="sec">8.7</td><td class="title">Live report as an introspection tool</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-clean">minor changes</span></td><td class="num">3,576</td></tr>
+          <tr><td class="sec">8.8</td><td class="title">Apple MDM diagnostics</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-clean">minor changes</span></td><td class="num">5,603</td></tr>
+          <tr><td class="sec">8.9</td><td class="title">Windows MDM diagnostics</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">7,246</td></tr>
+          <tr><td class="sec">8.10</td><td class="title">Android and AMAPI diagnostics</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-clean">minor changes</span></td><td class="num">6,399</td></tr>
+          <tr><td class="sec">8.11</td><td class="title">Reproducing and isolating</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-blocked">not ready</span></td><td class="num">4,672</td></tr>
+          <tr><td class="sec">8.12</td><td class="title">Audit logs: who did what, when</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-clean">ready</span></td><td class="num">5,320</td></tr>
+          <tr><td class="sec">8.13</td><td class="title">What to collect before escalating</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-clean">minor changes</span></td><td class="num">4,985</td></tr>
+          <tr><td class="sec">8.14</td><td class="title">Diagnosing degradation</td><td><span class="pill s-capped">at cap</span></td><td><span class="meter full"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="pill s-clean">minor changes</span></td><td class="num">6,456</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">The largest and most-reviewed part, and the only one where the cap has actually bitten. Every finding from every round is applied; what blocks a stamp is that no chapter's exact current text has been reviewed, because each kept taking corrections from a neighbour's review after its own verdict. 8.11's Docker Compose recipe has now been executed end to end rather than only read.</p>
+  </section>
+
+  <!-- OUTLINE PARTS -->
+  <section class="part">
+    <div class="part-head">
+      <span class="part-num">IV&ndash;VII</span>
+      <h2>Not yet drafted</h2>
+      <span class="part-meta">26 chapters &middot; 647 words of outline</span>
+    </div>
+    <div class="stub">
+      <strong>IV. Know your devices</strong>
+      <span>7 chapters</span>
+      <span class="pill s-outline">outline</span>
+      <span class="list">Hosts and inventory &middot; queries and reports &middot; policies &middot; software and vulnerabilities &middot; device status &middot; osquery, two chapters</span>
+    </div>
+    <div class="stub">
+      <strong>V. Manage devices</strong>
+      <span>8 chapters</span>
+      <span class="pill s-outline">outline</span>
+      <span class="list">Targeting changes &middot; configuration profiles &middot; scripts &middot; software installation &middot; self-service and setup &middot; MDM commands and encryption &middot; policy remediation &middot; advanced</span>
+    </div>
+    <div class="stub">
+      <strong>VI. Automate Fleet</strong>
+      <span>5 chapters</span>
+      <span class="pill s-outline">outline</span>
+      <span class="list">Change control &middot; GitOps &middot; REST API &middot; fleetctl &middot; integrations and webhooks</span>
+    </div>
+    <div class="stub">
+      <strong>VII. Operate Fleet</strong>
+      <span>6 chapters</span>
+      <span class="pill s-outline">outline</span>
+      <span class="list">Day-two operations &middot; upgrades &middot; backup and retention &middot; scale and availability &middot; observability &middot; operational security</span>
+    </div>
+    <p class="note">These four parts are the reason the verification freeze exists. A chapter cannot be finished before the chapters that contradict it have been written, and Part&nbsp;I's foundations are cited throughout all four.</p>
+  </section>
+
+  <!-- APPENDICES -->
+  <section class="part">
+    <div class="part-head">
+      <span class="part-num">A</span>
+      <h2>Appendices and indexes</h2>
+      <span class="part-meta">8 entries &middot; 3,023 words &middot; 2 started</span>
+    </div>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>&sect;</th><th>Reference</th><th>Status</th><th>Blocking</th><th style="text-align:right">Words</th></tr></thead>
+        <tbody>
+          <tr><td class="sec">A.1</td><td class="title">Capability index</td><td><span class="pill s-outline">outline</span></td><td class="num" style="text-align:left">&mdash;</td><td class="num">11</td></tr>
+          <tr><td class="sec">A.2</td><td class="title">Platform capability matrix</td><td><span class="pill s-outline">outline</span></td><td class="num" style="text-align:left">1.1 defers its licence gates here</td><td class="num">12</td></tr>
+          <tr><td class="sec">A.3</td><td class="title">Configuration model and precedence</td><td><span class="pill s-outline">outline</span></td><td class="num" style="text-align:left">1.3 defers precedence detail here</td><td class="num">19</td></tr>
+          <tr><td class="sec">A.4</td><td class="title">Roles and permissions matrix</td><td><span class="pill s-outline">outline</span></td><td class="num" style="text-align:left">1.4 defers the verification pattern here</td><td class="num">16</td></tr>
+          <tr><td class="sec">A.5</td><td class="title">Interface index</td><td><span class="pill s-outline">outline</span></td><td class="num" style="text-align:left">&mdash;</td><td class="num">12</td></tr>
+          <tr><td class="sec">A.6</td><td class="title">Glossary and release compatibility</td><td><span class="pill s-drafting">drafting</span></td><td class="num" style="text-align:left">1.3 defers the alias mapping here</td><td class="num">1,451</td></tr>
+          <tr><td class="sec">A.7</td><td class="title"><code>fleetctl</code> command reference</td><td><span class="pill s-outline">outline</span></td><td class="num" style="text-align:left">3.1 and 3.4 defer flag detail here</td><td class="num">44</td></tr>
+          <tr><td class="sec">A.8</td><td class="title">API action and endpoint reference</td><td><span class="pill s-drafting">drafting</span></td><td class="num" style="text-align:left">&mdash;</td><td class="num">1,458</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="legend">
+      <span class="pill s-outline">outline</span>
+      <span class="pill s-drafting">drafting, under cap</span>
+      <span class="pill s-capped">at cap, parked</span>
+      <span class="pill s-clean">clean verdict</span>
+      <span class="pill s-blocked">not ready</span>
+    </div>
+  </section>
+
+  <footer>
+    <p>Every product claim verified against <code>~/Source/Fleet/fleet-public</code> at tag <code>fleet-v4.90.1</code>, commit <code>dd0200f062</code>. Eight checkers run green: links, anchors, verified stamps, frequency claims, em-dashes, pinned repository links, shell placeholders, image markers, chapter shrinkage.</p>
+    <p>Word counts exclude HTML comments, which carry the image briefs and prompts. Round counts come from the review directories rather than from memory.</p>
+  </footer>
+
+</div>

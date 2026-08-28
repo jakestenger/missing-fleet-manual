@@ -24,6 +24,20 @@ chapter is long enough.
 
 **Site:** https://d4ch3x2jqqmix.cloudfront.net (public, deploys from `main` on push)
 **Repo:** https://github.com/jakestenger/missing-fleet-manual (**public**)
+**Status artifact:** https://claude.ai/code/artifact/8b5267d3-3e77-4867-8ed9-5a6bdf9119f6
+
+### Standing rule: refresh the status artifact after every step
+
+The project owner asked (2026-08-27) that the status artifact be updated **after every step**,
+not once at the end of a session. A step is any unit of work that changes what the table says: a
+chapter drafted, a review applied, a part finished, a checker added.
+
+Source file is `build/manual-status.html`. Regenerate it, then republish **to the URL above** by
+passing that URL to the publish call. Publishing without it creates a second artifact and breaks
+the link the owner already has.
+
+The purpose is that the owner can look at any moment and see where things stand without asking.
+Treat a stale artifact as an unfinished step.
 
 ---
 
