@@ -37,6 +37,31 @@ number in your class (C code defect, D documentation error, S security-shaped) r
 
 Note the file is not version controlled. Do not assume you can recover a bad edit.
 
+### 🔴 OUTSTANDING BEFORE ANY PUSH: sensitive research in local history
+
+**Set 2026-08-28. Do not `git push` this repository until this is resolved or Jake has decided to
+accept it.**
+
+While researching 5.8, disk encryption, the research notes crossed the disclosure line the reviewer
+had set for that chapter: they carried storage names, extraction plumbing, cipher construction and
+schema-level lookup sequences for **disk-recovery credentials**. This repository is **public**.
+
+**No exposure has occurred.** The file was moved out to
+`missing-fleet-manual-private/research-sensitive/` while the branch was still unpushed, and the
+branch was over a hundred commits ahead of `origin/main` at the time. **But the unsanitised file
+remains in local commit history**, so pushing that history publishes it.
+
+Options, for Jake to choose:
+
+1. Rewrite the affected commits before pushing. Cleanest, and destructive to history, so it is his
+   call and not one to take unilaterally.
+2. Decide the content is acceptable to publish after reading it, and push normally.
+3. Start the public history from a squashed commit.
+
+**The general rule this produced, now worth applying everywhere:** research notes inherit the
+disclosure line of the chapter they support. Notes are the easier of the two to forget, because
+nobody reviews them as prose.
+
 ### Standing rule: refresh the status artifact after every step
 
 The project owner asked (2026-08-27) that the status artifact be updated **after every step**,
