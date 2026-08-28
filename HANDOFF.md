@@ -25,6 +25,17 @@ chapter is long enough.
 **Site:** https://d4ch3x2jqqmix.cloudfront.net (public, deploys from `main` on push)
 **Repo:** https://github.com/jakestenger/missing-fleet-manual (**public**)
 **Status artifact:** https://claude.ai/code/artifact/8b5267d3-3e77-4867-8ed9-5a6bdf9119f6
+**Fleet defect queue:** `~/Vault/Claude Cowork/Work/General/Fleet bugs to file.md`
+
+### Where Fleet defects go
+
+Researching this manual finds real Fleet bugs, and the standing instruction is that this project
+files nothing and commits nothing to any Fleet repo. **Record them in the defect queue above**, which
+deliberately sits in the vault outside every git repo: this repo is public, and some findings should
+not be published before Fleet can fix them. It is shared with other sessions, so take the next free
+number in your class (C code defect, D documentation error, S security-shaped) rather than renumbering.
+
+Note the file is not version controlled. Do not assume you can recover a bad edit.
 
 ### Standing rule: refresh the status artifact after every step
 
