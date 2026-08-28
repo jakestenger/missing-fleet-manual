@@ -37,30 +37,29 @@ number in your class (C code defect, D documentation error, S security-shaped) r
 
 Note the file is not version controlled. Do not assume you can recover a bad edit.
 
-### 🔴 OUTSTANDING BEFORE ANY PUSH: sensitive research in local history
-
-**Set 2026-08-28. Do not `git push` this repository until this is resolved or Jake has decided to
-accept it.**
+### Resolved 2026-08-28: sensitive research purged from history
 
 While researching 5.8, disk encryption, the research notes crossed the disclosure line the reviewer
-had set for that chapter: they carried storage names, extraction plumbing, cipher construction and
-schema-level lookup sequences for **disk-recovery credentials**. This repository is **public**.
+had set for that chapter. A sweep found the same shape across Part V: several working notes
+described, in actionable detail, how to reach credentials or authorization gaps that are **unfixed at
+this release**. This repository is public.
 
-**No exposure has occurred.** The file was moved out to
-`missing-fleet-manual-private/research-sensitive/` while the branch was still unpushed, and the
-branch was over a hundred commits ahead of `origin/main` at the time. **But the unsanitised file
-remains in local commit history**, so pushing that history publishes it.
+**Resolved, and verified.** All Part V working notes moved to
+`missing-fleet-manual-private/research-sensitive/`, and the affected paths were purged from this
+repository's history with `git filter-branch`, followed by dropping the backup ref, clearing
+`refs/original`, expiring the reflog and garbage collecting. Verified afterwards: zero scratch files
+anywhere in history, zero blobs containing the extraction prose, zero dangling objects holding it,
+and the link checker clean.
 
-Options, for Jake to choose:
+**No exposure occurred at any point.** The branch was never pushed; it was over a hundred commits
+ahead of `origin/main` throughout.
 
-1. Rewrite the affected commits before pushing. Cleanest, and destructive to history, so it is his
-   call and not one to take unilaterally.
-2. Decide the content is acceptable to publish after reading it, and push normally.
-3. Start the public history from a squashed commit.
+**What stays in the repo:** the chapters, and the citation ledgers, both written to the disclosure
+line. `research/section-notes/README.md` records the policy.
 
-**The general rule this produced, now worth applying everywhere:** research notes inherit the
-disclosure line of the chapter they support. Notes are the easier of the two to forget, because
-nobody reviews them as prose.
+**The rule, now general:** research notes inherit the disclosure line of the chapter they support.
+They are the easier of the two to forget, because nobody reviews them as prose. When a chapter's
+subject is sensitive, keep its working notes out of this repository and cite them from the ledger.
 
 ### Standing rule: refresh the status artifact after every step
 
