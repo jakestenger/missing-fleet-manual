@@ -225,6 +225,39 @@ gh run list --limit 1
 
 `main` deploys directly. There are no feature branches and nothing to merge.
 
+### Scope extension, 2026-08-28 evening: the loop continues through Parts VI and VII
+
+The owner extended the run: **after 5.9, keep going into Part VI (5 chapters) and Part VII (6
+chapters), same process.** He expects to be offline overnight and to find them done in the morning.
+That is eleven chapters plus the end of 5.9, so the loop below is now the standing instruction for
+all of them rather than a Part V arrangement.
+
+Two things change at this volume, and both are about keeping the reviewer busy rather than keeping
+me busy.
+
+**Keep two chapters in flight.** The reviewer takes five to ten minutes per pass and the research
+agents take ten to twenty, so a strictly serial chapter spends most of its wall clock waiting. While
+chapter N is in its draft review, chapter N+1's outline consensus and research agents should already
+be running. This was being done informally by 5.8; from here it is the method. What must **not**
+overlap is a chapter's own steps — its research still has to be agreed before its draft starts.
+
+**Do not let the pipeline erode the consensus rule.** Outline and research still loop until genuine
+agreement, however many rounds that takes, and the draft still gets exactly one. The temptation
+under a deadline is to accept an AGREED WITH CHANGES as agreement without reading whether the
+changes are ones you actually accept. 5.9's outline was agreed in one round because the changes were
+right, not because one round was the target.
+
+**A note on the parts themselves.** VI and VII differ from V in a way that matters for research.
+Part V documented mechanisms that live in Fleet's server code, so the tag was almost always the
+answer. Parts VI and VII are about GitOps, the API, `fleetctl`, integrations, upgrades, backup,
+scale and observability — much of which is operational practice, deployment shape, and behaviour
+under load rather than a code path. Expect more claims that the tag cannot settle, and expect to
+have to say so in the prose, the way 5.6 did when platform behaviour was the OS's business rather
+than Fleet's. `research/section-notes/5.6-notes.md` is the model for a chapter whose ledger has to
+separate what was verified at the tag from what came from somewhere else.
+
+---
+
 ### Addendum, agreed 2026-08-28: the loop for drafting the rest of Part V (5.4 to 5.9)
 
 The owner asked for this exact sequence per chapter, tighter than the general loop above on two
