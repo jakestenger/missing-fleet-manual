@@ -43,24 +43,31 @@ Treat a stale artifact as an unfinished step.
 
 ## 2. Where the work actually stands
 
-**41 chapters written, 33 still outline stubs.** The stubs are 50 to 90 words each: a title, a
-frontmatter block, and a sentence of intent. Do not mistake the file count for progress.
+**49 chapters written, 26 still outline stubs.** The stubs are 50 to 90 words each: a title, a
+frontmatter block, and section headings. Do not mistake the file count for progress.
 
 | Part | Chapters | State |
 |---|---|---|
 | 0. Introduction | 1 | Written. Stamped `drafting` |
-| I. Foundations | 6 | Written, reviewed, corrected. Stamped `drafting` |
-| II. Administer and deploy | 12 | **Complete. All 12 `verified`** |
-| III. Connect devices | 7 | **All 7 written.** 3.1 and 3.7 reviewed; 3.2 to 3.6 written 2026-08-27 with ledgers and **no independent review yet**. All `drafting` |
-| IV. Know your devices | 7 | **All stubs** |
-| V. Manage devices | 9 | **All stubs** |
+| I. Foundations | 6 | Written, reviewed to the five-round cap, corrected. `drafting` |
+| II. Administer and deploy | 12 | Written. Was `verified`; **demoted to `drafting` under the freeze** |
+| III. Connect devices | 7 | Written, reviewed to the cap, corrected. `drafting` |
+| IV. Know your devices | 7 | **All 7 written 2026-08-27**, each with one review round applied and a ledger. `drafting` |
+| V. Manage devices | 9 | **All stubs.** Structure agreed with the reviewer, at `research/part5-structure.md` |
 | VI. Automate Fleet | 5 | **All stubs** |
 | VII. Operate Fleet | 6 | **All stubs** |
-| VIII. Troubleshooting | 14 | Written, tag-verified at 4.90.1, restructured, and re-reviewed twice. **Every chapter now has its findings applied at current text.** Stamped `drafting` |
-| IX. Appendices | 8 | a.6's terminology section written 2026-08-27; a.8 partial. **a.1 to a.5 and a.7 are stubs** |
+| VIII. Troubleshooting | 14 | Written, reviewed to the cap, corrected. `drafting` |
+| IX. Appendices | 8 | a.6 and a.8 partial. **a.1 to a.5 and a.7 are stubs** |
 
-So: Part II is finished, Parts I, III and VIII are written but not stamped, and Parts IV to VII
-have not been started.
+So: Parts 0, I, II, III, IV and VIII are drafted; Parts V, VI, VII and most appendices are not.
+
+**The verification freeze is in force.** `check-verified.py` carries `FREEZE = True`, and nothing
+may carry `verified` until every part is drafted and every chapter has had a review round. Part II
+was demoted from `verified` under it. Lifting the freeze is a deliberate act, not a formality.
+
+**No chapter has yet passed a review round without a material finding.** Across every part
+reviewed so far, every first round came back NOT READY, and the finding was usually the chapter's
+organising claim rather than a detail.
 
 ### The status ladder
 
