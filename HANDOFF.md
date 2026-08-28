@@ -197,6 +197,13 @@ points: an explicit outline-agreement step before research, and only **one** rev
 chapter for now (not the five-round cap) — a full extra review pass happens later, at the same
 point the whole book gets its final round.
 
+**The asymmetry is deliberate and the owner stated it explicitly (2026-08-28). Steps 1 and 2 run to
+consensus: loop back and forth with the reviewer as many times as it takes until you genuinely
+agree. Step 4 is a single pass: one review, apply, move on.** Do not spend rounds polishing prose
+now; spend them getting the outline and the facts right, because those are what later rounds cannot
+cheaply undo. A wrong organising claim survives five prose rounds — that is the record of this
+project — whereas a clumsy sentence does not survive one.
+
 1. **Pull the outline stub and check it with the independent reviewer.** Send the chapter's row
    from `research/part5-structure.md` plus its stub file. Ask directly: is this a good base for a
    chapter that takes an administrator to expert level on this subject, and does it capture every
