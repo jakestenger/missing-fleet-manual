@@ -53,7 +53,7 @@ frontmatter block, and section headings. Do not mistake the file count for progr
 | II. Administer and deploy | 12 | Written. Was `verified`; **demoted to `drafting` under the freeze** |
 | III. Connect devices | 7 | Written, reviewed to the cap, corrected. `drafting` |
 | IV. Know your devices | 7 | **All 7 written 2026-08-27**, each with one review round applied and a ledger. `drafting` |
-| V. Manage devices | 9 | **All stubs.** Structure agreed with the reviewer, at `research/part5-structure.md` |
+| V. Manage devices | 9 | **In progress.** 5.1, 5.2, 5.3 drafted 2026-08-27, one review round each, `drafting`. 5.4 to 5.9 still stubs. Structure agreed with the reviewer, at `research/part5-structure.md` |
 | VI. Automate Fleet | 5 | **All stubs** |
 | VII. Operate Fleet | 6 | **All stubs** |
 | VIII. Troubleshooting | 14 | Written, reviewed to the cap, corrected. `drafting` |
@@ -189,6 +189,45 @@ gh run list --limit 1
 ```
 
 `main` deploys directly. There are no feature branches and nothing to merge.
+
+### Addendum, agreed 2026-08-28: the loop for drafting the rest of Part V (5.4 to 5.9)
+
+The owner asked for this exact sequence per chapter, tighter than the general loop above on two
+points: an explicit outline-agreement step before research, and only **one** review round per
+chapter for now (not the five-round cap) — a full extra review pass happens later, at the same
+point the whole book gets its final round.
+
+1. **Pull the outline stub and check it with the independent reviewer.** Send the chapter's row
+   from `research/part5-structure.md` plus its stub file. Ask directly: is this a good base for a
+   chapter that takes an administrator to expert level on this subject, and does it capture every
+   concept it needs to? Apply whatever changes it recommends to the outline before researching.
+   (Part V's spine was already negotiated at the part level on 2026-08-27 — this step re-confirms
+   the one chapter's slice of it, not the whole structure again.)
+2. **Research the chapter's subject** the normal way: `claims.py` on every mechanism first, then
+   verify every claim against `~/Source/Fleet/fleet-public` at tag `fleet-v4.90.1` (commit
+   `dd0200f062`), never `main`, never the published docs as a primary source. Write the findings as
+   normal notes, then send them to the reviewer and ask if the research looks correct and complete.
+   Iterate — more research, back to the reviewer — until you agree. Do this **before** drafting
+   prose, not after.
+3. **Draft the chapter** to `STYLE.md`, citation ledger and all. Include HTML-comment diagram,
+   artwork, or screenshot markers wherever a picture would materially help, in the same
+   `IMAGE-TODO` / `IMAGE-REDO`-with-`PROMPT` shape used in Part II — Part II is the model to match
+   for how many markers and what they cover. Screenshots are the owner's to shoot; diagrams and
+   artwork prompts are the reviewer's to write (next step).
+4. **One review-and-edit round.** Send it to the reviewer once, apply what's accepted, record
+   rejections and why in the ledger, re-run `claims.py` on changed terms, run the checker list.
+   Do not chase a clean verdict or run further rounds this pass — that happens later, part-wide.
+5. **Kick off the image-prompt job in the background and move on** — do not wait on it. This is
+   `scratchpad/imageprompts.sh`'s shape: the reviewer reads the finished chapter and writes/refines
+   the `PROMPT:` block for each `IMAGE-TODO`/`IMAGE-REDO` marker, verified against the tag, in the
+   same style-rule voice as existing accepted prompts. It does **not** render pixels — the owner
+   generates the actual images himself afterward, separately and on his own schedule. Launch with
+   `nohup ... &`, note the job, then start the next chapter without waiting for it to finish.
+6. **Move to the next stub chapter and repeat from step 1.**
+
+**Refresh the status artifact after every step** (see the standing rule above) — after the outline
+is agreed, after research is agreed, after the draft lands, after the review is applied, and after
+each chapter closes out. Republish to the same URL recorded there; do not create a second one.
 
 ---
 
@@ -618,8 +657,9 @@ because what it found changes how to weigh the rest.
 
 5. **a.4, the roles and permissions matrix.** Highest-demand remaining appendix, and
    `check-crossrefs.py` still reports 2.3's deferral to it as reaching nothing.
-6. **Parts IV through VII**, with review in the loop per chapter. This is the bulk of the
-   remaining book: 26 chapters, none started.
+6. **Part V, chapters 5.4 through 5.9**, using the addendum loop in §3 above (agreed 2026-08-28).
+   5.1 to 5.3 are drafted with one review round each. Then **Parts VI and VII**, still unstarted:
+   11 chapters, all stubs.
 
 ### Backlog
 
