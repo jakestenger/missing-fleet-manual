@@ -53,7 +53,7 @@ frontmatter block, and a sentence of intent. Do not mistake the file count for p
 | II. Administer and deploy | 12 | **Complete. All 12 `verified`** |
 | III. Connect devices | 7 | **All 7 written.** 3.1 and 3.7 reviewed; 3.2 to 3.6 written 2026-08-27 with ledgers and **no independent review yet**. All `drafting` |
 | IV. Know your devices | 7 | **All stubs** |
-| V. Manage devices | 8 | **All stubs** |
+| V. Manage devices | 9 | **All stubs** |
 | VI. Automate Fleet | 5 | **All stubs** |
 | VII. Operate Fleet | 6 | **All stubs** |
 | VIII. Troubleshooting | 14 | Written, tag-verified at 4.90.1, restructured, and re-reviewed twice. **Every chapter now has its findings applied at current text.** Stamped `drafting` |

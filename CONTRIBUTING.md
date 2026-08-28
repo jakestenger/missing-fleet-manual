@@ -39,6 +39,24 @@ verified_source: "unverified: drafted from prior work, not checked at a tag"
 An honest unverified stamp is worth more than a confident wrong one. Sections have twice
 shipped here claiming verification that never ran.
 
+### Read the schema, not the migration that created the table
+
+A migration tells you what a table looked like on the day it was added. It does not tell you what
+the table looks like at the tag, because a later migration may have altered it.
+
+This produced a wrong claim in the Part V structure proposal. Migration
+`20250127162751_AddUnifiedQueueTable.go` creates `upcoming_activities` with an `activity_type`
+enum of four values, and that count was carried into the proposal as the number of activity types
+Fleet supports. It is five: `20251028140300_AddInHouseAppsToUnifiedQueue.go` adds
+`in_house_app_install`. The reviewer caught it.
+
+**For the current shape of any table, read `server/datastore/mysql/schema.sql`.** Use migrations to
+learn *when* and *why* something changed, and to read their comments, which are often the best
+statement of intent available. Never treat one as the authority on the present.
+
+The same reasoning applies to anything generated or accumulated: prefer the file describing the
+current state over the file describing a transition into it.
+
 ## What "complete" means here
 
 **Jake's decision, 2026-08-25.** The manual is meant to be complete and correct, and length is
