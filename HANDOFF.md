@@ -236,6 +236,15 @@ project — whereas a clumsy sentence does not survive one.
 is agreed, after research is agreed, after the draft lands, after the review is applied, and after
 each chapter closes out. Republish to the same URL recorded there; do not create a second one.
 
+**Only a review OF A DRAFT counts as a round.** Set by the owner on 2026-08-28, after the status page
+counted 5.4's outline and research reviews toward the five-round cap. Those are real reviews and
+their findings are applied, but they read a plan rather than prose, so counting them would retire a
+chapter's review budget before it had been written. `build/status-artifact.py` enforces this with
+`NON_DRAFT_REVIEW`, which excludes any review file whose name contains `outline`, `research`,
+`imageprompt` or `structure` from both the count and the displayed verdict. **Keep naming review
+outputs accordingly** — a draft review of 5.5 should be `5.5-sol.out` or similar, and anything that
+is not a draft review should say so in its filename.
+
 ---
 
 ## 4. The independent reviewer
