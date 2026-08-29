@@ -76,6 +76,18 @@ def unwrap(text):
             # 2026-08-27, one day after the same bug was found and fixed for fences alone.
             flush(); out.append(ln); i += 1; continue
 
+        if QUOTE.match(ln) and LIST.match(quote_body(ln)):
+            # A list item inside a blockquote. The third instance of the same root cause as the
+            # two branches around this one: LIST.match(ln) misses it because the line starts with
+            # '>', so every item of a quoted list was joined into a single paragraph and stopped
+            # rendering as a list. Found on 2026-08-28 while drafting 6.4 and 7.3, which were the
+            # first chapters to put a list inside a warning callout. sig() strips '>' markers and
+            # list markers survive as text, so it compared the wreckage equal to the original and
+            # the dry run reported a clean signature. That is twice now that sig() has failed to
+            # catch this family; treat a non-zero "files changed" on a chapter you did not edit as
+            # suspicious rather than as formatting.
+            flush(); out.append(ln); i += 1; continue
+
         if QUOTE.match(ln) and FENCE.match(quote_body(ln)):
             # A code fence inside a blockquote. FENCE.match(ln) above misses it, because the
             # line starts with '>', so without this branch the fence and its contents fall
