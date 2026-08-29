@@ -59,9 +59,9 @@ Two ways to obtain one. Through the UI, under **My account** and **Get API token
 
 **For SSO and MFA users the second route is closed.** Email and password login is disabled for those accounts, so the token has to come from the profile page in the UI. An automation account created for API use is the usual answer, and [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) covers creating one with an explicit role.
 
-## Three paths reach the same endpoint
+## The same endpoint reaches several paths, and the set is not global
 
-![Reference](../_assets/icons/reference.svg) Fleet registers each endpoint under every API version it declares, plus a `latest` alias. At this release the declared versions are `v1` and `2022-04`, so a route exists at three paths at once:
+![Reference](../_assets/icons/reference.svg) A route is registered under each version its **own registering module** declares, plus a `latest` alias. So a core route such as the host list exists at three paths at once:
 
 ```
 /api/v1/fleet/hosts
@@ -70,6 +70,8 @@ Two ways to obtain one. Through the UI, under **My account** and **Get API token
 ```
 
 `latest` is a registered path rather than a redirect, so nothing resolves or forwards at request time.
+
+> **The version set is declared per module, not once for the API.** The core module declares `v1` and `2022-04`; other modules declare their own, and at least one route family is `v1` only. **There is therefore no single dated prefix on which the whole API exists**, and a client touching two modules may need different prefixes for each, or `latest` plus compatibility tests pinned to the release ([6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md)).
 
 That has one practical consequence worth planning around. **A proxy rule, allowlist or firewall pattern written against `/api/v1/` does not cover the other two.** Fleet's own documentation uses `/api/v1/` and `/api/latest/` in different places, and both work, so matching on a single literal version will let some traffic through and not other traffic that does exactly the same thing. Match `/api/*/fleet/` where you can.
 
@@ -122,6 +124,8 @@ Which actions each role may perform is [a.4](a.4-roles-and-permissions-matrix.md
 
 ## Version notes
 
-![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.1. The declared API versions, `v1` and `2022-04`, are a property of this release; the `latest` alias is added to whatever set is declared.
+![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.1. `v1` and `2022-04` are what the **core** module declares at this release, and the `latest` alias is added to whatever set each module declares.
+
+**This appendix is not a complete inventory.** Fleet's own machine-readable route catalogue carries 234 entries with 12 marked deprecated, and it does not enumerate the backward-compatible name aliases that also exist. Treat what follows as a map of the classes and the rules, not as a list of everything Fleet serves.
 
 The public-exposure matrix grows as features are enabled and is the part of this appendix most likely to change between releases. Re-check it against Fleet's own guidance when adding a capability rather than assuming this list still covers it.
