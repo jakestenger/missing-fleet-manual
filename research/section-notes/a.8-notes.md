@@ -47,11 +47,9 @@ reference disagreed with what the server registers. It did not have it for route
 
 | Claim | Source |
 |---|---|
-| Six caller classes exist as an ingress model: user, host, orbit, device, fleetd certificate, route-local or protocol | `server/service/handler.go:937,1035,1044,1067` |
 | The fleetd certificate routes authenticate with the **Orbit node key** in an `Authentication` header, and Fleet's comment says why | `server/service/handler.go:1035-1041`, `server/service/endpoint_utils.go:256` |
 | Google's Android event callback is registered with no standard authenticator and verifies a route-specific query token | `server/mdm/android/service/handler.go:30`, `server/mdm/android/service/pubsub.go:80` |
 | Apple MDM protocol services are registered directly on the root mux | `server/service/handler.go:1342` |
-| Routes in the route-local class perform custom one-time authentication | `server/service/handler.go:1067`, Fleet's own registration comment |
 | The device endpointer registers **25** routes at this release, covering policies, software install and uninstall, self-service, certificates, setup-experience status, Linux escrow triggering, conditional-access bypass and MDM migration. **The count is not published** | `server/service/handler.go:939-966` |
 | API tokens are tied to a Fleet user account and sent as `Authorization: Bearer <token>`; obtainable from **My account > Get API token** or the login endpoint; email and password login disabled for SSO and MFA users | `docs/REST API/rest-api.md:49-59` |
 
@@ -59,14 +57,18 @@ reference disagreed with what the server registers. It did not have it for route
 
 | Claim | Source |
 |---|---|
-| The core module declares `v1` and `2022-04` | `server/service/handler.go:292` |
-| The Android module declares `v1` alone | `server/mdm/android/service/handler.go:35` |
+| The core module declares `v1` and `2022-04` | `server/service/handler.go:296` |
+| The chart module declares `v1` and `2022-04` | `server/chart/internal/service/handler.go:24-27` |
+| The activity module declares `v1` and **`latest` explicitly**, rather than receiving it as an appended alias | `server/activity/internal/service/handler.go:41-43` |
+| The Android module declares `v1` alone | `server/mdm/android/service/handler.go:40-42` |
+| SCIM is not a versioned module at all: two literal prefix mounts, `v1` and `latest` | `ee/server/scim/scim.go:280-284` |
+| **The union across every module and root mount is `v1`, `2022-04`, `latest` and nothing else.** This is the full audit round 2 required before the release-wide claim could stand | The five rows above |
 | A route's own start and end constraints narrow its module's ordered set, and `latest` is omitted where a route ends before the module's last version | `server/platform/endpointer/endpoint_utils.go:1115` |
 | `latest` is inserted into the route expression and handled directly, not a redirect | `server/platform/endpointer/endpoint_utils.go:1144` |
 | Fleet's SSO initiation and callback are literal `v1` paths | `server/service/handler.go:1217,1222` |
 | Android's Pub/Sub callback is a literal `v1` path | `server/mdm/android/service/handler.go:18` |
 | A configured URL prefix is prepended to everything Fleet serves, **including root-mux handlers**, because Fleet wraps the completed root mux and strips the prefix before dispatch | `cmd/fleet/serve.go:993-996`. **Corrected at round 2**: my first citation, `:230-231`, only normalises and validates the setting |
-| The Apple server URL selects **which base URL Fleet advertises** for certain MDM flows. It does not create a second listener and does not make any path unreachable at the main origin; Fleet's guidance is that it resolves to the same server | `server/fleet/app.go:199-205,331-342`. **Corrected at round 2**, where my first version had paths moving between origins |
+| The Apple server URL setting exists, is validated as a URL, and Fleet's guidance is that it resolves to the same server | `server/fleet/app.go:199-205,331-342`, `server/service/appconfig.go:1557-1568`. **Which flows advertise it is derived, below** |
 
 ### The exposure matrix
 
@@ -114,11 +116,12 @@ inclusion rule and its exclusions and says in terms that a capability absent fro
 assessed, rather than been found to need nothing. That is the honest position given that seven
 capabilities were missing from a matrix which read as complete.
 
-**A parsed derivation of the 234 and 12 counts.** Round 1 asked for the catalogue to be parsed
+**A parsed derivation of the catalogue counts.** Rounds 1 and 2 asked for the catalogue to be parsed
 through Fleet's own loader and type, with its duplicate and route-registration validation run, rather
-than counted textually. **There is no Go toolchain on this machine**, so that has not been done. The
-numbers are numerically confirmed and are carried with their unit and meaning corrected. A future
-pass with a toolchain should produce the parsed derivation before this appendix is stamped.
+than counted textually. **There is no Go toolchain on this machine**, so it has not been done, and
+**the numbers are therefore out of the appendix entirely** rather than carried with a caveat. 6.3 was
+publishing them too and no longer does. A future pass with a toolchain can restore them with a real
+derivation.
 
 **How `2022-04` differs in behaviour from `v1`, if at all.** Registration verified; semantics not.
 No source at the tag was found stating whether the two differ. The appendix says both paths exist and
@@ -200,14 +203,52 @@ the frontend routes, Windows with a source rather than "re-confirmed at review"
 initiation and frontend callback, Platform SSO's paths, `/enroll`, the metrics mount condition, and
 the API-only enforcement semantics.
 
-Four rows moved from **stated** to **derived**, because registration proves existence and not
-necessity: the six-class model, every "this capability requires external reachability" mapping, the
-Apple base-URL coverage boundary, and the route-local frequency claim, which was withdrawn outright.
+**Round 3 found that addendum describing moves the tables had not actually made.** They are made now: the caller model and the Apple base-URL coverage boundary sit under **Derived** and nowhere else, the route-local universal is deleted rather than annotated, and every "this capability requires external reachability" mapping is derived, because a registration proves a route exists and not that a capability needs it open.
+
+
+
+## Round 3, the whole read
+
+Round 3 returned NOT READY with seven items, and six of the seven were **corrections that had not
+landed** rather than new findings. That is this project's signature defect arriving on schedule: the
+round-2 fixes went in fast, two of them only into this ledger, and the ledger then described the
+appendix as repaired when it was not.
+
+| Round 2 said | What had actually happened |
+|---|---|
+| Replace the Apple origin claim | Written into the ledger only. **The appendix still said paths move to another origin** |
+| Correct the metrics mount condition | Ledger only. The appendix still said "unless you configure credentials" |
+| Withdraw the counts | Done in a.8. **6.3 was still publishing 234 and 12, and citing a.8 as agreeing** |
+| Name the prerequisites | Done, but the sentence said "three capabilities" and listed four |
+| Reclassify the ledger rows | Described in the addendum, not performed in the tables |
+
+Applied now, plus three round-3 findings of its own:
+
+**The six-class frame is demoted.** Round 3's argument is that the opening promised the class decides
+what a `401` means and whether a path may be exposed, and the appendix never organises either answer
+that way; meanwhile the sixth row is a residue defined by absence, and the paragraph beneath it
+correctly says membership implies nothing. So it is now **five shared-credential classes plus
+everything else**, the promise about `401` and exposure is gone, and the tripled hedge is one
+sentence.
+
+**The deferrals to a.4 and a.5 were written in the present tense** for appendices that are empty
+outlines, which every other chapter in the book is careful not to do. They now say "not written yet"
+and name what answers the question today.
+
+**Two chapters were carrying a.8's withdrawn or superseded claims.** 3.2 promised a Mac enrolling by
+link needs two paths on top of the protocol paths; the corrected chain has three, and the third is
+the one whose absence leaves an enrollment that starts and never finishes. And 6.3 opened by saying
+everything an administrator does goes through the API, which is not true of the settings the server
+reads at startup.
+
+**One class of claim the User row got grammatically wrong**: it read as though an API-only account
+could work through the interface. It cannot.
 
 ## Rounds
 
 | Round | Verdict | Outcome |
 |---|---|---|
-| 1, coverage | NOT READY, six blocking items | All six applied. Seven capabilities and nine paths added; 1,463 words to about 2,340 |
-| 2, evidence audit | NOT READY, eight items | All eight applied. Six rows changed from registered aliases to emitted paths, two of them to deprecated paths that are the ones in use |
-| 3, whole-appendix and cross-appendix | Not yet run | |
+| 1, coverage | NOT READY, six items | Seven capabilities and nine paths added; the matrix had been sourced from an article |
+| 2, evidence audit | NOT READY, eight items | Six rows changed from registered aliases to emitted paths, two of them deprecated paths that are the ones in use |
+| 3, whole read | NOT READY, seven items | Six were round-2 fixes that had not landed, two of them only in this ledger. Applied, plus the frame demoted and two chapters corrected |
+| 4, verification | Requested by round 3 | Pending |

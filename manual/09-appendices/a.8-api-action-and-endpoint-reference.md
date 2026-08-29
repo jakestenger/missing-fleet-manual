@@ -20,7 +20,9 @@ feature_requests:
 
 # API access, versioning, and exposure
 
-Fleet's request surface is easier to reason about once you stop reading it as a list of endpoints and start reading it as **six classes of caller**. The class decides what a request must present, what a `401` means, and whether a path can be exposed to the internet. Most confusion about Fleet's API is a request arriving in the wrong class.
+Fleet's request surface is easier to reason about once you stop reading it as a list of endpoints and start reading it as **callers**. Five of them share a credential Fleet's own authenticator understands. Everything else is a route that authenticates its own callers by its own means, and those are the ones a network design gets wrong.
+
+**What a caller must present is the useful grouping. What has to be reachable is a different question**, answered by capability further down, and the two do not line up neatly enough to organise one table by the other.
 
 ## What this appendix carries
 
@@ -28,22 +30,22 @@ Fleet's request surface is easier to reason about once you stop reading it as a 
 
 Per-endpoint parameters, request bodies and response shapes live in Fleet's own REST API reference. **That reference is hand-maintained**, so treat it as the best available account rather than a guarantee that it matches the release you are running. This appendix points there rather than copying it.
 
-Three questions belong elsewhere and are deliberately unanswered here. **Which role may perform an action is [a.4](a.4-roles-and-permissions-matrix.md).** Which interface can perform it at all is [a.5](a.5-interface-index.md). How to use the API in practice is [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md).
+Three questions belong elsewhere and are deliberately unanswered here. **Which role may perform an action will be [a.4](a.4-roles-and-permissions-matrix.md), which is not written yet**; [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) is the fullest account there is today. **Which interface can perform it at all will be [a.5](a.5-interface-index.md), also not written yet**; the chapter that owns the capability is the answer meanwhile. How to use the API in practice is [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md), which is written.
 
-## Six classes of caller
+## Who calls Fleet, and what they present
 
-![Reference](../_assets/icons/reference.svg) **This is an ingress model rather than a claim about how Fleet registers routes.** It groups callers by what they must present, which is the question a network design turns on. Fleet does not pass every handler through one of six constructors, and a few of the most important paths are registered directly on the server's root router.
+![Reference](../_assets/icons/reference.svg) **Five shared-credential classes, and everything else.** This groups callers by what they must present. It is not a claim about how Fleet registers routes: Fleet does not pass every handler through one of six constructors, and several of the most important paths are registered directly on the root router.
 
 | Class | Who calls it | What it presents |
 |---|---|---|
-| **User** | A person or an API-only account, through the UI, `fleetctl`, GitOps or a script | A Fleet API token, as `Authorization: Bearer <token>` |
+| **User** | A person through the UI, `fleetctl` or a script; or an API-only account, which cannot use the UI, through `fleetctl`, GitOps or a script | A Fleet API token, as `Authorization: Bearer <token>` |
 | **Host** | osquery on an enrolled device | The osquery node key issued at enrollment |
 | **Orbit** | Orbit on an enrolled device | The Orbit node key, a separate credential from osquery's |
 | **Device** | Fleet Desktop, and the **My device** page an end user opens | A per-device token, not a user account |
 | **fleetd certificate** | fleetd, fetching a certificate template Fleet has asked it to install and reporting the result | The **Orbit** node key, in an `Authentication` header |
 | **Route-local or protocol** | Everything whose credential belongs to the route rather than to Fleet's shared authenticator | An enrollment secret, a download token, a SAML response, a query-string token, a device identity certificate, or a protocol signature |
 
-> **Do not read the last class as "unauthenticated".** It is the class where Fleet's shared authenticator is skipped and the route does its own checking. Google's callback for Android events presents a route-specific token. An over-the-air enrollment presents an enroll secret. Apple's protocol paths authenticate the device by its identity certificate. **A path here is not safe to expose merely because no bearer token appears in the request, and it is not safe to assume the reverse either.** The class is defined by what Fleet's shared authenticator does not do, so what any member requires has to be established per route rather than inferred from the group.
+> **The last row is not a class in the sense the other five are.** It is everything left over once the shared authenticator is out of the picture, so **membership tells you nothing**: what a route requires has to be read off that route. Google's callback for Android events presents a route-specific token. An over-the-air enrollment presents an enroll secret. Apple's protocol paths authenticate the device by its identity certificate. What they have in common is only that Fleet's usual authentication did not run.
 
 The first class is the one people mean by "the Fleet API". The Host and Orbit classes are why [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) treats a host's credentials as more than one thing: they authenticate separately with separate keys, so a host can be half-working in a way a single credential could not produce.
 
@@ -89,16 +91,24 @@ That has one practical consequence worth planning around. **A proxy rule, allowl
 
 **Match the three prefixes explicitly rather than with a wildcard.** `v1`, `2022-04` and `latest` are the complete set at this release. A wildcard segment written as `/api/*/fleet/` means different things in different proxies and will accept segments you did not intend. Then handle the unversioned families separately: `/api/fleet/orbit/*`, `/api/osquery/*`, `/api/fleetd/*`, `/api/mdm/*`, `/api/setup`, and the paths outside `/api` below.
 
-## Two origins, and a prefix
+## Paths outside `/api`, a prefix, and which base URL Fleet advertises
 
 ![Reference](../_assets/icons/reference.svg) Some routes are deliberately not under `/api`, because they are not REST endpoints and are not meant for API clients or browsers. The Apple MDM protocol paths are the clearest case, along with the SCEP service, the SCEP proxy used for delivering your own certificates, and the Platform SSO well-known document.
 
 A proxy configuration written on the assumption that everything Fleet serves lives under `/api` will miss them, and the symptom is device management failing while the API and UI look healthy. [2.6](../02-administer-and-deploy-fleet/2.6-mdm-architecture-and-foundations.md) covers why the set of these grows as features are enabled.
 
-**Two further things move every path in this appendix**, and a matrix that ignores them is wrong for your deployment:
+**A configured URL prefix is prepended to everything Fleet serves**, including the paths on the root router, because Fleet wraps the finished router and strips the prefix before dispatch. Every path in this appendix is origin-relative and assumes no prefix.
 
-- **A configured URL prefix** is prepended to everything Fleet serves. Every path below is origin-relative and assumes no prefix.
-- **Apple device management can be given its own server URL**, separate from the one everything else uses. Where that is set, the Apple protocol paths are reachable at that origin rather than at Fleet's main one, and the two need separate ingress treatment.
+**Apple device management can be given its own server URL, and that is a narrower thing than it sounds.** It does not create a second listener and it does not make any path unreachable at the main origin, which Fleet expects to resolve to the same server. What it changes is **which base URL Fleet advertises** when it builds a URL for a device or a profile:
+
+| Advertised at the Apple URL | Still advertised at the main URL |
+|---|---|
+| `/enroll`, the over-the-air profile and `ota_enrollment` endpoints, and `/api/mdm/apple/enroll` | `/api/mdm/apple/installer` |
+| `/mdm/apple/scep`, `/mdm/apple/mdm`, and the ACME family, inside enrollment profiles | Platform SSO's issuer, key set and app-site-association document |
+| MDM setup SSO and account-driven enrollment | In-house app manifest and package URLs |
+| Bootstrap downloads and generated SCEP-proxy URLs | The server URL fleetd is given |
+
+So the ingress question is not "which paths moved" but "which hostname will a device have been told to use", and both hostnames need to reach the same Fleet.
 
 ## What has to be reachable, by capability
 
@@ -108,7 +118,7 @@ A proxy configuration written on the assumption that everything Fleet serves liv
 >
 > **Included:** every path a caller outside the Fleet server must reach for a named capability to work. Devices, end users, administrators, and third parties calling in.
 >
-> **Excluded deliberately, each for a reason.** Fleet's health, version and metrics endpoints and its debug tree are operator surfaces rather than capability surfaces, and [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) governs who should reach them. The metrics endpoint in particular is not mounted at all unless you configure credentials for it. The UI's own frontend and asset routes are excluded except where a capability's flow passes through one, which is called out where it happens.
+> **Excluded deliberately, each for a reason.** Fleet's health, version and metrics endpoints and its debug tree are operator surfaces rather than capability surfaces, and [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) governs who should reach them. The metrics endpoint in particular is not mounted at all unless you either configure credentials for it or explicitly disable its basic authentication. The UI's own frontend and asset routes are excluded except where a capability's flow passes through one, which is called out where it happens.
 >
 > **A capability absent from this matrix has not been assessed**, rather than been found to need nothing. The ledger records which were assessed.
 >
@@ -116,7 +126,7 @@ A proxy configuration written on the assumption that everything Fleet serves liv
 >
 > Where a row names a narrower set than the prefix rules above would suggest, that is deliberate. Opening what Fleet emits is the smaller configuration; opening every registered alias is not wrong, only wider.
 
-**Three capabilities have prerequisites beyond exposure.** SCIM and the SCEP proxy are Premium. Okta conditional access is Premium and additionally needs the server private key configured, as do Apple's root protocol services, which are not mounted at all without it.
+**Four capabilities have prerequisites beyond exposure.** SCIM and the SCEP proxy are Premium. Okta conditional access is Premium **and** needs the server private key configured. Apple's root protocol services need that key too, and are not mounted at all without it.
 
 **Baseline, for agents on devices that leave the network:**
 
@@ -180,7 +190,7 @@ An endpoint's valid `order_key` values are its own, and Fleet's reference docume
 
 ![Reference](../_assets/icons/reference.svg) Request bodies, response shapes, per-endpoint parameters and error codes are in Fleet's REST API reference at `fleetdm.com/docs/rest-api/rest-api`, and endpoints intended for contributors rather than administrators are documented separately in the Fleet repository.
 
-Which actions each role may perform is [a.4](a.4-roles-and-permissions-matrix.md). Which surface can perform a given action at all is [a.5](a.5-interface-index.md).
+Which actions each role may perform will be [a.4](a.4-roles-and-permissions-matrix.md) and which surface can perform one at all will be [a.5](a.5-interface-index.md). **Neither is written yet.** Until they are, 2.3 carries the roles and the owning chapter carries the surface.
 
 ## Version notes
 
