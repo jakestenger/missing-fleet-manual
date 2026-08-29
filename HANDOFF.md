@@ -92,9 +92,9 @@ frontmatter block, and section headings. Do not mistake the file count for progr
 | VI. Automate Fleet | 5 | **Complete 2026-08-28.** All 5 drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part6-structure.md` |
 | VII. Operate Fleet | 6 | **Complete 2026-08-28.** All 6 drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part7-structure.md`, and this part is held to a four-class evidence rule recorded there |
 | VIII. Troubleshooting | 14 | Written, reviewed to the cap, corrected. `drafting` |
-| IX. Appendices | 8 | **In progress 2026-08-29**, to three review rounds each rather than one, set by the owner. a.6 and a.8 drafted and reviewed; a.1 to a.5 and a.7 still stubs. Structure agreed at `research/appendix-structure.md` |
+| IX. Appendices | 8 | **In progress 2026-08-29**, to three review rounds each rather than one, set by the owner. a.2, a.3, a.4, a.6 and a.8 drafted; a.1, a.5 and a.7 still stubs. Per-appendix state in section 7. Structure agreed at `research/appendix-structure.md` |
 
-**So the entire manual body is drafted.** The only outline stubs left are six appendices: a.1 to a.5 and a.7.
+**So the entire manual body is drafted.** The only outline stubs left are three appendices: a.1, a.5 and a.7.
 
 **The verification freeze is in force.** `check-verified.py` carries `FREEZE = True`, and nothing
 may carry `verified` until every part is drafted and every chapter has had a review round. Part II
@@ -831,6 +831,40 @@ because what it found changes how to weigh the rest.
 6. **Part V, chapters 5.4 through 5.9**, using the addendum loop in §3 above (agreed 2026-08-28).
    5.1 to 5.3 are drafted with one review round each. Then **Parts VI and VII**, still unstarted:
    11 chapters, all stubs.
+
+### Appendix state, 2026-08-29
+
+The owner set **three review rounds each** for Part IX rather than the one a body chapter gets, and
+the three rounds do three different jobs. **Round 1 is coverage**: is anything missing, is the scope
+decision honest, do the headline findings hold. **Round 2 is a cell-by-cell evidence audit**, sampled
+hard across the whole matrix and not just the diff. **Round 3 is a fresh whole read plus
+cross-appendix consistency**, because the four register projections can drift apart.
+
+Every round reads the whole appendix. Reviewing the diff is how a project ships a summary sentence
+that was true of an earlier version of its own table, which this one has done more than once.
+
+| | Draft | Research gate | Draft rounds | Next |
+|---|---|---|---|---|
+| **a.1** Capability index | Stub | Not started | | **Built last.** It is the synonym layer over the register, so it needs every other projection settled first |
+| **a.2** Platform capability matrix | 20,379 words, 262 rows | SOUND after two passes | R1 running | Apply R1, then R2 and R3 |
+| **a.3** Configuration model | 2,363 words, thin | **NOT SOUND at round 3**, corrections in progress | none | Rewrite the draft from the corrected research, then three rounds |
+| **a.4** Roles and permissions | 5,993 words, 148 rows | SOUND after four passes | R1 applied, R2 running | Apply R2, then R3 |
+| **a.5** Interface index | Stub | Not started | | Depends on a.3, a.4, a.7 and a.8 to classify interfaces |
+| **a.6** Glossary and versions | 5,161 words | n/a | **4 rounds, done** | Complete |
+| **a.7** fleetctl reference | Stub | **NOT SOUND**, corrections in progress | none | Draft from the corrected research, then three rounds |
+| **a.8** API and endpoints | 3,310 words | n/a | **5 rounds, capped** | Complete |
+
+**The research gate is doing real work on this part and should not be skipped.** a.3 has been
+returned NOT SOUND three times and a.4 four times, and each round found something a draft would have
+published: a.4's matrix was a projection of Fleet's policy rather than of administrator intent, and
+its row count went 117 to 142 to 148 as merges and "synonyms" came apart, several of which were
+semantic opposites like install and uninstall. a.2's first pass argued negatives from absence
+throughout, which is the one thing the part agreement forbids by name.
+
+**The a.2 reclassification pattern is the one to reuse for a.5.** When a first pass has written a
+negative by omission, it separates in three directions: to `Not established` where no boundary exists
+either way, to `Not applicable` where the row's subject does not exist on that platform, and
+re-derived per platform wherever an answer was inherited from a neighbouring capability.
 
 ### Backlog
 
