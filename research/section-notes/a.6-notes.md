@@ -125,10 +125,88 @@ found during research affect one chapter only and stayed there.
 
 `check-links`, `check-em-dashes`, `check-crossrefs`, `unwrap` dry run.
 
+
+
+## Round 1, coverage
+
+NOT READY with seven items. **Three load-bearing conclusions were broader than the tag supported**,
+which is the failure mode this project keeps producing: a true narrow finding promoted into a
+universal.
+
+| Was | Now | Why |
+|---|---|---|
+| "The agent and server exchange capabilities on every request" | **The Orbit and device protocols** negotiate. osquery's does not | `client/orbit_client.go:157-168`, `client/device_client.go:91-110`. An osquery-side boundary is chosen locally or ungated, never negotiated |
+| "Everything else is negotiated" | **Four mechanisms**: negotiated, ungated, chosen locally, compared | The appendix's own rows disproved it. `update_channels` is ungated (`server/service/orbit.go:730-754`), MSI properties are selected while packaging (`orbit/pkg/packaging/windows.go:99-110`), Python inventory uses complementary discovery queries (`server/service/osquery_utils/queries.go:1374-1420`), gzip is chosen inside Orbit |
+| "Missing capability means it does something else and logs at debug" | Per row. **End-user auth fails open with a warning**; ADE setup falls back; Windows sync is persisted; Escrow Buddy is skipped | `server/service/orbit.go:251-286`, `:533-547`, `:591-620`, `:929-942` |
+| "A current server will enroll an arbitrarily old agent" | "**Fleet declares and enforces no global minimum**" | Absence of a gate does not prove every historical wire format works. Fleet's own process treats new-server-with-old-agent as nice to have, with a minimum named in release notes when it breaks (`docs/Contributing/workflows/fleetd-development-and-release-strategy.md:10-30`) |
+
+### The macOS trap was half right, and the wrong half was the absolute
+
+**Correct:** the macOS 14 label is dynamic and osquery-computed, the declaration attaches to it, and
+the older path needs the agent too. So **a Mac that never produced a result cannot enter the label**
+and gets neither mechanism.
+
+**Wrong:** the conclusion that any MDM-enrolled Mac without fleetd gets no enforcement. Dynamic
+membership is deleted only when a later result is **definitively false**; an error leaves it alone
+(`server/datastore/mysql/labels.go:957-1019`). A Mac that joined and later lost its agent keeps
+membership and keeps receiving enforcement. **Stale membership, not absence of enforcement**, and the
+appendix now separates the two cases.
+
+The iOS and iPadOS finding is confirmed exactly: platform-only manual labels, empty queries, no
+version predicate (`20240707134036_CreateIOSAndIPADOSBuiltinLabels.go:55-84`,
+`ee/server/service/mdm.go:1461-1473`).
+
+### The support conclusion was unfair and is rewritten
+
+I had written that no version is ever declared unsupported and that "supported" is not the category
+to plan in. **That contradicts the table directly above it.** A non-latest release is outside the
+scope for fixes, and on Free a previous major is outside the scope for troubleshooting. What Fleet
+lacks is a **dated** end of life, not the concept of support. The appendix now gives two planning
+questions, remediation against the latest release and support access against the troubleshooting
+scope, and says a date is the thing that does not exist.
+
+### Taxonomy, and what came in and out
+
+The single word "floor" was doing five jobs. Rows are now typed as hard floor, silent floor, fallback
+or routing boundary, published baseline, or dependency constraint.
+
+**Added:** the published host baselines for all six platforms, which an administrator looks here for
+first (`docs/Get started/FAQ.md:72-87`); Aurora MySQL 3.10.3; `fleetctl` against the server, which
+**warns and continues** rather than refusing (`cmd/fleetctl/fleetctl/api.go:87-105`); the asymmetric
+compatibility contract; the cross-platform web setup capability, where **the agent refuses to start
+the flow** against a server that lacks it (`server/fleet/capabilities.go:99-104`,
+`orbit/cmd/orbit/orbit.go:1642-1666`); and the three semantic-versioning exceptions, experimental
+features, security fixes and default-value changes (`docs/Deploy/Upgrading-Fleet.md:79-87`).
+
+**Removed** as not estate-planning material: gzip compression and per-certificate display scope.
+
+**Split:** the update-server migration now carries both numbers with what each answers, 1.38.0 as the
+code boundary and 1.38.1 as Fleet's documented bridge. Calling 1.38.1 the floor said 1.38.0 cannot do
+the rewrite, which the code contradicts.
+
+### Terminology
+
+Round 1 caught the section's own opening being false: **there are no `[term]()` markers anywhere in
+the manual**, and the entries are reached by ordinary links. Fixed, and the selection rule is stated
+in its place.
+
+Seven entries added, all meeting the rule that competing names would make an administrator act or
+search incorrectly: **fleetd and its components**, without which the version tables cannot be read;
+**AB, ABM and DEP token**; **Unassigned, No team and a null fleet**; **MDM enrollment status on screen
+against in a filter** (`frontend/interfaces/mdm.ts:85-115`), which is the strongest fit for the rule
+because the wrong value returns an empty result rather than an error; **MIA and missing**
+(`server/fleet/hosts.go:20-40`); **pack and scheduled report**; and **the two meanings of activity**
+(`20260316120008_RenameActivitiesToActivityPast.go:13`, `20250127162751_AddUnifiedQueueTable.go:72-108`).
+
+### Feature availability
+
+Removal upheld. The rationale is softened from "produce the identical symptom" to "can converge on
+the same symptom", because many licence gates refuse explicitly.
+
 ## Rounds
 
 | Round | Verdict | Outcome |
 |---|---|---|
-| 1, coverage | Not yet run | |
+| 1, coverage | NOT READY, seven items | All applied. Three universals narrowed, the macOS trap corrected, the support conclusion rewritten, seven terminology entries and six published baselines added. 3,083 to about 4,430 words |
 | 2, evidence audit | Not yet run | |
-| 3, whole-appendix and cross-appendix | Not yet run | |
+| 3, whole read | Not yet run | |
