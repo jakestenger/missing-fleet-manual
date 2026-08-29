@@ -78,7 +78,7 @@ Treat a stale artifact as an unfinished step.
 
 ## 2. Where the work actually stands
 
-**57 chapters written, 18 still outline stubs.** The stubs are 50 to 90 words each: a title, a
+**69 chapters written, 6 still outline stubs.** The stubs are 50 to 90 words each: a title, a
 frontmatter block, and section headings. Do not mistake the file count for progress.
 
 | Part | Chapters | State |
@@ -88,13 +88,13 @@ frontmatter block, and section headings. Do not mistake the file count for progr
 | II. Administer and deploy | 12 | Written. Was `verified`; **demoted to `drafting` under the freeze** |
 | III. Connect devices | 7 | Written, reviewed to the cap, corrected. `drafting` |
 | IV. Know your devices | 7 | **All 7 written 2026-08-27**, each with one review round applied and a ledger. `drafting` |
-| V. Manage devices | 9 | **In progress.** 5.1 through 5.8 drafted, one review round applied each, ledgers written, `drafting`. **5.9 is the only stub left in the part**, and its outline is agreed. Structure at `research/part5-structure.md`, revised for 5.9 on 2026-08-28 |
-| VI. Automate Fleet | 5 | **All stubs** |
-| VII. Operate Fleet | 6 | **All stubs** |
+| V. Manage devices | 9 | **Complete 2026-08-28.** All 9 drafted, one review round applied each, ledgers written, diagram prompts installed. `drafting` |
+| VI. Automate Fleet | 5 | **Complete 2026-08-28.** All 5 drafted, one review round applied each, ledgers written. Structure at `research/part6-structure.md` |
+| VII. Operate Fleet | 6 | **Complete 2026-08-28.** All 6 drafted, one review round applied each, ledgers written. Structure at `research/part7-structure.md`, and this part is held to a four-class evidence rule recorded there |
 | VIII. Troubleshooting | 14 | Written, reviewed to the cap, corrected. `drafting` |
 | IX. Appendices | 8 | a.6 and a.8 partial. **a.1 to a.5 and a.7 are stubs** |
 
-So: Parts 0, I, II, III, IV and VIII are drafted; Parts V, VI, VII and most appendices are not.
+**So the entire manual body is drafted.** The only outline stubs left are six appendices: a.1 to a.5 and a.7.
 
 **The verification freeze is in force.** `check-verified.py` carries `FREEZE = True`, and nothing
 may carry `verified` until every part is drafted and every chapter has had a review round. Part II
@@ -299,6 +299,33 @@ project — whereas a clumsy sentence does not survive one.
    generates the actual images himself afterward, separately and on his own schedule. Launch with
    `nohup ... &`, note the job, then start the next chapter without waiting for it to finish.
 6. **Move to the next stub chapter and repeat from step 1.**
+
+**The loop completed, 2026-08-28.** Parts V, VI and VII are all drafted, each chapter with one
+review round applied and a citation ledger. The overnight run added eleven chapters plus 5.9.
+
+Four things learned in it that are worth carrying:
+
+**The consensus rule earns its keep at the research stage, not the drafting stage.** Two research
+verdicts came back NOT SOUND (5.9's second file was unfinished when the reviewer read it; 7.1's had
+researched the wrong chapter), and both would have produced a plausible, confident, wrong chapter.
+Every draft review that followed was cheaper than the rework those would have caused.
+
+**Compression loses scope, not facts.** Three Part VI reviews and two Part VII reviews found the same
+shape: a fact survives being shortened and the qualifier that made it true does not. "Nothing
+anywhere", "the only", "always", "at any layer". After 6.3 I started asking the reviewer to look for
+it specifically, and it kept finding instances. Treat any absolute in a compressed chapter as
+suspect.
+
+**A later chapter's research corrects earlier chapters.** 5.8 was corrected twice by 7.6's research,
+after 5.8 was finished. 7.3 and 7.6 both placed the Apple certificate authority material outside the
+database until a review caught it in one and the correction propagated to the other. **When a
+chapter's research contradicts a finished chapter, fix the finished chapter in the same commit**, or
+it will not happen.
+
+**The build tooling has one bug with three instances.** `unwrap.py` joins structure it does not
+recognise inside a blockquote: tables, then code fences, then lists. Each was found by a reader
+rather than by `sig()`, which compared the wreckage equal to the original both times it mattered. The
+fix for lists is in place with a comment saying so.
 
 **Where this loop had got to, 2026-08-28.** 5.4 through 5.8 are done: outline agreed, research
 agreed, drafted, one review round applied, ledger written, diagram prompt installed. Every one of
