@@ -15,7 +15,7 @@ reviewed_on:
 
 Two jobs, and they are the same job. **This appendix translates between the words for a thing and between the versions of a thing**, so that a reader who meets an unfamiliar name or an unexplained failure can find out which they are looking at.
 
-What is **not** here: which capabilities your licence includes, which belongs in [a.2](a.2-platform-capability-matrix.md), where a claim can be qualified by platform and scope. A version boundary and a licence gate can converge on the same symptom, a feature that is configured and does nothing, and keeping them in one table would make each harder to rule out. Many licence gates do refuse explicitly, so silence is not universal; it is common enough that the two are worth separating.
+What is **not** here: which capabilities your licence includes. That will be collected in [a.2](a.2-platform-capability-matrix.md), where a claim can be qualified by platform and scope, and **a.2 is not written yet**, so the chapter that owns a capability is the authority on it today. A version boundary and a licence gate can converge on the same symptom, a feature that is configured and does nothing, and keeping them in one table would make each harder to rule out. Many licence gates do refuse explicitly, so silence is not universal; it is common enough that the two are worth separating.
 
 ## Terminology
 
@@ -36,15 +36,17 @@ Entries are added as chapters need them. A term earns one when its competing mea
 
 ### AB token, ABM token, and DEP token
 
-**Three names for one credential**, and you will meet all three in one afternoon. The interface says **AB token**. Fleet's server code and most of its documentation say **ABM token**. The underlying library, and some database and log material, says **DEP**, for the same reason the [ADE and DEP](#ade-and-dep) entry above exists.
+**Three names for one credential**, and you will meet all three in one afternoon. The interface says **AB token**. Fleet's server code and most of its documentation say **ABM token**. The underlying library, and some database and log material, says **DEP**, for the same reason the [ADE and DEP](#ade-and-dep) entry below exists.
 
 It is the token that authorises Fleet to talk to Apple Business Manager on your behalf, and it expires on its own schedule, separately from the push certificate and separately from the Apps and Books token ([7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md)).
 
 ### Unassigned, No team, and a null fleet
 
-**One concept, three vocabularies, and one of them is a `NULL`.** Hosts that belong to no named fleet are shown as **Unassigned** in the interface. GitOps used to call the same thing **No team**, in a file named `no-team.yml`, now deprecated in favour of `unassigned.yml`. In the database and in the authorization policy it is a **null fleet identifier**, which is why so many rules have an explicit guard for it.
+**Two vocabularies, and several storage representations.** Hosts that belong to no named fleet are shown as **Unassigned** in the interface. GitOps used to call the same thing **No team**, in a file named `no-team.yml`, now deprecated in favour of `unassigned.yml`.
 
-**That guard has consequences worth knowing**: a fleet-scoped role is scoped to a concrete fleet, and Unassigned is not one, so fleet-scoped roles do not reach it ([a.4](a.4-roles-and-permissions-matrix.md), not written yet).
+**Underneath, how it is stored depends on what is being stored, and you cannot assume one shape.** A host carries a null fleet identifier. Some scoped resources pair a nullable identifier with a zero, and where a resource can also mean *all fleets*, a null can mean all fleets while an explicit zero means Unassigned. Read the table you are querying rather than carrying one rule between them.
+
+**One consequence holds across all of them**: a fleet-scoped role is scoped to a *concrete* fleet, and the authorization rules reject both a null and a zero, so **fleet-scoped roles do not reach Unassigned at all** ([a.4](a.4-roles-and-permissions-matrix.md), not written yet).
 
 ### MDM enrollment status, on screen and in a filter
 
@@ -56,7 +58,7 @@ It is the token that authorises Fleet to talk to Apple Business Manager on your 
 | On (manual) | `On (manual)`, filtered as `manual` |
 | Off | filtered as `unenrolled` |
 
-The list above is the mapping for the enrolled states rather than the whole set: `personal` and `pending` also exist as filter values.
+That is three of five. The complete set also carries an enrolled personal state and a pending one, and the mapping for those is in Fleet's own interface definitions.
 
 This is the strongest case in this appendix for looking a term up before using it. A value Fleet does not recognise is rejected with a `400`, so typing what you read on screen fails loudly, which is the good case. **The bad case is a value that is recognised and means something else than you meant.**
 
@@ -105,7 +107,7 @@ Like DEP, the retired name is the one in the code and the settings. The console 
 
 ### node key
 
-**The credential a host uses for every request after enrollment.** The enroll secret authenticates the enrollment itself and nothing afterwards; what the host gets back is a node key, and that is what it presents from then on.
+**The credential a host uses on the osquery and Orbit channels after enrollment.** The enroll secret authenticates the enrollment itself and nothing afterwards; what the host gets back is a node key, and that is what it presents from then on. **Not every request from a device uses one**: Fleet Desktop and the device page authenticate with a separate per-device token instead.
 
 A fleetd host holds **two** of them, and confusing them costs time:
 
@@ -164,7 +166,7 @@ Released 11 March 2026. From the release notes:
 >
 > Deprecated certain API field names to reflect the renaming of "teams" to "fleets" and "queries" to "reports".
 
-The old field names are **deprecated rather than removed**, so integrations written against the earlier names continue to work. New work should use the current names.
+**Certain** renamed field names are deprecated rather than removed, so integrations written against those earlier names continue to work. The deprecation is per field rather than a blanket promise about every old name, so check the field you depend on. New work should use the current names.
 
 **The rename covered the surfaces administrators touch, and stopped there.** Storage and internal naming kept the original words:
 
@@ -188,7 +190,7 @@ A related change in the same release: `no-team.yml` in GitOps was deprecated in 
 | | |
 |---|---|
 | **Hard floor** | Enforced, and the failure reaches an administrator through Fleet |
-| **Silent floor** | Nothing an administrator sees **in Fleet**. A debug line in a server log, or a line in the agent's own log on the host, still counts as silent here, because neither reaches the console or an alert |
+| **Silent floor** | **Nothing reaches an administrator through Fleet.** A line in the server's process log or in the agent's log on the host is still silent by this definition, and so is a notification shown to the end user of the device, because none of them appears in the console or raises an alert. Where such a signal exists the row says where |
 | **Fallback or routing** | Both sides work. The version decides which path is taken |
 | **Published baseline** | Fleet states it and nothing in the code enforces it |
 | **Dependency constraint** | A floor or a ceiling on something Fleet runs on |
@@ -223,14 +225,14 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 | Capability | Agent | Server | Kind |
 |---|---|---|---|
 | Linux LUKS **passphrase** escrow | Orbit 1.36.0 | 4.61.0 | **Hard floor.** The one version comparison in the server, and the only boundary whose failure reaches an administrator in Fleet, through the escrow error on the host record |
-| Linux **snapd recovery-key** escrow, new agent against an older server | Orbit 1.58.0 | **4.90.0** | **Not silent in this direction.** The agent logs a warning and shows the user a one-shot notification. It gates itself rather than retrying, because retrying would churn the key slot |
+| Linux **snapd recovery-key** escrow, new agent against an older server | Orbit 1.58.0 | **4.90.0** | Silent to you, **not to the user**: the agent logs a warning and shows the device's user a one-shot notification. It gates itself rather than retrying, because retrying would churn the key slot |
 | Linux **snapd recovery-key** escrow, older agent against a current server | Orbit 1.58.0 | 4.90.0 | Silent. The other direction of the same boundary, and **the only one in this table that runs both ways** |
 | Remote channel configuration, `update_channels` | Orbit 1.20.0 | 4.43.0 | **Silent, and ungated.** Nothing checks anywhere. The server sends the block and an older agent ignores it |
 | macOS FileVault key **rotation** | Orbit 1.30.0 | 4.56.0 | Silent. Negotiated, **no fallback**: the notification is simply not sent, with a debug line and nothing in the console |
 | macOS ADE **setup experience** | Orbit 1.35.0 | 4.60.0 | **Fallback.** An older agent is released by the older worker-based path instead, which is a different mechanism rather than an absence |
 | **Web setup experience, Linux** | Orbit 1.48.0 | 4.74.0 | Silent. **The agent refuses to start the flow** when the server does not declare the capability, which is the reverse of every other row |
 | **Web setup experience, Windows** | Orbit 1.49.0 | 4.75.0 | As above. The two platforms arrived a release apart and are separate boundaries |
-| **End-user authentication** at enrollment, Linux and Windows | Orbit 1.50.0 | 4.77.0 | **Fails open, with a warning in the server log.** Below it Fleet allows the enrollment unauthenticated. Not silent by this table's definition, and the warning is in a log rather than in the console, so it is easy to miss anyway |
+| **End-user authentication** at enrollment, Linux and Windows | Orbit 1.50.0 | 4.77.0 | **Silent, and it fails open.** Below it Fleet allows the enrollment unauthenticated. There is a warning in the server's process log and nothing in Fleet, so an unauthenticated enrollment looks like an ordinary one |
 | Windows on-demand sync, the relaxed poll | Orbit 1.57.0 | 4.87.0 | Fallback. Negotiated, cadence only, and **the one capability flag Fleet persists** |
 | `python_packages` in software inventory | osquery 5.16.0 | not applicable | Fallback, chosen locally. Two complementary queries, so both sides work, and the boundary changes whether packages in user directories are found |
 | `END_USER_EMAIL` as an installer property | Orbit 1.28.0 **when the package is built** | not applicable | Fallback. Falls back to the service command line |
@@ -244,7 +246,7 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 
 **The two packaging floors behave differently from the rest**, because they bind when the installer is built rather than when the host runs. An old `fleetctl` produces a package that cannot carry the property, and no later upgrade of the agent fixes it. Rebuild the package instead.
 
-### Operating system boundaries that Fleet does check
+### Operating system boundaries
 
 | Capability | Boundary | Platform | Enforced where | Kind |
 |---|---|---|---|---|
@@ -268,7 +270,9 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 
 ### Published host baselines
 
-Fleet states these and **nothing in the code enforces any of them**, which is exactly why they belong in a separate table from the boundaries above:
+**This is a snapshot of what Fleet published at 4.90.1, and it is the kind of list this appendix warns about.** It has moved before and it will move again, so read it as where the baseline stood at this release and check Fleet's own current table before planning against it.
+
+**No global admission gate enforces this matrix.** Fleet does not refuse an enrollment for being below a line here. Individual features do have their own gates, several of them in the table above, so "unsupported" here means untested rather than blocked:
 
 | Platform | Baseline |
 |---|---|
@@ -283,7 +287,7 @@ Fleet's own qualification is worth carrying: it may work partially or fully belo
 
 ### Server floors
 
-These are the server side of the capability list above. They matter when you are the one running the old version: an agent that is current against a server that is not.
+These are the server side of the capabilities above, **including the two web setup rows, which run the other way**: there the agent refuses to start unless the server declares the capability. They matter when you are the one running the old version.
 
 | Capability | Server floor |
 |---|---|
@@ -310,7 +314,7 @@ These are the server side of the capability list above. They matter when you are
 
 ### Fleet publishes support scopes, and no dated end of life
 
-**No Fleet release has a published end-of-life date.** What Fleet publishes instead is two release-relative scopes:
+**No dated end-of-life policy was found anywhere in the 4.90.1 repository.** What Fleet publishes there is two release-relative scopes:
 
 | | Bug fixes | Troubleshooting help |
 |---|---|---|
@@ -321,7 +325,7 @@ These are the server side of the capability list above. They matter when you are
 
 **That is not the same as nothing being unsupported.** A release that is not the latest is outside the scope for fixes, and on Free a previous major version is outside the scope for troubleshooting too. Premium's all-versions troubleshooting promise is about help, not about fixes or indefinite compatibility.
 
-So there are two planning questions rather than one. **Plan remediation around being on the latest release**, because that is what a fix requires. **Plan support access around the troubleshooting scope**, which depends on your tier and your major version. What you cannot plan around is a date, because Fleet publishes none.
+So there are two planning questions rather than one. **Plan remediation around being on the latest release**, because that is what a fix requires. **Plan support access around the troubleshooting scope**, which depends on your tier and your major version. What you cannot plan around is a date, because none was found to plan against.
 
 One practical note: **this policy lives in Fleet's company handbook rather than its documentation**, so a reader working through the product docs will not meet it.
 

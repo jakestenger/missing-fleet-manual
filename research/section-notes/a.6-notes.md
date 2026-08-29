@@ -70,7 +70,7 @@ Each row's gate cited in the research at
 | **iOS 17 and iPadOS 17 are not enforced.** The built-in labels are platform-only with an empty query | `server/fleet/labels.go:308-309`, migration `20240707134036_CreateIOSAndIPADOSBuiltinLabels.go:77,82` |
 | Manual migration eligibility is macOS **strictly greater than** 14.0.0 | `server/fleet/hosts.go:1829`, compared at `:1865` |
 | Windows discovery requires protocol version 4.0, and the device reports a specific failure code | `server/fleet/microsoft_mdm.go:198`, `server/mdm/microsoft/syncml/syncml.go:189` |
-| TPM path opens the 2.0 resource-manager device node, which Linux added in 4.12 | `ee/orbit/pkg/securehw/securehw_linux.go:15,29` |
+| TPM path opens the 2.0 resource-manager device node | `ee/orbit/pkg/securehw/securehw_linux.go:15,29`. **The kernel version that added it is Linux's fact, not Fleet's, and no upstream citation was taken**, so neither the appendix nor this ledger states a number. Round 2 removed the inference and round 3 found this row still asserting it |
 | **No minimum Apple OS to enroll in MDM**, and no Android version gate anywhere | `server/service/apple_mdm.go:2683-2703`; nothing found in `server/mdm/android/` |
 
 ### Dependency constraints
@@ -282,10 +282,73 @@ The published-baseline table is now labelled as a **4.90.1 snapshot** rather tha
 evergreen list, with the instruction to check Fleet's current table before planning. Reproducing a
 list that moves is exactly what this appendix warns about, so it carries the warning about itself.
 
+
+
+## Round 3, the whole read
+
+NOT READY, six items. Round 3 confirmed the appendix reads as one thing rather than two, that the
+4.82 rename is a genuine hinge between translating names and translating versions, and that all
+seventeen Part VIII handoffs resolve to entries that give those chapters what they need. Then it found
+the same defect a.8 had just been caught with, twice.
+
+### Three round-2 corrections were in this ledger and not in the appendix
+
+The baseline snapshot label, "no global admission gate", and the narrowed end-of-life claim. **The
+ledger described all three as applied and none of them was.**
+
+**The mechanism is worth writing down, because it is mechanical and will recur.** Those three edits
+were written against hard-wrapped source text. `unwrap.py` had already joined those paragraphs into
+single lines, so the strings I was replacing no longer existed, and a plain `str.replace` that matches
+nothing **fails silently**. My assert-guarded edits in the same batch all landed; the three without an
+assertion all vanished.
+
+**Every replacement gets an assertion.** Not as a style preference: a silent no-op in a batch of
+fourteen edits is invisible, and the ledger then records the intent as the outcome.
+
+### "Silent" had two meanings again
+
+Round 2 gave it a definition and round 3 found two rows contradicting it. The definition said a log
+line still counts as silent; the end-user-auth row called a server-log warning "not silent", and the
+snapd row called a host notification "not silent".
+
+**One boundary now, stated in the table: nothing reaches an administrator through Fleet.** A process
+log, an agent log on the host, and a notification shown to the device's user are all silent by it,
+because none reaches the console or raises an alert. Both rows re-kinded, and each says where its
+signal does go, since "silent to you, not to the user" is the useful distinction for the snapd row.
+
+The operating-system table was also still headed "boundaries that Fleet does check" while containing
+rows that say "Nowhere" and "Nothing checks".
+
+### Unassigned was a data-model claim and I had made it a vocabulary claim
+
+"In the database and in the authorization policy it is a null fleet identifier" is too universal.
+Hosts use a null. Some scoped resources pair a nullable identifier with a zero. And where a resource
+can also mean *all fleets*, a null can mean all fleets while an explicit zero means Unassigned.
+
+Now: two vocabularies, several storage representations, read the table you are querying. **The role
+consequence survives and is the part that matters**, because the policy rejects both null and zero for
+fleet-scoped access, so fleet-scoped roles do not reach Unassigned at all.
+
+### Three neighbouring passages tightened
+
+The MDM status table gives three of five and I had called it "the enrolled states" while it includes
+Off and omits the enrolled personal state and Pending. The node-key entry opened with "every request"
+immediately before explaining that fleetd holds two keys, and it is neither: Fleet Desktop and the
+device page use a separate per-device token. And the 4.82 rename said old field names continue to
+work, where Fleet deprecated **certain** renamed fields rather than making a blanket promise.
+
+### The a.2 deferral was dishonest, in three places
+
+a.6 sent capability availability to a.2, which is an empty outline, without saying so. **0.1 and 2.6
+made the same promise.** All three now follow 1.1's pattern: a.2 will collect it, and the chapter that
+owns the capability is authoritative until it does. 1.3 had the reverse problem, still calling a.6 an
+outline after it was written.
+
 ## Rounds
 
 | Round | Verdict | Outcome |
 |---|---|---|
-| 1, coverage | NOT READY, seven items | Three universals narrowed, the macOS trap corrected, the support conclusion rewritten, seven terminology entries and the published baselines added |
-| 2, evidence audit | NOT READY, six items | One wrong version, split into two rows. "Silent" given one definition and six rows re-kinded. Two negative claims narrowed, five terminology entries corrected, the frontmatter's evidence claim fixed |
-| 3, whole read | Not yet run | |
+| 1, coverage | NOT READY, seven items | Three universals narrowed, the macOS trap corrected, the support conclusion rewritten, terminology and baselines added |
+| 2, evidence audit | NOT READY, six items | One wrong version split into two rows, "silent" defined, six rows re-kinded, two negative claims narrowed, five terminology entries corrected |
+| 3, whole read | NOT READY, six items | Three round-2 corrections found never applied, from unasserted replacements against text `unwrap.py` had already joined. "Silent" made consistent, Unassigned corrected from vocabulary to data model, the a.2 deferral made honest in three chapters |
+| 4, verification | Requested by round 3 | Pending |
