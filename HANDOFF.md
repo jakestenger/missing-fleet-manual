@@ -92,7 +92,7 @@ frontmatter block, and section headings. Do not mistake the file count for progr
 | VI. Automate Fleet | 5 | **Complete 2026-08-28.** All 5 drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part6-structure.md` |
 | VII. Operate Fleet | 6 | **Complete 2026-08-28.** All 6 drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part7-structure.md`, and this part is held to a four-class evidence rule recorded there |
 | VIII. Troubleshooting | 14 | Written, reviewed to the cap, corrected. `drafting` |
-| IX. Appendices | 8 | a.6 and a.8 partial. **a.1 to a.5 and a.7 are stubs** |
+| IX. Appendices | 8 | **In progress 2026-08-29**, to three review rounds each rather than one, set by the owner. a.6 and a.8 drafted and reviewed; a.1 to a.5 and a.7 still stubs. Structure agreed at `research/appendix-structure.md` |
 
 **So the entire manual body is drafted.** The only outline stubs left are six appendices: a.1 to a.5 and a.7.
 
@@ -358,6 +358,49 @@ outputs accordingly** — a draft review of 5.5 should be `5.5-sol.out` or simil
 is not a draft review should say so in its filename.
 
 ---
+
+### Part IX is being built differently, and the reasons are worth carrying
+
+**Set by the owner on 2026-08-29: every appendix, three review rounds each.** Two have needed more
+than three and the reason is recorded below, because it is the most useful thing this part has
+produced so far.
+
+**The structural decision.** a.1, a.2, a.4 and a.5 are four projections of **one shared capability
+register**, at `../missing-fleet-manual-private/research/capability-register.md`, 348 administrator
+intents. Written independently they duplicate each other and then drift, which is this project's
+dominant defect class operating at the scale of a whole part. The register's granularity rule is in
+`research/appendix-structure.md` and it exists because of the "Linux has no lock and no wipe" scar.
+
+**Tables get their own evidence rule**, because a table hides its evidence in a way prose does not: a
+cell saying Premium looks identical whether it was read out of a validator or assumed from a
+neighbour.
+
+### The two failure modes this part has produced, which are new
+
+**One. A correction recorded in the ledger and never made in the file.** a.8 hit this three rounds
+running and a.6 twice. The mechanism is mechanical: **`unwrap.py` reflows paragraphs into single
+lines, so a replacement written against hard-wrapped text stops matching, and a `str.replace` that
+matches nothing fails silently.** Every asserted edit landed; every unasserted one vanished, and the
+ledger then recorded the intent as the outcome.
+
+**Assert on every replacement.** Not a style preference. A silent no-op inside a batch of fourteen
+edits is invisible, and it took two independent review rounds to find three of them.
+
+**Two. A summary sentence outrunning the table it summarises.** a.6's server-floor table said it
+contained rows it did not; its 4.82 paragraph was narrowed while the table beneath kept the blanket
+promise. Cheap to make, hard to see, and the reviewer found both.
+
+### And one about filing defects against Fleet
+
+**S10 was filed and withdrawn within the hour.** I claimed the Windows MDM management endpoint has no
+caller authentication, on the strength of Fleet's registration comment saying so. The comment
+describes the middleware layer; the handler beneath authenticates the device by certificate or by a
+credential in the message. **The queue already contained D15**, a stale Fleet comment that both
+Fleet's documentation and this manual had swallowed, with the rule written beside it: *read the
+executed path, not the comment above it.* Broken the same night it was written down.
+
+The withdrawn entry is kept in the queue with its reasoning, because the mistake is worth more than
+the entry was.
 
 ## 4. The independent reviewer
 
