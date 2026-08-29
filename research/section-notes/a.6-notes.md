@@ -205,10 +205,87 @@ because the wrong value returns an empty result rather than an error; **MIA and 
 Removal upheld. The rationale is softened from "produce the identical symptom" to "can converge on
 the same symptom", because many licence gates refuse explicitly.
 
+
+
+## Round 2, the evidence audit
+
+NOT READY, six items, all applied. The numbers came through better than the classifications did: every
+version in the appendix checked out except one, and the **kind** assigned to each row, which is the
+column that tells a reader what they would see, was wrong or inconsistent across half the table.
+
+### The one wrong number
+
+**The web setup experience row was wrong and was two rows.** I had it as server 4.90.0 for Windows and
+Linux together. Linux arrived at Orbit 1.48.0 with server 4.74.0, Windows at Orbit 1.49.0 with server
+4.75.0, a release apart. Split, and the agent component named as Orbit rather than fleetd.
+
+Everything else verified: the capability pairs, osquery 5.16.0, the two packaging floors, 1.38.0 and
+1.38.1, the Apple and Windows boundaries, the copied host baselines, MySQL, Redis and Aurora, and the
+4.82.0 rename.
+
+**One inference removed.** Linux kernel 4.12 is not established by the Fleet tag, which establishes
+only that Fleet opens the TPM 2.0 resource-manager device node. That node's kernel version is Linux's
+fact and I had no upstream citation, so the appendix now states the requirement and declines the
+number.
+
+### "Silent" was doing two jobs
+
+The word meant "nothing anywhere" in some rows and "nothing in the console" in others, and rows were
+assigned on whichever reading suited. **It now has one definition, stated in the table: nothing an
+administrator sees in Fleet.** A debug line in a server log, or a line in the agent's own log on the
+host, is still silent by that definition, because neither reaches the console.
+
+Re-kinded accordingly:
+
+| Row | Was | Is |
+|---|---|---|
+| snapd recovery-key escrow | One silent row | **Two rows.** New agent against an old server logs a warning and shows the user a notification; the reverse direction is silent |
+| ADE setup experience | Silent floor | **Fallback**, to the older worker-based release path |
+| End-user authentication | Silent | **Fails open with a warning.** Not silent, and still easy to miss |
+| ACME device identity | Not kinded | **Fallback** to SCEP, with an info log |
+| macOS 14 update mechanism | Not kinded | **Routing.** Both paths exist |
+| Windows discovery version | Not kinded | **Hard floor**, the only one on the OS table: the device reports a specific code |
+
+The operating-system table also declared four columns and supplied five cells, and never assigned the
+five kinds it advertised. Rebuilt.
+
+### Two negative claims narrowed
+
+**"Nothing in the code enforces any published baseline"** was contradicted by the macOS 14 gates in the
+table immediately above it. Now: **no global admission gate enforces the matrix**, and individual
+features have their own.
+
+**"No Fleet release has a published end-of-life date"** exceeded what a repository search can support.
+Now: **no dated policy was found anywhere in the 4.90.1 repository**, which is the claim the evidence
+actually is.
+
+### Five terminology entries corrected
+
+| Entry | Was | Is |
+|---|---|---|
+| fleetd | "not a version you can compare" | **No version line of its own**, and what Fleet shows as the agent version is Orbit's. The old wording contradicted the appendix's own numbered rows |
+| MDM status filter | The wrong value "returns an empty result" | An unrecognised value is a `400`. The bad case is a **recognised** value meaning something else. Also adds `personal` and `pending` |
+| activity | A queued script "will never be in" the audit stream | Too exclusive. Scheduling is itself an action and Fleet records batch scheduling as an activity |
+| MIA and missing | Only one "will keep working" | Deprecation is not a removal date, and Fleet has published none |
+| pack | Meeting one means the configuration predates the migration | **The pack specification endpoint still accepts new ones**, so it proves only which of two vocabularies was used |
+
+AB/ABM/DEP token and Unassigned/No team/null fleet verified unchanged.
+
+### What the ledger owed, and now carries
+
+**The frontmatter's claim that every floor was "read from the gate" was false**, and it is corrected in
+the file: boundaries Fleet enforces were read from the gate, and **the version at which a capability
+was introduced is derived from release history**, since the tag only shows the constant existing now.
+Those rows are derived and are marked so.
+
+The published-baseline table is now labelled as a **4.90.1 snapshot** rather than presented as an
+evergreen list, with the instruction to check Fleet's current table before planning. Reproducing a
+list that moves is exactly what this appendix warns about, so it carries the warning about itself.
+
 ## Rounds
 
 | Round | Verdict | Outcome |
 |---|---|---|
-| 1, coverage | NOT READY, seven items | All applied. Three universals narrowed, the macOS trap corrected, the support conclusion rewritten, seven terminology entries and six published baselines added. 3,083 to about 4,430 words |
-| 2, evidence audit | Not yet run | |
+| 1, coverage | NOT READY, seven items | Three universals narrowed, the macOS trap corrected, the support conclusion rewritten, seven terminology entries and the published baselines added |
+| 2, evidence audit | NOT READY, six items | One wrong version, split into two rows. "Silent" given one definition and six rows re-kinded. Two negative claims narrowed, five terminology entries corrected, the frontmatter's evidence claim fixed |
 | 3, whole read | Not yet run | |

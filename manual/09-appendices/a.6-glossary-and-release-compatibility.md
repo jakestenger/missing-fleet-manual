@@ -6,7 +6,7 @@ sidebar_position: 6
 status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-08-29
-verified_source: "drafted against fleet-v4.90.1 (dd0200f062). Every version floor was read from the gate that enforces it, or recorded as unenforced where none exists. Citation ledger at research/section-notes/a.6-notes.md"
+verified_source: "drafted against fleet-v4.90.1 (dd0200f062). Boundaries that Fleet enforces were read from the gate; the version at which a capability was introduced is derived from release history rather than from the tag, and the ledger marks which is which. Citation ledger at research/section-notes/a.6-notes.md"
 reviewed_by:
 reviewed_on:
 ---
@@ -23,7 +23,7 @@ Entries are added as chapters need them. A term earns one when its competing mea
 
 ### fleetd, Orbit, osquery, Fleet Desktop
 
-**fleetd is the bundle. It is not a version you can compare.** What ships to a host is several programs with separate version numbers, and the version boundaries later in this appendix name different ones, so knowing which is which is the difference between a useful check and a wrong one.
+**fleetd is the bundle, and it has no version line of its own.** What ships to a host is several programs with separate version numbers. **What Fleet shows you as the fleetd or agent version is Orbit's**, which is why the boundaries later in this appendix name Orbit where they mean the supervisor and osquery where they mean the query engine. Knowing which one a number refers to is the difference between a useful check and upgrading the wrong thing.
 
 | | What it is | Whose version |
 |---|---|---|
@@ -56,15 +56,17 @@ It is the token that authorises Fleet to talk to Apple Business Manager on your 
 | On (manual) | `On (manual)`, filtered as `manual` |
 | Off | filtered as `unenrolled` |
 
-This is the strongest case in this appendix for looking a term up before using it, because the wrong value returns an empty result rather than an error.
+The list above is the mapping for the enrolled states rather than the whole set: `personal` and `pending` also exist as filter values.
+
+This is the strongest case in this appendix for looking a term up before using it. A value Fleet does not recognise is rejected with a `400`, so typing what you read on screen fails loudly, which is the good case. **The bad case is a value that is recognised and means something else than you meant.**
 
 ### MIA, and missing
 
-**Identical, and one is deprecated.** Both name a host that has not communicated for thirty days. `mia` is the older value and still exists at this release; `missing` is the current one. A query written against either will work, and only one will keep working.
+**Identical, and one is deprecated.** Both name a host that has not communicated for thirty days, and Fleet's own source says they are the same thing with `mia` marked deprecated. Both work at this release. **Deprecated is not a removal date**, and Fleet has published none, but `missing` is the name to write new work against.
 
 ### pack, and scheduled report
 
-**A pack is the older container for scheduled queries**, and it still exists. Schedules were folded into saved queries, which this release calls reports, so current configuration and older configuration describe overlapping objects in different words. If you meet a pack, you are reading something written before that change or migrated from it.
+**A pack is the older container for scheduled queries**, and it still exists. Schedules were folded into saved queries, which this release calls reports, so current and older configuration describe overlapping objects in different words. **Meeting a pack does not prove you are looking at something old**: the pack specification endpoint still accepts new ones at this release. It does mean you are looking at the older of two ways to say the same thing.
 
 ### activity, which means two different things
 
@@ -75,7 +77,7 @@ This is the strongest case in this appendix for looking a term up before using i
 | What somebody did | The past-activity tables | The audit record, written after the fact ([1.5](../01-foundations/1.5-audit-and-activity.md)) |
 | What is queued for a host | The upcoming-activity tables | Work Fleet has accepted and not yet completed ([8.6](../08-troubleshooting/8.6-server-state.md)) |
 
-The distinction decides where you look. A script that has not run yet is in the second and will never be in the first; a script that ran is in the first and has left the second.
+The distinction decides where you look. A script that has run is in the first and has left the second. A script that has not run yet is in the second, **and may already have left a trace in the first**, because scheduling something is itself an action somebody took and Fleet records batch scheduling as an activity. So the queue is the authority on what is pending; the audit stream is the authority on what was asked for.
 
 ### ADE, and DEP
 
@@ -185,8 +187,8 @@ A related change in the same release: `no-team.yml` in GitOps was deprecated in 
 
 | | |
 |---|---|
-| **Hard floor** | Enforced, and the failure reaches you |
-| **Silent floor** | Enforced or simply absent, with nothing surfaced |
+| **Hard floor** | Enforced, and the failure reaches an administrator through Fleet |
+| **Silent floor** | Nothing an administrator sees **in Fleet**. A debug line in a server log, or a line in the agent's own log on the host, still counts as silent here, because neither reaches the console or an alert |
 | **Fallback or routing** | Both sides work. The version decides which path is taken |
 | **Published baseline** | Fleet states it and nothing in the code enforces it |
 | **Dependency constraint** | A floor or a ceiling on something Fleet runs on |
@@ -220,18 +222,20 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 
 | Capability | Agent | Server | Kind |
 |---|---|---|---|
-| Linux LUKS **passphrase** escrow | fleetd 1.36.0 | 4.61.0 | **Hard floor.** The one version comparison in the server, and the only boundary whose failure reaches an administrator, through the escrow error on the host record |
-| Linux **snapd recovery-key** escrow | fleetd 1.58.0 | **4.90.0** | Silent. Negotiated, and **the only boundary that runs both ways**: a current agent gates itself on an older server rather than retrying, because retrying would churn the key slot |
-| Remote channel configuration, `update_channels` | fleetd 1.20.0 | 4.43.0 | **Silent, and ungated.** Nothing checks. The server sends the block and an older agent ignores it |
-| macOS FileVault key **rotation** | fleetd 1.30.0 | 4.56.0 | Silent. Negotiated, **no fallback**: the notification is simply not sent |
-| macOS ADE **setup experience** | fleetd 1.35.0 | 4.60.0 | Silent. Negotiated, with a fallback path for older agents |
-| **Cross-platform web setup experience**, Windows and Linux | Needs the server to declare it | 4.90.0 | Silent. **The agent refuses to start the flow** when the server lacks the capability, which is the reverse of every other row |
-| **End-user authentication** at enrollment, Linux and Windows | fleetd 1.50.0 | 4.77.0 | Silent, and **fails open**: below it Fleet allows the enrollment unauthenticated, with a warning in the server log |
-| Windows on-demand sync, the relaxed poll | fleetd 1.57.0 | 4.87.0 | Fallback. Negotiated, cadence only, and **the one capability Fleet persists** |
-| `python_packages` in software inventory | osquery 5.16.0 | not applicable | Fallback, chosen locally. Two complementary queries, and the boundary changes whether packages in user directories are found |
-| `END_USER_EMAIL` as an installer property | orbit 1.28.0 **when the package is built** | not applicable | Fallback. Falls back to the service command line |
-| `EUA_TOKEN` as an installer property | orbit 1.55.0 **when the package is built** | not applicable | Silent floor. **No fallback branch** |
-| Following an update channel to a current release | **orbit 1.38.0 in the code, 1.38.1 as the bridge** | not applicable | Silent. See below |
+| Linux LUKS **passphrase** escrow | Orbit 1.36.0 | 4.61.0 | **Hard floor.** The one version comparison in the server, and the only boundary whose failure reaches an administrator in Fleet, through the escrow error on the host record |
+| Linux **snapd recovery-key** escrow, new agent against an older server | Orbit 1.58.0 | **4.90.0** | **Not silent in this direction.** The agent logs a warning and shows the user a one-shot notification. It gates itself rather than retrying, because retrying would churn the key slot |
+| Linux **snapd recovery-key** escrow, older agent against a current server | Orbit 1.58.0 | 4.90.0 | Silent. The other direction of the same boundary, and **the only one in this table that runs both ways** |
+| Remote channel configuration, `update_channels` | Orbit 1.20.0 | 4.43.0 | **Silent, and ungated.** Nothing checks anywhere. The server sends the block and an older agent ignores it |
+| macOS FileVault key **rotation** | Orbit 1.30.0 | 4.56.0 | Silent. Negotiated, **no fallback**: the notification is simply not sent, with a debug line and nothing in the console |
+| macOS ADE **setup experience** | Orbit 1.35.0 | 4.60.0 | **Fallback.** An older agent is released by the older worker-based path instead, which is a different mechanism rather than an absence |
+| **Web setup experience, Linux** | Orbit 1.48.0 | 4.74.0 | Silent. **The agent refuses to start the flow** when the server does not declare the capability, which is the reverse of every other row |
+| **Web setup experience, Windows** | Orbit 1.49.0 | 4.75.0 | As above. The two platforms arrived a release apart and are separate boundaries |
+| **End-user authentication** at enrollment, Linux and Windows | Orbit 1.50.0 | 4.77.0 | **Fails open, with a warning in the server log.** Below it Fleet allows the enrollment unauthenticated. Not silent by this table's definition, and the warning is in a log rather than in the console, so it is easy to miss anyway |
+| Windows on-demand sync, the relaxed poll | Orbit 1.57.0 | 4.87.0 | Fallback. Negotiated, cadence only, and **the one capability flag Fleet persists** |
+| `python_packages` in software inventory | osquery 5.16.0 | not applicable | Fallback, chosen locally. Two complementary queries, so both sides work, and the boundary changes whether packages in user directories are found |
+| `END_USER_EMAIL` as an installer property | Orbit 1.28.0 **when the package is built** | not applicable | Fallback. Falls back to the service command line |
+| `EUA_TOKEN` as an installer property | Orbit 1.55.0 **when the package is built** | not applicable | Silent floor. **No fallback branch** |
+| Following an update channel to a current release | **Orbit 1.38.0 in the code, 1.38.1 as the bridge** | not applicable | Silent in Fleet. The failure is in the agent's own log on the host, and nothing in the console says the estate has stopped updating. See below |
 | Enrolling and talking to a 4.90.1 server | **no minimum** | not applicable | Nothing checks |
 
 > **The update-server migration has two numbers and they answer different questions.** The rewrite to the new update server is in the code from **1.38.0**. **1.38.1** is what Fleet's own configuration reference names as the stepping stone, it shipped three days later, and Fleet also shipped a rollback with 1.38.0 in case one was needed. **Step through 1.38.1** ([3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md)).
@@ -242,16 +246,16 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 
 ### Operating system boundaries that Fleet does check
 
-| Capability | Boundary | Platform | Kind |
+| Capability | Boundary | Platform | Enforced where | Kind |
 |---|---|---|---|---|
-| ACME device identity for Apple enrollment | **macOS 14.0, and Apple Silicon, and a DEP-assigned serial** | macOS | Yes | Yes. Fleet issues the SCEP profile instead and logs at info |
-| Which OS-update mechanism is used | macOS 14.0.0 | macOS | Yes. A routing decision; both paths exist | Not applicable |
-| **Delivery** of the OS-update declaration | macOS 14 | macOS | Yes, but **by a dynamic label computed from a report**, not by a version comparison | Yes, and see below |
-| **Delivery** of the OS-update declaration | **iOS 17 and iPadOS 17: not enforced** | iOS, iPadOS | **No.** The built-in labels for these platforms carry no version predicate | Yes |
-| Manual, non-ADE migration eligibility | macOS **strictly above** 14.0.0 | macOS | Yes | Yes on the notification path; loud only when a user triggers it |
-| Discovery request version | protocol version 4.0 | Windows | Yes | **No.** The device reports a specific failure code |
-| Full support for Windows 11 25H2 | **Fleet server 4.89.1** | Windows | Documented | **No.** Enrollment fails outright |
-| Hardware-backed host identity | TPM 2.0, and so Linux kernel 4.12 | Linux | Implicitly, by opening a device node that older kernels do not have | No on the host, yes in Fleet |
+| ACME device identity for Apple enrollment | **macOS 14.0, and Apple Silicon, and a DEP-assigned serial** | macOS | A server-side check before the profile is built | **Fallback.** Fleet issues the SCEP profile instead, with an info log and nothing in the console |
+| Which OS-update mechanism is used | macOS 14.0.0 | macOS | A server-side version comparison | **Routing.** Both mechanisms exist and the version picks one |
+| **Delivery** of the OS-update declaration | macOS 14 | macOS | A dynamic label computed from a report, not a version comparison | **Silent floor**, and a trap. See below |
+| **Delivery** of the OS-update declaration | **iOS 17 and iPadOS 17** | iOS, iPadOS | **Nowhere.** The built-in labels carry no version predicate | **Published baseline only**, and a trap. See below |
+| Manual, non-ADE migration eligibility | macOS **strictly above** 14.0.0 | macOS | A server-side comparison | **Silent floor** on the notification path. Loud only when a user triggers it themselves |
+| Discovery request version | Protocol version 4.0 | Windows | A server-side check on the request | **Hard floor**, and the only one on this table: the device reports a specific failure code |
+| Full support for Windows 11 25H2 | **Fleet server 4.89.1** | Windows | Documented, and the enrollment fails | **Hard floor.** Enrollment fails outright rather than degrading |
+| Hardware-backed host identity | TPM 2.0 | Linux | Implicit. Fleet opens the TPM 2.0 resource-manager device node, so a kernel without it cannot serve this. **Which kernel that is, is Linux's fact rather than Fleet's**, and this appendix does not assert a number | **Silent floor** in Fleet |
 | Enrolling an Apple device in MDM at all | **none** | Apple | Nothing checks | Not applicable |
 
 > ### Two of these are traps rather than boundaries
