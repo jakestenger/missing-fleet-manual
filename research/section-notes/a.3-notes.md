@@ -86,4 +86,40 @@ table above.
 | Research 2 | NOT SOUND, seven items | Eight authorities established; the ranked chain proposed |
 | Research 3 | NOT SOUND, seven items | The chain refused; six mechanisms established |
 | Normalisation | Applied | Units defined, counts restated, the asset store added, the provenance row replaced |
+| Draft correction | Applied | Six claims in the draft that the normalisation made wrong, corrected in the appendix and listed below |
 | Draft review 1 | Not yet run | |
+
+## The six claims the normalisation made wrong, and what replaced them
+
+Recorded because five of the six were claims about **scope**, not about behaviour: each said of a
+whole class what was true of one member. That is this appendix's characteristic failure, and the
+next reviewer should look for it first.
+
+| The draft said | It is actually |
+|---|---|
+| The server replaces four blocks wholesale whenever a spec is applied, whatever applied it | A request option on the organisation settings route. **The GitOps client is the only thing in Fleet that sets it**, and `fleetctl apply` does not. Any caller who can write organisation settings can set it |
+| The ordinary API preserves what you omit | True of the organisation settings patch, **false of the fleet spec path**, which resets or clears several fields |
+| Reading the host is the only method, and it has to be a live query | A live query reaches **the osquery half only**. Update channels, extensions, debug state and script behaviour each need their own host-side observation, so host-side per-consumer observation is the complete method |
+| Fleet settings retain the file name a GitOps run recorded, and nothing else | Activity rows retain actors for the changes Fleet names. The file name is the only writer marker **stored on the settings row itself** |
+| Two sources meeting produce one of six outcomes | Six **observed mechanisms** which co-occur. Credential resolution alone uses three |
+| Around forty specific changes write their own activity | Forty-two, re-derived independently |
+
+**One claim held on re-examination and is worth saying so:** the server-process provenance row. The
+configuration dump starts a new process and dumps what that process loads, so it is neither
+introspection of the running server nor necessarily equal to what is in force, and it omits every
+setting read directly from the environment. The draft already said this.
+
+## What the draft gained rather than corrected
+
+**The enforcement plane**, which had been one table row. The device reports are not equivalent across
+platforms: **Android holds four states and publishes only the first and the last**, so a device
+part-way through enforcement is indistinguishable through any API from one that has not started.
+Apple and Windows have no separate acceptance state for a policy provider, and a third-party
+management provider contributes device-reported observation only.
+
+**Apple push responses are inspected and never persisted.** Which is why a command that never
+arrived looks afterwards exactly like one that was never sent.
+
+**Two host-side counts** that bound how much of a host's configuration is reachable at all: twelve
+settings supplied by environment variable at packaging time and at no other moment, and twenty-eight
+of the agent's twenty-nine command-line settings overridable by the server.
