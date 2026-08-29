@@ -43,13 +43,13 @@ Three questions belong elsewhere and are deliberately unanswered here. **Which r
 | **Orbit** | Orbit on an enrolled device | The Orbit node key, a separate credential from osquery's |
 | **Device** | Fleet Desktop, and the **My device** page an end user opens | A per-device token, not a user account |
 | **fleetd certificate** | fleetd, fetching a certificate template Fleet has asked it to install and reporting the result | The **Orbit** node key, in an `Authentication` header |
-| **Route-local or protocol** | Everything whose credential belongs to the route rather than to Fleet's shared authenticator | An enrollment secret, a download token, a SAML response, a query-string token, a device identity certificate, or a protocol signature |
+| **Route-local or protocol** | Everything that does not go through Fleet's shared authenticator. Some of these check a credential themselves; **some require none at all** | An enrollment secret, a download token, a SAML response, a query-string token, a device identity certificate, a credential inside a protocol message, or nothing |
 
 > **The last row is not a class in the sense the other five are.** It is everything left over once the shared authenticator is out of the picture, so **membership tells you nothing**: what a route requires has to be read off that route.
 >
-> Google's callback for Android events presents a route-specific token. An over-the-air enrollment presents an enroll secret. Apple's protocol paths authenticate the device by its identity certificate. **And three of the five Windows protocol paths require nothing**: discovery, management and the terms-of-use page are unauthenticated, which Fleet's own registration comments say in as many words, the management one adding that it should be authenticated through TLS headers once there is an implementation to do it. Policy and enrollment are authenticated, by a token in the request.
+> Google's callback for Android events presents a route-specific token. An over-the-air enrollment presents an enroll secret. Apple's protocol paths authenticate the device by its identity certificate. Of the five Windows protocol paths, **policy and enrollment take a token in the request, and management authenticates the device inside the handler**, by a client certificate whose common name carries the device identifier or, failing that, a credential in the message itself. **Discovery and the terms-of-use page genuinely require nothing**, which is ordinary for pre-enrollment surfaces.
 >
-> What the row's members have in common is only that Fleet's usual authentication did not run.
+> What the row's members have in common is only that Fleet's usual authentication middleware did not run. **Fleet's registration comments describe that layer, not the route**, and one of them calls the management path unauthenticated while the handler beneath it rejects an untrusted device. Read the handler.
 
 The first class is the one people mean by "the Fleet API". The Host and Orbit classes are why [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) treats a host's credentials as more than one thing: they authenticate separately with separate keys, so a host can be half-working in a way a single credential could not produce.
 
@@ -112,7 +112,9 @@ A proxy configuration written on the assumption that everything Fleet serves liv
 | MDM setup SSO and account-driven enrollment | The in-house app **manifest** |
 | Generated SCEP-proxy URLs, **including the ones written into Windows profiles** | The server URL fleetd is given |
 
-**Two downloads are not on either Fleet hostname when a content delivery network is configured.** The bootstrap package and an in-house app's **package** are handed out as signed CDN URLs where one is set up, and fall back to a Fleet URL only when it is not. So those two are an egress question for the device rather than an ingress question for you, and the in-house app's manifest and its package can end up on different hosts.
+**Two downloads may not be on a Fleet hostname at all.** Where a content delivery network is configured, the bootstrap package and an in-house app's **package** are handed out as signed CDN URLs. **Configured is not the same as used**: if signing fails, or the stored object cannot be confirmed, Fleet falls back and hands out a Fleet URL instead, logging the failure. The two fall back to different places, the bootstrap package to the Apple base URL and the in-house package to the main server URL.
+
+So those two rows are conditional in a way the rest are not: **the path is registered and reachable either way, and which origin a device is sent to depends on configuration you hold and on whether signing worked at that moment.** Expose the Fleet paths regardless. The in-house app's manifest always stays on the main Fleet URL, so a manifest and its package can end up on different hosts.
 
 The ingress question is therefore not "which paths moved" but **"which hostname will a device have been told to use"**, and every hostname you advertise needs to reach the same Fleet.
 
@@ -156,12 +158,12 @@ The ingress question is therefore not "which paths moved" but **"which hostname 
 |---|---|
 | Identity-provider authentication during setup | Three separate things, all needed: the browser starts at `/api/latest/fleet/mdm/sso`, the identity provider is given `/api/v1/fleet/mdm/sso/callback`, and the flow returns the user to the frontend route `/mdm/sso/callback`, which `/assets/*` serves |
 | End user licence agreement | **`/api/latest/fleet/mdm/setup/eula/{token}`**, the deprecated form. The replacement `/api/*/fleet/setup_experience/eula/{token}` is registered and is not what this flow loads at the tag |
-| Bootstrap package | **`/api/latest/fleet/mdm/bootstrap`**, also the deprecated form, hard-coded into the URL Fleet builds. The replacement `/api/*/fleet/bootstrap` is registered and unused by this flow |
+| Bootstrap package | **`/api/latest/fleet/mdm/bootstrap`**, also the deprecated form, hard-coded into the URL Fleet builds, **and used only when a CDN URL is not** (see above). Expose it either way |
 | Fleet's Platform SSO extension | `/api/mdm/apple/psso/*` and `/.well-known/apple-app-site-association` |
 
 **For any Apple device enrolled by link**, which is macOS as well as iOS and iPadOS, the chain is `/enroll`, then `/api/v1/fleet/enrollment_profiles/ota`, then **`/api/v1/fleet/ota_enrollment`**, which is where the profile the second one hands out sends the device next. The last two exist under the other prefixes and **Fleet emits `v1` at both transitions**. Omitting the third leaves an enrollment that starts and never completes. None of them is platform-specific: a reverse proxy that exposes them only for mobile will block a Mac enrolling from the **Add hosts** link ([3.2](../03-connect-devices/3.2-enroll-macos-devices.md), [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md)).
 
-**For iOS and iPadOS specifically**, in-house app delivery adds **two** paths, and Fleet emits `latest` for both: `/api/latest/fleet/software/titles/*/in_house_app/{token}` and `/api/latest/fleet/software/titles/*/in_house_app/manifest/{token}`. A rule matching only the first serves the app and not the manifest that tells the device to install it.
+**For iOS and iPadOS specifically**, in-house app delivery adds **two** paths, and Fleet emits `latest` for both: `/api/latest/fleet/software/titles/*/in_house_app/{token}` and `/api/latest/fleet/software/titles/*/in_house_app/manifest/{token}`. A rule matching only the first serves the app and not the manifest that tells the device to install it. **The package path is the one a CDN URL can replace**; the manifest path never moves.
 
 **Account-driven user enrollment** needs each of these, and they are separate registrations rather than one family:
 

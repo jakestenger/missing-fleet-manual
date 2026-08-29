@@ -31,7 +31,7 @@ request bodies and response schemas.
 | **a.5 Action-to-interface index** | Fleet's interfaces overlap but are not interchangeable, and each administrative action has a specific set of supported control surfaces |
 | **a.6 Terminology and version boundaries** | Compatibility means translating between current names, legacy names and version floors, not maintaining a second feature catalogue |
 | **a.7 fleetctl command index and behaviour** | `fleetctl` is a set of operator requests whose contract is what each command asks Fleet to do and what its result proves, not a transcription of `--help` |
-| **a.8 API access, versioning, and exposure** | Fleet's API is six classes of caller, not a list of endpoints |
+| **a.8 API access, versioning, and exposure** | Fleet's request surface is a set of callers, not a list of endpoints: five that share a credential Fleet's authenticator understands, and a residue that must be read route by route |
 
 Five were retitled on 2026-08-28 to match those claims. **Titles changed in frontmatter only.** The
 filenames carry 28 live cross-references and renaming them buys nothing a title does not.

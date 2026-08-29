@@ -52,6 +52,14 @@ reference disagreed with what the server registers. It did not have it for route
 | Apple MDM protocol services are registered directly on the root mux | `server/service/handler.go:1342` |
 | The device endpointer registers **25** routes at this release, covering policies, software install and uninstall, self-service, certificates, setup-experience status, Linux escrow triggering, conditional-access bypass and MDM migration. **The count is not published** | `server/service/handler.go:939-966` |
 | API tokens are tied to a Fleet user account and sent as `Authorization: Bearer <token>`; obtainable from **My account > Get API token** or the login endpoint; email and password login disabled for SSO and MFA users | `docs/REST API/rest-api.md:49-59` |
+| **The Windows management endpoint authenticates the device inside the handler**, by a client certificate whose common name carries the device identifier or a credential in the SyncML message, with a one-time rekey path. Fleet's registration comment describes the middleware layer only | `server/service/microsoft_mdm.go:1209-1235`, `:1273-1310`. **Corrected at round 5**, after I had asserted the opposite from the comment alone |
+| Discovery and terms-of-use require no credential | `server/service/handler.go:1131-1145`, and the handlers beneath |
+| Platform SSO's API family and the app-site-association document | `server/service/handler.go:1085` and the frontend router registrations |
+| `/enroll` is a frontend-served route, not an API route | `server/service/frontend.go:199-213` |
+| The metrics endpoint mounts when credentials are configured **or** basic authentication is explicitly disabled | `cmd/fleet/serve.go:943-955` |
+| The API-only catalogue constrains only API-only accounts carrying a non-empty endpoint restriction list | `server/service/middleware/auth/api_only.go:21-67` |
+| A user token inherits its account's role and scope, and the activity record attributes work to it | Established for 2.3 and unchanged |
+| List endpoints share `page`, `per_page`, `order_key`, `order_direction` | `docs/REST API/rest-api.md:542` |
 
 ### Versioning
 
@@ -63,7 +71,7 @@ reference disagreed with what the server registers. It did not have it for route
 | The Android module declares `v1` alone | `server/mdm/android/service/handler.go:40-42` |
 | SCIM is not a versioned module at all: two literal prefix mounts, `v1` and `latest` | `ee/server/scim/scim.go:280-284` |
 | **The union across every version-bearing module is `v1`, `2022-04`, `latest` and nothing else** | The four module rows above |
-| **Literal and unversioned mounts are a separate population and carry no prefix at all**: SCIM's two mounts, the Apple root protocol services, and the ACME feature module | `ee/server/scim/scim.go:280-284`, `server/service/handler.go:1342`, `cmd/fleet/serve.go:748-754` with `server/mdm/acme/internal/service/handler.go:18-60`. **Narrowed at round 4**, which found the earlier claim covering "every module and root mount" while omitting ACME |
+| **Literal mounts are a separate population: their prefix is written out rather than expanded.** SCIM's two mounts carry `v1` and `latest` literally; the Apple root protocol services and the ACME feature module carry no version segment at all. **Literal means not expanded, which is not the same as unprefixed**, and an earlier version of this row conflated them | `ee/server/scim/scim.go:280-284`, `server/service/handler.go:1342`, `cmd/fleet/serve.go:748-754` with `server/mdm/acme/internal/service/handler.go:18-60`. **Narrowed at round 4**, which found the earlier claim covering "every module and root mount" while omitting ACME |
 | A route's own start and end constraints narrow its module's ordered set, and `latest` is omitted where a route ends before the module's last version | `server/platform/endpointer/endpoint_utils.go:1115` |
 | `latest` is inserted into the route expression and handled directly, not a redirect | `server/platform/endpointer/endpoint_utils.go:1144` |
 | Fleet's SSO initiation and callback are literal `v1` paths | `server/service/handler.go:1217,1222` |
@@ -106,7 +114,9 @@ enablement, and the Apple installer download.
 |---|---|---|
 | **Reading the request surface as five shared-credential caller classes plus a residue** | The authenticators and the root-mux registrations above | Fleet's reference is organised by resource, not by caller. The reframing is the book's and is why this appendix exists in this shape. **Demoted at round 3** from six peer classes, because the sixth is defined by absence and implies nothing |
 | **That a capability requires a given path to be externally reachable** | The registration, plus the caller or the URL producer | This is the whole exposure matrix, and it is derived. Registration establishes existence and matching; only the caller or the emitted URL establishes necessity. **Moved here from Stated at round 4** |
-| **Which flows advertise the Apple base URL and which stay on the main one** | Every construction site of a device-facing URL | Derived from reading each producer, not from the configuration validator. **Moved here from Stated at round 4** |
+| **Which flows advertise the Apple base URL and which stay on the main one** | `server/service/devices.go:880-889`, `server/service/frontend.go:199-213`, `server/mdm/apple/util.go:165-174`, `server/mdm/apple/apple_mdm.go:215-230,1431-1465,1527-1537`, `ee/server/service/mdm.go:867-875`, `server/worker/apple_mdm.go:703-715`, `server/mdm/apple/profile_processor.go:421-495`; and on the main URL, `server/service/apple_mdm.go:2177-2179,6414-6418`, `server/fleet/apple_psso.go:123-130`, `ee/server/service/in_house_apps.go:206-209` | Derived from reading every producer of a device-facing URL, not from the configuration validator. **Moved here from Stated at round 4, sourced at round 5** |
+| **The Apple base URL also reaches the SCEP-proxy URLs written into Windows profiles** | `server/mdm/microsoft/profile_variables.go:186-188` | Not obvious from the setting's name, which says Apple |
+| **Two downloads can leave Fleet's origins entirely**, and fall back when signing fails | `server/worker/apple_mdm.go:703-756` for the bootstrap package, falling back to the Apple base URL; `ee/server/service/in_house_apps.go:206-218` for the in-house package, falling back to the main server URL and logging the failure | The path stays registered and reachable either way. Which origin a device is sent to is conditional on configuration and on whether signing worked |
 | A rule matching `/api/v1/` misses the other prefixes and the unversioned families | The registration behaviour, plus Fleet's own docs using `v1` and `latest` interchangeably | Fleet does not warn about this |
 | Match three explicit prefixes rather than a wildcard segment | Wildcard semantics differ between proxies | Operational judgement on top of a verified fact |
 | Separate Orbit and osquery node keys mean a host can be half-working | The distinct authenticators and keys established for 3.1 | Fleet documents the keys separately and does not draw the conclusion |
@@ -200,11 +210,10 @@ It is not a general allowlist.
 
 ### Evidence rows added after round 2
 
-Round 2 found the ledger asserting less than the appendix. Now carried: account-driven enrollment and
-the frontend routes, Windows with a source rather than "re-confirmed at review"
-(`server/mdm/microsoft/microsoft_mdm.go:12-45`, `server/service/handler.go:1132-1145`), the setup SSO
-initiation and frontend callback, Platform SSO's paths, `/enroll`, the metrics mount condition, and
-the API-only enforcement semantics.
+Round 2 found the ledger asserting less than the appendix, and **round 5 found this paragraph still
+claiming rows the tables did not contain**. They are in the tables above now: Platform SSO, `/enroll`,
+the metrics mount condition, the API-only enforcement semantics, token inheritance, and the list
+conventions.
 
 **Round 3 found this addendum describing moves the tables had not made. Round 4 found the same thing again**, because I repaired the sentence rather than the tables. They are moved now, in the tables: the caller model, the exposure mapping and the Apple base-URL boundary are in **Derived** and nowhere else, and the route-local universal is deleted. Twice is a pattern, and the lesson is that a ledger entry describing a reclassification is not a reclassification.
 
@@ -247,11 +256,39 @@ reads at startup.
 **One class of claim the User row got grammatically wrong**: it read as though an API-only account
 could work through the interface. It cannot.
 
+
+
+## Round 5, and the cap
+
+Round 5 returned NOT READY and said plainly that a sixth full review is not worth running: what
+remains is bounded, and two of the four items were required corrections rather than polish. Applied,
+and this appendix now stops at five rounds, which is the project's cap. It stays at `drafting` for the
+whole-book pass.
+
+**The item worth recording is one I got wrong in the opposite direction.** Round 4 told me three of
+the five Windows protocol endpoints require nothing, citing Fleet's registration comments, and I
+wrote it into the appendix and filed it in the defect queue as S10. It is false. The comment describes
+the **middleware layer**: the route is not wrapped in Fleet's standard authenticator. The handler
+beneath authenticates the device by a client certificate whose common name carries the device
+identifier, or by a credential inside the SyncML message. Only discovery and terms-of-use genuinely
+require nothing, and both are pre-enrollment surfaces where that is ordinary.
+
+**S10 is withdrawn**, with its reasoning kept in the queue, because the mistake is the useful part:
+the queue already carried D15, a stale Fleet comment that both Fleet's documentation and this manual
+had taken as fact, and the rule written down beside it is *read the executed path, not the comment
+above it*. I filed S10 the same night.
+
+The other three: both content-delivery paths can fall back to a Fleet origin when signing fails, to
+different origins, and the exposure rows now say so instead of contradicting the paragraph above them;
+the literal-mount row conflated *not expanded* with *unprefixed*, when SCIM's two mounts carry `v1`
+and `latest` literally; and the governing structure note still described a.8's claim as six classes.
+
 ## Rounds
 
 | Round | Verdict | Outcome |
 |---|---|---|
-| 1, coverage | NOT READY, six items | Seven capabilities and nine paths added; the matrix had been sourced from an article |
+| 1, coverage | NOT READY, six items | Seven capabilities and nine paths added. The matrix had been sourced from an article |
 | 2, evidence audit | NOT READY, eight items | Six rows changed from registered aliases to emitted paths, two of them deprecated paths that are the ones in use |
-| 3, whole read | NOT READY, seven items | Six were round-2 fixes that had not landed, two of them only in this ledger. Applied, plus the frame demoted and two chapters corrected |
-| 4, verification | Requested by round 3 | Pending |
+| 3, whole read | NOT READY, seven items | Six were round-2 fixes that had not landed, two only in this ledger. The caller frame demoted; two chapters corrected |
+| 4, verification | NOT READY, four items | The ledger reclassification claimed a second time and not performed. The Apple origin table corrected |
+| 5, verification | NOT READY, four items | **Capped here.** The Windows authentication claim reversed and S10 withdrawn; the CDN fallbacks qualified; the ledger's outstanding evidence rows written into the tables |
