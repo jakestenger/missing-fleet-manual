@@ -20,7 +20,7 @@ feature_requests:
 
 # API access, versioning, and exposure
 
-Fleet's request surface is easier to reason about once you stop reading it as a list of endpoints and start reading it as **callers**. Five of them share a credential Fleet's own authenticator understands. Everything else is a route that authenticates its own callers by its own means, and those are the ones a network design gets wrong.
+Fleet's request surface is easier to reason about once you stop reading it as a list of endpoints and start reading it as **callers**. Five of them share a credential Fleet's own authenticator understands. Everything else bypasses that authenticator, and **whether such a route requires anything at all has to be established route by route**: some carry a token or a certificate, and some are genuinely unauthenticated.
 
 **What a caller must present is the useful grouping. What has to be reachable is a different question**, answered by capability further down, and the two do not line up neatly enough to organise one table by the other.
 
@@ -45,7 +45,11 @@ Three questions belong elsewhere and are deliberately unanswered here. **Which r
 | **fleetd certificate** | fleetd, fetching a certificate template Fleet has asked it to install and reporting the result | The **Orbit** node key, in an `Authentication` header |
 | **Route-local or protocol** | Everything whose credential belongs to the route rather than to Fleet's shared authenticator | An enrollment secret, a download token, a SAML response, a query-string token, a device identity certificate, or a protocol signature |
 
-> **The last row is not a class in the sense the other five are.** It is everything left over once the shared authenticator is out of the picture, so **membership tells you nothing**: what a route requires has to be read off that route. Google's callback for Android events presents a route-specific token. An over-the-air enrollment presents an enroll secret. Apple's protocol paths authenticate the device by its identity certificate. What they have in common is only that Fleet's usual authentication did not run.
+> **The last row is not a class in the sense the other five are.** It is everything left over once the shared authenticator is out of the picture, so **membership tells you nothing**: what a route requires has to be read off that route.
+>
+> Google's callback for Android events presents a route-specific token. An over-the-air enrollment presents an enroll secret. Apple's protocol paths authenticate the device by its identity certificate. **And three of the five Windows protocol paths require nothing**: discovery, management and the terms-of-use page are unauthenticated, which Fleet's own registration comments say in as many words, the management one adding that it should be authenticated through TLS headers once there is an implementation to do it. Policy and enrollment are authenticated, by a token in the request.
+>
+> What the row's members have in common is only that Fleet's usual authentication did not run.
 
 The first class is the one people mean by "the Fleet API". The Host and Orbit classes are why [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) treats a host's credentials as more than one thing: they authenticate separately with separate keys, so a host can be half-working in a way a single credential could not produce.
 
@@ -105,10 +109,12 @@ A proxy configuration written on the assumption that everything Fleet serves liv
 |---|---|
 | `/enroll`, the over-the-air profile and `ota_enrollment` endpoints, and `/api/mdm/apple/enroll` | `/api/mdm/apple/installer` |
 | `/mdm/apple/scep`, `/mdm/apple/mdm`, and the ACME family, inside enrollment profiles | Platform SSO's issuer, key set and app-site-association document |
-| MDM setup SSO and account-driven enrollment | In-house app manifest and package URLs |
-| Bootstrap downloads and generated SCEP-proxy URLs | The server URL fleetd is given |
+| MDM setup SSO and account-driven enrollment | The in-house app **manifest** |
+| Generated SCEP-proxy URLs, **including the ones written into Windows profiles** | The server URL fleetd is given |
 
-So the ingress question is not "which paths moved" but "which hostname will a device have been told to use", and both hostnames need to reach the same Fleet.
+**Two downloads are not on either Fleet hostname when a content delivery network is configured.** The bootstrap package and an in-house app's **package** are handed out as signed CDN URLs where one is set up, and fall back to a Fleet URL only when it is not. So those two are an egress question for the device rather than an ingress question for you, and the in-house app's manifest and its package can end up on different hosts.
+
+The ingress question is therefore not "which paths moved" but **"which hostname will a device have been told to use"**, and every hostname you advertise needs to reach the same Fleet.
 
 ## What has to be reachable, by capability
 

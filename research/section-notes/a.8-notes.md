@@ -59,10 +59,11 @@ reference disagreed with what the server registers. It did not have it for route
 |---|---|
 | The core module declares `v1` and `2022-04` | `server/service/handler.go:296` |
 | The chart module declares `v1` and `2022-04` | `server/chart/internal/service/handler.go:24-27` |
-| The activity module declares `v1` and **`latest` explicitly**, rather than receiving it as an appended alias | `server/activity/internal/service/handler.go:41-43` |
+| The activity module declares `v1` and `latest` explicitly. **It receives the appended alias as well**, since the shared endpointer appends one regardless; an earlier version of this row said otherwise and was wrong | `server/activity/internal/service/handler.go:41-43`, `server/platform/endpointer/endpoint_utils.go:1144-1150` |
 | The Android module declares `v1` alone | `server/mdm/android/service/handler.go:40-42` |
 | SCIM is not a versioned module at all: two literal prefix mounts, `v1` and `latest` | `ee/server/scim/scim.go:280-284` |
-| **The union across every module and root mount is `v1`, `2022-04`, `latest` and nothing else.** This is the full audit round 2 required before the release-wide claim could stand | The five rows above |
+| **The union across every version-bearing module is `v1`, `2022-04`, `latest` and nothing else** | The four module rows above |
+| **Literal and unversioned mounts are a separate population and carry no prefix at all**: SCIM's two mounts, the Apple root protocol services, and the ACME feature module | `ee/server/scim/scim.go:280-284`, `server/service/handler.go:1342`, `cmd/fleet/serve.go:748-754` with `server/mdm/acme/internal/service/handler.go:18-60`. **Narrowed at round 4**, which found the earlier claim covering "every module and root mount" while omitting ACME |
 | A route's own start and end constraints narrow its module's ordered set, and `latest` is omitted where a route ends before the module's last version | `server/platform/endpointer/endpoint_utils.go:1115` |
 | `latest` is inserted into the route expression and handled directly, not a redirect | `server/platform/endpointer/endpoint_utils.go:1144` |
 | Fleet's SSO initiation and callback are literal `v1` paths | `server/service/handler.go:1217,1222` |
@@ -70,9 +71,9 @@ reference disagreed with what the server registers. It did not have it for route
 | A configured URL prefix is prepended to everything Fleet serves, **including root-mux handlers**, because Fleet wraps the completed root mux and strips the prefix before dispatch | `cmd/fleet/serve.go:993-996`. **Corrected at round 2**: my first citation, `:230-231`, only normalises and validates the setting |
 | The Apple server URL setting exists, is validated as a URL, and Fleet's guidance is that it resolves to the same server | `server/fleet/app.go:199-205,331-342`, `server/service/appconfig.go:1557-1568`. **Which flows advertise it is derived, below** |
 
-### The exposure matrix
+### Registrations, which establish that a path exists
 
-Every path read from its registration. Grouped as the appendix groups them.
+Every path read from its registration. **That a capability needs a given path exposed is derived, not stated**, and lives in the Derived table below; a registration proves existence and nothing about necessity.
 
 | Capability | Paths, and source |
 |---|---|
@@ -84,7 +85,7 @@ Every path read from its registration. Grouped as the appendix groups them.
 | Setup experience: EULA, bootstrap, MDM SSO callback | `server/service/handler.go:761`, `:713`, `:1250` |
 | Enrollment by link, including `ota_enrollment` | `server/service/handler.go:1087`, and the profile that sends the device there, `server/mdm/apple/apple_mdm.go:1772` |
 | In-house apps, **both** paths | `server/service/handler.go:1153-1154` |
-| Windows MDM protocol paths | Unchanged from the first draft and re-confirmed at review |
+| Windows MDM protocol paths, and which of them authenticate | `server/mdm/microsoft/microsoft_mdm.go:12-45`, registered `server/service/handler.go:1131-1145`. **Discovery, management and terms-of-use are unauthenticated and Fleet's comments say so**; policy and enrollment authenticate by a token in the request |
 | Android enrollment token and enablement callback | `server/mdm/android/service/handler.go:35` |
 | Certificate delivery | SCEP proxy path constant `server/mdm/apple/apple_mdm.go:68`; fleetd certificates `server/service/handler.go:1039` |
 | Google Calendar webhook | `server/service/handler.go:1248`, and the URL Fleet supplies to Google, `ee/server/calendar/google_calendar.go:233` |
@@ -103,7 +104,9 @@ enablement, and the Apple installer download.
 
 | Conclusion | From | Reasoning |
 |---|---|---|
-| Reading the request surface as six classes of caller is the useful model | The authenticators and the root-mux registrations above | Fleet's reference is organised by resource, not by caller. The reframing is the book's, and is why this appendix exists in this shape |
+| **Reading the request surface as five shared-credential caller classes plus a residue** | The authenticators and the root-mux registrations above | Fleet's reference is organised by resource, not by caller. The reframing is the book's and is why this appendix exists in this shape. **Demoted at round 3** from six peer classes, because the sixth is defined by absence and implies nothing |
+| **That a capability requires a given path to be externally reachable** | The registration, plus the caller or the URL producer | This is the whole exposure matrix, and it is derived. Registration establishes existence and matching; only the caller or the emitted URL establishes necessity. **Moved here from Stated at round 4** |
+| **Which flows advertise the Apple base URL and which stay on the main one** | Every construction site of a device-facing URL | Derived from reading each producer, not from the configuration validator. **Moved here from Stated at round 4** |
 | A rule matching `/api/v1/` misses the other prefixes and the unversioned families | The registration behaviour, plus Fleet's own docs using `v1` and `latest` interchangeably | Fleet does not warn about this |
 | Match three explicit prefixes rather than a wildcard segment | Wildcard semantics differ between proxies | Operational judgement on top of a verified fact |
 | Separate Orbit and osquery node keys mean a host can be half-working | The distinct authenticators and keys established for 3.1 | Fleet documents the keys separately and does not draw the conclusion |
@@ -203,7 +206,7 @@ the frontend routes, Windows with a source rather than "re-confirmed at review"
 initiation and frontend callback, Platform SSO's paths, `/enroll`, the metrics mount condition, and
 the API-only enforcement semantics.
 
-**Round 3 found that addendum describing moves the tables had not actually made.** They are made now: the caller model and the Apple base-URL coverage boundary sit under **Derived** and nowhere else, the route-local universal is deleted rather than annotated, and every "this capability requires external reachability" mapping is derived, because a registration proves a route exists and not that a capability needs it open.
+**Round 3 found this addendum describing moves the tables had not made. Round 4 found the same thing again**, because I repaired the sentence rather than the tables. They are moved now, in the tables: the caller model, the exposure mapping and the Apple base-URL boundary are in **Derived** and nowhere else, and the route-local universal is deleted. Twice is a pattern, and the lesson is that a ledger entry describing a reclassification is not a reclassification.
 
 
 
