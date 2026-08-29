@@ -39,7 +39,9 @@ PART_NAMES = {
     "04": ("IV", "Know your devices"),
     "05": ("V", "Manage devices"),
     "06": ("VI", "Automate Fleet"),
-    "07": ("VII", "Extend and integrate Fleet"),
+    # Part VII was renamed while it was still an outline. The old name lived on here until
+    # 2026-08-28, so the status page announced six chapters under a title none of them had.
+    "07": ("VII", "Operate Fleet"),
     "08": ("VIII", "Troubleshooting Fleet"),
     "09": ("A", "Appendices and indexes"),
 }
@@ -96,7 +98,9 @@ def review_index():
         return rounds, latest
     for dirpath, _dirnames, filenames in os.walk(REVIEWS):
         for fn in sorted(filenames):
-            m = re.match(r"^(\d+\.\d+)[-.](.*)\.(out|md|txt)$", fn)
+            # Appendix sections are lettered, `a.4`, not numbered, so a digits-only pattern
+            # counted zero rounds for every appendix and reported them all as unreviewed.
+            m = re.match(r"^([\da-z]+\.\d+)[-.](.*)\.(out|md|txt)$", fn, re.I)
             if not m:
                 continue
             if NON_DRAFT_REVIEW.search(m.group(2)):
@@ -109,7 +113,9 @@ def review_index():
                     content = fh.read()
             except OSError:
                 continue
-            sec = m.group(1)
+            # Frontmatter writes appendix sections capitalised (`A.4`) and review filenames are
+            # lower case (`a.4-sol.out`). Fold both to one case or the lookup silently misses.
+            sec = m.group(1).upper()
             rounds[sec] += 1
             if "NOT READY" in content:
                 verdict = "not ready"
@@ -150,11 +156,19 @@ def collect():
 
 
 def sec_key(s):
+    """Sort `7.10` after `7.9`, and sort `A.4` by its number rather than tying every appendix.
+
+    The lettered part sorts last because there is only one of it; what matters is that the
+    numbers inside it order correctly, which a bare int() cast on "A" could not do.
+    """
     parts = s.split(".")
-    try:
-        return tuple(int(p) for p in parts)
-    except ValueError:
-        return (99, 99)
+    out = []
+    for p in parts:
+        try:
+            out.append((0, int(p)))
+        except ValueError:
+            out.append((1, p.lower()))
+    return tuple(out)
 
 
 def pill(status, rounds, verdict):
