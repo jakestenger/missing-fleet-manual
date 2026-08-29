@@ -27,13 +27,13 @@ feature_requests:
 
 **Licence and prerequisite are columns, never cell values**, which is the appendix's main structural decision. Folding a licence into a cell would put this project's least reliable claim class inside its most consulted table, and it would answer two questions with one word. The rule itself is restated where you will need it, above the matrix.
 
-**What is not here.** Operating system versions and floors are [a.6](a.6-glossary-and-release-compatibility.md). Which role may do it is [a.4](a.4-roles-and-permissions-matrix.md). How the thing works is the chapter that owns it, and every row points there rather than explaining it again.
+**What is not here.** Operating system versions and floors are [a.6](a.6-glossary-and-release-compatibility.md). Which role may do it is [a.4](a.4-roles-and-permissions-matrix.md). Which interface can do it is [a.5](a.5-interface-index.md). And how the thing actually works is the chapter that owns it: this appendix answers whether, not how, and does not repeat a chapter's explanation. Use [a.1](a.1-capability-index.md) to get from a capability to its chapter.
 
 ## What decides most cells
 
 ![Explanation](../_assets/icons/explanation.svg) Most cells are decided by a small number of structural facts, and knowing them lets you predict a row this table does not contain.
 
-**Whether the platform runs an agent.** macOS, Windows and Linux run fleetd. iOS, iPadOS and Android do not, so anything that depends on running a query or a script is not applicable there rather than unsupported. ChromeOS runs an extension that answers some of the same questions with none of the same machinery.
+**Whether the platform runs an agent.** macOS, Windows and Linux run fleetd. iOS, iPadOS and Android do not, so nothing that depends on running a query or a script reaches them. Which of `Unsupported` and `Not applicable` a given cell gets is decided per row rather than by the platform: where Fleet holds a target list that mobile platforms are absent from, the cell is `Unsupported` on that evidence, and where the subject simply has no mobile version, it is `Not applicable`. ChromeOS runs an extension that answers some of the same questions with none of the same machinery.
 
 **Whether Fleet holds a management channel, and whose it is.** Apple's protocol, Microsoft's, and Google's management API differ in what they will carry, so the same administrator intent arrives by three mechanisms with three sets of failure modes ([1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md)).
 
@@ -47,19 +47,27 @@ feature_requests:
 
 > ### Requiring signed host requests locks out every Mac and Windows host
 >
-> Fleet can require that every agent request carries a signature. **The setting is deployment-wide and has no platform exception**, and it refuses unsigned requests on the agent's core paths.
+> Fleet can require that agent requests carry a signature. **The setting is deployment-wide and has no platform exception.** It covers the agent's own request paths, everything under the osquery path, and the certificate-request route, refusing an unsigned request on any of them with an authentication error. The capability handshake is the one exemption.
 >
-> **Only Linux packages can carry the certificate that satisfies it.** Fleet's own packaging refuses the option for anything other than a Linux package type and says so.
+> **Only Linux can satisfy it, and Fleet says so twice.** Packaging refuses the option for anything other than a Linux package type, and the agent refuses it again at startup on any operating system that is not Linux.
 >
-> So on a mixed estate, turning this on stops every macOS and Windows host checking in, reporting, or receiving work. They cannot be fixed from the host, because no packaging option produces a Mac or Windows agent that can sign. **Nothing warns you at the point of change**, and Fleet knows which platforms are enrolled.
+> So on a mixed estate, turning this on stops every macOS and Windows host checking in, reporting or receiving work, and no packaging option produces a Mac or Windows agent that can sign. **Nothing warns you at the point of change**, and Fleet knows which platforms are enrolled.
+>
+> The end-user surface is outside the covered set, so **a locked-out host can still look reachable**: My Device answers while the host itself has stopped participating.
 
-> ### Downgrading to Free does not take back the recovery keys
+> ### Downgrading to Free does not stop disk encryption escrow
 >
-> Escrowing a disk encryption key is Premium. **Reading one is not.** A deployment that has been Premium, has escrowed keys, and then drops to Free stops collecting new keys and goes on surrendering every key it already holds, to every role that can read the host ([a.4](a.4-roles-and-permissions-matrix.md)).
+> What Free refuses is narrow: a write that **switches disk encryption on**. Everything downstream of that switch is gated on the stored setting rather than on the licence.
+>
+> So a deployment that ran Premium with encryption enforced, and then drops to Free, does not stop. The stored setting is still on, because nothing clears it, and Fleet **goes on collecting and storing new recovery keys** from Windows and Linux hosts. Reading a key was never licence-gated at all, so it also goes on surrendering every key it holds, to every role that can read the host ([a.4](a.4-roles-and-permissions-matrix.md)).
+>
+> There is a second effect that is easier to hit and harder to diagnose. Because the refusal fires on any write whose new value is on, **a downgraded deployment cannot save any device-management setting** until it first turns disk encryption off, and the error names the encryption field rather than the change you were making.
 
-> ### Wipe is Free on Android and Premium everywhere else
+> ### Wipe has three different answers, not two
 >
-> One administrator intent, one licence split down the middle of it. The Android company-owned path is not gated; the other five platforms return a licence error. A reader who learns the licence answer on one platform will get it wrong on the others, which is the whole argument for this appendix being organised the way it is.
+> One administrator intent, three outcomes. On Free, only a company-owned Android device can be wiped; every other platform gets a licence error before Fleet looks at the platform at all. On Premium, macOS, iPhone and iPad, Windows, Linux and Android all work. **ChromeOS works on neither**, because the Premium path rejects it by name as an unsupported platform.
+>
+> A reader who learns the licence answer on one platform will get it wrong on the others, which is the whole argument for this appendix being organised the way it is.
 
 ## How to read it
 
@@ -412,9 +420,9 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C018** CAP-056, Linux. Supported when the agent was packaged with the managed host identity certificate option and the host has a usable TPM 2.0: the agent generates a hardware-backed key, obtains a certificate over the enrollment protocol using a valid enroll secret, and signs later requests through a local signing proxy. Not supported when no TPM is present, in which case setup fails and the end-user surface reports the device as unavailable. The option is refused outright on any operating system other than Linux.
 
-**C019** CAP-057, macOS. Supported when the setting is on, in the sense that it is enforced: every unsigned agent request from a Mac is refused with an authentication error. Not satisfiable on macOS, because a macOS package cannot carry a host identity certificate, so turning the setting on locks every Mac out. The setting is deployment-wide and has no platform exception.
+**C019** CAP-057, macOS. Not supported when the setting is off, which is the default: an unsigned request from a Mac is passed through unverified, so nothing changes. Supported when the setting is on, in the sense that it is then enforced: an unsigned request from a Mac on a covered path is refused with an authentication error. Enforced but not satisfiable, because no macOS package can carry a host identity certificate and the agent refuses the option on macOS anyway, so turning the setting on locks every Mac out. The setting is deployment-wide and has no platform exception.
 
-**C020** CAP-057, Windows. Supported when the setting is on, in the sense that it is enforced: every unsigned agent request from a Windows host is refused with an authentication error. Not satisfiable on Windows, because a Windows package cannot carry a host identity certificate, so turning the setting on locks every Windows host out.
+**C020** CAP-057, Windows. Not supported when the setting is off, which is the default: an unsigned request from a Windows host is passed through unverified. Supported when the setting is on, in the sense that it is then enforced: an unsigned request from a Windows host on a covered path is refused with an authentication error. Enforced but not satisfiable, because no Windows package can carry a host identity certificate and the agent refuses the option on Windows anyway, so turning the setting on locks every Windows host out.
 
 **C021** CAP-057, Linux. Supported when the setting is on and the host holds a certificate: requests are signed and the server verifies them. Not supported when the setting is on and the host has no certificate, in which case every agent and osquery request is refused with an authentication error.
 
@@ -586,7 +594,9 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 ## Rows that are not platform-scoped
 
-88 rows have no platform answer, because their subject is the Fleet server rather than a device: server configuration, a server-side store, an identity operation, or a property of how the deployment is run. Carrying them as six `Not applicable` cells each would add 528 cells that say nothing and would distort every per-platform count. Omitting them would be worse, because a reader who looked one up and found nothing could not tell whether a.2 does not cover it or whether it simply has no platform answer.
+88 rows have no platform answer. Most are about the Fleet server rather than a device: server configuration, a server-side store, an identity operation, or a property of how the deployment is run. **A few are not server-side and still have no platform answer**, which is why the section is named for what is true of all of them rather than for the common case. An automation interface is one, and a commercial arrangement with no corresponding mode in the software is another.
+
+Carrying all 88 as six `Not applicable` cells each would add 528 cells that say nothing and would distort every per-platform count. Omitting them would be worse, because a reader who looked one up and found nothing could not tell whether a.2 does not cover it or whether it simply has no platform answer.
 
 So they are carried here, one line each, grouped by the same sections as the matrix. The role answer for these rows is in a.4 and the interface answer is in a.5, which is where they genuinely resolve.
 
