@@ -78,13 +78,19 @@ for path in sorted(MANUAL.rglob("*.md")):
 
 # --- check 2: source files cited in prose (STYLE §8) ---
 sources = []
-SRC_RE = re.compile(r"`([a-z][a-z0-9_/-]*\.(?:go|tsx|ts|rego|sql|py))`")
+# A citation is still a citation with a line number on it, and STYLE forbids both. The first
+# version of this pattern required the backtick to close straight after the extension, so
+# `policy.rego:47` passed and `policy.rego` did not; 49 of 50 citations in a.4 were invisible.
+SRC_RE = re.compile(r"`([a-z][a-z0-9_/-]*\.(?:go|tsx|ts|rego|sql|py))(?::[0-9,:-]+)?`")
 for path in sorted(MANUAL.rglob("*.md")):
     body = re.sub(r"<!--.*?-->", " ", path.read_text(), flags=re.S)
     body = re.sub(r"```.*?```", " ", body, flags=re.S)
     for n, line in enumerate(body.split("\n"), 1):
         s = line.strip()
-        if s.startswith(("|", "#")):
+        # Headings are structural. Table rows are NOT exempt: a table is reader-facing content
+        # and STYLE section 8 applies to it exactly as it applies to a paragraph. Skipping them
+        # is what let a.4 ship 40 citations inside its matrix.
+        if s.startswith("#"):
             continue
         for m in SRC_RE.finditer(line):
             sources.append((path.name, n, m.group(1)))
