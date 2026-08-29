@@ -49,7 +49,9 @@ feature_requests:
 | **Per-host stored control** | Nothing an administrator writes | A column on the host | Per agent poll |
 | **The device-management asset store** | Nothing, once populated | The database, encrypted, with a deletion history | Per use |
 
-**On the host**, a further set: compiled-in agent defaults, what the installer baked in, what the service definition passes, local fallback files, the operating system keystore, the macOS configuration profile, and what the server delivers.
+**On the host**, a further set: compiled-in agent defaults, what the installer baked in, what the service definition passes, local fallback files, the operating system keystore, the macOS configuration profile, and what the server delivers. Seven, against the eleven on the server, and the host set is where the surprising resolutions live because it is the one an administrator cannot inspect from Fleet.
+
+**Two counts are worth carrying** because they bound how much of the host's configuration is reachable at all. Twelve of the agent's settings can be supplied by environment variable at packaging time, which is the only moment they can be set that way. And **all but one of the agent's twenty-nine command-line settings can be overridden by the server** through the fleet's own agent options document, which is what makes that document the most consequential thing in this appendix.
 
 > ### The asset store outranks the server's own configuration, and only warns you
 >
@@ -72,7 +74,7 @@ feature_requests:
 
 ## How collisions resolve
 
-![Reference](../_assets/icons/reference.svg) **There is no single precedence order, and expecting one is the mistake this section exists to prevent.** Two sources meeting produce one of six outcomes, and a single resolution path routinely uses three or four of them at once.
+![Reference](../_assets/icons/reference.svg) **There is no single precedence order, and expecting one is the mistake this section exists to prevent.** Six mechanisms were observed at this release. They are **not six classes a collision falls into**: they co-occur, and a single resolution path routinely uses three or four of them at once. Read the table as a vocabulary rather than a taxonomy.
 
 | Mechanism | What happens |
 |---|---|
@@ -111,9 +113,11 @@ feature_requests:
 
 ![Reference](../_assets/icons/reference.svg) **The answer depends on the writer, not on the field**, which is why a single rule has never worked here.
 
-**The ordinary API preserves what you omit.** It patches the stored document.
+**The organisation settings API preserves what you omit.** It patches the stored document. **This is not true of the fleet spec path**, which resets or clears several fields, so "the API preserves omissions" is a statement about one route rather than about the API.
 
-**The server replaces four blocks wholesale** whenever a spec is applied, whatever applied it. So **omitting the single sign-on block clears it**, and the same is true of the features block, the MDM end-user authentication block, and Apple account provisioning.
+**Four blocks are replaced wholesale, but only on request.** The organisation settings route takes an overwrite option, and when it is set, **omitting the single sign-on block clears it**, along with the features block, the MDM end-user authentication block and Apple account provisioning. **The GitOps client is the only thing in Fleet that sets it.** `fleetctl apply` does not, and neither does the interface.
+
+> **It is an ordinary request option, not a GitOps privilege.** Any caller who can write organisation settings can set it, so a script that reproduces what GitOps sends will also clear those four blocks by omitting them, and nothing in the response distinguishes the two behaviours.
 
 **The GitOps client mostly resets.** Omitted YARA rules are converted to an empty list and therefore cleared. Omitted certificate authorities are cleared too, and by a less obvious route: the run queues a second pass that re-applies the empty grouping with deletion enabled, so the emptiness is acted on after the main apply rather than during it. Omitted conditional access is left alone. Activity expiry and host expiry are left alone.
 
@@ -127,20 +131,35 @@ feature_requests:
 |---|---|---|---|
 | **Server process** | A configuration dump, **which starts a new process** | **No surface reports it** | Not retained |
 | **Organisation settings** | The API or the interface | The same | **By exception only.** See below |
-| **Fleet settings** | The API or the interface | The same | The file name a GitOps run recorded, and nothing else |
+| **Fleet settings** | The API or the interface | The same | An activity, for the changes Fleet names. The recorded file name is the only writer marker **stored on the settings row itself** |
 | **Agent options** | The API | **Only the host knows.** Ask it | Recorded as an edit |
 | **Host-local** | The host's own files | The host | Not retained |
 | **Enforced on the device** | Fleet's desired state | The device's report | Per platform ([a.6](a.6-glossary-and-release-compatibility.md)) |
 
 > **The server-process row is the one to read twice.** The configuration dump does not introspect the running server: it starts a fresh process and dumps what *that* process loads. So it can differ silently from what is in force after a configuration file or deployment definition has changed, and it omits every setting read directly from the environment rather than through the configuration manager. **Fleet has no surface that reports the running server's effective configuration.**
 
-**Agent options are the plane where stored and in-force genuinely diverge**, and Fleet publishes no reconciliation. Reading the host is the only method, and it has to be a live query, because the routine detail collection gathers four flags and nothing else. **Fleet asks every host for its configuration hash on every detail cycle and discards it**, which is the one piece of evidence that would answer the question directly.
+**Agent options are the plane where stored and in-force genuinely diverge**, and Fleet publishes no reconciliation. **Host-side, per-consumer observation is the only complete method**, and there is no single question that answers it: a live query reaches the osquery half, while update channels, extensions, debug state and script behaviour each need their own host file, process state or log.
+
+**Fleet asks every host for its configuration hash and throws it away.** The detail query selects the whole introspection row and keeps only the version, discarding the hash that would answer the question directly. Note that this happens on a **detail cycle rather than on every poll**: Fleet skips detail queries until the detail interval comes round or a refetch forces them, so the discarded evidence is periodic, not continuous.
 
 ### The audit trail is by exception
 
-**The organisation settings document is audited by exception rather than as a document.** Around forty specific changes each write their own activity: agent options, enroll secrets, disk encryption, Windows device management, minimum operating system versions, the integrations, GitOps mode.
+**The organisation settings document is audited by exception rather than as a document.** Forty-two specific changes each write their own activity: agent options, enroll secrets, disk encryption, Windows device management, minimum operating system versions, the integrations, GitOps mode.
 
 **There is no activity for the document itself and no fallback.** Every one of those writes is guarded by a condition on its own block, so a change to a part with no dedicated type writes nothing at all. Changing SMTP settings, the server URL, or the host expiry window leaves no entry. **The feed is silent rather than incomplete**, which is worse, because nothing indicates a settings change happened ([1.5](../01-foundations/1.5-audit-and-activity.md)).
+
+## What the device says back, and what Fleet keeps of it
+
+![Explanation](../_assets/icons/explanation.svg) The last row of the table above is the one Fleet controls least, because the value in force is the device's and Fleet only holds a report of it. **The reports are not equivalent across platforms**, and treating them as one thing is how a dashboard comes to be trusted for something it cannot know.
+
+| Where it is enforced | What Fleet can observe |
+|---|---|
+| **Apple** | Whether the device accepted the delivered state. There is no separate acceptance state for a policy provider, so acceptance and enforcement are the same report |
+| **Windows** | The same shape as Apple: one acceptance report, no separate provider state |
+| **Android** | **Four distinct states, of which Fleet exposes only the first and the last through any API.** The two middle states are held and not published, so a device part-way through is indistinguishable from one that has not started |
+| **A third-party management provider** | Only what the device itself reports. Fleet holds no channel to the other provider, so this is observation rather than knowledge |
+
+> **Push responses are inspected and thrown away.** When Fleet pushes to Apple's service, the response is examined at the time and returned or logged, and **nothing about it is persisted.** So there is no stored record of whether an individual push was accepted, which is why a command that never arrives looks the same afterwards as one that was never sent ([8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md)).
 
 ## Where Fleet's reference and the running server disagree
 
