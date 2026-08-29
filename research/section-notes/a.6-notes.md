@@ -11,27 +11,29 @@ the appendix re-scoped at the same time under the Part IX agreement
 ## What the re-scope removed, and why
 
 **Feature availability is gone.** Free against Premium belongs in a.2, where a claim can be qualified
-by platform and scope. The reason is not tidiness: a version floor and a licence gate produce the
-identical symptom, a feature that is configured and does nothing, and a reader diagnosing one needs
-the other table to be a separate place they can rule out.
+by platform and scope. The reason is not tidiness: a version boundary and a licence gate **can converge on** the same
+symptom, a feature that is configured and does nothing, and a reader ruling one out needs the other
+to be a separate place. Narrowed at round 1: many licence gates refuse explicitly, so the convergence
+is common rather than universal.
 
 **Documentation maintenance is gone.** It was a third empty heading in an appendix whose own
 introduction admitted to two, and its content is contributor material rather than reader material.
 
-**Version boundaries is filled**, with cross-cutting floors only.
+**Version boundaries is filled**, with cross-cutting boundaries only, typed by kind rather than all
+called floors.
 
-## The organising finding
+## The organising finding, as narrowed at round 1
 
-**Fleet negotiates capabilities rather than comparing versions.** The agent and server exchange a
-named capability list per request; when the server wants something the agent has not declared, it
-does something else and logs at debug.
-
-There is **exactly one server-side agent-version comparison in the 4.90.1 tree**, the Linux LUKS
-passphrase escrow gate at `ee/server/service/devices.go:262`, using `IsAtLeastVersion`
+**Fleet 4.90.1 declares and enforces no global minimum agent version.** Its Orbit and device protocols
+negotiate named capabilities for several boundaries; others are ungated, chosen locally by the agent,
+or implemented as fallbacks. **The server compares a reported agent version in exactly one gate**, the
+Linux LUKS passphrase escrow gate at `ee/server/service/devices.go:262`, using `IsAtLeastVersion`
 (`server/fleet/utils.go:91`). `OrbitVersion` and `OsqueryVersion` appear elsewhere only in ingest and
 statistics, never in a gate.
 
-That is why the appendix's central claim is about **silence** rather than about numbers.
+So most incompatibilities degrade one feature rather than refusing anything, and many are invisible
+from the console. **My first draft of this said "everything else is negotiated" and the appendix's own
+table disproved it**; see round 1 below.
 
 ## Fleet contract, source checked at the tag
 
@@ -39,12 +41,12 @@ That is why the appendix's central claim is about **silence** rather than about 
 
 | Claim | Source |
 |---|---|
-| Capabilities are exchanged in a header, populated by both sides | `server/fleet/capabilities.go:153`; server reads at `server/contexts/capabilities/capabilities.go:15`, writes at `server/service/endpoint_utils.go:317` |
+| Capabilities are exchanged in a header, populated by both sides, **on the Orbit and device protocols only** | `server/fleet/capabilities.go:153`; server reads at `server/contexts/capabilities/capabilities.go:15`, writes at `server/service/endpoint_utils.go:317`; clients at `client/orbit_client.go:157-168` and `client/device_client.go:91-110`. **Narrowed at round 1 from "every request"** |
 | One version comparison exists in the whole server tree | `ee/server/service/devices.go:262`, definition `server/fleet/utils.go:91` |
 | **No minimum agent version to enroll or talk to a 4.90.1 server.** Neither enrollment path reads a version, and the agent's enrollment record has no version field | `server/service/orbit.go:150-310`, `server/service/osquery.go:105-200`, `server/fleet/orbit.go:100-120` |
 | Only one negotiated capability is persisted anywhere | `server/service/orbit.go:597-608`, into `mdm_windows_enrollments.fleetd_sync_capable` |
 
-### Agent floors
+### Agent boundaries
 
 Each row's gate cited in the research at
 `../../missing-fleet-manual-private/research-sensitive/a.6-scratch-versions.md` §1. Load-bearing ones:
@@ -59,7 +61,7 @@ Each row's gate cited in the research at
 | End-user auth, fleetd 1.50.0, and **below it Fleet allows the enrollment unauthenticated** | `server/service/orbit.go:259` |
 | `EUA_TOKEN` packaging property, orbit 1.55.0, **no fallback branch** | `orbit/pkg/packaging/windows.go:107-109` |
 
-### Operating system floors
+### Operating system boundaries
 
 | Claim | Source |
 |---|---|
@@ -71,7 +73,7 @@ Each row's gate cited in the research at
 | TPM path opens the 2.0 resource-manager device node, which Linux added in 4.12 | `ee/orbit/pkg/securehw/securehw_linux.go:15,29` |
 | **No minimum Apple OS to enroll in MDM**, and no Android version gate anywhere | `server/service/apple_mdm.go:2683-2703`; nothing found in `server/mdm/android/` |
 
-### Dependency floors
+### Dependency constraints
 
 | Claim | Source |
 |---|---|
