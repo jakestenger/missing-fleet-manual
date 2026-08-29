@@ -255,6 +255,59 @@
   .meter.full i.on { background: var(--s-capped); }
   .meter-none { color: var(--faint); font-family: var(--mono); font-size: 11.5px; }
 
+  /* work the reviewer has not returned yet; the panel is absent when nothing is running */
+  .running {
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--s-drafting);
+    border-radius: 3px;
+    background: var(--panel);
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+  }
+  .running-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 10px;
+  }
+  .running-head .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--s-drafting);
+    flex: none;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+  @media (prefers-reduced-motion: reduce) {
+    .running-head .dot { animation: none; }
+  }
+  .running ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .running li {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 14px;
+    flex-wrap: wrap;
+  }
+  .running li code {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .running .age {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-variant-numeric: tabular-nums;
+    color: var(--faint);
+    margin-left: auto;
+  }
+  .running-note { margin: 10px 0 0; font-size: 13px; color: var(--muted); max-width: 76ch; }
+
   /* collapsed outline parts */
   .stub {
     border: 1px dashed var(--rule);

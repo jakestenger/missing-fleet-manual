@@ -20,6 +20,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 from collections import defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -129,6 +130,41 @@ def review_index():
     return rounds, latest
 
 
+def in_flight():
+    """Reviews that are running right now, derived rather than declared.
+
+    The reviewer writes its output file only when it finishes, so a review output that exists
+    and is empty is a run in progress. That makes "what is happening at this moment" a property
+    of the filesystem rather than something I have to remember to type in, which is the only
+    kind of live status that stays true.
+
+    Returns a list of (label, minutes_running), newest last.
+    """
+    if not os.path.isdir(REVIEWS):
+        return []
+    now = time.time()
+    running = []
+    for dirpath, _dirnames, filenames in os.walk(REVIEWS):
+        for fn in sorted(filenames):
+            if not fn.endswith((".out", ".md", ".txt")) or fn.endswith(".err"):
+                continue
+            path = os.path.join(dirpath, fn)
+            try:
+                st = os.stat(path)
+            except OSError:
+                continue
+            if st.st_size:
+                continue
+            age = (now - st.st_mtime) / 60
+            # A job that has been empty for hours is dead, not running. Codex reviews take five
+            # to ten minutes; an hour is generous enough to never hide a slow one.
+            if age > 60:
+                continue
+            running.append((os.path.splitext(fn)[0], age))
+    running.sort(key=lambda r: r[1], reverse=True)
+    return running
+
+
 def collect():
     chapters = defaultdict(list)
     for entry in sorted(os.listdir(MANUAL)):
@@ -234,7 +270,8 @@ def main():
         '    <div class="rule-card"><span class="k">Review cap</span>'
         '<span class="v">Five rounds per chapter</span><span class="n">Rounds run until a chapter '
         "comes back clean or hits five, then it stays at <code>drafting</code> and waits for the "
-        "whole-part review.</span></div>\n"
+        "whole-part review. <strong>The appendices are being written to three rounds each</strong>, "
+        "set by the owner on 2026-08-28.</span></div>\n"
     )
     a(
         '    <div class="rule-card"><span class="k">Defect record</span>'
@@ -255,6 +292,19 @@ def main():
     ]:
         a('    <div class="tot"><span class="num">%s</span><span class="lab">%s</span></div>\n' % (num, lab))
     a("  </section>\n\n")
+
+    running = in_flight()
+    if running:
+        a('  <section class="running" aria-label="Running now">\n')
+        a('    <div class="running-head"><span class="dot"></span>Running now</div>\n')
+        a("    <ul>\n")
+        for label, age in running:
+            a('      <li><code>%s</code><span class="age">%d min</span></li>\n'
+              % (html.escape(label), round(age)))
+        a("    </ul>\n")
+        a('    <p class="running-note">Reviews the reviewer has not yet returned. It writes its '
+          "output only when it finishes, so an empty transcript is a job still thinking.</p>\n")
+        a("  </section>\n\n")
 
     for key in sorted(chapters):
         roman, name = PART_NAMES.get(key, (key, key))
