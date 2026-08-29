@@ -20,7 +20,8 @@ extractor that guarantees rule coverage is `../../missing-fleet-manual-private/r
 | First attempt, policy pairs treated as rows | 102 |
 | First row universe | 117 |
 | After merges undone and false synonyms separated | 141 |
-| After the last merge was split at research round 4 | **142** |
+| After the last merge was split at research round 4 | 142 |
+| After draft review round 1 named six unlisted actions | **148** |
 
 **The 117 was 25 rows too low and both causes were one mistake made twice**: collapsing distinct
 administrator intents onto a shared twelve-cell vector, once under the name "merge" and once under
@@ -93,4 +94,4 @@ any further path bypasses them**, because that would need integration tests rath
 | Research 2 | NOT SOUND, four items | Row universe built; C15 and the selective actions corrected |
 | Research 3 | NOT SOUND, five items | 117 rows refused; merges and synonyms unpicked |
 | Research 4 | NOT SOUND, two items | Last merge split, absent intents rerouted, 142 |
-| Draft review 1 | Not yet run | |
+| Draft review 1 | NOT READY, five items | All applied. Six actions added: deleting a user, deleting a fleet, turning Windows management **on**, and three Volume Purchasing token actions. The empty-result qualifier was at the wrong grain and is now effect-specific. C14 added for disabled scripts, which overrides an Allowed cell for every role including a global administrator |
