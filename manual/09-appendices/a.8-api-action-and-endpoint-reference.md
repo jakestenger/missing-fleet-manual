@@ -1,5 +1,5 @@
 ---
-title: "API action and endpoint reference"
+title: "API access, versioning, and exposure"
 chapter: "Appendices and indexes"
 section: "A.8"
 sidebar_position: 8
@@ -18,7 +18,7 @@ feature_requests:
   exclude: []
 ---
 
-# API action and endpoint reference
+# API access, versioning, and exposure
 
 Fleet's API is easier to reason about once you stop reading it as a list of endpoints and start reading it as **six classes of caller**. Every route belongs to exactly one, the class decides how a request proves who it is, and most confusion about Fleet's API is a request arriving in the wrong class.
 

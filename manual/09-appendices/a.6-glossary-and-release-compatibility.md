@@ -1,5 +1,5 @@
 ---
-title: "Glossary and release compatibility"
+title: "Terminology and version boundaries"
 chapter: "Appendices and indexes"
 section: "A.6"
 sidebar_position: 6
@@ -9,7 +9,7 @@ verified_on: 2026-08-24
 verified_source: "partial: the terminology section and the 4.82.0 rename are verified at git tag fleet-v4.90.1; feature availability and version boundaries are still outline"
 ---
 
-# Glossary and release compatibility
+# Terminology and version boundaries
 
 **Two of the five sections below are written and three are not.** Terminology and the deprecated-names section carry verified content; **Feature availability** and **Version boundaries** are headings with nothing under them, and a chapter that sends you to this appendix for either is sending you nowhere yet.
 

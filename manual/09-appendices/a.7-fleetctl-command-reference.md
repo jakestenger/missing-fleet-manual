@@ -1,5 +1,5 @@
 ---
-title: "fleetctl command reference"
+title: "fleetctl command index and behaviour"
 chapter: "Appendices and indexes"
 section: "A.7"
 sidebar_position: 7
@@ -9,7 +9,7 @@ verified_on: 2026-08-21
 verified_source: release-review-required
 ---
 
-# fleetctl command reference
+# fleetctl command index and behaviour
 
 <!--
 Structured placeholder. Document each command against Fleet 4.90.1, including syntax,

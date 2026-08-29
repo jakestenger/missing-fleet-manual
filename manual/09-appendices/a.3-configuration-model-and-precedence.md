@@ -1,5 +1,5 @@
 ---
-title: "Configuration model and precedence"
+title: "Configuration sources, scopes, and precedence"
 chapter: "Appendices and indexes"
 section: "A.3"
 sidebar_position: 3
@@ -9,7 +9,7 @@ verified_on: 2026-08-21
 verified_source: release-review-required
 ---
 
-# Configuration model and precedence
+# Configuration sources, scopes, and precedence
 
 <!--
 Structured placeholder. Replace this outline with release-verified guidance for Fleet 4.90.1.
