@@ -93,7 +93,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 
 ## The matrix
 
-![Reference](../_assets/icons/reference.svg) Grouped as a reader would look for a capability, 262 rows. Section rows in bold carry no cells; they mark where a family starts.
+![Reference](../_assets/icons/reference.svg) Grouped as a reader would look for a capability, 266 rows. Section rows in bold carry no cells; they mark where a family starts.
 
 | ID | Capability | macOS | iOS/iPadOS | Windows | Linux | Android | ChromeOS | Licence | Prerequisite |
 |---|---|---|---|---|---|---|---|---|---|
@@ -106,7 +106,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-026** | Rotate an enroll secret without a flag day | Supported | Supported | Supported | Supported | Supported | Supported | Free globally, Premium per fleet | None |
 | **CAP-027** | Enroll a Mac in MDM automatically during Setup Assistant | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple Business Manager token, and the serial assigned to Fleet there |
 | **CAP-028** | Enroll a Mac in MDM from a link, company-owned | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Free | Apple MDM configured, and a valid enroll secret |
-| **CAP-029** | Enroll a Mac in MDM from a link, personally owned | Supported | Supported | Unsupported | Not applicable | Supported | Not applicable | Free | Apple MDM configured, and a valid enroll secret |
+| **CAP-029** | Enroll a personally owned device from a link | Supported | Supported | Unsupported | Not applicable | Supported | Not applicable | Free | Apple MDM configured, and a valid enroll secret |
 | **CAP-030** | Download an unsigned manual macOS enrollment profile | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple MDM configured |
 | **CAP-031** | Download the default Setup Assistant profile | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple MDM configured |
 | **CAP-032** | Have Fleet install the agent on a Mac it enrolls | Supported | Unsupported | Not applicable | Not applicable | Not applicable | Not applicable | Free | Apple MDM enrollment on the device channel |
@@ -125,7 +125,6 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-045** | Supply a Windows host's URL, secret and flags at install time | Not applicable | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Free | Installer properties supplied on the command line |
 | **CAP-046** | Enroll an iPhone or iPad automatically | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple Business Manager token, with the devices assigned to Fleet |
 | **CAP-047** | Enroll an iPhone or iPad from a link, company-owned | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Free to enroll, Premium to attach the owner | Apple MDM configured, and a valid enroll secret |
-| **CAP-048** | Enroll an iPhone or iPad from a link, personally owned | Not applicable | Supported | Unsupported | Not applicable | Supported | Not applicable | Free | Apple MDM configured, and a valid enroll secret |
 | **CAP-049** | Have a person enroll their own device with a Managed Apple Account | Unsupported | Conditional (C016) | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple Business Manager token, MDM single sign-on, and a Managed Apple Account |
 | **CAP-051** | Place an ADE device in a fleet by platform | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple Business Manager token uploaded |
 | **CAP-052** | Enroll an Android device as a personal work profile | Not applicable | Not applicable | Not applicable | Not applicable | Supported | Not applicable | Free | Android Enterprise bound, and a valid enroll secret |
@@ -142,7 +141,11 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-063** | Expire host records automatically after a silence window | Conditional (C025) | Conditional (C026) | Supported | Supported | Supported | Supported | Free globally, Premium per fleet | None |
 | **C. Agent (fleetd) management** | | | | | | | | | |
 | **CAP-064** | Build an installer for a platform | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | Build host must match the package type |
-| **CAP-065** | Include the end-user surface in the agent | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free surface, Premium features inside it | Chosen at packaging time on macOS and Linux, at install time on Windows |
+| **CAP-065** | Include the end-user surface in the agent | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | Chosen at packaging time on macOS and Linux, at install time on Windows |
+| **CAP-349** | Let an end user see their own device's details and software | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | The end-user surface installed, which issues the device's own address |
+| **CAP-350** | Let an end user see the summary the desktop menu shows | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Premium | The end-user surface installed. On Free the request is refused with a licence error |
+| **CAP-351** | Open an interactive query shell on the host itself | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | The agent installed, and local access to the host. Starts a separate instance, so it does not show the running agent's state |
+| **CAP-352** | Force an agent update check without waiting for the interval | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | Updates not disabled at packaging time. The check runs at start, before any subsystem |
 | **CAP-066** | Enable scripts on a host at packaging time | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | Chosen at packaging time, or by profile on macOS |
 | **CAP-067** | Set an agent's update channel centrally | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Premium | Agent built with updates enabled |
 | **CAP-068** | Set an agent's update channel on the host | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | An agent restart |
@@ -251,7 +254,8 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-175** | Gate an install on a condition the device reports | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | Agent installed |
 | **CAP-176** | Have Fleet write the install and uninstall logic for you | Supported | Not applicable | Conditional (C040) | Supported | Not applicable | Not applicable | Free | Package identifiers must be extractable |
 | **CAP-177** | Install software on a host | Supported | Supported | Supported | Supported | Unsupported | Unsupported | Free | Agent installed, or MDM connected for the Apple path |
-| **CAP-178** | Uninstall software from a host | Conditional (C041) | Unsupported | Supported | Supported | Unsupported | Unsupported | Free | Agent installed with scripts enabled, and an uninstall script on file |
+| **CAP-178** | Uninstall software from a host, as an administrator | Conditional (C041) | Unsupported | Supported | Supported | Unsupported | Unsupported | Free | Agent installed with scripts enabled, and an uninstall script on file |
+| **CAP-353** | Let an end user uninstall their own software | Conditional (C041) | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | The title offered as self-service, and the end-user surface installed. Authenticated by the device's own address, not by a Fleet account |
 | **CAP-179** | Ship different builds of one title to different hosts | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | At most ten packages per title |
 | **CAP-180** | Hold a catalogue app at a version | Supported | Unsupported | Supported | Unsupported | Unsupported | Unsupported | Free | A cached version must exist |
 | **CAP-181** | Keep the library's catalogue apps current | Supported | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Free | An installer store, and no literal version pin |
@@ -263,14 +267,14 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-187** | Serve installers to hosts through a CDN | Supported | Supported | Supported | Supported | Not applicable | Not applicable | Free | A content delivery URL with a signing key pair |
 | **CAP-188** | Accept a very large installer | Supported | Supported | Supported | Supported | Not applicable | Not applicable | Premium | None |
 | **L. Setup and self-service experiences** | | | | | | | | | |
-| **CAP-189** | Prepare a Mac before its user reaches the desktop | Supported | Conditional (C043) | Conditional (C044) | Conditional (C045) | Not applicable | Unsupported | Premium | Apple MDM configured, automated enrollment, and the agent delivered |
+| **CAP-189** | Prepare a device before its user reaches the desktop | Supported | Conditional (C043) | Conditional (C044) | Conditional (C045) | Not applicable | Unsupported | Premium | Apple MDM configured, automated enrollment, and the agent delivered |
 | **CAP-190** | Run a script as part of setup | Supported | Unsupported | Unsupported | Unsupported | Not applicable | Not applicable | Premium | Automated enrollment, with manual agent install off |
 | **CAP-191** | Deliver a package to a Mac before the agent exists | Supported | Unsupported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Automated enrollment, and Apple MDM configured |
 | **CAP-192** | Create the user's local account during setup | Supported | Unsupported | Not applicable | Not applicable | Not applicable | Not applicable | Premium at delivery, not refused at the settings interface | Automated enrollment, and Apple MDM configured |
 | **CAP-193** | Show the user an agreement during setup | Conditional (C046) | Supported | Unsupported | Not applicable | Not applicable | Not applicable | Premium | An identity provider configured for MDM features |
 | **CAP-194** | Hold a Windows device at a status page until setup finishes | Not applicable | Not applicable | Conditional (C047) | Not applicable | Not applicable | Not applicable | Not established | Windows MDM configured, and automatic enrollment at first boot |
 | **CAP-195** | Show setup progress without holding anyone up | Conditional (C048) | Not applicable | Conditional (C049) | Supported | Not applicable | Not applicable | Premium | Agent installed with the end-user surface enabled |
-| **CAP-196** | Install software as part of an ADE iPhone's setup | Supported | Supported | Not applicable | Not applicable | Not applicable | Unsupported | Premium | A purchase token with licences available |
+| **CAP-196** | Install software during an automated Apple enrollment | Supported | Supported | Not applicable | Not applicable | Not applicable | Unsupported | Premium | A purchase token with licences available |
 | **CAP-197** | Push an app to an Android device at enrollment | Not applicable | Not applicable | Not applicable | Not applicable | Supported | Not applicable | Premium | Android Enterprise bound |
 | **CAP-198** | Install setup software only on devices that need it | Unsupported | Unsupported | Supported | Supported | Not applicable | Not applicable | Premium | A fleet policy whose automation points at the same installer |
 | **CAP-199** | Stop setup when a piece of software fails | Supported | Unsupported | Conditional (C050) | Unsupported | Not applicable | Not applicable | Premium | Windows MDM turned on |
@@ -304,7 +308,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-225** | Erase a Windows host | Not applicable | Not applicable | Conditional (C071) | Not applicable | Not applicable | Not applicable | Premium | Windows MDM configured, and the host enrolled in it |
 | **CAP-226** | Erase a Linux host | Not applicable | Not applicable | Not applicable | Conditional (C072) | Not applicable | Not applicable | Premium | Agent installed with scripts enabled, running as root |
 | **CAP-227** | Erase a company-owned Android device | Not applicable | Not applicable | Not applicable | Not applicable | Supported | Not applicable | Free on Android, Premium on every other platform | Android Enterprise bound, device enrolled, and company-owned |
-| **CAP-228** | Deal with a personally owned Android device | Not applicable | Not applicable | Not applicable | Not applicable | Supported | Not applicable | Free | Android Enterprise bound, and the device enrolled with a work profile |
+| **CAP-228** | Remove Fleet's management from a personally owned Android device | Not applicable | Not applicable | Not applicable | Not applicable | Supported | Not applicable | Free | Android Enterprise bound, and the device enrolled with a work profile |
 | **CAP-229** | Find where a device is | Unsupported | Conditional (C073) | Unsupported | Unsupported | Unsupported | Unsupported | Premium | Automated enrollment assigned to Fleet, and the device in lost mode |
 | **CAP-230** | Clear a device's passcode | Unsupported | Conditional (C074) | Unsupported | Unsupported | Supported | Unsupported | Premium | Apple MDM configured, non-personal enrollment, and an unlock token on file |
 | **CAP-231** | Send a raw command to Apple devices | Conditional (C075) | Conditional (C076) | Not applicable | Unsupported | Unsupported | Unsupported | Free, Premium for three Apple request types | Apple MDM configured, and every target connected and on one platform |

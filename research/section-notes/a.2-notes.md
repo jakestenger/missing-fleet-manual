@@ -57,7 +57,32 @@ Omitting them entirely would break the four-projection invariant the part agreem
 leave a reader unable to tell "not covered here" from "no platform answer exists".
 
 **They are carried as a one-line disposition list with no platform columns.** The matrix proper is
-262 rows.
+266 rows, after review round 1 added four capabilities the register had missed, split one, and
+merged two.
+
+**Merged, and the register still needs updating to match.** CAP-048, enrolling a personally owned
+iPhone or iPad from a link, was a strict subset of CAP-029: identical on every platform except macOS,
+where CAP-029 says Supported and CAP-048 said Not applicable. One administrator intent, so one row,
+now named for the intent rather than for a device. **The shared register still carries both**, and
+was deliberately not edited while three researchers were reading it as their row universe for a.5.
+Apply the merge there before a.1, a.4 or a.5 project from it again.
+
+**Added**, each verified at the tag rather than taken from the review: seeing your own device's
+details and software as an end user, which is Free; seeing the desktop summary, which is Premium and
+refused with a licence error on Free; opening the interactive query shell on the host, which starts a
+separate instance and therefore does not show the running agent's state; and forcing an update check
+by restarting the agent, which runs before any subsystem starts and is gated only on updates not
+having been disabled at packaging time.
+
+**Split.** Uninstalling software as an administrator and an end user uninstalling their own are
+different contracts on different routes, and the second is authenticated by the device's own address
+rather than by a Fleet account.
+
+**Fixed three names that answered for platforms they did not mention**, which is the failure the
+reviewer described as leaving a reader unable to infer what intent a row represents: preparing a
+device rather than a Mac, installing during an automated Apple enrollment rather than an iPhone's,
+and removing Fleet's management from a personally owned Android device rather than "dealing with"
+one.
 
 ## Established, and the three findings the appendix leads with
 
