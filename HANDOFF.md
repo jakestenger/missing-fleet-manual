@@ -89,8 +89,8 @@ frontmatter block, and section headings. Do not mistake the file count for progr
 | III. Connect devices | 7 | Written, reviewed to the cap, corrected. `drafting` |
 | IV. Know your devices | 7 | **All 7 written 2026-08-27**, each with one review round applied and a ledger. `drafting` |
 | V. Manage devices | 9 | **Complete 2026-08-28.** All 9 drafted, one review round applied each, ledgers written, diagram prompts installed. `drafting` |
-| VI. Automate Fleet | 5 | **Complete 2026-08-28.** All 5 drafted, one review round applied each, ledgers written. Structure at `research/part6-structure.md` |
-| VII. Operate Fleet | 6 | **Complete 2026-08-28.** All 6 drafted, one review round applied each, ledgers written. Structure at `research/part7-structure.md`, and this part is held to a four-class evidence rule recorded there |
+| VI. Automate Fleet | 5 | **Complete 2026-08-28.** All 5 drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part6-structure.md` |
+| VII. Operate Fleet | 6 | **Complete 2026-08-28.** All 6 drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part7-structure.md`, and this part is held to a four-class evidence rule recorded there |
 | VIII. Troubleshooting | 14 | Written, reviewed to the cap, corrected. `drafting` |
 | IX. Appendices | 8 | a.6 and a.8 partial. **a.1 to a.5 and a.7 are stubs** |
 
