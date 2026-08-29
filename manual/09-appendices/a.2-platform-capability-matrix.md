@@ -25,25 +25,11 @@ feature_requests:
 
 ![Reference](../_assets/icons/reference.svg) Every device-facing capability the manual teaches, across six platform columns, with the licence and the prerequisites that change the answer.
 
-**Licence and prerequisite are columns, never cell values.** That separation is the appendix's main structural decision and it is deliberate: a capability that needs Premium is *supported*, with Premium recorded beside it. Folding the licence into the cell would put this project's least reliable claim class inside its most consulted table, and it would answer two questions with one word.
+**Licence and prerequisite are columns, never cell values**, which is the appendix's main structural decision. Folding a licence into a cell would put this project's least reliable claim class inside its most consulted table, and it would answer two questions with one word. The rule itself is restated where you will need it, above the matrix.
 
 **What is not here.** Operating system versions and floors are [a.6](a.6-glossary-and-release-compatibility.md). Which role may do it is [a.4](a.4-roles-and-permissions-matrix.md). How the thing works is the chapter that owns it, and every row points there rather than explaining it again.
 
-## Reading a cell
-
-![Reference](../_assets/icons/reference.svg) Five values, and the distinction between three of them is the whole discipline of the appendix.
-
-| | |
-|---|---|
-| **Supported** | Fleet does this on this platform, once the prerequisites in the row hold |
-| **Conditional** | It depends on something stated. The condition register gives both branches |
-| **Unsupported** | **A positive boundary was found** that refuses it on this platform |
-| **Not applicable** | The row's subject does not exist here. Locking a Mac is not applicable on ChromeOS, not unsupported |
-| **Not established** | No boundary was found in either direction. **This is an honest answer, not a gap** |
-
-> **`Unsupported` is the value that needs evidence, and absence is not evidence.** A capability missing from a code path might be refused, or might simply not have been considered, and those are different facts for a reader deciding whether to plan around it. The first pass of this research repeatedly wrote `Unsupported` where it meant "I did not find it", and the second pass had to reclassify those. Where a row says `Unsupported` there is a check, a validator or an allow-list that excludes the platform, and where there is not, the row says `Not established` instead.
-
-## Why the answers differ at all
+## What decides most cells
 
 ![Explanation](../_assets/icons/explanation.svg) Most cells are decided by a small number of structural facts, and knowing them lets you predict a row this table does not contain.
 
@@ -75,11 +61,9 @@ feature_requests:
 >
 > One administrator intent, one licence split down the middle of it. The Android company-owned path is not gated; the other five platforms return a licence error. A reader who learns the licence answer on one platform will get it wrong on the others, which is the whole argument for this appendix being organised the way it is.
 
-## The matrix
-
-![Reference](../_assets/icons/reference.svg) Grouped as a reader would look for a capability. Every conditional cell cites a condition, and every condition states both branches.
-
 ## How to read it
+
+![Reference](../_assets/icons/reference.svg) Five values, and the distinction between three of them is the whole discipline of the appendix.
 
 | Value | What it means |
 |---|---|
@@ -101,7 +85,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 
 ## The matrix
 
-262 rows. Section rows in bold carry no cells; they mark where a family starts.
+![Reference](../_assets/icons/reference.svg) Grouped as a reader would look for a capability, 262 rows. Section rows in bold carry no cells; they mark where a family starts.
 
 | ID | Capability | macOS | iOS/iPadOS | Windows | Linux | Android | ChromeOS | Licence | Prerequisite |
 |---|---|---|---|---|---|---|---|---|---|
