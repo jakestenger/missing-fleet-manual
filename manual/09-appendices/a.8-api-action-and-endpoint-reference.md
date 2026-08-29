@@ -6,7 +6,7 @@ sidebar_position: 8
 status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-08-29
-verified_source: "drafted against fleet-v4.90.1 (dd0200f062), with every path in the exposure matrix read from the server's own route registrations rather than from the published reference. Citation ledger at research/section-notes/a.8-notes.md, which records the evidence class of every path and the derivation of every count"
+verified_source: "drafted against fleet-v4.90.1 (dd0200f062), with every path in the exposure matrix read from the server's own route registrations rather than from the published reference. Citation ledger at research/section-notes/a.8-notes.md, which records the evidence class of every path and distinguishes the routes Fleet registers from the ones it emits"
 reviewed_by:
 reviewed_on:
 further_reading:
@@ -43,7 +43,7 @@ Three questions belong elsewhere and are deliberately unanswered here. **Which r
 | **fleetd certificate** | fleetd, fetching a certificate template Fleet has asked it to install and reporting the result | The **Orbit** node key, in an `Authentication` header |
 | **Route-local or protocol** | Everything whose credential belongs to the route rather than to Fleet's shared authenticator | An enrollment secret, a download token, a SAML response, a query-string token, a device identity certificate, or a protocol signature |
 
-> **Do not read the last class as "unauthenticated".** It is the class where Fleet's shared authenticator is skipped and the route does its own checking, and most of its members require something. Google's callback for Android events presents a route-specific token. An over-the-air enrollment presents an enroll secret. Apple's protocol paths authenticate the device by its identity certificate. **A path here is not safe to expose merely because no bearer token appears in the request.**
+> **Do not read the last class as "unauthenticated".** It is the class where Fleet's shared authenticator is skipped and the route does its own checking. Google's callback for Android events presents a route-specific token. An over-the-air enrollment presents an enroll secret. Apple's protocol paths authenticate the device by its identity certificate. **A path here is not safe to expose merely because no bearer token appears in the request, and it is not safe to assume the reverse either.** The class is defined by what Fleet's shared authenticator does not do, so what any member requires has to be established per route rather than inferred from the group.
 
 The first class is the one people mean by "the Fleet API". The Host and Orbit classes are why [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) treats a host's credentials as more than one thing: they authenticate separately with separate keys, so a host can be half-working in a way a single credential could not produce.
 
@@ -111,6 +111,12 @@ A proxy configuration written on the assumption that everything Fleet serves liv
 > **Excluded deliberately, each for a reason.** Fleet's health, version and metrics endpoints and its debug tree are operator surfaces rather than capability surfaces, and [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) governs who should reach them. The metrics endpoint in particular is not mounted at all unless you configure credentials for it. The UI's own frontend and asset routes are excluded except where a capability's flow passes through one, which is called out where it happens.
 >
 > **A capability absent from this matrix has not been assessed**, rather than been found to need nothing. The ledger records which were assessed.
+>
+> **Registered is not the same as required, and that difference is most of this matrix's value.** A route registration tells you a path exists and how it matches. It does not tell you a capability needs that path open. Fleet routinely registers a route under all three version prefixes and then emits exactly one of them in the URL it hands to a device, a browser or a third party, and **the emitted one is what has to be reachable**. Several rows below name a deprecated path for that reason: the replacement is registered, and the older path is the one Fleet still sends.
+>
+> Where a row names a narrower set than the prefix rules above would suggest, that is deliberate. Opening what Fleet emits is the smaller configuration; opening every registered alias is not wrong, only wider.
+
+**Three capabilities have prerequisites beyond exposure.** SCIM and the SCEP proxy are Premium. Okta conditional access is Premium and additionally needs the server private key configured, as do Apple's root protocol services, which are not mounted at all without it.
 
 **Baseline, for agents on devices that leave the network:**
 
@@ -122,32 +128,43 @@ A proxy configuration written on the assumption that everything Fleet serves liv
 
 **For `fleetctl` and API clients from outside the network**, add `/api/{v1,2022-04,latest}/fleet/*`, plus `/api/setup` and `/api/v1/setup` for the initial setup flow. **Setup is not a versioned family**: there is no `/api/2022-04/setup` and no `/api/latest/setup`.
 
-**For identity**, Fleet's own SSO is `/api/v1/fleet/sso` and `/api/v1/fleet/sso/callback`, both fixed at `v1` and reachable under no other prefix. **SCIM provisioning** is `/api/v1/fleet/scim/*` and `/api/latest/fleet/scim/*`, those two prefixes only, which is what [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) needs reachable by your identity provider.
+**For identity**, Fleet's own SSO is `/api/v1/fleet/sso` and `/api/v1/fleet/sso/callback`, both literal `v1` paths reachable under **no other API-version prefix**, though a configured URL prefix still precedes them.
+
+**SCIM provisioning** is prefix-mounted at `/api/v1/fleet/scim/` and `/api/latest/fleet/scim/`, and those two are what your identity provider needs ([2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md)). One SCIM path is outside that mount: the details endpoint is an ordinary core route and therefore also exists at `2022-04`. SCIM is Premium.
 
 **For Apple device management**, add `/mdm/apple/scep` and `/mdm/apple/mdm`, both outside `/api`, plus `/api/mdm/apple/enroll` for automatic enrollment. Where hardware attestation is enabled, Fleet puts its own ACME directory URL into the enrollment profile, so add `/api/mdm/acme/*`. Where an installer is served to devices, that is `/api/mdm/apple/installer`.
 
 **Setup-experience features each add their own:**
 
-| Feature | Paths |
+| Feature | What Fleet actually emits |
 |---|---|
-| Identity-provider authentication during setup | `/mdm/sso` and `/assets/*`, plus the callback the provider returns to at `/api/{v1,2022-04,latest}/fleet/mdm/sso/callback` |
-| End user licence agreement | `/api/{v1,2022-04,latest}/fleet/setup_experience/eula/{token}`. The older `/fleet/mdm/setup/eula/*` form is deprecated |
-| Bootstrap package | `/api/{v1,2022-04,latest}/fleet/bootstrap`. The older `/fleet/mdm/bootstrap` form is deprecated |
+| Identity-provider authentication during setup | Three separate things, all needed: the browser starts at `/api/latest/fleet/mdm/sso`, the identity provider is given `/api/v1/fleet/mdm/sso/callback`, and the flow returns the user to the frontend route `/mdm/sso/callback`, which `/assets/*` serves |
+| End user licence agreement | **`/api/latest/fleet/mdm/setup/eula/{token}`**, the deprecated form. The replacement `/api/*/fleet/setup_experience/eula/{token}` is registered and is not what this flow loads at the tag |
+| Bootstrap package | **`/api/latest/fleet/mdm/bootstrap`**, also the deprecated form, hard-coded into the URL Fleet builds. The replacement `/api/*/fleet/bootstrap` is registered and unused by this flow |
 | Fleet's Platform SSO extension | `/api/mdm/apple/psso/*` and `/.well-known/apple-app-site-association` |
 
-**For any Apple device enrolled by link**, which is macOS as well as iOS and iPadOS, add `/enroll` and `/api/{v1,2022-04,latest}/fleet/enrollment_profiles/ota`, **and `/api/{v1,2022-04,latest}/fleet/ota_enrollment`**, which is where the profile those two hand out sends the device next. Omitting the third leaves an enrollment that starts and never completes. None of the three is platform-specific: a reverse proxy that exposes them only for mobile will block a Mac enrolling from the **Add hosts** link ([3.2](../03-connect-devices/3.2-enroll-macos-devices.md), [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md)).
+**For any Apple device enrolled by link**, which is macOS as well as iOS and iPadOS, the chain is `/enroll`, then `/api/v1/fleet/enrollment_profiles/ota`, then **`/api/v1/fleet/ota_enrollment`**, which is where the profile the second one hands out sends the device next. The last two exist under the other prefixes and **Fleet emits `v1` at both transitions**. Omitting the third leaves an enrollment that starts and never completes. None of them is platform-specific: a reverse proxy that exposes them only for mobile will block a Mac enrolling from the **Add hosts** link ([3.2](../03-connect-devices/3.2-enroll-macos-devices.md), [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md)).
 
-**For iOS and iPadOS specifically**, in-house app delivery adds **two** paths, `/api/{v1,2022-04,latest}/fleet/software/titles/*/in_house_app/{token}` and the same with `/manifest/{token}` before the token. A rule matching only the first serves the app and not the manifest that tells the device to install it. Account-driven user enrollment adds the account-driven enrollment paths, both service-discovery paths including `/mdm/apple/service_discovery`, and the frontend SSO routes its flow passes through.
+**For iOS and iPadOS specifically**, in-house app delivery adds **two** paths, and Fleet emits `latest` for both: `/api/latest/fleet/software/titles/*/in_house_app/{token}` and `/api/latest/fleet/software/titles/*/in_house_app/manifest/{token}`. A rule matching only the first serves the app and not the manifest that tells the device to install it.
+
+**Account-driven user enrollment** needs each of these, and they are separate registrations rather than one family:
+
+| Path | For |
+|---|---|
+| `/mdm/apple/service_discovery/{token}` | The discovery document the device fetches first. A tokenless form is registered and deprecated |
+| `/api/mdm/apple/account_driven_enroll/{token}` | The enrollment itself. A tokenless form is registered and deprecated |
+| `/mdm/apple/account_driven_enroll/sso/{token}` | Its identity-provider hop. A tokenless form is registered and deprecated |
+| The MDM SSO callback flow above | Shared with the setup-experience path, and needed here too |
 
 **For Windows device management**, add the four Microsoft protocol paths under `/api/mdm/microsoft/`, which are `management`, `discovery`, `policy` and `enroll`, plus `/api/mdm/microsoft/tos` for automatic enrollment. [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) covers why exposing some but not all of these fails partway rather than cleanly.
 
-**For Android**, add `/enroll`, `/api/{v1,latest}/fleet/android_enterprise/enrollment_token`, and the enablement callback `/api/{v1,latest}/fleet/android_enterprise/connect/{token}`. **Android's module declares `v1` alone**, so those two exist at `v1` and `latest` and nowhere else, which is why the prefix list here is shorter than everywhere above. The event callback `/api/v1/fleet/android_enterprise/pubsub` is a literal path fixed at `v1`, is how Google delivers device events, and is why [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) requires a publicly reachable server URL.
+**For Android**, add `/enroll`, `/api/v1/fleet/android_enterprise/enrollment_token`, and the enablement callback `/api/v1/fleet/android_enterprise/connect/{token}`. **Android's module declares `v1` alone**, so its routes exist at `v1` and `latest` and nowhere else, which is why the prefix set here is shorter than everywhere above, and **Fleet emits `v1` in both the enrollment page and the signup callback it generates**. The event callback `/api/v1/fleet/android_enterprise/pubsub` is a literal `v1` path, is how Google delivers device events, and is why [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) requires a publicly reachable server URL.
 
 **For delivering your own certificates to devices**, rather than Fleet's, add `/mdm/scep/proxy/*`, which sits outside `/api`. Where fleetd fetches and reports on those certificates, add `/api/fleetd/certificates/*`.
 
-**For the Google Calendar integration**, add `/api/{v1,2022-04,latest}/fleet/calendar/webhook/{event_uuid}`, which is the address Fleet gives Google and which Google calls back on.
+**For the Google Calendar integration**, add `/api/v1/fleet/calendar/webhook/{event_uuid}`. The route is registered under all three prefixes and **the address Fleet supplies to Google is the `v1` one**, so that is the one Google will call.
 
-**For Okta conditional access**, add `/api/fleet/conditional_access/scep`, `/api/fleet/conditional_access/idp/metadata` and `/api/fleet/conditional_access/idp/sso`. None of the three is versioned.
+**For Okta conditional access**, add `/api/fleet/conditional_access/scep`, `/api/fleet/conditional_access/idp/metadata` and `/api/fleet/conditional_access/idp/sso`. None of the three is versioned. **They do not all belong to the same origin**: Fleet builds the SSO URL against the conditional-access hostname, which is expected to be reached over mutual TLS, while metadata and SCEP sit on Fleet's ordinary origin. It is Premium, and requires the server private key.
 
 ## API conventions
 
@@ -169,6 +186,6 @@ Which actions each role may perform is [a.4](a.4-roles-and-permissions-matrix.md
 
 ![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.1. `v1` and `2022-04` are what the **core** module declares at this release; other modules declare their own, and `latest` is added to whatever set each declares.
 
-**This appendix is not a complete inventory of everything Fleet serves, and one number is easy to mistake for one.** Fleet embeds a catalogue of 234 method-and-path entries, 12 of them marked deprecated. **That catalogue is the allowlist for API-only accounts rather than a list of routes.** Its own validation runs in one direction, checking that every catalogue entry has a registered route, which does not establish the reverse. Fleet separately registers backward-compatible path aliases that the catalogue does not carry. Treat the number as the size of the allowlist and nothing more.
+**This appendix is not a complete inventory of everything Fleet serves.** Fleet embeds a catalogue of method-and-path entries which is sometimes mistaken for one, and it is not: **it is the allowlist consulted for API-only accounts that carry a non-empty endpoint restriction list**, and it constrains nobody else. Its own validation runs in one direction, checking that every catalogue entry has a registered route, which establishes nothing about the reverse, and Fleet separately registers backward-compatible aliases the catalogue does not carry. An earlier draft of this appendix published its size as though it were a route count; the number is withheld here until it can be derived through Fleet's own loader rather than counted.
 
 **The exposure matrix is the part most likely to change between releases**, because it grows as features are enabled and as features are added. Re-check it against Fleet's own guidance when adding a capability rather than assuming this list still covers it, and re-check it after an upgrade.
