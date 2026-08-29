@@ -5,13 +5,17 @@ section: "A.6"
 sidebar_position: 6
 status: drafting
 verified_against: Fleet 4.90.1
-verified_on: 2026-08-24
-verified_source: "partial: the terminology section and the 4.82.0 rename are verified at git tag fleet-v4.90.1; feature availability and version boundaries are still outline"
+verified_on: 2026-08-29
+verified_source: "drafted against fleet-v4.90.1 (dd0200f062). Every version floor was read from the gate that enforces it, or recorded as unenforced where none exists. Citation ledger at research/section-notes/a.6-notes.md"
+reviewed_by:
+reviewed_on:
 ---
 
 # Terminology and version boundaries
 
-**Two of the five sections below are written and three are not.** Terminology and the deprecated-names section carry verified content; **Feature availability** and **Version boundaries** are headings with nothing under them, and a chapter that sends you to this appendix for either is sending you nowhere yet.
+Two jobs, and they are the same job. **This appendix translates between the words for a thing and between the versions of a thing**, so that a reader who meets an unfamiliar name or an unexplained failure can find out which they are looking at.
+
+What is **not** here: which capabilities your licence includes, which belongs in [a.2](a.2-platform-capability-matrix.md), where a claim can be qualified by platform and scope. A version floor and a licence gate produce the same symptom, a feature that is configured and does nothing, and keeping them in one table would make each harder to diagnose.
 
 ## Terminology
 
@@ -92,14 +96,6 @@ The two words describe different layers of the same action. Running a live repor
 
 Part VIII works at all of these layers at once, which is why both words appear there. Its opening section carries a note explaining the split in context.
 
-## Feature availability
-
-**Not written.** Which capabilities are Fleet Free and which are Fleet Premium is currently stated per chapter, where each was verified, rather than gathered here.
-
-## Version boundaries
-
-**Not written.** Minimum supported OS versions, minimum fleetd versions per feature, and Fleet's own version support window belong here. Several chapters state a specific floor they verified, such as fleetd 1.36.0 for Linux disk-encryption escrow; none of that is collected.
-
 ## Deprecated names and APIs
 
 ### Fleet 4.82.0 renamed teams to fleets, and queries to reports
@@ -126,4 +122,107 @@ This is why documentation, forum posts, and scripts written before March 2026 us
 
 A related change in the same release: `no-team.yml` in GitOps was deprecated in favour of `unassigned.yml`.
 
-## Documentation maintenance
+
+## Version boundaries
+
+![Reference](../_assets/icons/reference.svg) A **floor** is the version below which a capability does not work. Three kinds meet here, and confusing them is how a diagnosis goes wrong: a minimum agent version, a minimum operating system version, and a minimum Fleet server version.
+
+Only cross-cutting floors are collected here. A floor that one chapter needs and no other reader would plan around stays in that chapter.
+
+### Fleet negotiates capabilities rather than versions, and that is why floors are quiet
+
+**This is the fact the rest of the section rests on.** The agent and the server exchange a list of named capabilities on every request, each side declaring what it supports. When the server wants to do something the agent has not declared, it does something else and writes a debug line.
+
+**There is exactly one place in the whole 4.90.1 server that compares an agent version number**, and it is the Linux disk-encryption passphrase escrow gate. Everything else is negotiated.
+
+That mechanism is better than version comparison in most ways. It is bidirectional, it survives custom builds, and it does not break on an unexpected version string. **What it is not is observable.** There is no version number in the failure, no error in the console, and usually nothing above debug in the server log. What an administrator sees is a feature that is configured and does nothing.
+
+Two consequences worth stating plainly:
+
+- **There is no minimum agent version for talking to a 4.90.1 server at all.** Neither enrollment path reads a version; the agent's own enrollment record has no version field. A current server will enroll an arbitrarily old agent. The cost is per-feature degradation, and almost all of it is silent.
+- **Fleet cannot tell you which hosts lack a capability.** Only one negotiated capability is written down anywhere, the Windows on-demand sync flag. For the rest there is no way to ask the question, which is why the agent-version column on the hosts page is the practical proxy.
+
+### Agent floors
+
+| Capability | Agent floor | Server floor | Enforced | Quiet |
+|---|---|---|---|---|
+| Linux LUKS **passphrase** escrow | fleetd 1.36.0 | 4.61.0 | **Yes**, the one version comparison | **No.** The only floor whose failure reaches an administrator, and only after a user acts |
+| Linux **snapd recovery-key** escrow | fleetd 1.58.0 | **4.90.0** | Capability | Yes |
+| Remote channel configuration, `update_channels` | fleetd 1.20.0 | 4.43.0 | **Nothing checks.** The server sends the block unconditionally | Yes, and this is the worst of the set |
+| Following an update channel to a current release | orbit 1.38.1 | not applicable | Not enforced. A property of the update repository | Yes, and only in the agent's own log ([3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md)) |
+| macOS FileVault key **rotation** | fleetd 1.30.0 | 4.56.0 | Capability. **No fallback**; the notification is simply not sent | Yes |
+| macOS ADE **setup experience** | fleetd 1.35.0 | 4.60.0 | Capability, with a fallback path for older agents | Yes |
+| **End-user authentication** at enrollment, Linux and Windows | fleetd 1.50.0 | 4.77.0 | Capability. **Below it Fleet allows the enrollment unauthenticated** | Effectively. A warning in the server log and nothing else |
+| Windows on-demand sync, the relaxed poll | fleetd 1.57.0 | 4.87.0 | Capability, and the only one persisted | Yes. Cadence only |
+| `python_packages` in software inventory | osquery 5.16.0 | not applicable | Two complementary queries, so both sides work | Yes, and gracefully |
+| gzip-compressed osquery responses | osquery 5.21.0 | not applicable | A flag that is not passed below it | Yes. Bandwidth only |
+| Per-certificate scope on Windows host details | osquery 5.23.1 | 4.90.0 | No gate found | Yes |
+| `END_USER_EMAIL` as an installer property | orbit 1.28.0 **at packaging time** | not applicable | Falls back to the service command line | Yes |
+| `EUA_TOKEN` as an installer property | orbit 1.55.0 **at packaging time** | not applicable | **No fallback branch** | Yes |
+| Talking to a 4.90.1 server | **none** | not applicable | Nothing checks | Not applicable |
+
+> **`update_channels` is the one to know**, because it fails in the shape most likely to be misread. An agent below 1.20.0 ignores the channel you set. Fleet accepts the configuration, stores it, shows it back, and the host keeps running whatever it was running. There is no error and no log line, so the estate looks pinned and is not ([3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md)).
+
+**The two packaging floors behave differently from the rest**, because they bind when the installer is built rather than when the host runs. An old `fleetctl` produces a package that cannot carry the property, and no later upgrade of the agent fixes it. Rebuild the package instead.
+
+### Operating system floors
+
+| Capability | Floor | Platform | Enforced | Quiet |
+|---|---|---|---|---|
+| ACME device identity for Apple enrollment | **macOS 14.0, and Apple Silicon, and a DEP-assigned serial** | macOS | Yes | Yes. Fleet issues the SCEP profile instead and logs at info |
+| Which OS-update mechanism is used | macOS 14.0.0 | macOS | Yes. A routing decision; both paths exist | Not applicable |
+| **Delivery** of the OS-update declaration | macOS 14 | macOS | Yes, but **by a dynamic label computed from a report**, not by a version comparison | Yes, and see below |
+| **Delivery** of the OS-update declaration | **iOS 17 and iPadOS 17: not enforced** | iOS, iPadOS | **No.** The built-in labels for these platforms carry no version predicate | Yes |
+| Manual, non-ADE migration eligibility | macOS **strictly above** 14.0.0 | macOS | Yes | Yes on the notification path; loud only when a user triggers it |
+| Discovery request version | protocol version 4.0 | Windows | Yes | **No.** The device reports a specific failure code |
+| Full support for Windows 11 25H2 | **Fleet server 4.89.1** | Windows | Documented | **No.** Enrollment fails outright |
+| Hardware-backed host identity | TPM 2.0, and so Linux kernel 4.12 | Linux | Implicitly, by opening a device node that older kernels do not have | No on the host, yes in Fleet |
+| ChromeOS reporting | 112.0.5615.134, documented only | ChromeOS | Nothing enforces it | Yes |
+| Android | **No minimum in code.** Fleet's documentation says Android 14 | Android | Nothing enforces it | Yes |
+| Enrolling an Apple device in MDM at all | **none** | Apple | Nothing checks | Not applicable |
+
+> ### Two of these are traps rather than floors
+>
+> **The macOS 14 OS-update floor is a dynamic label computed from report results.** A host that has not reported since enrollment is not in the label, so it receives nothing, and a Mac managed by MDM with no agent installed is never in it at all. **An MDM-enrolled Mac without fleetd gets no OS-update enforcement**, because both the label that selects it and the older enforcement path need the agent.
+>
+> **The iOS and iPadOS floor is not enforced at all.** The built-in labels for those platforms select by platform with no version predicate, so the update declaration goes to every iPhone and iPad regardless of version. Fleet's documentation states a floor; nothing implements one.
+
+### Server floors
+
+These are the server side of the capability list above. They matter when you are the one running the old version: an agent that is current against a server that is not.
+
+| Capability | Server floor |
+|---|---|
+| Remote channel configuration | 4.43.0 |
+| macOS FileVault key rotation | 4.56.0 |
+| macOS ADE setup experience | 4.60.0 |
+| Linux LUKS passphrase escrow | 4.61.0 |
+| End-user authentication at enrollment | 4.77.0 |
+| Windows on-demand sync | 4.87.0 |
+| Full Windows 11 25H2 support | 4.89.1 |
+| Linux snapd recovery-key escrow | 4.90.0 |
+
+**One floor runs in both directions**, and Fleet's own source says so where none of the others do. A current agent talking to a server without the snapd escrow capability has its payload rejected, so the agent gates on the capability rather than retrying, because retrying would churn the key slot on the device.
+
+### Dependency floors
+
+**MySQL 8.0.44.** Tested against 8.0.44, 8.4.8 and 9.5.0, with 9.6.0 currently incompatible. The floor moved from 8.0.36 during the 4.83 line ([2.9](../02-administer-and-deploy-fleet/2.9-self-hosting-architecture-and-capacity.md) has the operational consequence, which is that a newer MySQL is not automatically a safer one).
+
+**Redis 6.2.** Required by the host-lookup cache on the agent authentication paths, which arrived in the 4.86 line. Fleet is actively tested against 6.2 and 7.
+
+### Fleet publishes a support policy, not a support window
+
+**No Fleet release has a stated end of life, and no date is attached to any of them.** What Fleet publishes is release-relative:
+
+| | Bug fixes | Troubleshooting help |
+|---|---|---|
+| **Free** | Latest version only | Current major version |
+| **Premium** | Latest version only | All versions |
+
+**There are no backports to either tier.** A fix lands in the latest release and nowhere else, so the only supported response to a bug you are hit by is to upgrade.
+
+Two things about that policy are worth knowing before you plan against it. **It lives in Fleet's company handbook rather than in its documentation**, so a reader working through the product docs will not meet it. And **it is not a window**: nothing expires, and no version is ever declared unsupported, which means "supported" and "unsupported" are not the categories to plan in. The category that matters is whether you are on the latest release.
+
+**There is no constrained upgrade path within version 4.** Fleet's own guidance says skipping versions is fine, and nothing in the server enforces an ordering. The exception is the agent, where the update repository move makes one release a stepping stone ([3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md)).
+
+Fleet's cadence, for planning: one minor and one patch release every three weeks, with scheduled patches weekly in between and immediate patches for critical bugs. [7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md) is where that becomes a release-review rhythm.
