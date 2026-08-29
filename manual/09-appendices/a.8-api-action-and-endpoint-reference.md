@@ -26,7 +26,7 @@ Fleet's API is easier to reason about once you stop reading it as a list of endp
 
 ![Reference](../_assets/icons/reference.svg) The organizing model, the authentication rules, the versioning scheme, and the matrix of what has to be reachable from where. Those are the parts that make the API usable and that are not collected in one place anywhere else.
 
-Per-endpoint parameters, request bodies and response shapes live in Fleet's own REST API reference, which is maintained continuously and stays correct across releases. This appendix points there rather than copying it.
+Per-endpoint parameters, request bodies and response shapes live in Fleet's own REST API reference. **That reference is hand-maintained**, so treat it as the best available account rather than a guarantee that it matches the release you are running. This appendix points there rather than copying it.
 
 ## Six classes of route
 
@@ -71,7 +71,7 @@ Two ways to obtain one. Through the UI, under **My account** and **Get API token
 
 `latest` is a registered path rather than a redirect, so nothing resolves or forwards at request time.
 
-> **The version set is declared per module, not once for the API.** The core module declares `v1` and `2022-04`; other modules declare their own, and at least one route family is `v1` only. **There is therefore no single dated prefix on which the whole API exists**, and a client touching two modules may need different prefixes for each, or `latest` plus compatibility tests pinned to the release ([6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md)).
+> **Versions resolve in two stages, and not once for the API.** Each module declares an ordered base set, and **an individual route can narrow that set further** with its own start and end boundaries, so a `latest` registration is not added to every route. The core module declares `v1` and `2022-04`; other modules declare their own, and at least one route family is fixed to `v1` alone. **There is therefore no single dated prefix on which the whole API exists.** Default to the documented method and path for each resource, prefix included ([6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md)).
 
 That has one practical consequence worth planning around. **A proxy rule, allowlist or firewall pattern written against `/api/v1/` does not cover the other two.** Fleet's own documentation uses `/api/v1/` and `/api/latest/` in different places, and both work, so matching on a single literal version will let some traffic through and not other traffic that does exactly the same thing. Match `/api/*/fleet/` where you can.
 
@@ -104,7 +104,7 @@ A proxy configuration written on the assumption that everything Fleet serves liv
 
 **For iOS and iPadOS specifically**, in-house app delivery adds `/api/*/fleet/software/titles/*/in_house_app`, and account-driven user enrollment adds the `/api/mdm/apple/account_driven_enroll` family, its SSO paths, and `/mdm/apple/service_discovery`.
 
-**For Android**, add `/enroll`, `/api/*/fleet/android_enterprise/enrollment_token`, and `/api/*/fleet/android_enterprise/pubsub`, the last of which is how Google delivers device events and is why [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) requires a publicly reachable server URL.
+**For Android**, add `/enroll`, `/api/*/fleet/android_enterprise/enrollment_token`, and `/api/v1/fleet/android_enterprise/pubsub`. That last one is how Google delivers device events, is why [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) requires a publicly reachable server URL, and is **fixed at `v1`** rather than being served under every prefix, so a wildcard rule written for the others will not match it.
 
 ## Pagination and ordering
 
