@@ -64,7 +64,7 @@ This is the strongest case in this appendix for looking a term up before using i
 
 ### MIA, and missing
 
-**Identical, and one is deprecated.** Both name a host that has not communicated for thirty days, and Fleet's own source says they are the same thing with `mia` marked deprecated. Both work at this release. **Deprecated is not a removal date**, and Fleet has published none, but `missing` is the name to write new work against.
+**Identical, and one is deprecated.** Both name a host that has not communicated for thirty days, and Fleet's own source says they are the same thing with `mia` marked deprecated. Both work at this release. **Fleet has published no date and it has published a version**: the source says `mia` was deprecated in 4.15 and will be removed in **Fleet 5.0**. So `missing` is not merely the tidier name, it is the one that survives a major release.
 
 ### pack, and scheduled report
 
@@ -128,7 +128,7 @@ The output is not readable by eye. It is a binary file you open with `go tool pp
 
 **osquery's mechanism for collecting whole files off a host**, rather than facts about them. You run a report against the `carves` table with a path, osquery reads the file, splits it into blocks, and uploads them; Fleet reassembles them and stores the result on disk or in object storage.
 
-It is the only path in Fleet by which a file's **contents** leave a host through osquery, which makes it both the answer to "I need to see that file" and a capability worth knowing is enabled. Blocks and their ceilings are configuration, and the per-carve size limit is in [8.14](../08-troubleshooting/8.14-degradation.md).
+It is the **purpose-built** path for getting a file's contents off a host through osquery, which makes it both the answer to "I need to see that file" and a capability worth knowing is enabled. It is not the only such path: osquery can read a file line by line, and Fleet's own disk-encryption query does exactly that to ingest a key file. Blocks and their ceilings are configuration, and the per-carve size limit is in [8.14](../08-troubleshooting/8.14-degradation.md).
 
 ### dead lettering
 
@@ -173,7 +173,7 @@ Released 11 March 2026. From the release notes:
 | Surface | Current | Notes |
 |---|---|---|
 | UI, API paths, CLI, GitOps | fleets, reports | `/api/v1/fleet/reports`, `fleetctl report` |
-| API field names | fleets, reports | Old names deprecated, still accepted |
+| API field names | fleets, reports | **Certain** old names deprecated and still accepted. Per field, not a blanket promise |
 | MySQL tables | `teams`, `queries` | Schema unchanged |
 | Redis key prefix | `livequery:` | Unchanged |
 | osquery | query | osquery is a separate project and renamed nothing |
@@ -231,14 +231,14 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 | macOS FileVault key **rotation** | Orbit 1.30.0 | 4.56.0 | Silent. Negotiated, **no fallback**: the notification is simply not sent, with a debug line and nothing in the console |
 | macOS ADE **setup experience** | Orbit 1.35.0 | 4.60.0 | **Fallback.** An older agent is released by the older worker-based path instead, which is a different mechanism rather than an absence |
 | **Web setup experience, Linux** | Orbit 1.48.0 | 4.74.0 | Silent. **The agent refuses to start the flow** when the server does not declare the capability, which is the reverse of every other row |
-| **Web setup experience, Windows** | Orbit 1.49.0 | 4.75.0 | As above. The two platforms arrived a release apart and are separate boundaries |
+| **Web setup experience, Windows** | Orbit 1.49.0 | 4.75.0 | Silent, as above. The two platforms arrived a release apart and are separate boundaries |
 | **End-user authentication** at enrollment, Linux and Windows | Orbit 1.50.0 | 4.77.0 | **Silent, and it fails open.** Below it Fleet allows the enrollment unauthenticated. There is a warning in the server's process log and nothing in Fleet, so an unauthenticated enrollment looks like an ordinary one |
 | Windows on-demand sync, the relaxed poll | Orbit 1.57.0 | 4.87.0 | Fallback. Negotiated, cadence only, and **the one capability flag Fleet persists** |
 | `python_packages` in software inventory | osquery 5.16.0 | not applicable | Fallback, chosen locally. Two complementary queries, so both sides work, and the boundary changes whether packages in user directories are found |
 | `END_USER_EMAIL` as an installer property | Orbit 1.28.0 **when the package is built** | not applicable | Fallback. Falls back to the service command line |
 | `EUA_TOKEN` as an installer property | Orbit 1.55.0 **when the package is built** | not applicable | Silent floor. **No fallback branch** |
 | Following an update channel to a current release | **Orbit 1.38.0 in the code, 1.38.1 as the bridge** | not applicable | Silent in Fleet. The failure is in the agent's own log on the host, and nothing in the console says the estate has stopped updating. See below |
-| Enrolling and talking to a 4.90.1 server | **no minimum** | not applicable | Nothing checks |
+| Enrolling and talking to a 4.90.1 server | **no minimum** | not applicable | **No boundary**, listed because its absence is the useful fact |
 
 > **The update-server migration has two numbers and they answer different questions.** The rewrite to the new update server is in the code from **1.38.0**. **1.38.1** is what Fleet's own configuration reference names as the stepping stone, it shipped three days later, and Fleet also shipped a rollback with 1.38.0 in case one was needed. **Step through 1.38.1** ([3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md)).
 
@@ -255,10 +255,10 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 | **Delivery** of the OS-update declaration | macOS 14 | macOS | A dynamic label computed from a report, not a version comparison | **Silent floor**, and a trap. See below |
 | **Delivery** of the OS-update declaration | **iOS 17 and iPadOS 17** | iOS, iPadOS | **Nowhere.** The built-in labels carry no version predicate | **Published baseline only**, and a trap. See below |
 | Manual, non-ADE migration eligibility | macOS **strictly above** 14.0.0 | macOS | A server-side comparison | **Silent floor** on the notification path. Loud only when a user triggers it themselves |
-| Discovery request version | Protocol version 4.0 | Windows | A server-side check on the request | **Hard floor**, and the only one on this table: the device reports a specific failure code |
-| Full support for Windows 11 25H2 | **Fleet server 4.89.1** | Windows | Documented, and the enrollment fails | **Hard floor.** Enrollment fails outright rather than degrading |
+| Discovery request version | Protocol version 4.0 | Windows | A server-side check on the request | **Silent floor.** Fleet writes a debug line and returns a fault to the device; nothing reaches the console. The device reports the failure locally, so the evidence is on the machine rather than in Fleet |
+| Full support for Windows 11 25H2 | **Fleet server 4.89.1** | Windows | Documented, and the enrollment fails | **Silent floor.** The enrollment fails outright rather than degrading, and the device reports error `80180006`; in Fleet it is a host that never appeared |
 | Hardware-backed host identity | TPM 2.0 | Linux | Implicit. Fleet opens the TPM 2.0 resource-manager device node, so a kernel without it cannot serve this. **Which kernel that is, is Linux's fact rather than Fleet's**, and this appendix does not assert a number | **Silent floor** in Fleet |
-| Enrolling an Apple device in MDM at all | **none** | Apple | Nothing checks | Not applicable |
+| Enrolling an Apple device in MDM at all | **none** | Apple | Nothing checks | **No boundary**, listed because its absence is the useful fact |
 
 > ### Two of these are traps rather than boundaries
 >
@@ -296,6 +296,8 @@ These are the server side of the capabilities above, **including the two web set
 | macOS ADE setup experience | 4.60.0 |
 | Linux LUKS passphrase escrow | 4.61.0 |
 | End-user authentication at enrollment | 4.77.0 |
+| Web setup experience, Linux | 4.74.0 |
+| Web setup experience, Windows | 4.75.0 |
 | Windows on-demand sync | 4.87.0 |
 | Full Windows 11 25H2 support | 4.89.1 |
 | Linux snapd recovery-key escrow | 4.90.0 |

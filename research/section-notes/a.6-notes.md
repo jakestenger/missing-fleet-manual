@@ -344,11 +344,66 @@ made the same promise.** All three now follow 1.1's pattern: a.2 will collect it
 owns the capability is authoritative until it does. 1.3 had the reverse problem, still calling a.6 an
 outline after it was written.
 
+
+
+## Round 4, verification
+
+NOT READY, five items, all applied. **Four of round 3's six landed fully and two landed partially**,
+which is a better ratio than the two rounds before it, and the two partials were both of the same
+kind: a summary sentence updated while the table it summarised was not.
+
+### The two partials
+
+**The server-floor table's introduction said it included the web setup rows and the rows were not
+there.** Added, at 4.74.0 for Linux and 4.75.0 for Windows.
+
+**The 4.82 rename paragraph was narrowed to "certain fields" and the table beneath it still carried
+the blanket promise.** Narrowed to match.
+
+### The kind definition, applied a third time, moved two more rows
+
+Round 3 settled what silent means. Round 4 applied it to rows I had not revisited and found two
+Windows rows misclassified as hard floors:
+
+- **Discovery request version.** Fleet writes a debug line and returns a fault to the device. The
+  device reports the failure; **Fleet's console says nothing**, so it is silent by the definition and
+  the evidence is on the machine.
+- **Windows 11 25H2 without server 4.89.1.** The enrollment fails outright, the device reports error
+  `80180006`, and in Fleet it is a host that never appeared.
+
+Both re-kinded, and the claim that discovery was "the only hard floor on this table" is gone, since it
+was immediately followed by another row claiming to be one.
+
+Two rows are **no boundary at all** and now say so rather than being forced into one of the five
+kinds. They are listed because their absence is the useful fact.
+
+### Two findings in old content, which is the value of a whole read
+
+Neither is a correction of a correction. Both are in terminology written six days ago and reviewed
+until now only for its selection rule.
+
+**File carving was described as the only path by which a file's contents leave a host through
+osquery.** It is the purpose-built path and not the only one: osquery reads files line by line, and
+**Fleet's own disk-encryption query uses that to ingest a key file** (`server/service/osquery_utils/queries.go:929`,
+ingested at `:2951`). An absolute in a glossary entry, which is exactly where nobody looks for one.
+
+**`mia` has a stated removal boundary and the entry said Fleet had published none.** The source says
+it was deprecated in 4.15 and **will be removed in Fleet 5.0** (`server/fleet/hosts.go:1178`). In an
+appendix about version boundaries, omitting a named removal version is material, and I had written
+the opposite.
+
+### Backlog, agreed with the reviewer rather than assumed
+
+- 1.3's pointer, softened here: a.6 gives a surface-level mapping and does not enumerate every renamed
+  field.
+- The round-3 terminology corrections need direct source rows in this ledger rather than evidence
+  living only in review history. Deferred to the whole-book citation pass.
+
 ## Rounds
 
 | Round | Verdict | Outcome |
 |---|---|---|
-| 1, coverage | NOT READY, seven items | Three universals narrowed, the macOS trap corrected, the support conclusion rewritten, terminology and baselines added |
-| 2, evidence audit | NOT READY, six items | One wrong version split into two rows, "silent" defined, six rows re-kinded, two negative claims narrowed, five terminology entries corrected |
-| 3, whole read | NOT READY, six items | Three round-2 corrections found never applied, from unasserted replacements against text `unwrap.py` had already joined. "Silent" made consistent, Unassigned corrected from vocabulary to data model, the a.2 deferral made honest in three chapters |
-| 4, verification | Requested by round 3 | Pending |
+| 1, coverage | NOT READY, seven items | Three universals narrowed, the macOS trap corrected, the support conclusion rewritten |
+| 2, evidence audit | NOT READY, six items | One wrong version split in two, "silent" defined, six rows re-kinded, five terminology entries corrected |
+| 3, whole read | NOT READY, six items | Three round-2 corrections found never applied, from unasserted replacements against reflowed text. Unassigned corrected from vocabulary to data model; the a.2 deferral made honest in four chapters |
+| 4, verification | NOT READY, five items | Two summaries that had outrun their tables. Two more Windows rows re-kinded. **Two new findings in old glossary content**: file carving was not the only path, and `mia` has a stated removal in 5.0 |
