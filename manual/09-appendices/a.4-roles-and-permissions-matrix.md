@@ -86,7 +86,7 @@ Three kinds of refusal get confused, and they fail differently:
 | Value | Meaning |
 |---|---|
 | `Allowed` | The request succeeds and returns what it promises. |
-| `Denied` | The request is refused for this role at this scope. **The policy denies by default**, so every combination no rule grants is a denial. |
+| `Denied` | The request is refused for this role at this scope. Every one is checked against Fleet's own refusal tests, and the three families where those tests fall short are named below. |
 | `Conditional (Cnn)` | Allowed or denied depending on the condition; both branches are in the register below. |
 | `Not applicable` | The product has **no such scoped operation**: the action exists, and this scope cannot hold the object. Never a way of saying a role is refused. |
 | `Not established (Enn)` | Not determined; the register below says what was searched. |
@@ -111,7 +111,7 @@ Three kinds of refusal get confused, and they fail differently:
 |---|---|
 | Inspecting and revoking **anyone else's** session | Global GitOps, and all six fleet-scoped roles |
 | Listing and reading pending invites; inviting and revoking an invite | Global GitOps, and all six fleet-scoped roles |
-| Every account row in group 2 except editing your own account | Global GitOps; and fleet-scoped maintainer, technician, Observer+, observer and GitOps |
+| Every group 2 row about a user account, except editing your own | Global GitOps; and fleet-scoped maintainer, technician, Observer+, observer and GitOps |
 
 **Nothing in those tests contradicts the cells**, and no rule in the policy grants the combinations. What is missing is Fleet's own assertion that they are refused, which is the evidence this appendix asks for everywhere else. They are the cells to challenge first if a deployment behaves otherwise.
 
@@ -517,7 +517,7 @@ The subject holds this role on fleet T and holds no global role. The cell answer
 
 **C18, listing accounts is scoped by the fleet the request names.** **Allowed** for a fleet administrator when the request names a fleet they administer. **Denied** when the request names no fleet, or names one they do not administer. A global role needs no fleet in the request and is not subject to this, and a fleet-scoped role other than administrator cannot list accounts at all.
 
-**C14, C16 and C17 are the three conditions that do not turn on the caller's role.** Two of them can refuse a request a cell says is allowed, and the third can admit one every cell says is refused. They are conditions rather than notes for exactly that reason.
+**C14, C16 and C17 are the three conditions that do not turn on the caller's role at all.** Two of them refuse a request the role alone would allow, and the third admits one the role alone would refuse. They are conditions rather than notes for exactly that reason: a note beside a cell would not tell you the cell's answer can be wrong.
 
 **Two further conditions are filed in the row universe's addendum and are not cell values here**, because they qualify an outcome rather than the decision: **C31**, transfer-by-filter reporting success having transferred nothing, which is the effect behind the `Allowed; moves nothing` cell on "Move hosts between fleets by filter"; and **C32**, renewing the Apple Business Manager token being authorised as a read, noted on "Renew the Apple Business Manager token".
 

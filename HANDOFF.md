@@ -375,7 +375,7 @@ dominant defect class operating at the scale of a whole part. The register's gra
 cell saying Premium looks identical whether it was read out of a validator or assumed from a
 neighbour.
 
-### The three failure modes this part has produced, which are new
+### The four failure modes this part has produced, which are new
 
 **One. A correction recorded in the ledger and never made in the file.** a.8 hit this three rounds
 running and a.6 twice. The mechanism is mechanical: **`unwrap.py` reflows paragraphs into single
@@ -415,6 +415,26 @@ that question explicitly rather than hoping.
 **The tell is a universal quantifier next to a mechanism**: every, always, whatever, any, all,
 the only. When you write one, name the thing it ranges over and check the boundary rather than the
 centre.
+
+**Four. Publishing a subagent's conclusion without verifying it.** Distinct from the format problem
+subagents have caused before, and more expensive, because a badly formatted table announces itself
+and a wrong sentence does not.
+
+a.3 gained two sections on 2026-08-29 that no research gate had seen, written from a research
+agent's closing summary rather than from source. The reviewer found **every substantive claim in
+both wrong**: agent settings available as environment variables were reported as
+server-overridable, when the persisted override structure holds only the three update channels;
+package-command inputs were reported as agent settings supplied only at packaging time, when five
+are packaging inputs and seven also have runtime forms; and a correct observation that no platform
+has a separate external-provider acceptance tier was turned into a false claim that acceptance and
+enforcement are one report.
+
+**The agent was not wrong. The summarising was.** Each claim was a true statement compressed until
+its scope inverted, which is failure mode three arriving by a different route.
+
+**So: a subagent's report is a lead, exactly like Fleet's documentation.** Verify anything from it
+that is going to be published, at the tag, before it goes in. The whole point of delegating the
+reading is that the conclusion comes back small enough to check.
 
 ### And one about filing defects against Fleet
 
