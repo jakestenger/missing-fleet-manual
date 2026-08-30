@@ -42,7 +42,7 @@ between chapters (Parts 0 to VIII) and appendices:
 | `work profile` | 9 files | **6** |
 | `Nudge` | 3 files | **1** chapter, plus a.3 |
 | `Lost Mode` | 2 files | **1** |
-| `Azure` | 3 files | **1** chapter (2.10, about cloud hosting). `Azure AD` **0** |
+| `Azure` | 3 files | **1** chapter (2.3, about cloud hosting). `Azure AD` **0** |
 | `Okta` | 5 files | **3** chapters; the other two hits are a.4 and a.8 |
 
 **The strongest claim in the research turned out to be false, and the replacement is stronger.** The
@@ -73,9 +73,9 @@ the appendix.
 | The three per-host channel variables are the real names | Stated. **Expanded from the research's `ORBIT_*_CHANNEL` wildcard**, because STYLE §26 makes a path with an unenumerated placeholder a template rather than a fact | `ORBIT_ORBIT_CHANNEL`, `ORBIT_OSQUERYD_CHANNEL`, `ORBIT_DESKTOP_CHANNEL`, the only three matching `ORBIT_[A-Z_]*CHANNEL` in `orbit/` and `cmd/` |
 | `vulnerabilities.disable_schedule` is the key for moving vulnerability processing off the serving instances | Stated. **Added during drafting**, because the research gave the outcome and no key | `server/config/config.go:1727`, field at `:732`, read at `:2102` |
 | `disable_events` is a name administrators actually type | Stated | Used as an agent command-line flag in Fleet's own repository configuration, `it-and-security/fleets/testing-and-qa.yml:45`, and in the Terraform provider tests |
-| The SCIM attribute clash is between two of Fleet's own documentation pages, and the disputed attribute is `email` | Stated. **Corrected during drafting**: the first draft invented `userName` and `active` as the disputed pair | `manual/02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md:210`, which records the SSO page listing `email` among the required attributes while the host-vitals guide lists only `userName`, `givenName` and `familyName` |
+| The SCIM attribute clash is between two of Fleet's own documentation pages, and the disputed attribute is `email` | Stated. **Corrected during drafting**: the first draft invented `userName` and `active` as the disputed pair | `manual/02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md:210`, which records the SSO page listing `email` among the required attributes while the host-vitals guide lists only `userName`, `givenName` and `familyName` |
 | The manual contradicts itself on channels against families | Stated | `manual/01-foundations/1.2-how-fleet-reaches-a-device.md:129` heading "The five channels" over `:131` "five families" |
-| `fleet` means both a scope and the estate inside this book | Stated | `manual/05-manage-devices/5.4-manage-software-and-applications.md:472` heading "Automatic updates update your library, not your fleet"; `manual/04-know-your-devices/4.5-monitor-device-and-management-status.md:2` and `:18` "Monitor fleet-wide state" |
+| `fleet` means both a scope and the estate inside this book | Stated | `manual/05-manage-devices/5.4-manage-software-and-applications.md:472` heading "Automatic updates update your library, not your fleet"; `manual/04-know-your-devices/4.5-monitor-fleet-wide-state.md:2` and `:18` "Monitor fleet-wide state" |
 | Nineteen coined terms are this manual's and appear nowhere in Fleet | Stated for the manual half | Every coinage in the table was grepped against `manual/`; all nineteen resolve to the chapter the table names, and `sentinel`, `fleet move`, `re-fire`, `endpoint restrictions`, `break-glass` and `families` also appear in neighbouring chapters, which is why the table names where each is **defined** rather than where it appears |
 | Group counts 32, 66, 8, 57, 98, 23, 44, 20 | Stated, and enforced | The build script asserts each group's printed count against the rows in that group's table, and the three group 5 sub-tables against 30, 52 and 16. It refuses to write the file otherwise |
 
@@ -100,7 +100,7 @@ do.
 **Two symptom rows were assigned a chapter the research did not assign.** The research lists the
 symptom entries with no capability row and says they "route to a chapter" without naming one. Where
 the routing followed from an existing row it was taken from that row. Two did not: "my EDR is flagging
-the fleetd agent" was routed to 3.7 then 8.4, and "switch to Fleet from Kolide Fleet" was **dropped**
+the fleetd agent" was routed to 3.8 then 8.4, and "switch to Fleet from Kolide Fleet" was **dropped**
 rather than routed, because no chapter covers it and asserting `None` would have been a new coverage
 claim beyond what the research checked. Fleet's own two removed-surface questions, "Where did the
 Packs page go?" and "What happened to the Schedule page?", are in the closing section instead, where
@@ -109,7 +109,7 @@ the research had already established that packs have no owning chapter.
 **CAP-006, the second factor, is published with the research's canonical chapter and the assignment is
 weak.** 1.5 carries a substantial paragraph at `:121` about second-factor events being almost
 unrecorded, which serves "why is my MFA not in the audit log" and not "how do I require a second
-factor". 2.2 carries the configuration side at `:150`, as the break-glass account's authentication
+factor". 2.5 carries the configuration side at `:150`, as the break-glass account's authentication
 method. The research checked ownership row by row and did not list CAP-006 among the seven unowned, so
 its assignment stands here. **Raise it in coverage review.**
 

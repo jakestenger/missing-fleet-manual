@@ -23,7 +23,7 @@ Judge status by **evidence, not by frontmatter**. The reorganization rewrote eve
 | ● | written | complete prose, reads start to finish |
 | ✔ | verified | written **and** checked against a release tag, with a citation ledger in `research/section-notes/` |
 
-**Current state, 2026-08-24.** Part I and 2.1 to 2.5 are ✔ verified against tag
+**Current state, 2026-08-24.** Part I and the Part II chapters now numbered 2.1 and 2.5 to 2.8 are ✔ verified against tag
 `fleet-v4.90.1`, each with a ledger in `research/section-notes/`. Part VIII is ● written and
 was checked against Fleet 4.90.0, so its re-verification at the tag is still outstanding and
 it does not yet qualify. Everything else is ○ or ◐. See `STYLE.md` §9.
@@ -96,17 +96,17 @@ administrator, before devices arrive.
 | # | Section | File | Pri | Status |
 |---|---|---|---|---|
 | 2.1 | Administration model and deployment choices | `2.1-administration-model-and-deployment-choices.md` | ★★ | ◐ |
-| 2.2 | Identity providers, SSO, SCIM, and role sync | `2.2-identity-providers-sso-scim-and-role-sync.md` | ★★★ | ◐ |
-| 2.3 | User accounts, roles, and service identities | `2.3-user-accounts-roles-and-service-identities.md` | ★★ | ◐ |
-| 2.4 | Organization and server settings | `2.4-organization-and-server-settings.md` | ★★ | ◐ |
-| 2.5 | Activity, audit logs, and log delivery | `2.5-activity-audit-logs-and-log-delivery.md` | ★★ | ◐ |
-| 2.6 | MDM architecture and foundations | `2.6-mdm-architecture-and-foundations.md` | ★★★ | ◐ |
-| 2.7 | Apple MDM configuration | `2.7-apple-mdm-configuration.md` | ★★★ | ○ |
-| 2.8 | Windows and Android management configuration | `2.8-windows-and-android-management-configuration.md` | ★★★ | ○ |
-| 2.9 | Self-hosting architecture and capacity | `2.9-self-hosting-architecture-and-capacity.md` | ★★ | ○ |
-| 2.10 | Deploy on AWS or GCP | `2.10-deploy-on-aws-or-gcp.md` | ★★ | ○ |
-| 2.11 | Deploy with containers or virtual machines | `2.11-deploy-with-containers-or-virtual-machines.md` | ★★ | ○ |
-| 2.12 | Production readiness and handoff | `2.12-production-readiness-and-handoff.md` | ★★ | ○ |
+| 2.2 | Self-hosting architecture and capacity | `2.2-self-hosting-architecture-and-capacity.md` | ★★ | ○ |
+| 2.3 | Deploy on AWS or GCP | `2.3-deploy-on-aws-or-gcp.md` | ★★ | ○ |
+| 2.4 | Deploy with containers or virtual machines | `2.4-deploy-with-containers-or-virtual-machines.md` | ★★ | ○ |
+| 2.5 | Identity providers, SSO, SCIM, and role sync | `2.5-identity-providers-sso-scim-and-role-sync.md` | ★★★ | ◐ |
+| 2.6 | User accounts, roles, and service identities | `2.6-user-accounts-roles-and-service-identities.md` | ★★ | ◐ |
+| 2.7 | Organization and server settings | `2.7-organization-and-server-settings.md` | ★★ | ◐ |
+| 2.8 | Activity, audit logs, and log delivery | `2.8-activity-audit-logs-and-log-delivery.md` | ★★ | ◐ |
+| 2.9 | MDM architecture and foundations | `2.9-mdm-architecture-and-foundations.md` | ★★★ | ◐ |
+| 2.10 | Apple MDM configuration | `2.10-apple-mdm-configuration.md` | ★★★ | ○ |
+| 2.11 | Configure Windows management | `2.11-configure-windows-management.md` | ★★★ | ○ |
+| 2.12 | Bind Android Enterprise | `2.12-bind-android-enterprise.md` | ★★★ | ○ |
 
 ## Part III — Connect devices
 
@@ -119,8 +119,9 @@ administrator, before devices arrive.
 | 3.3 | Enroll Windows devices | `3.3-enroll-windows-devices.md` | ★★★ | ○ |
 | 3.4 | Enroll Linux devices | `3.4-enroll-linux-devices.md` | ★★ | ○ |
 | 3.5 | Enroll iOS and iPadOS devices | `3.5-enroll-ios-and-ipados-devices.md` | ★★ | ○ |
-| 3.6 | Enroll Android and ChromeOS devices | `3.6-enroll-android-and-chromeos-devices.md` | ★★ | ○ |
-| 3.7 | Manage fleetd, Orbit, and updates | `3.7-manage-fleetd-orbit-and-updates.md` | ★★★ | ○ |
+| 3.6 | Enroll Android devices | `3.6-enroll-android-devices.md` | ★★ | ○ |
+| 3.7 | Enroll ChromeOS devices | `3.7-enroll-chromeos-devices.md` | ★★ | ○ |
+| 3.8 | Manage fleetd, Orbit, and updates | `3.8-manage-fleetd-orbit-and-updates.md` | ★★★ | ○ |
 
 ## Part IV — Know your devices
 
@@ -134,7 +135,7 @@ Reading state off devices: inventory, queries, policies, vulnerabilities.
 | 4.2 | Run queries and reports | `4.2-run-queries-and-reports.md` | ★★★ | ○ |
 | 4.3 | Use policies for compliance | `4.3-use-policies-for-compliance.md` | ★★★ | ○ |
 | 4.4 | Understand software and vulnerabilities | `4.4-understand-software-and-vulnerabilities.md` | ★★★ | ○ |
-| 4.5 | Monitor device and management status | `4.5-monitor-device-and-management-status.md` | ★★ | ○ |
+| 4.5 | Monitor fleet-wide state | `4.5-monitor-fleet-wide-state.md` | ★★ | ○ |
 | 4.6 | Advanced osquery: queries and tables | `4.6-advanced-osquery-queries-and-tables.md` | ★★ | ○ |
 | 4.7 | Advanced osquery: custom tables and plugins | `4.7-extend-osquery-with-custom-tables-and-plugins.md` | ★ | ○ |
 
@@ -177,11 +178,13 @@ Exhaustive command and endpoint listings belong in `a.7` and `a.8`, not in these
 | # | Section | File | Pri | Status |
 |---|---|---|---|---|
 | 7.1 | Day-two operations | `7.1-day-two-operations.md` | ★★ | ○ |
-| 7.2 | Upgrade Fleet and fleetd | `7.2-upgrade-fleet-and-fleetd.md` | ★★★ | ○ |
-| 7.3 | Back up, restore, and retain state | `7.3-backup-restore-and-retain-state.md` | ★★★ | ○ |
+| 7.2 | Back up and restore service state | `7.2-back-up-and-restore-service-state.md` | ★★★ | ○ |
+| 7.3 | Upgrade Fleet and fleetd | `7.3-upgrade-fleet-and-fleetd.md` | ★★★ | ○ |
 | 7.4 | Scale and maintain availability | `7.4-scale-and-maintain-availability.md` | ★★★ | ○ |
 | 7.5 | Observe performance and service health | `7.5-observe-performance-and-service-health.md` | ★★★ | ○ |
 | 7.6 | Operational security and release maintenance | `7.6-operational-security-and-release-maintenance.md` | ★★ | ○ |
+| 7.7 | Production readiness checklist and handoff | `7.7-production-readiness-checklist-and-handoff.md` | ★★ | ○ |
+| 7.8 | Retire a Fleet deployment | `7.8-retire-a-fleet-deployment.md` | ★ | ○ |
 
 ## Part VIII — Troubleshooting Fleet
 
@@ -242,7 +245,9 @@ glosses a term inline should be linking to it.
 
 Sections forward-link to unwritten sections, so paths must be predictable or the links rot.
 **These paths are canonical.** A worker writing a section MUST use its registered path, and
-may only add to this list, never rename.
+may only add to this list, never rename. The renumber of 2026-08-30 was executed under owner
+authorisation (whole-book review, P6 structural moves); the registry now reflects the new
+numbering, and the no-rename rule resumes from that baseline.
 
 Convention: `manual/NN-part-slug/N.N-section-slug.md`, lowercase, hyphenated. Appendices use
 a lowercase `a.N-` prefix. `00-Introduction` is capitalised, inconsistently with the rest;
@@ -310,22 +315,22 @@ hint, not evidence.
 |---|---|---|
 | Software / installers / packages | 752 | 5.4, 5.5, 4.4 |
 | Queries | 620 | 4.2, 4.6 |
-| Enrollment (ADE / Autopilot / DEP) | 457 | 3.1 to 3.6 |
+| Enrollment (ADE / Autopilot / DEP) | 457 | 3.1 to 3.7 |
 | Policies | 319 | 4.3, 5.7 |
 | Profiles / DDM / CSPs | 314 | 5.2 |
 | Vulnerabilities / CVEs | 272 | 4.4 |
 | GitOps | 240 | 6.2 |
 | Scripts | 233 | 5.3 |
 | Labels | 199 | 1.3, 5.1 |
-| SSO / SCIM / IdP | 165 | 2.2, 1.4 |
-| Certificates / SCEP | 146 | 2.7, 5.8 |
+| SSO / SCIM / IdP | 165 | 2.5, 1.4 |
+| Certificates / SCEP | 146 | 2.10, 5.8 |
 | VPP / App Store | 119 | 5.4 |
 | Self Service / Fleet Desktop | 115 | 5.5 |
 | Webhooks / integrations | 100 | 6.5 |
-| Android | 80 | 3.6, 2.8 |
+| Android | 80 | 3.6, 2.12 |
 | Disk encryption | 78 | 5.6 |
 | Host vitals / inventory | 68 | 4.1 |
-| OS updates / patching | 51 | 5.5, 3.7 |
+| OS updates / patching | 51 | 5.5, 3.8 |
 
 This heuristic is a placeholder. Once the weekly support sweep has a few weeks
 of data, hits-per-section replaces it with something real.
@@ -334,7 +339,7 @@ of data, hits-per-section replaces it with something real.
 
 1. ~~Merge the salvage into 1.2, 1.3 and 1.6.~~ **Done 2026-08-24.**
 2. ~~Finish Part I.~~ **Done.** All six chapters written and verified.
-3. **Finish Part II.** 2.1 to 2.5 are verified; 2.6 to 2.12 are outlines. In progress on an
+3. **Finish Part II.** The chapters now numbered 2.1 and 2.5 to 2.8 are verified; the rest of the part are outlines. In progress on an
    hourly schedule, one chapter per run, each verified at the tag with its own ledger.
 4. **Re-verify Part VIII** against tag `fleet-v4.90.1` and move it from ● to ✔. This is the
    largest outstanding debt in the book: fourteen written sections carrying a 4.90.0 stamp.

@@ -25,53 +25,13 @@ feature_requests:
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) The administrator-visible actions this appendix's research found, against all six roles, at both scopes. That is the breakdown [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) promises and the reason this appendix is the most-referenced one in the book. **The row universe is a search result and not a proof**: two rows were added after a review round found routes the earlier passes had missed, so a reader who finds another has found a gap rather than a contradiction.
+![Reference](../_assets/icons/reference.svg) The administrator-visible actions this appendix's research found, against all six roles, at both scopes. That is the breakdown [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) promises and the reason this appendix is the most-referenced one in the book. **The row universe is a search result and not a proof**: two rows were added after a review round found routes the earlier passes had missed, so a reader who finds another has found a gap rather than a contradiction.
 
 **A cell answers what an administrator can actually obtain**, not what Fleet's authorization policy returns. Those are different questions more often than they should be. The policy is the largest input, and a decision can also be made by service middleware before the policy runs, by a response having a field stripped from it after the policy allowed the whole object, or by a database query that filters the result to nothing after the request succeeded. **All four change the answer, so all four are in the cells wherever this appendix found them.**
 
 > **Masking is a property of the route, not of the object, and this appendix is organised by intent rather than by route.** Where a value is stripped from one response and not from another, the cell describes the reading route, and any row where that is known to differ says so. Reading the organisation settings is the case to know about: **the write response applies credential obfuscation and not the role masks the read response applies**, so an identity authorised to write receives fields it is masked from on read. At this release that affects exactly one identity, global GitOps, and three settings groups.
 
 Three questions belong elsewhere. **Whether the capability exists on your platform is [a.2](a.2-platform-capability-matrix.md)**, which answers it per platform with the licence and prerequisites beside it. **Whether your licence includes it is a separate gate again**, and it is not folded into any cell here: a role that is allowed an action it has no licence for gets a licence error, not a permission error, and telling them apart is most of diagnosing a `403`. **Which interface can perform it is [a.5](a.5-interface-index.md)**, which answers it interface by interface.
-
-## How Fleet decides
-
-![Explanation](../_assets/icons/explanation.svg) Enough of the mechanism to predict an answer this appendix does not contain.
-
-A request carries a **subject**, which is the authenticated identity and the roles it holds. It names an **object**, which is the kind of thing being acted on and, where the thing belongs to a fleet, that fleet's identifier. And it names an **action**, one of sixteen verbs.
-
-**The policy is deny by default.** Every combination no rule grants is refused. That is a stated rule rather than an argument from silence, but it says nothing about any particular role, so a `Denied` cell below is not written off the default. **A `Denied` cell is checked against Fleet's own refusal tests wherever Fleet has such a test**, and those tests assert, role by role and action by action, that a request is turned away. **Where they do not cover a role, this appendix says so** instead of inferring the refusal, and the families found that way are named just before the tables. **That naming is what the search found rather than a closed list.**
-
-**Sixteen actions, not two.** Reading and writing are the common pair, and the rest exist because Fleet needed to give one role one verb without the general one. Running a report is not writing it. Transferring a host between fleets is not writing the host. Reading a secret is not reading the object that holds it. **A matrix built on read and write would be wrong**, and it would be wrong in the permissive direction, which is why this one is not built that way.
-
-> **Two vocabularies for one idea.** This book says *fleet*, which is Fleet's current product term. **Fleet's authorization vocabulary still says *team***, and so do the API fields, the object type printed under each action below, and the role a fleet membership records. The two words mean the same thing, and a reader who traces a cell into the API or into a GitOps file will meet the older one.
-
-### Role and scope combine, and are exclusive
-
-**The same six roles exist at both scopes**, and an identity holds one or the other, never both. Fleet rejects an account carrying a global role and a fleet role together.
-
-That is why there are two tables rather than one with twelve columns. **You are always in exactly one of them.**
-
-**A fleet-scoped role is scoped to a concrete fleet.** Most fleet-scoped rules are keyed on the object's fleet identifier and guarded against a null, and the helper that resolves a subject's role for a fleet is undefined when there is no such fleet. **So no fleet-scoped role of any kind reaches the Unassigned fleet**, whatever its role name suggests. Only a global role does. That single structural fact accounts for a large share of the conditional cells below, and it is the answer to a question that otherwise looks like a bug: a fleet administrator who can see an Unassigned host in a list and can do none of this appendix's host operations to it.
-
-### Combinations Fleet refuses, and where it does not
-
-Three kinds of refusal get confused, and they fail differently:
-
-| Kind | Example | What you get |
-|---|---|---|
-| **Structural** | A global role and a fleet role on one identity | Rejected at write time, whatever the licence |
-| **Licence-gated** | Technician, Observer+ or GitOps on Free | A licence error, not a permission error |
-| **Ordinary denial** | Observer trying to write a policy | A `403` from the policy |
-
-**Those checks live in the create and modify paths, not in the roles themselves.** Fleet has a third route that applies roles in bulk from a spec and it performs neither: no licence check and no API-only check. So the table above describes what two paths enforce rather than an invariant about what a role can be, and a Free deployment can be given Premium-only roles through that third route. **That route has its own row**, in the accounts group, and only a global administrator reaches it.
-
-## Service identities and endpoint restrictions
-
-![Reference](../_assets/icons/reference.svg) **API-only is a property of an account, not a seventh role.** Such an account holds one of the same six roles, and its token inherits that role and that scope. The activity record attributes its work to it, which is the argument in [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) for giving each automation its own identity rather than sharing a person's token.
-
-**GitOps is intended to be API-only**, and the rule that enforces it is unreachable on the modify path: it fires only when the request carries an API-only field, and that endpoint rejects any request carrying one. So the role can be given to an ordinary interactive account, and [1.4](../01-foundations/1.4-identity-and-roles.md) covers what that account can then reach.
-
-**Endpoint restrictions narrow an API-only account further**, to a named list of endpoints, and they sit *above* every row this appendix reaches through the authenticated API. Where such a list is non-empty, the middleware decides before the policy is consulted at all. **The debug tree is outside that chain.** It authenticates its own callers and never consults the endpoint list, so **a restricted API-only global administrator reaches those endpoints whether or not its list names them**. That is why the restriction is not a row: everywhere else it qualifies the rows equally. Configuring one is an ordinary row, in the accounts group.
 
 ## The permission matrix
 
@@ -558,6 +518,46 @@ The subject holds this role on fleet T and holds no global role. The cell answer
 **Those three are one permission decision and three separate rows, and the difference matters.** Fleet has no object type for a recovery key: revealing any of the three takes exactly the permission that reading the host takes, so the cells are identical. They stay three rows because a reader looking up who can reveal a Recovery Lock password must not have to know that Fleet decides it as a host read. **One decision is not one intent.**
 
 So the group is five of the six roles at either scope, and at global scope that means every key in the deployment. [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) covers what to do about that; this appendix's job is to say that it is not a separate decision, because everyone assumes it is.
+
+## How Fleet decides
+
+![Explanation](../_assets/icons/explanation.svg) Enough of the mechanism to predict an answer this appendix does not contain.
+
+A request carries a **subject**, which is the authenticated identity and the roles it holds. It names an **object**, which is the kind of thing being acted on and, where the thing belongs to a fleet, that fleet's identifier. And it names an **action**, one of sixteen verbs.
+
+**The policy is deny by default.** Every combination no rule grants is refused. That is a stated rule rather than an argument from silence, but it says nothing about any particular role, so a `Denied` cell in the tables above is not written off the default. **A `Denied` cell is checked against Fleet's own refusal tests wherever Fleet has such a test**, and those tests assert, role by role and action by action, that a request is turned away. **Where they do not cover a role, this appendix says so** instead of inferring the refusal, and the families found that way are named just before the tables. **That naming is what the search found rather than a closed list.**
+
+**Sixteen actions, not two.** Reading and writing are the common pair, and the rest exist because Fleet needed to give one role one verb without the general one. Running a report is not writing it. Transferring a host between fleets is not writing the host. Reading a secret is not reading the object that holds it. **A matrix built on read and write would be wrong**, and it would be wrong in the permissive direction, which is why this one is not built that way.
+
+> **Two vocabularies for one idea.** This book says *fleet*, which is Fleet's current product term. **Fleet's authorization vocabulary still says *team***, and so do the API fields, the object type printed under each action in the tables, and the role a fleet membership records. The two words mean the same thing, and a reader who traces a cell into the API or into a GitOps file will meet the older one.
+
+### Role and scope combine, and are exclusive
+
+**The same six roles exist at both scopes**, and an identity holds one or the other, never both. Fleet rejects an account carrying a global role and a fleet role together.
+
+That is why there are two tables rather than one with twelve columns. **You are always in exactly one of them.**
+
+**A fleet-scoped role is scoped to a concrete fleet.** Most fleet-scoped rules are keyed on the object's fleet identifier and guarded against a null, and the helper that resolves a subject's role for a fleet is undefined when there is no such fleet. **So no fleet-scoped role of any kind reaches the Unassigned fleet**, whatever its role name suggests. Only a global role does. That single structural fact accounts for a large share of the conditional cells in the tables, and it is the answer to a question that otherwise looks like a bug: a fleet administrator who can see an Unassigned host in a list and can do none of this appendix's host operations to it.
+
+### Combinations Fleet refuses, and where it does not
+
+Three kinds of refusal get confused, and they fail differently:
+
+| Kind | Example | What you get |
+|---|---|---|
+| **Structural** | A global role and a fleet role on one identity | Rejected at write time, whatever the licence |
+| **Licence-gated** | Technician, Observer+ or GitOps on Free | A licence error, not a permission error |
+| **Ordinary denial** | Observer trying to write a policy | A `403` from the policy |
+
+**Those checks live in the create and modify paths, not in the roles themselves.** Fleet has a third route that applies roles in bulk from a spec and it performs neither: no licence check and no API-only check. So the table above describes what two paths enforce rather than an invariant about what a role can be, and a Free deployment can be given Premium-only roles through that third route. **That route has its own row**, in the accounts group, and only a global administrator reaches it.
+
+## Service identities and endpoint restrictions
+
+![Reference](../_assets/icons/reference.svg) **API-only is a property of an account, not a seventh role.** Such an account holds one of the same six roles, and its token inherits that role and that scope. The activity record attributes its work to it, which is the argument in [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) for giving each automation its own identity rather than sharing a person's token.
+
+**GitOps is intended to be API-only**, and the rule that enforces it is unreachable on the modify path: it fires only when the request carries an API-only field, and that endpoint rejects any request carrying one. So the role can be given to an ordinary interactive account, and [1.4](../01-foundations/1.4-identity-and-roles.md) covers what that account can then reach.
+
+**Endpoint restrictions narrow an API-only account further**, to a named list of endpoints, and they sit *above* every row this appendix reaches through the authenticated API. Where such a list is non-empty, the middleware decides before the policy is consulted at all. **The debug tree is outside that chain.** It authenticates its own callers and never consults the endpoint list, so **a restricted API-only global administrator reaches those endpoints whether or not its list names them**. That is why the restriction is not a row: everywhere else it qualifies the rows equally. Configuring one is an ordinary row, in the accounts group.
 
 ## Version notes
 

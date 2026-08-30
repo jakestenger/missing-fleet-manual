@@ -63,7 +63,7 @@ row.
 | 154 policy rules over 49 object types and 16 actions | `policy-rules.md`, count cross-checked against a grep |
 | **The policy denies by default**, so every ungranted combination is a denial | The default rule |
 | **No fleet-scoped role reaches the Unassigned fleet**, because fleet-scoped rules key on a concrete fleet and the role lookup is undefined without one | Row universe, condition C15 |
-| Reading a recovery key takes exactly the permission that reading the host takes; there is no separate object | Verified independently while correcting 1.4, 1.5 and 2.3 |
+| Reading a recovery key takes exactly the permission that reading the host takes; there is no separate object | Verified independently while correcting 1.4, 1.5 and 2.6 |
 | **GitOps is denied host list and host read outright** | Policy ledger rows 18 and 20 |
 | Eight routes are allowed by policy for GitOps and return nothing, because the host filter names no GitOps role | Row universe §6, filed as C31. They land on seven published rows, so 14 cells |
 | The label routes empty membership **only when hosts arrive by name**; raw host identifiers take a different path and are authorized host by host | `server/service/labels.go:116` and `:283` resolve names through the team filter; `:130` and `:300` then call `authorizeWriteLabelOnHosts` (`:187`), which authorizes each loaded host for `write_host_label` |

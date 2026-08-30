@@ -19,7 +19,7 @@ feature_requests:
 
 # Capability index
 
-**Search the last column for the word you have. Open the owning chapter. `(no)` means Fleet does not provide the capability.** The rows themselves are in [The index](#the-index); the sections before it explain where its words come from.
+**Search the last column for the word you have. Open the owning chapter. `(no)` means Fleet does not provide the capability.** The rows themselves are in [The index](#the-index); the sections after it explain where its words come from.
 
 **Every outcome this manual teaches has one chapter that owns it, and this index gets you there from the word you would actually type.** A table of contents can only expose the book's own vocabulary. Administrators arrive holding Apple's word, Microsoft's word, the name of the product they are migrating off, or the name Fleet itself used two releases ago, and none of those is what a chapter is called.
 
@@ -55,6 +55,474 @@ Six markers, and each changes what you do with the word next to it.
 | **[a.6]** | [a.6](a.6-glossary-and-release-compatibility.md) settles what the word means. This row carries only the route |
 
 **Where the last column is empty, the row's own words are the search words.** The row is present so the enumeration is complete, and it is not what the appendix is for.
+
+## The index
+
+![Reference](../_assets/icons/reference.svg) 348 outcomes. Find the row by the words you would type, then open the linked chapter.
+
+### 1. Access and accountability
+
+**Who can use Fleet, how they prove it, and what is recorded.** 32 outcomes, cutting across Parts I, II and VII.
+
+| ID | What you are trying to do | Chapter | Also | Words that lead here |
+|---|---|---|---|---|
+| **CAP-001** | Sign in, or reset a password | [1.4](../01-foundations/1.4-identity-and-roles.md) | 2.6 | `user_logged_in` · `user_failed_login` · Access denied · my account · change password · API token · disable password-based authentication |
+| **CAP-002** | Sign in through the identity provider | [1.4](../01-foundations/1.4-identity-and-roles.md) | 2.5 | SSO · SAML · single sign-on · log in with Okta · log in with Entra · IdP · authentik · Google Workspace · `user_added_by_sso` |
+| **CAP-003** | Create accounts the first time someone signs in | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 1.4 | JIT · just-in-time provisioning · auto-create users · account provisioning · `fpsso` |
+| **CAP-004** | Remove accounts when people leave | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 1.4 | SCIM · deprovision · offboarding · account provisioning |
+| **CAP-005** | Work out why an account was not deprovisioned | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 2.6 | required SCIM attributes · `email` · `userName` · `givenName` · `familyName` · deprovisioning matches by email · API-only and non-SSO accounts skipped · last global admin never deleted |
+| **CAP-006** | Require a second factor | [1.5](../01-foundations/1.5-audit-and-activity.md) | 2.5 | 2FA · MFA · email two-factor · one-time code |
+| **CAP-007** | Add a person and give them a role | [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) | 1.4 | invite · new user · create user · human user · make someone an admin · `created_user` · `changed_user_global_role` · Add User button disabled |
+| **CAP-008** | Choose between Fleet's roles | [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) | 1.4 | `observer_plus` · Observer+ · observer plus · `gitops` · `technician` · role-based access |
+| **CAP-009** | Give someone access to one fleet only | [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) | 1.4, 1.3 | team role (still accepted) · team admin (still accepted) · `--team` (still accepted) · fleet-level permissions · `changed_user_team_role` |
+| **CAP-010** | Create a non-human identity for automation | [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) | 6.1, 1.4 | API token · API-only user · service account · bot user · gitops user · `api only user` · retrieve your API token |
+| **CAP-011** | Scope a non-human identity to one fleet | [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) | 1.4 | `--team <id>:<role>` (still accepted) · `--fleet <id>:<role>` |
+| **CAP-012** | Restrict a token to particular endpoints | [1.4](../01-foundations/1.4-identity-and-roles.md) | 2.6, 6.1 | endpoint restrictions (ours) · `user_api_endpoints` · allowlist endpoints |
+| **CAP-013** | Add or remove a fleet's members | [1.4](../01-foundations/1.4-identity-and-roles.md) | 2.6 | team member (still accepted) · `/fleet/teams/{id}/users` (still accepted) · add users to fleet |
+| **CAP-014** | Make the interface read-only | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) | 6.2 | GitOps mode · change management · lock the interface · workflow · `enabled_gitops_mode` |
+| **CAP-015** | Find out who changed something | [1.5](../01-foundations/1.5-audit-and-activity.md) | 2.8, 8.12 | audit log · activity feed · who did that · `activities` (clash) · `activity_past` · [a.6] |
+| **CAP-016** | Read one host's history | [1.5](../01-foundations/1.5-audit-and-activity.md) | 8.12 | host timeline · past activity |
+| **CAP-017** | See what is queued for a host | [1.5](../01-foundations/1.5-audit-and-activity.md) | 5.1, 8.6 | upcoming activity · pending work · queued · [a.6] |
+| **CAP-018** | Push every activity to a webhook | [1.5](../01-foundations/1.5-audit-and-activity.md) | 6.5, 2.8 | activity automations · `enabled_activity_automations` · Manage automations |
+| **CAP-019** | Stream the audit record to a SIEM | [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md) | 1.5 | audit log destination · external activity audit logging · Splunk · Firehose · Kinesis · Lambda · Pub/Sub · Kafka · log destinations |
+| **CAP-020** | Work out why an activity never reached the SIEM | [1.5](../01-foundations/1.5-audit-and-activity.md) | 8.12 | `host_only` |
+| **CAP-021** | Set how long Fleet keeps activity | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) | 1.5 | `activity_expiry_settings` · activity retention |
+| **CAP-022** | Keep a host's history across re-enrollment | [1.5](../01-foundations/1.5-audit-and-activity.md) | 2.7 | `preserve_host_activities_on_reenrollment` |
+| **CAP-023** | Read a disk encryption recovery key | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 1.4, 2.6 | recovery key · FileVault key · `filevault2` · bitlocker key (vendor) · unlock this laptop · Show disk encryption key · `read_host_disk_encryption_key` |
+| **CAP-024** | Prove nobody read a secret without permission | [1.5](../01-foundations/1.5-audit-and-activity.md) | 5.8 | `read_host_disk_encryption_key` · `viewed_host_recovery_lock_password` · `read_managed_local_account` |
+| **CAP-290** | Set roles from the identity provider | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 2.6 | role sync · SAML role attribute · `FLEET_JIT_USER_ROLE_TEAM_<id>` (still accepted) · `FLEET_JIT_USER_ROLE_FLEET_<id>` · customization of user roles |
+| **CAP-291** | Keep a way in when the identity provider is down | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 2.6 | break-glass account (ours) |
+| **CAP-292** | Put the end user's name on the host record | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 4.1 | human-device mapping · foreign host vitals · User mapping · `identity-provider` (clash) · Okta · Entra · Azure AD (vendor) · LDAP (vendor) |
+| **CAP-293** | Set a host's user by hand | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 4.1 | `edited_host_idp_data` |
+| **CAP-294** | Check the identity provider connection | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 8.13 | No IdP connected · identity provider details |
+| **CAP-297** | Rotate an API token | [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) | 7.6 | revoke the authorization tokens for a user · **(no)** |
+| **CAP-298** | Remove a person, or demote an administrator | [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) | 1.4 | `deleted_user` · `deleted_user_global_role` · last admin |
+| **CAP-313** | Run an access review | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 2.6 | who has admin · least privilege · last token use · **(no)** |
+
+### 2. Connecting devices
+
+**Getting a device enrolled, and the platform connections that must exist first.** 66 outcomes. The credentials that make these connections work are in group 7, because you meet them again at renewal.
+
+| ID | What you are trying to do | Chapter | Also | Words that lead here |
+|---|---|---|---|---|
+| **CAP-025** | Understand how a device authenticates to Fleet | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 1.3 | enroll secret · enrollment token · `enroll_secrets` · `fleetctl get enroll-secret` · `edited_enroll_secrets` · system keystore |
+| **CAP-026** | Rotate an enroll secret | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 3.2, 3.3, 3.4 | the secret leaked · target hosts by enroll secret |
+| **CAP-027** | Enroll a Mac with no hands on it | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 2.10 | DEP (vendor) · Device Enrollment Program (vendor) · ADE · ABM · zero-touch · company-owned Mac · automated enrollment · [a.6] |
+| **CAP-028** | Enroll a Mac from a link | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 3.1 | Add hosts · enrollment link · manual enrollment · onboard · provision · fleetd |
+| **CAP-029** | Enroll a personally owned Mac | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 5.7 | BYOD · personal Mac · personally owned · `On (manual - personal)` · [a.6] |
+| **CAP-030** | Download the manual enrollment profile | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 6.3 | unsigned mobileconfig · `/fleet/mdm/manual_enrollment_profile` (still accepted) |
+| **CAP-031** | Get the default automatic enrollment profile | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 3.2 | Setup Assistant profile · `/fleet/mdm/apple/enrollment_profile` (still accepted) |
+| **CAP-032** | Work out why the agent never arrived after MDM enrollment | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 8.4 | `InstallEnterpriseApplication` · half-enrolled (ours) |
+| **CAP-033** | Let a bootstrap package deliver the agent instead | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 5.5 | `manual_agent_install` (still accepted) · `macos_manual_agent_install` |
+| **CAP-034** | Make the user sign in during enrollment | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 2.5, 5.5 | end user authentication · require IdP authentication · `enabled_macos_setup_end_user_auth` |
+| **CAP-035** | Enroll Windows by installing the agent | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) | 2.11 | MSI · `win10` · `win11` · pc · install fleetd |
+| **CAP-036** | Enroll Windows at first boot | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) | 2.11 | Autopilot (vendor) · OOBE (vendor) · Entra · Azure AD (vendor) · Active Directory (vendor) · repurposing a Windows device |
+| **CAP-037** | Let a person enroll Windows from Settings | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) | 2.11 | Access work or school (vendor) · Automatic enrollment (clash) |
+| **CAP-038** | Stop Fleet turning Windows MDM on by itself | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) | 2.11 | `enable_turn_on_windows_mdm_manually` |
+| **CAP-039** | Move Windows hosts off another MDM with no prompt | [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md) | 3.3 | Intune (vendor) · automatic Windows MDM migration · `enabled_windows_mdm_migration` |
+| **CAP-040** | Prompt a Mac's user to migrate from another MDM | `None` | 6.5, 1.2 | Jamf (vendor) · Workspace ONE (vendor) · Kandji (vendor) · Munki (vendor) · macOS MDM migration · seamless migration |
+| **CAP-041** | Have Fleet push the agent to Entra-enrolled Windows hosts | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) | 2.11 | global enroll secret |
+| **CAP-042** | Enroll a Linux host | [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | 3.1 | deb · rpm · `tar.gz` · tarballs · Arch · Linux support |
+| **CAP-043** | Re-point a deployed Linux agent | [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | 3.8 | `/etc/default/orbit` · `ORBIT_*` · config-less deployment · change the Fleet URL |
+| **CAP-044** | Build a Mac package with no secret inside it | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 3.1 | `--use-system-configuration` · system keystore |
+| **CAP-045** | Supply a Windows host's settings at install time | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) | 3.1 | MSI properties · `FLEET_URL` · `FLEET_SECRET` · `ENABLE_SCRIPTS` · `END_USER_EMAIL` · `EUA_TOKEN` · heat failed |
+| **CAP-046** | Enroll an iPhone or iPad with no hands on it | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) | 2.10 | zero-touch iPhone · ADE iPad · which Apple devices work with ADE |
+| **CAP-047** | Enroll a company-owned iPhone from a link | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) | 2.10 | enrollment URL for an iPhone |
+| **CAP-048** | Enroll a personally owned iPhone or iPad | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) | 5.7 | BYOD iPad · personal iPhone · profile-based enrollment |
+| **CAP-049** | Let a person enroll with a Managed Apple Account | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) | 2.5, 2.10 | Managed Apple ID (vendor) · account-driven enrollment |
+| **CAP-050** | Work out why account-driven enrollment cannot find the server | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) | 8.8 | `mdm_service_discovery` · service discovery |
+| **CAP-051** | Decide which fleet automatically enrolled devices land in | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 3.5, 3.2 | default team (still accepted) · `macos_team` (still accepted) · `ios_team` (still accepted) · `ipados_team` (still accepted) · `byod_team` (still accepted) · `macos_fleet` |
+| **CAP-052** | Enroll a personally owned Android device | [3.6](../03-connect-devices/3.6-enroll-android-devices.md) | 2.12 | work profile (vendor) · profile owner (vendor) · Android BYOD migration · remove the old work profile |
+| **CAP-053** | Enroll a company-owned Android device at first boot | [3.6](../03-connect-devices/3.6-enroll-android-devices.md) | 2.12 | QR code · fully managed (vendor) · device owner (vendor) · `fully_managed` |
+| **CAP-054** | Issue an Android enrollment token | [3.6](../03-connect-devices/3.6-enroll-android-devices.md) | 8.10 | token expired · one hour · one device |
+| **CAP-055** | Enroll a Chromebook | [3.7](../03-connect-devices/3.7-enroll-chromeos-devices.md) | 4.2 | ChromeOS · Fleetd for Chrome · force-installed extension · managing Chrome with Fleet |
+| **CAP-056** | Give a host a hardware-backed identity | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 3.4 | TPM · device attestation · host identity certificates · certificates in fleetd |
+| **CAP-057** | Require signed requests from hosts | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 2.2 | `auth.require_http_message_signature` · fleetd authentication |
+| **CAP-058** | Recognise a returning device instead of creating a new one | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 4.1, 8.4 | duplicate enrollment · re-enrollment · the host came back as a new record · IP duplication · node key · [a.6] |
+| **CAP-059** | Enroll two operating systems on one machine | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 8.14 | `--host-identifier=instance` · dual boot · cloned VM |
+| **CAP-060** | Move a host to another fleet | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 5.8 | Transfer · move a host to another team (still accepted) · fleet move (ours) · `transferred_hosts` · update hosts' fleet |
+| **CAP-061** | Delete a host record | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 4.5 | remove a device from Fleet · `deleted_host` |
+| **CAP-062** | Stop a deleted host coming back | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 2.10, 8.4 | the host keeps reappearing |
+| **CAP-063** | Expire stale host records | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) | 4.5 | `host_expiry_settings` · clean up old records |
+| **CAP-064** | Build an installer | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 3.2, 3.3, 3.4 | `fleetctl package` · pkg · msi · deb · rpm · exe · ps1 · signing fleetd · a.7 owns the command contract |
+| **CAP-065** | Configure the end user's own surface | `None` | 3.2, 3.3, 3.4 | Fleet Desktop · My device · tray icon · transparency · browser host · custom proxy |
+| **CAP-066** | Allow scripts on a host | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 3.2, 3.3, 3.4 | `--enable-scripts` · `ENABLE_SCRIPTS` · `ORBIT_ENABLE_SCRIPTS` · Running scripts is disabled in organization settings |
+| **CAP-067** | Set which agent versions a host takes | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 1.2 | `update_channels` · update channel · pin the agent · fleetd updates |
+| **CAP-068** | Set the channel on one host | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 3.4 | `--orbit-channel` · `ORBIT_ORBIT_CHANNEL` · `ORBIT_OSQUERYD_CHANNEL` · `ORBIT_DESKTOP_CHANNEL` |
+| **CAP-069** | Pin the agent to an exact version | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 1.2 | version pinning |
+| **CAP-070** | Roll the agent back | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 7.3 | downgrade the agent (clash: downgrading Fleet is a different operation) |
+| **CAP-071** | Stop an agent updating at all | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 8.4 | `--disable-updates` · `ORBIT_DISABLE_UPDATES` |
+| **CAP-072** | Publish agent versions from your own repository | `None` | 3.8, 6.4 | TUF · `fleetctl updates init` · `updates add` · `updates roots` · `updates timestamp` · `updates rotate` · air-gapped agents · where does fleetd get update information |
+| **CAP-073** | See what agent version a host is running | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 4.5, 8.4 | Agent card · component versions |
+| **CAP-074** | Ship an osquery extension to hosts | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 3.8 | custom table · `extensions` · bundle osquery extensions into fleetd |
+| **CAP-075** | Send an extension only to some hosts | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 1.3 | targeting extensions with labels |
+| **CAP-076** | Set osquery runtime options | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md) | 4.6, 6.2 | agent options · `distributed_interval` · `config_refresh` · `config_tls_refresh` (clash) · `command_line_flags` · global config · `edited_agent_options` |
+| **CAP-077** | Set the supervisor's own settings | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 3.8 | `orbit` · `script_execution_timeout` · `update_channels` |
+| **CAP-078** | Watch files for change | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.6 | FIM · file integrity monitoring · `file_paths` · `file_accesses` |
+| **CAP-079** | Scan hosts with signature sets | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 5.7 | YARA · `yara` · remote deployment of YARA rules |
+| **CAP-080** | Add columns to every result | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.6 | `decorators` |
+| **CAP-081** | Turn event collection on or off | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 8.14 | evented tables · event subscribers · `disable_events` |
+| **CAP-082** | Get a file off a device | `None` | 1.6, 8.7 | file carving · carve · `fleetctl get carve` · `get carves` · collect a log file · [a.6] |
+| **CAP-269** | Turn Apple MDM on | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 2.9 | APNs · push certificate · `apns` · activate · iphone · ipad · macbook |
+| **CAP-272** | Connect Apple Business Manager | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 3.2, 3.5 | ABM token · AB token · DEP token · `abm_token` (still accepted) · `ab_token` · `fleetctl get mdm-ab` · `mdm_apple_bm` (still accepted) · [a.6] |
+| **CAP-275** | Connect Apple's app purchasing | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 5.4 | VPP (vendor) · Volume Purchasing Program (vendor) · Apps and Books · App and Book token · [a.6] |
+| **CAP-278** | Turn Windows MDM on | [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md) | 3.3 | WSTEP · `mdm.windows_wstep_identity_cert_bytes` |
+| **CAP-279** | Choose the Windows enrollment experience | [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md) | 3.3 | Automatic enrollment (clash) · Manual enrollment |
+| **CAP-281** | Bind Fleet to Android Enterprise | [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) | 3.6 | AMAPI (vendor) · Managed Google Play (vendor) · google · enterprise · phone · tablet |
+| **CAP-282** | Deliver certificates to Android | [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) | 5.2 | `COMPANION_APP` · `CERT_INSTALL` · `android_settings.certificates` · the Fleet Android app |
+| **CAP-283** | Tune the Android integration | [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) | 8.10 | `mdm.android_agent.package` · `mdm.android_batch_size` |
+
+### 3. Scope and targeting
+
+**Deciding who a change reaches and whose data you are reading.** 8 outcomes, and they precede both the reading group and the writing group, which is why they are not filed inside either.
+
+| ID | What you are trying to do | Chapter | Also | Words that lead here |
+|---|---|---|---|---|
+| **CAP-140** | Group hosts by a question | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 4.2 | dynamic label · smart group · query-based group · tag · category · filter · `created_label` |
+| **CAP-141** | Group hosts by hand | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 4.5 | manual label · static group · add labels to host |
+| **CAP-142** | Group hosts on a vital | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 4.1 | host vitals label |
+| **CAP-143** | Keep a label inside one fleet | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 6.2 | team-scoped label (still accepted) · label scope, global against fleet |
+| **CAP-144** | Separate configuration by department | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 1.4, 2.6 | teams (still accepted) · `add team` (still accepted) · `fleetctl get teams` (still accepted) · groups · No fleets yet · [a.6] |
+| **CAP-145** | Rename a label | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 6.2 | `edited_label` |
+| **CAP-150** | Give one fleet its own profiles | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 1.3 | exact scope · a global profile and a named fleet |
+| **CAP-151** | Send something to only some hosts | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 1.3 | label scoping · `labels_include_all` · `labels_include_any` · `labels_exclude_any` · `labels` (still accepted) · combining include and exclude |
+
+### 4. Knowing what a device is
+
+**Reading state: vitals, reports, policies, software, vulnerabilities and estate counts.** 57 outcomes.
+
+| ID | What you are trying to do | Chapter | Also | Words that lead here |
+|---|---|---|---|---|
+| **CAP-083** | See what a device is and what is on it | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 4.5 | host details · vitals · inventory · devices · endpoints · machines · computers · serial number · hostname |
+| **CAP-084** | Add a field to every host record | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.1 | `additional_queries` (clash: Fleet's own FAQ still asks about them by the pre-rename name) |
+| **CAP-085** | Record a value Fleet cannot collect | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 4.7 | custom host vital · asset tag · Variables · `created_custom_host_vital` |
+| **CAP-086** | Query an application's own database | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.6 | `auto_table_construction` · ATC · SQLite |
+| **CAP-087** | Replace one of Fleet's built-in queries | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.1 | `detail_query_overrides` |
+| **CAP-088** | Collect the accounts on a machine | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 8.4 | `enable_host_users` · who is logged in · local accounts |
+| **CAP-089** | See which certificates a host holds | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 5.2 | view certificates in host vitals · get host's certificates |
+| **CAP-090** | Attach an email address to a host | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 2.5 | device mapping · human-device mapping · `END_USER_EMAIL` · whose laptop is this |
+| **CAP-091** | Ask a host to report again now | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 5.9, 4.1 | Refetch · refresh this host · how often is software inventory updated |
+| **CAP-092** | Refresh an iPhone's inventory on a schedule | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) | 4.1 | `apple_mdm_iphone_ipad_refetcher` · my iPhone data is stale |
+| **CAP-093** | Run a query right now | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 8.7 | live query (still accepted) · live report · ad hoc · `fleetctl query` (still accepted) · run report · execute report · Live report whose value is `query` (clash) · [a.6] |
+| **CAP-094** | Save a query without scheduling it | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 6.2 | saved query (still accepted) · Save report · `created_saved_query` · [a.6] |
+| **CAP-095** | Run a query on a schedule | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 2.8 | scheduled query (still accepted) · `scheduled_query_id` (still accepted) · `scheduled_report_id` · interval · Where did the Schedule page go |
+| **CAP-096** | Find where the results went | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 8.7 | Nothing to report yet · Collecting results · stored report · get report data |
+| **CAP-097** | Send results to a log destination | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 2.8 | query automations · report automations · Splunk · why aren't my live queries being logged |
+| **CAP-098** | Read one report across the estate | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 4.5 | estate-wide results |
+| **CAP-099** | Read one host's result, empty included | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 8.7 | get host's report data |
+| **CAP-100** | Get the rows out of Fleet | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 6.3 | export query results · import and export queries · fetch results from a scheduled query |
+| **CAP-101** | Run something on one platform only | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 4.6 | `darwin` · `windows` · `linux` · `chrome` · `macos` (clash: an extension's platform token) · platform selector |
+| **CAP-102** | Require a minimum osquery version | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 4.6 | minimum osquery version on a report |
+| **CAP-103** | Run something on a fraction of hosts | [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md) | 4.2 | shard · canary · ten percent · staged rollout |
+| **CAP-104** | Target a report by label | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 1.3 | label targeting on a report |
+| **CAP-105** | Let observers run a report | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 2.6 | `observer_can_run` |
+| **CAP-106** | Turn live reporting off | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 8.14 | `live_query_disabled` (still accepted) · `live_reporting_disabled` · advanced options |
+| **CAP-107** | Stop storing report results | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 2.8 | `query_reports_disabled` (still accepted) · `discard_reports_data` |
+| **CAP-108** | Stop storing one report's results | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 6.2 | `discard_data` |
+| **CAP-109** | Find out how many rows Fleet keeps | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 4.6, 8.14 | `query_report_cap` (still accepted) · `report_cap` · results truncated |
+| **CAP-110** | Find out what a query costs | [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md) | 4.2, 8.14 | performance impact · Undetermined · Minimal · Considerable · Excessive · Denylisted |
+| **CAP-111** | Work out why query statistics are empty | [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md) | 8.14 | `enable_scheduled_query_stats` · `app_enable_report_stats` (clash) |
+| **CAP-112** | Cap what osquery may consume | [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md) | 8.14 | watchdog · `watchdog_memory_limit` · `watchdog_utilization_limit` · `disable_watchdog` · osquery using too much CPU |
+| **CAP-113** | Work out why a query stopped running on some hosts | [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md) | 8.14 | `denylist` · blacklist · `distributed_denylist_duration` |
+| **CAP-114** | Ask a pass-or-fail question | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 4.2 | policy · compliance check · device health · failing · `created_policy` |
+| **CAP-115** | Check whether an application is up to date | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 5.4 | patch policy · patch management |
+| **CAP-116** | Run a policy on one platform | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 4.1 | targeting hosts using platforms |
+| **CAP-117** | Run a policy on some hosts only | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 1.3 | targeting hosts using labels · exclude hosts from a policy |
+| **CAP-118** | Mark a policy important | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 5.9 | `critical` |
+| **CAP-119** | Count how many hosts are failing | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 4.5 | compliance percentage · out-of-policy devices · No hosts are online |
+| **CAP-120** | Clear a policy's stored results | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 4.3 | `reset_policy` · my policy is stuck · host not updating a policy's response |
+| **CAP-121** | Re-arm a policy's automations | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 4.3 | reset automations |
+| **CAP-122** | List what is installed | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 4.1 | software inventory · titles · library · managed · Software inventory disabled |
+| **CAP-123** | Turn software inventory on for one fleet | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 6.2 | `features` · `host_settings` (still accepted) |
+| **CAP-124** | Find vulnerable software | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | CVE · cves · vulns · CVSS · exploit · security findings · Vulnerabilities are not supported for this type of host |
+| **CAP-125** | Find out whether an operating system build is vulnerable | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.6 | OS vulnerabilities · operating systems |
+| **CAP-126** | Prioritise by exploitability | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | EPSS · KEV · CISA · known exploited · `cisa_known_exploits_url` |
+| **CAP-127** | Sort and filter findings | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 6.3 | sort by severity · filter by exploited |
+| **CAP-128** | Find the version that fixes it | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | resolved version |
+| **CAP-129** | See exposure over time | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 4.5 | vulnerability trend · dashboard vulnerability exposure · charts |
+| **CAP-130** | Turn the history chart off | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 4.5 | `disabled_historical_dataset` |
+| **CAP-131** | Find out what Fleet can install for you | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | FMA · Fleet-maintained apps · fleet maintained · app store · google play |
+| **CAP-132** | Supply vulnerability data yourself | `None` | 4.4 | air-gapped · offline CVE data · `cpe_database_url` · `cve_feed_prefix_url` · NVD · `fleetctl vulnerability-data-stream` |
+| **CAP-133** | Count the estate | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 1.2 | online · offline · missing · MIA (still accepted) · No hosts match your filters · how does Fleet determine online and offline status · [a.6] |
+| **CAP-134** | Count hosts low on disk | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 6.3 | low disk space |
+| **CAP-135** | Find automated enrollments that failed | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 2.10, 8.8 | failed enrollments · ADE devices failing |
+| **CAP-136** | See whether hosts were online last week | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 4.4 | uptime history |
+| **CAP-137** | Hand a host list to somebody | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 6.3 | export to CSV |
+| **CAP-138** | List hosts through the API | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 6.3 | pagination · `after` key · No more hosts to display |
+| **CAP-139** | Be told when hosts go offline | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 6.5 | host status alerts · missing hosts · notification · host status automations |
+
+### 5. Changing a device
+
+**Writing state, split by the mechanism that carries it.** 98 outcomes, in the three lanes [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) teaches: settings that persist, work that runs once, and experiences. If you know which lane you are in, you know which sub-table to scan.
+
+#### Settings that persist
+
+30 outcomes. Profiles, operating system updates and disk encryption: things Fleet keeps true rather than things Fleet does once.
+
+| ID | What you are trying to do | Chapter | Also | Words that lead here |
+|---|---|---|---|---|
+| **CAP-146** | Push a setting to a Mac | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 3.2 | configuration profile · mobileconfig · custom profiles · `custom_settings` (still accepted) · `configuration_profiles` · OS settings · custom OS settings |
+| **CAP-147** | Use Apple's declarative mechanism | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 5.6 | DDM (vendor) · declaration · declarative device management · `profile_uuid` (clash: a declaration carries a profile identifier) |
+| **CAP-148** | Push a setting to Windows | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 8.9 | OMA-URI (vendor) · LocURI (vendor) · CSP (vendor) · SyncML (vendor) · ADMX (vendor) · Windows configuration profile · CSP converter · migrating Intune policies |
+| **CAP-149** | Push a setting to Android | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 2.12 | `android_settings` · Android profile · Android policy · `created_android_profile` |
+| **CAP-152** | Put a host's own values into a profile | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 6.2 | Fleet variable · `$FLEET_VAR_` · Variables · built-in variables · put the serial in a profile |
+| **CAP-153** | Issue a certificate to a device | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 2.12, 8.9 | SCEP · EST · PKI · NDES (vendor) · DigiCert (vendor) · Smallstep (vendor) · Hydrant (vendor) · certificate authority · CA · Certificate enrollment · `certificate-authorities` (clash) · `added_hydrant` · `added_custom_est_proxy` · [a.6] |
+| **CAP-154** | Deliver a Platform SSO registration token | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 5.5 | Platform SSO · PSSO · Okta Verify · Entra Platform SSO |
+| **CAP-155** | Keep a password out of a spec file | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 6.1 | `$FLEET_SECRET_` · custom variable · secret · `created_custom_variable` |
+| **CAP-156** | Read a profile's delivery state | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 8.8, 8.9 | pending · verifying · verified · failed · the profile says failed · configuration profile status |
+| **CAP-157** | Push a profile again | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 8.8 | resend · batch-resend · `resent_configuration_profile` |
+| **CAP-158** | Remove a profile from a device | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 1.3 | removal behavior · `install` and `remove` · it disappeared from the device |
+| **CAP-205** | Require a minimum macOS version by a date | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 5.2 | OS updates · minimum version · deadline · `macos_updates` · `edited_macos_min_version` · `edited_ios_min_version` · `edited_ipados_min_version` · enforce OS updates |
+| **CAP-206** | Nag older Macs to update | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 8.2 | Nudge (vendor) |
+| **CAP-207** | Set a Windows update deadline | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 5.2 | `windows_updates` · grace period · force a restart · `edited_windows_updates` · Windows Update CSP |
+| **CAP-208** | Control Android system updates | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 5.2 | `systemUpdate` (vendor) · freeze period · postpone |
+| **CAP-209** | Express what the update form cannot | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 5.2 | custom OS update profile · Fleet-managed updates against custom profiles |
+| **CAP-210** | Update newly enrolled Macs during setup | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 3.2 | `enabled_macos_update_new_hosts` · update new hosts to latest |
+| **CAP-211** | Force a Linux operating system update | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 4.3 | **(no)** |
+| **CAP-212** | Confirm the devices actually updated | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 4.1 | Current versions |
+| **CAP-235** | Enforce disk encryption on Macs | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 3.2 | FileVault · `filevault2` · Disk encryption · Escrow Buddy · `enabled_macos_disk_encryption` · `mdm.macos_settings.enable_disk_encryption` (still accepted) · `mdm.enable_disk_encryption` |
+| **CAP-236** | Enforce disk encryption on Windows | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 3.3 | BitLocker (vendor) · numerical password protector · `mdm.enable_custom_os_updates_and_filevault` (still accepted, clash) |
+| **CAP-237** | Escrow a Linux disk encryption key | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 3.4 | LUKS (vendor) · encrypt your Fleet-managed Linux device · escrow your key with Fleet · `escrowed_disk_encryption_key` |
+| **CAP-238** | Escrow on Ubuntu with no prompt | [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | 5.8 | snapd · headless host |
+| **CAP-239** | Have the user type their passphrase | [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | 5.8 | `cryptsetup` · `zenity` · `kdialog` |
+| **CAP-240** | Find out whether a disk is encrypted at all | [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | 5.8, 4.1 | `disk_encryption_enabled` |
+| **CAP-241** | Read disk encryption enforcement state | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 4.5 | `action_required` · `enforcing` · `removing_enforcement` · disk encryption status |
+| **CAP-242** | Require a BitLocker startup PIN | `None` | 5.8 | `windows_require_bitlocker_pin` · BitLocker PIN enforcement |
+| **CAP-243** | Use your own encryption profile instead | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 5.2 | `mdm.enable_custom_filevault` · `mdm.enable_custom_disk_encryption` · escape hatch |
+| **CAP-244** | Set and read a firmware password on Apple silicon | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 1.4 | Recovery Lock · `laps` · rotation · Show Recovery Lock password · `viewed_host_recovery_lock_password` · `rotated_host_recovery_lock_password` |
+| **CAP-245** | Stop enforcing encryption without losing the keys | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 7.2 | disable enforcement |
+
+#### Work that runs once
+
+52 outcomes. Scripts, software installs and device actions: a single unit of work, queued, delivered and finished.
+
+| ID | What you are trying to do | Chapter | Also | Words that lead here |
+|---|---|---|---|---|
+| **CAP-159** | Run a script on a host | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 5.1 | remote shell · powershell · bash · remediate · Run script · `ran_script` |
+| **CAP-160** | Keep a library of scripts | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 6.2 | script library · saved · uploaded · `added_script` |
+| **CAP-161** | Wait for a script to finish | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 6.4 | `fleetctl run-script` · synchronous · `--async` |
+| **CAP-162** | Run a script across many hosts | `None` | 5.3, 6.1 | batch script · Run script on many hosts · script batch progress · `ran_script_batch` · `scheduled_script_batch` · `canceled_script_batch` |
+| **CAP-163** | Turn scripts off everywhere | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 2.7 | `scripts_disabled` · Running scripts is disabled in organization settings |
+| **CAP-164** | Change the script timeout | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 1.3 | `script_execution_timeout` · my script times out at five minutes |
+| **CAP-165** | Read what a script printed | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 8.4 | exit code · output truncated |
+| **CAP-166** | Keep a password out of a script | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 6.1 | secret in a script |
+| **CAP-167** | Use a host's own values inside an install script | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.3 | `$FLEET_HOST_VITAL_` |
+| **CAP-168** | Deploy an installer you supply | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 6.2 | upload a package · Add software · custom package · pkg · msi · exe · deb · rpm · `added_software` · EXE install scripts |
+| **CAP-169** | Install an application Fleet maintains | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 4.4 | FMA · Fleet-maintained app · fleet maintained · install Chrome for me |
+| **CAP-170** | Install an App Store application | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 2.10 | VPP app (vendor) · volume purchase · app store · `added_app_store_app` · `installed_app_store_app` |
+| **CAP-171** | Install a Play application | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 2.12 | google play · play store · Android app · private app · APK · Android MDM isn't enabled |
+| **CAP-172** | Deploy an application Apple did not distribute | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 3.5 | in-house app (vendor) · sideload · enterprise app · `ipa` |
+| **CAP-173** | Put a shortcut on an Android home screen | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.5 | Android web app |
+| **CAP-174** | Ship a shell script as software | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.3 | script-only package |
+| **CAP-175** | Install only when a condition holds | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 4.2 | pre-install query · conditional install |
+| **CAP-176** | Use the install and uninstall scripts Fleet writes | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.3 | install script · post-install script · uninstall script · generated script |
+| **CAP-177** | Install software on one host | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.1, 8.11 | `installed_software` · Library tab · it says installed and it is not there |
+| **CAP-178** | Remove software from a host | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 8.11 | uninstall · `uninstalled_software` · uninstall by source |
+| **CAP-179** | Ship different builds per architecture | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 1.3 | arm64 · x86 · Apple silicon and Intel |
+| **CAP-180** | Hold an application at a version | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 4.3 | pin a version |
+| **CAP-181** | Keep applications current | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 4.3 | automatic updates |
+| **CAP-182** | Go back to an earlier version | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 8.11 | roll back to a previous version |
+| **CAP-183** | Configure an application on an iPhone | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.2 | managed app config · app configuration |
+| **CAP-184** | Configure an application on Android | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 2.12 | Android Managed App Configurations · Work Profile Widgets |
+| **CAP-185** | Choose when applications update | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.6 | app update window · configure automatic updates for an app |
+| **CAP-186** | Delete software from the library | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 6.2 | `deleted_software` · `deleted_app_store_app` |
+| **CAP-187** | Speed up installer downloads | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 2.3 | CDN · CloudFront signed URLs |
+| **CAP-188** | Find the installer size limit | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 8.14 | too big · 10 GiB |
+| **CAP-213** | Lock a Mac | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.2 | Lock · remote lock · `locked_host` · lock and wipe hosts |
+| **CAP-214** | Lock an iPhone or iPad | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5 | Lost Mode (vendor) · find my iPad |
+| **CAP-215** | Lock a Windows host | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 5.3 | lock a PC |
+| **CAP-216** | Lock a Linux host | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.4 | lock a Linux desktop |
+| **CAP-217** | Lock an Android device | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.6 | lock a phone |
+| **CAP-218** | Unlock a Mac | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 5.8 | Unlock · unlock PIN · `unlocked_host` |
+| **CAP-219** | Unlock an iPhone or iPad | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5 | release Lost Mode (vendor) · unlock offline iOS hosts |
+| **CAP-220** | Unlock a Windows host | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 5.3 | unlock a PC |
+| **CAP-221** | Unlock a Linux host | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.4 | unlock a Linux desktop |
+| **CAP-222** | Unlock an Android device | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.6 | **(no)** |
+| **CAP-223** | Wipe a Mac | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.2 | Wipe · erase · remote wipe · `wiped_host` · `failed_wipe` |
+| **CAP-224** | Wipe an iPhone or iPad | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5 | erase an iPad |
+| **CAP-225** | Wipe a Windows host | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 8.9 | OMA-DM (vendor) · remote wipe a PC |
+| **CAP-226** | Wipe a Linux host | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.4 | secure erase |
+| **CAP-227** | Wipe an Android device | [3.6](../03-connect-devices/3.6-enroll-android-devices.md) | 5.7 | erase a phone |
+| **CAP-228** | Wipe a personally owned Android device | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.6 | unenroll · remove the work profile |
+| **CAP-229** | Locate a device | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5 | find my device · Apple device location |
+| **CAP-230** | Clear a passcode | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5, 3.6 | Clear passcode · forgotten PIN · `cleared_passcode` · `fleetctl mdm clear-passcode` · `clear_passcode` |
+| **CAP-231** | Send a payload Fleet has no button for | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 6.4 | custom MDM command · raw Apple command · `fleetctl mdm run-command` · `run_command` · `/fleet/mdm/apple/enqueue` (still accepted) · `/mdm/commands/run` |
+| **CAP-232** | Send a raw Windows command | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 8.9 | SyncML Exec (vendor) · raw Windows MDM command |
+| **CAP-233** | Read what the device said back | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 8.8, 8.9 | command results · `fleetctl get mdm-command-results` · `mdm_command_results` · `/fleet/mdm/apple/commandresults` (still accepted) |
+| **CAP-234** | Stop something before it runs | [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) | 5.7, 6.1 | cancel · upcoming activity · `canceled_run_script` · `canceled_install_software` |
+
+#### Experiences
+
+16 outcomes. What the person holding the device sees, at first boot and afterwards.
+
+| ID | What you are trying to do | Chapter | Also | Words that lead here |
+|---|---|---|---|---|
+| **CAP-189** | Design what happens at first boot | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 3.2, 2.10 | setup experience · onboarding · first run · customize · `macos_setup` (still accepted) · `setup_experience` |
+| **CAP-190** | Run a script during setup | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.3 | Run script · post-enrollment · shell |
+| **CAP-191** | Install something before the agent exists | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 1.6 | bootstrap package · `bootstrap_package` (still accepted) · `macos_bootstrap_package` · `added_bootstrap_package` |
+| **CAP-192** | Create the end user's account | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.8 | LAPS (vendor) · managed local account · standard against admin account · `enable_managed_local_account` (still accepted) · `enable_create_local_admin_account` · secure local admin passwords |
+| **CAP-193** | Show an agreement at enrollment | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 2.5 | EULA · end user license agreement · `/fleet/mdm/setup/eula` (still accepted) |
+| **CAP-194** | Hold a Windows host at first boot | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 8.9 | ESP (vendor) · Enrollment Status Page (vendor) · OOBE (vendor) · Windows updates during Autopilot |
+| **CAP-195** | Show the setup page outside first boot, and on Linux | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 8.2 | Windows and Linux setup experience |
+| **CAP-196** | Install applications during an iPhone's setup | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 3.5 | App Store apps in setup experience |
+| **CAP-197** | Push an application to Android at enrollment | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.4 | Android setup software |
+| **CAP-198** | Install setup software only where it is needed | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 4.3 | policy gate · conditional setup software |
+| **CAP-199** | Stop setup when software fails | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 8.9 | cancel setup if software fails |
+| **CAP-200** | Release the device yourself | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 3.2 | `enable_release_device_manually` (still accepted) · `apple_enable_release_device_manually` · stop the automatic release · release-ready (ours) |
+| **CAP-201** | Retry a setup step that failed | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 8.11 | `canceled_setup_experience` · retry |
+| **CAP-202** | Let people install applications themselves | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.4 | self-service · self service · app catalog · software library · web clip |
+| **CAP-203** | Group the self-service catalogue | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 6.2 | self-service categories · End user experience · `added_self_service_category` |
+| **CAP-204** | Offer everything in a category at once | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 8.11 | Install all · `installed_all_self_service_software` |
+
+### 6. Automating Fleet
+
+**Making Fleet, or another system, act without a person.** 23 outcomes.
+
+| ID | What you are trying to do | Chapter | Also | Words that lead here |
+|---|---|---|---|---|
+| **CAP-246** | Install software when a policy fails | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 4.3, 5.4 | self-healing · software automations · automatic software install · templates for policy queries |
+| **CAP-247** | Install an App Store application on failure | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 5.4 | VPP automation (vendor) |
+| **CAP-248** | Run a script when a policy fails | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 5.3 | policy automation run script · remediate |
+| **CAP-249** | Call a webhook when hosts fail a policy | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 6.5 | `failing_policies_webhook` · webhooks and tickets · `ran_automation_webhook` |
+| **CAP-250** | Open a ticket when hosts fail a policy | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 6.5 | Jira (vendor) · Zendesk (vendor) · Ticketing · `ticket-destinations` (clash) · `jira` · `zendesk` · `ran_automation_ticket` |
+| **CAP-251** | Put remediation in the user's calendar | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 6.5 | maintenance window · Calendar events · `google_calendar` · `ran_automation_calendar_event` |
+| **CAP-252** | Block sign-in for a non-compliant device | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 2.5 | conditional access · zero trust · Entra compliance · Company Portal (vendor) · `added_conditional_access_integration_microsoft` |
+| **CAP-253** | Block sign-in through Okta | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 2.5 | Okta conditional access · mTLS proxy · `added_conditional_access_okta` |
+| **CAP-254** | Let one person through once | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 2.6 | bypass · per-policy bypass · `update_conditional_access_bypass` · `host_bypassed_conditional_access` |
+| **CAP-255** | Keep an automation firing rather than firing once | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 4.3 | `continuous_automations_enabled` · continuous · transition-based (ours) · re-fire (ours) |
+| **CAP-256** | Call a webhook on a new vulnerability | [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md) | 4.4 | `vulnerabilities_webhook` · vulnerability automations |
+| **CAP-257** | Send osquery logs somewhere | [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md) | 6.5 | log plugin · `osquery.status_log_file` (still accepted) · `osquery.result_log_file` (still accepted) · `filesystem.*` · `logger_path` (clash) · `logger_plugin` |
+| **CAP-258** | Stop webhooks reaching internal addresses | [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md) | 2.2 | SSRF · outbound webhook restrictions |
+| **CAP-259** | Manage Fleet from a repository | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) | 6.1 | GitOps · declarative config · `team_settings` (still accepted) · `queries` (still accepted) · `kind: team` (still accepted) · `kind: query` (still accepted) · `kind: fleet` · `kind: report` · preventing mistakes with GitOps |
+| **CAP-260** | Validate before applying | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) | 6.4 | dry run · `--dry-run` |
+| **CAP-261** | Delete fleets that are not in the repository | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) | 6.4 | `--delete-other-teams` (still accepted) · `--delete-other-fleets` · `DELETE_OTHER_TEAMS` (still accepted) · `DELETE_OTHER_FLEETS` |
+| **CAP-262** | Find out whether omitting a section deletes it | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) | 2.7 | change management exceptions · `enabled_gitops_exception` · deprecation warnings in GitOps |
+| **CAP-263** | Export a running deployment to YAML | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) | 6.4 | `fleetctl generate-gitops` · `--team no-team` (still accepted) · `--fleet unassigned` · migrating to GitOps |
+| **CAP-264** | Call the API | [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) | 6.1, 2.6 | REST API · `/api/v1/osquery/*` (still accepted) · `/api/osquery/*` · retrieve your API token · fleetctl against the REST API against the UI |
+| **CAP-265** | Use the command line | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.3 | `fleetctl` · a.7 owns the command contract |
+| **CAP-266** | Call an endpoint the command line has no verb for | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.3 | `fleetctl api` |
+| **CAP-267** | Push or delete spec files | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.2 | `fleetctl apply` · `fleetctl delete` · `--policies-team` (still accepted) · `--policies-fleet` |
+| **CAP-268** | Generate a pipeline for Fleet | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.2 | `fleetctl new` · GitHub Action · CI scaffold |
+
+### 7. Running the service
+
+**Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive.** 44 outcomes. The credentials are here rather than in group 2 because a token is a connection task once and a renewal task every year after that, and it is the renewal you arrive searching for.
+
+| ID | What you are trying to do | Chapter | Also | Words that lead here |
+|---|---|---|---|---|
+| **CAP-270** | Renew the Apple push certificate | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 7.6 | APNs · push certificate expired · renew APNs · APNs expiration |
+| **CAP-271** | Understand how host certificates renew themselves | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 8.8 | `mdm.apple_scep_signer_validity_days` · SCEP renewal |
+| **CAP-273** | Renew the Apple Business token | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 7.6 | ABM token expired · AB token · renew AB · `/fleet/abm_tokens/{id}/renew` (still accepted) |
+| **CAP-274** | Customise what Setup Assistant shows | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 5.5 | `macos_setup_assistant` (still accepted) · `apple_setup_assistant` · `changed_macos_setup_assistant` |
+| **CAP-276** | Renew the Apps and Books token | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 7.6 | VPP token (vendor) · renew VPP · `enabled_vpp` |
+| **CAP-277** | Be warned before a credential expires | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 7.6 | expiry banner · certificate expiration monitoring |
+| **CAP-280** | Turn Windows MDM off | [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md) | 3.3 | `disabled_windows_mdm` |
+| **CAP-284** | Turn Android management off | [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) | 3.6 | Turn off Android MDM · delete Android Enterprise · `disabled_android_mdm` |
+| **CAP-285** | Change the Fleet server address | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) | 2.12, 2.1 | Fleet web address · `server_url` · `kolide_server_url` (still accepted) · apple mdm server url · migrate hosts from one Fleet server to another |
+| **CAP-286** | Run Fleet under a path | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) | 2.2 | `url_prefix` · `server_url_prefix` (clash) |
+| **CAP-287** | Let administrators sign in at a different address | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) | 2.5 | `sso_server_url` · sso user url |
+| **CAP-288** | Brand the interface | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) | 6.2 | `org_info` · Organization info · `org_logo_url` (still accepted) · `org_logo_url_dark_mode` · `org_logo_url_light_background` (still accepted) · `org_logo_url_light_mode` · `changed_org_logo` |
+| **CAP-289** | Point error messages at your help desk | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) | 5.5 | `contact_url` |
+| **CAP-295** | Choose where scheduled results go | [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md) | 4.2 | `osquery_result_log_plugin` · `osquery.result_log_file` (still accepted) · Firehose · Kinesis · Lambda · Pub/Sub · Kafka · log destinations |
+| **CAP-296** | Choose where agent status logs go | [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md) | 8.2 | `osquery_status_log_plugin` · what happens when the logging destination is offline |
+| **CAP-299** | Check whether Fleet is up | [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) | 2.2 | `healthz` · health check · how do I monitor a Fleet server |
+| **CAP-300** | Scrape Fleet's metrics | [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) | 2.2 | Prometheus · metrics endpoint |
+| **CAP-301** | Export traces | [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) | 8.14 | OpenTelemetry · traces |
+| **CAP-302** | Find out whether the scheduled work ran | [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) | 8.6, 8.11 | `cron_stats` · scheduled jobs · `dep_syncer` (clash) · `apple_mdm_dep_profile_assigner` |
+| **CAP-303** | Force a schedule to run now | [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) | 8.11 | `fleetctl trigger` · trigger a cron |
+| **CAP-304** | Upgrade Fleet | [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) | 2.4 | run migrations · `fleet prepare db` · `upgrades.allow_missing_migrations` · `updates.allow_missing_migrations` (clash) · `--upgrades_allow_missing_migrations` · skip versions · unknown column error |
+| **CAP-305** | Check whether migrations are current | [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) | 8.5 | `fleetctl debug migrations` |
+| **CAP-306** | Back Fleet up and restore it | [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md) | 7.7 | disaster recovery · point-in-time recovery · migrate Fleet server · **(no)** |
+| **CAP-307** | Prove a restored Fleet can still decrypt the keys | [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md) | 5.8 | server private key · escrow chain |
+| **CAP-308** | Stop a restored copy acting on the real world | [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md) | 7.1 | read-only mode · dry-run server · **(no)** |
+| **CAP-309** | Find out when the licence expires | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 2.1 | licence key · `basic` (still accepted) · `premium` · migrate from Fleet Free to Fleet Premium · downgrade from Premium |
+| **CAP-310** | Rotate the server's TLS certificate | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 7.7 | certificate verify failed · private root · change the Fleet server TLS certificate |
+| **CAP-311** | Rotate the Windows enrollment certificate | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 2.11 | WSTEP · `mdm.windows_wstep_identity_cert_bytes` (clash: Fleet's documentation attributes the effect to macOS) |
+| **CAP-312** | Rotate an integration secret | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 6.5 | |
+| **CAP-314** | Size the database connection pool | [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) | 7.5 | `mysql.max_open_conns` · too many connections · database connection error when preparing the database · MySQL user requirements |
+| **CAP-315** | Add read replicas | [7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md) | 2.2 | MySQL replication · scale MySQL |
+| **CAP-316** | Decide where installers and carves live | [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) | 1.6, 2.3 | S3 · GCS · object storage · `s3.bucket` (still accepted) · `s3.prefix` (still accepted) · `s3.region` (still accepted) · `s3.carves_*` |
+| **CAP-317** | Send Fleet's outbound traffic through a proxy | [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) | 8.13 | `HTTP_PROXY` · `NO_PROXY` · using a proxy · public IPs of devices |
+| **CAP-318** | Deploy on AWS | [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md) | 2.2 | ECS · Terraform · reference architecture |
+| **CAP-319** | Deploy on GCP, or ask about Azure | [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md) | 2.2 | Cloud Run · Cloud SQL · Azure |
+| **CAP-320** | Avoid storing a key for the bucket | [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md) | 2.2 | workload identity |
+| **CAP-321** | Run Fleet with Docker Compose | [2.4](../02-administer-and-deploy-fleet/2.4-deploy-with-containers-or-virtual-machines.md) | 7.3 | easiest way to deploy Fleet · Docker container |
+| **CAP-322** | Run Fleet on Kubernetes | [2.4](../02-administer-and-deploy-fleet/2.4-deploy-with-containers-or-virtual-machines.md) | 7.3 | Helm chart · pre-upgrade hook |
+| **CAP-323** | Run Fleet on a virtual machine | [2.4](../02-administer-and-deploy-fleet/2.4-deploy-with-containers-or-virtual-machines.md) | 7.3 | systemd · run with systemd |
+| **CAP-324** | Move vulnerability processing off the serving instances | [2.4](../02-administer-and-deploy-fleet/2.4-deploy-with-containers-or-virtual-machines.md) | 4.4 | dedicated cron instance · `vulnerabilities.disable_schedule` |
+| **CAP-325** | Find out how many hosts Fleet takes | [7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md) | 2.2 | load test · `osquery-perf` · stress test · Fleet server performance |
+| **CAP-326** | Drain an instance before stopping it | [7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md) | 7.3 | graceful shutdown |
+| **CAP-327** | Shut Fleet down for good | [7.8](../07-operate-fleet/7.8-retire-a-fleet-deployment.md) | 7.7 | decommission · release devices · release external assignments |
+| **CAP-328** | Ask whether Fleet can host it for you | [2.1](../02-administer-and-deploy-fleet/2.1-administration-model-and-deployment-choices.md) | 2.8 | managed cloud · SaaS · can you host Fleet for me |
+
+### 8. When it did not work
+
+**Symptoms, and the surfaces that answer them.** 20 outcomes, plus the sentences people actually arrive with. This is the group that cannot be reconstructed from the table of contents, because nobody types a capability name when something is broken.
+
+#### Sentences people type
+
+![Troubleshooting](../_assets/icons/troubleshooting.svg) **Every sentence below is a string Fleet prints, a question Fleet's own documentation asks, or a phrasing this manual records.** The middle column is the ambiguity to resolve, not the fix.
+
+| The sentence you arrive with | What it turns on | Start at |
+|---|---|---|
+| "my hosts went offline", "everything shows offline", "my computer is showing up as an offline host" | The online window is calculated from the agent's own reporting interval, and a mobile device managed without an agent is permanently offline | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md), then [8.1](../08-troubleshooting/8.1-diagnostic-method.md) |
+| "no hosts match your filters", "I expected to see more hosts than this" | Pagination, scope, or a parameter your licence causes Fleet to drop rather than refuse | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) |
+| "the profile says failed", "stuck on pending", "stuck verifying" | Which of the five delivery states you are in, and that Verifying means accepted rather than confirmed | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md), then [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md) or [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md) |
+| "the app will not install", "it says installed and it is not there" | Installed means four different things depending on where the software came from | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) |
+| "why aren't my DDM declarations applying to devices?" | Declarations are delivered on a different mechanism from profiles and report their state differently | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md), then [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md) |
+| "nothing to report yet", "collecting results", "no results returned" | The report never joined a schedule, or result storage is off | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) |
+| "where are my query results?", "why aren't my live queries being logged?" | Stored reports and forwarded results are two different destinations with two different switches | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md), then [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md) |
+| "why does my query work locally with osquery but not in Fleet?" | Which osquery is running it, with which flags and which tables | [8.7](../08-troubleshooting/8.7-live-query-introspection.md), then [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md) |
+| "I'm only getting partial results from live queries" | The targeted count includes hosts that never fetch the query | [8.14](../08-troubleshooting/8.14-degradation.md), then [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) |
+| "running scripts is disabled in organization settings" | `scripts_disabled` at the organization, or a host packaged without scripts | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) |
+| "software inventory disabled" | The organization's feature block, or the fleet's | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
+| "vulnerabilities are not supported for this type of host" | Application findings are not produced for every platform | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
+| "unable to detect MDM enrollment", "no MDM solutions detected" | A dashboard card describing the estate, not the host you are looking at | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) |
+| "access denied", "api only user" | A role, a scope, GitOps mode, or a password reset Fleet is waiting on | [1.4](../01-foundations/1.4-identity-and-roles.md), then [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) |
+| "this fleet isn't added to Volume Purchasing Program (VPP)" | The token exists and is not assigned to this scope | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
+| "no hosts are online", on a policy's results | Live evaluation needs hosts that are online now, not hosts that have ever answered | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) |
+| "MDM is on but the agent never arrived", "half-enrolled" | One channel enrolled and the other did not | [8.4](../08-troubleshooting/8.4-host-side-investigation.md) |
+| "why aren't my osquery agents connecting to Fleet?" | Which hop failed: address, certificate, secret, or the agent's own service | [8.4](../08-troubleshooting/8.4-host-side-investigation.md), then [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) |
+| "certificate verify failed", from the agent | The chain the agent trusts, and the order a rotation has to happen in | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md), then [8.4](../08-troubleshooting/8.4-host-side-investigation.md) |
+| "my EDR is flagging the fleetd agent" | Agent packaging and signing | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md), then [8.4](../08-troubleshooting/8.4-host-side-investigation.md) |
+| "what is duplicate enrollment, and how do I fix it?" | The host identifier, and the cooldown | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md), then [8.14](../08-troubleshooting/8.14-degradation.md) |
+| "I renamed a label and the targeting broke" | A rename through a repository deletes and recreates | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) |
+| "the recovery key will not reveal", "encryption keys unreadable" | A Windows enrollment certificate change, a fleet transfer, or Apple MDM being turned off | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md), then [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) |
+| "the automation saved and never fired" | Ticketing reads its policy list from the webhook settings, and calendar automation needs a named fleet | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
+| "it says success and nothing happened" | Several operations report before the destructive phase, or ignore part of what you sent | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md), then [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) |
+| "the estate stopped updating and nothing said so" | An agent below the floor ignores the central channel setting | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) |
+| "I set it in the API and it did nothing" | Two per-fleet agent settings are accepted by the API and applied only from a repository | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) |
+| "why is my host not updating a policy's response?" | When a policy is evaluated, and what resets a stored answer | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md), then [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
+| "why am I getting errors generating a .msi package", "package root files: heat failed" | The build host has to match the package type | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) |
+| "how do I resolve an unknown column error when upgrading Fleet?" | Migrations ran partially, or not at all | [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) |
+| "what do I do about too many open files errors?" | A limit on the server rather than a Fleet setting | [8.14](../08-troubleshooting/8.14-degradation.md) |
+| "what happens if a device fails to enroll during first boot?" | Which of the setup steps failed, and whether the device was released | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md), then [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
+| "it isn't working", "one host, never reproduced", "Fleet's UI disagrees with the host", "cron output missing", "profile stays at Pending indefinitely and no error surfaces anywhere" | What to collect before you ask anybody else | [8.13](../08-troubleshooting/8.13-escalation.md) |
+
+#### The diagnostic capabilities
+
+| ID | What you are trying to do | Chapter | Also | Words that lead here |
+|---|---|---|---|---|
+| **CAP-329** | Find the agent's logs on the host | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.4 | orbit log · osqueryd log · finding fleetd logs · `logger_path` (clash) |
+| **CAP-330** | Find out what the agent puts on disk | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.4 | `/opt/orbit` · `secret.txt` · `fleet.pem` |
+| **CAP-331** | Turn debug logging on for a while | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.4 | `debug_logging_on_enroll_duration` · `debug_logging` |
+| **CAP-332** | Turn verbose logging on permanently | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.4 | `--debug` · `--verbose` · enabling debug mode for fleetd |
+| **CAP-333** | Collect diagnostics for support | [8.5](../08-troubleshooting/8.5-fleetctl-debug.md) | 8.13 | `fleetctl debug archive` · `db-process-list` · pprof · [a.6] |
+| **CAP-334** | Read the server's recorded errors | [8.5](../08-troubleshooting/8.5-fleetctl-debug.md) | 1.6 | `fleetctl debug errors` · get errors |
+| **CAP-335** | Ask a host what osquery is doing | [8.7](../08-troubleshooting/8.7-live-query-introspection.md) | 4.6 | `osquery_info` · `osquery_flags` · `osquery_schedule` · `osquery_events` · `fleetd_logs` |
+| **CAP-336** | Inspect the Apple command queue | [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md) | 8.6 | nano tables · checking MDM commands · `fleetctl get mdm-commands` · `mdm_commands` |
+| **CAP-337** | Inspect the Windows command queue | [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md) | 8.6 | Windows command feed |
+| **CAP-338** | Inspect Android command and policy state | [8.10](../08-troubleshooting/8.10-android-diagnostics.md) | 8.6 | Android policy state |
+| **CAP-339** | Read the audit record out of the database | [8.12](../08-troubleshooting/8.12-audit-logs.md) | 1.5 | `activity_past` · `activities` (clash) · `host_only` |
+| **CAP-340** | Find out whether a schedule ran | [8.6](../08-troubleshooting/8.6-server-state.md) | 7.4, 8.11 | `cron_stats` · `dep_syncer` (clash) · `apple_mdm_dep_profile_assigner` |
+| **CAP-341** | Read Windows' own view of its management state | [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md) | 5.6 | `mdmdiagnosticstool` (vendor) · PolicyManager registry (vendor) · MDM diagnostic report |
+| **CAP-342** | Get logs off an iPhone | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.13, 3.5 | sysdiagnose (vendor) · MDMClient logs |
+| **CAP-343** | Find out what version of Fleet you are talking to | [8.13](../08-troubleshooting/8.13-escalation.md) | 7.3 | per instance · behind the load balancer |
+| **CAP-344** | Reduce the load Fleet is under | [8.14](../08-troubleshooting/8.14-degradation.md) | 2.2, 7.5 | tune the intervals · Fleet is slow · slow or unresponsive after enabling a feature |
+| **CAP-345** | Process host results asynchronously | [8.14](../08-troubleshooting/8.14-degradation.md) | 1.6 | `osquery_enable_async_host_processing` |
+| **CAP-346** | Stop hosts overwriting each other | [8.14](../08-troubleshooting/8.14-degradation.md) | 3.1 | duplicate hosts · enroll cooldown · `--host-identifier` |
+| **CAP-347** | Work out what truncated or refused a request | [8.14](../08-troubleshooting/8.14-degradation.md) | 6.3 | 429 · too many open files · body too large · partial results |
+| **CAP-348** | Find which query costs the most on the host | [8.14](../08-troubleshooting/8.14-degradation.md) | 4.6, 8.7 | per-query cost on the device |
 
 ## Why the eight groups are not the table of contents
 
@@ -114,8 +582,8 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | `team_settings` | `settings` | GitOps | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) |
 | `no-team.yml`, `No team`, team 0 | `unassigned.yml`, Unassigned | GitOps, the interface | [1.3](../01-foundations/1.3-hosts-fleets-labels.md), and [a.6] for how it is stored |
 | `--team`, `--policies-team`, `--delete-other-teams`, `DELETE_OTHER_TEAMS` | `--fleet`, `--policies-fleet`, `--delete-other-fleets`, `DELETE_OTHER_FLEETS` | `fleetctl`, and CI environment | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) |
-| `FLEET_JIT_USER_ROLE_TEAM_<id>` | `FLEET_JIT_USER_ROLE_FLEET_<id>` | A SAML attribute in your identity provider | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) |
-| `apple_bm_default_team`, `macos_team`, `ios_team`, `ipados_team`, `byod_team` | `mdm.apple_business`, `macos_fleet`, and the matching `_fleet` forms | GitOps, the API | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) |
+| `FLEET_JIT_USER_ROLE_TEAM_<id>` | `FLEET_JIT_USER_ROLE_FLEET_<id>` | A SAML attribute in your identity provider | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) |
+| `apple_bm_default_team`, `macos_team`, `ios_team`, `ipados_team`, `byod_team` | `mdm.apple_business`, `macos_fleet`, and the matching `_fleet` forms | GitOps, the API | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
 | `query`, `queries`, `saved query`, `live query`, `scheduled query` | report, live report, scheduled report | Everywhere | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) |
 | `kind: query` | `kind: report` | A spec file | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) |
 | `/api/v1/fleet/queries`, the live-query run paths, host query paths | the `reports` forms | A URL, a client, a saved request | [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) |
@@ -130,31 +598,31 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | You would type | Current name | Route |
 |---|---|---|
 | `host_settings` | `features` | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
-| `enable_jit_role_sync` | Nothing. It is accepted and does nothing | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) |
+| `enable_jit_role_sync` | Nothing. It is accepted and does nothing | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) |
 | `macos_settings` | `apple_settings` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
 | `custom_settings` | `configuration_profiles` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
 | `macos_setup` | `setup_experience` | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
 | `bootstrap_package` | `macos_bootstrap_package` | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
-| `macos_setup_assistant` | `apple_setup_assistant` | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) |
+| `macos_setup_assistant` | `apple_setup_assistant` | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
 | `manual_agent_install` | `macos_manual_agent_install` | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) |
 | `enable_release_device_manually` | `apple_enable_release_device_manually` | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
 | `enable_managed_local_account` | `enable_create_local_admin_account` | `None`, and see the last section |
 | `mdm.macos_settings.enable_disk_encryption` | `mdm.enable_disk_encryption` | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
 | `mdm.enable_custom_os_updates_and_filevault` | `mdm.enable_custom_filevault`, `mdm.enable_custom_disk_encryption`. Any of the three enables it | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
-| `org_logo_url`, `org_logo_url_light_background` | `org_logo_url_dark_mode`, `org_logo_url_light_mode` | [2.4](../02-administer-and-deploy-fleet/2.4-organization-and-server-settings.md) |
-| `s3.bucket`, `s3.prefix`, `s3.region` and eight siblings | the `s3.carves_*` forms, hidden from the help output | [2.9](../02-administer-and-deploy-fleet/2.9-self-hosting-architecture-and-capacity.md) |
-| `osquery.status_log_file`, `osquery.result_log_file`, `osquery.enable_log_rotation` | the `filesystem.*` forms | [2.5](../02-administer-and-deploy-fleet/2.5-activity-audit-logs-and-log-delivery.md) |
+| `org_logo_url`, `org_logo_url_light_background` | `org_logo_url_dark_mode`, `org_logo_url_light_mode` | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) |
+| `s3.bucket`, `s3.prefix`, `s3.region` and eight siblings | the `s3.carves_*` forms, hidden from the help output | [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) |
+| `osquery.status_log_file`, `osquery.result_log_file`, `osquery.enable_log_rotation` | the `filesystem.*` forms | [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md) |
 | `packaging.*` | Nothing. The feature they configured was removed and the keys stayed | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) |
 | `SCEP_RENEWAL_ID` | `CERTIFICATE_RENEWAL_ID` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
 | `HOST_END_USER_EMAIL_IDP` | `HOST_END_USER_IDP_USERNAME` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
-| `abm_token` | `ab_token` | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) |
-| `fleetctl generate mdm-apple-bm`, `get mdm-apple-bm` | `generate mdm-ab`, `get mdm-ab` | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) |
+| `abm_token` | `ab_token` | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
+| `fleetctl generate mdm-apple-bm`, `get mdm-apple-bm` | `generate mdm-ab`, `get mdm-ab` | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
 | `browser` | `extension_for` | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
-| `software_id` as a host filter | `software_version_id` | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) |
+| `software_id` as a host filter | `software_version_id` | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) |
 | `profile_id` | `profile_uuid` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
-| `orbot_node_key` | `orbit_node_key`. A shipped typo kept for agents at 1.38.0 and below | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md), and [a.6] for node keys |
-| `kolide_server_url` | `server_url` | [2.4](../02-administer-and-deploy-fleet/2.4-organization-and-server-settings.md) |
-| `mia` | `missing` | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md), and [a.6] |
+| `orbot_node_key` | `orbit_node_key`. A shipped typo kept for agents at 1.38.0 and below | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md), and [a.6] for node keys |
+| `kolide_server_url` | `server_url` | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) |
+| `mia` | `missing` | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md), and [a.6] |
 | tier `basic` | `premium` | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) |
 | `vendor_old` | `vendor` | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
 
@@ -165,10 +633,10 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | You arrive with | Fleet or this manual calls it | Chapters using the word | Route |
 |---|---|---|---|
 | DEP, Device Enrollment Program | Automated Device Enrollment, ADE, company-owned | DEP in six, ADE in thirteen, and [a.6] owns the pair | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) |
-| VPP, Volume Purchase Program | Apps and Books, App and Book token | VPP in eight, Apps and Books in one | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) |
+| VPP, Volume Purchase Program | Apps and Books, App and Book token | VPP in eight, Apps and Books in one | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
 | Autopilot, OOBE | Windows automatic enrollment through Entra | Autopilot in five, OOBE in two | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) |
-| Azure AD, AAD, Active Directory, LDAP | Microsoft Entra | None | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) |
-| Intune | Named as the thing you are leaving, or the thing that wins a conflict | Two | [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) |
+| Azure AD, AAD, Active Directory, LDAP | Microsoft Entra | None | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) |
+| Intune | Named as the thing you are leaving, or the thing that wins a conflict | Two | [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md) |
 | Jamf, Workspace ONE, Kandji, Munki | "another MDM" | Jamf in one, the other three in none | `None`, and see the last section |
 | OMA-URI, LocURI, CSP, ADMX | Windows configuration profile | CSP in two and LocURI in one, both Windows diagnostics. OMA-URI in none | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
 | SyncML | The Windows management channel | Three, all in Part VIII | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) |
@@ -178,9 +646,9 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | EST, PKI, NDES, DigiCert, Smallstep, Hydrant | certificate authority | EST and Hydrant in none. The other four appear in [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) or Part VIII | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md), with the prerequisite unowned |
 | Lost Mode | Fleet's button says Lock | One | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) |
 | Managed Apple ID | Managed Apple Account, Apple's current term | None. [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) uses Apple's current term on purpose | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) |
-| work profile, device owner, profile owner | personally enrolled and company-owned Android | Six | [3.6](../03-connect-devices/3.6-enroll-android-and-chromeos-devices.md) |
+| work profile, device owner, profile owner | personally enrolled and company-owned Android | Six | [3.6](../03-connect-devices/3.6-enroll-android-devices.md) |
 | Nudge | The update path for macOS 13 and earlier | One | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) |
-| Managed Google Play, AMAPI | Android Enterprise, bound to Fleet | Three and seven | [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) |
+| Managed Google Play, AMAPI | Android Enterprise, bound to Fleet | Three and seven | [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) |
 | LUKS | Linux disk encryption | Eight | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
 | Okta, Jira, Zendesk | conditional access, ticketing | Three, four and four | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
 
@@ -213,8 +681,8 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | the label-scope trap | Nothing | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
 | sentinel | Nothing | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) |
 | endpoint restrictions | `user_api_endpoints` | [1.4](../01-foundations/1.4-identity-and-roles.md) |
-| break-glass account | Nothing, and Fleet's documentation has no heading for it | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) |
-| estate | Fleet says fleet, for the same thing and also for a different one | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) |
+| break-glass account | Nothing, and Fleet's documentation has no heading for it | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) |
+| estate | Fleet says fleet, for the same thing and also for a different one | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) |
 
 ## Where two live Fleet names disagree
 
@@ -226,23 +694,23 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 **`app_enable_report_stats` is documented and not registered.** The server registers `app.enable_scheduled_query_stats`. Setting the documented name silently does nothing ([4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md)).
 
-**Fleet's own startup message names the wrong configuration key, one line above the right one.** It tells you to set `updates.allow_missing_migrations`; the registered key is `upgrades.allow_missing_migrations`, and the next line gives the correct `--upgrades_allow_missing_migrations` flag ([7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md)).
+**Fleet's own startup message names the wrong configuration key, one line above the right one.** It tells you to set `updates.allow_missing_migrations`; the registered key is `upgrades.allow_missing_migrations`, and the next line gives the correct `--upgrades_allow_missing_migrations` flag ([7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md)).
 
 **The API reference names a table called `activities`. No such table exists.** The audit rows are in `activity_past`, which is what a query against your own database has to say ([8.12](../08-troubleshooting/8.12-audit-logs.md)).
 
 **`logger_path` is documented as an agent option where osquery's flag is `logger_plugin`**, and Fleet's own guidance uses the working name elsewhere in the same documentation set ([8.2](../08-troubleshooting/8.2-log-surfaces.md)).
 
-**Fleet's documentation attributes the Windows enrollment key pair's effect to macOS hosts.** Changing that pair makes escrowed disk encryption credentials unreadable, and this manual adjudicates the effect to Windows ([2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md), [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md)).
+**Fleet's documentation attributes the Windows enrollment key pair's effect to macOS hosts.** Changing that pair makes escrowed disk encryption credentials unreadable, and this manual adjudicates the effect to Windows ([2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md), [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md)).
 
 **`fleetctl get user_roles` prints the deprecated vocabulary.** Its output carries `team:` for a concept the release notes say the command line renamed, so a GitOps-managed user-role file grepped for `fleet:` comes back empty ([a.7](a.7-fleetctl-command-reference.md)).
 
 **The other seven are live ambiguities to search around.**
 
-**Three names for one Apple credential, all live at once.** The interface says AB token, the API says `abm_token`, and the tables say DEP. [a.6] owns which is which ([2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md)).
+**Three names for one Apple credential, all live at once.** The interface says AB token, the API says `abm_token`, and the tables say DEP. [a.6] owns which is which ([2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md)).
 
 **The host action reads "Live report" and the value behind it is `query`** ([4.2](../04-know-your-devices/4.2-run-queries-and-reports.md)).
 
-**`enable_jit_role_sync` is accepted and does nothing.** The capability it names is now implicit ([2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md)).
+**`enable_jit_role_sync` is accepted and does nothing.** The capability it names is now implicit ([2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md)).
 
 **`packaging.*` configures a feature Fleet removed.** The keys remain and set nothing ([6.4](../06-automate-fleet/6.4-use-fleetctl.md)).
 
@@ -250,475 +718,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 **`channels` and `families` both name the ways Fleet reaches a device**, in adjacent lines of [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), and both spellings of Apple Business appear across Part I and Part II. Search for both.
 
-**`fleet` means two opposite things inside this book.** [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) uses it for the whole estate in one heading and for a single scope in the same chapter, and [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) says fleet-wide meaning estate-wide. It is the most-typed word in the manual and it is ambiguous; when a sentence could mean either, the scope reading is the one Fleet's API uses.
-
-## The index
-
-![Reference](../_assets/icons/reference.svg) 348 outcomes. Find the row by the words you would type, then open the linked chapter.
-
-### 1. Access and accountability
-
-**Who can use Fleet, how they prove it, and what is recorded.** 32 outcomes, cutting across Parts I, II and VII.
-
-| ID | What you are trying to do | Chapter | Also | Words that lead here |
-|---|---|---|---|---|
-| **CAP-001** | Sign in, or reset a password | [1.4](../01-foundations/1.4-identity-and-roles.md) | 2.3 | `user_logged_in` · `user_failed_login` · Access denied · my account · change password · API token · disable password-based authentication |
-| **CAP-002** | Sign in through the identity provider | [1.4](../01-foundations/1.4-identity-and-roles.md) | 2.2 | SSO · SAML · single sign-on · log in with Okta · log in with Entra · IdP · authentik · Google Workspace · `user_added_by_sso` |
-| **CAP-003** | Create accounts the first time someone signs in | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) | 1.4 | JIT · just-in-time provisioning · auto-create users · account provisioning · `fpsso` |
-| **CAP-004** | Remove accounts when people leave | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) | 1.4 | SCIM · deprovision · offboarding · account provisioning |
-| **CAP-005** | Work out why an account was not deprovisioned | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) | 2.3 | required SCIM attributes · `email` · `userName` · `givenName` · `familyName` · deprovisioning matches by email · API-only and non-SSO accounts skipped · last global admin never deleted |
-| **CAP-006** | Require a second factor | [1.5](../01-foundations/1.5-audit-and-activity.md) | 2.2 | 2FA · MFA · email two-factor · one-time code |
-| **CAP-007** | Add a person and give them a role | [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) | 1.4 | invite · new user · create user · human user · make someone an admin · `created_user` · `changed_user_global_role` · Add User button disabled |
-| **CAP-008** | Choose between Fleet's roles | [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) | 1.4 | `observer_plus` · Observer+ · observer plus · `gitops` · `technician` · role-based access |
-| **CAP-009** | Give someone access to one fleet only | [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) | 1.4, 1.3 | team role (still accepted) · team admin (still accepted) · `--team` (still accepted) · fleet-level permissions · `changed_user_team_role` |
-| **CAP-010** | Create a non-human identity for automation | [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) | 6.1, 1.4 | API token · API-only user · service account · bot user · gitops user · `api only user` · retrieve your API token |
-| **CAP-011** | Scope a non-human identity to one fleet | [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) | 1.4 | `--team <id>:<role>` (still accepted) · `--fleet <id>:<role>` |
-| **CAP-012** | Restrict a token to particular endpoints | [1.4](../01-foundations/1.4-identity-and-roles.md) | 2.3, 6.1 | endpoint restrictions (ours) · `user_api_endpoints` · allowlist endpoints |
-| **CAP-013** | Add or remove a fleet's members | [1.4](../01-foundations/1.4-identity-and-roles.md) | 2.3 | team member (still accepted) · `/fleet/teams/{id}/users` (still accepted) · add users to fleet |
-| **CAP-014** | Make the interface read-only | [2.4](../02-administer-and-deploy-fleet/2.4-organization-and-server-settings.md) | 6.2 | GitOps mode · change management · lock the interface · workflow · `enabled_gitops_mode` |
-| **CAP-015** | Find out who changed something | [1.5](../01-foundations/1.5-audit-and-activity.md) | 2.5, 8.12 | audit log · activity feed · who did that · `activities` (clash) · `activity_past` · [a.6] |
-| **CAP-016** | Read one host's history | [1.5](../01-foundations/1.5-audit-and-activity.md) | 8.12 | host timeline · past activity |
-| **CAP-017** | See what is queued for a host | [1.5](../01-foundations/1.5-audit-and-activity.md) | 5.1, 8.6 | upcoming activity · pending work · queued · [a.6] |
-| **CAP-018** | Push every activity to a webhook | [1.5](../01-foundations/1.5-audit-and-activity.md) | 6.5, 2.5 | activity automations · `enabled_activity_automations` · Manage automations |
-| **CAP-019** | Stream the audit record to a SIEM | [2.5](../02-administer-and-deploy-fleet/2.5-activity-audit-logs-and-log-delivery.md) | 1.5 | audit log destination · external activity audit logging · Splunk · Firehose · Kinesis · Lambda · Pub/Sub · Kafka · log destinations |
-| **CAP-020** | Work out why an activity never reached the SIEM | [1.5](../01-foundations/1.5-audit-and-activity.md) | 8.12 | `host_only` |
-| **CAP-021** | Set how long Fleet keeps activity | [2.4](../02-administer-and-deploy-fleet/2.4-organization-and-server-settings.md) | 1.5 | `activity_expiry_settings` · activity retention |
-| **CAP-022** | Keep a host's history across re-enrollment | [1.5](../01-foundations/1.5-audit-and-activity.md) | 2.4 | `preserve_host_activities_on_reenrollment` |
-| **CAP-023** | Read a disk encryption recovery key | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 1.4, 2.3 | recovery key · FileVault key · `filevault2` · bitlocker key (vendor) · unlock this laptop · Show disk encryption key · `read_host_disk_encryption_key` |
-| **CAP-024** | Prove nobody read a secret without permission | [1.5](../01-foundations/1.5-audit-and-activity.md) | 5.8 | `read_host_disk_encryption_key` · `viewed_host_recovery_lock_password` · `read_managed_local_account` |
-| **CAP-290** | Set roles from the identity provider | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) | 2.3 | role sync · SAML role attribute · `FLEET_JIT_USER_ROLE_TEAM_<id>` (still accepted) · `FLEET_JIT_USER_ROLE_FLEET_<id>` · customization of user roles |
-| **CAP-291** | Keep a way in when the identity provider is down | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) | 2.3 | break-glass account (ours) |
-| **CAP-292** | Put the end user's name on the host record | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) | 4.1 | human-device mapping · foreign host vitals · User mapping · `identity-provider` (clash) · Okta · Entra · Azure AD (vendor) · LDAP (vendor) |
-| **CAP-293** | Set a host's user by hand | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) | 4.1 | `edited_host_idp_data` |
-| **CAP-294** | Check the identity provider connection | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) | 8.13 | No IdP connected · identity provider details |
-| **CAP-297** | Rotate an API token | [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) | 7.6 | revoke the authorization tokens for a user · **(no)** |
-| **CAP-298** | Remove a person, or demote an administrator | [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) | 1.4 | `deleted_user` · `deleted_user_global_role` · last admin |
-| **CAP-313** | Run an access review | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 2.3 | who has admin · least privilege · last token use · **(no)** |
-
-### 2. Connecting devices
-
-**Getting a device enrolled, and the platform connections that must exist first.** 66 outcomes. The credentials that make these connections work are in group 7, because you meet them again at renewal.
-
-| ID | What you are trying to do | Chapter | Also | Words that lead here |
-|---|---|---|---|---|
-| **CAP-025** | Understand how a device authenticates to Fleet | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 1.3 | enroll secret · enrollment token · `enroll_secrets` · `fleetctl get enroll-secret` · `edited_enroll_secrets` · system keystore |
-| **CAP-026** | Rotate an enroll secret | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 3.2, 3.3, 3.4 | the secret leaked · target hosts by enroll secret |
-| **CAP-027** | Enroll a Mac with no hands on it | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 2.7 | DEP (vendor) · Device Enrollment Program (vendor) · ADE · ABM · zero-touch · company-owned Mac · automated enrollment · [a.6] |
-| **CAP-028** | Enroll a Mac from a link | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 3.1 | Add hosts · enrollment link · manual enrollment · onboard · provision · fleetd |
-| **CAP-029** | Enroll a personally owned Mac | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 5.7 | BYOD · personal Mac · personally owned · `On (manual - personal)` · [a.6] |
-| **CAP-030** | Download the manual enrollment profile | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 6.3 | unsigned mobileconfig · `/fleet/mdm/manual_enrollment_profile` (still accepted) |
-| **CAP-031** | Get the default automatic enrollment profile | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) | 3.2 | Setup Assistant profile · `/fleet/mdm/apple/enrollment_profile` (still accepted) |
-| **CAP-032** | Work out why the agent never arrived after MDM enrollment | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 8.4 | `InstallEnterpriseApplication` · half-enrolled (ours) |
-| **CAP-033** | Let a bootstrap package deliver the agent instead | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 5.5 | `manual_agent_install` (still accepted) · `macos_manual_agent_install` |
-| **CAP-034** | Make the user sign in during enrollment | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 2.2, 5.5 | end user authentication · require IdP authentication · `enabled_macos_setup_end_user_auth` |
-| **CAP-035** | Enroll Windows by installing the agent | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) | 2.8 | MSI · `win10` · `win11` · pc · install fleetd |
-| **CAP-036** | Enroll Windows at first boot | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) | 2.8 | Autopilot (vendor) · OOBE (vendor) · Entra · Azure AD (vendor) · Active Directory (vendor) · repurposing a Windows device |
-| **CAP-037** | Let a person enroll Windows from Settings | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) | 2.8 | Access work or school (vendor) · Automatic enrollment (clash) |
-| **CAP-038** | Stop Fleet turning Windows MDM on by itself | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) | 2.8 | `enable_turn_on_windows_mdm_manually` |
-| **CAP-039** | Move Windows hosts off another MDM with no prompt | [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) | 3.3 | Intune (vendor) · automatic Windows MDM migration · `enabled_windows_mdm_migration` |
-| **CAP-040** | Prompt a Mac's user to migrate from another MDM | `None` | 6.5, 1.2 | Jamf (vendor) · Workspace ONE (vendor) · Kandji (vendor) · Munki (vendor) · macOS MDM migration · seamless migration |
-| **CAP-041** | Have Fleet push the agent to Entra-enrolled Windows hosts | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) | 2.8 | global enroll secret |
-| **CAP-042** | Enroll a Linux host | [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | 3.1 | deb · rpm · `tar.gz` · tarballs · Arch · Linux support |
-| **CAP-043** | Re-point a deployed Linux agent | [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | 3.7 | `/etc/default/orbit` · `ORBIT_*` · config-less deployment · change the Fleet URL |
-| **CAP-044** | Build a Mac package with no secret inside it | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) | 3.1 | `--use-system-configuration` · system keystore |
-| **CAP-045** | Supply a Windows host's settings at install time | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) | 3.1 | MSI properties · `FLEET_URL` · `FLEET_SECRET` · `ENABLE_SCRIPTS` · `END_USER_EMAIL` · `EUA_TOKEN` · heat failed |
-| **CAP-046** | Enroll an iPhone or iPad with no hands on it | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) | 2.7 | zero-touch iPhone · ADE iPad · which Apple devices work with ADE |
-| **CAP-047** | Enroll a company-owned iPhone from a link | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) | 2.7 | enrollment URL for an iPhone |
-| **CAP-048** | Enroll a personally owned iPhone or iPad | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) | 5.7 | BYOD iPad · personal iPhone · profile-based enrollment |
-| **CAP-049** | Let a person enroll with a Managed Apple Account | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) | 2.2, 2.7 | Managed Apple ID (vendor) · account-driven enrollment |
-| **CAP-050** | Work out why account-driven enrollment cannot find the server | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) | 8.8 | `mdm_service_discovery` · service discovery |
-| **CAP-051** | Decide which fleet automatically enrolled devices land in | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) | 3.5, 3.2 | default team (still accepted) · `macos_team` (still accepted) · `ios_team` (still accepted) · `ipados_team` (still accepted) · `byod_team` (still accepted) · `macos_fleet` |
-| **CAP-052** | Enroll a personally owned Android device | [3.6](../03-connect-devices/3.6-enroll-android-and-chromeos-devices.md) | 2.8 | work profile (vendor) · profile owner (vendor) · Android BYOD migration · remove the old work profile |
-| **CAP-053** | Enroll a company-owned Android device at first boot | [3.6](../03-connect-devices/3.6-enroll-android-and-chromeos-devices.md) | 2.8 | QR code · fully managed (vendor) · device owner (vendor) · `fully_managed` |
-| **CAP-054** | Issue an Android enrollment token | [3.6](../03-connect-devices/3.6-enroll-android-and-chromeos-devices.md) | 8.10 | token expired · one hour · one device |
-| **CAP-055** | Enroll a Chromebook | [3.6](../03-connect-devices/3.6-enroll-android-and-chromeos-devices.md) | 4.2 | ChromeOS · Fleetd for Chrome · force-installed extension · managing Chrome with Fleet |
-| **CAP-056** | Give a host a hardware-backed identity | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 3.4 | TPM · device attestation · host identity certificates · certificates in fleetd |
-| **CAP-057** | Require signed requests from hosts | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 2.9 | `auth.require_http_message_signature` · fleetd authentication |
-| **CAP-058** | Recognise a returning device instead of creating a new one | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 4.1, 8.4 | duplicate enrollment · re-enrollment · the host came back as a new record · IP duplication · node key · [a.6] |
-| **CAP-059** | Enroll two operating systems on one machine | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 8.14 | `--host-identifier=instance` · dual boot · cloned VM |
-| **CAP-060** | Move a host to another fleet | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 5.8 | Transfer · move a host to another team (still accepted) · fleet move (ours) · `transferred_hosts` · update hosts' fleet |
-| **CAP-061** | Delete a host record | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 4.5 | remove a device from Fleet · `deleted_host` |
-| **CAP-062** | Stop a deleted host coming back | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 2.7, 8.4 | the host keeps reappearing |
-| **CAP-063** | Expire stale host records | [2.4](../02-administer-and-deploy-fleet/2.4-organization-and-server-settings.md) | 4.5 | `host_expiry_settings` · clean up old records |
-| **CAP-064** | Build an installer | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 3.2, 3.3, 3.4 | `fleetctl package` · pkg · msi · deb · rpm · exe · ps1 · signing fleetd · a.7 owns the command contract |
-| **CAP-065** | Configure the end user's own surface | `None` | 3.2, 3.3, 3.4 | Fleet Desktop · My device · tray icon · transparency · browser host · custom proxy |
-| **CAP-066** | Allow scripts on a host | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 3.2, 3.3, 3.4 | `--enable-scripts` · `ENABLE_SCRIPTS` · `ORBIT_ENABLE_SCRIPTS` · Running scripts is disabled in organization settings |
-| **CAP-067** | Set which agent versions a host takes | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 1.2 | `update_channels` · update channel · pin the agent · fleetd updates |
-| **CAP-068** | Set the channel on one host | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 3.4 | `--orbit-channel` · `ORBIT_ORBIT_CHANNEL` · `ORBIT_OSQUERYD_CHANNEL` · `ORBIT_DESKTOP_CHANNEL` |
-| **CAP-069** | Pin the agent to an exact version | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 1.2 | version pinning |
-| **CAP-070** | Roll the agent back | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 7.2 | downgrade the agent (clash: downgrading Fleet is a different operation) |
-| **CAP-071** | Stop an agent updating at all | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 8.4 | `--disable-updates` · `ORBIT_DISABLE_UPDATES` |
-| **CAP-072** | Publish agent versions from your own repository | `None` | 3.7, 6.4 | TUF · `fleetctl updates init` · `updates add` · `updates roots` · `updates timestamp` · `updates rotate` · air-gapped agents · where does fleetd get update information |
-| **CAP-073** | See what agent version a host is running | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 4.5, 8.4 | Agent card · component versions |
-| **CAP-074** | Ship an osquery extension to hosts | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 3.7 | custom table · `extensions` · bundle osquery extensions into fleetd |
-| **CAP-075** | Send an extension only to some hosts | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 1.3 | targeting extensions with labels |
-| **CAP-076** | Set osquery runtime options | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md) | 4.6, 6.2 | agent options · `distributed_interval` · `config_refresh` · `config_tls_refresh` (clash) · `command_line_flags` · global config · `edited_agent_options` |
-| **CAP-077** | Set the supervisor's own settings | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 3.7 | `orbit` · `script_execution_timeout` · `update_channels` |
-| **CAP-078** | Watch files for change | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.6 | FIM · file integrity monitoring · `file_paths` · `file_accesses` |
-| **CAP-079** | Scan hosts with signature sets | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 5.7 | YARA · `yara` · remote deployment of YARA rules |
-| **CAP-080** | Add columns to every result | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.6 | `decorators` |
-| **CAP-081** | Turn event collection on or off | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 8.14 | evented tables · event subscribers · `disable_events` |
-| **CAP-082** | Get a file off a device | `None` | 1.6, 8.7 | file carving · carve · `fleetctl get carve` · `get carves` · collect a log file · [a.6] |
-| **CAP-269** | Turn Apple MDM on | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) | 2.6 | APNs · push certificate · `apns` · activate · iphone · ipad · macbook |
-| **CAP-272** | Connect Apple Business Manager | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) | 3.2, 3.5 | ABM token · AB token · DEP token · `abm_token` (still accepted) · `ab_token` · `fleetctl get mdm-ab` · `mdm_apple_bm` (still accepted) · [a.6] |
-| **CAP-275** | Connect Apple's app purchasing | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) | 5.4 | VPP (vendor) · Volume Purchasing Program (vendor) · Apps and Books · App and Book token · [a.6] |
-| **CAP-278** | Turn Windows MDM on | [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) | 3.3 | WSTEP · `mdm.windows_wstep_identity_cert_bytes` |
-| **CAP-279** | Choose the Windows enrollment experience | [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) | 3.3 | Automatic enrollment (clash) · Manual enrollment |
-| **CAP-281** | Bind Fleet to Android Enterprise | [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) | 3.6 | AMAPI (vendor) · Managed Google Play (vendor) · google · enterprise · phone · tablet |
-| **CAP-282** | Deliver certificates to Android | [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) | 5.2 | `COMPANION_APP` · `CERT_INSTALL` · `android_settings.certificates` · the Fleet Android app |
-| **CAP-283** | Tune the Android integration | [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) | 8.10 | `mdm.android_agent.package` · `mdm.android_batch_size` |
-
-### 3. Scope and targeting
-
-**Deciding who a change reaches and whose data you are reading.** 8 outcomes, and they precede both the reading group and the writing group, which is why they are not filed inside either.
-
-| ID | What you are trying to do | Chapter | Also | Words that lead here |
-|---|---|---|---|---|
-| **CAP-140** | Group hosts by a question | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 4.2 | dynamic label · smart group · query-based group · tag · category · filter · `created_label` |
-| **CAP-141** | Group hosts by hand | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 4.5 | manual label · static group · add labels to host |
-| **CAP-142** | Group hosts on a vital | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 4.1 | host vitals label |
-| **CAP-143** | Keep a label inside one fleet | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 6.2 | team-scoped label (still accepted) · label scope, global against fleet |
-| **CAP-144** | Separate configuration by department | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 1.4, 2.3 | teams (still accepted) · `add team` (still accepted) · `fleetctl get teams` (still accepted) · groups · No fleets yet · [a.6] |
-| **CAP-145** | Rename a label | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 6.2 | `edited_label` |
-| **CAP-150** | Give one fleet its own profiles | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 1.3 | exact scope · a global profile and a named fleet |
-| **CAP-151** | Send something to only some hosts | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 1.3 | label scoping · `labels_include_all` · `labels_include_any` · `labels_exclude_any` · `labels` (still accepted) · combining include and exclude |
-
-### 4. Knowing what a device is
-
-**Reading state: vitals, reports, policies, software, vulnerabilities and estate counts.** 57 outcomes.
-
-| ID | What you are trying to do | Chapter | Also | Words that lead here |
-|---|---|---|---|---|
-| **CAP-083** | See what a device is and what is on it | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 4.5 | host details · vitals · inventory · devices · endpoints · machines · computers · serial number · hostname |
-| **CAP-084** | Add a field to every host record | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.1 | `additional_queries` (clash: Fleet's own FAQ still asks about them by the pre-rename name) |
-| **CAP-085** | Record a value Fleet cannot collect | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 4.7 | custom host vital · asset tag · Variables · `created_custom_host_vital` |
-| **CAP-086** | Query an application's own database | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.6 | `auto_table_construction` · ATC · SQLite |
-| **CAP-087** | Replace one of Fleet's built-in queries | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.1 | `detail_query_overrides` |
-| **CAP-088** | Collect the accounts on a machine | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 8.4 | `enable_host_users` · who is logged in · local accounts |
-| **CAP-089** | See which certificates a host holds | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 5.2 | view certificates in host vitals · get host's certificates |
-| **CAP-090** | Attach an email address to a host | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 2.2 | device mapping · human-device mapping · `END_USER_EMAIL` · whose laptop is this |
-| **CAP-091** | Ask a host to report again now | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 5.9, 4.1 | Refetch · refresh this host · how often is software inventory updated |
-| **CAP-092** | Refresh an iPhone's inventory on a schedule | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) | 4.1 | `apple_mdm_iphone_ipad_refetcher` · my iPhone data is stale |
-| **CAP-093** | Run a query right now | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 8.7 | live query (still accepted) · live report · ad hoc · `fleetctl query` (still accepted) · run report · execute report · Live report whose value is `query` (clash) · [a.6] |
-| **CAP-094** | Save a query without scheduling it | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 6.2 | saved query (still accepted) · Save report · `created_saved_query` · [a.6] |
-| **CAP-095** | Run a query on a schedule | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 2.5 | scheduled query (still accepted) · `scheduled_query_id` (still accepted) · `scheduled_report_id` · interval · Where did the Schedule page go |
-| **CAP-096** | Find where the results went | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 8.7 | Nothing to report yet · Collecting results · stored report · get report data |
-| **CAP-097** | Send results to a log destination | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 2.5 | query automations · report automations · Splunk · why aren't my live queries being logged |
-| **CAP-098** | Read one report across the estate | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 4.5 | estate-wide results |
-| **CAP-099** | Read one host's result, empty included | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 8.7 | get host's report data |
-| **CAP-100** | Get the rows out of Fleet | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 6.3 | export query results · import and export queries · fetch results from a scheduled query |
-| **CAP-101** | Run something on one platform only | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 4.6 | `darwin` · `windows` · `linux` · `chrome` · `macos` (clash: an extension's platform token) · platform selector |
-| **CAP-102** | Require a minimum osquery version | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 4.6 | minimum osquery version on a report |
-| **CAP-103** | Run something on a fraction of hosts | [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md) | 4.2 | shard · canary · ten percent · staged rollout |
-| **CAP-104** | Target a report by label | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 1.3 | label targeting on a report |
-| **CAP-105** | Let observers run a report | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 2.3 | `observer_can_run` |
-| **CAP-106** | Turn live reporting off | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 8.14 | `live_query_disabled` (still accepted) · `live_reporting_disabled` · advanced options |
-| **CAP-107** | Stop storing report results | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 2.5 | `query_reports_disabled` (still accepted) · `discard_reports_data` |
-| **CAP-108** | Stop storing one report's results | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 6.2 | `discard_data` |
-| **CAP-109** | Find out how many rows Fleet keeps | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) | 4.6, 8.14 | `query_report_cap` (still accepted) · `report_cap` · results truncated |
-| **CAP-110** | Find out what a query costs | [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md) | 4.2, 8.14 | performance impact · Undetermined · Minimal · Considerable · Excessive · Denylisted |
-| **CAP-111** | Work out why query statistics are empty | [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md) | 8.14 | `enable_scheduled_query_stats` · `app_enable_report_stats` (clash) |
-| **CAP-112** | Cap what osquery may consume | [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md) | 8.14 | watchdog · `watchdog_memory_limit` · `watchdog_utilization_limit` · `disable_watchdog` · osquery using too much CPU |
-| **CAP-113** | Work out why a query stopped running on some hosts | [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md) | 8.14 | `denylist` · blacklist · `distributed_denylist_duration` |
-| **CAP-114** | Ask a pass-or-fail question | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 4.2 | policy · compliance check · device health · failing · `created_policy` |
-| **CAP-115** | Check whether an application is up to date | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 5.4 | patch policy · patch management |
-| **CAP-116** | Run a policy on one platform | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 4.1 | targeting hosts using platforms |
-| **CAP-117** | Run a policy on some hosts only | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 1.3 | targeting hosts using labels · exclude hosts from a policy |
-| **CAP-118** | Mark a policy important | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 5.9 | `critical` |
-| **CAP-119** | Count how many hosts are failing | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 4.5 | compliance percentage · out-of-policy devices · No hosts are online |
-| **CAP-120** | Clear a policy's stored results | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 4.3 | `reset_policy` · my policy is stuck · host not updating a policy's response |
-| **CAP-121** | Re-arm a policy's automations | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 4.3 | reset automations |
-| **CAP-122** | List what is installed | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 4.1 | software inventory · titles · library · managed · Software inventory disabled |
-| **CAP-123** | Turn software inventory on for one fleet | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 6.2 | `features` · `host_settings` (still accepted) |
-| **CAP-124** | Find vulnerable software | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | CVE · cves · vulns · CVSS · exploit · security findings · Vulnerabilities are not supported for this type of host |
-| **CAP-125** | Find out whether an operating system build is vulnerable | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.6 | OS vulnerabilities · operating systems |
-| **CAP-126** | Prioritise by exploitability | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | EPSS · KEV · CISA · known exploited · `cisa_known_exploits_url` |
-| **CAP-127** | Sort and filter findings | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 6.3 | sort by severity · filter by exploited |
-| **CAP-128** | Find the version that fixes it | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | resolved version |
-| **CAP-129** | See exposure over time | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 4.5 | vulnerability trend · dashboard vulnerability exposure · charts |
-| **CAP-130** | Turn the history chart off | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 4.5 | `disabled_historical_dataset` |
-| **CAP-131** | Find out what Fleet can install for you | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | FMA · Fleet-maintained apps · fleet maintained · app store · google play |
-| **CAP-132** | Supply vulnerability data yourself | `None` | 4.4 | air-gapped · offline CVE data · `cpe_database_url` · `cve_feed_prefix_url` · NVD · `fleetctl vulnerability-data-stream` |
-| **CAP-133** | Count the estate | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 1.2 | online · offline · missing · MIA (still accepted) · No hosts match your filters · how does Fleet determine online and offline status · [a.6] |
-| **CAP-134** | Count hosts low on disk | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 6.3 | low disk space |
-| **CAP-135** | Find automated enrollments that failed | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 2.7, 8.8 | failed enrollments · ADE devices failing |
-| **CAP-136** | See whether hosts were online last week | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 4.4 | uptime history |
-| **CAP-137** | Hand a host list to somebody | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 6.3 | export to CSV |
-| **CAP-138** | List hosts through the API | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 6.3 | pagination · `after` key · No more hosts to display |
-| **CAP-139** | Be told when hosts go offline | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 6.5 | host status alerts · missing hosts · notification · host status automations |
-
-### 5. Changing a device
-
-**Writing state, split by the mechanism that carries it.** 98 outcomes, in the three lanes [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) teaches: settings that persist, work that runs once, and experiences. If you know which lane you are in, you know which sub-table to scan.
-
-#### Settings that persist
-
-30 outcomes. Profiles, operating system updates and disk encryption: things Fleet keeps true rather than things Fleet does once.
-
-| ID | What you are trying to do | Chapter | Also | Words that lead here |
-|---|---|---|---|---|
-| **CAP-146** | Push a setting to a Mac | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 3.2 | configuration profile · mobileconfig · custom profiles · `custom_settings` (still accepted) · `configuration_profiles` · OS settings · custom OS settings |
-| **CAP-147** | Use Apple's declarative mechanism | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 5.6 | DDM (vendor) · declaration · declarative device management · `profile_uuid` (clash: a declaration carries a profile identifier) |
-| **CAP-148** | Push a setting to Windows | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 8.9 | OMA-URI (vendor) · LocURI (vendor) · CSP (vendor) · SyncML (vendor) · ADMX (vendor) · Windows configuration profile · CSP converter · migrating Intune policies |
-| **CAP-149** | Push a setting to Android | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 2.8 | `android_settings` · Android profile · Android policy · `created_android_profile` |
-| **CAP-152** | Put a host's own values into a profile | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 6.2 | Fleet variable · `$FLEET_VAR_` · Variables · built-in variables · put the serial in a profile |
-| **CAP-153** | Issue a certificate to a device | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 2.8, 8.9 | SCEP · EST · PKI · NDES (vendor) · DigiCert (vendor) · Smallstep (vendor) · Hydrant (vendor) · certificate authority · CA · Certificate enrollment · `certificate-authorities` (clash) · `added_hydrant` · `added_custom_est_proxy` · [a.6] |
-| **CAP-154** | Deliver a Platform SSO registration token | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 5.5 | Platform SSO · PSSO · Okta Verify · Entra Platform SSO |
-| **CAP-155** | Keep a password out of a spec file | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 6.1 | `$FLEET_SECRET_` · custom variable · secret · `created_custom_variable` |
-| **CAP-156** | Read a profile's delivery state | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 8.8, 8.9 | pending · verifying · verified · failed · the profile says failed · configuration profile status |
-| **CAP-157** | Push a profile again | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 8.8 | resend · batch-resend · `resent_configuration_profile` |
-| **CAP-158** | Remove a profile from a device | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 1.3 | removal behavior · `install` and `remove` · it disappeared from the device |
-| **CAP-205** | Require a minimum macOS version by a date | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 5.2 | OS updates · minimum version · deadline · `macos_updates` · `edited_macos_min_version` · `edited_ios_min_version` · `edited_ipados_min_version` · enforce OS updates |
-| **CAP-206** | Nag older Macs to update | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 8.2 | Nudge (vendor) |
-| **CAP-207** | Set a Windows update deadline | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 5.2 | `windows_updates` · grace period · force a restart · `edited_windows_updates` · Windows Update CSP |
-| **CAP-208** | Control Android system updates | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 5.2 | `systemUpdate` (vendor) · freeze period · postpone |
-| **CAP-209** | Express what the update form cannot | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 5.2 | custom OS update profile · Fleet-managed updates against custom profiles |
-| **CAP-210** | Update newly enrolled Macs during setup | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 3.2 | `enabled_macos_update_new_hosts` · update new hosts to latest |
-| **CAP-211** | Force a Linux operating system update | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 4.3 | **(no)** |
-| **CAP-212** | Confirm the devices actually updated | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 4.1 | Current versions |
-| **CAP-235** | Enforce disk encryption on Macs | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 3.2 | FileVault · `filevault2` · Disk encryption · Escrow Buddy · `enabled_macos_disk_encryption` · `mdm.macos_settings.enable_disk_encryption` (still accepted) · `mdm.enable_disk_encryption` |
-| **CAP-236** | Enforce disk encryption on Windows | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 3.3 | BitLocker (vendor) · numerical password protector · `mdm.enable_custom_os_updates_and_filevault` (still accepted, clash) |
-| **CAP-237** | Escrow a Linux disk encryption key | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 3.4 | LUKS (vendor) · encrypt your Fleet-managed Linux device · escrow your key with Fleet · `escrowed_disk_encryption_key` |
-| **CAP-238** | Escrow on Ubuntu with no prompt | [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | 5.8 | snapd · headless host |
-| **CAP-239** | Have the user type their passphrase | [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | 5.8 | `cryptsetup` · `zenity` · `kdialog` |
-| **CAP-240** | Find out whether a disk is encrypted at all | [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | 5.8, 4.1 | `disk_encryption_enabled` |
-| **CAP-241** | Read disk encryption enforcement state | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 4.5 | `action_required` · `enforcing` · `removing_enforcement` · disk encryption status |
-| **CAP-242** | Require a BitLocker startup PIN | `None` | 5.8 | `windows_require_bitlocker_pin` · BitLocker PIN enforcement |
-| **CAP-243** | Use your own encryption profile instead | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 5.2 | `mdm.enable_custom_filevault` · `mdm.enable_custom_disk_encryption` · escape hatch |
-| **CAP-244** | Set and read a firmware password on Apple silicon | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 1.4 | Recovery Lock · `laps` · rotation · Show Recovery Lock password · `viewed_host_recovery_lock_password` · `rotated_host_recovery_lock_password` |
-| **CAP-245** | Stop enforcing encryption without losing the keys | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 7.3 | disable enforcement |
-
-#### Work that runs once
-
-52 outcomes. Scripts, software installs and device actions: a single unit of work, queued, delivered and finished.
-
-| ID | What you are trying to do | Chapter | Also | Words that lead here |
-|---|---|---|---|---|
-| **CAP-159** | Run a script on a host | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 5.1 | remote shell · powershell · bash · remediate · Run script · `ran_script` |
-| **CAP-160** | Keep a library of scripts | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 6.2 | script library · saved · uploaded · `added_script` |
-| **CAP-161** | Wait for a script to finish | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 6.4 | `fleetctl run-script` · synchronous · `--async` |
-| **CAP-162** | Run a script across many hosts | `None` | 5.3, 6.1 | batch script · Run script on many hosts · script batch progress · `ran_script_batch` · `scheduled_script_batch` · `canceled_script_batch` |
-| **CAP-163** | Turn scripts off everywhere | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 2.4 | `scripts_disabled` · Running scripts is disabled in organization settings |
-| **CAP-164** | Change the script timeout | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 1.3 | `script_execution_timeout` · my script times out at five minutes |
-| **CAP-165** | Read what a script printed | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 8.4 | exit code · output truncated |
-| **CAP-166** | Keep a password out of a script | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 6.1 | secret in a script |
-| **CAP-167** | Use a host's own values inside an install script | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.3 | `$FLEET_HOST_VITAL_` |
-| **CAP-168** | Deploy an installer you supply | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 6.2 | upload a package · Add software · custom package · pkg · msi · exe · deb · rpm · `added_software` · EXE install scripts |
-| **CAP-169** | Install an application Fleet maintains | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 4.4 | FMA · Fleet-maintained app · fleet maintained · install Chrome for me |
-| **CAP-170** | Install an App Store application | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 2.7 | VPP app (vendor) · volume purchase · app store · `added_app_store_app` · `installed_app_store_app` |
-| **CAP-171** | Install a Play application | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 2.8 | google play · play store · Android app · private app · APK · Android MDM isn't enabled |
-| **CAP-172** | Deploy an application Apple did not distribute | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 3.5 | in-house app (vendor) · sideload · enterprise app · `ipa` |
-| **CAP-173** | Put a shortcut on an Android home screen | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.5 | Android web app |
-| **CAP-174** | Ship a shell script as software | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.3 | script-only package |
-| **CAP-175** | Install only when a condition holds | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 4.2 | pre-install query · conditional install |
-| **CAP-176** | Use the install and uninstall scripts Fleet writes | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.3 | install script · post-install script · uninstall script · generated script |
-| **CAP-177** | Install software on one host | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.1, 8.11 | `installed_software` · Library tab · it says installed and it is not there |
-| **CAP-178** | Remove software from a host | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 8.11 | uninstall · `uninstalled_software` · uninstall by source |
-| **CAP-179** | Ship different builds per architecture | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 1.3 | arm64 · x86 · Apple silicon and Intel |
-| **CAP-180** | Hold an application at a version | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 4.3 | pin a version |
-| **CAP-181** | Keep applications current | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 4.3 | automatic updates |
-| **CAP-182** | Go back to an earlier version | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 8.11 | roll back to a previous version |
-| **CAP-183** | Configure an application on an iPhone | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.2 | managed app config · app configuration |
-| **CAP-184** | Configure an application on Android | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 2.8 | Android Managed App Configurations · Work Profile Widgets |
-| **CAP-185** | Choose when applications update | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.6 | app update window · configure automatic updates for an app |
-| **CAP-186** | Delete software from the library | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 6.2 | `deleted_software` · `deleted_app_store_app` |
-| **CAP-187** | Speed up installer downloads | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 2.10 | CDN · CloudFront signed URLs |
-| **CAP-188** | Find the installer size limit | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 8.14 | too big · 10 GiB |
-| **CAP-213** | Lock a Mac | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.2 | Lock · remote lock · `locked_host` · lock and wipe hosts |
-| **CAP-214** | Lock an iPhone or iPad | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5 | Lost Mode (vendor) · find my iPad |
-| **CAP-215** | Lock a Windows host | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 5.3 | lock a PC |
-| **CAP-216** | Lock a Linux host | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.4 | lock a Linux desktop |
-| **CAP-217** | Lock an Android device | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.6 | lock a phone |
-| **CAP-218** | Unlock a Mac | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 5.8 | Unlock · unlock PIN · `unlocked_host` |
-| **CAP-219** | Unlock an iPhone or iPad | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5 | release Lost Mode (vendor) · unlock offline iOS hosts |
-| **CAP-220** | Unlock a Windows host | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 5.3 | unlock a PC |
-| **CAP-221** | Unlock a Linux host | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.4 | unlock a Linux desktop |
-| **CAP-222** | Unlock an Android device | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.6 | **(no)** |
-| **CAP-223** | Wipe a Mac | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.2 | Wipe · erase · remote wipe · `wiped_host` · `failed_wipe` |
-| **CAP-224** | Wipe an iPhone or iPad | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5 | erase an iPad |
-| **CAP-225** | Wipe a Windows host | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 8.9 | OMA-DM (vendor) · remote wipe a PC |
-| **CAP-226** | Wipe a Linux host | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.4 | secure erase |
-| **CAP-227** | Wipe an Android device | [3.6](../03-connect-devices/3.6-enroll-android-and-chromeos-devices.md) | 5.7 | erase a phone |
-| **CAP-228** | Wipe a personally owned Android device | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.6 | unenroll · remove the work profile |
-| **CAP-229** | Locate a device | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5 | find my device · Apple device location |
-| **CAP-230** | Clear a passcode | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5, 3.6 | Clear passcode · forgotten PIN · `cleared_passcode` · `fleetctl mdm clear-passcode` · `clear_passcode` |
-| **CAP-231** | Send a payload Fleet has no button for | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 6.4 | custom MDM command · raw Apple command · `fleetctl mdm run-command` · `run_command` · `/fleet/mdm/apple/enqueue` (still accepted) · `/mdm/commands/run` |
-| **CAP-232** | Send a raw Windows command | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 8.9 | SyncML Exec (vendor) · raw Windows MDM command |
-| **CAP-233** | Read what the device said back | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 8.8, 8.9 | command results · `fleetctl get mdm-command-results` · `mdm_command_results` · `/fleet/mdm/apple/commandresults` (still accepted) |
-| **CAP-234** | Stop something before it runs | [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) | 5.7, 6.1 | cancel · upcoming activity · `canceled_run_script` · `canceled_install_software` |
-
-#### Experiences
-
-16 outcomes. What the person holding the device sees, at first boot and afterwards.
-
-| ID | What you are trying to do | Chapter | Also | Words that lead here |
-|---|---|---|---|---|
-| **CAP-189** | Design what happens at first boot | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 3.2, 2.7 | setup experience · onboarding · first run · customize · `macos_setup` (still accepted) · `setup_experience` |
-| **CAP-190** | Run a script during setup | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.3 | Run script · post-enrollment · shell |
-| **CAP-191** | Install something before the agent exists | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 1.6 | bootstrap package · `bootstrap_package` (still accepted) · `macos_bootstrap_package` · `added_bootstrap_package` |
-| **CAP-192** | Create the end user's account | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.8 | LAPS (vendor) · managed local account · standard against admin account · `enable_managed_local_account` (still accepted) · `enable_create_local_admin_account` · secure local admin passwords |
-| **CAP-193** | Show an agreement at enrollment | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 2.2 | EULA · end user license agreement · `/fleet/mdm/setup/eula` (still accepted) |
-| **CAP-194** | Hold a Windows host at first boot | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 8.9 | ESP (vendor) · Enrollment Status Page (vendor) · OOBE (vendor) · Windows updates during Autopilot |
-| **CAP-195** | Show the setup page outside first boot, and on Linux | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 8.2 | Windows and Linux setup experience |
-| **CAP-196** | Install applications during an iPhone's setup | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 3.5 | App Store apps in setup experience |
-| **CAP-197** | Push an application to Android at enrollment | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.4 | Android setup software |
-| **CAP-198** | Install setup software only where it is needed | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 4.3 | policy gate · conditional setup software |
-| **CAP-199** | Stop setup when software fails | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 8.9 | cancel setup if software fails |
-| **CAP-200** | Release the device yourself | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 3.2 | `enable_release_device_manually` (still accepted) · `apple_enable_release_device_manually` · stop the automatic release · release-ready (ours) |
-| **CAP-201** | Retry a setup step that failed | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 8.11 | `canceled_setup_experience` · retry |
-| **CAP-202** | Let people install applications themselves | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.4 | self-service · self service · app catalog · software library · web clip |
-| **CAP-203** | Group the self-service catalogue | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 6.2 | self-service categories · End user experience · `added_self_service_category` |
-| **CAP-204** | Offer everything in a category at once | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 8.11 | Install all · `installed_all_self_service_software` |
-
-### 6. Automating Fleet
-
-**Making Fleet, or another system, act without a person.** 23 outcomes.
-
-| ID | What you are trying to do | Chapter | Also | Words that lead here |
-|---|---|---|---|---|
-| **CAP-246** | Install software when a policy fails | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 4.3, 5.4 | self-healing · software automations · automatic software install · templates for policy queries |
-| **CAP-247** | Install an App Store application on failure | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 5.4 | VPP automation (vendor) |
-| **CAP-248** | Run a script when a policy fails | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 5.3 | policy automation run script · remediate |
-| **CAP-249** | Call a webhook when hosts fail a policy | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 6.5 | `failing_policies_webhook` · webhooks and tickets · `ran_automation_webhook` |
-| **CAP-250** | Open a ticket when hosts fail a policy | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 6.5 | Jira (vendor) · Zendesk (vendor) · Ticketing · `ticket-destinations` (clash) · `jira` · `zendesk` · `ran_automation_ticket` |
-| **CAP-251** | Put remediation in the user's calendar | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 6.5 | maintenance window · Calendar events · `google_calendar` · `ran_automation_calendar_event` |
-| **CAP-252** | Block sign-in for a non-compliant device | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 2.2 | conditional access · zero trust · Entra compliance · Company Portal (vendor) · `added_conditional_access_integration_microsoft` |
-| **CAP-253** | Block sign-in through Okta | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 2.2 | Okta conditional access · mTLS proxy · `added_conditional_access_okta` |
-| **CAP-254** | Let one person through once | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 2.3 | bypass · per-policy bypass · `update_conditional_access_bypass` · `host_bypassed_conditional_access` |
-| **CAP-255** | Keep an automation firing rather than firing once | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 4.3 | `continuous_automations_enabled` · continuous · transition-based (ours) · re-fire (ours) |
-| **CAP-256** | Call a webhook on a new vulnerability | [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md) | 4.4 | `vulnerabilities_webhook` · vulnerability automations |
-| **CAP-257** | Send osquery logs somewhere | [2.5](../02-administer-and-deploy-fleet/2.5-activity-audit-logs-and-log-delivery.md) | 6.5 | log plugin · `osquery.status_log_file` (still accepted) · `osquery.result_log_file` (still accepted) · `filesystem.*` · `logger_path` (clash) · `logger_plugin` |
-| **CAP-258** | Stop webhooks reaching internal addresses | [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md) | 2.9 | SSRF · outbound webhook restrictions |
-| **CAP-259** | Manage Fleet from a repository | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) | 6.1 | GitOps · declarative config · `team_settings` (still accepted) · `queries` (still accepted) · `kind: team` (still accepted) · `kind: query` (still accepted) · `kind: fleet` · `kind: report` · preventing mistakes with GitOps |
-| **CAP-260** | Validate before applying | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) | 6.4 | dry run · `--dry-run` |
-| **CAP-261** | Delete fleets that are not in the repository | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) | 6.4 | `--delete-other-teams` (still accepted) · `--delete-other-fleets` · `DELETE_OTHER_TEAMS` (still accepted) · `DELETE_OTHER_FLEETS` |
-| **CAP-262** | Find out whether omitting a section deletes it | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) | 2.4 | change management exceptions · `enabled_gitops_exception` · deprecation warnings in GitOps |
-| **CAP-263** | Export a running deployment to YAML | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) | 6.4 | `fleetctl generate-gitops` · `--team no-team` (still accepted) · `--fleet unassigned` · migrating to GitOps |
-| **CAP-264** | Call the API | [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) | 6.1, 2.3 | REST API · `/api/v1/osquery/*` (still accepted) · `/api/osquery/*` · retrieve your API token · fleetctl against the REST API against the UI |
-| **CAP-265** | Use the command line | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.3 | `fleetctl` · a.7 owns the command contract |
-| **CAP-266** | Call an endpoint the command line has no verb for | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.3 | `fleetctl api` |
-| **CAP-267** | Push or delete spec files | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.2 | `fleetctl apply` · `fleetctl delete` · `--policies-team` (still accepted) · `--policies-fleet` |
-| **CAP-268** | Generate a pipeline for Fleet | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.2 | `fleetctl new` · GitHub Action · CI scaffold |
-
-### 7. Running the service
-
-**Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive.** 44 outcomes. The credentials are here rather than in group 2 because a token is a connection task once and a renewal task every year after that, and it is the renewal you arrive searching for.
-
-| ID | What you are trying to do | Chapter | Also | Words that lead here |
-|---|---|---|---|---|
-| **CAP-270** | Renew the Apple push certificate | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) | 7.6 | APNs · push certificate expired · renew APNs · APNs expiration |
-| **CAP-271** | Understand how host certificates renew themselves | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) | 8.8 | `mdm.apple_scep_signer_validity_days` · SCEP renewal |
-| **CAP-273** | Renew the Apple Business token | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) | 7.6 | ABM token expired · AB token · renew AB · `/fleet/abm_tokens/{id}/renew` (still accepted) |
-| **CAP-274** | Customise what Setup Assistant shows | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) | 5.5 | `macos_setup_assistant` (still accepted) · `apple_setup_assistant` · `changed_macos_setup_assistant` |
-| **CAP-276** | Renew the Apps and Books token | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) | 7.6 | VPP token (vendor) · renew VPP · `enabled_vpp` |
-| **CAP-277** | Be warned before a credential expires | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) | 7.6 | expiry banner · certificate expiration monitoring |
-| **CAP-280** | Turn Windows MDM off | [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) | 3.3 | `disabled_windows_mdm` |
-| **CAP-284** | Turn Android management off | [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) | 3.6 | Turn off Android MDM · delete Android Enterprise · `disabled_android_mdm` |
-| **CAP-285** | Change the Fleet server address | [2.4](../02-administer-and-deploy-fleet/2.4-organization-and-server-settings.md) | 2.8, 2.1 | Fleet web address · `server_url` · `kolide_server_url` (still accepted) · apple mdm server url · migrate hosts from one Fleet server to another |
-| **CAP-286** | Run Fleet under a path | [2.4](../02-administer-and-deploy-fleet/2.4-organization-and-server-settings.md) | 2.9 | `url_prefix` · `server_url_prefix` (clash) |
-| **CAP-287** | Let administrators sign in at a different address | [2.4](../02-administer-and-deploy-fleet/2.4-organization-and-server-settings.md) | 2.2 | `sso_server_url` · sso user url |
-| **CAP-288** | Brand the interface | [2.4](../02-administer-and-deploy-fleet/2.4-organization-and-server-settings.md) | 6.2 | `org_info` · Organization info · `org_logo_url` (still accepted) · `org_logo_url_dark_mode` · `org_logo_url_light_background` (still accepted) · `org_logo_url_light_mode` · `changed_org_logo` |
-| **CAP-289** | Point error messages at your help desk | [2.4](../02-administer-and-deploy-fleet/2.4-organization-and-server-settings.md) | 5.5 | `contact_url` |
-| **CAP-295** | Choose where scheduled results go | [2.5](../02-administer-and-deploy-fleet/2.5-activity-audit-logs-and-log-delivery.md) | 4.2 | `osquery_result_log_plugin` · `osquery.result_log_file` (still accepted) · Firehose · Kinesis · Lambda · Pub/Sub · Kafka · log destinations |
-| **CAP-296** | Choose where agent status logs go | [2.5](../02-administer-and-deploy-fleet/2.5-activity-audit-logs-and-log-delivery.md) | 8.2 | `osquery_status_log_plugin` · what happens when the logging destination is offline |
-| **CAP-299** | Check whether Fleet is up | [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) | 2.9 | `healthz` · health check · how do I monitor a Fleet server |
-| **CAP-300** | Scrape Fleet's metrics | [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) | 2.9 | Prometheus · metrics endpoint |
-| **CAP-301** | Export traces | [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) | 8.14 | OpenTelemetry · traces |
-| **CAP-302** | Find out whether the scheduled work ran | [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) | 8.6, 8.11 | `cron_stats` · scheduled jobs · `dep_syncer` (clash) · `apple_mdm_dep_profile_assigner` |
-| **CAP-303** | Force a schedule to run now | [2.12](../02-administer-and-deploy-fleet/2.12-production-readiness-and-handoff.md) | 8.11 | `fleetctl trigger` · trigger a cron |
-| **CAP-304** | Upgrade Fleet | [7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md) | 2.11 | run migrations · `fleet prepare db` · `upgrades.allow_missing_migrations` · `updates.allow_missing_migrations` (clash) · `--upgrades_allow_missing_migrations` · skip versions · unknown column error |
-| **CAP-305** | Check whether migrations are current | [7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md) | 8.5 | `fleetctl debug migrations` |
-| **CAP-306** | Back Fleet up and restore it | [7.3](../07-operate-fleet/7.3-back-up-restore-and-retire-service-state.md) | 2.12 | disaster recovery · point-in-time recovery · migrate Fleet server · **(no)** |
-| **CAP-307** | Prove a restored Fleet can still decrypt the keys | [7.3](../07-operate-fleet/7.3-back-up-restore-and-retire-service-state.md) | 5.8 | server private key · escrow chain |
-| **CAP-308** | Stop a restored copy acting on the real world | [7.3](../07-operate-fleet/7.3-back-up-restore-and-retire-service-state.md) | 7.1 | read-only mode · dry-run server · **(no)** |
-| **CAP-309** | Find out when the licence expires | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 2.1 | licence key · `basic` (still accepted) · `premium` · migrate from Fleet Free to Fleet Premium · downgrade from Premium |
-| **CAP-310** | Rotate the server's TLS certificate | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 2.12 | certificate verify failed · private root · change the Fleet server TLS certificate |
-| **CAP-311** | Rotate the Windows enrollment certificate | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 2.8 | WSTEP · `mdm.windows_wstep_identity_cert_bytes` (clash: Fleet's documentation attributes the effect to macOS) |
-| **CAP-312** | Rotate an integration secret | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 6.5 | |
-| **CAP-314** | Size the database connection pool | [2.9](../02-administer-and-deploy-fleet/2.9-self-hosting-architecture-and-capacity.md) | 7.5 | `mysql.max_open_conns` · too many connections · database connection error when preparing the database · MySQL user requirements |
-| **CAP-315** | Add read replicas | [7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md) | 2.9 | MySQL replication · scale MySQL |
-| **CAP-316** | Decide where installers and carves live | [2.9](../02-administer-and-deploy-fleet/2.9-self-hosting-architecture-and-capacity.md) | 1.6, 2.10 | S3 · GCS · object storage · `s3.bucket` (still accepted) · `s3.prefix` (still accepted) · `s3.region` (still accepted) · `s3.carves_*` |
-| **CAP-317** | Send Fleet's outbound traffic through a proxy | [2.9](../02-administer-and-deploy-fleet/2.9-self-hosting-architecture-and-capacity.md) | 8.13 | `HTTP_PROXY` · `NO_PROXY` · using a proxy · public IPs of devices |
-| **CAP-318** | Deploy on AWS | [2.10](../02-administer-and-deploy-fleet/2.10-deploy-on-aws-or-gcp.md) | 2.9 | ECS · Terraform · reference architecture |
-| **CAP-319** | Deploy on GCP, or ask about Azure | [2.10](../02-administer-and-deploy-fleet/2.10-deploy-on-aws-or-gcp.md) | 2.9 | Cloud Run · Cloud SQL · Azure |
-| **CAP-320** | Avoid storing a key for the bucket | [2.10](../02-administer-and-deploy-fleet/2.10-deploy-on-aws-or-gcp.md) | 2.9 | workload identity |
-| **CAP-321** | Run Fleet with Docker Compose | [2.11](../02-administer-and-deploy-fleet/2.11-deploy-with-containers-or-virtual-machines.md) | 7.2 | easiest way to deploy Fleet · Docker container |
-| **CAP-322** | Run Fleet on Kubernetes | [2.11](../02-administer-and-deploy-fleet/2.11-deploy-with-containers-or-virtual-machines.md) | 7.2 | Helm chart · pre-upgrade hook |
-| **CAP-323** | Run Fleet on a virtual machine | [2.11](../02-administer-and-deploy-fleet/2.11-deploy-with-containers-or-virtual-machines.md) | 7.2 | systemd · run with systemd |
-| **CAP-324** | Move vulnerability processing off the serving instances | [2.11](../02-administer-and-deploy-fleet/2.11-deploy-with-containers-or-virtual-machines.md) | 4.4 | dedicated cron instance · `vulnerabilities.disable_schedule` |
-| **CAP-325** | Find out how many hosts Fleet takes | [7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md) | 2.9 | load test · `osquery-perf` · stress test · Fleet server performance |
-| **CAP-326** | Drain an instance before stopping it | [7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md) | 7.2 | graceful shutdown |
-| **CAP-327** | Shut Fleet down for good | [7.3](../07-operate-fleet/7.3-back-up-restore-and-retire-service-state.md) | 2.12 | decommission · release devices · release external assignments |
-| **CAP-328** | Ask whether Fleet can host it for you | [2.1](../02-administer-and-deploy-fleet/2.1-administration-model-and-deployment-choices.md) | 2.5 | managed cloud · SaaS · can you host Fleet for me |
-
-### 8. When it did not work
-
-**Symptoms, and the surfaces that answer them.** 20 outcomes, plus the sentences people actually arrive with. This is the group that cannot be reconstructed from the table of contents, because nobody types a capability name when something is broken.
-
-#### Sentences people type
-
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Every sentence below is a string Fleet prints, a question Fleet's own documentation asks, or a phrasing this manual records.** The middle column is the ambiguity to resolve, not the fix.
-
-| The sentence you arrive with | What it turns on | Start at |
-|---|---|---|
-| "my hosts went offline", "everything shows offline", "my computer is showing up as an offline host" | The online window is calculated from the agent's own reporting interval, and a mobile device managed without an agent is permanently offline | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md), then [8.1](../08-troubleshooting/8.1-diagnostic-method.md) |
-| "no hosts match your filters", "I expected to see more hosts than this" | Pagination, scope, or a parameter your licence causes Fleet to drop rather than refuse | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) |
-| "the profile says failed", "stuck on pending", "stuck verifying" | Which of the five delivery states you are in, and that Verifying means accepted rather than confirmed | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md), then [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md) or [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md) |
-| "the app will not install", "it says installed and it is not there" | Installed means four different things depending on where the software came from | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) |
-| "why aren't my DDM declarations applying to devices?" | Declarations are delivered on a different mechanism from profiles and report their state differently | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md), then [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md) |
-| "nothing to report yet", "collecting results", "no results returned" | The report never joined a schedule, or result storage is off | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) |
-| "where are my query results?", "why aren't my live queries being logged?" | Stored reports and forwarded results are two different destinations with two different switches | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md), then [2.5](../02-administer-and-deploy-fleet/2.5-activity-audit-logs-and-log-delivery.md) |
-| "why does my query work locally with osquery but not in Fleet?" | Which osquery is running it, with which flags and which tables | [8.7](../08-troubleshooting/8.7-live-query-introspection.md), then [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md) |
-| "I'm only getting partial results from live queries" | The targeted count includes hosts that never fetch the query | [8.14](../08-troubleshooting/8.14-degradation.md), then [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) |
-| "running scripts is disabled in organization settings" | `scripts_disabled` at the organization, or a host packaged without scripts | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) |
-| "software inventory disabled" | The organization's feature block, or the fleet's | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
-| "vulnerabilities are not supported for this type of host" | Application findings are not produced for every platform | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
-| "unable to detect MDM enrollment", "no MDM solutions detected" | A dashboard card describing the estate, not the host you are looking at | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) |
-| "access denied", "api only user" | A role, a scope, GitOps mode, or a password reset Fleet is waiting on | [1.4](../01-foundations/1.4-identity-and-roles.md), then [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) |
-| "this fleet isn't added to Volume Purchasing Program (VPP)" | The token exists and is not assigned to this scope | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) |
-| "no hosts are online", on a policy's results | Live evaluation needs hosts that are online now, not hosts that have ever answered | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) |
-| "MDM is on but the agent never arrived", "half-enrolled" | One channel enrolled and the other did not | [8.4](../08-troubleshooting/8.4-host-side-investigation.md) |
-| "why aren't my osquery agents connecting to Fleet?" | Which hop failed: address, certificate, secret, or the agent's own service | [8.4](../08-troubleshooting/8.4-host-side-investigation.md), then [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) |
-| "certificate verify failed", from the agent | The chain the agent trusts, and the order a rotation has to happen in | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md), then [8.4](../08-troubleshooting/8.4-host-side-investigation.md) |
-| "my EDR is flagging the fleetd agent" | Agent packaging and signing | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md), then [8.4](../08-troubleshooting/8.4-host-side-investigation.md) |
-| "what is duplicate enrollment, and how do I fix it?" | The host identifier, and the cooldown | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md), then [8.14](../08-troubleshooting/8.14-degradation.md) |
-| "I renamed a label and the targeting broke" | A rename through a repository deletes and recreates | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) |
-| "the recovery key will not reveal", "encryption keys unreadable" | A Windows enrollment certificate change, a fleet transfer, or Apple MDM being turned off | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md), then [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) |
-| "the automation saved and never fired" | Ticketing reads its policy list from the webhook settings, and calendar automation needs a named fleet | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
-| "it says success and nothing happened" | Several operations report before the destructive phase, or ignore part of what you sent | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md), then [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) |
-| "the estate stopped updating and nothing said so" | An agent below the floor ignores the central channel setting | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) |
-| "I set it in the API and it did nothing" | Two per-fleet agent settings are accepted by the API and applied only from a repository | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) |
-| "why is my host not updating a policy's response?" | When a policy is evaluated, and what resets a stored answer | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md), then [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
-| "why am I getting errors generating a .msi package", "package root files: heat failed" | The build host has to match the package type | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) |
-| "how do I resolve an unknown column error when upgrading Fleet?" | Migrations ran partially, or not at all | [7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md) |
-| "what do I do about too many open files errors?" | A limit on the server rather than a Fleet setting | [8.14](../08-troubleshooting/8.14-degradation.md) |
-| "what happens if a device fails to enroll during first boot?" | Which of the setup steps failed, and whether the device was released | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md), then [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
-| "it isn't working", "one host, never reproduced", "Fleet's UI disagrees with the host", "cron output missing", "profile stays at Pending indefinitely and no error surfaces anywhere" | What to collect before you ask anybody else | [8.13](../08-troubleshooting/8.13-escalation.md) |
-
-#### The diagnostic capabilities
-
-| ID | What you are trying to do | Chapter | Also | Words that lead here |
-|---|---|---|---|---|
-| **CAP-329** | Find the agent's logs on the host | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.4 | orbit log · osqueryd log · finding fleetd logs · `logger_path` (clash) |
-| **CAP-330** | Find out what the agent puts on disk | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.4 | `/opt/orbit` · `secret.txt` · `fleet.pem` |
-| **CAP-331** | Turn debug logging on for a while | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.4 | `debug_logging_on_enroll_duration` · `debug_logging` |
-| **CAP-332** | Turn verbose logging on permanently | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.4 | `--debug` · `--verbose` · enabling debug mode for fleetd |
-| **CAP-333** | Collect diagnostics for support | [8.5](../08-troubleshooting/8.5-fleetctl-debug.md) | 8.13 | `fleetctl debug archive` · `db-process-list` · pprof · [a.6] |
-| **CAP-334** | Read the server's recorded errors | [8.5](../08-troubleshooting/8.5-fleetctl-debug.md) | 1.6 | `fleetctl debug errors` · get errors |
-| **CAP-335** | Ask a host what osquery is doing | [8.7](../08-troubleshooting/8.7-live-query-introspection.md) | 4.6 | `osquery_info` · `osquery_flags` · `osquery_schedule` · `osquery_events` · `fleetd_logs` |
-| **CAP-336** | Inspect the Apple command queue | [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md) | 8.6 | nano tables · checking MDM commands · `fleetctl get mdm-commands` · `mdm_commands` |
-| **CAP-337** | Inspect the Windows command queue | [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md) | 8.6 | Windows command feed |
-| **CAP-338** | Inspect Android command and policy state | [8.10](../08-troubleshooting/8.10-android-diagnostics.md) | 8.6 | Android policy state |
-| **CAP-339** | Read the audit record out of the database | [8.12](../08-troubleshooting/8.12-audit-logs.md) | 1.5 | `activity_past` · `activities` (clash) · `host_only` |
-| **CAP-340** | Find out whether a schedule ran | [8.6](../08-troubleshooting/8.6-server-state.md) | 7.4, 8.11 | `cron_stats` · `dep_syncer` (clash) · `apple_mdm_dep_profile_assigner` |
-| **CAP-341** | Read Windows' own view of its management state | [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md) | 5.6 | `mdmdiagnosticstool` (vendor) · PolicyManager registry (vendor) · MDM diagnostic report |
-| **CAP-342** | Get logs off an iPhone | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.13, 3.5 | sysdiagnose (vendor) · MDMClient logs |
-| **CAP-343** | Find out what version of Fleet you are talking to | [8.13](../08-troubleshooting/8.13-escalation.md) | 7.2 | per instance · behind the load balancer |
-| **CAP-344** | Reduce the load Fleet is under | [8.14](../08-troubleshooting/8.14-degradation.md) | 2.9, 7.5 | tune the intervals · Fleet is slow · slow or unresponsive after enabling a feature |
-| **CAP-345** | Process host results asynchronously | [8.14](../08-troubleshooting/8.14-degradation.md) | 1.6 | `osquery_enable_async_host_processing` |
-| **CAP-346** | Stop hosts overwriting each other | [8.14](../08-troubleshooting/8.14-degradation.md) | 3.1 | duplicate hosts · enroll cooldown · `--host-identifier` |
-| **CAP-347** | Work out what truncated or refused a request | [8.14](../08-troubleshooting/8.14-degradation.md) | 6.3 | 429 · too many open files · body too large · partial results |
-| **CAP-348** | Find which query costs the most on the host | [8.14](../08-troubleshooting/8.14-degradation.md) | 4.6, 8.7 | per-query cost on the device |
+**`fleet` means two opposite things inside this book.** [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) uses it for the whole estate in one heading and for a single scope in the same chapter, and [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) says fleet-wide meaning estate-wide. It is the most-typed word in the manual and it is ambiguous; when a sentence could mean either, the scope reading is the one Fleet's API uses.
 
 ## Where this index ends
 
@@ -732,10 +732,10 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 | ID | The outcome | Where the manual mentions it | Why nothing owns it |
 |---|---|---|---|
-| **CAP-040** | Prompt a Mac's user to migrate from another MDM | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md) | [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md) teaches the webhook contract rather than the migration, [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) has no migration section, and [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) hands Windows migration to [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md), which has no macOS counterpart. Fleet publishes several guides on it and this book publishes none |
+| **CAP-040** | Prompt a Mac's user to migrate from another MDM | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md) | [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md) teaches the webhook contract rather than the migration, [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) has no migration section, and [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) hands Windows migration to [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md), which has no macOS counterpart. Fleet publishes several guides on it and this book publishes none |
 | **CAP-065** | Fleet Desktop and the My Device page | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), [3.2](../03-connect-devices/3.2-enroll-macos-devices.md), [3.3](../03-connect-devices/3.3-enroll-windows-devices.md), [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | Named as the end-user surface in three enrollment chapters and configured in none. Self-service and Linux key escrow both depend on it |
-| **CAP-072** | Publish agent versions from your own update repository | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md), [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) says [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) owns update-repository semantics. [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) teaches consuming Fleet's repository, and never creating, signing, key-rotating or re-timestamping one. [a.7](a.7-fleetctl-command-reference.md) reached the same verdict for the five commands that do it |
-| **CAP-082** | Carve a file off a host | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), [1.6](../01-foundations/1.6-the-fleet-server.md), [2.9](../02-administer-and-deploy-fleet/2.9-self-hosting-architecture-and-capacity.md), [2.10](../02-administer-and-deploy-fleet/2.10-deploy-on-aws-or-gcp.md), [8.6](../08-troubleshooting/8.6-server-state.md), [8.7](../08-troubleshooting/8.7-live-query-introspection.md), [8.13](../08-troubleshooting/8.13-escalation.md), [8.14](../08-troubleshooting/8.14-degradation.md) | Eight chapters size it, budget it, bucket it and tabulate its limits. None starts one or reads one back. It is not licence-gated, so this is not a Premium omission |
+| **CAP-072** | Publish agent versions from your own update repository | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md), [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) says [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) owns update-repository semantics. [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) teaches consuming Fleet's repository, and never creating, signing, key-rotating or re-timestamping one. [a.7](a.7-fleetctl-command-reference.md) reached the same verdict for the five commands that do it |
+| **CAP-082** | Carve a file off a host | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), [1.6](../01-foundations/1.6-the-fleet-server.md), [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md), [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md), [8.6](../08-troubleshooting/8.6-server-state.md), [8.7](../08-troubleshooting/8.7-live-query-introspection.md), [8.13](../08-troubleshooting/8.13-escalation.md), [8.14](../08-troubleshooting/8.14-degradation.md) | Eight chapters size it, budget it, bucket it and tabulate its limits. None starts one or reads one back. It is not licence-gated, so this is not a Premium omission |
 | **CAP-132** | Supply vulnerability data yourself | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | One table cell saying that something else places the data where Fleet reads it. A mention rather than a workflow, and the command that does it downloads nine datasets |
 | **CAP-162** | Run a script across many hosts at once | [1.5](../01-foundations/1.5-audit-and-activity.md), [6.1](../06-automate-fleet/6.1-automation-design-and-change-control.md), [8.14](../08-troubleshooting/8.14-degradation.md) | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) teaches running one script on one host. The batch route, its cancellation, and the fact that its per-host records never reach an external log destination are named only in passing elsewhere |
 | **CAP-242** | Set a BitLocker startup PIN | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | One sentence, saying the PIN and encryption are locked together as one decision. Fleet has a dialog for it and a setting behind it |
@@ -746,7 +746,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 | ID | Taught | Not taught |
 |---|---|---|
-| **CAP-153** | Delivering a certificate through a profile, in [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | **Creating the certificate authority integration.** The largest gap in the book. [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) names the variables, [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) says certificate authorities are reconciled on their own paths, and [3.6](../03-connect-devices/3.6-enroll-android-and-chromeos-devices.md) and [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) both assume templates exist. Three chapters depend on a capability no chapter creates. Fleet publishes a long guide covering NDES, DigiCert, Smallstep, Hydrant, any SCEP authority and any EST authority |
+| **CAP-153** | Delivering a certificate through a profile, in [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | **Creating the certificate authority integration.** The largest gap in the book. [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) names the variables, [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) says certificate authorities are reconciled on their own paths, and [3.6](../03-connect-devices/3.6-enroll-android-devices.md) and [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) both assume templates exist. Three chapters depend on a capability no chapter creates. Fleet publishes a long guide covering NDES, DigiCert, Smallstep, Hydrant, any SCEP authority and any EST authority |
 | **CAP-085** | Reading a custom host vital, in [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | **Creating the definition.** [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) names the feature and says values are set per host through the API. The definition an administrator creates is never taught, and [a.4](a.4-roles-and-permissions-matrix.md) already publishes a permission row for writing it |
 | **CAP-253** | Okta conditional access, in [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | **The mutual-TLS proxy in front of it.** One sentence, stated as a prerequisite rather than as hardening, with specific header-stripping instructions, and no chapter owns it |
 
@@ -762,13 +762,13 @@ Each is attested in Fleet, in this manual as a mention, or both. None has a capa
 
 **`fleetctl preview`**, and its `sandbox` alias. Named twice, once as a hazard and once in a list of surfaces. Nothing teaches starting, stopping or resetting it.
 
-**Android enrollment through a Google account.** A named absence: [3.6](../03-connect-devices/3.6-enroll-android-and-chromeos-devices.md) says a third path exists and this manual cannot describe it, and [8.13](../08-troubleshooting/8.13-escalation.md) adds that no expected status has been established for it.
+**Android enrollment through a Google account.** A named absence: [3.6](../03-connect-devices/3.6-enroll-android-devices.md) says a third path exists and this manual cannot describe it, and [8.13](../08-troubleshooting/8.13-escalation.md) adds that no expected status has been established for it.
 
-**ChromeOS diagnosis.** [3.6](../03-connect-devices/3.6-enroll-android-and-chromeos-devices.md) says there is no ChromeOS troubleshooting chapter, and there is not.
+**ChromeOS diagnosis.** [3.7](../03-connect-devices/3.7-enroll-chromeos-devices.md) says there is no ChromeOS troubleshooting chapter, and there is not.
 
 **Detecting half-enrolled hosts across the estate.** Three chapters route to [8.6](../08-troubleshooting/8.6-server-state.md) for the query and [8.6](../08-troubleshooting/8.6-server-state.md) does not contain one.
 
-**Prometheus metric names.** [8.14](../08-troubleshooting/8.14-degradation.md) tells you to alert on them. [2.9](../02-administer-and-deploy-fleet/2.9-self-hosting-architecture-and-capacity.md) and [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) own the endpoint and neither names a metric.
+**Prometheus metric names.** [8.14](../08-troubleshooting/8.14-degradation.md) tells you to alert on them. [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) and [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) own the endpoint and neither names a metric.
 
 **Retrying a software install.** [8.11](../08-troubleshooting/8.11-reproducing-and-isolating.md) lists it as a forcing action with a production-safety verdict. The retry is real but has no row and no owning chapter: the host's software library and the self-service page both show **Retry** on a failed install, and **Retry uninstall** on a failed uninstall, and the button re-sends the ordinary install request, `POST /api/v1/fleet/hosts/:id/software/:software_title_id/install`, Premium. There is no retry-specific endpoint, no fleetctl command and no GitOps path.
 

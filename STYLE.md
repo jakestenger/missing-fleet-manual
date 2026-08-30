@@ -1138,7 +1138,7 @@ because it was never performed.
 
 **And read it against the book, not only against itself.** Added 2026-08-25: a chapter written
 under this rule still contradicted a different chapter of the same manual. 3.1 stated that an
-enroll secret determines where a host lands, which is true on the fleetd path; 2.7 had already
+enroll secret determines where a host lands, which is true on the fleetd path; 2.10 had already
 documented that automatic Apple enrollment places hosts by a default fleet on the Apple Business
 token instead. Both chapters were internally consistent and the book was not.
 

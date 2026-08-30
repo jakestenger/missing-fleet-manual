@@ -30,7 +30,7 @@ Fleet's request surface is easier to reason about once you stop reading it as a 
 
 Per-endpoint parameters, request bodies and response shapes live in Fleet's own REST API reference. **That reference is hand-maintained**, so treat it as the best available account rather than a guarantee that it matches the release you are running. This appendix points there rather than copying it.
 
-Three questions belong elsewhere and are deliberately unanswered here. **Which role may perform an action is [a.4](a.4-roles-and-permissions-matrix.md)**, which carries it action by action against all six roles at both scopes; [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) explains the model behind it. **Which interface can perform it at all is [a.5](a.5-interface-index.md)**, which carries every action against all four. How to use the API in practice is [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md), which is written.
+Three questions belong elsewhere and are deliberately unanswered here. **Which role may perform an action is [a.4](a.4-roles-and-permissions-matrix.md)**, which carries it action by action against all six roles at both scopes; [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) explains the model behind it. **Which interface can perform it at all is [a.5](a.5-interface-index.md)**, which carries every action against all four. How to use the API in practice is [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md), which is written.
 
 ## Who calls Fleet, and what they present
 
@@ -59,7 +59,7 @@ The first class is the one people mean by "the Fleet API". The Host and Orbit cl
 
 ## How a user request authenticates
 
-![Reference](../_assets/icons/reference.svg) A Fleet API token belongs to a user account, which is what makes [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md)'s advice about giving automation its own account matter: the token inherits that account's role and scope, and the activity record attributes the work to it.
+![Reference](../_assets/icons/reference.svg) A Fleet API token belongs to a user account, which is what makes [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md)'s advice about giving automation its own account matter: the token inherits that account's role and scope, and the activity record attributes the work to it.
 
 Send it as a bearer token:
 
@@ -69,7 +69,7 @@ Authorization: Bearer <your token>
 
 Two ways to obtain one. Through the UI, under **My account** and **Get API token**. Or by calling the login endpoint with an email and password, which returns a token.
 
-**For SSO and MFA users the second route is closed.** Email and password login is disabled for those accounts, so the token has to come from the profile page in the UI. An automation account created for API use is the usual answer, and [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) covers creating one with an explicit role.
+**For SSO and MFA users the second route is closed.** Email and password login is disabled for those accounts, so the token has to come from the profile page in the UI. An automation account created for API use is the usual answer, and [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) covers creating one with an explicit role.
 
 ## Version prefixes expand for some routes and not others
 
@@ -99,7 +99,7 @@ That has one practical consequence worth planning around. **A proxy rule, allowl
 
 ![Reference](../_assets/icons/reference.svg) Some routes are deliberately not under `/api`, because they are not REST endpoints and are not meant for API clients or browsers. The Apple MDM protocol paths are the clearest case, along with the SCEP service, the SCEP proxy used for delivering your own certificates, and the Platform SSO well-known document.
 
-A proxy configuration written on the assumption that everything Fleet serves lives under `/api` will miss them, and the symptom is device management failing while the API and UI look healthy. [2.6](../02-administer-and-deploy-fleet/2.6-mdm-architecture-and-foundations.md) covers why the set of these grows as features are enabled.
+A proxy configuration written on the assumption that everything Fleet serves lives under `/api` will miss them, and the symptom is device management failing while the API and UI look healthy. [2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md) covers why the set of these grows as features are enabled.
 
 **A configured URL prefix is prepended to everything Fleet serves**, including the paths on the root router, because Fleet wraps the finished router and strips the prefix before dispatch. Every path in this appendix is origin-relative and assumes no prefix.
 
@@ -148,7 +148,7 @@ The ingress question is therefore not "which paths moved" but **"which hostname 
 
 **For identity**, Fleet's own SSO is `/api/v1/fleet/sso` and `/api/v1/fleet/sso/callback`, both literal `v1` paths reachable under **no other API-version prefix**, though a configured URL prefix still precedes them.
 
-**SCIM provisioning** is prefix-mounted at `/api/v1/fleet/scim/` and `/api/latest/fleet/scim/`, and those two are what your identity provider needs ([2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md)). One SCIM path is outside that mount: the details endpoint is an ordinary core route and therefore also exists at `2022-04`. SCIM is Premium.
+**SCIM provisioning** is prefix-mounted at `/api/v1/fleet/scim/` and `/api/latest/fleet/scim/`, and those two are what your identity provider needs ([2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md)). One SCIM path is outside that mount: the details endpoint is an ordinary core route and therefore also exists at `2022-04`. SCIM is Premium.
 
 **For Apple device management**, add `/mdm/apple/scep` and `/mdm/apple/mdm`, both outside `/api`, plus `/api/mdm/apple/enroll` for automatic enrollment. Where hardware attestation is enabled, Fleet puts its own ACME directory URL into the enrollment profile, so add `/api/mdm/acme/*`. Where an installer is served to devices, that is `/api/mdm/apple/installer`.
 
@@ -174,9 +174,9 @@ The ingress question is therefore not "which paths moved" but **"which hostname 
 | `/mdm/apple/account_driven_enroll/sso/{token}` | Its identity-provider hop. A tokenless form is registered and deprecated |
 | The MDM SSO callback flow above | Shared with the setup-experience path, and needed here too |
 
-**For Windows device management**, add the four Microsoft protocol paths under `/api/mdm/microsoft/`, which are `management`, `discovery`, `policy` and `enroll`, plus `/api/mdm/microsoft/tos` for automatic enrollment. [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) covers why exposing some but not all of these fails partway rather than cleanly.
+**For Windows device management**, add the four Microsoft protocol paths under `/api/mdm/microsoft/`, which are `management`, `discovery`, `policy` and `enroll`, plus `/api/mdm/microsoft/tos` for automatic enrollment. [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md) covers why exposing some but not all of these fails partway rather than cleanly.
 
-**For Android**, add `/enroll`, `/api/v1/fleet/android_enterprise/enrollment_token`, and the enablement callback `/api/v1/fleet/android_enterprise/connect/{token}`. **Android's module declares `v1` alone**, so its routes exist at `v1` and `latest` and nowhere else, which is why the prefix set here is shorter than everywhere above, and **Fleet emits `v1` in both the enrollment page and the signup callback it generates**. The event callback `/api/v1/fleet/android_enterprise/pubsub` is a literal `v1` path, is how Google delivers device events, and is why [2.8](../02-administer-and-deploy-fleet/2.8-windows-and-android-management-configuration.md) requires a publicly reachable server URL.
+**For Android**, add `/enroll`, `/api/v1/fleet/android_enterprise/enrollment_token`, and the enablement callback `/api/v1/fleet/android_enterprise/connect/{token}`. **Android's module declares `v1` alone**, so its routes exist at `v1` and `latest` and nowhere else, which is why the prefix set here is shorter than everywhere above, and **Fleet emits `v1` in both the enrollment page and the signup callback it generates**. The event callback `/api/v1/fleet/android_enterprise/pubsub` is a literal `v1` path, is how Google delivers device events, and is why [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) requires a publicly reachable server URL.
 
 **For delivering your own certificates to devices**, rather than Fleet's, add `/mdm/scep/proxy/*`, which sits outside `/api`. Where fleetd fetches and reports on those certificates, add `/api/fleetd/certificates/*`.
 

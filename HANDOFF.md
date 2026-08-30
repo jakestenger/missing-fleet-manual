@@ -116,19 +116,21 @@ touches a chapter, and application has not been authorised.**
 
 ## 2. Where the work actually stands
 
-**69 chapters written, 6 still outline stubs.** The stubs are 50 to 90 words each: a title, a
-frontmatter block, and section headings. Do not mistake the file count for progress.
+**78 chapter files, all drafted, zero outline stubs.** Recounted 2026-08-30 with
+`find manual -mindepth 2 -maxdepth 2 -name '*.md' | wc -l`; the structural splits (2.11/2.12 from
+old 2.8, 3.7 from old 3.6, 7.8 from old 7.3) took the count from 75 to 78. Do not mistake the
+file count for progress.
 
 | Part | Chapters | State |
 |---|---|---|
 | 0. Introduction | 1 | Written. Stamped `drafting` |
 | I. Foundations | 6 | Written, reviewed to the five-round cap, corrected. `drafting` |
 | II. Administer and deploy | 12 | Written. Was `verified`; **demoted to `drafting` under the freeze** |
-| III. Connect devices | 7 | Written, reviewed to the cap, corrected. `drafting` |
+| III. Connect devices | 8 | Written, reviewed to the cap, corrected. `drafting`. 3.7 ChromeOS split from old 3.6 in the 2026-08-30 restructure |
 | IV. Know your devices | 7 | **All 7 written 2026-08-27**, each with one review round applied and a ledger. `drafting` |
 | V. Manage devices | 9 | **Complete 2026-08-28.** All 9 drafted, one review round applied each, ledgers written, diagram prompts installed. `drafting` |
 | VI. Automate Fleet | 5 | **Complete 2026-08-28.** All 5 drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part6-structure.md` |
-| VII. Operate Fleet | 6 | **Complete 2026-08-28.** All 6 drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part7-structure.md`, and this part is held to a four-class evidence rule recorded there |
+| VII. Operate Fleet | 8 | **Complete 2026-08-28** as six chapters; 7.7 (from old 2.12) and 7.8 (split from old 7.3) joined in the 2026-08-30 restructure. All drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part7-structure.md` (old numbering), and this part is held to a four-class evidence rule recorded there |
 | VIII. Troubleshooting | 14 | Written, reviewed to the cap, corrected. `drafting` |
 | IX. Appendices | 8 | **All 8 drafted, finished 2026-08-29.** Per-appendix detail in section 7. Structure agreed at `research/appendix-structure.md` |
 
@@ -356,7 +358,7 @@ it specifically, and it kept finding instances. Treat any absolute in a compress
 suspect.
 
 **A later chapter's research corrects earlier chapters.** 5.8 was corrected twice by 7.6's research,
-after 5.8 was finished. 7.3 and 7.6 both placed the Apple certificate authority material outside the
+after 5.8 was finished. 7.2 and 7.6 both placed the Apple certificate authority material outside the
 database until a review caught it in one and the correction propagated to the other. **When a
 chapter's research contradicts a finished chapter, fix the finished chapter in the same commit**, or
 it will not happen.
@@ -695,7 +697,7 @@ inaccuracy; it is a claim about which release's behaviour is described.
 
 **Cross-chapter contradiction is the dominant defect class, and the most dangerous.** In the last
 session: 8.11 contradicted 8.1 on log ordering and contradicted *itself* three sections later;
-8.12 contradicted 1.5 on retention and 2.5 on stream lag and itself on actor names; 8.13
+8.12 contradicted 1.5 on retention and 2.8 on stream lag and itself on actor names; 8.13
 contradicted 8.7 on what a live report proves and 8.11 on a command name. In every case the book
 already held the right answer. That is what `claims.py` is for.
 
@@ -717,20 +719,20 @@ sentence the chapter is built around, not on a detail:
 | 3.2 | Fleet delivers the agent on ADE; manual enrollments need a package by hand | It delivers on **both**. Only ADE has an opt-out |
 | 3.3 | Windows MDM brings disk-encryption enforcement | It is set in the **Orbit** config response; MDM is a gate, and it never appears in the MDM queue |
 | 3.4 | Linux has one channel, and no lock or wipe | It has no *MDM* channel and three others, and Premium **can** lock and wipe Linux, as scripts |
-| 3.5 | ADE's licensing on Free is undocumented | ADE is **Premium**, because Apple Business tokens are, which 2.7 had said all along |
+| 3.5 | ADE's licensing on Free is undocumented | ADE is **Premium**, because Apple Business tokens are, which 2.10 had said all along |
 
 Every one is the natural inference from a true adjacent fact, which is why it survived drafting: no MDM
 therefore no lock; ADE installs the agent therefore only ADE does; MDM does disk encryption elsewhere
 therefore it does here.
 
-3.6 and 3.7 completed the set at six for six. 3.6 said Android has no agent and everything arrives
+3.6 and 3.8 completed the set at six for six. 3.6 said Android has no agent and everything arrives
 unsolicited; Fleet ships a narrow force-installed app that reports certificate results, and polls Google
-hourly. **1.2, 2.8 and 8.10 all had that right.** 3.7 said Orbit checks for updates at startup; it starts
+hourly. **1.2, 2.12 and 8.10 all had that right.** 3.8 said Orbit checks for updates at startup; it starts
 a timer and waits, so a channel change reaches the host in under a minute and changes the version fifteen
 to twenty-five minutes later.
 
 **And each correction rippled.** Writing and reviewing these chapters produced corrections in **thirteen
-places in already-reviewed chapters**: 1.2 four separate times, plus 2.7, 2.8, 3.1, 3.2, 8.1, 8.2, 8.4,
+places in already-reviewed chapters**: 1.2 four separate times, plus 2.10, 2.12, 3.1, 3.2, 8.1, 8.2, 8.4,
 8.8, and 8.10 twice. A reviewed chapter is not a verified one, and the cheapest way to find what a
 reviewed chapter got wrong turns out to be writing its neighbour.
 
@@ -807,7 +809,7 @@ sounds like one, since a reader will carry it into chapters that were never chec
 
 **Licence claims are the least reliable claim class in the project and no checker catches them.**
 **Seven wrong on 2026-08-27 alone**, in both directions and in every part of the book: 3.5 said ADE's licensing was undocumented when ADE is
-Premium, then said owner mapping was free when end-user authentication is Premium; 2.8 gated
+Premium, then said owner mapping was free when end-user authentication is Premium; 2.12 gated
 company-owned Android when it is not gated; 1.2's rollout table listed lock, wipe and LUKS escrow
 with no gate at all when every lock is Premium, every wipe except company-owned Android is Premium,
 and disk encryption is Premium; and 1.1 presented a platform table that read as an edition promise.
@@ -962,7 +964,7 @@ because what it found changes how to weigh the rest.
    blocks a `verified` stamp. An accepted image is accepted against the prose as it stood.
 
    **Eight Part II chapters were demoted from `verified` to `drafting`**, having taken factual
-   corrections today from the Part I and Part III work. The clearest case: 2.2, whose whole subject
+   corrections today from the Part I and Part III work. The clearest case: 2.5, whose whole subject
    is identity, stated that SCIM deprovisioning does not require Premium. It does, and Fleet only
    registers the SCIM routes when the server starts with a Premium licence.
 
@@ -971,7 +973,7 @@ because what it found changes how to weigh the rest.
    fewer defects but not none.
 
 4. **Part III has had two review rounds and every finding applied.** Five first reviews, five
-   confirming reviews, and a first review of 3.7, which had never had one. All twelve verdicts and
+   confirming reviews, and a first review of 3.8, which had never had one. All twelve verdicts and
    their findings are at `reviews/2026-08-27/part3/` and `part3-confirm/`.
 
    It is in exactly the position Part VIII is: **every chapter was corrected after its last
@@ -983,7 +985,7 @@ because what it found changes how to weigh the rest.
    corrections. §6 above has the shapes.
 
 5. **a.4, the roles and permissions matrix.** Highest-demand remaining appendix, and
-   `check-crossrefs.py` still reports 2.3's deferral to it as reaching nothing.
+   `check-crossrefs.py` still reports 2.6's deferral to it as reaching nothing.
 6. **Part V, chapters 5.4 through 5.9**, using the addendum loop in §3 above (agreed 2026-08-28).
    5.1 to 5.3 are drafted with one review round each. Then **Parts VI and VII**, still unstarted:
    11 chapters, all stubs.
@@ -1048,8 +1050,8 @@ Withdraw rather than soften.
   building a.7's owning-chapter field, which is a required column the part agreement sets. Two of
   the sixteen are findings against this manual rather than gaps in a reference:
 
-  **6.4 promised something 3.7 does not deliver.** Its surface table said 3.7 owns "the packaging and
-  update-repository semantics". 3.7 teaches packaging and channel behaviour and never teaches
+  **6.4 promised something 3.8 does not deliver.** Its surface table said 3.8 owns "the packaging and
+  update-repository semantics". 3.8 teaches packaging and channel behaviour and never teaches
   creating, signing, rotating or re-timestamping a repository; `fleetctl updates add` appears in one
   subordinate clause. **Corrected in place on 2026-08-29** to say packaging and channels, and to say
   plainly that running your own repository is not covered. That is honest and it is still a hole.
@@ -1060,7 +1062,7 @@ Withdraw rather than soften.
   `preview` leaves, `get carve` and `get carves`, `setup`, `new`, and `goquery`. Read strictly it is
   fifteen, because `updates add` has that one subordinate clause.
 
-  **What closing it would take:** a section in 3.7 on running a private update repository, covering
+  **What closing it would take:** a section in 3.8 on running a private update repository, covering
   initialisation, root keys, adding targets, timestamps and rotation, which is where the key-retention
   finding S15 also belongs. The `preview` and `goquery` commands are development conveniences and a
   short honest note in 6.4 may be the right answer for them rather than a chapter. **This is a
@@ -1071,7 +1073,7 @@ Withdraw rather than soften.
   them.** Part III's confirming reviews found one chapter asserting a capability was Premium and
   then, forty lines later, asserting a related one was free; both were wrong, in opposite
   directions. Sweeping the rest found two more: 8.6's schedule table omitted Premium on
-  `send_recovery_lock_commands` and `google_workspace_sync`, and **2.8, a `verified` chapter, called
+  `send_recovery_lock_commands` and `google_workspace_sync`, and **2.12, a `verified` chapter, called
   company-owned Android enrollment Premium when nothing in Fleet's Android module checks a licence
   at all.**
 
@@ -1120,7 +1122,7 @@ Withdraw rather than soften.
   - ~~10 are promises~~ **All closed 2026-08-27.** They named content that does not exist: "the
     full action-by-action breakdown for all six roles at both scopes", "every setting, what it
     defaults to, and what wins when two levels disagree". Each now says the target is not written
-    yet and names what answers the question today, which for a.4 is 2.3 itself and for a.3 is
+    yet and names what answers the question today, which for a.4 is 2.6 itself and for a.3 is
     Fleet's configuration reference read with 8.14's caveat about its defaults. The checker
     suppresses a promise that disclaims itself, so it reports zero and will report any new one.
   - **19 still sit in chapters stamped `verified`**, now as bare pointers rather than promises.
@@ -1149,7 +1151,7 @@ Withdraw rather than soften.
 
 ```
 missing-fleet-manual/            (public, git, deploys from main)
-├── manual/                      78 chapter files, 41 written
+├── manual/                      78 chapter files, all drafted (recounted 2026-08-30)
 ├── research/section-notes/      citation ledgers, one per chapter
 ├── review/BRIEFING.md           the reviewer's own briefing, written by it
 ├── build/                       14 checkers, unwrap.py, claims.py

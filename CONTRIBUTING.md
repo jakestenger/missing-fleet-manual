@@ -229,7 +229,7 @@ have caught something on nearly every run.
 |---|---|---|
 | `check-links.py` | Yes | A renamed heading silently broke every anchor into it |
 | `check-verified.py` | Yes | Twelve chapters carried `status: verified` on a source check alone, and a review found a defect in every one |
-| `check-crossrefs.py` | Advisory | "As 2.9 notes, escrowed Linux disk encryption data", where 2.9 said no such thing. Also carries the §8 and eaten-code-span checks |
+| `check-crossrefs.py` | Advisory | "As 2.2 notes, escrowed Linux disk encryption data", where 2.2 said no such thing. Also carries the §8 and eaten-code-span checks |
 | `check-activity-names.py` | Advisory | `user_mfa_requested`, documented in two chapters, exists nowhere in Fleet |
 | `check-schedule-names.py` | Advisory | `software_checksum_migration`, given an interval and a description, exists nowhere in Fleet |
 | `check-column-names.py` | Advisory | Part VIII prints column inventories for ~20 tables; `check-table-names.py` covered table names and nothing covered columns |

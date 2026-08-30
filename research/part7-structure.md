@@ -1,5 +1,7 @@
 # Part VII structure, agreed with the independent reviewer 2026-08-28
 
+> **Historical numbering.** This document predates the chapter renumbering of 2026-08-30 (P6 structural moves); section numbers in it are the old ones. The renumber map in `section-notes/README.md` translates them to the current numbering.
+
 The third of these, after `part5-structure.md` and `part6-structure.md`. Verdict: **AGREED WITH
 CHANGES**, and the changes are larger than Part VI's: two chapters change contract, two swap places.
 

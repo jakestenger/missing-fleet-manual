@@ -218,7 +218,7 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 
 **Compatibility is asymmetric, and Fleet says so.** A new agent against an older server is a requirement its engineering process treats as a must. **An older agent against a new server is only a nice to have**, with a minimum named in the release notes when it breaks. That is a rollout rule: move the server first and the agents after, and read the release notes before assuming the reverse is safe.
 
-**Upgrades follow semantic versioning with three stated exceptions**: experimental features, security fixes, and changes to default values. All three can break a minor or patch upgrade, and all three are called out in the version notes, which is the practical reason [7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md) asks you to read them rather than diff the version number.
+**Upgrades follow semantic versioning with three stated exceptions**: experimental features, security fixes, and changes to default values. All three can break a minor or patch upgrade, and all three are called out in the version notes, which is the practical reason [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) asks you to read them rather than diff the version number.
 
 ### Agent floors
 
@@ -240,9 +240,9 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 | Following an update channel to a current release | **Orbit 1.38.0 in the code, 1.38.1 as the bridge** | not applicable | Silent in Fleet. The failure is in the agent's own log on the host, and nothing in the console says the estate has stopped updating. See below |
 | Enrolling and talking to a 4.90.1 server | **no minimum** | not applicable | **No boundary**, listed because its absence is the useful fact |
 
-> **The update-server migration has two numbers and they answer different questions.** The rewrite to the new update server is in the code from **1.38.0**. **1.38.1** is what Fleet's own configuration reference names as the stepping stone, it shipped three days later, and Fleet also shipped a rollback with 1.38.0 in case one was needed. **Step through 1.38.1** ([3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md)).
+> **The update-server migration has two numbers and they answer different questions.** The rewrite to the new update server is in the code from **1.38.0**. **1.38.1** is what Fleet's own configuration reference names as the stepping stone, it shipped three days later, and Fleet also shipped a rollback with 1.38.0 in case one was needed. **Step through 1.38.1** ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
 
-> **`update_channels` is the one to know**, because it fails in the shape most likely to be misread. An agent below 1.20.0 ignores the channel you set. Fleet accepts the configuration, stores it, shows it back, and the host keeps running whatever it was running. There is no error and no log line, so the estate looks pinned and is not ([3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md)).
+> **`update_channels` is the one to know**, because it fails in the shape most likely to be misread. An agent below 1.20.0 ignores the channel you set. Fleet accepts the configuration, stores it, shows it back, and the host keeps running whatever it was running. There is no error and no log line, so the estate looks pinned and is not ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
 
 **The two packaging floors behave differently from the rest**, because they bind when the installer is built rather than when the host runs. An old `fleetctl` produces a package that cannot carry the property, and no later upgrade of the agent fixes it. Rebuild the package instead.
 
@@ -306,7 +306,7 @@ These are the server side of the capabilities above, **including the two web set
 
 ### Dependency floors
 
-**MySQL 8.0.44.** Tested against 8.0.44, 8.4.8 and 9.5.0, with 9.6.0 currently incompatible. The floor moved from 8.0.36 during the 4.83 line ([2.9](../02-administer-and-deploy-fleet/2.9-self-hosting-architecture-and-capacity.md) has the operational consequence, which is that a newer MySQL is not automatically a safer one).
+**MySQL 8.0.44.** Tested against 8.0.44, 8.4.8 and 9.5.0, with 9.6.0 currently incompatible. The floor moved from 8.0.36 during the 4.83 line ([2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) has the operational consequence, which is that a newer MySQL is not automatically a safer one).
 
 **Redis 6.2.** Required by the host-lookup cache on the agent authentication paths, which arrived in the 4.86 line. Fleet is actively tested against 6.2 and 7.
 
@@ -331,6 +331,6 @@ So there are two planning questions rather than one. **Plan remediation around b
 
 One practical note: **this policy lives in Fleet's company handbook rather than its documentation**, so a reader working through the product docs will not meet it.
 
-**There is no constrained upgrade path within version 4.** Fleet's own guidance says skipping versions is fine and nothing in the server enforces an ordering. The exception is the agent, where the update server migration makes one release a stepping stone ([3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md)).
+**There is no constrained upgrade path within version 4.** Fleet's own guidance says skipping versions is fine and nothing in the server enforces an ordering. The exception is the agent, where the update server migration makes one release a stepping stone ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
 
-Fleet's cadence, for planning: one minor and one patch release every three weeks, with scheduled patches weekly in between and immediate patches for critical bugs. [7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md) turns that into a release-review rhythm.
+Fleet's cadence, for planning: one minor and one patch release every three weeks, with scheduled patches weekly in between and immediate patches for critical bugs. [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) turns that into a release-review rhythm.
