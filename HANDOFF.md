@@ -116,19 +116,21 @@ touches a chapter, and application has not been authorised.**
 
 ## 2. Where the work actually stands
 
-**69 chapters written, 6 still outline stubs.** The stubs are 50 to 90 words each: a title, a
-frontmatter block, and section headings. Do not mistake the file count for progress.
+**78 chapter files, all drafted, zero outline stubs.** Recounted 2026-08-30 with
+`find manual -mindepth 2 -maxdepth 2 -name '*.md' | wc -l`; the structural splits (2.11/2.12 from
+old 2.8, 3.7 from old 3.6, 7.8 from old 7.3) took the count from 75 to 78. Do not mistake the
+file count for progress.
 
 | Part | Chapters | State |
 |---|---|---|
 | 0. Introduction | 1 | Written. Stamped `drafting` |
 | I. Foundations | 6 | Written, reviewed to the five-round cap, corrected. `drafting` |
 | II. Administer and deploy | 12 | Written. Was `verified`; **demoted to `drafting` under the freeze** |
-| III. Connect devices | 7 | Written, reviewed to the cap, corrected. `drafting` |
+| III. Connect devices | 8 | Written, reviewed to the cap, corrected. `drafting`. 3.7 ChromeOS split from old 3.6 in the 2026-08-30 restructure |
 | IV. Know your devices | 7 | **All 7 written 2026-08-27**, each with one review round applied and a ledger. `drafting` |
 | V. Manage devices | 9 | **Complete 2026-08-28.** All 9 drafted, one review round applied each, ledgers written, diagram prompts installed. `drafting` |
 | VI. Automate Fleet | 5 | **Complete 2026-08-28.** All 5 drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part6-structure.md` |
-| VII. Operate Fleet | 6 | **Complete 2026-08-28.** All 6 drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part7-structure.md`, and this part is held to a four-class evidence rule recorded there |
+| VII. Operate Fleet | 8 | **Complete 2026-08-28** as six chapters; 7.7 (from old 2.12) and 7.8 (split from old 7.3) joined in the 2026-08-30 restructure. All drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part7-structure.md` (old numbering), and this part is held to a four-class evidence rule recorded there |
 | VIII. Troubleshooting | 14 | Written, reviewed to the cap, corrected. `drafting` |
 | IX. Appendices | 8 | **All 8 drafted, finished 2026-08-29.** Per-appendix detail in section 7. Structure agreed at `research/appendix-structure.md` |
 
@@ -356,7 +358,7 @@ it specifically, and it kept finding instances. Treat any absolute in a compress
 suspect.
 
 **A later chapter's research corrects earlier chapters.** 5.8 was corrected twice by 7.6's research,
-after 5.8 was finished. 7.3 and 7.6 both placed the Apple certificate authority material outside the
+after 5.8 was finished. 7.2 and 7.6 both placed the Apple certificate authority material outside the
 database until a review caught it in one and the correction propagated to the other. **When a
 chapter's research contradicts a finished chapter, fix the finished chapter in the same commit**, or
 it will not happen.
@@ -1149,7 +1151,7 @@ Withdraw rather than soften.
 
 ```
 missing-fleet-manual/            (public, git, deploys from main)
-├── manual/                      78 chapter files, 41 written
+├── manual/                      78 chapter files, all drafted (recounted 2026-08-30)
 ├── research/section-notes/      citation ledgers, one per chapter
 ├── review/BRIEFING.md           the reviewer's own briefing, written by it
 ├── build/                       14 checkers, unwrap.py, claims.py

@@ -19,7 +19,7 @@ feature_requests:
 
 # Capability index
 
-**Search the last column for the word you have. Open the owning chapter. `(no)` means Fleet does not provide the capability.** The rows themselves are in [The index](#the-index); the sections before it explain where its words come from.
+**Search the last column for the word you have. Open the owning chapter. `(no)` means Fleet does not provide the capability.** The rows themselves are in [The index](#the-index); the sections after it explain where its words come from.
 
 **Every outcome this manual teaches has one chapter that owns it, and this index gets you there from the word you would actually type.** A table of contents can only expose the book's own vocabulary. Administrators arrive holding Apple's word, Microsoft's word, the name of the product they are migrating off, or the name Fleet itself used two releases ago, and none of those is what a chapter is called.
 
@@ -55,202 +55,6 @@ Six markers, and each changes what you do with the word next to it.
 | **[a.6]** | [a.6](a.6-glossary-and-release-compatibility.md) settles what the word means. This row carries only the route |
 
 **Where the last column is empty, the row's own words are the search words.** The row is present so the enumeration is complete, and it is not what the appendix is for.
-
-## Why the eight groups are not the table of contents
-
-![Explanation](../_assets/icons/explanation.svg) **Groups shaped like the manual's parts produce a re-worded contents page**, so these are shaped like the question you are holding instead. Three of them cut across parts as a result: scope and targeting spans Parts I and V, access and accountability spans Parts I, II and VII, and the diagnosis group spans Parts VII and VIII.
-
-| | Group | The question it answers | Outcomes |
-|---|---|---|---|
-| 1 | Access and accountability | Who can use Fleet, how they prove it, and what is recorded | 32 |
-| 2 | Connecting devices | Getting a device enrolled, and the platform connections that must exist first | 66 |
-| 3 | Scope and targeting | Deciding who a change reaches and whose data you are reading | 8 |
-| 4 | Knowing what a device is | Reading state: vitals, reports, policies, software, vulnerabilities, estate counts | 57 |
-| 5 | Changing a device | Writing state, split by the mechanism that carries it | 98 |
-| 6 | Automating Fleet | Making Fleet or another system act without a person | 23 |
-| 7 | Running the service | Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive | 44 |
-| 8 | When it did not work | Symptoms, and the surfaces that answer them | 20 |
-
-**Group 5 gets one level of sub-grouping and no more**, along the line [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) already teaches: settings that persist, work that runs once, and experiences. Every reader of Part V has met that distinction, so it costs nothing to reuse and it splits the largest group along a boundary people already hold.
-
-**One outcome, one group.** A row appears once and is reached from elsewhere through its `Also` column. Duplicating a row is how two projections of the same set of capabilities drift apart, and this book has already paid for that once.
-
-**Outcomes Fleet refuses keep their rows.** Enforcing a Linux operating system version, releasing a locked Android device, rotating an API token, backing Fleet up with Fleet's own tooling, and keeping a restored copy from acting on the real world are all things people search for and Fleet does not do. Each keeps a row, marked **(no)**, pointing at the chapter that records the refusal. An index that leaves them out sends you off to look for them.
-
-## Where the words in the last column come from
-
-![Explanation](../_assets/icons/explanation.svg) **Every word was read somewhere. None was invented**, because a synonym built from a plausible guess routes a reader to the wrong chapter with more confidence than no index at all.
-
-Six places supply them.
-
-1. **Fleet's interface**, in the labels and empty states it prints, and in the keyword lists behind its search box.
-2. **Fleet's older names**, still accepted at this release in request bodies, GitOps keys, environment variables, command aliases and route paths.
-3. **Fleet's activity types**, which are what the audit record literally says and therefore what somebody searches it for.
-4. **Fleet's own published documentation** at this release. It is evidence of what Fleet calls a thing, because it is what a searcher has already read, and never evidence of how Fleet behaves.
-5. **The vendors**, for the words an administrator arrives holding from Apple, Microsoft or Google.
-6. **This manual**, for the concepts it names that Fleet does not name at all.
-
-### Fleet ships its own synonym index and does not publish it
-
-**The command palette in Fleet's web interface matches on 98 hand-written keyword lists**, one per capability, and they are the closest thing Fleet has to an answer to the question this appendix asks. They carry `filevault2`, `laps`, `ade`, `dep`, `win10`, `win11`, `fma`, `pki`, `est`, `zero trust`, `azure ad`, `ldap`, `tag`, `endpoints`, `machines`, `computers`, `ad hoc`, `tarballs` and `service account`. Fleet's own engineers wrote them, for exactly the reason this index exists: after a rename, people go on typing the old word for a long time.
-
-**They also index things this manual routes differently**, which makes them a source of rows rather than only of words. Fleet keeps `filevault`, `filevault2`, `bitlocker` and `recovery key` in one list under disk encryption. This manual splits that outcome across five rows and argues at [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) that "the BitLocker key" is the wrong name for what Windows actually escrows. So `bitlocker key` is a phrase this index has to carry **because** the manual refuses it, not in spite of that.
-
-The lists are reachable only by typing into the search box of a running Fleet. They are not in Fleet's documentation, and they are not in its API.
-
-## Fleet's older names, and which ones still work
-
-![Reference](../_assets/icons/reference.svg) **Everything in this section is accepted at 4.90.1.** [a.6](a.6-glossary-and-release-compatibility.md) owns the rename itself and the surfaces it covered. What follows is the part you type: the spec kinds, keys, variables, flags and paths that carry the older word and still resolve.
-
-**Fleet serves 47 route aliases covering 58 deprecated paths**, and accepts **44 deprecated GitOps keys**. Renamed request fields keep taking the old name in a body and answer with the new one. So a script written before March 2026 keeps working, a runbook keeps being correct, and a search of your own repository for the current word comes back empty while the deployment is running fine.
-
-### The fleet and report family
-
-| You would type | Current name | Where you would type it | Route |
-|---|---|---|---|
-| `team`, `teams`, `team_id` | fleet, `fleet_id` | API bodies and query strings, GitOps, the interface | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) |
-| `kind: team` | `kind: fleet` | A spec file | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) |
-| `/api/v1/fleet/teams`, `/fleet/spec/teams`, `/fleet/team/{id}/policies`, `/fleet/teams/{id}/users` | the `fleets` forms | A URL, a client, a saved request | [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) |
-| `team_settings` | `settings` | GitOps | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) |
-| `no-team.yml`, `No team`, team 0 | `unassigned.yml`, Unassigned | GitOps, the interface | [1.3](../01-foundations/1.3-hosts-fleets-labels.md), and [a.6] for how it is stored |
-| `--team`, `--policies-team`, `--delete-other-teams`, `DELETE_OTHER_TEAMS` | `--fleet`, `--policies-fleet`, `--delete-other-fleets`, `DELETE_OTHER_FLEETS` | `fleetctl`, and CI environment | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) |
-| `FLEET_JIT_USER_ROLE_TEAM_<id>` | `FLEET_JIT_USER_ROLE_FLEET_<id>` | A SAML attribute in your identity provider | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) |
-| `apple_bm_default_team`, `macos_team`, `ios_team`, `ipados_team`, `byod_team` | `mdm.apple_business`, `macos_fleet`, and the matching `_fleet` forms | GitOps, the API | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
-| `query`, `queries`, `saved query`, `live query`, `scheduled query` | report, live report, scheduled report | Everywhere | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) |
-| `kind: query` | `kind: report` | A spec file | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) |
-| `/api/v1/fleet/queries`, the live-query run paths, host query paths | the `reports` forms | A URL, a client, a saved request | [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) |
-| `queries` (GitOps top level), `scheduled_query_id` | `reports`, `scheduled_report_id` | GitOps, the API | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) |
-| `fleetctl query`, `--query-name`, `QUERYNAME` | `fleetctl report`, `--report-name`, `REPORT_NAME` | `fleetctl`, and CI environment | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) |
-| `live_query_disabled`, `query_reports_disabled`, `query_report_cap` | `live_reporting_disabled`, `discard_reports_data`, `report_cap` | Organization settings, GitOps | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) |
-| `/api/v1/osquery/*` | `/api/osquery/*` | The agent's own paths | [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) |
-| `/fleet/global/policies`, `/fleet/global/schedule` | `/fleet/policies`, `/fleet/schedule` | A URL, a client | [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) |
-
-### Other names Fleet has not retired
-
-| You would type | Current name | Route |
-|---|---|---|
-| `host_settings` | `features` | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
-| `enable_jit_role_sync` | Nothing. It is accepted and does nothing | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) |
-| `macos_settings` | `apple_settings` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
-| `custom_settings` | `configuration_profiles` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
-| `macos_setup` | `setup_experience` | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
-| `bootstrap_package` | `macos_bootstrap_package` | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
-| `macos_setup_assistant` | `apple_setup_assistant` | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
-| `manual_agent_install` | `macos_manual_agent_install` | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) |
-| `enable_release_device_manually` | `apple_enable_release_device_manually` | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
-| `enable_managed_local_account` | `enable_create_local_admin_account` | `None`, and see the last section |
-| `mdm.macos_settings.enable_disk_encryption` | `mdm.enable_disk_encryption` | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
-| `mdm.enable_custom_os_updates_and_filevault` | `mdm.enable_custom_filevault`, `mdm.enable_custom_disk_encryption`. Any of the three enables it | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
-| `org_logo_url`, `org_logo_url_light_background` | `org_logo_url_dark_mode`, `org_logo_url_light_mode` | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) |
-| `s3.bucket`, `s3.prefix`, `s3.region` and eight siblings | the `s3.carves_*` forms, hidden from the help output | [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) |
-| `osquery.status_log_file`, `osquery.result_log_file`, `osquery.enable_log_rotation` | the `filesystem.*` forms | [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md) |
-| `packaging.*` | Nothing. The feature they configured was removed and the keys stayed | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) |
-| `SCEP_RENEWAL_ID` | `CERTIFICATE_RENEWAL_ID` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
-| `HOST_END_USER_EMAIL_IDP` | `HOST_END_USER_IDP_USERNAME` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
-| `abm_token` | `ab_token` | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
-| `fleetctl generate mdm-apple-bm`, `get mdm-apple-bm` | `generate mdm-ab`, `get mdm-ab` | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
-| `browser` | `extension_for` | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
-| `software_id` as a host filter | `software_version_id` | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) |
-| `profile_id` | `profile_uuid` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
-| `orbot_node_key` | `orbit_node_key`. A shipped typo kept for agents at 1.38.0 and below | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md), and [a.6] for node keys |
-| `kolide_server_url` | `server_url` | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) |
-| `mia` | `missing` | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md), and [a.6] |
-| tier `basic` | `premium` | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) |
-| `vendor_old` | `vendor` | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
-
-## The vendors' words for things Fleet renames
-
-![Reference](../_assets/icons/reference.svg) **These are the words an administrator arrives holding**, and the third column is the one that matters: how many of this book's chapters use the word at all. Where that count is low, the index is the only route from the word to the chapter.
-
-| You arrive with | Fleet or this manual calls it | Chapters using the word | Route |
-|---|---|---|---|
-| DEP, Device Enrollment Program | Automated Device Enrollment, ADE, company-owned | DEP in six, ADE in thirteen, and [a.6] owns the pair | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) |
-| VPP, Volume Purchase Program | Apps and Books, App and Book token | VPP in eight, Apps and Books in one | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
-| Autopilot, OOBE | Windows automatic enrollment through Entra | Autopilot in five, OOBE in two | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) |
-| Azure AD, AAD, Active Directory, LDAP | Microsoft Entra | None | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) |
-| Intune | Named as the thing you are leaving, or the thing that wins a conflict | Two | [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md) |
-| Jamf, Workspace ONE, Kandji, Munki | "another MDM" | Jamf in one, the other three in none | `None`, and see the last section |
-| OMA-URI, LocURI, CSP, ADMX | Windows configuration profile | CSP in two and LocURI in one, both Windows diagnostics. OMA-URI in none | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
-| SyncML | The Windows management channel | Three, all in Part VIII | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) |
-| DDM | declaration, declarative device management | The acronym in one, the spelled-out form in three | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
-| zero-touch | ADE on Apple, Autopilot on Windows, the QR path on Android | Two | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) |
-| LAPS | managed local administrator account | None, and the capability has no owning chapter either | `None`, and see the last section |
-| EST, PKI, NDES, DigiCert, Smallstep, Hydrant | certificate authority | EST and Hydrant in none. The other four appear in [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) or Part VIII | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md), with the prerequisite unowned |
-| Lost Mode | Fleet's button says Lock | One | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) |
-| Managed Apple ID | Managed Apple Account, Apple's current term | None. [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) uses Apple's current term on purpose | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) |
-| work profile, device owner, profile owner | personally enrolled and company-owned Android | Six | [3.6](../03-connect-devices/3.6-enroll-android-devices.md) |
-| Nudge | The update path for macOS 13 and earlier | One | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) |
-| Managed Google Play, AMAPI | Android Enterprise, bound to Fleet | Three and seven | [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) |
-| LUKS | Linux disk encryption | Eight | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
-| Okta, Jira, Zendesk | conditional access, ticketing | Three, four and four | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
-
-**Ten of those words appear in no chapter of this book**: Azure AD, LDAP, Workspace ONE, Kandji, Munki, LAPS, EST, Hydrant, OMA-URI and Managed Apple ID. Their rows are the ones that earn the appendix, because there is no other route from the word to the page.
-
-**Fleet documents most of them.** At this release `EST` heads fourteen sections of Fleet's own documentation, Jamf twenty-six, Kandji and Munki eight each, Hydrant four and Workspace ONE three. The word is standard in the industry, present in the vendor's material, and absent from this book, which is a gap in the book rather than in the reader.
-
-**OMA-URI is the one word neither Fleet nor this book gives a heading to**, and it is the only word an Intune administrator has for the thing [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) calls a Windows configuration profile. Managed Google Play and AMAPI have no heading in Fleet's documentation either, though both are used in this book's chapters.
-
-## Words this manual uses that Fleet does not
-
-![Reference](../_assets/icons/reference.svg) **The reverse direction, and this index is the only place it can be fixed.** A reader who has read the chapter will search for the manual's word; a reader who has not will never guess it. Both need the row.
-
-| This manual's word | What Fleet calls it, if anything | Where it is defined |
-|---|---|---|
-| desired state, discrete activity, device action | Nothing. The three mechanisms have no collective Fleet name | [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) |
-| rollout rings | Nothing | [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) |
-| families, for the ways Fleet reaches a device | Nothing. **[1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md)'s heading says channels and the paragraph beneath it says families**, so search for both | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md) |
-| the unnamed state | Nothing | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
-| the three representations of a piece of software | Nothing, and [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) says you never see those names in the interface | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) |
-| variants, not versions | Nothing | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) |
-| configuration lane, setup-item lane | Nothing | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
-| release-ready | Nothing | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
-| the evidence ladder | Nothing | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) |
-| supported action, against custom command | Nothing | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) |
-| archived credential | Nothing | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
-| fleet move | Fleet says transfer, and the activity is `transferred_hosts` | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
-| transition-based, against continuous | `continuous_automations_enabled` is the setting | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
-| re-fire, duplicate suppression, cooldown | Nothing | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
-| the label-scope trap | Nothing | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
-| sentinel | Nothing | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) |
-| endpoint restrictions | `user_api_endpoints` | [1.4](../01-foundations/1.4-identity-and-roles.md) |
-| break-glass account | Nothing, and Fleet's documentation has no heading for it | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) |
-| estate | Fleet says fleet, for the same thing and also for a different one | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) |
-
-## Where two live Fleet names disagree
-
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Fourteen places where Fleet, or this book, uses two names for one thing and neither is marked wrong.** Each is a row in the index. Seven are defects rather than dialects: a name that Fleet prints, documents or emits where a different name is the one that actually works, so following the visible name gets you nothing and says nothing.
-
-**The seven that will waste your time.**
-
-**`dep_syncer` is a job name and never a schedule name.** Fleet's own documentation calls it "the `dep_syncer` cron job". The schedule that contains it is `apple_mdm_dep_profile_assigner`, and that is the name recorded when it runs. Searching the schedule history for `dep_syncer` finds nothing ([8.6](../08-troubleshooting/8.6-server-state.md)).
-
-**`app_enable_report_stats` is documented and not registered.** The server registers `app.enable_scheduled_query_stats`. Setting the documented name silently does nothing ([4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md)).
-
-**Fleet's own startup message names the wrong configuration key, one line above the right one.** It tells you to set `updates.allow_missing_migrations`; the registered key is `upgrades.allow_missing_migrations`, and the next line gives the correct `--upgrades_allow_missing_migrations` flag ([7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md)).
-
-**The API reference names a table called `activities`. No such table exists.** The audit rows are in `activity_past`, which is what a query against your own database has to say ([8.12](../08-troubleshooting/8.12-audit-logs.md)).
-
-**`logger_path` is documented as an agent option where osquery's flag is `logger_plugin`**, and Fleet's own guidance uses the working name elsewhere in the same documentation set ([8.2](../08-troubleshooting/8.2-log-surfaces.md)).
-
-**Fleet's documentation attributes the Windows enrollment key pair's effect to macOS hosts.** Changing that pair makes escrowed disk encryption credentials unreadable, and this manual adjudicates the effect to Windows ([2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md), [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md)).
-
-**`fleetctl get user_roles` prints the deprecated vocabulary.** Its output carries `team:` for a concept the release notes say the command line renamed, so a GitOps-managed user-role file grepped for `fleet:` comes back empty ([a.7](a.7-fleetctl-command-reference.md)).
-
-**The other seven are live ambiguities to search around.**
-
-**Three names for one Apple credential, all live at once.** The interface says AB token, the API says `abm_token`, and the tables say DEP. [a.6] owns which is which ([2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md)).
-
-**The host action reads "Live report" and the value behind it is `query`** ([4.2](../04-know-your-devices/4.2-run-queries-and-reports.md)).
-
-**`enable_jit_role_sync` is accepted and does nothing.** The capability it names is now implicit ([2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md)).
-
-**`packaging.*` configures a feature Fleet removed.** The keys remain and set nothing ([6.4](../06-automate-fleet/6.4-use-fleetctl.md)).
-
-**`mdm.enable_custom_os_updates_and_filevault` and its two successors are all live, and any one of the three enables the behaviour** ([5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md)).
-
-**`channels` and `families` both name the ways Fleet reaches a device**, in adjacent lines of [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), and both spellings of Apple Business appear across Part I and Part II. Search for both.
-
-**`fleet` means two opposite things inside this book.** [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) uses it for the whole estate in one heading and for a single scope in the same chapter, and [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) says fleet-wide meaning estate-wide. It is the most-typed word in the manual and it is ambiguous; when a sentence could mean either, the scope reading is the one Fleet's API uses.
 
 ## The index
 
@@ -719,6 +523,202 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | **CAP-346** | Stop hosts overwriting each other | [8.14](../08-troubleshooting/8.14-degradation.md) | 3.1 | duplicate hosts · enroll cooldown · `--host-identifier` |
 | **CAP-347** | Work out what truncated or refused a request | [8.14](../08-troubleshooting/8.14-degradation.md) | 6.3 | 429 · too many open files · body too large · partial results |
 | **CAP-348** | Find which query costs the most on the host | [8.14](../08-troubleshooting/8.14-degradation.md) | 4.6, 8.7 | per-query cost on the device |
+
+## Why the eight groups are not the table of contents
+
+![Explanation](../_assets/icons/explanation.svg) **Groups shaped like the manual's parts produce a re-worded contents page**, so these are shaped like the question you are holding instead. Three of them cut across parts as a result: scope and targeting spans Parts I and V, access and accountability spans Parts I, II and VII, and the diagnosis group spans Parts VII and VIII.
+
+| | Group | The question it answers | Outcomes |
+|---|---|---|---|
+| 1 | Access and accountability | Who can use Fleet, how they prove it, and what is recorded | 32 |
+| 2 | Connecting devices | Getting a device enrolled, and the platform connections that must exist first | 66 |
+| 3 | Scope and targeting | Deciding who a change reaches and whose data you are reading | 8 |
+| 4 | Knowing what a device is | Reading state: vitals, reports, policies, software, vulnerabilities, estate counts | 57 |
+| 5 | Changing a device | Writing state, split by the mechanism that carries it | 98 |
+| 6 | Automating Fleet | Making Fleet or another system act without a person | 23 |
+| 7 | Running the service | Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive | 44 |
+| 8 | When it did not work | Symptoms, and the surfaces that answer them | 20 |
+
+**Group 5 gets one level of sub-grouping and no more**, along the line [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) already teaches: settings that persist, work that runs once, and experiences. Every reader of Part V has met that distinction, so it costs nothing to reuse and it splits the largest group along a boundary people already hold.
+
+**One outcome, one group.** A row appears once and is reached from elsewhere through its `Also` column. Duplicating a row is how two projections of the same set of capabilities drift apart, and this book has already paid for that once.
+
+**Outcomes Fleet refuses keep their rows.** Enforcing a Linux operating system version, releasing a locked Android device, rotating an API token, backing Fleet up with Fleet's own tooling, and keeping a restored copy from acting on the real world are all things people search for and Fleet does not do. Each keeps a row, marked **(no)**, pointing at the chapter that records the refusal. An index that leaves them out sends you off to look for them.
+
+## Where the words in the last column come from
+
+![Explanation](../_assets/icons/explanation.svg) **Every word was read somewhere. None was invented**, because a synonym built from a plausible guess routes a reader to the wrong chapter with more confidence than no index at all.
+
+Six places supply them.
+
+1. **Fleet's interface**, in the labels and empty states it prints, and in the keyword lists behind its search box.
+2. **Fleet's older names**, still accepted at this release in request bodies, GitOps keys, environment variables, command aliases and route paths.
+3. **Fleet's activity types**, which are what the audit record literally says and therefore what somebody searches it for.
+4. **Fleet's own published documentation** at this release. It is evidence of what Fleet calls a thing, because it is what a searcher has already read, and never evidence of how Fleet behaves.
+5. **The vendors**, for the words an administrator arrives holding from Apple, Microsoft or Google.
+6. **This manual**, for the concepts it names that Fleet does not name at all.
+
+### Fleet ships its own synonym index and does not publish it
+
+**The command palette in Fleet's web interface matches on 98 hand-written keyword lists**, one per capability, and they are the closest thing Fleet has to an answer to the question this appendix asks. They carry `filevault2`, `laps`, `ade`, `dep`, `win10`, `win11`, `fma`, `pki`, `est`, `zero trust`, `azure ad`, `ldap`, `tag`, `endpoints`, `machines`, `computers`, `ad hoc`, `tarballs` and `service account`. Fleet's own engineers wrote them, for exactly the reason this index exists: after a rename, people go on typing the old word for a long time.
+
+**They also index things this manual routes differently**, which makes them a source of rows rather than only of words. Fleet keeps `filevault`, `filevault2`, `bitlocker` and `recovery key` in one list under disk encryption. This manual splits that outcome across five rows and argues at [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) that "the BitLocker key" is the wrong name for what Windows actually escrows. So `bitlocker key` is a phrase this index has to carry **because** the manual refuses it, not in spite of that.
+
+The lists are reachable only by typing into the search box of a running Fleet. They are not in Fleet's documentation, and they are not in its API.
+
+## Fleet's older names, and which ones still work
+
+![Reference](../_assets/icons/reference.svg) **Everything in this section is accepted at 4.90.1.** [a.6](a.6-glossary-and-release-compatibility.md) owns the rename itself and the surfaces it covered. What follows is the part you type: the spec kinds, keys, variables, flags and paths that carry the older word and still resolve.
+
+**Fleet serves 47 route aliases covering 58 deprecated paths**, and accepts **44 deprecated GitOps keys**. Renamed request fields keep taking the old name in a body and answer with the new one. So a script written before March 2026 keeps working, a runbook keeps being correct, and a search of your own repository for the current word comes back empty while the deployment is running fine.
+
+### The fleet and report family
+
+| You would type | Current name | Where you would type it | Route |
+|---|---|---|---|
+| `team`, `teams`, `team_id` | fleet, `fleet_id` | API bodies and query strings, GitOps, the interface | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) |
+| `kind: team` | `kind: fleet` | A spec file | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) |
+| `/api/v1/fleet/teams`, `/fleet/spec/teams`, `/fleet/team/{id}/policies`, `/fleet/teams/{id}/users` | the `fleets` forms | A URL, a client, a saved request | [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) |
+| `team_settings` | `settings` | GitOps | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) |
+| `no-team.yml`, `No team`, team 0 | `unassigned.yml`, Unassigned | GitOps, the interface | [1.3](../01-foundations/1.3-hosts-fleets-labels.md), and [a.6] for how it is stored |
+| `--team`, `--policies-team`, `--delete-other-teams`, `DELETE_OTHER_TEAMS` | `--fleet`, `--policies-fleet`, `--delete-other-fleets`, `DELETE_OTHER_FLEETS` | `fleetctl`, and CI environment | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) |
+| `FLEET_JIT_USER_ROLE_TEAM_<id>` | `FLEET_JIT_USER_ROLE_FLEET_<id>` | A SAML attribute in your identity provider | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) |
+| `apple_bm_default_team`, `macos_team`, `ios_team`, `ipados_team`, `byod_team` | `mdm.apple_business`, `macos_fleet`, and the matching `_fleet` forms | GitOps, the API | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
+| `query`, `queries`, `saved query`, `live query`, `scheduled query` | report, live report, scheduled report | Everywhere | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) |
+| `kind: query` | `kind: report` | A spec file | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) |
+| `/api/v1/fleet/queries`, the live-query run paths, host query paths | the `reports` forms | A URL, a client, a saved request | [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) |
+| `queries` (GitOps top level), `scheduled_query_id` | `reports`, `scheduled_report_id` | GitOps, the API | [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) |
+| `fleetctl query`, `--query-name`, `QUERYNAME` | `fleetctl report`, `--report-name`, `REPORT_NAME` | `fleetctl`, and CI environment | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) |
+| `live_query_disabled`, `query_reports_disabled`, `query_report_cap` | `live_reporting_disabled`, `discard_reports_data`, `report_cap` | Organization settings, GitOps | [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) |
+| `/api/v1/osquery/*` | `/api/osquery/*` | The agent's own paths | [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) |
+| `/fleet/global/policies`, `/fleet/global/schedule` | `/fleet/policies`, `/fleet/schedule` | A URL, a client | [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) |
+
+### Other names Fleet has not retired
+
+| You would type | Current name | Route |
+|---|---|---|
+| `host_settings` | `features` | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
+| `enable_jit_role_sync` | Nothing. It is accepted and does nothing | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) |
+| `macos_settings` | `apple_settings` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
+| `custom_settings` | `configuration_profiles` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
+| `macos_setup` | `setup_experience` | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
+| `bootstrap_package` | `macos_bootstrap_package` | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
+| `macos_setup_assistant` | `apple_setup_assistant` | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
+| `manual_agent_install` | `macos_manual_agent_install` | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) |
+| `enable_release_device_manually` | `apple_enable_release_device_manually` | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
+| `enable_managed_local_account` | `enable_create_local_admin_account` | `None`, and see the last section |
+| `mdm.macos_settings.enable_disk_encryption` | `mdm.enable_disk_encryption` | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
+| `mdm.enable_custom_os_updates_and_filevault` | `mdm.enable_custom_filevault`, `mdm.enable_custom_disk_encryption`. Any of the three enables it | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
+| `org_logo_url`, `org_logo_url_light_background` | `org_logo_url_dark_mode`, `org_logo_url_light_mode` | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) |
+| `s3.bucket`, `s3.prefix`, `s3.region` and eight siblings | the `s3.carves_*` forms, hidden from the help output | [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) |
+| `osquery.status_log_file`, `osquery.result_log_file`, `osquery.enable_log_rotation` | the `filesystem.*` forms | [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md) |
+| `packaging.*` | Nothing. The feature they configured was removed and the keys stayed | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) |
+| `SCEP_RENEWAL_ID` | `CERTIFICATE_RENEWAL_ID` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
+| `HOST_END_USER_EMAIL_IDP` | `HOST_END_USER_IDP_USERNAME` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
+| `abm_token` | `ab_token` | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
+| `fleetctl generate mdm-apple-bm`, `get mdm-apple-bm` | `generate mdm-ab`, `get mdm-ab` | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
+| `browser` | `extension_for` | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
+| `software_id` as a host filter | `software_version_id` | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) |
+| `profile_id` | `profile_uuid` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
+| `orbot_node_key` | `orbit_node_key`. A shipped typo kept for agents at 1.38.0 and below | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md), and [a.6] for node keys |
+| `kolide_server_url` | `server_url` | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) |
+| `mia` | `missing` | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md), and [a.6] |
+| tier `basic` | `premium` | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) |
+| `vendor_old` | `vendor` | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
+
+## The vendors' words for things Fleet renames
+
+![Reference](../_assets/icons/reference.svg) **These are the words an administrator arrives holding**, and the third column is the one that matters: how many of this book's chapters use the word at all. Where that count is low, the index is the only route from the word to the chapter.
+
+| You arrive with | Fleet or this manual calls it | Chapters using the word | Route |
+|---|---|---|---|
+| DEP, Device Enrollment Program | Automated Device Enrollment, ADE, company-owned | DEP in six, ADE in thirteen, and [a.6] owns the pair | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) |
+| VPP, Volume Purchase Program | Apps and Books, App and Book token | VPP in eight, Apps and Books in one | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) |
+| Autopilot, OOBE | Windows automatic enrollment through Entra | Autopilot in five, OOBE in two | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) |
+| Azure AD, AAD, Active Directory, LDAP | Microsoft Entra | None | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) |
+| Intune | Named as the thing you are leaving, or the thing that wins a conflict | Two | [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md) |
+| Jamf, Workspace ONE, Kandji, Munki | "another MDM" | Jamf in one, the other three in none | `None`, and see the last section |
+| OMA-URI, LocURI, CSP, ADMX | Windows configuration profile | CSP in two and LocURI in one, both Windows diagnostics. OMA-URI in none | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
+| SyncML | The Windows management channel | Three, all in Part VIII | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) |
+| DDM | declaration, declarative device management | The acronym in one, the spelled-out form in three | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
+| zero-touch | ADE on Apple, Autopilot on Windows, the QR path on Android | Two | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) |
+| LAPS | managed local administrator account | None, and the capability has no owning chapter either | `None`, and see the last section |
+| EST, PKI, NDES, DigiCert, Smallstep, Hydrant | certificate authority | EST and Hydrant in none. The other four appear in [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) or Part VIII | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md), with the prerequisite unowned |
+| Lost Mode | Fleet's button says Lock | One | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) |
+| Managed Apple ID | Managed Apple Account, Apple's current term | None. [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) uses Apple's current term on purpose | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) |
+| work profile, device owner, profile owner | personally enrolled and company-owned Android | Six | [3.6](../03-connect-devices/3.6-enroll-android-devices.md) |
+| Nudge | The update path for macOS 13 and earlier | One | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) |
+| Managed Google Play, AMAPI | Android Enterprise, bound to Fleet | Three and seven | [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) |
+| LUKS | Linux disk encryption | Eight | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
+| Okta, Jira, Zendesk | conditional access, ticketing | Three, four and four | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
+
+**Ten of those words appear in no chapter of this book**: Azure AD, LDAP, Workspace ONE, Kandji, Munki, LAPS, EST, Hydrant, OMA-URI and Managed Apple ID. Their rows are the ones that earn the appendix, because there is no other route from the word to the page.
+
+**Fleet documents most of them.** At this release `EST` heads fourteen sections of Fleet's own documentation, Jamf twenty-six, Kandji and Munki eight each, Hydrant four and Workspace ONE three. The word is standard in the industry, present in the vendor's material, and absent from this book, which is a gap in the book rather than in the reader.
+
+**OMA-URI is the one word neither Fleet nor this book gives a heading to**, and it is the only word an Intune administrator has for the thing [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) calls a Windows configuration profile. Managed Google Play and AMAPI have no heading in Fleet's documentation either, though both are used in this book's chapters.
+
+## Words this manual uses that Fleet does not
+
+![Reference](../_assets/icons/reference.svg) **The reverse direction, and this index is the only place it can be fixed.** A reader who has read the chapter will search for the manual's word; a reader who has not will never guess it. Both need the row.
+
+| This manual's word | What Fleet calls it, if anything | Where it is defined |
+|---|---|---|
+| desired state, discrete activity, device action | Nothing. The three mechanisms have no collective Fleet name | [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) |
+| rollout rings | Nothing | [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) |
+| families, for the ways Fleet reaches a device | Nothing. **[1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md)'s heading says channels and the paragraph beneath it says families**, so search for both | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md) |
+| the unnamed state | Nothing | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
+| the three representations of a piece of software | Nothing, and [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) says you never see those names in the interface | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) |
+| variants, not versions | Nothing | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) |
+| configuration lane, setup-item lane | Nothing | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
+| release-ready | Nothing | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
+| the evidence ladder | Nothing | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) |
+| supported action, against custom command | Nothing | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) |
+| archived credential | Nothing | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
+| fleet move | Fleet says transfer, and the activity is `transferred_hosts` | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
+| transition-based, against continuous | `continuous_automations_enabled` is the setting | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
+| re-fire, duplicate suppression, cooldown | Nothing | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
+| the label-scope trap | Nothing | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
+| sentinel | Nothing | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) |
+| endpoint restrictions | `user_api_endpoints` | [1.4](../01-foundations/1.4-identity-and-roles.md) |
+| break-glass account | Nothing, and Fleet's documentation has no heading for it | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) |
+| estate | Fleet says fleet, for the same thing and also for a different one | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) |
+
+## Where two live Fleet names disagree
+
+![Troubleshooting](../_assets/icons/troubleshooting.svg) **Fourteen places where Fleet, or this book, uses two names for one thing and neither is marked wrong.** Each is a row in the index. Seven are defects rather than dialects: a name that Fleet prints, documents or emits where a different name is the one that actually works, so following the visible name gets you nothing and says nothing.
+
+**The seven that will waste your time.**
+
+**`dep_syncer` is a job name and never a schedule name.** Fleet's own documentation calls it "the `dep_syncer` cron job". The schedule that contains it is `apple_mdm_dep_profile_assigner`, and that is the name recorded when it runs. Searching the schedule history for `dep_syncer` finds nothing ([8.6](../08-troubleshooting/8.6-server-state.md)).
+
+**`app_enable_report_stats` is documented and not registered.** The server registers `app.enable_scheduled_query_stats`. Setting the documented name silently does nothing ([4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md)).
+
+**Fleet's own startup message names the wrong configuration key, one line above the right one.** It tells you to set `updates.allow_missing_migrations`; the registered key is `upgrades.allow_missing_migrations`, and the next line gives the correct `--upgrades_allow_missing_migrations` flag ([7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md)).
+
+**The API reference names a table called `activities`. No such table exists.** The audit rows are in `activity_past`, which is what a query against your own database has to say ([8.12](../08-troubleshooting/8.12-audit-logs.md)).
+
+**`logger_path` is documented as an agent option where osquery's flag is `logger_plugin`**, and Fleet's own guidance uses the working name elsewhere in the same documentation set ([8.2](../08-troubleshooting/8.2-log-surfaces.md)).
+
+**Fleet's documentation attributes the Windows enrollment key pair's effect to macOS hosts.** Changing that pair makes escrowed disk encryption credentials unreadable, and this manual adjudicates the effect to Windows ([2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md), [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md)).
+
+**`fleetctl get user_roles` prints the deprecated vocabulary.** Its output carries `team:` for a concept the release notes say the command line renamed, so a GitOps-managed user-role file grepped for `fleet:` comes back empty ([a.7](a.7-fleetctl-command-reference.md)).
+
+**The other seven are live ambiguities to search around.**
+
+**Three names for one Apple credential, all live at once.** The interface says AB token, the API says `abm_token`, and the tables say DEP. [a.6] owns which is which ([2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md)).
+
+**The host action reads "Live report" and the value behind it is `query`** ([4.2](../04-know-your-devices/4.2-run-queries-and-reports.md)).
+
+**`enable_jit_role_sync` is accepted and does nothing.** The capability it names is now implicit ([2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md)).
+
+**`packaging.*` configures a feature Fleet removed.** The keys remain and set nothing ([6.4](../06-automate-fleet/6.4-use-fleetctl.md)).
+
+**`mdm.enable_custom_os_updates_and_filevault` and its two successors are all live, and any one of the three enables the behaviour** ([5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md)).
+
+**`channels` and `families` both name the ways Fleet reaches a device**, in adjacent lines of [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), and both spellings of Apple Business appear across Part I and Part II. Search for both.
+
+**`fleet` means two opposite things inside this book.** [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) uses it for the whole estate in one heading and for a single scope in the same chapter, and [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) says fleet-wide meaning estate-wide. It is the most-typed word in the manual and it is ambiguous; when a sentence could mean either, the scope reading is the one Fleet's API uses.
 
 ## Where this index ends
 

@@ -7,6 +7,8 @@ verified_against: fleet-v4.90.1 (dd0200f062)
 
 # Part IV structure, agreed 2026-08-27
 
+> **Historical numbering.** This document predates the chapter renumbering of 2026-08-30 (P6 structural moves); section numbers in it are the old ones. The renumber map in `section-notes/README.md` translates them to the current numbering.
+
 Settled before drafting, with the independent reviewer, rather than discovered chapter by chapter. Full exchange at `reviews/2026-08-27/part4-structure/structure.out`.
 
 ## What I proposed and what came back

@@ -1,5 +1,7 @@
 # Part VI structure, agreed with the independent reviewer 2026-08-28
 
+> **Historical numbering.** This document predates the chapter renumbering of 2026-08-30 (P6 structural moves); section numbers in it are the old ones. The renumber map in `section-notes/README.md` translates them to the current numbering.
+
 The same job that `part5-structure.md` records for Part V, done once for Part VI before any of its
 five chapters was outlined individually. Verdict: **AGREED WITH CHANGES.** Five chapters kept; their
 contracts sharpened.

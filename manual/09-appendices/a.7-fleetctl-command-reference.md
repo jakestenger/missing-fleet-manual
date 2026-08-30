@@ -20,6 +20,8 @@ feature_requests:
 
 # fleetctl command index and behaviour
 
+**Find the command in [the index](#the-command-index) below; its row says what it asks Fleet to do, what must allow it, and what its exit status proves.**
+
 **A `fleetctl` command is a request to Fleet, and its contract is what it asks Fleet to do and what its result proves.** That is a different document from the one `--help` prints. Help tells you the flags a command accepts. It does not tell you that an invocation reaches four separate authorization decisions and that clearing the last one is not enough, that the answer changes between Fleet Free and Fleet Premium, or that a command exits zero after Fleet refused it.
 
 Those three gaps are what this appendix carries, and each one is a place where an operator acts on a result that means less than it appears to.
@@ -31,147 +33,6 @@ Those three gaps are what this appendix carries, and each one is a place where a
 **Exact syntax is the installed client's job.** Run `fleetctl <command> --help` for the flag list of the client you actually have, which is the only listing guaranteed to match your binary. What is here instead is the part help does not carry: the resolution model, the per-command contract, the register of results that mislead, and the option families that widen an operation past what its name suggests.
 
 **Three questions belong elsewhere.** Which role may perform an action, across all six roles at both scopes, is [a.4](a.4-roles-and-permissions-matrix.md). Which configuration authority wins when two disagree is [a.3](a.3-configuration-model-and-precedence.md). How to use the client in practice, meaning installation, version pinning, safe context use in CI, stream capture and worked examples, is [6.4](../06-automate-fleet/6.4-use-fleetctl.md). This appendix carries lookup contracts and links out; it reteaches none of the three.
-
-## Where the inventory came from, and why a file search under-reports it
-
-![Explanation](../_assets/icons/explanation.svg) The inventory below is the command tree Fleet assembles at 4.90.1, read from source at the release tag, because no `fleetctl` binary trustworthy as 4.90.1 was available to interrogate. That matters when your client disagrees with this table: the likely explanation is that you are running a different version, and the version notes at the end say why that is easy to do without noticing.
-
-**Four things make the tree non-uniform**, and each defeats a naive search of the source files. They are worth knowing because they are also the four places the tree differs between two machines running the same release.
-
-**One command is wired in at run time.** The interactive query shell is always present in the tree, and its implementation is supplied by the program that builds the client. A binary that embeds Fleet's client library without supplying it still shows the command, which then reports that the support is not built in.
-
-**One family exists on two platforms of three.** The self-hosted update repository commands are built for macOS and Linux. On Windows the family is present as a single entry carrying no subcommands, no action and no flags, whose pre-action step returns a message telling you to use a Linux environment. **Whether that pre-action step runs ahead of the client's own help handling is not established here**, because it is decided by the command-line framework rather than by Fleet, and this manual verifies against Fleet's source alone.
-
-**Every `get` subcommand is modified after it is declared**, gaining two logging flags that are not written where the subcommand is. That is why `--enable-log-topics` and `--disable-log-topics` appear across the `get` family and on three other commands and nowhere else.
-
-**Three `debug` subcommands are built by a shared helper** rather than declared one by one, so a search for command declarations finds nine of the twelve.
-
-### The counts, which are platform-specific
-
-**77 named entries on macOS and Linux. 72 on Windows.** The root registers 27 top-level names on every platform. What differs is the update family, which contributes five leaves on macOS and Linux and none on Windows.
-
-| | macOS and Linux | Windows |
-|---|---|---|
-| Top-level names | 27 | 27 |
-| Leaf subcommands | 50 | 45 |
-| **Named entries** | **77** | **72** |
-| Behavioural rows in the index below | 69 | 65 |
-
-**A behavioural row is an invocation that does something.** On macOS and Linux, nineteen of the 27 top-level commands act in their own right and the other eight are containers whose job is to hold subcommands. On Windows it is twenty and seven, because `updates` holds no subcommands there and fails on invocation instead, which is a behaviour rather than a container. Containers appear below as group headings rather than as rows, because a row for a command that does nothing describes a behaviour that does not exist.
-
-**Do not carry 77 across platforms.** It is the count for the macOS and Linux assembly. `fleetctl package` is one command everywhere and still differs by platform in its options: on Windows it builds one package type, one option is available on Linux alone, and another on Windows and macOS alone.
-
-### Two enumerations here are floors rather than inventories
-
-**The permission chains are established by reading each command through to the authorization decisions it reaches**, so a decision taken in middleware, in a wrapper this verification did not assemble, or on a branch it did not reach would not appear. **The exit-zero register is bounded by a stated class and enumerated by search**, and its two most consequential rows were found by reading rather than by searching, which is a fair warning about what a search alone returns.
-
-A floor is useful and it is a different claim from a complete list. Where this appendix has a complete list, such as the 27 top-level names, it says so.
-
-## Which server and which credential an invocation selects
-
-![Reference](../_assets/icons/reference.svg) One question decides where a destructive command lands, and it is answered before any flag you typed is considered.
-
-**The client reads a configuration file holding named contexts.** Each context carries a server address, an account email, a token, and the transport settings for reaching that server: a certificate authority, a URL prefix, whether to skip verification, and any custom headers. Switching context switches all of it at once. The file is `~/.fleet/config` unless `--config` names another, and the context is `default` unless `--context` names another.
-
-**The file is created with owner-only permissions inside an owner-only directory**, and on macOS and Linux the client refuses to open an existing file whose group or other permissions are wider than that. On Windows there is no such check.
-
-**Writes to it are whole-file and unlocked**, so two `fleetctl` processes changing configuration at the same time lose one of the two changes and both exit zero. [6.4](../06-automate-fleet/6.4-use-fleetctl.md) covers giving each automation job its own file, which removes the class of problem rather than narrowing it.
-
-Five situations produce answers worth knowing in advance:
-
-| Situation | What happens |
-|---|---|
-| No configuration file at all | One is created, and the command then fails, asking you to set an address |
-| `--context` names a context that does not exist | A hard error, for every command except `config get` and `config set` |
-| The same, under `config get` or `config set` | **The context is created**, with a printed note. Fleet does not know `prod-typo` is a typo: it creates a perfectly usable context with exactly that name, and a later command passing the same typo selects exactly it. The `prod` context you meant is untouched, still holding whatever it held before, or does not exist and fails outright |
-| An address is set and the token is empty | An instruction to log in, on standard error, or the single sign-on instructions where the server reports it enabled |
-| **Windows, with no certificate authority and no skip-verify setting** | A hard refusal. A genuine platform difference in the client, not a convention |
-
-### The two round-trips an authenticated command makes before its own work
-
-**Nearly every authenticated command asks Fleet two questions before it asks the one you typed.** It reads Fleet's version, and it reads the application configuration. Both are authenticated requests, both can be refused, and the two refusals differ:
-
-| | What it asks | What a refusal does |
-|---|---|---|
-| **First** | `version · read` (global) | **Ends the command.** Any error, a permission error included, returns before your work begins. This call doubles as the check that your token is still valid |
-| **Second** | `app_config · read` (global) | **Tolerated when it is a permission refusal**, fatal otherwise. The tolerance is what lets a low-privilege automation identity, such as one holding the GitOps role, use the client at all |
-
-**The 51 rows that carry the prefix state only the suffix after those two.** It is stated once here rather than in 51 rows, and a row that shows an application-configuration read is showing a second, command-specific one. The other eighteen rows are the subject of the paragraph below, and one of them has authorization of its own that this prefix does not describe.
-
-**Eighteen of the 69 rows do not carry the prefix, and seventeen of those eighteen reach no Fleet authorization at all.** The two counts differ by one row and the row is `preview`. Fourteen make no call to any Fleet: `convert`, `package`, `new`, `vulnerability-data-stream`, `prepare`, `preview stop`, `preview reset`, both `config` subcommands and the five update-repository subcommands. Three reach Fleet without a credential: `setup`, `login` and `debug connection`.
-
-**`preview` is the one that differs, and it differs in both directions.** It never calls your Fleet, and it is not free of Fleet authorization: inside the sandbox it starts, it creates the first administrator, logs in as that account, then reads and writes the application configuration, reads the enroll secret, lists hosts, and runs a nested GitOps reconcile that carries this same prefix. Those are the sandbox's authorization decisions rather than your Fleet's, and the account taking them is the one `preview` just created, so none of them can refuse you. **The count is therefore eighteen rows without the prefix and seventeen with no Fleet authorization anywhere**, and the two are not the same set.
-
-### Where a value comes from when you did not pass a flag
-
-**There are no global options.** The root declares no flags of its own, so there is nothing to set before a command name and nothing that overrides what a command declares for itself. **Whether a command's own flag is accepted in that position is the command-line framework's decision rather than Fleet's, and is not established at this release**, which is the same boundary as the placement question after a subcommand further down. No test in Fleet's tree puts a flag before a command name. Four flags are declared command by command and behave as though they were global:
-
-| Flag | Environment variable | Default |
-|---|---|---|
-| `--config` | `CONFIG` | `~/.fleet/config` |
-| `--context` | `CONTEXT` | `default` |
-| `--debug` | `DEBUG` | off |
-| `--enable-log-topics`, `--disable-log-topics` | `FLEET_ENABLE_LOG_TOPICS`, `FLEET_DISABLE_LOG_TOPICS` | unset |
-
-**`--debug` dumps the client's own request bodies to standard error**, which on a `login`, a `user create`, an `apply` or a `gitops` run puts a credential into the terminal scrollback and into any captured CI log. `config set` is not in that list, because it declares no `--debug` and makes no request.
-
-**Not every command declares all four.** `package` declares none of `--config`, `--context` or `--debug`, and carries an unrelated `--debug` of its own that turns on agent debug logging in the package it builds. `new` declares none of them. The five `mdm` subcommands and the three `generate` subcommands declare `--context` and `--debug` but not `--config`. So a claim that a flag is available on every subcommand is true of the `debug` family and untrue of the client.
-
-**Most of the client's environment variables are unprefixed, which is the sharpest option-resolution hazard here.** Fleet's server variables all begin `FLEET_`. The client's flag variables mostly do not, and the set includes `TOKEN`, `PASSWORD`, `INSECURE`, `FORCE`, `DRY_RUN`, `DEBUG`, `QUIET`, `TIMEOUT`, `NAME`, `DIR`, `HOSTS`, `QUERY`, `EMAIL`, `FILENAME` and `DELETE_OTHER_FLEETS`. Several of those are names a CI runner or a shell profile sets for unrelated reasons. An exported `DEBUG=1` makes every `fleetctl` call **that declares the standard debug flag** dump request bodies, which is most of them and not all: `new`, `convert`, the two `config` subcommands, `prepare` and the update-repository commands do not declare it and ignore the variable, and `package`'s `--debug` is a different flag that reads no environment variable at all. An exported `INSECURE=1` makes `fleetctl config set` disable certificate verification for the context it writes. `fleetctl package` prefixes its own variables `FLEETCTL_`, which is a good indication that the unprefixed set is inherited rather than intended.
-
-**In automation, pass the flags explicitly** and give each job its own configuration file.
-
-### What is not established about flag placement
-
-**Whether `--config` is accepted after a subcommand that does not declare it is not established at this release**, and the index below is laid out so as to imply neither answer.
-
-What Fleet's source settles is the shape of the question. For the five `mdm` subcommands and the three `generate` subcommands, the parent command declares `--config`, the subcommand does not, and the code that builds the API client reads a `--config` value regardless. Whether the value is readable at that position is decided by the third-party command-line framework Fleet is built on, which is not part of Fleet's own source and could not be read at the tag. No test in Fleet's tree places the flag after any of those eight subcommands, so nothing in the release settles it either.
-
-**The form Fleet's own tests use is the safe one**: put `--config` where the command that declares it sits, or use the `CONFIG` environment variable, which is read the same way whatever the placement.
-
-## What a result and an exit status prove
-
-![Reference](../_assets/icons/reference.svg) This is the legend the index is read through. **A zero exit proves that the client reached the end of its work without returning an error.** It does not prove that Fleet did the thing, that the thing reached a device, that your file was fully validated, that you were authorised, or that the flags you passed were understood.
-
-**The client's own exits are zero and one.** No command distinguishes "not found" from "forbidden" from "the network is down" in its status, so a pipeline branching on the exit code is branching on one bit. Signals, panics and a launcher's own failure produce other process statuses, so this is a statement about what the program returns rather than about everything a shell can observe.
-
-**Two error sinks exist and they write to different streams.** One prints to standard error and the other to standard output. **Which class of failure reaches which sink is not established, and this appendix assigns neither**: that dispatch belongs to the command-line framework rather than to Fleet, which also decides whether a given failure reaches one sink, the other, or both. The consequence for a pipeline holds either way. **Capture both streams**, because the text you need is not reliably on one of them.
-
-**The displayed error text has the HTTP status stripped out of it.** Where a request failed with a status code, the client removes the leading "received status N" portion before printing, so the number is not in the string a script would search for.
-
-### Four things exit zero can mean
-
-Read a row's result contract as one of these four. The fourth is why this appendix has a register.
-
-**The request completed and Fleet returned success.** The ordinary case, and what most rows carry.
-
-**Fleet accepted a request and a device has not acted on it.** The five `mdm` subcommands and `run-script --async`. All five `mdm` subcommands say so in their output, in the form "when it comes online", and the index marks them `accepted`. A command that is accepted rather than done is not a defect and is not in the register: it is a property of the operation, and you confirm it by reading the result from Fleet afterwards.
-
-**The client's work completed and the outcome is in the text rather than in the status.** `run-script` waiting for its result exits zero whatever the script returned, and the script's own exit code is a line of output that `--quiet` removes. `report` exits zero when it stops on a timeout.
-
-**The advertised outcome was refused, incomplete or partial, and the status does not say so.** That is the register below. **Most of those cases print something**, a warning line or an advisory, so the shared property is not silence: it is that the exit status is zero either way, and nothing a script can branch on records the refusal.
-
-### Output modes, and where structured output is absent
-
-There is no single output-format flag. Five renderers exist and they are attached command by command:
-
-| Mode | Where you get it |
-|---|---|
-| Table | The default for `get reports`, `packs`, `labels`, `hosts`, `user_roles`, `fleets` and `software`, and the sole mode for `get carves`, `get mdm-commands`, `get mdm-apple`, `get mdm-ab` and `get mdm-apple-bm` |
-| `--yaml` | Nine `get` subcommands. `get carve` prints YAML whether you ask for it or not |
-| `--json` | The same nine |
-| JSON lines | `fleetctl report`, by default: one object per host, carrying the host, its rows and any error |
-| Live table | `fleetctl report --pretty` |
-
-**`--remove-deprecated-keys` strips the older key spellings from JSON and YAML output.** Without it the output carries both the current and the deprecated name for the same field, which matters when the output is going back into `apply`.
-
-**A large part of the client has no structured output on the terminal.** Every `mdm` subcommand, `run-script`, `trigger`, `gitops`, `apply`, `delete`, `upgrade-packs`, `get mdm-command-results`, `package`, `new`, the update-repository subcommands, and every `debug` subcommand **but one**, print prose to your screen. **The exception is `debug errors --stdout`**, which streams Fleet's error store to the terminal as JSON. Anything parsing that is parsing sentences, and sentences change between releases without a deprecation.
-
-**Several of them do write structured output, to a file rather than to your terminal**, and that is the distinction the sentence above hides. `upgrade-packs` requires an output path and writes report YAML into it. `new` writes a whole YAML repository. Four `debug` subcommands write JSON: `errors`, which `--stdout` sends to the terminal instead, as above, and the three database diagnostics, which `debug archive` then bundles alongside the profiling files. `get mdm-command-results` is the opposite case: it has no structured mode at all, and the payload and result cells inside its text blocks are XML.
-
-**Four commands declare a `--yaml` flag that nothing in them reads**: `hosts transfer`, `goquery`, `user create` and `user delete`. The declaration carries no destination, no environment variable and no action of its own, so the only route to the value is the invocation's own context, and none of the four takes it: the query shell is handed a client and never sees the context at all. What the framework does with a declared flag nobody reads is a question about the framework.
-
-**Stream discipline is inconsistent.** Some commands print through the client's own writer and others print straight to standard output, while progress and warning lines from the API client go to standard error. That is the second reason to capture both streams.
 
 ## The command index
 
@@ -191,7 +52,7 @@ Five phrases replace a chain where there is nothing to chain:
 | `route-dependent` | Whatever the route you named requires |
 | `no contract` | The command fails before authentication is reached |
 
-**A chain is the suffix after the common prefix** stated above, for the 51 rows that carry it: a `version · read` that ends the command on any error, then an `app_config · read` that tolerates a permission refusal. **`preview` is the one row whose authorization sits outside that prefix**, and its own row carries the chain in full.
+**A chain is the suffix after the common prefix** stated below, for the 51 rows that carry it: a `version · read` that ends the command on any error, then an `app_config · read` that tolerates a permission refusal. **`preview` is the one row whose authorization sits outside that prefix**, and its own row carries the chain in full.
 
 **Where a row's chain differs between Fleet Free and Fleet Premium, the row carries both**, because a reader who holds the last permission on Free and is refused has been told the wrong thing. The seventeen such rows are listed after the index.
 
@@ -384,6 +245,112 @@ Neither reaches Fleet. Both read and write the local configuration file only.
 
 **The outcome-level sibling of this register is [a.1](a.1-capability-index.md#where-this-index-ends)'s closing section, "Where this index ends".** Five of the six groups above appear there as outcomes: the update repository, file carving and vulnerability data as capability rows, packs and the sandbox in its no-row list. First-run `setup` is this register's alone. The two registers describe overlapping gaps at different grain, so quote either count on its own and never their sum.
 
+## Which server and which credential an invocation selects
+
+![Reference](../_assets/icons/reference.svg) One question decides where a destructive command lands, and it is answered before any flag you typed is considered.
+
+**The client reads a configuration file holding named contexts.** Each context carries a server address, an account email, a token, and the transport settings for reaching that server: a certificate authority, a URL prefix, whether to skip verification, and any custom headers. Switching context switches all of it at once. The file is `~/.fleet/config` unless `--config` names another, and the context is `default` unless `--context` names another.
+
+**The file is created with owner-only permissions inside an owner-only directory**, and on macOS and Linux the client refuses to open an existing file whose group or other permissions are wider than that. On Windows there is no such check.
+
+**Writes to it are whole-file and unlocked**, so two `fleetctl` processes changing configuration at the same time lose one of the two changes and both exit zero. [6.4](../06-automate-fleet/6.4-use-fleetctl.md) covers giving each automation job its own file, which removes the class of problem rather than narrowing it.
+
+Five situations produce answers worth knowing in advance:
+
+| Situation | What happens |
+|---|---|
+| No configuration file at all | One is created, and the command then fails, asking you to set an address |
+| `--context` names a context that does not exist | A hard error, for every command except `config get` and `config set` |
+| The same, under `config get` or `config set` | **The context is created**, with a printed note. Fleet does not know `prod-typo` is a typo: it creates a perfectly usable context with exactly that name, and a later command passing the same typo selects exactly it. The `prod` context you meant is untouched, still holding whatever it held before, or does not exist and fails outright |
+| An address is set and the token is empty | An instruction to log in, on standard error, or the single sign-on instructions where the server reports it enabled |
+| **Windows, with no certificate authority and no skip-verify setting** | A hard refusal. A genuine platform difference in the client, not a convention |
+
+### The two round-trips an authenticated command makes before its own work
+
+**Nearly every authenticated command asks Fleet two questions before it asks the one you typed.** It reads Fleet's version, and it reads the application configuration. Both are authenticated requests, both can be refused, and the two refusals differ:
+
+| | What it asks | What a refusal does |
+|---|---|---|
+| **First** | `version · read` (global) | **Ends the command.** Any error, a permission error included, returns before your work begins. This call doubles as the check that your token is still valid |
+| **Second** | `app_config · read` (global) | **Tolerated when it is a permission refusal**, fatal otherwise. The tolerance is what lets a low-privilege automation identity, such as one holding the GitOps role, use the client at all |
+
+**The 51 rows that carry the prefix state only the suffix after those two.** It is stated once here rather than in 51 rows, and a row that shows an application-configuration read is showing a second, command-specific one. The other eighteen rows are the subject of the paragraph below, and one of them has authorization of its own that this prefix does not describe.
+
+**Eighteen of the 69 rows do not carry the prefix, and seventeen of those eighteen reach no Fleet authorization at all.** The two counts differ by one row and the row is `preview`. Fourteen make no call to any Fleet: `convert`, `package`, `new`, `vulnerability-data-stream`, `prepare`, `preview stop`, `preview reset`, both `config` subcommands and the five update-repository subcommands. Three reach Fleet without a credential: `setup`, `login` and `debug connection`.
+
+**`preview` is the one that differs, and it differs in both directions.** It never calls your Fleet, and it is not free of Fleet authorization: inside the sandbox it starts, it creates the first administrator, logs in as that account, then reads and writes the application configuration, reads the enroll secret, lists hosts, and runs a nested GitOps reconcile that carries this same prefix. Those are the sandbox's authorization decisions rather than your Fleet's, and the account taking them is the one `preview` just created, so none of them can refuse you. **The count is therefore eighteen rows without the prefix and seventeen with no Fleet authorization anywhere**, and the two are not the same set.
+
+### Where a value comes from when you did not pass a flag
+
+**There are no global options.** The root declares no flags of its own, so there is nothing to set before a command name and nothing that overrides what a command declares for itself. **Whether a command's own flag is accepted in that position is the command-line framework's decision rather than Fleet's, and is not established at this release**, which is the same boundary as the placement question after a subcommand further down. No test in Fleet's tree puts a flag before a command name. Four flags are declared command by command and behave as though they were global:
+
+| Flag | Environment variable | Default |
+|---|---|---|
+| `--config` | `CONFIG` | `~/.fleet/config` |
+| `--context` | `CONTEXT` | `default` |
+| `--debug` | `DEBUG` | off |
+| `--enable-log-topics`, `--disable-log-topics` | `FLEET_ENABLE_LOG_TOPICS`, `FLEET_DISABLE_LOG_TOPICS` | unset |
+
+**`--debug` dumps the client's own request bodies to standard error**, which on a `login`, a `user create`, an `apply` or a `gitops` run puts a credential into the terminal scrollback and into any captured CI log. `config set` is not in that list, because it declares no `--debug` and makes no request.
+
+**Not every command declares all four.** `package` declares none of `--config`, `--context` or `--debug`, and carries an unrelated `--debug` of its own that turns on agent debug logging in the package it builds. `new` declares none of them. The five `mdm` subcommands and the three `generate` subcommands declare `--context` and `--debug` but not `--config`. So a claim that a flag is available on every subcommand is true of the `debug` family and untrue of the client.
+
+**Most of the client's environment variables are unprefixed, which is the sharpest option-resolution hazard here.** Fleet's server variables all begin `FLEET_`. The client's flag variables mostly do not, and the set includes `TOKEN`, `PASSWORD`, `INSECURE`, `FORCE`, `DRY_RUN`, `DEBUG`, `QUIET`, `TIMEOUT`, `NAME`, `DIR`, `HOSTS`, `QUERY`, `EMAIL`, `FILENAME` and `DELETE_OTHER_FLEETS`. Several of those are names a CI runner or a shell profile sets for unrelated reasons. An exported `DEBUG=1` makes every `fleetctl` call **that declares the standard debug flag** dump request bodies, which is most of them and not all: `new`, `convert`, the two `config` subcommands, `prepare` and the update-repository commands do not declare it and ignore the variable, and `package`'s `--debug` is a different flag that reads no environment variable at all. An exported `INSECURE=1` makes `fleetctl config set` disable certificate verification for the context it writes. `fleetctl package` prefixes its own variables `FLEETCTL_`, which is a good indication that the unprefixed set is inherited rather than intended.
+
+**In automation, pass the flags explicitly** and give each job its own configuration file.
+
+### What is not established about flag placement
+
+**Whether `--config` is accepted after a subcommand that does not declare it is not established at this release**, and the index above is laid out so as to imply neither answer.
+
+What Fleet's source settles is the shape of the question. For the five `mdm` subcommands and the three `generate` subcommands, the parent command declares `--config`, the subcommand does not, and the code that builds the API client reads a `--config` value regardless. Whether the value is readable at that position is decided by the third-party command-line framework Fleet is built on, which is not part of Fleet's own source and could not be read at the tag. No test in Fleet's tree places the flag after any of those eight subcommands, so nothing in the release settles it either.
+
+**The form Fleet's own tests use is the safe one**: put `--config` where the command that declares it sits, or use the `CONFIG` environment variable, which is read the same way whatever the placement.
+
+## What a result and an exit status prove
+
+![Reference](../_assets/icons/reference.svg) This is the legend the index is read through. **A zero exit proves that the client reached the end of its work without returning an error.** It does not prove that Fleet did the thing, that the thing reached a device, that your file was fully validated, that you were authorised, or that the flags you passed were understood.
+
+**The client's own exits are zero and one.** No command distinguishes "not found" from "forbidden" from "the network is down" in its status, so a pipeline branching on the exit code is branching on one bit. Signals, panics and a launcher's own failure produce other process statuses, so this is a statement about what the program returns rather than about everything a shell can observe.
+
+**Two error sinks exist and they write to different streams.** One prints to standard error and the other to standard output. **Which class of failure reaches which sink is not established, and this appendix assigns neither**: that dispatch belongs to the command-line framework rather than to Fleet, which also decides whether a given failure reaches one sink, the other, or both. The consequence for a pipeline holds either way. **Capture both streams**, because the text you need is not reliably on one of them.
+
+**The displayed error text has the HTTP status stripped out of it.** Where a request failed with a status code, the client removes the leading "received status N" portion before printing, so the number is not in the string a script would search for.
+
+### Four things exit zero can mean
+
+Read a row's result contract as one of these four. The fourth is why this appendix has a register.
+
+**The request completed and Fleet returned success.** The ordinary case, and what most rows carry.
+
+**Fleet accepted a request and a device has not acted on it.** The five `mdm` subcommands and `run-script --async`. All five `mdm` subcommands say so in their output, in the form "when it comes online", and the index marks them `accepted`. A command that is accepted rather than done is not a defect and is not in the register: it is a property of the operation, and you confirm it by reading the result from Fleet afterwards.
+
+**The client's work completed and the outcome is in the text rather than in the status.** `run-script` waiting for its result exits zero whatever the script returned, and the script's own exit code is a line of output that `--quiet` removes. `report` exits zero when it stops on a timeout.
+
+**The advertised outcome was refused, incomplete or partial, and the status does not say so.** That is the register below. **Most of those cases print something**, a warning line or an advisory, so the shared property is not silence: it is that the exit status is zero either way, and nothing a script can branch on records the refusal.
+
+### Output modes, and where structured output is absent
+
+There is no single output-format flag. Five renderers exist and they are attached command by command:
+
+| Mode | Where you get it |
+|---|---|
+| Table | The default for `get reports`, `packs`, `labels`, `hosts`, `user_roles`, `fleets` and `software`, and the sole mode for `get carves`, `get mdm-commands`, `get mdm-apple`, `get mdm-ab` and `get mdm-apple-bm` |
+| `--yaml` | Nine `get` subcommands. `get carve` prints YAML whether you ask for it or not |
+| `--json` | The same nine |
+| JSON lines | `fleetctl report`, by default: one object per host, carrying the host, its rows and any error |
+| Live table | `fleetctl report --pretty` |
+
+**`--remove-deprecated-keys` strips the older key spellings from JSON and YAML output.** Without it the output carries both the current and the deprecated name for the same field, which matters when the output is going back into `apply`.
+
+**A large part of the client has no structured output on the terminal.** Every `mdm` subcommand, `run-script`, `trigger`, `gitops`, `apply`, `delete`, `upgrade-packs`, `get mdm-command-results`, `package`, `new`, the update-repository subcommands, and every `debug` subcommand **but one**, print prose to your screen. **The exception is `debug errors --stdout`**, which streams Fleet's error store to the terminal as JSON. Anything parsing that is parsing sentences, and sentences change between releases without a deprecation.
+
+**Several of them do write structured output, to a file rather than to your terminal**, and that is the distinction the sentence above hides. `upgrade-packs` requires an output path and writes report YAML into it. `new` writes a whole YAML repository. Four `debug` subcommands write JSON: `errors`, which `--stdout` sends to the terminal instead, as above, and the three database diagnostics, which `debug archive` then bundles alongside the profiling files. `get mdm-command-results` is the opposite case: it has no structured mode at all, and the payload and result cells inside its text blocks are XML.
+
+**Four commands declare a `--yaml` flag that nothing in them reads**: `hosts transfer`, `goquery`, `user create` and `user delete`. The declaration carries no destination, no environment variable and no action of its own, so the only route to the value is the invocation's own context, and none of the four takes it: the query shell is handed a client and never sees the context at all. What the framework does with a declared flag nobody reads is a question about the framework.
+
+**Stream discipline is inconsistent.** Some commands print through the client's own writer and others print straight to standard output, while progress and warning lines from the API client go to standard error. That is the second reason to capture both streams.
+
 ## The exit-zero register
 
 ![Troubleshooting](../_assets/icons/troubleshooting.svg) **Thirty-four invocations where Fleet or the client detected an adverse, incomplete or refused outcome and the command still exited zero.** This is the section to read before you run `fleetctl` unattended, because every row is a case where a pipeline that branches on the exit code branches the wrong way.
@@ -535,6 +502,41 @@ Ranked on five axes: whether it can be undone, how much one invocation reaches, 
 **Two more options bind at build time and cannot be repaired later.** The properties that carry an end user's email and a licence-agreement token into the installer are written by the client that builds the package, so an old client produces a package that cannot carry them and no later agent upgrade changes that. [a.6](a.6-glossary-and-release-compatibility.md) carries the agent floors for both. **Rebuild the package rather than upgrading the agent.**
 
 **The package's `--debug` is not the client's `--debug`.** On `package` it turns on debug logging in the agent you are shipping. Everywhere else it dumps the client's own request bodies to standard error.
+
+## Where the inventory came from, and why a file search under-reports it
+
+![Explanation](../_assets/icons/explanation.svg) The inventory above is the command tree Fleet assembles at 4.90.1, read from source at the release tag, because no `fleetctl` binary trustworthy as 4.90.1 was available to interrogate. That matters when your client disagrees with this table: the likely explanation is that you are running a different version, and the version notes at the end say why that is easy to do without noticing.
+
+**Four things make the tree non-uniform**, and each defeats a naive search of the source files. They are worth knowing because they are also the four places the tree differs between two machines running the same release.
+
+**One command is wired in at run time.** The interactive query shell is always present in the tree, and its implementation is supplied by the program that builds the client. A binary that embeds Fleet's client library without supplying it still shows the command, which then reports that the support is not built in.
+
+**One family exists on two platforms of three.** The self-hosted update repository commands are built for macOS and Linux. On Windows the family is present as a single entry carrying no subcommands, no action and no flags, whose pre-action step returns a message telling you to use a Linux environment. **Whether that pre-action step runs ahead of the client's own help handling is not established here**, because it is decided by the command-line framework rather than by Fleet, and this manual verifies against Fleet's source alone.
+
+**Every `get` subcommand is modified after it is declared**, gaining two logging flags that are not written where the subcommand is. That is why `--enable-log-topics` and `--disable-log-topics` appear across the `get` family and on three other commands and nowhere else.
+
+**Three `debug` subcommands are built by a shared helper** rather than declared one by one, so a search for command declarations finds nine of the twelve.
+
+### The counts, which are platform-specific
+
+**77 named entries on macOS and Linux. 72 on Windows.** The root registers 27 top-level names on every platform. What differs is the update family, which contributes five leaves on macOS and Linux and none on Windows.
+
+| | macOS and Linux | Windows |
+|---|---|---|
+| Top-level names | 27 | 27 |
+| Leaf subcommands | 50 | 45 |
+| **Named entries** | **77** | **72** |
+| Behavioural rows in the index above | 69 | 65 |
+
+**A behavioural row is an invocation that does something.** On macOS and Linux, nineteen of the 27 top-level commands act in their own right and the other eight are containers whose job is to hold subcommands. On Windows it is twenty and seven, because `updates` holds no subcommands there and fails on invocation instead, which is a behaviour rather than a container. Containers appear in the index as group headings rather than as rows, because a row for a command that does nothing describes a behaviour that does not exist.
+
+**Do not carry 77 across platforms.** It is the count for the macOS and Linux assembly. `fleetctl package` is one command everywhere and still differs by platform in its options: on Windows it builds one package type, one option is available on Linux alone, and another on Windows and macOS alone.
+
+### Two enumerations here are floors rather than inventories
+
+**The permission chains are established by reading each command through to the authorization decisions it reaches**, so a decision taken in middleware, in a wrapper this verification did not assemble, or on a branch it did not reach would not appear. **The exit-zero register is bounded by a stated class and enumerated by search**, and its two most consequential rows were found by reading rather than by searching, which is a fair warning about what a search alone returns.
+
+A floor is useful and it is a different claim from a complete list. Where this appendix has a complete list, such as the 27 top-level names, it says so.
 
 ## Aliases, deprecated surfaces, and version notes
 
