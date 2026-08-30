@@ -375,7 +375,7 @@ dominant defect class operating at the scale of a whole part. The register's gra
 cell saying Premium looks identical whether it was read out of a validator or assumed from a
 neighbour.
 
-### The two failure modes this part has produced, which are new
+### The three failure modes this part has produced, which are new
 
 **One. A correction recorded in the ledger and never made in the file.** a.8 hit this three rounds
 running and a.6 twice. The mechanism is mechanical: **`unwrap.py` reflows paragraphs into single
@@ -389,6 +389,32 @@ edits is invisible, and it took two independent review rounds to find three of t
 **Two. A summary sentence outrunning the table it summarises.** a.6's server-floor table said it
 contained rows it did not; its 4.82 paragraph was narrowed while the table beneath kept the blanket
 promise. Cheap to make, hard to see, and the reviewer found both.
+
+**Three. A claim about a class that is only true of one member.** This is the one to look for
+first now, because it accounts for more corrections in Part IX than the other two together, and
+unlike them it survives every mechanical check the project has.
+
+a.3's third research gate found six wrong claims and **five were this shape**. The load-bearing one:
+the draft said the server replaces four configuration blocks wholesale *whenever a spec is applied,
+whatever applied it*. It is a request option on one route, and the GitOps client is the only thing in
+Fleet that sets it. Everything about the sentence was true except its scope, and the scope was the
+part a reader would act on. The same gate caught "the ordinary API preserves what you omit", true of
+one route and false of the fleet spec path, and "reading the host has to be a live query", which
+reaches one half of agent options.
+
+a.2's first draft review found three more of it in prose that had never been near a table: every row
+points to its owning chapter, when no such column exists; query-dependent operations on mobile are
+`Not applicable`, when the table marks them `Unsupported` on positive evidence; and all 88
+not-platform-scoped rows are about the Fleet server, when two of them are not.
+
+**Why it survives.** A checker cannot see it, because nothing is malformed. A reviewer reading for
+correctness can miss it, because the sentence is true of the case they check. It is only visible
+when someone asks *of what exactly is this true*, which is why round 1 of an appendix review now asks
+that question explicitly rather than hoping.
+
+**The tell is a universal quantifier next to a mechanism**: every, always, whatever, any, all,
+the only. When you write one, name the thing it ranges over and check the boundary rather than the
+centre.
 
 ### And one about filing defects against Fleet
 
