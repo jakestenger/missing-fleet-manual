@@ -32,6 +32,12 @@ OUT = os.path.join(ROOT, "build", "manual-status.html")
 # only counted, so nothing from them can leak into the public tree.
 REVIEWS = os.path.join(os.path.dirname(ROOT), "missing-fleet-manual-private", "reviews")
 
+# The owner reset every review count to zero on 2026-08-29, once all 78 chapters were drafted.
+# The per-chapter era (2026-08-25 through 2026-08-29) stays on disk as an archive, but only the
+# whole-book era under phase2/ counts. Walking the old directories would resurrect the retired
+# counts every time this page regenerates.
+PHASE2 = os.path.join(REVIEWS, "phase2")
+
 PART_NAMES = {
     "00": ("0", "Introduction"),
     "01": ("I", "Foundations"),
@@ -95,9 +101,9 @@ def review_index():
     """
     rounds = defaultdict(int)
     latest = {}
-    if not os.path.isdir(REVIEWS):
+    if not os.path.isdir(PHASE2):
         return rounds, latest
-    for dirpath, _dirnames, filenames in os.walk(REVIEWS):
+    for dirpath, _dirnames, filenames in os.walk(PHASE2):
         for fn in sorted(filenames):
             # Appendix sections are lettered, `a.4`, not numbered, so a digits-only pattern
             # counted zero rounds for every appendix and reported them all as unreviewed.
@@ -267,16 +273,17 @@ def main():
         "<code>check-verified.py</code>.</span></div>\n"
     )
     a(
-        '    <div class="rule-card"><span class="k">Review cap</span>'
-        '<span class="v">Five rounds per chapter</span><span class="n">Rounds run until a chapter '
-        "comes back clean or hits five, then it stays at <code>drafting</code> and waits for the "
-        "whole-part review. <strong>The appendices are being written to three rounds each</strong>, "
-        "set by the owner on 2026-08-28.</span></div>\n"
+        '    <div class="rule-card"><span class="k">Review reset</span>'
+        '<span class="v">All counts zero, 2026-08-29</span><span class="n">With every chapter '
+        "drafted, the owner retired the per-chapter rounds (the five-round cap, three per "
+        "appendix) and reset every count to zero. The next phase reviews <strong>the whole book "
+        "as a single entity</strong>.</span></div>\n"
     )
     a(
-        '    <div class="rule-card"><span class="k">Defect record</span>'
-        '<span class="v">%d chapters reviewed</span><span class="n">%d rounds recorded. No chapter '
-        "has yet passed a round without a material finding.</span></div>\n" % (reviewed, all_rounds)
+        '    <div class="rule-card"><span class="k">Whole-book review</span>'
+        '<span class="v">%d chapters reviewed, %d rounds</span><span class="n">Counted from the '
+        "whole-book era only. In the retired per-chapter era, no chapter ever passed a round "
+        "without a material finding.</span></div>\n" % (reviewed, all_rounds)
     )
     a("  </section>\n\n")
 
@@ -349,9 +356,9 @@ def main():
       "documentation, and never against <code>main</code>.</p>\n")
     a("    <p>Word counts exclude HTML comments, which carry the image briefs. Round counts come "
       "from the review directories rather than from memory, and zero-byte transcripts from failed "
-      "runs are not counted as rounds. <strong>Only reviews of a finished draft are counted.</strong> "
-      "Outline and research reviews happen before there is prose to read, so they are excluded from "
-      "the count and from the verdict, however many of them a chapter took. This page is generated "
+      "runs are not counted as rounds. <strong>Only the whole-book era is counted:</strong> the "
+      "owner reset every count to zero on 2026-08-29, so the per-chapter reviews run before that "
+      "date remain archived but count for nothing here. This page is generated "
       "by <code>build/status-artifact.py</code>; nothing on it is typed in by hand.</p>\n")
     a("  </footer>\n\n</div>\n")
 

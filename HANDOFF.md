@@ -76,6 +76,26 @@ Treat a stale artifact as an unfinished step.
 
 ---
 
+## The review reset, 2026-08-29
+
+With every chapter and every appendix drafted, the owner reset the review ledger: **every
+per-chapter round count is zero as of 2026-08-29.** The five-round cap, the three-rounds-per-
+appendix rule, and every recorded verdict are history rather than state. The narratives below
+keep their round numbers because the lessons in them are real, but nothing gates on them any
+more, and no chapter is "more reviewed" than any other.
+
+What replaces the per-chapter regime: **the book is reviewed as a single entity.** Sol, at
+extra-high reasoning effort, makes one pass over the whole manual and writes a review synopsis
+covering accuracy, completeness and breadth, tone, and organization. The owner's bar for the
+pass: a reader who arrives as a competent engineer who has never seen Fleet should leave close
+to an expert, short only of experience and practice.
+
+New review output goes under `missing-fleet-manual-private/reviews/phase2/`.
+`build/status-artifact.py` counts rounds from that directory alone, so the status page shows
+zero rounds everywhere until the whole-book review produces output.
+
+---
+
 ## 2. Where the work actually stands
 
 **69 chapters written, 6 still outline stubs.** The stubs are 50 to 90 words each: a title, a
@@ -92,9 +112,10 @@ frontmatter block, and section headings. Do not mistake the file count for progr
 | VI. Automate Fleet | 5 | **Complete 2026-08-28.** All 5 drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part6-structure.md` |
 | VII. Operate Fleet | 6 | **Complete 2026-08-28.** All 6 drafted, one review round applied each, ledgers written, diagram prompts installed. Structure at `research/part7-structure.md`, and this part is held to a four-class evidence rule recorded there |
 | VIII. Troubleshooting | 14 | Written, reviewed to the cap, corrected. `drafting` |
-| IX. Appendices | 8 | **In progress 2026-08-29**, to three review rounds each rather than one, set by the owner. a.2, a.3, a.4, a.6 and a.8 drafted; a.1, a.5 and a.7 still stubs. Per-appendix state in section 7. Structure agreed at `research/appendix-structure.md` |
+| IX. Appendices | 8 | **All 8 drafted, finished 2026-08-29.** Per-appendix detail in section 7. Structure agreed at `research/appendix-structure.md` |
 
-**So the entire manual body is drafted.** The only outline stubs left are three appendices: a.1, a.5 and a.7.
+**The entire manual is drafted: 78 chapters, zero outline stubs.** The last three appendices
+(a.1, a.5, a.7) landed on 2026-08-29.
 
 **The verification freeze is in force.** `check-verified.py` carries `FREEZE = True`, and nothing
 may carry `verified` until every part is drafted and every chapter has had a review round. Part II
@@ -361,9 +382,9 @@ is not a draft review should say so in its filename.
 
 ### Part IX is being built differently, and the reasons are worth carrying
 
-**Set by the owner on 2026-08-29: every appendix, three review rounds each.** Two have needed more
-than three and the reason is recorded below, because it is the most useful thing this part has
-produced so far.
+**Set by the owner on 2026-08-29: every appendix, three review rounds each.** Retired the same
+day by the review reset above, once all eight were drafted. The failure modes below outlived the
+regime that found them.
 
 **The structural decision.** a.1, a.2, a.4 and a.5 are four projections of **one shared capability
 register**, at `../missing-fleet-manual-private/research/capability-register.md`, 348 administrator
@@ -949,27 +970,21 @@ because what it found changes how to weigh the rest.
    5.1 to 5.3 are drafted with one review round each. Then **Parts VI and VII**, still unstarted:
    11 chapters, all stubs.
 
-### Appendix state, 2026-08-29
+### Appendix state: all eight drafted, 2026-08-29
 
-The owner set **three review rounds each** for Part IX rather than the one a body chapter gets, and
-the three rounds do three different jobs. **Round 1 is coverage**: is anything missing, is the scope
-decision honest, do the headline findings hold. **Round 2 is a cell-by-cell evidence audit**, sampled
-hard across the whole matrix and not just the diff. **Round 3 is a fresh whole read plus
-cross-appendix consistency**, because the four register projections can drift apart.
+The per-appendix review regime is retired by the review reset above; every appendix stands at
+zero rounds like the rest of the book. What each draft is, as it stands:
 
-Every round reads the whole appendix. Reviewing the diff is how a project ships a summary sentence
-that was true of an earlier version of its own table, which this one has done more than once.
-
-| | Draft | Research gates | Draft rounds | State |
-|---|---|---|---|---|
-| **a.1** Capability index | Stub | Research running | | The synonym layer over the register. **Its value is entirely the gap between what an administrator types and what this manual calls it**; a re-worded table of contents would be worthless |
-| **a.2** Platform capability matrix | 272 rows, 1,632 cells | 2 | **5, capped. Done** | 603 Supported, 102 Conditional, 180 Unsupported, 710 Not applicable, 37 Not established |
-| **a.3** Configuration model | 10,665 words | 3 | **3. Done** | Grew from 2,363 words. Five claims withdrawn at the evidence boundary |
-| **a.4** Roles and permissions | 150 rows, two tables | 4 | 2 applied, R3 running | 19 conditions, 40 qualified cells |
-| **a.5** Interface index | Stub | UI, GitOps and REST columns complete; `fleetctl` column running | | 348 rows against four interfaces. Drafts once the fourth column lands |
-| **a.6** Glossary and versions | 5,161 words | n/a | **4. Done** | Complete |
-| **a.7** fleetctl reference | 14,472 words, 70 rows | **4** | 1 applied, R2 running | 33 exit-zero rows, 17 edition-split rows, 15 commands with no owning chapter |
-| **a.8** API and endpoints | 3,310 words | n/a | **5, capped. Done** | Complete |
+| | Draft | What it holds |
+|---|---|---|
+| **a.1** Capability index | 14,522 words | Eight groups keyed on the reader's question, built over Fleet's own command-palette synonym lists. Carries both naming sets where Fleet's own naming diverges |
+| **a.2** Platform capability matrix | 273 rows, 1,638 cells | 604 Supported, 102 Conditional, 185 Unsupported, 710 Not applicable, 37 Not established; 101 condition records |
+| **a.3** Configuration model | 10,665 words | Grew from 2,363 words. Five claims withdrawn at the evidence boundary |
+| **a.4** Roles and permissions | 152 rows per table | 19 conditions, 50 qualified cells across six kinds |
+| **a.5** Interface index | 12,351 words, 347 rows | Four interface columns; 29 cross-column conflicts in 17 rows reconciled before drafting |
+| **a.6** Glossary and versions | 5,161 words | Complete |
+| **a.7** fleetctl reference | 16,074 words, 70 rows | 34 exit-zero rows, 17 edition-split rows, 51/18 prefix split |
+| **a.8** API and endpoints | 3,310 words | Complete |
 
 **The research gate is doing real work on this part and should not be skipped.** a.3 has been
 returned NOT SOUND three times and a.4 four times, and each round found something a draft would have
