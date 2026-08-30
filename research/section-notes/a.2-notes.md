@@ -111,7 +111,8 @@ One row was removed outright for the same reason rather than being answered from
 | Draft review 1 | NOT READY, five items | Coverage. Four capabilities added, one merge, one split, three renamed rows. **Two of the three headline findings corrected**, both in the direction of being worse than written |
 | Draft review 2 | NOT READY, twelve items | Cell audit. Nine wrong licence cells, six ChromeOS cells moved off absence, the escrow finding narrowed to what source supports |
 | Draft review 3 | NOT READY, fifteen items | Fresh read plus cross-appendix consistency. A fifteen-cell licence block, five missing capabilities, the vocabulary decision, and the stale forward references between all four appendices |
-| Draft review 4 | NOT READY, seven items | Cell-level and closing. **Counts and sweep denominators confirmed exact.** Seven blocking cell corrections remain |
+| Draft review 4 | NOT READY, seven items | Cell-level. **Counts and sweep denominators confirmed exact.** Seventeen cells moved to `Not established`, eight to `Not applicable` |
+| Draft review 5 | **Capped here**, four items, all applied | Closing. The catalogue block corrected in **both** directions, two prerequisites rewritten, one licence answer moved to `Not established` |
 
 ## The count moved every round, and that is the record worth keeping
 
@@ -121,9 +122,27 @@ against an independent count**, because on 2026-08-29 a first count disagreed wi
 was wrong: five rows carry lettered identifiers from register splits, and a pattern requiring digits
 only silently dropped them.
 
-**Verified at draft review 4:** 271 rows, 1,626 platform cells, 599 `Supported`, 105 `Conditional`,
-202 `Unsupported`, 697 `Not applicable`, 23 `Not established`, 104 condition records serving 105
-conditional cells because one condition governs two rows, and 88 non-platform rows.
+**Verified at draft review 5, the final round:** 272 rows, 1,632 platform cells, 603 `Supported`,
+102 `Conditional`, 180 `Unsupported`, 710 `Not applicable`, 37 `Not established`, 101 condition
+records serving 102 conditional cells because one condition governs two rows, 38 not-established
+records serving 37 platform cells plus one licence answer, no dangling or orphaned identifier in
+either register, and 88 non-platform rows.
+
+**Five conditions were retired across the rounds and their numbers were not reused**, so the register
+has visible gaps by design. Reusing a number would silently repoint any note written against the old
+one.
+
+## The last round earned its place by asking whether the fix had overshot
+
+Round 5 was asked one question the earlier rounds were not: **is `Not established` now over-applied?**
+It was, in four cells. Holding a catalogue application at a version had been swept along with its
+neighbours when the operation is provably platform-blind once the row's own prerequisite holds; with a
+cached version in hand Fleet checks only that the title is one of its own maintained applications.
+Those four are `Supported`.
+
+**A wrong `Not established` is a failure in the same way a wrong `Unsupported` is.** It sends a reader
+to go and establish something this release already settles, and it is harder to notice because it
+looks like caution. Ask the question in the last round of every remaining appendix.
 
 ## The one lesson worth carrying to a.5
 
