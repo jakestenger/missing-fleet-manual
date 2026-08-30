@@ -129,6 +129,17 @@ overruled.
 | 12 | Register and prose recounted; C17 added; four Go-side rows | `cmd/fleet/serve.go:982-990` and `:1366-1372` (the debug token handler is chosen before any role check); `server/service/service_campaigns.go:113` |
 | 13 | STYLE 8 sweep and repair of the sentences the earlier citation strip broke | C07's duplicated clause, C11's dangling parenthesis, C12's missing call-site names and literal Go value, and the API-only paragraph's "calls ... at" all rewritten as behaviour |
 
+**One correction outside the thirteen findings, and the new defect behind it.** While checking finding
+4 the delete-user path turned out to authorize deletion with the same action as profile editing, and
+the self rule grants that action unconditionally, so **any account can delete itself at any role and
+either scope**. `server/service/users.go:961` calls `Authorize(user, ActionWrite)` on the loaded
+target; `server/authz/policy.rego:165-170` grants `write` whenever `object.id == subject.id`; the
+route is registered at `server/service/handler.go:339`; and no guard exists beyond
+`DeleteUserIfNotLastAdmin` (`server/datastore/mysql/users.go:466`), which fires only when the target
+holds the global admin role. The cells for "Delete a user account" said `Denied` for every non-admin
+role and were wrong in the self case, so **C19 was added** and the row now carries it at both scopes.
+This change was not asked for by the review; it is flagged here so round 3 can challenge it.
+
 ## Rounds
 
 | Round | Verdict | Outcome |
@@ -138,4 +149,4 @@ overruled.
 | Research 3 | NOT SOUND, five items | 117 rows refused; merges and synonyms unpicked |
 | Research 4 | NOT SOUND, two items | Last merge split, absent intents rerouted, 142 |
 | Draft review 1 | NOT READY, five items | All applied. Six actions added: deleting a user, deleting a fleet, turning Windows management **on**, and three Volume Purchasing token actions. The empty-result qualifier was at the wrong grain and is now effect-specific. C14 added for disabled scripts, which overrides an Allowed cell for every role including a global administrator |
-| Draft review 2 | NOT READY, thirteen items | **All thirteen applied, none overruled.** Two rows split (account list against detail read; host transfer by name against by filter), 150 rows. Wrong cells corrected in ten places. C16, C17 and C18 added; C03 kept but no longer cited. The negative-evidence rule was reopened and three untested refusal families are now named in the appendix. STYLE 8 sweep removed every rule number, policy expression, Go name and literal value, and repaired the sentences an earlier citation strip had broken |
+| Draft review 2 | NOT READY, thirteen items | **All thirteen applied, none overruled.** Two rows split (account list against detail read; host transfer by name against by filter), 150 rows. Wrong cells corrected in ten places. C16, C17, C18 and C19 added; C03 kept but no longer cited. The negative-evidence rule was reopened and three untested refusal families are now named in the appendix. STYLE 8 sweep removed every rule number, policy expression, Go name and literal value, and repaired the sentences an earlier citation strip had broken |

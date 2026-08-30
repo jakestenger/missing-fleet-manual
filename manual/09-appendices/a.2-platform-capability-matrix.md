@@ -59,7 +59,9 @@ feature_requests:
 >
 > What Free refuses is narrow: a write that **switches disk encryption on**. Everything downstream of that switch is gated on the stored setting rather than on the licence.
 >
-> So a deployment that ran Premium with encryption enforced, and then drops to Free, does not stop. The stored setting is still on, because nothing clears it, and Fleet **goes on collecting and storing new recovery keys** from Windows and Linux hosts. Reading a key was never licence-gated at all, so it also goes on surrendering every key it holds, to every role that can read the host ([a.4](a.4-roles-and-permissions-matrix.md)).
+> So a deployment that ran Premium with encryption enforced, and then drops to Free, does not stop. The stored setting is still on, because nothing clears it, and Fleet **goes on collecting and storing new recovery keys from Windows hosts**. Reading a key was never licence-gated at all, so it also goes on surrendering every key it holds, to every role that can read the host ([a.4](a.4-roles-and-permissions-matrix.md)).
+>
+> **Linux is narrower and worth stating exactly**, because the difference is the kind a reader would otherwise generalise wrongly. Free refuses to start a new Linux escrow outright. What it will do is finish one that was already pending when the licence changed, and accept that upload without checking the licence again.
 >
 > There is a second effect that is easier to hit and harder to diagnose. Because the refusal fires on any write whose new value is on, **a downgraded deployment cannot save any device-management setting** until it first turns disk encryption off, and the error names the encryption field rather than the change you were making.
 

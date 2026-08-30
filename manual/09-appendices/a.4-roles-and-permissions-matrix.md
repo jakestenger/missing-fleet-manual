@@ -132,7 +132,7 @@ Three kinds of refusal get confused, and they fail differently:
 | Create a user account<br>`user · write`; the account does not exist yet, so the self branch cannot apply | Allowed | Denied | Denied | Denied | Denied | Denied |
 | Edit your own account<br>`user · write` | Allowed | Allowed | Allowed | Allowed | Allowed | Allowed |
 | Edit another user's account<br>`user · write` | Allowed | Denied | Denied | Denied | Denied | Denied |
-| Delete a user account<br>`user · write` | Allowed | Denied | Denied | Denied | Denied | Denied |
+| Delete a user account<br>`user · write` | Allowed | Conditional (C19) | Conditional (C19) | Conditional (C19) | Conditional (C19) | Conditional (C19) |
 | Change a user's role or fleets<br>`user · write_role` | Allowed | Denied | Denied | Denied | Denied | Denied |
 | Change a password<br>`user · change_password` | Allowed | Conditional (C01) | Conditional (C01) | Conditional (C01) | Conditional (C01) | Conditional (C01) |
 | List and read pending invites<br>`invite · read` | Allowed | Denied | Denied | Denied | Denied | Denied |
@@ -310,7 +310,7 @@ The subject holds this role on fleet T and holds no global role. The cell answer
 | Create a user account<br>`user · write`; the account does not exist yet, so the self branch cannot apply | Conditional (C02) | Denied | Denied | Denied | Denied | Denied |
 | Edit your own account<br>`user · write` | Allowed | Allowed | Allowed | Allowed | Allowed | Allowed |
 | Edit another user's account<br>`user · write` | Conditional (C02) | Denied | Denied | Denied | Denied | Denied |
-| Delete a user account<br>`user · write` | Conditional (C02) | Denied | Denied | Denied | Denied | Denied |
+| Delete a user account<br>`user · write` | Conditional (C02, C19) | Conditional (C19) | Conditional (C19) | Conditional (C19) | Conditional (C19) | Conditional (C19) |
 | Change a user's role or fleets<br>`user · write_role` | Conditional (C02) | Denied | Denied | Denied | Denied | Denied |
 | Change a password<br>`user · change_password` | Conditional (C01) | Conditional (C01) | Conditional (C01) | Conditional (C01) | Conditional (C01) | Conditional (C01) |
 | List and read pending invites<br>`invite · read` | Denied | Denied | Denied | Denied | Denied | Denied |
@@ -473,7 +473,7 @@ The subject holds this role on fleet T and holds no global role. The cell answer
 
 ## The condition register
 
-**Eighteen conditions, C01 to C18, with no gaps in the numbering.** Every one of them states both branches. Seventeen are cited from at least one cell. **C03 is not cited at this release**, because the two rows that carried it turned out to be unconditional for every role; it keeps its number so that the research ledger behind this appendix still lines up.
+**Nineteen conditions, C01 to C19, with no gaps in the numbering.** Every one of them states both branches. Eighteen are cited from at least one cell. **C03 is not cited at this release**, because the two rows that carried it turned out to be unconditional for every role; it keeps its number so that the research ledger behind this appendix still lines up.
 
 **C01, the account is the requester's own.** **Allowed** when the account being read or written is the caller's own and that account already exists. **Denied** for any other account, unless a separate grant covers it. Note the two omissions. Changing a role is not on the self list, so nobody can change their own role this way. And a brand-new account has no identity yet, so **creating an account is never a self-service act**, which is why the creation row is a denial for every role that has no general grant rather than a condition.
 
@@ -516,6 +516,8 @@ The subject holds this role on fleet T and holds no global role. The cell answer
 **C17, debug mode replaces the role check with a token.** A server started in debug mode prints a debug address carrying a generated token. A request to a debug endpoint that carries that token is then handed to a separate handler which validates the token and nothing else, so **Fleet's global-administrator check is never reached**. **Allowed** for anyone holding the token against a server started in debug mode, with no Fleet role and no Fleet session at all. **Denied** for every role except a global administrator on a server started normally.
 
 **C18, listing accounts is scoped by the fleet the request names.** **Allowed** for a fleet administrator when the request names a fleet they administer. **Denied** when the request names no fleet, or names one they do not administer. A global role needs no fleet in the request and is not subject to this, and a fleet-scoped role other than administrator cannot list accounts at all.
+
+**C19, deleting your own account.** Fleet decides account deletion with the same permission it uses for editing an account, and **every authenticated identity may write its own account**, so the delete succeeds on yourself whatever role you hold. **Allowed** when the account being deleted is the caller's own, at either scope, unless the caller is the last remaining global administrator, which Fleet refuses separately. **Denied** for anybody else's account, unless a separate grant covers it. This is not a documented self-service route and it is worth knowing before an automation account is given a role on the assumption it cannot remove itself.
 
 **C14, C16 and C17 are the three conditions that do not turn on the caller's role at all.** Two of them refuse a request the role alone would allow, and the third admits one the role alone would refuse. They are conditions rather than notes for exactly that reason: a note beside a cell would not tell you the cell's answer can be wrong.
 
