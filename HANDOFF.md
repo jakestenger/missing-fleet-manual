@@ -383,6 +383,12 @@ lines, so a replacement written against hard-wrapped text stops matching, and a 
 matches nothing fails silently.** Every asserted edit landed; every unasserted one vanished, and the
 ledger then recorded the intent as the outcome.
 
+**Commit explicit paths, never `git add -A`, while a subagent has a file open.** Related mechanical
+lesson, learned on 2026-08-29: a.4's entire round 2 landed inside three commits whose messages
+describe unrelated work, because the session committed while an agent was still writing. The file is
+correct and nothing was lost, but the history no longer explains itself, and the account had to be
+reconstructed into `research/section-notes/a.4-notes.md` after the fact.
+
 **Assert on every replacement.** Not a style preference. A silent no-op inside a batch of fourteen
 edits is invisible, and it took two independent review rounds to find three of them.
 

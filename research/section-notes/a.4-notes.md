@@ -140,6 +140,51 @@ holds the global admin role. The cells for "Delete a user account" said `Denied`
 role and were wrong in the self case, so **C19 was added** and the row now carries it at both scopes.
 This change was not asked for by the review; it is flagged here so round 3 can challenge it.
 
+## Round 2's own account, because the commits do not carry it
+
+**The a.4 round 2 changes are spread across three commits whose messages describe other work**
+(`f4945fa`, `2ebc7e2`, `19faa07`). They landed that way because the appendix was being edited by a
+subagent while the session committed unrelated work with `git add -A`. **Nothing is lost and the file
+is correct**, but git archaeology on this appendix will mislead, so the account lives here instead.
+
+**The process rule that follows:** commit explicit paths, never `-A`, while a subagent has a file
+open. Recorded in HANDOFF as well.
+
+### What round 2 found, and the shape it shared
+
+**The largest class was a condition placed on an intent whose own wording had already fixed the
+allowed branch.** Inspecting and revoking your own session are not conditional for any authenticated
+role, because the granting rule carries no role predicate at all. Thirty-three cells were wrong that
+way across sessions and own-account editing. Ten more read `Conditional` on account creation, where
+the authorization object is a zero-identifier user so the self branch can never succeed; those are
+denials.
+
+**Round 1's own repairs were the largest source of new defects, for the third time in this project.**
+The empty-result qualifier had been attached at the wrong grain: transfer by explicit host
+identifiers executes, and only transfer by filter returns success with nothing moved; label
+membership empties only when hosts arrive by name, because raw identifiers take a different path.
+Five printed qualifiers became fourteen.
+
+**The appendix was making an absence argument in its own prose.** It said denied cells need no atomic
+refusal because absence is the rule in a deny-by-default policy. That is the one thing the part
+agreement forbids by name. Denied cells now rest on positive refusal tests, and **the three families
+whose tests omit roles are named in the appendix** rather than quietly inferred: another user's
+session, invites, and user accounts.
+
+### The security finding, verified before filing
+
+**S13. Any Fleet account can delete itself, at any role and either scope.** Fleet decides account
+deletion with the same action it uses for editing a profile, and the policy grants that action
+unconditionally whenever the object is the caller. The one guard fires only when the target holds the
+global administrator role, and it exists to stop a deployment losing its last administrator rather
+than to stop an account removing itself.
+
+**Why it is worth a condition rather than a note.** An administrator sizing access from the role
+names reads "delete a user account" as an administrator power, because that is what every interface
+makes it look like. An automation identity given observer or GitOps can remove its own account, and
+that account is the subject of its own audit trail, so what goes is both the access and the record of
+who held it. C19 carries it at both scopes.
+
 ## Rounds
 
 | Round | Verdict | Outcome |
