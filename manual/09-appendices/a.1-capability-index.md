@@ -150,11 +150,11 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | `abm_token` | `ab_token` | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) |
 | `fleetctl generate mdm-apple-bm`, `get mdm-apple-bm` | `generate mdm-ab`, `get mdm-ab` | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) |
 | `browser` | `extension_for` | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
-| `software_id` as a host filter | `software_version_id` | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) |
+| `software_id` as a host filter | `software_version_id` | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) |
 | `profile_id` | `profile_uuid` | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
 | `orbot_node_key` | `orbit_node_key`. A shipped typo kept for agents at 1.38.0 and below | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md), and [a.6] for node keys |
 | `kolide_server_url` | `server_url` | [2.4](../02-administer-and-deploy-fleet/2.4-organization-and-server-settings.md) |
-| `mia` | `missing` | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md), and [a.6] |
+| `mia` | `missing` | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md), and [a.6] |
 | tier `basic` | `premium` | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) |
 | `vendor_old` | `vendor` | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
 
@@ -214,7 +214,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | sentinel | Nothing | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) |
 | endpoint restrictions | `user_api_endpoints` | [1.4](../01-foundations/1.4-identity-and-roles.md) |
 | break-glass account | Nothing, and Fleet's documentation has no heading for it | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) |
-| estate | Fleet says fleet, for the same thing and also for a different one | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) |
+| estate | Fleet says fleet, for the same thing and also for a different one | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) |
 
 ## Where two live Fleet names disagree
 
@@ -226,7 +226,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 **`app_enable_report_stats` is documented and not registered.** The server registers `app.enable_scheduled_query_stats`. Setting the documented name silently does nothing ([4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md)).
 
-**Fleet's own startup message names the wrong configuration key, one line above the right one.** It tells you to set `updates.allow_missing_migrations`; the registered key is `upgrades.allow_missing_migrations`, and the next line gives the correct `--upgrades_allow_missing_migrations` flag ([7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md)).
+**Fleet's own startup message names the wrong configuration key, one line above the right one.** It tells you to set `updates.allow_missing_migrations`; the registered key is `upgrades.allow_missing_migrations`, and the next line gives the correct `--upgrades_allow_missing_migrations` flag ([7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md)).
 
 **The API reference names a table called `activities`. No such table exists.** The audit rows are in `activity_past`, which is what a query against your own database has to say ([8.12](../08-troubleshooting/8.12-audit-logs.md)).
 
@@ -250,7 +250,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 **`channels` and `families` both name the ways Fleet reaches a device**, in adjacent lines of [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), and both spellings of Apple Business appear across Part I and Part II. Search for both.
 
-**`fleet` means two opposite things inside this book.** [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) uses it for the whole estate in one heading and for a single scope in the same chapter, and [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) says fleet-wide meaning estate-wide. It is the most-typed word in the manual and it is ambiguous; when a sentence could mean either, the scope reading is the one Fleet's API uses.
+**`fleet` means two opposite things inside this book.** [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) uses it for the whole estate in one heading and for a single scope in the same chapter, and [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) says fleet-wide meaning estate-wide. It is the most-typed word in the manual and it is ambiguous; when a sentence could mean either, the scope reading is the one Fleet's API uses.
 
 ## The index
 
@@ -346,7 +346,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | **CAP-067** | Set which agent versions a host takes | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 1.2 | `update_channels` · update channel · pin the agent · fleetd updates |
 | **CAP-068** | Set the channel on one host | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 3.4 | `--orbit-channel` · `ORBIT_ORBIT_CHANNEL` · `ORBIT_OSQUERYD_CHANNEL` · `ORBIT_DESKTOP_CHANNEL` |
 | **CAP-069** | Pin the agent to an exact version | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 1.2 | version pinning |
-| **CAP-070** | Roll the agent back | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 7.2 | downgrade the agent (clash: downgrading Fleet is a different operation) |
+| **CAP-070** | Roll the agent back | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 7.3 | downgrade the agent (clash: downgrading Fleet is a different operation) |
 | **CAP-071** | Stop an agent updating at all | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 8.4 | `--disable-updates` · `ORBIT_DISABLE_UPDATES` |
 | **CAP-072** | Publish agent versions from your own repository | `None` | 3.7, 6.4 | TUF · `fleetctl updates init` · `updates add` · `updates roots` · `updates timestamp` · `updates rotate` · air-gapped agents · where does fleetd get update information |
 | **CAP-073** | See what agent version a host is running | [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) | 4.5, 8.4 | Agent card · component versions |
@@ -439,13 +439,13 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | **CAP-130** | Turn the history chart off | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 4.5 | `disabled_historical_dataset` |
 | **CAP-131** | Find out what Fleet can install for you | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | FMA · Fleet-maintained apps · fleet maintained · app store · google play |
 | **CAP-132** | Supply vulnerability data yourself | `None` | 4.4 | air-gapped · offline CVE data · `cpe_database_url` · `cve_feed_prefix_url` · NVD · `fleetctl vulnerability-data-stream` |
-| **CAP-133** | Count the estate | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 1.2 | online · offline · missing · MIA (still accepted) · No hosts match your filters · how does Fleet determine online and offline status · [a.6] |
-| **CAP-134** | Count hosts low on disk | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 6.3 | low disk space |
-| **CAP-135** | Find automated enrollments that failed | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 2.7, 8.8 | failed enrollments · ADE devices failing |
-| **CAP-136** | See whether hosts were online last week | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 4.4 | uptime history |
-| **CAP-137** | Hand a host list to somebody | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 6.3 | export to CSV |
-| **CAP-138** | List hosts through the API | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 6.3 | pagination · `after` key · No more hosts to display |
-| **CAP-139** | Be told when hosts go offline | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) | 6.5 | host status alerts · missing hosts · notification · host status automations |
+| **CAP-133** | Count the estate | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 1.2 | online · offline · missing · MIA (still accepted) · No hosts match your filters · how does Fleet determine online and offline status · [a.6] |
+| **CAP-134** | Count hosts low on disk | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 6.3 | low disk space |
+| **CAP-135** | Find automated enrollments that failed | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 2.7, 8.8 | failed enrollments · ADE devices failing |
+| **CAP-136** | See whether hosts were online last week | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 4.4 | uptime history |
+| **CAP-137** | Hand a host list to somebody | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 6.3 | export to CSV |
+| **CAP-138** | List hosts through the API | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 6.3 | pagination · `after` key · No more hosts to display |
+| **CAP-139** | Be told when hosts go offline | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 6.5 | host status alerts · missing hosts · notification · host status automations |
 
 ### 5. Changing a device
 
@@ -486,7 +486,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | **CAP-242** | Require a BitLocker startup PIN | `None` | 5.8 | `windows_require_bitlocker_pin` · BitLocker PIN enforcement |
 | **CAP-243** | Use your own encryption profile instead | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 5.2 | `mdm.enable_custom_filevault` · `mdm.enable_custom_disk_encryption` · escape hatch |
 | **CAP-244** | Set and read a firmware password on Apple silicon | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 1.4 | Recovery Lock · `laps` · rotation · Show Recovery Lock password · `viewed_host_recovery_lock_password` · `rotated_host_recovery_lock_password` |
-| **CAP-245** | Stop enforcing encryption without losing the keys | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 7.3 | disable enforcement |
+| **CAP-245** | Stop enforcing encryption without losing the keys | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 7.2 | disable enforcement |
 
 #### Work that runs once
 
@@ -626,11 +626,11 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | **CAP-301** | Export traces | [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) | 8.14 | OpenTelemetry · traces |
 | **CAP-302** | Find out whether the scheduled work ran | [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) | 8.6, 8.11 | `cron_stats` · scheduled jobs · `dep_syncer` (clash) · `apple_mdm_dep_profile_assigner` |
 | **CAP-303** | Force a schedule to run now | [2.12](../02-administer-and-deploy-fleet/2.12-production-readiness-and-handoff.md) | 8.11 | `fleetctl trigger` · trigger a cron |
-| **CAP-304** | Upgrade Fleet | [7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md) | 2.11 | run migrations · `fleet prepare db` · `upgrades.allow_missing_migrations` · `updates.allow_missing_migrations` (clash) · `--upgrades_allow_missing_migrations` · skip versions · unknown column error |
-| **CAP-305** | Check whether migrations are current | [7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md) | 8.5 | `fleetctl debug migrations` |
-| **CAP-306** | Back Fleet up and restore it | [7.3](../07-operate-fleet/7.3-back-up-restore-and-retire-service-state.md) | 2.12 | disaster recovery · point-in-time recovery · migrate Fleet server · **(no)** |
-| **CAP-307** | Prove a restored Fleet can still decrypt the keys | [7.3](../07-operate-fleet/7.3-back-up-restore-and-retire-service-state.md) | 5.8 | server private key · escrow chain |
-| **CAP-308** | Stop a restored copy acting on the real world | [7.3](../07-operate-fleet/7.3-back-up-restore-and-retire-service-state.md) | 7.1 | read-only mode · dry-run server · **(no)** |
+| **CAP-304** | Upgrade Fleet | [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) | 2.11 | run migrations · `fleet prepare db` · `upgrades.allow_missing_migrations` · `updates.allow_missing_migrations` (clash) · `--upgrades_allow_missing_migrations` · skip versions · unknown column error |
+| **CAP-305** | Check whether migrations are current | [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) | 8.5 | `fleetctl debug migrations` |
+| **CAP-306** | Back Fleet up and restore it | [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md) | 2.12 | disaster recovery · point-in-time recovery · migrate Fleet server · **(no)** |
+| **CAP-307** | Prove a restored Fleet can still decrypt the keys | [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md) | 5.8 | server private key · escrow chain |
+| **CAP-308** | Stop a restored copy acting on the real world | [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md) | 7.1 | read-only mode · dry-run server · **(no)** |
 | **CAP-309** | Find out when the licence expires | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 2.1 | licence key · `basic` (still accepted) · `premium` · migrate from Fleet Free to Fleet Premium · downgrade from Premium |
 | **CAP-310** | Rotate the server's TLS certificate | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 2.12 | certificate verify failed · private root · change the Fleet server TLS certificate |
 | **CAP-311** | Rotate the Windows enrollment certificate | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 2.8 | WSTEP · `mdm.windows_wstep_identity_cert_bytes` (clash: Fleet's documentation attributes the effect to macOS) |
@@ -642,13 +642,13 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | **CAP-318** | Deploy on AWS | [2.10](../02-administer-and-deploy-fleet/2.10-deploy-on-aws-or-gcp.md) | 2.9 | ECS · Terraform · reference architecture |
 | **CAP-319** | Deploy on GCP, or ask about Azure | [2.10](../02-administer-and-deploy-fleet/2.10-deploy-on-aws-or-gcp.md) | 2.9 | Cloud Run · Cloud SQL · Azure |
 | **CAP-320** | Avoid storing a key for the bucket | [2.10](../02-administer-and-deploy-fleet/2.10-deploy-on-aws-or-gcp.md) | 2.9 | workload identity |
-| **CAP-321** | Run Fleet with Docker Compose | [2.11](../02-administer-and-deploy-fleet/2.11-deploy-with-containers-or-virtual-machines.md) | 7.2 | easiest way to deploy Fleet · Docker container |
-| **CAP-322** | Run Fleet on Kubernetes | [2.11](../02-administer-and-deploy-fleet/2.11-deploy-with-containers-or-virtual-machines.md) | 7.2 | Helm chart · pre-upgrade hook |
-| **CAP-323** | Run Fleet on a virtual machine | [2.11](../02-administer-and-deploy-fleet/2.11-deploy-with-containers-or-virtual-machines.md) | 7.2 | systemd · run with systemd |
+| **CAP-321** | Run Fleet with Docker Compose | [2.11](../02-administer-and-deploy-fleet/2.11-deploy-with-containers-or-virtual-machines.md) | 7.3 | easiest way to deploy Fleet · Docker container |
+| **CAP-322** | Run Fleet on Kubernetes | [2.11](../02-administer-and-deploy-fleet/2.11-deploy-with-containers-or-virtual-machines.md) | 7.3 | Helm chart · pre-upgrade hook |
+| **CAP-323** | Run Fleet on a virtual machine | [2.11](../02-administer-and-deploy-fleet/2.11-deploy-with-containers-or-virtual-machines.md) | 7.3 | systemd · run with systemd |
 | **CAP-324** | Move vulnerability processing off the serving instances | [2.11](../02-administer-and-deploy-fleet/2.11-deploy-with-containers-or-virtual-machines.md) | 4.4 | dedicated cron instance · `vulnerabilities.disable_schedule` |
 | **CAP-325** | Find out how many hosts Fleet takes | [7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md) | 2.9 | load test · `osquery-perf` · stress test · Fleet server performance |
-| **CAP-326** | Drain an instance before stopping it | [7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md) | 7.2 | graceful shutdown |
-| **CAP-327** | Shut Fleet down for good | [7.3](../07-operate-fleet/7.3-back-up-restore-and-retire-service-state.md) | 2.12 | decommission · release devices · release external assignments |
+| **CAP-326** | Drain an instance before stopping it | [7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md) | 7.3 | graceful shutdown |
+| **CAP-327** | Shut Fleet down for good | [7.8](../07-operate-fleet/7.8-retire-a-fleet-deployment.md) | 2.12 | decommission · release devices · release external assignments |
 | **CAP-328** | Ask whether Fleet can host it for you | [2.1](../02-administer-and-deploy-fleet/2.1-administration-model-and-deployment-choices.md) | 2.5 | managed cloud · SaaS · can you host Fleet for me |
 
 ### 8. When it did not work
@@ -661,8 +661,8 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 | The sentence you arrive with | What it turns on | Start at |
 |---|---|---|
-| "my hosts went offline", "everything shows offline", "my computer is showing up as an offline host" | The online window is calculated from the agent's own reporting interval, and a mobile device managed without an agent is permanently offline | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md), then [8.1](../08-troubleshooting/8.1-diagnostic-method.md) |
-| "no hosts match your filters", "I expected to see more hosts than this" | Pagination, scope, or a parameter your licence causes Fleet to drop rather than refuse | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) |
+| "my hosts went offline", "everything shows offline", "my computer is showing up as an offline host" | The online window is calculated from the agent's own reporting interval, and a mobile device managed without an agent is permanently offline | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md), then [8.1](../08-troubleshooting/8.1-diagnostic-method.md) |
+| "no hosts match your filters", "I expected to see more hosts than this" | Pagination, scope, or a parameter your licence causes Fleet to drop rather than refuse | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) |
 | "the profile says failed", "stuck on pending", "stuck verifying" | Which of the five delivery states you are in, and that Verifying means accepted rather than confirmed | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md), then [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md) or [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md) |
 | "the app will not install", "it says installed and it is not there" | Installed means four different things depending on where the software came from | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) |
 | "why aren't my DDM declarations applying to devices?" | Declarations are delivered on a different mechanism from profiles and report their state differently | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md), then [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md) |
@@ -673,7 +673,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | "running scripts is disabled in organization settings" | `scripts_disabled` at the organization, or a host packaged without scripts | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) |
 | "software inventory disabled" | The organization's feature block, or the fleet's | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
 | "vulnerabilities are not supported for this type of host" | Application findings are not produced for every platform | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |
-| "unable to detect MDM enrollment", "no MDM solutions detected" | A dashboard card describing the estate, not the host you are looking at | [4.5](../04-know-your-devices/4.5-monitor-device-and-management-status.md) |
+| "unable to detect MDM enrollment", "no MDM solutions detected" | A dashboard card describing the estate, not the host you are looking at | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) |
 | "access denied", "api only user" | A role, a scope, GitOps mode, or a password reset Fleet is waiting on | [1.4](../01-foundations/1.4-identity-and-roles.md), then [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) |
 | "this fleet isn't added to Volume Purchasing Program (VPP)" | The token exists and is not assigned to this scope | [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) |
 | "no hosts are online", on a policy's results | Live evaluation needs hosts that are online now, not hosts that have ever answered | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) |
@@ -690,7 +690,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | "I set it in the API and it did nothing" | Two per-fleet agent settings are accepted by the API and applied only from a repository | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) |
 | "why is my host not updating a policy's response?" | When a policy is evaluated, and what resets a stored answer | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md), then [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
 | "why am I getting errors generating a .msi package", "package root files: heat failed" | The build host has to match the package type | [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) |
-| "how do I resolve an unknown column error when upgrading Fleet?" | Migrations ran partially, or not at all | [7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md) |
+| "how do I resolve an unknown column error when upgrading Fleet?" | Migrations ran partially, or not at all | [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) |
 | "what do I do about too many open files errors?" | A limit on the server rather than a Fleet setting | [8.14](../08-troubleshooting/8.14-degradation.md) |
 | "what happens if a device fails to enroll during first boot?" | Which of the setup steps failed, and whether the device was released | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md), then [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
 | "it isn't working", "one host, never reproduced", "Fleet's UI disagrees with the host", "cron output missing", "profile stays at Pending indefinitely and no error surfaces anywhere" | What to collect before you ask anybody else | [8.13](../08-troubleshooting/8.13-escalation.md) |
@@ -713,7 +713,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | **CAP-340** | Find out whether a schedule ran | [8.6](../08-troubleshooting/8.6-server-state.md) | 7.4, 8.11 | `cron_stats` · `dep_syncer` (clash) · `apple_mdm_dep_profile_assigner` |
 | **CAP-341** | Read Windows' own view of its management state | [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md) | 5.6 | `mdmdiagnosticstool` (vendor) · PolicyManager registry (vendor) · MDM diagnostic report |
 | **CAP-342** | Get logs off an iPhone | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.13, 3.5 | sysdiagnose (vendor) · MDMClient logs |
-| **CAP-343** | Find out what version of Fleet you are talking to | [8.13](../08-troubleshooting/8.13-escalation.md) | 7.2 | per instance · behind the load balancer |
+| **CAP-343** | Find out what version of Fleet you are talking to | [8.13](../08-troubleshooting/8.13-escalation.md) | 7.3 | per instance · behind the load balancer |
 | **CAP-344** | Reduce the load Fleet is under | [8.14](../08-troubleshooting/8.14-degradation.md) | 2.9, 7.5 | tune the intervals · Fleet is slow · slow or unresponsive after enabling a feature |
 | **CAP-345** | Process host results asynchronously | [8.14](../08-troubleshooting/8.14-degradation.md) | 1.6 | `osquery_enable_async_host_processing` |
 | **CAP-346** | Stop hosts overwriting each other | [8.14](../08-troubleshooting/8.14-degradation.md) | 3.1 | duplicate hosts · enroll cooldown · `--host-identifier` |

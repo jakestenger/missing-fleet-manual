@@ -218,7 +218,7 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 
 **Compatibility is asymmetric, and Fleet says so.** A new agent against an older server is a requirement its engineering process treats as a must. **An older agent against a new server is only a nice to have**, with a minimum named in the release notes when it breaks. That is a rollout rule: move the server first and the agents after, and read the release notes before assuming the reverse is safe.
 
-**Upgrades follow semantic versioning with three stated exceptions**: experimental features, security fixes, and changes to default values. All three can break a minor or patch upgrade, and all three are called out in the version notes, which is the practical reason [7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md) asks you to read them rather than diff the version number.
+**Upgrades follow semantic versioning with three stated exceptions**: experimental features, security fixes, and changes to default values. All three can break a minor or patch upgrade, and all three are called out in the version notes, which is the practical reason [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) asks you to read them rather than diff the version number.
 
 ### Agent floors
 
@@ -333,4 +333,4 @@ One practical note: **this policy lives in Fleet's company handbook rather than 
 
 **There is no constrained upgrade path within version 4.** Fleet's own guidance says skipping versions is fine and nothing in the server enforces an ordering. The exception is the agent, where the update server migration makes one release a stepping stone ([3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md)).
 
-Fleet's cadence, for planning: one minor and one patch release every three weeks, with scheduled patches weekly in between and immediate patches for critical bugs. [7.2](../07-operate-fleet/7.2-upgrade-fleet-and-fleetd.md) turns that into a release-review rhythm.
+Fleet's cadence, for planning: one minor and one patch release every three weeks, with scheduled patches weekly in between and immediate patches for critical bugs. [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) turns that into a release-review rhythm.

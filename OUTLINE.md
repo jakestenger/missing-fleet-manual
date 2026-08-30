@@ -134,7 +134,7 @@ Reading state off devices: inventory, queries, policies, vulnerabilities.
 | 4.2 | Run queries and reports | `4.2-run-queries-and-reports.md` | ★★★ | ○ |
 | 4.3 | Use policies for compliance | `4.3-use-policies-for-compliance.md` | ★★★ | ○ |
 | 4.4 | Understand software and vulnerabilities | `4.4-understand-software-and-vulnerabilities.md` | ★★★ | ○ |
-| 4.5 | Monitor device and management status | `4.5-monitor-device-and-management-status.md` | ★★ | ○ |
+| 4.5 | Monitor fleet-wide state | `4.5-monitor-fleet-wide-state.md` | ★★ | ○ |
 | 4.6 | Advanced osquery: queries and tables | `4.6-advanced-osquery-queries-and-tables.md` | ★★ | ○ |
 | 4.7 | Advanced osquery: custom tables and plugins | `4.7-extend-osquery-with-custom-tables-and-plugins.md` | ★ | ○ |
 
@@ -177,11 +177,12 @@ Exhaustive command and endpoint listings belong in `a.7` and `a.8`, not in these
 | # | Section | File | Pri | Status |
 |---|---|---|---|---|
 | 7.1 | Day-two operations | `7.1-day-two-operations.md` | ★★ | ○ |
-| 7.2 | Upgrade Fleet and fleetd | `7.2-upgrade-fleet-and-fleetd.md` | ★★★ | ○ |
-| 7.3 | Back up, restore, and retain state | `7.3-backup-restore-and-retain-state.md` | ★★★ | ○ |
+| 7.2 | Back up and restore service state | `7.2-back-up-and-restore-service-state.md` | ★★★ | ○ |
+| 7.3 | Upgrade Fleet and fleetd | `7.3-upgrade-fleet-and-fleetd.md` | ★★★ | ○ |
 | 7.4 | Scale and maintain availability | `7.4-scale-and-maintain-availability.md` | ★★★ | ○ |
 | 7.5 | Observe performance and service health | `7.5-observe-performance-and-service-health.md` | ★★★ | ○ |
 | 7.6 | Operational security and release maintenance | `7.6-operational-security-and-release-maintenance.md` | ★★ | ○ |
+| 7.8 | Retire a Fleet deployment | `7.8-retire-a-fleet-deployment.md` | ★ | ○ |
 
 ## Part VIII — Troubleshooting Fleet
 
