@@ -103,19 +103,26 @@ loop below.
 **Design lessons from the 2.13 pilot, reusable on every diagram:**
 - A landscape brief crams content and shrinks text; reorienting to vertical is usually the fix.
 - Two lanes with different step counts create a tension between {equal-height bands, aligned ends,
-  no empty tinted area}. You cannot have all three with uniform boxes; choose what to sacrifice
-  deliberately, per diagram.
-- Minimise structural (black) arrows: the coloured lane arrows can carry the whole path, so keep
-  only the shared pre-branch arrow.
-- When a group has a bounding box, terminate and restart external arrows at the box EDGE rather
-  than reaching in to touch each internal object; it is less noisy, and it makes band edges the
-  alignment anchors so the routing stays symmetric regardless of internal box placement.
-- Short arrows can render as a line-with-a-smudge; specify a clean, slightly larger triangular
-  arrowhead.
+  no empty tinted area}. You cannot have all three with uniform boxes. The 2.13 pilot settled it as
+  **matched-height, aligned bands with the shorter lane's boxes centred inside** (balanced padding
+  above and below), because a matched pair reads better than either a mismatched band size or a
+  stretched empty middle. Symmetry of the bands beats filling every pixel.
+- **Minimise structural (dark) arrows: keep only the single shared pre-branch arrow; let the
+  coloured lane arrows carry each path the whole way, including into the terminal node.** Drop the
+  split/merge junction dots entirely. In the pilot this took the arrow count from a noisy tangle to
+  one dark arrow plus the coloured paths, and it was a clear improvement.
+- **Terminate external arrows at a group's bounding-box EDGE**, not reaching in to touch each
+  internal object; the internal boxes connect to each other with internal arrows. Less noisy, and
+  band edges become the alignment anchors so routing stays symmetric regardless of internal
+  placement.
+- Short arrows render as a line-with-a-smudge with a small marker; specify a **crisp filled
+  triangular arrowhead (~20x15), with enough shaft length that the head reads as a head**, used
+  identically on every arrow.
 
 The working prompts live in `missing-fleet-manual-private/reviews/phase2/` (`imgtest/`), versioned
-v1..v5+ with their iteration logs. 2.13's `ca-delivery-loop` diagram is the pilot; when the process
-is settled, the same recipe applies to every other IMAGE-TODO in the book.
+v1..v6+ with their iteration logs. **v6 is the settled pilot** for 2.13's `ca-delivery-loop`; its
+prompt (`v6-prompt.txt`, a revision of v5) encodes the three defaults above and is the model to
+copy for the next diagram. The same recipe applies to every other IMAGE-TODO in the book.
 
 ### Standing rule: refresh the status artifact after every step
 
