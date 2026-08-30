@@ -129,6 +129,32 @@ loop below.
   named self-review criterion. Sol improves markedly when told the goal of the pass is balance and
   symmetry, not just correctness.
 
+Node-graph diagrams (state machines, branchy flows) taught more, validated on 5.2's profile-status
+state machine:
+- **Specify the TOPOLOGY explicitly.** Sol lays out a linear diagram from principles but tangles a
+  graph left to itself. Give it the shape: the forward spine, where each branch node sits, and
+  which edges curve where. The generic layout system is not enough for a graph.
+- **Two edge styles, deliberately: straight forward, curved backward.** Relax "orthogonal only" for
+  return/back edges - curved arcs are how state diagrams keep back-edges from fighting the forward
+  flow. Nest multiple back-arcs into separate lanes so they never overlap.
+- **Fold a node's description INSIDE the node** (two-part node: name on top, meaning beneath, both
+  inside the box). A description floating in the gap below a node reads as an edge label and makes
+  arrows appear to point at text. This was the single biggest clarity win on 5.2.
+- **Explanatory asides go in a bordered "Note" callout**, not a floating label.
+- **Reuse a known-good arrowhead marker VERBATIM** rather than re-describing "crisp" each time. The
+  accepted one: `<marker viewBox="0 0 20 15" refX="20" refY="7.5" markerWidth="20" markerHeight="15"
+  orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L20 7.5 L0 15 Z" fill="..."/></marker>`
+  on a stroke-width-3 path. Re-describing it regressed to blobs; pasting it verbatim fixed it.
+- **Every arrow terminates identically** at its target box's edge - none stopping short or pointing
+  at empty space.
+- **De-AI the BRIEF and cut secondary content before generating.** The IMAGE-TODO prompts carry
+  slogan captions ("the gap is where silent failure lives") and bolted-on second panels; give them
+  the same de-AI and single-purpose review as prose. These are brief problems, not rendering
+  problems, and rendering a bad brief faithfully just ships the bad brief.
+- **Tell the self-review to "judge the arrows hard."** Sol's edge-routing self-critique is weaker
+  than its box-level critique; v1 falsely passed a tangle, and naming edge-traceability as the
+  thing to scrutinise made it separate the arcs.
+
 The working prompts live in `missing-fleet-manual-private/reviews/phase2/` (`imgtest/`), versioned
 v1..v7 with their iteration logs. **v7 is the accepted pilot** for 2.13's `ca-delivery-loop`
 (accepted for now with minor polish debt: the shorter lane's boxes sit slightly high in their
