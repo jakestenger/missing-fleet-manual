@@ -937,16 +937,16 @@ cross-appendix consistency**, because the four register projections can drift ap
 Every round reads the whole appendix. Reviewing the diff is how a project ships a summary sentence
 that was true of an earlier version of its own table, which this one has done more than once.
 
-| | Draft | Research gate | Draft rounds | Next |
+| | Draft | Research gates | Draft rounds | State |
 |---|---|---|---|---|
-| **a.1** Capability index | Stub | Not started | | **Built last.** It is the synonym layer over the register, so it needs every other projection settled first |
-| **a.2** Platform capability matrix | 20,379 words, 262 rows | SOUND after two passes | R1 running | Apply R1, then R2 and R3 |
-| **a.3** Configuration model | 2,363 words, thin | **NOT SOUND at round 3**, corrections in progress | none | Rewrite the draft from the corrected research, then three rounds |
-| **a.4** Roles and permissions | 5,993 words, 148 rows | SOUND after four passes | R1 applied, R2 running | Apply R2, then R3 |
-| **a.5** Interface index | Stub | Not started | | Depends on a.3, a.4, a.7 and a.8 to classify interfaces |
-| **a.6** Glossary and versions | 5,161 words | n/a | **4 rounds, done** | Complete |
-| **a.7** fleetctl reference | Stub | **NOT SOUND**, corrections in progress | none | Draft from the corrected research, then three rounds |
-| **a.8** API and endpoints | 3,310 words | n/a | **5 rounds, capped** | Complete |
+| **a.1** Capability index | Stub | Research running | | The synonym layer over the register. **Its value is entirely the gap between what an administrator types and what this manual calls it**; a re-worded table of contents would be worthless |
+| **a.2** Platform capability matrix | 272 rows, 1,632 cells | 2 | **5, capped. Done** | 603 Supported, 102 Conditional, 180 Unsupported, 710 Not applicable, 37 Not established |
+| **a.3** Configuration model | 10,665 words | 3 | **3. Done** | Grew from 2,363 words. Five claims withdrawn at the evidence boundary |
+| **a.4** Roles and permissions | 150 rows, two tables | 4 | 2 applied, R3 running | 19 conditions, 40 qualified cells |
+| **a.5** Interface index | Stub | UI, GitOps and REST columns complete; `fleetctl` column running | | 348 rows against four interfaces. Drafts once the fourth column lands |
+| **a.6** Glossary and versions | 5,161 words | n/a | **4. Done** | Complete |
+| **a.7** fleetctl reference | 14,472 words, 70 rows | **4** | 1 applied, R2 running | 33 exit-zero rows, 17 edition-split rows, 15 commands with no owning chapter |
+| **a.8** API and endpoints | 3,310 words | n/a | **5, capped. Done** | Complete |
 
 **The research gate is doing real work on this part and should not be skipped.** a.3 has been
 returned NOT SOUND three times and a.4 four times, and each round found something a draft would have
@@ -959,6 +959,32 @@ throughout, which is the one thing the part agreement forbids by name.
 negative by omission, it separates in three directions: to `Not established` where no boundary exists
 either way, to `Not applicable` where the row's subject does not exist on that platform, and
 re-derived per platform wherever an answer was inherited from a neighbouring capability.
+
+### Four things this part taught that were not known when it started
+
+**One. A refusal on a neighbouring endpoint is not a refusal for the capability.** a.2's third round
+swept 100 absence-shaped cells and overruled a group of them on a validator that named the targetable
+platforms and errored. The fourth round found that validator guards a URL filter on the endpoint that
+*lists* report definitions, while Fleet's write validator accepts the platform outright. Right
+denominator, wrong result, and reported as coverage. **Checking which endpoint a validator guards is
+part of the job.**
+
+**Two. A wrong `Not established` is a failure in the same way a wrong `Unsupported` is.** a.2's fifth
+round was the only one asked whether the fix had overshot, and it found four cells marked unresolved
+where the operation is provably platform-blind. A false `Not established` sends a reader to establish
+something the release already settles, and it is harder to spot because it looks like caution. **Ask
+that question in the last round of every appendix.**
+
+**Three. Feed the repository's own `check-absolutes.py` output to the reviewer as an explicit input.**
+Done for the first time on a.3's third round and repeated since. It returns every flagged sentence
+classified as established, true-of-one-member, or unsettleable, which is a far better yield than
+asking a reviewer to go looking. **Do this in the last round of every remaining appendix.**
+
+**Four. Upstream library source is not evidence, and it will come up repeatedly.** It cost six
+published sentences across a.3 and a.7 in one day: flag placement, empty environment variables,
+trailing-argument precedence, usage-error stream mapping, and two others. The checkout is the only
+source of truth, so a claim about how a dependency behaves needs an in-tree test or a vendored copy.
+Withdraw rather than soften.
 
 ### Backlog
 
