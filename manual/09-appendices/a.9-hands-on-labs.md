@@ -169,7 +169,7 @@ Build the full compliance loop, policy then automation then remediation, and be 
 
 ### Prerequisites
 
-- A running Fleet with at least one host you can make fail a policy. Authoring and observing the loop works against any failing host, but a script response only runs on a host with fleetd installed: preview's simulated hosts are vanilla osquery, so they fail policies fine but silently skip an attached script rather than running it. Target the script response at preview's own local fleetd host, the one `fleetctl preview` enrolls on your machine, or at a real disposable fleetd host.
+- A running Fleet with at least one host you can make fail a policy. Authoring and observing the loop works against any failing host, but a script response only runs on a host with fleetd installed: preview's simulated hosts are vanilla osquery, so they fail policies fine but silently skip an attached script rather than running it. Target the script response at preview's own local fleetd host, the one `fleetctl preview` enrolls on your machine, or at a real disposable fleetd host. Keep the policy in the unassigned scope, with no team: a run-script automation is Free there, and Premium once the policy is fleet-scoped, so the unassigned scope is what keeps this lab runnable on Fleet Free.
 - Policies are [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md); automated responses to policy failures are [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md).
 
 ### Steps
