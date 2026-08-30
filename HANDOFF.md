@@ -94,6 +94,14 @@ New review output goes under `missing-fleet-manual-private/reviews/phase2/`.
 `build/status-artifact.py` counts rounds from that directory alone, so the status page shows
 zero rounds everywhere until per-chapter work resumes.
 
+**The owner authorised full application on 2026-08-29, late evening:** verify and apply the
+entirety of the findings (all eleven order-of-attack steps, including the eight new-content
+clusters, the reference catalogs, and the exercises), renumber chapters freely even though
+public URLs break, then run a round-2 whole-book review: same four lenses at xhigh, fresh
+test criteria, plus a recombination check on every applied fix. Autonomous until complete.
+Live progress state is in `reviews/phase2/application-tracker.md` in the private sibling;
+that file, not this one, is the step-by-step truth while the run is in flight.
+
 **The first whole-book pass ran on 2026-08-29 and is complete.** Four Sol agents at xhigh, one
 lens each (accuracy, completeness, tone, organization), each reading all 358,264 words, then a
 fifth merged them. The merged synopsis, with an eleven-step order of attack, is at
