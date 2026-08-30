@@ -29,10 +29,14 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **APNs** (Apple Push Notification service): the push channel is [2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md); the certificate that authorises it is [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md).
 - **Apple Business Manager** (ABM): [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md); the AB, ABM, and DEP token names are pinned down in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Apps and Books**, see VPP.
+- **async host processing:** the experimental `osquery_enable_async_host_processing` mode, which moves label, policy and last-seen writes through Redis, is [8.14](../08-troubleshooting/8.14-degradation.md); its use as a capacity lever is [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md).
+- **Autopilot:** Microsoft's zero-touch Windows provisioning path is set up for enrollment in [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) and diagnosed, including why Fleet never talks to it, in [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md).
 
 ## B
 
+- **batch script** (running one saved script across many hosts at once): [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md).
 - **BitLocker:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md); the Windows escrow key it depends on is the WSTEP certificate, [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md).
+- **BitLocker startup PIN:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
 
 ## C
 
@@ -50,12 +54,16 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **dead lettering:** defined in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **declarative settings**, see DDM.
 - **DEP** (Device Enrollment Program), see ADE. DEP is the deprecated name, kept apart from ADE in the [glossary](a.6-glossary-and-release-compatibility.md).
+- **DigiCert:** one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 - **disk encryption:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
 
 ## E
 
+- **egress destinations** (the outbound map for a firewall review): [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md).
 - **enroll secret:** [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md).
 - **enrollment profile:** [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md); the macOS route that uses it is [3.2](../03-connect-devices/3.2-enroll-macos-devices.md).
+- **Entra** (Microsoft Entra ID): as an identity provider it is [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md); its part in Windows automatic enrollment is [3.3](../03-connect-devices/3.3-enroll-windows-devices.md).
+- **EST** (Enrollment over Secure Transport): one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 
 ## F
 
@@ -63,6 +71,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **FileVault:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
 - **fleet** (the scoping construct, renamed from team): [1.3](../01-foundations/1.3-hosts-fleets-labels.md); the rename is recorded in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Fleet Desktop:** introduced as one of the host-side components in [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md); its end-user surface is designed in [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
+- **Fleet-maintained apps** (FMA): the curated catalogue is defined in [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md); installing one is [5.4](../05-manage-devices/5.4-manage-software-and-applications.md).
 - **fleetd:** the host-side bundle is defined in [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md); keeping it current is [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md).
 
 ## G
@@ -71,14 +80,17 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 ## H
 
+- **Helm** (the Kubernetes chart): [2.4](../02-administer-and-deploy-fleet/2.4-deploy-with-containers-or-virtual-machines.md).
 - **host identity certificate:** [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md); which platforms support it is a row in the [platform capability matrix](a.2-platform-capability-matrix.md).
 - **host vitals:** [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md).
+- **Hydrant:** one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 
 ## L
 
 - **label:** [1.3](../01-foundations/1.3-hosts-fleets-labels.md).
 - **LAPS and the managed local administrator account:** [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
 - **live query**, see report.
+- **LUKS** (Linux disk encryption): escrow is [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
 
 ## M
 
@@ -97,12 +109,15 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **object storage** (S3 and compatible): its place in the server's stores is [1.6](../01-foundations/1.6-the-fleet-server.md); provider specifics are [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
 - **Orbit:** introduced in [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md) as the bundle's supervisor; managed in [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md).
 - **osquery:** introduced in [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md); query design and performance are [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md).
+- **osquery-perf** (the load-simulation tool): [7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md).
 
 ## P
 
 - **pack:** the legacy 2017 query pack is covered in [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) and glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
+- **Platform SSO:** the device registration token and its delivery are [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 - **policy:** [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md).
 - **pprof:** the profiling set is [8.5](../08-troubleshooting/8.5-fleetctl-debug.md); the term is glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
+- **Preview** (`fleetctl preview`, alias `sandbox`): the throwaway local Fleet is exercised in [a.9](a.9-hands-on-labs.md) Lab 1; its command contracts are in [a.7](a.7-fleetctl-command-reference.md).
 - **profile**, see configuration profile.
 
 ## Q
@@ -112,6 +127,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## R
 
 - **recovery key escrow:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
+- **Recovery Lock** (the Apple silicon firmware password): [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
 - **Redis:** what it holds, and what its loss does and does not cost, is [1.6](../01-foundations/1.6-the-fleet-server.md).
 - **report and live report** (renamed from query and live query in 4.82.0): [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md); a live report used as an introspection tool is [8.7](../08-troubleshooting/8.7-live-query-introspection.md). The rename is in the [glossary](a.6-glossary-and-release-compatibility.md).
 
@@ -124,6 +140,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **secret variables:** [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); their use in version-controlled configuration is [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md).
 - **self-service:** [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
 - **setup assistant:** [3.2](../03-connect-devices/3.2-enroll-macos-devices.md); the wider setup experience is [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
+- **Smallstep:** one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 - **software installer:** [5.4](../05-manage-devices/5.4-manage-software-and-applications.md).
 - **SSO and SAML:** [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md).
 - **SyncML:** the Windows MDM wire format is diagnosed in [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md).
@@ -131,12 +148,14 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## T
 
 - **team**, see fleet.
+- **Terraform:** the AWS reference architecture module is [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
 - **TUF** (The Update Framework): the update repository is [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md); confirming what a host is running is [8.4](../08-troubleshooting/8.4-host-side-investigation.md).
 
 ## V
 
 - **VPP** (Volume Purchasing, Apple's Apps and Books): [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md); glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **vulnerabilities** (CVEs): how software inventory is matched to known vulnerabilities is [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md).
+- **`vulnerability-data-stream`** (staging offline vulnerability feeds): [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md).
 
 ## W
 

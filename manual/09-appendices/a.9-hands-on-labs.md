@@ -59,7 +59,7 @@ Prove you can start Fleet locally, see hosts reporting, run both a saved report 
 
 > **Blast radius: your `fleetctl` context file, `~/.fleet/config`.** Preview rewrites that file to point your client at the sandbox. If the file already exists and does not parse, preview overwrites the whole thing and every other context in it is lost. Back it up before you run preview on a machine that already has contexts.
 
-1. Start the sandbox with a pinned version so the exercise is reproducible: `fleetctl preview --tag v4.90.1`. Without `--no-hosts`, preview also starts a set of simulated hosts that enroll themselves, which is what you want here. [6.4](../06-automate-fleet/6.4-use-fleetctl.md) covers `fleetctl` and its context file.
+1. Start the sandbox with pinned versions. `fleetctl preview --tag v4.90.1` pins the Fleet server image, but only the image. Preview also downloads its compose file and its simulated-host assets from the preview repository, at the ref given by `--preview-config`, which defaults to the mutable `main` branch. So `--tag` on its own does not freeze the environment: the server is pinned while the configuration and assets can still move under you. For a reproducible run, pin both, giving `--preview-config` an immutable ref such as this release's tag rather than a branch: `fleetctl preview --tag v4.90.1 --preview-config fleet-v4.90.1`. Without `--no-hosts`, preview also starts a set of simulated hosts that enroll themselves, which is what you want here. [6.4](../06-automate-fleet/6.4-use-fleetctl.md) covers `fleetctl` and its context file.
 2. Note that preview has repointed your client at the local sandbox. Confirm where you are pointed by reading `~/.fleet/config`, or by printing one key with `fleetctl config get address`. This is the side effect to be aware of before you run `fleetctl` against anything else.
 3. Open the local console at the address preview prints, and confirm the simulated hosts appear on the Hosts page. Enrollment as a lifecycle is [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md).
 4. Run a live report: on the Queries page choose a built-in query such as one listing installed software, target the simulated hosts, and run it. A live report is the ad-hoc form; [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) explains the difference between a live report and a saved one whose results Fleet stores.
@@ -87,14 +87,14 @@ It proves you can drive Fleet's query pipeline end to end and that you understan
 
 ### Goal
 
-Be able to name, in order, every step that takes a self-hosted Fleet from nothing to an authenticated control plane, and know which command or endpoint performs each one.
+Build a one-page first-run runbook: each stage that takes a self-hosted Fleet from nothing to an authenticated control plane, the command or endpoint that performs it, and the failure that stage prevents.
 
 ### Prerequisites
 
 - The self-hosting chapters as your reference: [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) for sizing and the stores, [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md) for the AWS or GCP reference architectures, and [2.4](../02-administer-and-deploy-fleet/2.4-deploy-with-containers-or-virtual-machines.md) for containers or plain virtual machines.
 - A disposable MySQL and Redis if you want to run the safe steps for real. None of this belongs on a server you rely on.
 
-> **Blast radius: a throwaway database only.** The one step here that writes state is the schema migration in step 3. Point it at a scratch database, never at one that holds anything.
+> **Blast radius: a throwaway database only.** The one step here that writes state is the schema migration in step 2. Point it at a scratch database, never at one that holds anything.
 
 ### Steps
 
@@ -107,7 +107,7 @@ Be able to name, in order, every step that takes a self-hosted Fleet from nothin
 
 ### Expected result
 
-You can recite the sequence, key then migrate then serve then healthz then setup, and say what breaks if any step is skipped or reordered. If you ran the safe steps, `fleet prepare db` completed against the scratch database and nothing touched a real server.
+Your runbook reads key, then migrate, then serve, then health check, then setup, with the failure each stage prevents noted beside it, and it says what breaks if any stage is skipped or reordered. If you ran the safe steps, `fleet prepare db` completed against the scratch database and nothing touched a real server.
 
 ### Cleanup
 
@@ -147,9 +147,12 @@ A table you filled in yourself: for each platform, which of agent, MDM, device-a
 
 ### Cleanup
 
-> **Blast radius: the disposable devices.** Unenrolling and wiping affect only the hosts you enrolled for the lab. Keep them disposable so a mistake costs nothing.
+> **Blast radius: the disposable devices and their host records.** The steps below turn a management channel off and delete host records; they touch only the hosts you enrolled for the lab. Keep the hardware disposable so a mistake costs nothing.
 
-- Unenroll each device and confirm it leaves the Hosts list.
+Unenrolling a device is not the same as removing its record, and this is the lab's own teardown honesty check. Turning MDM off disables that one channel; stopping the agent makes the record go stale and read offline. Neither deletes the host record, and Fleet does not age hosts out on its own unless you have turned host expiry on. So clean up in two deliberate moves:
+
+- Turn off what you can, then stop the agent. Turn MDM off where the platform allows it, noting that Windows MDM unenrollment is refused, so on Windows you stop the reporting component rather than unenrolling. Then stop fleetd. Confirm each host reads offline, rather than expecting it to disappear.
+- Delete each test host record explicitly if you want it gone, using the delete-a-host action from [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md). Deleting the record uninstalls nothing, so if anything is still enrolling the device, an agent still running or a live automatic-enrollment assignment, the record comes straight back; stop the source first.
 - Reset or reimage the disposable hardware if you will reuse it.
 
 ### What this proves, and what it does not
@@ -166,7 +169,7 @@ Build the full compliance loop, policy then automation then remediation, and be 
 
 ### Prerequisites
 
-- A running Fleet with at least one host you can make fail a policy. Preview with its simulated hosts is enough for authoring and observing; a real host is needed if the response actually changes the device.
+- A running Fleet with at least one host you can make fail a policy. Authoring and observing the loop works against any failing host, but a script response only runs on a host with fleetd installed: preview's simulated hosts are vanilla osquery, so they fail policies fine but silently skip an attached script rather than running it. Target the script response at preview's own local fleetd host, the one `fleetctl preview` enrolls on your machine, or at a real disposable fleetd host.
 - Policies are [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md); automated responses to policy failures are [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md).
 
 ### Steps
@@ -174,7 +177,7 @@ Build the full compliance loop, policy then automation then remediation, and be 
 1. Write a policy that a host in scope will fail. A policy is a yes-or-no question asked of every host in its scope, with the verdict stored per host, so choose a question you can flip later. [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) is the model.
 2. Attach a harmless response to the failing verdict: a script that writes a marker file, or a package that is safe to install. [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) covers wiring a script or software response to a policy.
 
-> **Blast radius: every host failing this policy in its scope.** An automated response runs on all of them, not just your test host. Scope the policy narrowly, or run it against preview's simulated hosts, before you attach anything.
+> **Blast radius: every host failing this policy in its scope.** An automated response runs on all of them, not just your test host. Scope the policy narrowly to a single fleetd host, preview's local one or a disposable one, before you attach anything.
 
 3. Let the host fail and watch the response fire. Read the attempts through the policy automation activity endpoint, `/api/v1/fleet/policies/{policy_id}/automation_activities`, which returns one activity row per attempt. This is the observability surface [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) points to.
 4. Observe the retry limit. Fleet retries a failed automated response a bounded number of times rather than forever, and the activity rows show each distinct attempt.
@@ -196,7 +199,7 @@ It proves you can author, automate, observe and stop a compliance loop, and read
 
 ## Lab 5: Lost-device recovery
 
-![How-to](../_assets/icons/howto.svg) Work a lost-or-stolen-laptop scenario end to end on a spare device: choose lock or wipe, reveal the escrowed recovery key through an authorised account, confirm the disclosure was recorded, then re-escrow.
+![How-to](../_assets/icons/howto.svg) Work a lost-or-stolen-laptop scenario end to end on a spare Mac: choose lock or wipe, reveal the escrowed recovery key through an authorised account, and confirm the disclosure was recorded.
 
 ### Goal
 
@@ -204,32 +207,32 @@ Turn the lost-device decision model into muscle memory and prove the recovery cr
 
 ### Prerequisites
 
-- A spare, disposable, encrypted device you are willing to lock, wipe and recover. This lab is Premium: disk-encryption enforcement and key escrow are Premium capabilities.
+- A spare, disposable, encrypted Mac you are willing to lock, wipe and recover. The lab runs one macOS device end to end so the mechanism stays concrete; step 1 says why the transports differ on other platforms. This lab is Premium: disk-encryption enforcement and key escrow are Premium capabilities.
 - The decision model for locking, wiping and preserving evidence lives in [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md); which recovery credentials exist and who may reveal them is [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
 
 ### Steps
 
-1. From a written scenario, decide lock versus wipe using the model in [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md). Fleet sends lock and wipe as MDM commands, and the choice turns on whether you expect to get the device back.
+1. From a written scenario, decide lock versus wipe using the model in [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md). On the Mac in front of you, lock and wipe are both Apple MDM commands, and the choice turns on whether you expect to get the device back. How Fleet carries the same two actions out is not uniform across platforms, though, so do not carry a Mac's behaviour across without checking: Windows lock and every Linux action are scripts, Windows wipe is an OMA-DM command, iOS and iPadOS use Apple MDM, and Android goes through its own management API. [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) is the per-platform matrix.
 
 > **Blast radius: the spare device.** Wipe is irreversible: it erases the device. Lock renders it unusable until unlocked. Run this only against hardware you have chosen to sacrifice to the exercise.
 
 2. Retrieve the escrowed recovery key through an account authorised to reveal it. In the console this is the host's disk-encryption key; through the API it is the host encryption-key endpoint, `/api/v1/fleet/hosts/{id}/encryption_key`, which returns the decrypted value to an authorised caller. Who is authorised is in [a.4](a.4-roles-and-permissions-matrix.md).
 3. Confirm the disclosure was recorded. Revealing a key writes a read-disk-encryption-key activity, so the fact that someone read it is itself auditable. [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) explains the lifecycle.
 4. Perform an actual recovery on the spare, using the revealed key, to prove the credential is the right one.
-5. Re-escrow or rotate afterwards. A disclosed key should not stay the standing one; rotating it brings a fresh key back under escrow.
+5. See what Fleet does, and does not do, with the key afterwards. Revealing a disk-recovery key does not rotate it: Fleet decrypts the stored value, records the read, and hands it back unchanged, and there is no Fleet action that rotates a disk-recovery key on demand. That is the opposite of Recovery Lock and the managed local administrator password, where a reveal schedules a rotation. If a disclosed key must stop being the standing one, that is a platform-specific re-escrow on the device rather than a Fleet rotate command; on an already-encrypted Mac, for instance, Fleet arranges a new key it can hold and the old one stops mattering. [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) is the lifecycle.
 
 ### Expected result
 
-You unlocked or recovered the spare with the revealed key, and the activity feed shows both the command you sent and the key disclosure, attributed to the account that performed it. After rotation, a fresh key is escrowed.
+You unlocked or recovered the spare with the revealed key, and the activity feed shows both the command you sent and the key disclosure, attributed to the account that performed it. You can state that the reveal left the escrowed key unchanged, and say what a genuine re-escrow would take on this platform.
 
 ### Cleanup
 
 - Wipe and reset the spare device for reuse.
-- Confirm the rotated key, not the disclosed one, is the escrowed value of record.
+- Handle the revealed key as the credential it is: move it through your secrets channel, not a ticket or chat, and treat a disclosure that went somewhere it should not have as an incident for your own process, since Fleet has no rotate action to undo it.
 
 ### What this proves, and what it does not
 
-It proves the decision model, the retrieval path, the audit trail and the rotation are real and connected. It does not prove recovery of a device you do not physically control, and it does not rehearse the parts of a genuine incident that live outside Fleet, such as chain-of-custody and legal hold.
+It proves the decision model, the retrieval path and the audit trail are real and connected. It does not prove recovery of a device you do not physically control, and it does not rehearse the parts of a genuine incident that live outside Fleet, such as chain-of-custody and legal hold.
 
 ## Lab 6: Adopt GitOps
 
@@ -284,15 +287,15 @@ Complete the prerequisite that certificate delivery depends on: a working, valid
 
 ### Steps
 
-1. Connect the certificate authority per [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md). Fleet validates the connection when you create it, so a good set of credentials and URL is accepted and a bad one is refused at creation rather than silently later.
-2. Make the failure visible on purpose: connect a second integration with a wrong URL or credential and watch it be rejected at validation. This is the fast way to learn what a broken integration looks like before one bites you in production.
-3. Reference the working authority from a configuration profile, using the certificate template the profile supports, so an enrolled device requests a certificate. [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) covers profiles and their template variables.
-4. Deliver the profile to a test host and confirm the certificate is issued and installed.
+1. Choose your CA type deliberately, because it decides both what creation checks and how a certificate is later delivered. To exercise the whole path here, connect a type that both proves its credentials at creation and delivers through a profile: DigiCert, NDES, or Smallstep. Connect it per [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md). Creation makes a live outbound call, so for these three a good URL and set of credentials is accepted and a bad one is refused at creation rather than failing silently later.
+2. Make the failure visible on purpose, and notice that creation validates different things for different types. A wrong URL, or an endpoint that is unreachable or speaking the wrong protocol, is refused at creation for any type, because creation always checks reachability and protocol. A wrong credential is refused at creation only for DigiCert, NDES, and Smallstep, the three whose live check also authenticates. For Hydrant, custom EST, and custom SCEP, creation does not test the credential: a wrong secret survives the connection and surfaces later, custom SCEP the first time a host requests a certificate, Hydrant and custom EST only when a caller invokes the test-issue endpoint. So connect a second integration of your chosen type with a wrong credential and watch it rejected at creation; to see the delayed failure instead, connect a Hydrant or custom EST authority with a wrong secret, watch it pass creation, then fail when you test-issue. [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md) sets out which types validate what.
+3. Reference the working authority from a configuration profile so an enrolled device requests a certificate. This delivery path exists only for the four delivery-capable types, NDES, custom SCEP, Smallstep, and DigiCert; Hydrant and custom EST have no profile variable and do not deliver to a host at this release, so for those the only issuance path is the synchronous test-issue endpoint, which hands a certificate back to the caller rather than installing one. [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) covers profiles and their certificate variables.
+4. For a delivery-capable type, deliver the profile to a test host and confirm the certificate is issued and installed. For Hydrant or custom EST, issue one certificate through the test-issue endpoint instead and confirm it returns a certificate to you.
 5. Rotate the integration credentials and delete a test integration safely, watching what happens to profiles that depend on it.
 
 ### Expected result
 
-The valid authority is accepted and issues a certificate that lands on the host through the profile; the deliberately broken one is refused at validation with a clear reason. Deleting an integration that a profile depends on shows you the dependency rather than hiding it.
+For a delivery-capable type, the valid authority is accepted and issues a certificate that lands on the host through the profile; for Hydrant or custom EST it returns a certificate from the test-issue endpoint. The deliberately broken authority is refused at creation when the fault is a bad URL for any type, or a bad credential on DigiCert, NDES, or Smallstep; for Hydrant, custom EST, or custom SCEP a bad credential passes creation and fails only later. Deleting an integration that a profile depends on shows you the dependency rather than hiding it.
 
 ### Cleanup
 
@@ -303,7 +306,7 @@ The valid authority is accepted and issues a certificate that lands on the host 
 
 ### What this proves, and what it does not
 
-It proves the full path from connecting an authority to a certificate on a device, including the failure path and the deletion dependency. It does not prove your production authority's own issuance policy, renewal cadence or scale behaviour, which live in the certificate authority rather than in Fleet.
+It proves the full path from connecting an authority to a certificate, reaching a device through a profile for a delivery-capable type or a caller through the test-issue endpoint for Hydrant and custom EST, including the type-specific failure path and the deletion dependency. It does not prove your production authority's own issuance policy, renewal cadence or scale behaviour, which live in the certificate authority rather than in Fleet.
 
 ## Lab 8: Offline vulnerability pipeline
 
@@ -325,8 +328,8 @@ Operate the vulnerability pipeline in a controlled-egress or air-gapped shape, w
 
 > **Blast radius: the vulnerability freshness of the server you change.** Turning off data sync on a server that was updating itself freezes its vulnerability data at whatever you last placed there. Do this on a test server, and treat stale data as a first-class failure to watch for.
 
-3. On the isolated server, set `vulnerabilities.disable_data_sync` so Fleet expects the data to be present in `databases_path` rather than fetching it, and point `databases_path` at the copied directory. [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) explains how a finding is a match between installed software and downloaded data.
-4. Run vulnerability processing with `fleet vuln_processing`, which does the matching pass against the data you placed.
+3. On the isolated server, set two things, so it neither fetches data nor competes for the job. Set `vulnerabilities.disable_data_sync` so Fleet expects the data to be present in `databases_path` rather than fetching it, and point `databases_path` at the copied directory. Then set `vulnerabilities.disable_schedule` so the server stops running vulnerability processing on its own internal cron and hands ownership of the job to the external command you run next. The two share one database lock, so if the internal schedule is left on, whichever grabs the lock first wins and the other is refused; disabling the schedule is what makes the external command the owner. [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) explains how a finding is a match between installed software and downloaded data.
+4. Run vulnerability processing with `fleet vuln_processing`, the external command that now owns the job, which does the matching pass against the data you placed. Because you disabled the internal schedule, it takes the shared lock cleanly; a `vulnerabilities processing locked` failure here is the sign the schedule is still on.
 5. Simulate a stale or missing dataset: withhold the next copy, run processing again, and confirm you can tell fresh data from old by when you last transferred it.
 
 ### Expected result
@@ -335,7 +338,7 @@ The isolated server produces vulnerability findings from data it never downloade
 
 ### Cleanup
 
-- Re-enable data sync on any server that should update itself, or decommission the test servers.
+- Re-enable data sync and the internal schedule on any server that should update and process on its own again, or decommission the test servers.
 - Remove the staged database copies you no longer need.
 
 ### What this proves, and what it does not
@@ -373,8 +376,8 @@ A short table: variable changed, first component to saturate, and the metric tha
 
 ### Cleanup
 
-- Stop `osquery-perf` and confirm the simulated hosts age out of the server.
-- Tear down the test server and its stores.
+- Stop `osquery-perf`. Its simulated hosts stop checking in and read offline; they do not age out on their own. Fleet removes an offline host automatically only if you have turned host expiry on and its window has passed, so to clear them without waiting, either enable host expiry or delete the host records explicitly.
+- Tear down the test server and its stores, which discards the records along with everything else.
 
 ### What this proves, and what it does not
 
@@ -400,7 +403,7 @@ Practise the diagnostic method on faults whose cause you already know, so that w
 For each fault, force yourself to name the channel, the evidence surface, the next discriminating test, and the safe recovery, before you open the logs. Then check your reasoning against what the logs say.
 
 1. Present a bad TLS arrangement to an agent and watch it fail to check in. Diagnose from the host side per [8.4](../08-troubleshooting/8.4-host-side-investigation.md).
-2. Invalidate a host's node key and observe the re-enrollment behaviour that follows.
+2. Invalidate a host's node key using a method the book already gives you, and reversible by design: delete that host's record in Fleet while its agent keeps running. The agent's next check-in no longer matches any host row, so it fails with `invalid node key` ([8.3](../08-troubleshooting/8.3-server-logs.md)), then re-enrolls with its enroll secret and a fresh record appears ([3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md)). Observe that recovery rather than engineering a broken key by hand.
 3. Let a host go stale by stopping its agent, and tell staleness apart from a genuine outage.
 4. Split the agent and MDM state, as in Lab 3, and locate the half-enrollment from the server side per [8.6](../08-troubleshooting/8.6-server-state.md).
 5. Make a software install fail and read the failure, then the retry.
