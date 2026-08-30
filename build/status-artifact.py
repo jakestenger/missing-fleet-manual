@@ -231,6 +231,31 @@ def pill(status, rounds, verdict):
     return "s-drafting", "drafting"
 
 
+def diagram_progress():
+    """Count image markers across the manual so the artifact tracks the graphics run.
+
+    The book carries three image marker kinds in HTML comments: IMAGE-OK (a picture that is
+    placed and accepted), IMAGE-TODO (a brief with no picture yet), and IMAGE-REDO (a picture
+    that no longer matches the corrected prose). Progress on the graphics run is OK over the
+    total, per part, so the owner can see which parts are finished at a glance.
+    """
+    ok = defaultdict(int)
+    todo = defaultdict(int)
+    redo = defaultdict(int)
+    for dirpath, _dirs, files in os.walk(MANUAL):
+        for fn in files:
+            if not fn.endswith(".md"):
+                continue
+            m = re.match(r"(\d\d)", os.path.basename(dirpath))
+            part = m.group(1) if m else "00"
+            text = open(os.path.join(dirpath, fn), encoding="utf-8").read()
+            ok[part] += len(re.findall(r"<!--\s*IMAGE-OK:", text))
+            todo[part] += len(re.findall(r"<!--\s*IMAGE-TODO", text))
+            redo[part] += len(re.findall(r"<!--\s*IMAGE-REDO", text))
+    parts = sorted(set(ok) | set(todo) | set(redo))
+    return ok, todo, redo, parts
+
+
 def main():
     chapters = collect()
     rounds, latest = review_index()
@@ -242,6 +267,11 @@ def main():
     verified = sum(1 for v in chapters.values() for c in v if c["status"] == "verified")
     all_rounds = sum(rounds.get(c["section"], 0) for v in chapters.values() for c in v)
     reviewed = sum(1 for v in chapters.values() for c in v if rounds.get(c["section"], 0))
+
+    img_ok, img_todo, img_redo, img_parts = diagram_progress()
+    imgs_ok = sum(img_ok.values())
+    imgs_total = imgs_ok + sum(img_todo.values()) + sum(img_redo.values())
+    imgs_open = sum(img_todo.values()) + sum(img_redo.values())
 
     try:
         commits = subprocess.run(
@@ -285,6 +315,15 @@ def main():
         "whole-book era only. In the retired per-chapter era, no chapter ever passed a round "
         "without a material finding.</span></div>\n" % (reviewed, all_rounds)
     )
+    done_parts = [PART_NAMES.get(pt, (pt, pt))[0] for pt in img_parts
+                  if img_ok.get(pt, 0) and not (img_todo.get(pt, 0) or img_redo.get(pt, 0))]
+    a(
+        '    <div class="rule-card"><span class="k">Graphics run</span>'
+        '<span class="v">%d of %d placed, %d open</span><span class="n">Diagrams are drawn by '
+        "the reviewer as SVG and placed as lossless WebP, part by part with a review gate per "
+        "batch. Parts with every picture placed: %s.</span></div>\n"
+        % (imgs_ok, imgs_total, imgs_open, (", ".join(done_parts) if done_parts else "none yet"))
+    )
     a("  </section>\n\n")
 
     a('  <section class="totals" aria-label="Book totals">\n')
@@ -295,6 +334,7 @@ def main():
         (verified, "Verified"),
         ("%dk" % round(words / 1000), "Words"),
         (all_rounds, "Review rounds"),
+        ("%d/%d" % (imgs_ok, imgs_total), "Diagrams placed"),
         (commits, "Commits"),
     ]:
         a('    <div class="tot"><span class="num">%s</span><span class="lab">%s</span></div>\n' % (num, lab))

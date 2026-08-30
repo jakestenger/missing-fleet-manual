@@ -162,6 +162,32 @@ band). Its prompt (`v7-prompt.txt`) plus its ancestors encode every default abov
 to copy for the next diagram. The same recipe applies to every other IMAGE-TODO in the book; the
 state-machine diagram in 5.2 is the next test of whether it generalises to a non-linear shape.
 
+### Graphics production run: progress and the delegation trap (2026-08-30)
+
+The run is **part by part, one review gate per batch**; accuracy is trusted from the chapter
+prose and spot-checked, not re-audited against the tag for every diagram.
+
+- **Part I: COMPLETE.** All nine marked images are `IMAGE-OK`. Three were redrawn 2026-08-30 to
+  match corrected prose and reviewed by eye: `1.2-five-channels` (five families scoped to a fully
+  enrolled Mac or Windows host, diagnosed separately not failing independently, 10-second default),
+  `1.4-access-gates` (scope = resources, members, hosts; fleet-scoped roles still read global
+  config; endpoint restrictions narrow only for configured API-only accounts; interface is not a
+  gate; fourth layer is account and deployment state), and `1.6-fleet-service-state-model` (Redis
+  loss = unreconstructed pending failing-policy notifications and recorded errors; object-storage
+  loss = file-carve evidence that cannot be re-uploaded). The other six were existing owner images,
+  spot-checked and kept. Committed and pushed to main (92c0318). One orphan asset,
+  `1.2-orbit-platforms.webp`, is unreferenced; left in place, not part of this batch.
+- **Next: Part II** (`02-administer-and-deploy-fleet`), where from-scratch `IMAGE-TODO` generation
+  begins in volume, plus the `2.1-setup-sequence` `IMAGE-REDO`.
+
+**Delegation trap, learned the hard way.** A subagent that launches a codex run as a background
+process and then ends does NOT get re-invoked when codex finishes; the run just detaches and the
+agent's turn is already over. So the three Part I agents each wrote a good brief, launched codex,
+and bailed early. **Fix: use agents for brief-prep only. Run the codex generations yourself in a
+harness-tracked background job** (`run_in_background: true`), which does re-invoke you on
+completion, then place and review the output. Do not delegate the generation-and-wait step.
+
+
 ### Standing rule: refresh the status artifact after every step
 
 The project owner asked (2026-08-27) that the status artifact be updated **after every step**,
