@@ -422,6 +422,29 @@ that question explicitly rather than hoping.
 the only. When you write one, name the thing it ranges over and check the boundary rather than the
 centre.
 
+**Three, continued: the correction is where the failure recurs.** Worth its own paragraph because it
+is the thing that makes failure mode three expensive rather than merely common.
+
+a.3's round 2 found that **the fixes written for round 1's class-versus-member findings were
+themselves class-versus-member claims**. Round 1 said the appendix wrongly claimed Apple and Windows
+have one acceptance report. The correction said Windows never enters the intermediate state and
+Apple profiles rest there. Both are true of the ordinary case and false of a sibling: a proxied
+certificate profile on Windows is deliberately held at the intermediate state until the certificate
+is observed, and an iPhone install acknowledgement is promoted straight to verified by the datastore.
+Same shape, one round later, in a sentence written specifically to fix that shape.
+
+**The move that breaks it is not a third rewrite.** It is to name the caller or the case a sentence is
+true of, and then go and look at whether a sibling caller does something else, before writing the
+sentence. **Where more than one behaviour exists, the sentence carries the distinction rather than
+picking a winner.** A generalisation that survives because nobody checked the second caller is
+indistinguishable, on the page, from one that was verified.
+
+**A second rule earned twice on 2026-08-29: upstream library source is not evidence.** The reviewer
+ruled it out for a flag-parsing library in a.7 and again for the configuration loader in a.3. The
+checkout is the only source of truth, and a claim about how a dependency behaves needs an in-tree
+test or a vendored copy. Both claims were withdrawn rather than softened. Expect this to come up
+wherever a resolution question ends at a library boundary, and settle it the same way.
+
 **Four. Publishing a subagent's conclusion without verifying it.** Distinct from the format problem
 subagents have caused before, and more expensive, because a badly formatted table announces itself
 and a wrong sentence does not.
