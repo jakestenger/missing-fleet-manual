@@ -107,6 +107,7 @@ administrator, before devices arrive.
 | 2.10 | Apple MDM configuration | `2.10-apple-mdm-configuration.md` | ★★★ | ○ |
 | 2.11 | Configure Windows management | `2.11-configure-windows-management.md` | ★★★ | ○ |
 | 2.12 | Bind Android Enterprise | `2.12-bind-android-enterprise.md` | ★★★ | ○ |
+| 2.13 | Connect certificate authorities | `2.13-connect-certificate-authorities.md` | ★★★ | ◐ |
 
 ## Part III — Connect devices
 
