@@ -57,7 +57,7 @@ Omitting them entirely would break the four-projection invariant the part agreem
 leave a reader unable to tell "not covered here" from "no platform answer exists".
 
 **They are carried as a one-line disposition list with no platform columns.** The matrix proper is
-266 rows, after review round 1 added four capabilities the register had missed, split one, and
+266 rows after review round 1, which added four capabilities the register had missed, split one, and
 merged two.
 
 **Merged, and the register still needs updating to match.** CAP-048, enrolling a personally owned
@@ -97,7 +97,7 @@ one.
 
 ## Not established, deliberately
 
-**Fourteen cells**, each with a record of what was searched. Two of them are on-device capabilities
+**Twenty-three cells** as of draft review 4, each with a record of what was searched. The count grew because three review rounds each found `Unsupported` cells resting on something that was not a refusal, and moving them was the correct answer rather than a retreat. Two of them are on-device capabilities
 that **Fleet's source cannot settle in either direction**, because the question is what the platform
 does rather than what Fleet does; settling those needs a vendor contract this research did not have.
 One row was removed outright for the same reason rather than being answered from Fleet's silence.
@@ -108,4 +108,31 @@ One row was removed outright for the same reason rather than being answered from
 |---|---|---|
 | Research 1 | NOT SOUND, seven items | Negatives argued from absence; licence answers contradicting themselves; a single-pass section |
 | Research 2 | Corrections applied | Section G redone; reclassifications in three directions; the scope decision taken |
-| Draft review 1 | Not yet run | |
+| Draft review 1 | NOT READY, five items | Coverage. Four capabilities added, one merge, one split, three renamed rows. **Two of the three headline findings corrected**, both in the direction of being worse than written |
+| Draft review 2 | NOT READY, twelve items | Cell audit. Nine wrong licence cells, six ChromeOS cells moved off absence, the escrow finding narrowed to what source supports |
+| Draft review 3 | NOT READY, fifteen items | Fresh read plus cross-appendix consistency. A fifteen-cell licence block, five missing capabilities, the vocabulary decision, and the stale forward references between all four appendices |
+| Draft review 4 | NOT READY, seven items | Cell-level and closing. **Counts and sweep denominators confirmed exact.** Seven blocking cell corrections remain |
+
+## The count moved every round, and that is the record worth keeping
+
+266 rows at draft review 1, 271 at review 4. 1,596 cells then, 1,626 now. **Every printed figure in
+the appendix was recounted mechanically from the table at the end of each round and then checked
+against an independent count**, because on 2026-08-29 a first count disagreed with the agent's and
+was wrong: five rows carry lettered identifiers from register splits, and a pattern requiring digits
+only silently dropped them.
+
+**Verified at draft review 4:** 271 rows, 1,626 platform cells, 599 `Supported`, 105 `Conditional`,
+202 `Unsupported`, 697 `Not applicable`, 23 `Not established`, 104 condition records serving 105
+conditional cells because one condition governs two rows, and 88 non-platform rows.
+
+## The one lesson worth carrying to a.5
+
+**A refusal on a neighbouring endpoint is not a refusal for the capability.** Draft review 3 swept
+100 absence-shaped cells and overruled a group of them on the strength of a validator that named the
+targetable platforms and errored. Review 4 found that validator guards a URL filter parameter on the
+endpoint that *lists* report definitions, and says nothing about creating a scheduled query or
+delivering one. Fleet's write validator accepts the platform in question.
+
+So the sweep had the right denominator and the wrong result, which is the most expensive kind of
+error a sweep can make: it is reported as coverage. **Checking which endpoint a validator guards is
+part of the job**, not a refinement of it.
