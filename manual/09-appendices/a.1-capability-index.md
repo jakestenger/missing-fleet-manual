@@ -722,9 +722,11 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Where this index ends
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Twenty-four things a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on.
+![Troubleshooting](../_assets/icons/troubleshooting.svg) **Twenty-one things a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Three earlier entries left the count after a re-audit found their teaching already in the book; they close this section, with links to the coverage, rather than disappearing.
 
 **No link is invented for any of them.** A chapter owns an outcome when it explains the workflow, not when it mentions the thing in passing, and not when it explains the surrounding workflow without covering this step.
+
+**[a.7](a.7-fleetctl-command-reference.md#fifteen-commands-this-manual-does-not-explain) keeps the sibling register at command granularity**: fifteen `fleetctl` commands with no owning chapter, in six groups. Five of the six groups appear here as outcomes, since the update repository, file carving and vulnerability data are capability rows below and packs and the sandbox sit in the no-row list; the sixth, first-run `setup`, is a.7's alone. The two registers describe overlapping gaps at different grain, so never add one count to the other.
 
 ### Seven outcomes with no owning chapter
 
@@ -748,7 +750,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | **CAP-085** | Reading a custom host vital, in [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | **Creating the definition.** [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) names the feature and says values are set per host through the API. The definition an administrator creates is never taught, and [a.4](a.4-roles-and-permissions-matrix.md) already publishes a permission row for writing it |
 | **CAP-253** | Okta conditional access, in [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | **The mutual-TLS proxy in front of it.** One sentence, stated as a prerequisite rather than as hardening, with specific header-stripping instructions, and no chapter owns it |
 
-### Fourteen things with no row and no chapter
+### Eleven things with no row and no chapter
 
 Each is attested in Fleet, in this manual as a mention, or both. None has a capability row, so none appears in the index above.
 
@@ -758,15 +760,11 @@ Each is attested in Fleet, in this manual as a mention, or both. None has a capa
 
 **Fleet's usage analytics.** Named once, as a firewall consideration. Fleet gives it a settings page and a guide.
 
-**The device-authenticated API.** [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md) names it as a sixth channel alongside the five, and it is covered through the things that run on it rather than in its own right.
-
 **`fleetctl preview`**, and its `sandbox` alias. Named twice, once as a hazard and once in a list of surfaces. Nothing teaches starting, stopping or resetting it.
 
 **Android enrollment through a Google account.** A named absence: [3.6](../03-connect-devices/3.6-enroll-android-and-chromeos-devices.md) says a third path exists and this manual cannot describe it, and [8.13](../08-troubleshooting/8.13-escalation.md) adds that no expected status has been established for it.
 
 **ChromeOS diagnosis.** [3.6](../03-connect-devices/3.6-enroll-android-and-chromeos-devices.md) says there is no ChromeOS troubleshooting chapter, and there is not.
-
-**Turning stored reporting off across the whole server, and what that does to forwarding.** Two chapters touch the switch and neither owns the consequence.
 
 **Detecting half-enrolled hosts across the estate.** Three chapters route to [8.6](../08-troubleshooting/8.6-server-state.md) for the query and [8.6](../08-troubleshooting/8.6-server-state.md) does not contain one.
 
@@ -778,4 +776,12 @@ Each is attested in Fleet, in this manual as a mention, or both. None has a capa
 
 **The policy automation activity endpoint.** It appears once, in an endpoint table, and is never used.
 
-**An infrastructure intake checklist.** [8.13](../08-troubleshooting/8.13-escalation.md) and [8.14](../08-troubleshooting/8.14-degradation.md) both call for one. Fleet publishes none, and the version in [8.13](../08-troubleshooting/8.13-escalation.md) is assembled by this manual and marked as not official.
+### Three entries re-audited out of the count
+
+**An entry leaves this register by being taught, and these three left it because a re-audit found the teaching already in the book.** They stay listed so the register never shrinks silently, and so the next audit does not re-open them.
+
+**The device-authenticated API.** Counted here in an earlier revision on the grounds that it was covered only through the things that run on it. The coverage stands in its own right: [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md#the-five-channels) explains the channel, its per-host token and who consumes it, and [a.8](a.8-api-action-and-endpoint-reference.md#who-calls-fleet-and-what-they-present) carries the Device caller class and enumerates the surface that token authenticates.
+
+**Turning stored reporting off across the whole server, and what that does to forwarding.** An earlier revision said two chapters touch the switch and neither owns the consequence. Both halves are owned: [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md#what-stops-a-result-being-stored) owns the switch, including that `discard_reports_data` deletes the rows already stored, [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md#getting-results-out-of-fleet) owns the forwarding consequence, namely that a server-wide disable forwards incoming results without the per-report automations filter, and [1.1](../01-foundations/1.1-what-fleet-is.md#what-does-fleet-do) carries the storage-against-forwarding model the two hang from.
+
+**An infrastructure intake checklist.** [8.13](../08-troubleshooting/8.13-escalation.md#8134-infrastructure-intake-list-self-hosted) carries a usable one. It is assembled by this manual and marked as not official because Fleet publishes none, which is the absence [8.14](../08-troubleshooting/8.14-degradation.md) records; unofficial is a provenance note rather than a missing chapter, so this register no longer counts it.

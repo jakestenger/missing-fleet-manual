@@ -382,6 +382,8 @@ Neither reaches Fleet. Both read and write the local configuration file only.
 
 **Read those rows as complete contracts and incomplete guidance.** The access, effect and result columns are verified for all fifteen exactly as they are for the other 54; what is missing is a chapter explaining when you would want the command and what to do around it. **The Windows-only `updates` row has no owning chapter either**, for the same reason as the family it replaces, and it is outside the fifteen because the fifteen are counted over the macOS and Linux index.
 
+**The outcome-level sibling of this register is [a.1](a.1-capability-index.md#where-this-index-ends)'s closing section, "Where this index ends".** Five of the six groups above appear there as outcomes: the update repository, file carving and vulnerability data as capability rows, packs and the sandbox in its no-row list. First-run `setup` is this register's alone. The two registers describe overlapping gaps at different grain, so quote either count on its own and never their sum.
+
 ## The exit-zero register
 
 ![Troubleshooting](../_assets/icons/troubleshooting.svg) **Thirty-four invocations where Fleet or the client detected an adverse, incomplete or refused outcome and the command still exited zero.** This is the section to read before you run `fleetctl` unattended, because every row is a case where a pipeline that branches on the exit code branches the wrong way.
