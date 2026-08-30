@@ -642,7 +642,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | SyncML | The Windows management channel | Three, all in Part VIII | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) |
 | DDM | declaration, declarative device management | The acronym in one, the spelled-out form in three | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
 | zero-touch | ADE on Apple, Autopilot on Windows, the QR path on Android | Two | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) |
-| LAPS | managed local administrator account | None, and the capability has no owning chapter either | `None`, and see the last section |
+| LAPS | managed local administrator account | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) creates, enables and rotates it | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |
 | EST, PKI, NDES, DigiCert, Smallstep, Hydrant | certificate authority | All six now appear in [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md). Four also appear in [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) or Part VIII | [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md) for the prerequisite, [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) to deliver |
 | Lost Mode | Fleet's button says Lock | One | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) |
 | Managed Apple ID | Managed Apple Account, Apple's current term | None. [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) uses Apple's current term on purpose | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) |
@@ -722,7 +722,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Where this index ends
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Eight things a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Five earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
+![Troubleshooting](../_assets/icons/troubleshooting.svg) **Six things a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Seven earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
 
 **No link is invented for any of them.** A chapter owns an outcome when it explains the workflow, not when it mentions the thing in passing, and not when it explains the surrounding workflow without covering this step.
 
@@ -744,21 +744,17 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | **CAP-085** | Reading a custom host vital, in [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | **Creating the definition.** [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) names the feature and says values are set per host through the API. The definition an administrator creates is never taught, and [a.4](a.4-roles-and-permissions-matrix.md) already publishes a permission row for writing it |
 | **CAP-253** | Okta conditional access, in [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | **The mutual-TLS proxy in front of it.** One sentence, stated as a prerequisite rather than as hardening, with specific header-stripping instructions, and no chapter owns it |
 
-### Four things with no row and no chapter
+### Two things with no row and no chapter
 
 Each is attested in Fleet, in this manual as a mention, or both. None has a capability row, so none appears in the index above.
-
-**The managed local administrator account.** A credential Fleet creates, holds, rotates and audits the reading of, with no chapter that creates or rotates it. `LAPS` is the word people arrive with and it appears in no chapter of this book.
 
 **`fleetctl preview`**, and its `sandbox` alias. Named twice, once as a hazard and once in a list of surfaces. Nothing teaches starting, stopping or resetting it.
 
 **Android enrollment through a Google account.** A named absence: [3.6](../03-connect-devices/3.6-enroll-android-devices.md) says a third path exists and this manual cannot describe it, and [8.13](../08-troubleshooting/8.13-escalation.md) adds that no expected status has been established for it.
 
-**Retrying a software install.** [8.11](../08-troubleshooting/8.11-reproducing-and-isolating.md) lists it as a forcing action with a production-safety verdict. The retry is real but has no row and no owning chapter: the host's software library and the self-service page both show **Retry** on a failed install, and **Retry uninstall** on a failed uninstall, and the button re-sends the ordinary install request, `POST /api/v1/fleet/hosts/:id/software/:software_title_id/install`, Premium. There is no retry-specific endpoint, no fleetctl command and no GitOps path.
+### Seven entries re-audited out of the count
 
-### Five entries re-audited out of the count
-
-**An entry leaves this register by being taught, and these five left it that way: three when a re-audit found the teaching already in the book, and two when a chapter added in this revision took the outcome on.** They stay listed so the register never shrinks silently, and so the next audit does not re-open them.
+**An entry leaves this register by being taught, and these seven left it that way: three when a re-audit found the teaching already in the book, and four when a chapter added in this revision took the outcome on.** They stay listed so the register never shrinks silently, and so the next audit does not re-open them.
 
 **The device-authenticated API.** Counted here in an earlier revision on the grounds that it was covered only through the things that run on it. The coverage stands in its own right: [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md#the-five-channels) explains the channel, its per-host token and who consumes it, and [a.8](a.8-api-action-and-endpoint-reference.md#who-calls-fleet-and-what-they-present) carries the Device caller class and enumerates the surface that token authenticates.
 
@@ -769,3 +765,7 @@ Each is attested in Fleet, in this manual as a mention, or both. None has a capa
 **Carving a file off a host, and reading the server's record of it.** Counted here while eight chapters sized, budgeted and bucketed a carve and none started one or read one back. [8.7](../08-troubleshooting/8.7-live-query-introspection.md#878-running-and-retrieving-a-file-carve) now owns both halves: initiating a carve, and retrieving the completed one through `fleetctl get carves`, `get carve` and the REST equivalents. It is not licence-gated, so this was never a Premium omission.
 
 **ChromeOS diagnosis.** Counted here while [3.7](../03-connect-devices/3.7-enroll-chromeos-devices.md) said there was no ChromeOS troubleshooting chapter. [3.7](../03-connect-devices/3.7-enroll-chromeos-devices.md) now carries the diagnosis itself, so the absence it recorded is closed.
+
+**Retrying a failed software install or uninstall.** Counted here while the retry controls had no capability row and no chapter that owned the workflow. [5.4](../05-manage-devices/5.4-manage-software-and-applications.md#retries-you-ask-for) now owns it: **Retry** on a failed install and **Retry uninstall** on a failed uninstall, appearing in two places on two different routes. From the host's software library an operator's retry re-sends the operator host action, `POST /api/v1/fleet/hosts/:id/software/:software_title_id/install` or the matching `.../uninstall`; from the self-service page the user's retry re-sends the device-authenticated self-service action, `POST /api/v1/fleet/device/{token}/software/install/:software_title_id` or `.../uninstall/:software_title_id`. Both are Premium, and there is no retry-specific endpoint, no `fleetctl` command and no GitOps path. [8.11](../08-troubleshooting/8.11-reproducing-and-isolating.md) still lists the retry as a forcing action with its production-safety verdict.
+
+**The managed local administrator account.** Counted here while no chapter created or rotated the account Fleet holds on a Mac. [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) now owns it: enabling `_fleetadmin`, the standard-account interlock, and [retrieving and rotating its password](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#retrieve-and-rotate-the-managed-local-administrator-password), including the view-triggered rotation. It is macOS-only and Premium. `LAPS` is the word people arrive with, and it now leads to a chapter.
