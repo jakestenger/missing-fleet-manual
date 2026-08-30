@@ -258,7 +258,7 @@ The vocabulary is closed in the other direction too. Exactly ten top-level keys 
 | **CAP-079** | Scan hosts with YARA signature sets | Full | Full | Full | Full |
 | **CAP-080** | Stamp results with provenance columns | Full | Full | Full | Full |
 | **CAP-081** | Turn individual osquery event subscribers on or off | Full | Full | Full | Full |
-| **CAP-082** | Carve a file off a host | Not established | Partial | Partial | Unsupported |
+| **CAP-082** | Carve a file off a host | Unsupported | Partial | Partial | Unsupported |
 | **D. Host data, vitals, and inventory** | | | | | |
 | **CAP-083** | See what a device is and what is on it | Full | Partial | Full | Unsupported |
 | **CAP-084** | Put a value you collect on the host record | Not established | Partial | Full | Full |
@@ -553,15 +553,15 @@ The vocabulary is closed in the other direction too. Exactly ten top-level keys 
 | **Full** | 192 | 181 | 176 | 120 |
 | **Partial** | 53 | 103 | 56 | 34 |
 | **Read only** | 12 | 6 | 8 | 0 |
-| **Unsupported** | 20 | 46 | 105 | 191 |
-| **Not established** | 70 | 11 | 2 | 2 |
+| **Unsupported** | 21 | 46 | 105 | 191 |
+| **Not established** | 69 | 11 | 2 | 2 |
 | **Total** | **347** | **347** | **347** | **347** |
 
 Four things in that shape are worth reading before you use any single row.
 
 **The REST API reaches more actions than any other interface**, 284 at `Full` or `Partial` against 245 for the UI, 232 for `fleetctl` and 154 for GitOps. The other three are clients of it, so its reach is the ceiling theirs are measured against.
 
-**The UI's 70 `Not established` cells are the appendix's largest soft spot**, and they are not evenly spread. Thirty-three of them are in the three sections about running the server, its settings and its diagnostics, where the answer is nearly always that the value is process configuration no interface writes. Twenty-one of the 70 sit on rows where all three other columns independently found `Unsupported`. **Those are very probably `Unsupported` too, and they are not published that way**, because the boundary that would justify it was not found. A wrong `Not established` is a failure in the same way a wrong `Unsupported` is, so the appendix records the uncertainty rather than resolving it in the direction the neighbours point.
+**The UI's 69 `Not established` cells are the appendix's largest soft spot**, and they are not evenly spread. Thirty-three of them are in the three sections about running the server, its settings and its diagnostics, where the answer is nearly always that the value is process configuration no interface writes. Twenty-one of the 69 sit on rows where all three other columns independently found `Unsupported`. **Those are very probably `Unsupported` too, and they are not published that way**, because the boundary that would justify it was not found. A wrong `Not established` is a failure in the same way a wrong `Unsupported` is, so the appendix records the uncertainty rather than resolving it in the direction the neighbours point.
 
 **GitOps is `Unsupported` on 101 rows the UI and the REST API can both perform.** That is not a defect in GitOps. It is the closed vocabulary and the missing read direction working as designed, and it is the number that bounds how much of Fleet a repository can manage.
 
@@ -613,15 +613,15 @@ This is the set worth knowing about, not a catalogue. The register marks 141 row
 
 ## Not established, deliberately
 
-![Explanation](../_assets/icons/explanation.svg) **Seventy-two rows carry at least one `Not established` cell, and no row carries four.** Every action in the register has at least one interface answer that rests on evidence.
+![Explanation](../_assets/icons/explanation.svg) **Seventy-one rows carry at least one `Not established` cell, and no row carries four.** Every action in the register has at least one interface answer that rests on evidence.
 
 Thirteen rows are unsettled in more than one column, and they fall into three groups.
 
 **Two are open in three columns and are the same two questions in both.** Whether Fleet's package variants map onto several software entries for one title, and which stored setting the Windows automatic-against-manual enrollment control writes. Two researchers reached each of those independently, which is a point in favour of the questions being real rather than of one search being bad.
 
-**Eleven are deployment and operations rows** where the question is what an operating practice looks like rather than what Fleet does. Backing up and restoring a deployment, running behind an outbound proxy, deploying from reference infrastructure code, running on Kubernetes or a virtual machine, simulating load, draining an instance, hosted Fleet, and collecting a sysdiagnose from an iPhone. **This manual verifies against Fleet's own source**, and a `Not established` cell in these rows means the interface answer is unsettled, not the practice: load simulation, for one, is settled by a purpose-built tool Fleet ships in its own tree ([7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md)), which is reachable from none of the four interfaces scored here.
+**Eleven are deployment and operations rows** where the question is what an operating practice looks like rather than what Fleet does. Backing up and restoring a deployment, running behind an outbound proxy, deploying from reference infrastructure code, running on Kubernetes or a virtual machine, simulating load, draining an instance, hosted Fleet, and collecting a sysdiagnose from an iPhone. **This manual verifies against Fleet's own source**, and a `Not established` cell in these rows means the interface answer is unsettled, not the practice: load simulation, for one, is settled by `osquery-perf`, a purpose-built tool Fleet ships in its own tree ([7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md)), which is reachable from none of the four interfaces scored here.
 
-**The single largest concentration is the UI column's 70 cells**, described in the counts above. **The honest characterisation is that the UI column is the most conservative of the four**, not that the UI is the least capable interface. Its `Not established` cells and the REST API column's `Unsupported` cells were often reached on the same underlying fact, from different standards of proof.
+**The single largest concentration is the UI column's 69 cells**, described in the counts above. **The honest characterisation is that the UI column is the most conservative of the four**, not that the UI is the least capable interface. Its `Not established` cells and the REST API column's `Unsupported` cells were often reached on the same underlying fact, from different standards of proof.
 
 ## Where this appendix and its siblings deliberately differ
 

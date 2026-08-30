@@ -511,7 +511,7 @@ The subject holds this role on fleet T and holds no global role. The cell answer
 | A host's disk encryption recovery key | **Reading the host.** There is no separate permission |
 | The macOS Recovery Lock password | The same |
 | A managed local account password | The same |
-| Certificate authority integration credentials | Reading certificate authorities **with secrets** |
+| Certificate authority integration credentials | Reading certificate authorities **with secrets**. [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md) sets these integrations up |
 | Enroll secrets | Reading enroll secrets |
 | **A host's device page URL** | Its own row, decided outside the policy. Fleet treats this URL as a credential for acting as that device's end user, so handing one out is handing over that person's view of Fleet |
 

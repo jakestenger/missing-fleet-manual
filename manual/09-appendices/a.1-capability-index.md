@@ -145,14 +145,14 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-062** | Stop a deleted host coming back | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 2.10, 8.4 | the host keeps reappearing |
 | **CAP-063** | Expire stale host records | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) | 4.5 | `host_expiry_settings` · clean up old records |
 | **CAP-064** | Build an installer | [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) | 3.2, 3.3, 3.4 | `fleetctl package` · pkg · msi · deb · rpm · exe · ps1 · signing fleetd · a.7 owns the command contract |
-| **CAP-065** | Configure the end user's own surface | `None` | 3.2, 3.3, 3.4 | Fleet Desktop · My device · tray icon · transparency · browser host · custom proxy |
+| **CAP-065** | Configure the end user's own surface | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 3.2, 3.3, 3.4 | Fleet Desktop · My device · tray icon · transparency · browser host · custom proxy |
 | **CAP-066** | Allow scripts on a host | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 3.2, 3.3, 3.4 | `--enable-scripts` · `ENABLE_SCRIPTS` · `ORBIT_ENABLE_SCRIPTS` · Running scripts is disabled in organization settings |
 | **CAP-067** | Set which agent versions a host takes | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 1.2 | `update_channels` · update channel · pin the agent · fleetd updates |
 | **CAP-068** | Set the channel on one host | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 3.4 | `--orbit-channel` · `ORBIT_ORBIT_CHANNEL` · `ORBIT_OSQUERYD_CHANNEL` · `ORBIT_DESKTOP_CHANNEL` |
 | **CAP-069** | Pin the agent to an exact version | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 1.2 | version pinning |
 | **CAP-070** | Roll the agent back | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 7.3 | downgrade the agent (clash: downgrading Fleet is a different operation) |
 | **CAP-071** | Stop an agent updating at all | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 8.4 | `--disable-updates` · `ORBIT_DISABLE_UPDATES` |
-| **CAP-072** | Publish agent versions from your own repository | `None` | 3.8, 6.4 | TUF · `fleetctl updates init` · `updates add` · `updates roots` · `updates timestamp` · `updates rotate` · air-gapped agents · where does fleetd get update information |
+| **CAP-072** | Publish agent versions from your own repository | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 6.4 | TUF · `fleetctl updates init` · `updates add` · `updates roots` · `updates timestamp` · `updates rotate` · air-gapped agents · where does fleetd get update information |
 | **CAP-073** | See what agent version a host is running | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 4.5, 8.4 | Agent card · component versions |
 | **CAP-074** | Ship an osquery extension to hosts | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 3.8 | custom table · `extensions` · bundle osquery extensions into fleetd |
 | **CAP-075** | Send an extension only to some hosts | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 1.3 | targeting extensions with labels |
@@ -162,7 +162,7 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-079** | Scan hosts with signature sets | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 5.7 | YARA · `yara` · remote deployment of YARA rules |
 | **CAP-080** | Add columns to every result | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.6 | `decorators` |
 | **CAP-081** | Turn event collection on or off | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 8.14 | evented tables · event subscribers · `disable_events` |
-| **CAP-082** | Get a file off a device | `None` | 1.6, 8.7 | file carving · carve · `fleetctl get carve` · `get carves` · collect a log file · [a.6] |
+| **CAP-082** | Get a file off a device | [8.7](../08-troubleshooting/8.7-live-query-introspection.md) | 1.6 | file carving · carve · `fleetctl get carve` · `get carves` · collect a log file · [a.6] |
 | **CAP-269** | Turn Apple MDM on | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 2.9 | APNs · push certificate · `apns` · activate · iphone · ipad · macbook |
 | **CAP-272** | Connect Apple Business Manager | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 3.2, 3.5 | ABM token · AB token · DEP token · `abm_token` (still accepted) · `ab_token` · `fleetctl get mdm-ab` · `mdm_apple_bm` (still accepted) · [a.6] |
 | **CAP-275** | Connect Apple's app purchasing | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 5.4 | VPP (vendor) · Volume Purchasing Program (vendor) · Apps and Books · App and Book token · [a.6] |
@@ -242,7 +242,7 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-129** | See exposure over time | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 4.5 | vulnerability trend · dashboard vulnerability exposure · charts |
 | **CAP-130** | Turn the history chart off | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 4.5 | `disabled_historical_dataset` |
 | **CAP-131** | Find out what Fleet can install for you | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | FMA · Fleet-maintained apps · fleet maintained · app store · google play |
-| **CAP-132** | Supply vulnerability data yourself | `None` | 4.4 | air-gapped · offline CVE data · `cpe_database_url` · `cve_feed_prefix_url` · NVD · `fleetctl vulnerability-data-stream` |
+| **CAP-132** | Supply vulnerability data yourself | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) |  | air-gapped · offline CVE data · `cpe_database_url` · `cve_feed_prefix_url` · NVD · `fleetctl vulnerability-data-stream` |
 | **CAP-133** | Count the estate | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 1.2 | online · offline · missing · MIA (still accepted) · No hosts match your filters · how does Fleet determine online and offline status · [a.6] |
 | **CAP-134** | Count hosts low on disk | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 6.3 | low disk space |
 | **CAP-135** | Find automated enrollments that failed | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 2.10, 8.8 | failed enrollments · ADE devices failing |
@@ -266,7 +266,7 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-148** | Push a setting to Windows | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 8.9 | OMA-URI (vendor) · LocURI (vendor) · CSP (vendor) · SyncML (vendor) · ADMX (vendor) · Windows configuration profile · CSP converter · migrating Intune policies |
 | **CAP-149** | Push a setting to Android | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 2.12 | `android_settings` · Android profile · Android policy · `created_android_profile` |
 | **CAP-152** | Put a host's own values into a profile | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 6.2 | Fleet variable · `$FLEET_VAR_` · Variables · built-in variables · put the serial in a profile |
-| **CAP-153** | Issue a certificate to a device | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 2.12, 8.9 | SCEP · EST · PKI · NDES (vendor) · DigiCert (vendor) · Smallstep (vendor) · Hydrant (vendor) · certificate authority · CA · Certificate enrollment · `certificate-authorities` (clash) · `added_hydrant` · `added_custom_est_proxy` · [a.6] |
+| **CAP-153** | Issue a certificate to a device | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 2.13, 2.12, 8.9 | SCEP · EST · PKI · NDES (vendor) · DigiCert (vendor) · Smallstep (vendor) · Hydrant (vendor) · certificate authority · CA · Certificate enrollment · `certificate-authorities` (clash) · `added_hydrant` · `added_custom_est_proxy` · [a.6] |
 | **CAP-154** | Deliver a Platform SSO registration token | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 5.5 | Platform SSO · PSSO · Okta Verify · Entra Platform SSO |
 | **CAP-155** | Keep a password out of a spec file | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 6.1 | `$FLEET_SECRET_` · custom variable · secret · `created_custom_variable` |
 | **CAP-156** | Read a profile's delivery state | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 8.8, 8.9 | pending · verifying · verified · failed · the profile says failed · configuration profile status |
@@ -287,7 +287,7 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-239** | Have the user type their passphrase | [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | 5.8 | `cryptsetup` · `zenity` · `kdialog` |
 | **CAP-240** | Find out whether a disk is encrypted at all | [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | 5.8, 4.1 | `disk_encryption_enabled` |
 | **CAP-241** | Read disk encryption enforcement state | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 4.5 | `action_required` · `enforcing` · `removing_enforcement` · disk encryption status |
-| **CAP-242** | Require a BitLocker startup PIN | `None` | 5.8 | `windows_require_bitlocker_pin` · BitLocker PIN enforcement |
+| **CAP-242** | Require a BitLocker startup PIN | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |  | `windows_require_bitlocker_pin` · BitLocker PIN enforcement |
 | **CAP-243** | Use your own encryption profile instead | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 5.2 | `mdm.enable_custom_filevault` · `mdm.enable_custom_disk_encryption` · escape hatch |
 | **CAP-244** | Set and read a firmware password on Apple silicon | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 1.4 | Recovery Lock · `laps` · rotation · Show Recovery Lock password · `viewed_host_recovery_lock_password` · `rotated_host_recovery_lock_password` |
 | **CAP-245** | Stop enforcing encryption without losing the keys | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 7.2 | disable enforcement |
@@ -643,7 +643,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | DDM | declaration, declarative device management | The acronym in one, the spelled-out form in three | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) |
 | zero-touch | ADE on Apple, Autopilot on Windows, the QR path on Android | Two | [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) |
 | LAPS | managed local administrator account | None, and the capability has no owning chapter either | `None`, and see the last section |
-| EST, PKI, NDES, DigiCert, Smallstep, Hydrant | certificate authority | EST and Hydrant in none. The other four appear in [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) or Part VIII | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md), with the prerequisite unowned |
+| EST, PKI, NDES, DigiCert, Smallstep, Hydrant | certificate authority | All six now appear in [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md). Four also appear in [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) or Part VIII | [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md) for the prerequisite, [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) to deliver |
 | Lost Mode | Fleet's button says Lock | One | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) |
 | Managed Apple ID | Managed Apple Account, Apple's current term | None. [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) uses Apple's current term on purpose | [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) |
 | work profile, device owner, profile owner | personally enrolled and company-owned Android | Six | [3.6](../03-connect-devices/3.6-enroll-android-devices.md) |
@@ -652,9 +652,9 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | LUKS | Linux disk encryption | Eight | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
 | Okta, Jira, Zendesk | conditional access, ticketing | Three, four and four | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
 
-**Ten of those words appear in no chapter of this book**: Azure AD, LDAP, Workspace ONE, Kandji, Munki, LAPS, EST, Hydrant, OMA-URI and Managed Apple ID. Their rows are the ones that earn the appendix, because there is no other route from the word to the page.
+**Eight of those words appear in no chapter of this book**: Azure AD, LDAP, Workspace ONE, Kandji, Munki, LAPS, OMA-URI and Managed Apple ID. Their rows are the ones that earn the appendix, because there is no other route from the word to the page.
 
-**Fleet documents most of them.** At this release `EST` heads fourteen sections of Fleet's own documentation, Jamf twenty-six, Kandji and Munki eight each, Hydrant four and Workspace ONE three. The word is standard in the industry, present in the vendor's material, and absent from this book, which is a gap in the book rather than in the reader.
+**Fleet documents most of them.** At this release Jamf heads twenty-six sections of Fleet's own documentation, Kandji and Munki eight each, and Workspace ONE three. The word is standard in the industry, present in the vendor's material, and absent from this book, which is a gap in the book rather than in the reader.
 
 **OMA-URI is the one word neither Fleet nor this book gives a heading to**, and it is the only word an Intune administrator has for the thing [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) calls a Windows configuration profile. Managed Google Play and AMAPI have no heading in Fleet's documentation either, though both are used in this book's chapters.
 
@@ -722,66 +722,50 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Where this index ends
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Twenty-one things a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Three earlier entries left the count after a re-audit found their teaching already in the book; they close this section, with links to the coverage, rather than disappearing.
+![Troubleshooting](../_assets/icons/troubleshooting.svg) **Eight things a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Five earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
 
 **No link is invented for any of them.** A chapter owns an outcome when it explains the workflow, not when it mentions the thing in passing, and not when it explains the surrounding workflow without covering this step.
 
-**[a.7](a.7-fleetctl-command-reference.md#fifteen-commands-this-manual-does-not-explain) keeps the sibling register at command granularity**: fifteen `fleetctl` commands with no owning chapter, in six groups. Five of the six groups appear here as outcomes, since the update repository, file carving and vulnerability data are capability rows below and packs and the sandbox sit in the no-row list; the sixth, first-run `setup`, is a.7's alone. The two registers describe overlapping gaps at different grain, so never add one count to the other.
+**[a.7](a.7-fleetctl-command-reference.md#four-commands-this-manual-does-not-explain) keeps the sibling register at command granularity**: four `fleetctl` commands with no owning chapter, in two groups. One of the two groups appears here as an outcome, the local evaluation sandbox, which sits in the no-row list below; the other, first-run `setup`, is a.7's alone. The two registers describe overlapping gaps at different grain, so never add one count to the other.
 
-### Seven outcomes with no owning chapter
+### Two outcomes with no owning chapter
 
 | ID | The outcome | Where the manual mentions it | Why nothing owns it |
 |---|---|---|---|
 | **CAP-040** | Prompt a Mac's user to migrate from another MDM | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md) | [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md) teaches the webhook contract rather than the migration, [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) has no migration section, and [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) hands Windows migration to [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md), which has no macOS counterpart. Fleet publishes several guides on it and this book publishes none |
-| **CAP-065** | Fleet Desktop and the My Device page | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), [3.2](../03-connect-devices/3.2-enroll-macos-devices.md), [3.3](../03-connect-devices/3.3-enroll-windows-devices.md), [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) | Named as the end-user surface in three enrollment chapters and configured in none. Self-service and Linux key escrow both depend on it |
-| **CAP-072** | Publish agent versions from your own update repository | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md), [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) says [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) owns update-repository semantics. [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) teaches consuming Fleet's repository, and never creating, signing, key-rotating or re-timestamping one. [a.7](a.7-fleetctl-command-reference.md) reached the same verdict for the five commands that do it |
-| **CAP-082** | Carve a file off a host | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), [1.6](../01-foundations/1.6-the-fleet-server.md), [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md), [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md), [8.6](../08-troubleshooting/8.6-server-state.md), [8.7](../08-troubleshooting/8.7-live-query-introspection.md), [8.13](../08-troubleshooting/8.13-escalation.md), [8.14](../08-troubleshooting/8.14-degradation.md) | Eight chapters size it, budget it, bucket it and tabulate its limits. None starts one or reads one back. It is not licence-gated, so this is not a Premium omission |
-| **CAP-132** | Supply vulnerability data yourself | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | One table cell saying that something else places the data where Fleet reads it. A mention rather than a workflow, and the command that does it downloads nine datasets |
-| **CAP-162** | Run a script across many hosts at once | [1.5](../01-foundations/1.5-audit-and-activity.md), [6.1](../06-automate-fleet/6.1-automation-design-and-change-control.md), [8.14](../08-troubleshooting/8.14-degradation.md) | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) teaches running one script on one host. The batch route, its cancellation, and the fact that its per-host records never reach an external log destination are named only in passing elsewhere |
-| **CAP-242** | Set a BitLocker startup PIN | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | One sentence, saying the PIN and encryption are locked together as one decision. Fleet has a dialog for it and a setting behind it |
+| **CAP-162** | Run a script across many hosts at once | [1.5](../01-foundations/1.5-audit-and-activity.md), [6.1](../06-automate-fleet/6.1-automation-design-and-change-control.md), [8.14](../08-troubleshooting/8.14-degradation.md) | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) teaches running one script on one host and, in [its batch section](../05-manage-devices/5.3-run-and-manage-scripts.md#running-it-on-many-at-once), running one across many. What no chapter owns is that the batch's per-host records never reach an external log destination, which is the half a reader auditing script activity arrives for |
 
-### Three outcomes taught without their prerequisite
+### Two outcomes taught without their prerequisite
 
 **These are worse than a clean gap**, because you follow the chapter and stop at a step nothing explains.
 
 | ID | Taught | Not taught |
 |---|---|---|
-| **CAP-153** | Delivering a certificate through a profile, in [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | **Creating the certificate authority integration.** The largest gap in the book. [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) names the variables, [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) says certificate authorities are reconciled on their own paths, and [3.6](../03-connect-devices/3.6-enroll-android-devices.md) and [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) both assume templates exist. Three chapters depend on a capability no chapter creates. Fleet publishes a long guide covering NDES, DigiCert, Smallstep, Hydrant, any SCEP authority and any EST authority |
 | **CAP-085** | Reading a custom host vital, in [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | **Creating the definition.** [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) names the feature and says values are set per host through the API. The definition an administrator creates is never taught, and [a.4](a.4-roles-and-permissions-matrix.md) already publishes a permission row for writing it |
 | **CAP-253** | Okta conditional access, in [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | **The mutual-TLS proxy in front of it.** One sentence, stated as a prerequisite rather than as hardening, with specific header-stripping instructions, and no chapter owns it |
 
-### Eleven things with no row and no chapter
+### Four things with no row and no chapter
 
 Each is attested in Fleet, in this manual as a mention, or both. None has a capability row, so none appears in the index above.
 
-**Packs and scheduled query packs.** Defined in [a.6](a.6-glossary-and-release-compatibility.md) and introduced by no chapter, while `fleetctl get packs` still retrieves them and Fleet's own documentation still answers "Where did the Packs page go?" and "What happened to the Schedule page?"
-
 **The managed local administrator account.** A credential Fleet creates, holds, rotates and audits the reading of, with no chapter that creates or rotates it. `LAPS` is the word people arrive with and it appears in no chapter of this book.
-
-**Fleet's usage analytics.** Named once, as a firewall consideration. Fleet gives it a settings page and a guide.
 
 **`fleetctl preview`**, and its `sandbox` alias. Named twice, once as a hazard and once in a list of surfaces. Nothing teaches starting, stopping or resetting it.
 
 **Android enrollment through a Google account.** A named absence: [3.6](../03-connect-devices/3.6-enroll-android-devices.md) says a third path exists and this manual cannot describe it, and [8.13](../08-troubleshooting/8.13-escalation.md) adds that no expected status has been established for it.
 
-**ChromeOS diagnosis.** [3.7](../03-connect-devices/3.7-enroll-chromeos-devices.md) says there is no ChromeOS troubleshooting chapter, and there is not.
-
-**Detecting half-enrolled hosts across the estate.** Three chapters route to [8.6](../08-troubleshooting/8.6-server-state.md) for the query and [8.6](../08-troubleshooting/8.6-server-state.md) does not contain one.
-
-**Prometheus metric names.** [8.14](../08-troubleshooting/8.14-degradation.md) tells you to alert on them. [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) and [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) own the endpoint and neither names a metric.
-
 **Retrying a software install.** [8.11](../08-troubleshooting/8.11-reproducing-and-isolating.md) lists it as a forcing action with a production-safety verdict. The retry is real but has no row and no owning chapter: the host's software library and the self-service page both show **Retry** on a failed install, and **Retry uninstall** on a failed uninstall, and the button re-sends the ordinary install request, `POST /api/v1/fleet/hosts/:id/software/:software_title_id/install`, Premium. There is no retry-specific endpoint, no fleetctl command and no GitOps path.
 
-**The server's own record of a file carve.** [8.7](../08-troubleshooting/8.7-live-query-introspection.md) frames the host's table as the half the server record does not give you, and Part VIII never gives the other half.
+### Five entries re-audited out of the count
 
-**The policy automation activity endpoint.** It appears once, in an endpoint table, and is never used.
-
-### Three entries re-audited out of the count
-
-**An entry leaves this register by being taught, and these three left it because a re-audit found the teaching already in the book.** They stay listed so the register never shrinks silently, and so the next audit does not re-open them.
+**An entry leaves this register by being taught, and these five left it that way: three when a re-audit found the teaching already in the book, and two when a chapter added in this revision took the outcome on.** They stay listed so the register never shrinks silently, and so the next audit does not re-open them.
 
 **The device-authenticated API.** Counted here in an earlier revision on the grounds that it was covered only through the things that run on it. The coverage stands in its own right: [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md#the-five-channels) explains the channel, its per-host token and who consumes it, and [a.8](a.8-api-action-and-endpoint-reference.md#who-calls-fleet-and-what-they-present) carries the Device caller class and enumerates the surface that token authenticates.
 
 **Turning stored reporting off across the whole server, and what that does to forwarding.** An earlier revision said two chapters touch the switch and neither owns the consequence. Both halves are owned: [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md#what-stops-a-result-being-stored) owns the switch, including that `discard_reports_data` deletes the rows already stored, [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md#getting-results-out-of-fleet) owns the forwarding consequence, namely that a server-wide disable forwards incoming results without the per-report automations filter, and [1.1](../01-foundations/1.1-what-fleet-is.md#what-does-fleet-do) carries the storage-against-forwarding model the two hang from.
 
 **An infrastructure intake checklist.** [8.13](../08-troubleshooting/8.13-escalation.md#8134-infrastructure-intake-list-self-hosted) carries a usable one. It is assembled by this manual and marked as not official because Fleet publishes none, which is the absence [8.14](../08-troubleshooting/8.14-degradation.md) records; unofficial is a provenance note rather than a missing chapter, so this register no longer counts it.
+
+**Carving a file off a host, and reading the server's record of it.** Counted here while eight chapters sized, budgeted and bucketed a carve and none started one or read one back. [8.7](../08-troubleshooting/8.7-live-query-introspection.md#878-running-and-retrieving-a-file-carve) now owns both halves: initiating a carve, and retrieving the completed one through `fleetctl get carves`, `get carve` and the REST equivalents. It is not licence-gated, so this was never a Premium omission.
+
+**ChromeOS diagnosis.** Counted here while [3.7](../03-connect-devices/3.7-enroll-chromeos-devices.md) said there was no ChromeOS troubleshooting chapter. [3.7](../03-connect-devices/3.7-enroll-chromeos-devices.md) now carries the diagnosis itself, so the absence it recorded is closed.

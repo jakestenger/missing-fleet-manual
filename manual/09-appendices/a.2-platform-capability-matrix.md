@@ -243,7 +243,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-159** | Run a one-off script on a device | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | Free globally, Premium per fleet | Agent installed with scripts enabled |
 | **CAP-160** | Keep a script in a library and run it | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | Free globally, Premium per fleet | A recognised file extension, and matching interpreter line |
 | **CAP-161** | Wait for a script's result | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | Free globally, Premium per fleet | Host online, with nothing already pending |
-| **CAP-162** | Run a script across many hosts at once | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | Free globally, Premium per fleet | All targets in the same fleet as the script |
+| **CAP-162** | Run a script across many hosts at once | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | No licence check on the run; Premium only to create the fleets a team batch targets | All targets in the same fleet as the script |
 | **CAP-163** | Stop every script running anywhere | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | None |
 | **CAP-164** | Let a script run for longer than five minutes | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | A value of 18,000 seconds or less |
 | **CAP-165** | Read what a script did | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | A script must have run |
