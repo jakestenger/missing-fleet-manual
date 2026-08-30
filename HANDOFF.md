@@ -94,6 +94,48 @@ New review output goes under `missing-fleet-manual-private/reviews/phase2/`.
 `build/status-artifact.py` counts rounds from that directory alone, so the status page shows
 zero rounds everywhere until per-chapter work resumes.
 
+### The whole-book review is COMPLETE, both rounds applied (2026-08-30)
+
+Both review rounds ran and both were applied in full. The book is now **81 chapter files, ~397k
+words** (was 75 / 358k): a new certificate-authority chapter (2.13) and two new appendices
+(a.9 hands-on labs, a.10 subject index). Full commit trail in
+`reviews/phase2/application-tracker.md`; that file is the blow-by-blow record.
+
+**What was done, by the review's own eleven-step order of attack:** safety-critical factual
+corrections (APNs expiry, Android systemUpdate, WSTEP recovery, GitOps device-action authz);
+the remaining source corrections with their sibling passages; the honest-scope ledger (a.1's
+gap register and the introduction's "complete guide" promise); an eight-stage structural
+restructure (backup before upgrades, production handoff to 7.7, self-hosting opening Part II,
+one platform per chapter, appendix tables ahead of essays), merged as `1a80970`; source-pinned
+reference catalogs (config keys and API routes, generated so they cannot drift); eight
+new-content clusters closing the gaps that broke the review's reader journeys; the hands-on
+labs, subject index and full troubleshooting cross-linking. Then round two (four lenses, fresh
+criteria, recombination check) re-verified every round-one fix as holding and was itself
+applied, followed by a focused confirmation pass.
+
+**The reader journeys the first review found broken now close:** lost laptop, production
+bootstrap (at reading level, with an honest scope note), certificate issuance, carve retrieval,
+capacity validation, ChromeOS. Eight of nine core journeys close end to end.
+
+**Method that held up and is worth reusing.** Every accuracy finding was adversarially verified
+at the tag before application; roughly half of Sol's suggested fixes were amended because they
+would have shipped a new defect. Every new-content cluster passed a soundness gate (all eight
+came back NOT SOUND first) and then a draft review. The recombination check earned its keep
+repeatedly: the 4.3 script-Premium contradiction, the CAP-085/253 register drift, and a final
+half-applied script-automation fix were all caught during application or confirmation, not after.
+
+**One Fleet defect filed:** C59 in the vault queue (the certificate-authority licence gate
+silently no-ops for EST/Smallstep-only batch applies on Free), verified at the executed path.
+
+**Deferred, and genuinely open (owner's calls):** the images remain the owner's to generate
+(several IMAGE-REDO markers carry corrected prompts, including the 2.1 setup-sequence diagram
+withheld because it drew the pre-restructure order, and the stale 1.6 Redis-loss visual); the
+production-bootstrap journey is taught at reading level rather than as a runnable deploy, by
+design, with a scope note naming what needs the operator's own infrastructure; the verification
+freeze is still in force, so nothing carries `verified` yet.
+
+---
+
 **The owner authorised full application on 2026-08-29, late evening:** verify and apply the
 entirety of the findings (all eleven order-of-attack steps, including the eight new-content
 clusters, the reference catalogs, and the exercises), renumber chapters freely even though
