@@ -30,7 +30,7 @@ Fleet's request surface is easier to reason about once you stop reading it as a 
 
 Per-endpoint parameters, request bodies and response shapes live in Fleet's own REST API reference. **That reference is hand-maintained**, so treat it as the best available account rather than a guarantee that it matches the release you are running. This appendix points there rather than copying it.
 
-Three questions belong elsewhere and are deliberately unanswered here. **Which role may perform an action is [a.4](a.4-roles-and-permissions-matrix.md)**, which carries it action by action against all six roles at both scopes; [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) explains the model behind it. **Which interface can perform it at all will be [a.5](a.5-interface-index.md), also not written yet**; the chapter that owns the capability is the answer meanwhile. How to use the API in practice is [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md), which is written.
+Three questions belong elsewhere and are deliberately unanswered here. **Which role may perform an action is [a.4](a.4-roles-and-permissions-matrix.md)**, which carries it action by action against all six roles at both scopes; [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) explains the model behind it. **Which interface can perform it at all is [a.5](a.5-interface-index.md)**, which carries every action against all four. How to use the API in practice is [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md), which is written.
 
 ## Who calls Fleet, and what they present
 
@@ -198,7 +198,7 @@ An endpoint's valid `order_key` values are its own, and Fleet's reference docume
 
 ![Reference](../_assets/icons/reference.svg) Request bodies, response shapes, per-endpoint parameters and error codes are in Fleet's REST API reference at `fleetdm.com/docs/rest-api/rest-api`, and endpoints intended for contributors rather than administrators are documented separately in the Fleet repository.
 
-Which actions each role may perform is [a.4](a.4-roles-and-permissions-matrix.md). Which surface can perform one at all will be [a.5](a.5-interface-index.md), **which is not written yet**. Until they are, 2.3 carries the roles and the owning chapter carries the surface.
+Which actions each role may perform is [a.4](a.4-roles-and-permissions-matrix.md). Which surface can perform one at all is [a.5](a.5-interface-index.md), which carries every action against all four interfaces.
 
 ## Version notes
 
