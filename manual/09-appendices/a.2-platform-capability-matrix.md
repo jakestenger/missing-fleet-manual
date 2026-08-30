@@ -593,7 +593,7 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C100** CAP-310, Linux. Supported when the agent was packaged without a pinned certificate, in which case the operating system trust store applies and a publicly-trusted rotation is transparent. Not supported when it was packaged with one, for the same replacement-trust-store reason as macOS and Windows.
 
-**C101** CAP-311, Windows. Supported when the currently configured Windows enrollment certificate and key are the same pair the keys were escrowed under, because that is what decrypts them. Not supported after the pair is replaced, because keys escrowed under the previous leaf certificate can no longer be decrypted.
+**C101** CAP-311, Windows. Supported when the currently configured Windows enrollment certificate is the very certificate the keys were escrowed under, with its private key, because retrieval matches the stored ciphertext to the current certificate by issuer and serial. Not supported after the certificate is replaced or renewed, even by a renewal that keeps the same key pair, because keys escrowed under the previous certificate can no longer be decrypted.
 
 **C102** CAP-335, ChromeOS. Supported for three of the six introspection tables, which the extension declares and answers from its own implementation: the agent information table, the operating-system version table and the system information table. Not supported for the other three, along with carving and agent logs, because those tables do not exist in the extension's closed set, so the query simply returns nothing.
 

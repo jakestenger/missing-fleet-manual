@@ -22,6 +22,9 @@ if not SRC.exists():
     sys.exit(0)
 
 real = set(re.findall(r'CronScheduleName\s*=\s*"([a-z0-9_]+)"', SRC.read_text()))
+# One schedule is registered by string literal rather than a CronScheduleName constant
+# (service discovery, cmd/fleet/cron.go), so the constants list under-counts by one.
+real.add("mdm_service_discovery")
 if not real:
     print("skipped: no schedule names found in source; the declaration shape may have changed")
     sys.exit(0)

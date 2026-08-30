@@ -264,7 +264,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | **CAP-002** | Sign in through the identity provider | [1.4](../01-foundations/1.4-identity-and-roles.md) | 2.2 | SSO · SAML · single sign-on · log in with Okta · log in with Entra · IdP · authentik · Google Workspace · `user_added_by_sso` |
 | **CAP-003** | Create accounts the first time someone signs in | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) | 1.4 | JIT · just-in-time provisioning · auto-create users · account provisioning · `fpsso` |
 | **CAP-004** | Remove accounts when people leave | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) | 1.4 | SCIM · deprovision · offboarding · account provisioning |
-| **CAP-005** | Work out why an account was not deprovisioned | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) | 2.3 | required SCIM attributes · `email` · `userName` · `givenName` · `familyName` (clash: Fleet's two documentation pages list different sets) |
+| **CAP-005** | Work out why an account was not deprovisioned | [2.2](../02-administer-and-deploy-fleet/2.2-identity-providers-sso-scim-and-role-sync.md) | 2.3 | required SCIM attributes · `email` · `userName` · `givenName` · `familyName` · deprovisioning matches by email · API-only and non-SSO accounts skipped · last global admin never deleted |
 | **CAP-006** | Require a second factor | [1.5](../01-foundations/1.5-audit-and-activity.md) | 2.2 | 2FA · MFA · email two-factor · one-time code |
 | **CAP-007** | Add a person and give them a role | [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) | 1.4 | invite · new user · create user · human user · make someone an admin · `created_user` · `changed_user_global_role` · Add User button disabled |
 | **CAP-008** | Choose between Fleet's roles | [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) | 1.4 | `observer_plus` · Observer+ · observer plus · `gitops` · `technician` · role-based access |
@@ -770,7 +770,7 @@ Each is attested in Fleet, in this manual as a mention, or both. None has a capa
 
 **Prometheus metric names.** [8.14](../08-troubleshooting/8.14-degradation.md) tells you to alert on them. [2.9](../02-administer-and-deploy-fleet/2.9-self-hosting-architecture-and-capacity.md) and [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) own the endpoint and neither names a metric.
 
-**Retrying a software install.** [8.11](../08-troubleshooting/8.11-reproducing-and-isolating.md) lists it as a forcing action with a production-safety verdict. There is no control, no endpoint and no command for it anywhere.
+**Retrying a software install.** [8.11](../08-troubleshooting/8.11-reproducing-and-isolating.md) lists it as a forcing action with a production-safety verdict. The retry is real but has no row and no owning chapter: the host's software library and the self-service page both show **Retry** on a failed install, and **Retry uninstall** on a failed uninstall, and the button re-sends the ordinary install request, `POST /api/v1/fleet/hosts/:id/software/:software_title_id/install`, Premium. There is no retry-specific endpoint, no fleetctl command and no GitOps path.
 
 **The server's own record of a file carve.** [8.7](../08-troubleshooting/8.7-live-query-introspection.md) frames the host's table as the half the server record does not give you, and Part VIII never gives the other half.
 
