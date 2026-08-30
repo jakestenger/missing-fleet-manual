@@ -375,7 +375,7 @@ dominant defect class operating at the scale of a whole part. The register's gra
 cell saying Premium looks identical whether it was read out of a validator or assumed from a
 neighbour.
 
-### The five failure modes this part has produced, which are new
+### The six failure modes this part has produced, which are new
 
 **One. A correction recorded in the ledger and never made in the file.** a.8 hit this three rounds
 running and a.6 twice. The mechanism is mechanical: **`unwrap.py` reflows paragraphs into single
@@ -483,6 +483,29 @@ harder does not converge.
 updated.** Where round history is genuinely worth keeping, it goes in one dated section at the end,
 clearly a record rather than a claim. Research files are evidence, not a diary, and the ledgers in
 `research/section-notes/` are where the story belongs.
+
+**Six. An under-claim is the same defect wearing the opposite sign.** Found on 2026-08-29 after
+three rounds of a.7 spent withdrawing over-claims, when the fourth had to *publish* three things the
+appendix was hedging.
+
+The appendix said generating the Apple push request writes a local file. On a first run Fleet creates
+a certificate authority certificate and key and a push private key and **stores all three encrypted
+on the server**, and it sends the signing request to **Fleet's own service rather than to Apple**. It
+said a debug command was read-only; that command writes a file, and eight of its twelve siblings write
+one whether you ask or not.
+
+**Why it is harder to catch than an over-claim.** Nothing about a hedge reads as overreach. Every
+review instinct this project has built is tuned to "can you show that", and a sentence claiming less
+than the source supports answers that question perfectly while still being wrong. The reviewer only
+found these because the round explicitly asked *is anything now under-claimed*.
+
+**So ask it.** Every review round after the first should carry the question, and the last round of
+every appendix must. The question that generalises both halves is neither "is this too strong" nor
+"is this too weak" but **what does the source settle**.
+
+**A related habit worth keeping:** the independent reviewer is authoritative on source and not on
+arithmetic. Its subtotals were wrong in two consecutive a.7 rounds, both times in a way that was
+internally consistent and therefore easy to accept. Recount everything mechanically from the artifact.
 
 ### And one about filing defects against Fleet
 
