@@ -142,7 +142,7 @@ The vocabulary is closed in the other direction too. Exactly ten top-level keys 
 >
 > GitOps inverts the same boundary rather than closing it: it assigns an already-uploaded token's default fleets and cannot upload, renew or delete the token. **In GitOps you can only do the part after the token.**
 >
-> The renewal itself is `Full` in the UI and the API and `Read only` in `fleetctl`, which is the shape to design the calendar reminder around. [2.7](../02-administer-and-deploy-fleet/2.7-apple-mdm-configuration.md) covers the workflow.
+> The renewal itself is `Full` in the UI and the API and `Read only` in `fleetctl`, which is the shape to design the calendar reminder around. [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) covers the workflow.
 
 ## What decides a `Partial` cell
 

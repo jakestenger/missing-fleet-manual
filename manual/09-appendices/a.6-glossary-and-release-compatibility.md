@@ -306,7 +306,7 @@ These are the server side of the capabilities above, **including the two web set
 
 ### Dependency floors
 
-**MySQL 8.0.44.** Tested against 8.0.44, 8.4.8 and 9.5.0, with 9.6.0 currently incompatible. The floor moved from 8.0.36 during the 4.83 line ([2.9](../02-administer-and-deploy-fleet/2.9-self-hosting-architecture-and-capacity.md) has the operational consequence, which is that a newer MySQL is not automatically a safer one).
+**MySQL 8.0.44.** Tested against 8.0.44, 8.4.8 and 9.5.0, with 9.6.0 currently incompatible. The floor moved from 8.0.36 during the 4.83 line ([2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) has the operational consequence, which is that a newer MySQL is not automatically a safer one).
 
 **Redis 6.2.** Required by the host-lookup cache on the agent authentication paths, which arrived in the 4.86 line. Fleet is actively tested against 6.2 and 7.
 

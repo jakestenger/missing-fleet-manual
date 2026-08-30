@@ -27,7 +27,7 @@ feature_requests:
 
 **It does not enumerate settings or their defaults.** Fleet's own configuration reference does that, and copying it would be a liability rather than a service: this project has confirmed the reference and the server disagreeing in two different ways at this release, about what a default is and about whether a documented key is bound at all. The last section records the ones that change a decision.
 
-**The boundary with [2.4](../02-administer-and-deploy-fleet/2.4-organization-and-server-settings.md)** is worth stating because the two are adjacent. If the question is *why, when, or how to choose* a particular setting, that is 2.4's. If it is *which source controls a class of values, or how competing sources resolve*, it is this appendix's.
+**The boundary with [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md)** is worth stating because the two are adjacent. If the question is *why, when, or how to choose* a particular setting, that is 2.7's. If it is *which source controls a class of values, or how competing sources resolve*, it is this appendix's.
 
 ## The authorities
 

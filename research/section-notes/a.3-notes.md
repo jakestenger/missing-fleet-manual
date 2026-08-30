@@ -72,7 +72,7 @@ table above.
 | Chapter | What changed |
 |---|---|
 | **1.3** | The agent-options inheritance row, which was true of one case and false of the other, and had already been corrected once |
-| **2.4** | A fleet cannot opt out of host expiry, only change its window. And the count of reference disagreements, twice: raised to seven, then withdrawn entirely as underived |
+| **2.7** | A fleet cannot opt out of host expiry, only change its window. And the count of reference disagreements, twice: raised to seven, then withdrawn entirely as underived |
 | **6.2** | The GitOps agent-options row, wrong in both of its last two cells |
 | **5.2** | **Rotating a secret redelivers nothing.** Filed as C28 |
 | **8.11** | Remote flags overwrite the local flagfile rather than losing to it |

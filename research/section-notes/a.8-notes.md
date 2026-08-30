@@ -58,7 +58,7 @@ reference disagreed with what the server registers. It did not have it for route
 | `/enroll` is a frontend-served route, not an API route | `server/service/frontend.go:199-213` |
 | The metrics endpoint mounts when credentials are configured **or** basic authentication is explicitly disabled | `cmd/fleet/serve.go:943-955` |
 | The API-only catalogue constrains only API-only accounts carrying a non-empty endpoint restriction list | `server/service/middleware/auth/api_only.go:21-67` |
-| A user token inherits its account's role and scope, and the activity record attributes work to it | Established for 2.3 and unchanged |
+| A user token inherits its account's role and scope, and the activity record attributes work to it | Established for 2.6 and unchanged |
 | List endpoints share `page`, `per_page`, `order_key`, `order_direction` | `docs/REST API/rest-api.md:542` |
 
 ### Versioning
@@ -101,7 +101,7 @@ Every path read from its registration. **That a capability needs a given path ex
 
 **Seven capabilities were absent entirely** before this round: Fleet SSO, SCIM, Google Calendar, Okta
 conditional access, certificate delivery, Apple ACME hardware attestation, and the full device
-family. **The SCIM omission also broke an explicit promise live in 2.2**, which sends readers here for
+family. **The SCIM omission also broke an explicit promise live in 2.5**, which sends readers here for
 SCIM endpoints.
 
 **Nine path corrections** were applied to capabilities already present: setup, EULA, bootstrap, OTA
@@ -156,7 +156,7 @@ statement about Fleet's implementation and was false as one.
 ## Checks run
 
 `check-links`, `check-em-dashes`, `check-crossrefs`, `check-absolutes`, `check-frequency-claims`,
-`unwrap` dry run. Read against 2.2, 2.3, 2.6, 2.7, 2.8, 3.1, 3.2, 3.5, 3.7 and 6.3, which are the
+`unwrap` dry run. Read against 2.5, 2.6, 2.9, 2.10, 2.11, 3.1, 3.2, 3.5, 3.7 and 6.3, which are the
 chapters that defer here or describe the same paths.
 
 

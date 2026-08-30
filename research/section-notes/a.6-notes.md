@@ -77,7 +77,7 @@ Each row's gate cited in the research at
 
 | Claim | Source |
 |---|---|
-| MySQL 8.0.44, moved from 8.0.36 in the 4.83 line | Already carried by 2.9 |
+| MySQL 8.0.44, moved from 8.0.36 in the 4.83 line | Already carried by 2.2 |
 | **Redis 6.2**, required by the host-lookup cache on the osquery and orbit authentication paths | `CHANGELOG.md:489`, which states the requirement in the entry itself; corroborated `docs/Get started/FAQ.md:197` |
 
 ### The support policy
@@ -105,7 +105,7 @@ minimum Chrome version key. Recorded as documented-only.
 | Chapter | Was | Now |
 |---|---|---|
 | **5.6** | Fleet sends the combined Windows deadline node, and it is unknown whether Windows 11 still honours it | Fleet sends **both split nodes**. The question does not arise |
-| **2.9** | "Redis has no minimum version stated" | **6.2**, required by the host-lookup cache |
+| **2.2** | "Redis has no minimum version stated" | **6.2**, required by the host-lookup cache |
 | **5.6** | The Apple version check "does not run on the team-spec and GitOps path" | Narrower: global and Unassigned **do** validate; the per-fleet spec endpoint does not, and iOS gets no validation there at all |
 | **3.7** | 1.38.1 as the stepping stone | **Kept at 1.38.1**, with the discrepancy explained. See below |
 
@@ -339,7 +339,7 @@ work, where Fleet deprecated **certain** renamed fields rather than making a bla
 
 ### The a.2 deferral was dishonest, in three places
 
-a.6 sent capability availability to a.2, which is an empty outline, without saying so. **0.1 and 2.6
+a.6 sent capability availability to a.2, which is an empty outline, without saying so. **0.1 and 2.9
 made the same promise.** All three now follow 1.1's pattern: a.2 will collect it, and the chapter that
 owns the capability is authoritative until it does. 1.3 had the reverse problem, still calling a.6 an
 outline after it was written.

@@ -25,7 +25,7 @@ feature_requests:
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) The administrator-visible actions this appendix's research found, against all six roles, at both scopes. That is the breakdown [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) promises and the reason this appendix is the most-referenced one in the book. **The row universe is a search result and not a proof**: two rows were added after a review round found routes the earlier passes had missed, so a reader who finds another has found a gap rather than a contradiction.
+![Reference](../_assets/icons/reference.svg) The administrator-visible actions this appendix's research found, against all six roles, at both scopes. That is the breakdown [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) promises and the reason this appendix is the most-referenced one in the book. **The row universe is a search result and not a proof**: two rows were added after a review round found routes the earlier passes had missed, so a reader who finds another has found a gap rather than a contradiction.
 
 **A cell answers what an administrator can actually obtain**, not what Fleet's authorization policy returns. Those are different questions more often than they should be. The policy is the largest input, and a decision can also be made by service middleware before the policy runs, by a response having a field stripped from it after the policy allowed the whole object, or by a database query that filters the result to nothing after the request succeeded. **All four change the answer, so all four are in the cells wherever this appendix found them.**
 
@@ -67,7 +67,7 @@ Three kinds of refusal get confused, and they fail differently:
 
 ## Service identities and endpoint restrictions
 
-![Reference](../_assets/icons/reference.svg) **API-only is a property of an account, not a seventh role.** Such an account holds one of the same six roles, and its token inherits that role and that scope. The activity record attributes its work to it, which is the argument in [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) for giving each automation its own identity rather than sharing a person's token.
+![Reference](../_assets/icons/reference.svg) **API-only is a property of an account, not a seventh role.** Such an account holds one of the same six roles, and its token inherits that role and that scope. The activity record attributes its work to it, which is the argument in [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) for giving each automation its own identity rather than sharing a person's token.
 
 **GitOps is intended to be API-only**, and the rule that enforces it is unreachable on the modify path: it fires only when the request carries an API-only field, and that endpoint rejects any request carrying one. So the role can be given to an ordinary interactive account, and [1.4](../01-foundations/1.4-identity-and-roles.md) covers what that account can then reach.
 

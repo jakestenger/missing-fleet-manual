@@ -695,7 +695,7 @@ inaccuracy; it is a claim about which release's behaviour is described.
 
 **Cross-chapter contradiction is the dominant defect class, and the most dangerous.** In the last
 session: 8.11 contradicted 8.1 on log ordering and contradicted *itself* three sections later;
-8.12 contradicted 1.5 on retention and 2.5 on stream lag and itself on actor names; 8.13
+8.12 contradicted 1.5 on retention and 2.8 on stream lag and itself on actor names; 8.13
 contradicted 8.7 on what a live report proves and 8.11 on a command name. In every case the book
 already held the right answer. That is what `claims.py` is for.
 
@@ -717,7 +717,7 @@ sentence the chapter is built around, not on a detail:
 | 3.2 | Fleet delivers the agent on ADE; manual enrollments need a package by hand | It delivers on **both**. Only ADE has an opt-out |
 | 3.3 | Windows MDM brings disk-encryption enforcement | It is set in the **Orbit** config response; MDM is a gate, and it never appears in the MDM queue |
 | 3.4 | Linux has one channel, and no lock or wipe | It has no *MDM* channel and three others, and Premium **can** lock and wipe Linux, as scripts |
-| 3.5 | ADE's licensing on Free is undocumented | ADE is **Premium**, because Apple Business tokens are, which 2.7 had said all along |
+| 3.5 | ADE's licensing on Free is undocumented | ADE is **Premium**, because Apple Business tokens are, which 2.10 had said all along |
 
 Every one is the natural inference from a true adjacent fact, which is why it survived drafting: no MDM
 therefore no lock; ADE installs the agent therefore only ADE does; MDM does disk encryption elsewhere
@@ -725,12 +725,12 @@ therefore it does here.
 
 3.6 and 3.7 completed the set at six for six. 3.6 said Android has no agent and everything arrives
 unsolicited; Fleet ships a narrow force-installed app that reports certificate results, and polls Google
-hourly. **1.2, 2.8 and 8.10 all had that right.** 3.7 said Orbit checks for updates at startup; it starts
+hourly. **1.2, 2.11 and 8.10 all had that right.** 3.7 said Orbit checks for updates at startup; it starts
 a timer and waits, so a channel change reaches the host in under a minute and changes the version fifteen
 to twenty-five minutes later.
 
 **And each correction rippled.** Writing and reviewing these chapters produced corrections in **thirteen
-places in already-reviewed chapters**: 1.2 four separate times, plus 2.7, 2.8, 3.1, 3.2, 8.1, 8.2, 8.4,
+places in already-reviewed chapters**: 1.2 four separate times, plus 2.10, 2.11, 3.1, 3.2, 8.1, 8.2, 8.4,
 8.8, and 8.10 twice. A reviewed chapter is not a verified one, and the cheapest way to find what a
 reviewed chapter got wrong turns out to be writing its neighbour.
 
@@ -807,7 +807,7 @@ sounds like one, since a reader will carry it into chapters that were never chec
 
 **Licence claims are the least reliable claim class in the project and no checker catches them.**
 **Seven wrong on 2026-08-27 alone**, in both directions and in every part of the book: 3.5 said ADE's licensing was undocumented when ADE is
-Premium, then said owner mapping was free when end-user authentication is Premium; 2.8 gated
+Premium, then said owner mapping was free when end-user authentication is Premium; 2.11 gated
 company-owned Android when it is not gated; 1.2's rollout table listed lock, wipe and LUKS escrow
 with no gate at all when every lock is Premium, every wipe except company-owned Android is Premium,
 and disk encryption is Premium; and 1.1 presented a platform table that read as an edition promise.
@@ -962,7 +962,7 @@ because what it found changes how to weigh the rest.
    blocks a `verified` stamp. An accepted image is accepted against the prose as it stood.
 
    **Eight Part II chapters were demoted from `verified` to `drafting`**, having taken factual
-   corrections today from the Part I and Part III work. The clearest case: 2.2, whose whole subject
+   corrections today from the Part I and Part III work. The clearest case: 2.5, whose whole subject
    is identity, stated that SCIM deprovisioning does not require Premium. It does, and Fleet only
    registers the SCIM routes when the server starts with a Premium licence.
 
@@ -983,7 +983,7 @@ because what it found changes how to weigh the rest.
    corrections. §6 above has the shapes.
 
 5. **a.4, the roles and permissions matrix.** Highest-demand remaining appendix, and
-   `check-crossrefs.py` still reports 2.3's deferral to it as reaching nothing.
+   `check-crossrefs.py` still reports 2.6's deferral to it as reaching nothing.
 6. **Part V, chapters 5.4 through 5.9**, using the addendum loop in §3 above (agreed 2026-08-28).
    5.1 to 5.3 are drafted with one review round each. Then **Parts VI and VII**, still unstarted:
    11 chapters, all stubs.
@@ -1071,7 +1071,7 @@ Withdraw rather than soften.
   them.** Part III's confirming reviews found one chapter asserting a capability was Premium and
   then, forty lines later, asserting a related one was free; both were wrong, in opposite
   directions. Sweeping the rest found two more: 8.6's schedule table omitted Premium on
-  `send_recovery_lock_commands` and `google_workspace_sync`, and **2.8, a `verified` chapter, called
+  `send_recovery_lock_commands` and `google_workspace_sync`, and **2.11, a `verified` chapter, called
   company-owned Android enrollment Premium when nothing in Fleet's Android module checks a licence
   at all.**
 
@@ -1120,7 +1120,7 @@ Withdraw rather than soften.
   - ~~10 are promises~~ **All closed 2026-08-27.** They named content that does not exist: "the
     full action-by-action breakdown for all six roles at both scopes", "every setting, what it
     defaults to, and what wins when two levels disagree". Each now says the target is not written
-    yet and names what answers the question today, which for a.4 is 2.3 itself and for a.3 is
+    yet and names what answers the question today, which for a.4 is 2.6 itself and for a.3 is
     Fleet's configuration reference read with 8.14's caveat about its defaults. The checker
     suppresses a promise that disclaims itself, so it reports zero and will report any new one.
   - **19 still sit in chapters stamped `verified`**, now as bare pointers rather than promises.
