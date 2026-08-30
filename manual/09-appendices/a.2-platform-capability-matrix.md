@@ -388,7 +388,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 
 ## The condition register
 
-Every `Conditional` cell in the matrix, with both of its branches: what makes Fleet do the thing on that platform, and what makes it not. 104 conditions.
+Every `Conditional` cell in the matrix, with both of its branches: what makes Fleet do the thing on that platform, and what makes it not. 105 condition records, serving 106 conditional cells: one condition governs two rows, because an end user's self-service uninstall runs the same machinery as an administrator's.
 
 **C001** CAP-022, macOS. Supported when the preserve setting is on for the host's scope and the Mac reaches Setup Assistant on the first check-in of the new enrollment: past activity survives. Not supported when the setting is off, in which case past activity and the pending command queue are both cleared. On macOS only, a migration already in progress skips the reset entirely, so history survives whatever the setting says.
 

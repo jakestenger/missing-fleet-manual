@@ -30,7 +30,7 @@ Fleet's request surface is easier to reason about once you stop reading it as a 
 
 Per-endpoint parameters, request bodies and response shapes live in Fleet's own REST API reference. **That reference is hand-maintained**, so treat it as the best available account rather than a guarantee that it matches the release you are running. This appendix points there rather than copying it.
 
-Three questions belong elsewhere and are deliberately unanswered here. **Which role may perform an action will be [a.4](a.4-roles-and-permissions-matrix.md), which is not written yet**; [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) is the fullest account there is today. **Which interface can perform it at all will be [a.5](a.5-interface-index.md), also not written yet**; the chapter that owns the capability is the answer meanwhile. How to use the API in practice is [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md), which is written.
+Three questions belong elsewhere and are deliberately unanswered here. **Which role may perform an action is [a.4](a.4-roles-and-permissions-matrix.md)**, which carries it action by action against all six roles at both scopes; [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) explains the model behind it. **Which interface can perform it at all will be [a.5](a.5-interface-index.md), also not written yet**; the chapter that owns the capability is the answer meanwhile. How to use the API in practice is [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md), which is written.
 
 ## Who calls Fleet, and what they present
 

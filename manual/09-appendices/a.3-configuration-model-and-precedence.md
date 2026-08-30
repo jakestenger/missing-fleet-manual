@@ -137,19 +137,23 @@ Four different claims get run together here, and separating them is what makes t
 
 **The last one is categorically different and worth its own sentence.** Nothing is compared and no value loses: the receiver is never registered, so the server's value never reaches the host at all.
 
-**Within the server's process configuration the order is stable**, and it is the one place a simple rule holds: an explicitly set flag beats a non-empty environment variable, which beats the configuration file, which beats the built-in default.
+**Within the server's process configuration the order is stable**, and it is the one place a simple rule holds. **Fleet states it itself**, in the help text of its own configuration dump: command-line flags, then environment variables, then the configuration file, then the built-in defaults.
 
-**An empty environment variable is ignored rather than treated as a value.** That has a consequence worth designing around: an orchestrator cannot push a key back to Fleet's default by setting the variable to an empty string. It has to remove the variable.
+> **What that statement does not settle is how an *empty* environment variable is treated, and this appendix declines to guess.** An earlier draft said an empty value is ignored, so that an orchestrator would have to remove a variable rather than blank it. That behaviour belongs to the configuration library, **which this release does not vendor**, and Fleet neither states it nor tests it. **Remove the variable rather than blanking it**, which is the safe action whichever way it resolves.
 
 ### Pairs that must not both be set
 
-**Before that order runs, the server checks a small number of pairs that express the same value two ways, and refuses to start when both are present.** There is no winner and nothing is compared:
+**Fleet loads and resolves the whole configuration first, then validates the result.** So these are checks on the resolved value rather than on where you set it, and supplying one half by flag and the other by environment variable collides exactly as if both sat in the file. **There is no winner and nothing is compared: the process refuses to start.**
 
 | Pair | What happens |
 |---|---|
 | **A device-management certificate, key or token given both as a path and as inline content** | Startup fails, with a message naming the certificate, the key or the token. It covers the Apple push certificate and key, the Apple SCEP certificate and key, the Apple Business Manager certificate, key and server token, and the Windows device-management identity certificate and key |
-| **`mysql.password` with `mysql.password_path`** | Startup fails, with its own separate message |
+| **`mysql.password` with `mysql.password_path`** | Startup fails. **The identical check runs on the read replica**, so `mysql_read_replica.password` with `mysql_read_replica.password_path` fails the same way, its message prefixed to say which of the two connections was at fault |
 | **`server.private_key` with `server.private_key_arn`** | Startup fails **before Fleet makes any call to the secret manager**, which is deliberate: a misconfiguration should not cost a lookup. A key that resolves shorter than 32 bytes is a separate startup failure, checked after the fetch |
+| **On the host, `--insecure` with `--fleet-certificate`** | The agent refuses to start, saying the two may not be specified together |
+| **On the host, `--insecure` with `--update-tls-certificate`** | The same again, for the update server's certificate |
+
+> **The two host-side rows bite hardest during a migration**, because `--insecure` is exactly what an operator reaches for when a certificate is the thing that is broken. Removing the certificate flag is the fix. Adding `--insecure` beside it stops the agent from starting at all.
 
 > **Two things about the first row are worth knowing before you debug it.** The path and inline forms exist only for device-management material. The server's own TLS certificate and key have no inline form, so the rule never applies to them, and neither does it apply to the object-store or licence settings.
 >
@@ -187,9 +191,11 @@ Four different claims get run together here, and separating them is what makes t
 
 **At start**, the persisted overrides file overwrites both the flag and the environment for the three channels it holds. **At check-in**, the agent decides whether to rewrite that file by comparing what the server sent against *the file*, never against what the package was built with, and **an absent value on either side is read as `stable`.**
 
-**So the first move of a package-installed `edge` host to `stable` does nothing.** The server sends `stable`; the agent has no file yet and so reads its own side as `stable` too; the comparison finds no difference; nothing is written and nothing restarts. The host carries on running `edge` from its package while Fleet shows the channel you asked for.
+**So a move to `stable` can be dropped silently, and whether it is depends on the whole request rather than on that one channel.** All three channels are compared together. A host packaged off `stable` with no override file reads its own side as `stable` for all three. Send `stable` for the agent and nothing that differs elsewhere, and the two sides match: nothing is written, nothing restarts, and the host carries on running `edge` from its package while Fleet shows the channel you asked for.
 
-**Every other direction works**, including moving back to `stable` once a file exists holding something else. **The corollary matters to anyone reading that file during an investigation**: its presence does not mean the server's channels differ from the package's, it means they differ from `stable`.
+**Change any other enabled channel in the same request and the whole thing lands**, including the `stable` that would otherwise have been dropped, because the two sides now differ and the file is written with all three values. **Fleet Desktop leaves the comparison entirely when Desktop is disabled**, so on those hosts it cannot be the channel that carries the others through.
+
+**The rollout rule that follows**: moving a single channel to `stable`, on hosts packaged off `stable`, is the case that quietly does nothing. Moving several at once works, and so does moving to any value other than `stable`. **And the corollary for anyone reading that file during an investigation**: its presence does not mean the server's channels differ from the package's, it means they differ from `stable`.
 
 > **Disabling updates removes the channel altogether.** The receiver that would ever write that file is never registered, while the file is still read at start. So **with updates disabled the last override written stays in force permanently and the server has no say at any point**, which is a larger effect than the exception above and a different one.
 

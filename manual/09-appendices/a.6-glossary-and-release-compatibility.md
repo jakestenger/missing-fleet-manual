@@ -15,7 +15,7 @@ reviewed_on:
 
 Two jobs, and they are the same job. **This appendix translates between the words for a thing and between the versions of a thing**, so that a reader who meets an unfamiliar name or an unexplained failure can find out which they are looking at.
 
-What is **not** here: which capabilities your licence includes. That will be collected in [a.2](a.2-platform-capability-matrix.md), where a claim can be qualified by platform and scope, and **a.2 is not written yet**, so the chapter that owns a capability is the authority on it today. A version boundary and a licence gate can converge on the same symptom, a feature that is configured and does nothing, and keeping them in one table would make each harder to rule out. Many licence gates do refuse explicitly, so silence is not universal; it is common enough that the two are worth separating.
+What is **not** here: which capabilities your licence includes. That is collected in [a.2](a.2-platform-capability-matrix.md), where a claim is qualified by platform and scope, and where the licence is a column rather than a cell value. A version boundary and a licence gate can converge on the same symptom, a feature that is configured and does nothing, and keeping them in one table would make each harder to rule out. Many licence gates do refuse explicitly, so silence is not universal; it is common enough that the two are worth separating.
 
 ## Terminology
 
@@ -46,7 +46,7 @@ It is the token that authorises Fleet to talk to Apple Business Manager on your 
 
 **Underneath, how it is stored depends on what is being stored, and you cannot assume one shape.** A host carries a null fleet identifier. Some scoped resources pair a nullable identifier with a zero, and where a resource can also mean *all fleets*, a null can mean all fleets while an explicit zero means Unassigned. Read the table you are querying rather than carrying one rule between them.
 
-**One consequence holds across all of them**: a fleet-scoped role is scoped to a *concrete* fleet, and the authorization rules reject both a null and a zero, so **fleet-scoped roles do not reach Unassigned at all** ([a.4](a.4-roles-and-permissions-matrix.md), not written yet).
+**One consequence holds across all of them**: a fleet-scoped role is scoped to a *concrete* fleet, and the authorization rules reject both a null and a zero, so **fleet-scoped roles do not reach Unassigned at all** ([a.4](a.4-roles-and-permissions-matrix.md)).
 
 ### MDM enrollment status, on screen and in a filter
 
