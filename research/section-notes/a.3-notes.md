@@ -30,10 +30,10 @@ which 16 arbitrate and 2 are single-authority reads.**
 
 | Claim | Note |
 |---|---|
-| Within the server's process configuration: explicit flag, then non-empty environment, then file, then default. Empty environment variables ignored | The one place a simple order holds |
+| Within the server's process configuration: flags, then environment, then file, then defaults, **as Fleet itself states in its configuration-dump help text** | The one place a simple order holds. **The "empty environment variables ignored" half was withdrawn at draft review 2**: it came from the configuration library, which this release does not vendor, and no test in the checkout pins it |
 | Mounted secret and secret-manager values are read **once** and never re-read | Changing the file under a running server does nothing |
 | **The device-management asset store outranks the process configuration after first boot** | Added at the normalisation pass; its absence was why one consumer looked one-sided |
-| Fleet **warns rather than refuses** when configuration-supplied certificates are being ignored | The startup log says so; nothing enforces it |
+| Fleet **warns rather than refuses** when configuration-supplied certificates are being ignored | The startup log says so; nothing enforces it. **Narrowed at draft review 2**: true of the push certificate, the SCEP certificate and the ABM material. **The SCEP enrollment challenge warns on no ordinary boot at all** |
 | **The Apple Business Manager token file is parsed on every boot before the store is consulted** | A broken path stays fatal even when the parsed value is discarded |
 | The macOS profile sets the Fleet URL and enrol secret unconditionally, **and the comment above it describes a guard the code does not have** | Verified independently at round 2 and again at round 3 |
 | Disabling updates removes the receiver, so the last persisted override is permanent | Which narrows C29: the `stable` defect holds only while the receiver is enabled |
@@ -44,7 +44,7 @@ which 16 arbitrate and 2 are single-authority reads.**
 | The server replaces four blocks wholesale on any spec apply, so omitting single sign-on clears it | **The rule is the writer, not the field** |
 | Nine keys survive omission | Corrected from "three", which contradicted the file's own table |
 | The organisation settings document is **audited by exception**, with no document-level fallback. **42 distinct activity types are reachable from a modification**, corrected at draft review 1 from "42 changes each writing one" | SMTP, server URL and host expiry confirmed to write nothing. Enrolment secrets are outside the set. Three of the 42 are best effort |
-| **No surface reports the running server's effective configuration.** The configuration dump starts a new process | Replaced the provenance row that had claimed otherwise |
+| **No *complete* surface reports the running server's effective configuration.** The configuration dump starts a new process | Replaced the provenance row that had claimed otherwise. **Corrected at draft review 2**: the unqualified "no surface" was an over-correction. The configuration API exposes a live subset, roughly 20 of the 320 keys, readable by any authenticated role |
 | Fleet asks for a configuration hash **on each detail cycle** and discards it | Narrowed at round 3 from "every poll", and **narrowed again at draft review 1 from "every host"**: it is an osquery detail-query mechanism, so iOS, iPadOS and Android hosts never contribute it |
 | 320 keys registered by the configuration manager | Independently reproduced by the reviewer |
 
@@ -88,6 +88,23 @@ table above.
 | Normalisation | Applied | Units defined, counts restated, the asset store added, the provenance row replaced |
 | Draft correction | Applied | Six claims in the draft that the normalisation made wrong, corrected in the appendix and listed below |
 | Draft review 1 | **NOT READY**, five findings | Applied in full, 2026-08-29. Coverage gap closed, 2,921 to 7,939 words. Three of my own unverified claims withdrawn, the activity restatement repaired, five scope overreaches corrected. §"Draft review 1" below |
+| Draft review 2 | **NOT READY**, twelve findings | Applied in full, 2026-08-29, to 9,868 words. **Three of the twelve were the round 1 corrections committing the same defect again**, recorded separately below. Two were the provenance rule, one was an over-correction to undo, six were ordinary. §"Draft review 2" below |
+
+## The recursion, which is the most useful thing this appendix has taught the project
+
+**Round 1 named this appendix's characteristic failure as the class-versus-member claim, and replaced five of them. Round 2 found that three of the replacements were themselves class-versus-member claims.** Not the same sentences returning: new sentences, written specifically to fix that defect, exhibiting it again.
+
+| The round 1 correction | What round 2 found |
+|---|---|
+| "Windows maps every success straight to `verified`, and nothing re-checks it" | True of ordinary profiles. A profile whose certificate Fleet brokered is deliberately held at `verifying` and advanced only when the issued certificate is observed. **Windows reaches all four states** |
+| "Apple profiles rest at `verifying` after acknowledgement" | True of the command-status mapper. The datastore then promotes an iPhone or iPad install straight to `verified`, and declarative profiles record `verified` directly. **The mapper is not the whole path** |
+| "A failed push is deliberately treated as success, and an inactive token turns device management off" | True of specific callers. Profile delivery swallows the error; device lock returns it. Inactive-token handling fires only in the scheduled mobile refetch. **Both are caller-scoped, not class-wide** |
+
+**Why the fix failed the first time.** Each round 1 correction was verified, and verified correctly, against *one* implementation: the mapper, the ordinary-profile path, the profile processor. Confirming a source says X is not the same as establishing that X has no siblings, and the verification step as practised answers only the first. The correction then reads as authoritative precisely because it was checked.
+
+**The rule this produces, and it is now a drafting rule rather than a review finding.** Before writing a sentence about how Fleet handles something, **find the second caller.** Where a behaviour is reached through a mapper, a helper or a shared processor, ask which other callers reach it and whether they agree. Where they disagree, **the sentence carries the distinction rather than picking the majority**, and it names the caller or the class each branch belongs to. A sentence that cannot name what it is true of is not finished.
+
+**The tell to look for in a draft**, since this defect survives source-checking: a confident universal about a platform, a plane or an operation, with no clause naming what it excludes. Round 2's three findings all had that shape, and so did round 1's five.
 
 ## The six claims the normalisation made wrong, and what replaced them
 
@@ -207,3 +224,37 @@ plausible-but-false version.
 changes ... agent options, enroll secrets", which the restatement contradicts twice. Corrected in
 place to "around forty distinct activity types reachable from a change to it", with enroll secrets
 named as a separate route.
+
+## Draft review 2
+
+Independent review, 2026-08-28, verdict **NOT READY**, twelve findings. Transcript at
+`../../missing-fleet-manual-private/reviews/2026-08-28/appendices/a.3-sol-r2.out`. Finding 13
+re-checked the round 1 numbers (twelve packaging inputs, 29 flags with 28 environment forms, three
+Android states, the two cache periods, 320 registered keys, 42 activity types with three best
+effort, the trailing-argument boundary) and all agreed with the tag. House style clean.
+
+**Findings 1, 2, 9: the recursion.** Rewritten to carry distinctions. See the section above.
+
+| Finding | What changed | Key citations |
+|---|---|---|
+| 1, Windows states | Device-state table re-keyed on **platform and profile class**. Windows reaches all four; the exception is narrowly a profile whose SCEP request Fleet brokered through a custom SCEP proxy, NDES or Smallstep, **DigiCert excluded by design**. `failed` self-heals in that class | `server/datastore/mysql/microsoft_mdm.go:1296`, `:1322`; `server/datastore/mysql/host_certificates.go:570`; `server/fleet/certificate_authorities.go:27` |
+| 2, Apple states | iOS and iPadOS **installs** are promoted straight to `verified`; predicate is a literal two-platform match, not "non-macOS". Declarative profiles record `verified` from an active valid report. macOS is the only case where `verified` is not final | `server/service/apple_mdm.go:6345`, `:7279`; `server/datastore/mysql/apple_mdm.go:3060`; `server/mdm/apple/profile_verifier.go:44` |
+| 9, push | Split by caller: administrator-initiated operations report the failure, background jobs swallow it, the two rotation jobs swallow it **and write the activity anyway**, multi-host run reports only a total failure. Inactive-token unenrolment fires **only in the scheduled mobile refetch** | `server/mdm/apple/profile_processor.go:108`; `server/mdm/apple/commander.go:180`; `ee/server/service/hosts.go:383`, `:887`; `server/service/mdm.go:699`; `server/mdm/apple/apple_mdm.go:1675`, `:1698`, `:1721` |
+| 3, agent boundary | Replaced "exactly three settings" with four groups by durability: three persisted channels; debug level and script timeout live in memory; osquery flags, extensions and Nudge as component files; twelve notifications | `server/fleet/orbit.go:65`; `orbit/pkg/update/debug_log_runner.go:38`; `orbit/pkg/update/notifications.go:425`; `orbit/cmd/orbit/orbit.go:2463` |
+| 4, reuse count | Nine to **twenty**, with the reused families named and disk encryption flagged as having three other emitters | `ee/server/service/teams.go:501`, `:523`, `:625`, `:747`; `ee/server/service/mdm.go:319`, `:332`; `server/service/org_logo.go:289` |
+| 5, asset store | Self-contradiction resolved: push and SCEP stop being checked only when **every** such asset is stored; ABM and the Windows identity certificate stay fatal forever. **The SCEP challenge warns on no ordinary boot** | `cmd/fleet/mdm_apple.go:141`, `:204`, `:212`; `server/config/config.go:1176`; `cmd/fleet/serve.go:863`, `:876` |
+| 6, server-owned fields | Windows replaced by **Apple Business Manager enablement**; Windows enablement is writable and audited. Entra row narrowed: cleared when omitted or empty, **rejected when sent non-empty** | `server/service/appconfig.go:1013`, `:1584`, `:726`, `:2162` |
+| 7, exclusions | Read replica added, two host-side `--insecure` pairs added, and the ordering claim **reversed**: load and resolve first, validate after. Per-key type and range checks are the exception and happen during load | `server/datastore/mysql/mysql.go:239`, `:246`, `:440`; `orbit/cmd/orbit/orbit.go:451`; `cmd/fleet/serve.go:169`, `:226`, `:265` |
+| 8, `stable` | Qualified to the whole normalised tuple. **An all-`stable` request is a no-op however many channels it names**; one non-`stable` channel carries the rest through. Added the no-update-channels early return | `orbit/cmd/orbit/orbit.go:2398`, `:2406`, `:2420`, `:2380` |
+| 10, observability | Over-correction undone. Subset named with its real edges: two osquery intervals only, email only under SES, one partnership key, licence as decoded claims. **The transparency-URL partnership key is not exposed**, and **any authenticated role can read the lot** | `server/service/appconfig.go:41`, `:107`, `:244`; `server/service/service_appconfig.go:103`; `server/authz/policy.rego:71` |
+| 11, cross-plane | Count replaced by instances, with the size of the unperformed comparison stated: 320 registered keys against 19 top-level stored groups **expanding to several hundred leaves** | `server/config/config.go:1299`; `server/fleet/app.go:760` |
+| 12, empty environment | **Withdrawn.** Fleet's own precedence statement is silent on empty values, the configuration library is not vendored, and no test pins it. Replaced with the four-step order Fleet states plus actionable advice to remove rather than blank a variable | `cmd/fleet/config_dump.go:23`; `go.mod:141`; `server/config/config.go:2287` |
+
+**Two provenance rulings applied, both the same rule.** Finding 12 is the second instance in this
+project of a claim resting on a library outside the checkout, after the `fleetctl` appendix and its
+flag parser. Finding 11 is the same rule in exclusivity form: two instances are established, "there
+are two" is not. **Publish the instances, state the comparison that was not done.**
+
+**One reviewer decomposition declined as arithmetic, while its conclusion was accepted.** The
+reviewer's breakdown of the twenty reused activity types sums to twenty-one. The total of twenty is
+right; the itemisation double-counts. Counted independently and listed in full above.
