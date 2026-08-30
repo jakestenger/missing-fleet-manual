@@ -92,7 +92,17 @@ to an expert, short only of experience and practice.
 
 New review output goes under `missing-fleet-manual-private/reviews/phase2/`.
 `build/status-artifact.py` counts rounds from that directory alone, so the status page shows
-zero rounds everywhere until the whole-book review produces output.
+zero rounds everywhere until per-chapter work resumes.
+
+**The first whole-book pass ran on 2026-08-29 and is complete.** Four Sol agents at xhigh, one
+lens each (accuracy, completeness, tone, organization), each reading all 358,264 words, then a
+fifth merged them. The merged synopsis, with an eleven-step order of attack, is at
+`reviews/phase2/book-synopsis-sol.md`; the four lens reports sit beside it. Roughly 4.9M tokens
+of reviewer quota in total. Headline: five accuracy blockers (all with path:line evidence, none
+yet independently verified), five of ten learning-path walkthroughs break, and every report
+independently counted 75 chapter files where this file said 78. **Nothing from it is applied
+yet: every accuracy finding gets verified against the executed path at the tag before it
+touches a chapter, and application has not been authorised.**
 
 ---
 
