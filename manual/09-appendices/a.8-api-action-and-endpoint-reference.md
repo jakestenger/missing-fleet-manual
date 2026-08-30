@@ -198,7 +198,7 @@ An endpoint's valid `order_key` values are its own, and Fleet's reference docume
 
 ![Reference](../_assets/icons/reference.svg) Request bodies, response shapes, per-endpoint parameters and error codes are in Fleet's REST API reference at `fleetdm.com/docs/rest-api/rest-api`, and endpoints intended for contributors rather than administrators are documented separately in the Fleet repository.
 
-Which actions each role may perform will be [a.4](a.4-roles-and-permissions-matrix.md) and which surface can perform one at all will be [a.5](a.5-interface-index.md). **Neither is written yet.** Until they are, 2.3 carries the roles and the owning chapter carries the surface.
+Which actions each role may perform is [a.4](a.4-roles-and-permissions-matrix.md). Which surface can perform one at all will be [a.5](a.5-interface-index.md), **which is not written yet**. Until they are, 2.3 carries the roles and the owning chapter carries the surface.
 
 ## Version notes
 
