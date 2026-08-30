@@ -61,6 +61,62 @@ line. `research/section-notes/README.md` records the policy.
 They are the easier of the two to forget, because nobody reviews them as prose. When a chapter's
 subject is sensitive, keep its working notes out of this repository and cite them from the ledger.
 
+### Generating chapter diagrams with Sol (established 2026-08-30, evolving)
+
+The book's content diagrams exist only as `IMAGE-TODO` prompts; the owner was going to render
+them separately. They can instead be generated through the codex CLI, and this process produces
+designer-grade technical diagrams. Sol has no image-generation model, so it does NOT paint. It
+authors an **SVG** and rasterises it with `rsvg-convert`. For technical diagrams (flows, state
+machines, architecture, matrices) this beats an image model because the text is exact and the
+geometry deterministic; it cannot do illustrative or painterly art.
+
+**Sol can see rendered rasters.** Confirmed 2026-08-30: given only a PNG and forbidden the SVG, it
+accurately critiqued the layout. So it can self-review its own output, which is the engine of the
+loop below.
+
+**Mechanics.**
+- Work in a scratch dir, not the repo. codex needs write+execute:
+  `-s workspace-write --skip-git-repo-check -C <scratchdir>`. On the machine: `rsvg-convert`
+  (SVG to PNG), `cwebp` (PNG to lossless WebP), PIL.
+- Convert the accepted PNG to lossless WebP (`cwebp -lossless`) so the diagram text stays crisp,
+  place it at the chapter's `assets/` path named by the IMAGE-TODO, and add a live
+  `![alt](assets/name.webp)` line. Leave the IMAGE-TODO comment as the prompt/record.
+- CDN caching: the deployed site caches by filename, so reusing an asset name across iterations
+  serves the stale image until a hard refresh (Cmd+Shift+R). The owner shift-refreshes; keep the
+  stable filename.
+
+**The prompt recipe that works, four parts:**
+1. **Format-first.** Tell Sol it is a vertically-scrolling web book: prefer portrait, never cram
+   horizontally to stay landscape, and set a hard floor on body text size (~34px on a ~1400-wide
+   canvas). This single instruction fixed the worst problems in one jump.
+2. **A locked layout system.** Uniform box sizes (a few tiers, e.g. step boxes vs anchor boxes),
+   fixed row/column centres, symmetry about a centre axis, ONE arrow style, consistent inter-box
+   gaps, tinted bands that hug their content. Design to the grid; make the text fit the box, never
+   the box fit the text.
+3. **A self-review loop.** Instruct Sol to render, then LOOK at the raster as a critic, write down
+   every defect with its location, fix, and repeat up to 5 passes before presenting, with an
+   ITERATION LOG. Give it an explicit rubric (uniform boxes, aligned rows, symmetry, no arrowhead
+   touching text, bands hug content, legible text, not cramped).
+4. **Targeted revision over regeneration.** For polish, have Sol LOAD the prior SVG and change only
+   the named things, so the wins already banked are not lost.
+
+**Design lessons from the 2.13 pilot, reusable on every diagram:**
+- A landscape brief crams content and shrinks text; reorienting to vertical is usually the fix.
+- Two lanes with different step counts create a tension between {equal-height bands, aligned ends,
+  no empty tinted area}. You cannot have all three with uniform boxes; choose what to sacrifice
+  deliberately, per diagram.
+- Minimise structural (black) arrows: the coloured lane arrows can carry the whole path, so keep
+  only the shared pre-branch arrow.
+- When a group has a bounding box, terminate and restart external arrows at the box EDGE rather
+  than reaching in to touch each internal object; it is less noisy, and it makes band edges the
+  alignment anchors so the routing stays symmetric regardless of internal box placement.
+- Short arrows can render as a line-with-a-smudge; specify a clean, slightly larger triangular
+  arrowhead.
+
+The working prompts live in `missing-fleet-manual-private/reviews/phase2/` (`imgtest/`), versioned
+v1..v5+ with their iteration logs. 2.13's `ca-delivery-loop` diagram is the pilot; when the process
+is settled, the same recipe applies to every other IMAGE-TODO in the book.
+
 ### Standing rule: refresh the status artifact after every step
 
 The project owner asked (2026-08-27) that the status artifact be updated **after every step**,
