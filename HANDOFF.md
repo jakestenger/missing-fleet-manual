@@ -375,7 +375,7 @@ dominant defect class operating at the scale of a whole part. The register's gra
 cell saying Premium looks identical whether it was read out of a validator or assumed from a
 neighbour.
 
-### The four failure modes this part has produced, which are new
+### The five failure modes this part has produced, which are new
 
 **One. A correction recorded in the ledger and never made in the file.** a.8 hit this three rounds
 running and a.6 twice. The mechanism is mechanical: **`unwrap.py` reflows paragraphs into single
@@ -464,6 +464,25 @@ its scope inverted, which is failure mode three arriving by a different route.
 **So: a subagent's report is a lead, exactly like Fleet's documentation.** Verify anything from it
 that is going to be published, at the tag, before it goes in. The whole point of delegating the
 reading is that the conclusion comes back small enough to check.
+
+**Five. A research file that carries its own history generates stale claims faster than they can be
+swept.** Found on 2026-08-29 after a.7's research came back NOT SOUND four times, with the same
+finding in the last three rounds: live contradictions between the file's current tables and older
+paragraphs restating what the tables used to say.
+
+The instances were unmistakable once named. A central legend contradicted four of its own register
+rows. A chain corrected in one round was restated in its rejected form a thousand lines later. Both
+"thirty-second" and "the number is now thirty-two" survived in the same file. One question was
+recorded as `Not established` in one file and established in its sibling.
+
+**These are not sweep failures.** Every correction to a file that narrates its own progress creates a
+fresh contradiction with an older paragraph, so the sweep is running against a generator. Sweeping
+harder does not converge.
+
+**The rule: tables are authoritative, and prose that restates a table gets deleted rather than
+updated.** Where round history is genuinely worth keeping, it goes in one dated section at the end,
+clearly a record rather than a claim. Research files are evidence, not a diary, and the ledgers in
+`research/section-notes/` are where the story belongs.
 
 ### And one about filing defects against Fleet
 
