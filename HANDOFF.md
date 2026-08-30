@@ -943,6 +943,29 @@ re-derived per platform wherever an answer was inherited from a neighbouring cap
 
 ### Backlog
 
+- **Sixteen `fleetctl` commands have no chapter that explains them**, found on 2026-08-29 while
+  building a.7's owning-chapter field, which is a required column the part agreement sets. Two of
+  the sixteen are findings against this manual rather than gaps in a reference:
+
+  **6.4 promised something 3.7 does not deliver.** Its surface table said 3.7 owns "the packaging and
+  update-repository semantics". 3.7 teaches packaging and channel behaviour and never teaches
+  creating, signing, rotating or re-timestamping a repository; `fleetctl updates add` appears in one
+  subordinate clause. **Corrected in place on 2026-08-29** to say packaging and channels, and to say
+  plainly that running your own repository is not covered. That is honest and it is still a hole.
+
+  **`setup` and `goquery` appear nowhere in the manual at all.** Zero occurrences, either chapter.
+
+  The full sixteen: `convert`, `upgrade-packs`, `get packs`, the five `updates` leaves, the three
+  `preview` leaves, `get carve` and `get carves`, `setup`, `new`, and `goquery`. Read strictly it is
+  fifteen, because `updates add` has that one subordinate clause.
+
+  **What closing it would take:** a section in 3.7 on running a private update repository, covering
+  initialisation, root keys, adding targets, timestamps and rotation, which is where the key-retention
+  finding S15 also belongs. The `preview` and `goquery` commands are development conveniences and a
+  short honest note in 6.4 may be the right answer for them rather than a chapter. **This is a
+  deliberate open decision, not an oversight**, and a.7 will publish the commands either way.
+
+
 - **Licence claims are the least reliable class of claim in this manual, and there is no check for
   them.** Part III's confirming reviews found one chapter asserting a capability was Premium and
   then, forty lines later, asserting a related one was free; both were wrong, in opposite
