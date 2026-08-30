@@ -91,13 +91,15 @@ Four habits of this table are worth knowing before you use it.
 
 **Licence and prerequisite are columns, not cell values.** A Premium capability is `Supported` with `Premium` in the licence column. A capability that needs MDM configured first is `Supported` with that named as its prerequisite. Neither ever appears as `Conditional`, because neither is a condition on whether Fleet does the thing, only on whether you may ask or on what you must have in place first.
 
+**Three actions are named differently here than in the sibling appendices, deliberately.** This appendix says release, erase, and turn Fleet's device management off, because those describe what happens to the device. [a.4](a.4-roles-and-permissions-matrix.md) and [a.7](a.7-fleetctl-command-reference.md) say unlock, wipe, and unenroll, because those are the administrator's request and the command's name. **They are the same three capabilities**, and [a.1](a.1-capability-index.md) carries both sets of words.
+
 **Some rows are deliberately per-platform.** Locking a Mac and locking a Windows host are separate rows, so each reads `Not applicable` on the platforms the other covers. That is the grain at which the six platforms can actually disagree.
 
 No cell holds two values. Where a cell needs explaining, that is what a condition identifier is for.
 
 ## The matrix
 
-![Reference](../_assets/icons/reference.svg) Grouped as a reader would look for a capability, 272 rows. Section rows in bold carry no cells; they mark where a family starts.
+![Reference](../_assets/icons/reference.svg) Grouped as a reader would look for a capability, 273 rows. Section rows in bold carry no cells; they mark where a family starts.
 
 | ID | Capability | macOS | iOS/iPadOS | Windows | Linux | Android | ChromeOS | Licence | Prerequisite |
 |---|---|---|---|---|---|---|---|---|---|
@@ -337,6 +339,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-243** | Allow a custom disk-encryption profile alongside Fleet's own | Conditional (C090) | Not applicable | Conditional (C091) | Not applicable | Not applicable | Not applicable | Premium | Server-level configuration and a restart |
 | **CAP-244a** | Turn Recovery Lock on for a scope | Conditional (C092) | Not applicable | Not applicable | Not applicable | Not applicable | Not applicable | Free globally, Premium per fleet | Apple silicon, enrolled and not personally enrolled, with the setting on for the scope |
 | **CAP-244b** | Reveal a Mac's Recovery Lock password | Supported | Unsupported | Unsupported | Unsupported | Unsupported | Unsupported | Free | Apple silicon, and Apple MDM configured |
+| **CAP-360** | Rotate the managed local account's password | Supported | Unsupported | Unsupported | Unsupported | Unsupported | Unsupported | Premium | The managed local account turned on for the scope. Fleet refuses any host that is not a Mac, by name |
 | **CAP-244c** | Rotate a Recovery Lock password | Conditional (C093) | Unsupported | Unsupported | Unsupported | Unsupported | Unsupported | Premium | Apple silicon, MDM connected, and an existing password |
 | **CAP-245** | Stop enforcing encryption without losing what is held | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Premium | The decryption material for the platform must still be held |
 | **P. Policy automations, integrations, and outbound events** | | | | | | | | | |
@@ -614,8 +617,8 @@ So they are carried here, one line each, grouped by the same sections as the mat
 - **CAP-001** Sign in to Fleet with a Fleet password. An identity operation against Fleet's own user records, with no device involved.
 - **CAP-002** Sign in through the organisation's identity provider. An identity operation: a browser sign-in between Fleet and the identity provider.
 - **CAP-003** Have Fleet create the account on first IdP sign-in. An identity operation: account creation inside the sign-in callback.
-- **CAP-004** Remove Fleet accounts when people leave, from the IdP. An identity operation: a provisioning protocol the identity provider speaks to Fleet.
-- **CAP-005** Have SCIM skip accounts it must not delete. An identity operation: a guard inside that provisioning handler.
+- **CAP-004** Remove Fleet accounts when people leave, from the IdP. An identity operation: a provisioning protocol the identity provider speaks to Fleet. **Premium**: on Free the provisioning surface returns a licence error without checking anything else.
+- **CAP-005** Have SCIM skip accounts it must not delete. An identity operation: a guard inside that provisioning handler. **Premium**, for the same reason as the row above.
 - **CAP-006** Challenge a sign-in with an emailed second factor. An identity operation: an email round-trip on the sign-in path.
 - **CAP-007** Create or modify a user and give it a global role. An identity operation: a write to Fleet's user records.
 - **CAP-008** Give a user the Technician, Observer+ or GitOps role. An identity operation: a write to Fleet's user records.
