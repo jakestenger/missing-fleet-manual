@@ -17,7 +17,7 @@ An A-Z of the concepts, components, and named artifacts a reader looks up by nam
 
 This is the noun counterpart to the [capability index](a.1-capability-index.md), which starts from an outcome you want, a verb. Start here when you have met a word and want to know what it is; start there when you know the job and want the chapter that does it. Where a term also carries a short definition in the [glossary](a.6-glossary-and-release-compatibility.md), that is noted, because the glossary is where a renamed or easily-confused term is pinned down.
 
-A cross-reference of the form "see X" means the book files the concept under X, usually because Fleet renamed it or because one name is the expansion of another.
+A cross-reference of the form "see X" means the book files the concept under X, because Fleet renamed it or because one name is the expansion of another.
 
 ## A
 

@@ -148,14 +148,15 @@ Changing state on devices: profiles, scripts, software, remediation.
 
 | # | Section | File | Pri | Status |
 |---|---|---|---|---|
-| 5.1 | Plan and target device changes | `5.1-plan-and-target-device-changes.md` | ★★★ | ○ |
-| 5.2 | Manage configuration profiles and OS settings | `5.2-manage-configuration-profiles-and-os-settings.md` | ★★★ | ○ |
+| 5.1 | Plan, target, and govern device changes | `5.1-plan-target-and-govern-device-changes.md` | ★★★ | ○ |
+| 5.2 | Manage configuration profiles and declarative settings | `5.2-manage-configuration-profiles-and-declarative-settings.md` | ★★★ | ○ |
 | 5.3 | Run and manage scripts | `5.3-run-and-manage-scripts.md` | ★★ | ○ |
-| 5.4 | Install software with FMAs and custom packages | `5.4-install-software-with-fmas-and-custom-packages.md` | ★★★ | ○ |
-| 5.5 | Self-service, setup experience, and updates | `5.5-self-service-setup-experience-and-updates.md` | ★★★ | ○ |
-| 5.6 | Send MDM commands and manage encryption | `5.6-send-mdm-commands-and-manage-encryption.md` | ★★★ | ○ |
-| 5.7 | Automate remediation with policies | `5.7-automate-remediation-with-policies.md` | ★★★ | ○ |
-| 5.8 | Advanced device management | `5.8-advanced-device-management.md` | ★★ | ○ |
+| 5.4 | Manage software and applications | `5.4-manage-software-and-applications.md` | ★★★ | ○ |
+| 5.5 | Design setup and self-service experiences | `5.5-design-setup-and-self-service-experiences.md` | ★★★ | ○ |
+| 5.6 | Control operating system updates | `5.6-control-operating-system-updates.md` | ★★★ | ○ |
+| 5.7 | Control devices and send custom MDM commands | `5.7-control-devices-and-send-mdm-commands.md` | ★★★ | ○ |
+| 5.8 | Enforce disk encryption and manage recovery credentials | `5.8-enforce-disk-encryption-and-manage-recovery-credentials.md` | ★★★ | ○ |
+| 5.9 | Automate responses to policy failures | `5.9-automate-remediation-with-policies.md` | ★★★ | ○ |
 
 ## Part VI — Automate Fleet
 
