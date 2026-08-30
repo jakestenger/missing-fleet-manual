@@ -49,7 +49,7 @@ feature_requests:
 | **Per-host stored control** | Nothing an administrator writes | A column on the host | Per agent poll |
 | **The device-management asset store** | Nothing, once populated | The database, encrypted, with a deletion history | Per use |
 
-**On the host**, a further seven. This is where the surprising resolutions live, because it is the set an administrator cannot inspect from Fleet:
+**On the host**, a further seven. This is where the surprising resolutions live, because **Fleet reports almost nothing about them.** The one window it has is narrow: on each detail cycle it collects four resultant osquery flags, the distributed interval, the configuration refresh pair and the logger period. **Those tell you the value a host ended up with, never which of the seven produced it**, and nothing at all about the other settings.
 
 | Source | Declared as | Stored | Read |
 |---|---|---|---|
@@ -65,11 +65,13 @@ feature_requests:
 
 > ### The last two rows are the ones nothing in Fleet will show you
 >
-> **Trailing arguments are appended after everything else, so they win.** The agent assembles osquery's command line in a fixed order: its own generated flags, then the local osquery flags file, then the two settings it deliberately protects from that file, the host identifier and the database directory. Anything after the separator is placed last, and osquery honours the last occurrence of a repeated flag. **So a trailing argument beats even the two settings Fleet fences off**, which are the only two it makes any guarantee about.
+> **Trailing arguments are placed after everything else, on every osquery start.** The agent assembles osquery's command line in a fixed order: its own generated flags, then the local osquery flags file, then the three settings it deliberately protects from that file, the host identifier, the database directory, and the extensions autoload list where one is configured. Anything after the separator is appended last, **and Fleet's own source states that it intends those to override every flag and flagfile entry before them.**
+>
+> **Whether they do is osquery's behaviour, and this appendix does not assert it.** How osquery resolves the same option supplied twice is settled inside osquery, not inside Fleet, and nothing in Fleet establishes it either way. **So treat a trailing argument as capable of displacing anything Fleet placed earlier, including the three settings Fleet fences off**, and confirm the result on the host rather than predicting it.
 >
 > **No package Fleet builds passes any.** The macOS launch daemon, the Linux service unit and the Windows service entry all invoke the agent with none, so this is reachable only by a host edit to the service definition. It is invisible from Fleet and it silently outranks everything configured on the server.
 >
-> **Direct environment reads have no flag, no help entry, and no server setting.** Two of them matter for support work. One suppresses enrollment failure messages from the agent's log entirely, so a host that cannot enroll looks quiet rather than broken. The other stops the agent deleting the temporary directory it creates for each script run, which is worth one investigation and then accumulates directories holding script bodies and their output for as long as it stays set. Fleet Desktop is configured this way in its entirety and has no command line at all, but the agent sets those variables itself when it launches the process, so they are an internal channel rather than something to tune.
+> **Direct environment reads have no flag, no help entry, and no server setting.** Two of them matter for support work. One suppresses enrollment failure messages from the agent's log entirely, so a host that cannot enroll looks quiet rather than broken. The other stops the agent deleting the temporary directory it creates for each script run, which is worth one investigation and then accumulates directories holding script bodies and their output for as long as it stays set. Fleet Desktop is configured this way in its entirety: it accepts `--version` and `--help` and nothing else, so **its configuration has no command-line surface**. The agent sets those variables itself when it launches the process, so they are an internal channel rather than something to tune.
 
 ### What the server can and cannot change on an installed host
 
@@ -178,16 +180,14 @@ Four further claims get run together, and separating them is what makes the boun
 
 **Agent credentials use four mechanisms at once**, and they are worth setting out in full, because this is the only place in the agent where a remote authority overrides a locally supplied credential. There are two orders, selected by whether the agent was installed to read the macOS configuration profile.
 
-**Without the profile**, for the enroll secret and the server URL:
+**Without the profile the two credentials do not behave alike**, and assuming they do is the easy mistake:
 
-| Step | Mechanism |
+| Credential | How it resolves |
 |---|---|
-| Supplying both `--enroll-secret` and `--enroll-secret-path` | **Mutual exclusion.** A fatal error at start, and there is no winner |
-| A non-empty secret file | **Write-through.** Its contents are written into the keystore and **the file is then deleted**, so the credential moves and the file you created disappears |
-| The keystore | **Fallback.** Consulted only when nothing has been set by flag or environment |
-| The flag, the environment variable, the compiled default | **Precedence**, in that order |
+| **The enroll secret** | **All four mechanisms.** Supplying both `--enroll-secret` and `--enroll-secret-path` is a fatal error at start, with no winner. A non-empty secret file has its contents written into the keystore and **the file is then deleted**, so the credential moves and the file you created disappears. The keystore is consulted only when nothing has been set by flag or environment. Otherwise: flag, then environment variable, then compiled default |
+| **The server URL** | **One mechanism, and no more.** The flag, then `ORBIT_FLEET_URL`. **There is no compiled default**, so with neither set the value is simply empty, and there is no file, no keystore and no write-through. **Its local file is read only inside the profile branch below** |
 
-**With the profile**, on macOS only, the order is different and the keystore fallback above is skipped entirely:
+**With the profile**, on macOS only, the two move together, and the keystore fallback above is skipped entirely:
 
 | Step | What happens |
 |---|---|
@@ -212,7 +212,22 @@ Four further claims get run together, and separating them is what makes the boun
 
 **What does land is a request where at least one enabled channel asks for something other than `stable`.** The two sides then differ, the file is written with all three values, and **any `stable` in that same request takes effect alongside the value that triggered the write.**
 
-**The rollout rule that follows**: an all-`stable` request against a host that has no override file is the case that quietly does nothing, however many channels it names. Mix in one non-`stable` channel and the whole request applies. **And the corollary for anyone reading that file during an investigation**: its presence does not mean the server's channels differ from the package's, it means they differ from `stable`.
+**The rollout rule that follows**: an all-`stable` request against a host that has no override file is the case that quietly does nothing, however many channels it names. Mix in one non-`stable` channel and the whole request applies.
+
+### Auditing the channels actually in force on a host
+
+**The file is `server-overrides.json`, in the agent's root directory.** By default that directory is `/opt/orbit` on macOS and on Linux, and `C:\Program Files\Orbit` on Windows, following the system's own program-files location where that has been moved. **The root directory is itself overridable at install time**, by `--root-dir` or `ORBIT_ROOT_DIR`, so confirm it from the service definition before concluding that a file is missing.
+
+**Then read the contents rather than the presence.** When the agent writes, it writes all three channels explicitly, whatever their values, alongside two fallback binary paths. **It never deletes or empties the file.**
+
+| What you find | What it establishes |
+|---|---|
+| **No file** | No write has ever happened: either the server sent no channels at all, or everything it sent normalised to all-`stable`. **Either way the host runs whatever its package was built with**, which is the case the exception above hides |
+| **A file** | A write happened at some point. **On its own that says nothing about the channels now in force** |
+| **The three values inside it** | **The channels in force.** A file holding three `stable` values is the ordinary result of moving a host back to `stable`, and not evidence of anything wrong |
+| **An empty value for a channel** | That channel is **not** overridden. It falls back to the flag or environment variable the host was installed with, each of which defaults to `stable` |
+
+**So the audit is two steps: confirm the root directory, then read the three values.** Reasoning from whether the file exists will mislead you in both directions.
 
 > **A second and simpler no-op sits in front of that one.** A server that sends no update channels at all, which is what an older Fleet does, is ignored before any comparison happens. Removing the key is therefore not a way to reset a host to its packaged channels.
 
@@ -231,7 +246,7 @@ Four further claims get run together, and separating them is what makes the boun
 | **The vulnerability database directory** | `vulnerabilities.databases_path` in the process configuration **beats** `vulnerability_settings.databases_path` in organisation settings, and the server logs an informational line saying that it did. **The process key ships with a non-empty default**, so on an otherwise untouched server the process value always wins and the stored setting never takes effect at all. Setting it in the interface and seeing nothing change is the expected outcome rather than a fault |
 | **The transparency URL** | Three-way and licence-conditional: Fleet's built-in default, then the `partnerships.enable_secureframe` process setting, then the stored `fleet_desktop.transparency_url`, **which is read only on Premium**. So on Free the process configuration wins and the stored value is never consulted, and on Premium the stored value wins. **The same two values resolve in opposite directions on the two tiers** |
 
-**Neither is discoverable from the interface**, which shows you the stored value it accepted rather than the value in force.
+**The interface shows neither resolution.** It displays the stored value it accepted, and for the transparency URL that field reads back cleanly while never being consulted on Free. **Nothing in either surface names the authority that won**, so a value that looks saved and correct can be inert.
 
 ### Two preconditions, where the process plane gates a stored write
 
@@ -257,11 +272,15 @@ Four further claims get run together, and separating them is what makes the boun
 
 ### The per-host debug window is a merge, and it loses to an explicit value
 
-**Putting a host into a debug window does not replace its agent options.** Fleet takes the fleet's `command_line_flags`, adds `verbose` set to true **only when that key is absent**, and delivers the result. Everything else you set is preserved, which is the intent.
+**The window opens at enrollment and nowhere else.** At this release the only thing that stamps one is the agent option `orbit.debug_logging_on_enroll_duration`, applied to every host enrolling under that scope. **There is no host action and no endpoint that opens a window on demand**, so this is something you configure in advance for hosts that have yet to enroll, rather than something you switch on for a host you are already investigating.
 
-**So a fleet whose agent options explicitly set `verbose: false` gets nothing from a debug window.** The explicit value survives the merge, the host runs at its normal verbosity, and Fleet reports the window as active throughout. **There is no warning and no indication in the host's record**, so the symptom is an escalation that collects no extra logging and a support cycle spent asking why.
+**While a window is open, Fleet merges rather than replaces.** It takes the fleet's `command_line_flags`, adds `verbose` set to true **only when that key is absent**, and delivers the result. Everything else you set is preserved, which is the intent.
 
-**Check the fleet's agent options before opening a debug window**, and remove an explicit `verbose` rather than setting it to false if you want the window to work.
+**So a fleet whose agent options explicitly set `verbose: false` gets half of what the window promises.** The explicit value survives the merge, so **osquery keeps running at its normal verbosity**. The agent's own log level is raised anyway, because the window carries a second and separate signal that is sent whenever the window is open, whatever the merge decided. **You get the agent's debug logging and not osquery's.**
+
+**The window itself is visible, barely**: the host's record carries its expiry as `orbit_debug_until`, and **that field is returned by the single-host API and nowhere else**, so it is absent from the host list, from a CSV export and from the interface. **What nothing reports is that the osquery half of the merge lost**, so an escalation that collects agent logs and no osquery detail reads as a broken window rather than a working one with an explicit setting standing in front of it.
+
+**Check the fleet's agent options in the same change that sets the enrollment duration**, and remove an explicit `verbose` rather than setting it to false where you want osquery's verbosity raised as well as the agent's.
 
 ### Absent and empty mean different things for osquery startup flags
 
@@ -323,7 +342,9 @@ Four further claims get run together, and separating them is what makes the boun
 | `setup_experience.require_all_software_macos` | Off |
 | `setup_experience.require_all_software_windows` | Off |
 
-**Those four setup-experience settings are plain booleans on the wire, which is exactly why they cannot tell absent from false.** Turn end-user authentication on in the interface, then apply a fleet spec that does not mention it, and it is off again, with no error and no warning.
+**Three of those four are plain booleans on the wire, which is exactly why they cannot tell absent from false**: end-user authentication and the two software requirements. Turn end-user authentication on in the interface, then apply a fleet spec that does not mention it, and it is off again, with no error and no warning.
+
+**`lock_end_user_info` reaches the same result by a different route**, and the difference matters when you are trying to set it. It is an optional boolean that **can** tell absent from an explicit false. Set it explicitly and your value is kept. Omit it and Fleet deliberately makes it follow end-user authentication, preserving how it behaved before it was configurable at all. **So an explicit `false` is honoured here, where on the other three it is indistinguishable from silence.**
 
 Three further setup-experience settings, whether to release the device manually, whether to create a local administrator account, and what type that account is, are defaulted only when the stored value was never explicitly set. **That is a migration default rather than a clobber**, and it fires once.
 
@@ -387,7 +408,7 @@ Three further setup-experience settings, whether to release the device manually,
 
 **Neither are the forty-two a partition of the feed, and the overlap is large: twenty of them are also emitted elsewhere.** The fleet writer emits the same types for the minimum operating system versions on all three Apple platforms, the macOS and Windows update settings, disk encryption on and off, recovery-lock passwords, conditional access, agent options and the historical datasets. The setup-experience authentication pair and the managed-local-account pair come from the Apple setup writer. The deleted organisation logo has its own endpoint. **So seeing one of those twenty establishes only that something changed somewhere, not that the organisation settings document is what changed.** The remaining twenty-two, among them the Windows device-management types, the Entra identifier types and the GitOps-mode types, are written on this path alone.
 
-> **Disk encryption is the worst case and worth naming**, because it has three other emitters rather than one: the fleet writer, the Apple disk-encryption path and the Apple push certificate upload all produce the same pair. An activity saying disk encryption was enabled identifies neither the scope nor the writer.
+> **Disk encryption is the worst case and worth naming**, because it has several other emitters and they do not behave alike. The fleet writer and the Apple disk-encryption path each produce both halves, enabled and disabled. **Uploading an Apple push certificate produces only the enabled half**, and it produces one for the unassigned fleet and one for every fleet already enforcing encryption. **So a single certificate upload can fill the feed with enabled events for scopes nobody touched.** An activity saying disk encryption was enabled identifies neither the scope nor the writer.
 
 **Three of the forty-two are best effort.** The deleted organisation logo, and both historical-dataset types, are written on a path that logs a failure and carries on, so the request can succeed with no activity behind it. **Absence of one of those three is not evidence that the change did not happen.** The other thirty-nine fail the request rather than lose the record.
 
@@ -442,7 +463,9 @@ Three further setup-experience settings, whether to release the device manually,
 
 ### Two collision rules at the device boundary
 
-**Android merges every profile for a host into a single policy, and a collision costs you a profile.** Profiles are sorted **by name, alphabetically**, and merged in that order, so **where two of them set the same top-level field, the alphabetically later name wins.** The loser is not silently overridden: **it is marked `failed`**, with a message naming the fields it lost. Two consequences follow that are easy to miss. Renaming a profile can change which one wins. And adding a profile can fail an existing one that was working yesterday.
+**Android merges a host's *eligible* profiles into a single policy, and a collision costs you a profile.** Eligible is doing real work in that sentence: **a profile whose network configuration references a certificate that has not yet reached a terminal state**, verified or finally failed, **is withheld from the merge entirely**, held at `pending`, and re-sent once the certificate resolves either way, since a finally failed certificate releases it too. **The reason is written into the profile's detail**, which says it is waiting for the named certificate to be installed, and that detail is the only thing distinguishing it from an ordinary pending profile. Withheld profiles never reach the collision rule.
+
+The rest are sorted **by name, alphabetically**, and merged in that order, so **where two of them set the same top-level field, the alphabetically later name wins.** The loser is not silently overridden: **it is marked `failed`**, with a message naming the fields it lost. Two consequences follow that are easy to miss. Renaming a profile can change which one wins. And adding a profile can fail an existing one that was working yesterday.
 
 **Windows refuses a custom profile that collides with Fleet's own operating-system update settings.** Where a fleet or the organisation has Windows updates configured through settings, uploading a profile that targets the same area is rejected with a message saying operating-system updates are already configured. **The gate has three parts**: managing updates by profile is Premium-only, the settings must be clear, and a second profile targeting that area is rejected even when they are. Turn the settings off first if you intend to manage updates by profile.
 
@@ -459,6 +482,8 @@ Three further setup-experience settings, whether to release the device manually,
 > | **The two automatic rotation jobs**: recovery lock, managed local account password | **Nothing is reported, and the activity is written anyway**, recording the rotation as though it had reached the device |
 > | **Running a command against many hosts at once** | **Partly.** You get an error only where the push failed for every target. Otherwise the response succeeds and names the hosts it could not reach |
 >
+> **Locking a Mac carries an exception inside that first row.** Where a second request wins the race to enqueue the lock command, Fleet sends the push for the command that won, and **if that push fails it logs the failure, returns the PIN and reports success.** The success activity is written on top. So the ordinary lock path tells you about a failed push, the raced path does not, and **the two are indistinguishable from outside.**
+>
 > **One class of push response does change stored state, and it is caller-scoped too.** When Apple reports a device token as inactive, Fleet turns device management off for that host and fails its pending app installs. **That happens only during the scheduled iPhone and iPad refresh.** The same dead token during a lock, a wipe, profile delivery or the manual refetch button produces nothing at all, and **Macs are never covered**, because that job enumerates only iPhones and iPads.
 >
 > **So what a pending command tells you is narrower than it looks.** It establishes that the command exists and the device has not answered. **It does not separate a push that failed from a push that succeeded and a device that has not checked in**, and in both cases the remedy is the same: wait for the check-in, or prompt one ([8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md)).
@@ -474,7 +499,7 @@ Three further setup-experience settings, whether to release the device manually,
 | The MySQL password default | `fleet` | Empty |
 | The private-key external identifier | Names an environment variable without the middle component | That variable is not read. The documented form is silently ignored |
 
-**Read per-key defaults out of Fleet's reference with that in mind**, and confirm anything you are about to depend on rather than trusting the published default. **How you confirm it depends on the plane, and one of the two planes cannot be confirmed at all:**
+**Read per-key defaults out of Fleet's reference with that in mind**, and confirm anything you are about to depend on rather than trusting the published default. **How you confirm it depends on the plane, and one of the two is only partly confirmable:**
 
 | Plane | How to establish the value in force |
 |---|---|

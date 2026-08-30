@@ -89,6 +89,7 @@ table above.
 | Draft correction | Applied | Six claims in the draft that the normalisation made wrong, corrected in the appendix and listed below |
 | Draft review 1 | **NOT READY**, five findings | Applied in full, 2026-08-29. Coverage gap closed, 2,921 to 7,939 words. Three of my own unverified claims withdrawn, the activity restatement repaired, five scope overreaches corrected. §"Draft review 1" below |
 | Draft review 2 | **NOT READY**, twelve findings | Applied in full, 2026-08-29, to 9,868 words. **Three of the twelve were the round 1 corrections committing the same defect again**, recorded separately below. Two were the provenance rule, one was an over-correction to undo, six were ordinary. §"Draft review 2" below |
+| Draft review 3 | **NOT READY**, closing kind | Applied findings 1 to 10 and the five M rows, to 10,767 words. Findings 11, 14 and 15 **confirm round 2's distinctions survived, every count holds, and nothing is under-claimed**. Finding 12 was handled by the owner. **Finding 16 overruled**, reasoning below. §"Draft review 3" below |
 
 ## The recursion, which is the most useful thing this appendix has taught the project
 
@@ -169,7 +170,7 @@ all added:
 | Added | Key citations |
 |---|---|
 | Host-side authority table, replacing a prose list that miscounted and included the server as a host authority | `orbit/cmd/orbit/orbit.go:1407`, `:1413`–`:1424`; writers vs rows per normalised §1 |
-| Trailing osquery arguments, appended last, beating the flagfile and the two protected options | `orbit/cmd/orbit/orbit.go:1422`–`:1424` |
+| Trailing osquery arguments, appended last, after the flagfile and the **three** protected options | `orbit/cmd/orbit/orbit.go:1416`–`:1424`. **Corrected at draft review 3 twice**: it is three protected options (host identifier, database path, extensions autoload), and **the "beating" half is withdrawn** as osquery behaviour the checkout does not settle |
 | Direct agent environment reads, outside the CLI binding path | `orbit/pkg/logging/logging.go:22`, `orbit/pkg/scripts/scripts.go:97` |
 | Process-config mutual exclusions: `_path`/`_bytes` (MDM material only), `mysql.password`, `server.private_key` vs `_arn` | `server/config/config.go:1018`–`:1030`, `:185`–`:192` |
 | Cross-plane precedence: vulnerability database path (process wins, **and its default is non-empty**, so the stored key is inert on an untouched server), transparency URL (licence-conditional) | `cmd/fleet/vuln_process.go:136`–`:150`, `server/config/config.go:1713`; `server/service/devices.go:648`–`:657` |
@@ -258,3 +259,68 @@ are two" is not. **Publish the instances, state the comparison that was not done
 **One reviewer decomposition declined as arithmetic, while its conclusion was accepted.** The
 reviewer's breakdown of the twenty reused activity types sums to twenty-one. The total of twenty is
 right; the itemisation double-counts. Counted independently and listed in full above.
+
+## Draft review 3
+
+Independent review, 2026-08-28, verdict **NOT READY**, sixteen findings, but the closing kind:
+finding 11 confirms round 2's platform-and-profile-class distinctions all survived recombination,
+finding 14 confirms every count, and finding 15 records **no material under-claim**. Transcript at
+`../../missing-fleet-manual-private/reviews/2026-08-28/appendices/a.3-sol-r3.out`. Findings 1 to 10
+and the M rows of finding 13 applied here; finding 12 handled by the owner; finding 16 overruled.
+
+**The absolute-claim checker output was fed to the reviewer as an explicit input this round**, and
+that is what produced the finding 13 table. It is the first round where a machine-generated list of
+absolute phrasings was handed over rather than left for the reviewer to notice, and it converted
+this appendix's characteristic defect from something found by reading into something enumerated.
+**Do this again for every remaining appendix.** The table's three-way split is the useful part: `E`
+established as written, `M` only a member established, `U` not settleable from this checkout.
+
+| Finding | What changed |
+|---|---|
+| 1, channel file | **Presence proves only that a write happened.** The agent writes all three channels explicitly and never deletes or empties the file, so a later all-`stable` request leaves a present file holding three `stable` values. Contents decide. Replaced the false corollary with a contents table |
+| 2, credentials | Split one table into two. **The file, keystore and write-through sequence is the enroll secret's alone**; the server URL has flag then environment and **no compiled default**, its local file read only inside the profile branch |
+| 3, debug window | Materially false and rewritten. An explicit `verbose: false` blocks only osquery's verbosity; the separate debug signal is sent unconditionally while the window is open, so the agent's own logging is raised. `orbit_debug_until` **is** on the host record. Also corrected: **at this tag a window opens only at enrollment**, from `orbit.debug_logging_on_enroll_duration`; the on-demand action the docs describe does not exist here |
+| 4, setup booleans | Three are plain booleans; `lock_end_user_info` is optional and **can** tell absent from false. Its omission result is right, the explanation was not: it is a deliberate derivation from end-user authentication for backward compatibility |
+| 5, Android merge | **Only certificate-eligible profiles are merged.** A profile referencing a certificate not yet at a terminal state is withheld at `pending` with an explaining detail, and released when the certificate verifies **or finally fails** |
+| 6, push taxonomy | Lock carve-out added. Where a second request wins the enqueue race, Fleet retries the push for the winning command, **logs any failure, returns the PIN and reports success**, and the activity is written on top |
+| 7, disk encryption | Count of 20 stands; the explanation was wrong. The fleet writer and the Apple disk-encryption path emit both halves; **the push-certificate upload emits only the enabled half**, once for the unassigned fleet and once per fleet already enforcing. Softened "three other emitters" to "several", since at least four more exist |
+| 8, trailing arguments | **Winning claim withdrawn.** The checkout establishes that they are appended last and that Fleet's comment says they *should* override. How osquery resolves a repeated option is osquery's, and nothing here vendors, tests or documents it. Also corrected to **three** protected settings |
+| 9, subset answers | Fleet Desktop **does** accept `--version` and `--help`; the accurate claim is that its configuration has no command-line surface. "One plane cannot be confirmed at all" softened to "only partly confirmable" |
+| 10, executable audit | `server-overrides.json` now named and located: `/opt/orbit` on macOS and Linux, the program-files Orbit directory on Windows, **and the root directory is itself overridable** by `--root-dir` or `ORBIT_ROOT_DIR` |
+
+**The five M rows from finding 13, and how each was rewritten.**
+
+| M row | Rewrite |
+|---|---|
+| Neither cross-plane value discoverable from the interface | Narrowed to **neither *resolution* is shown**. The interface does display the stored transparency URL; what it never names is the authority that won |
+| All seven host authorities uninspectable from Fleet | Narrowed. **Fleet collects four resultant osquery flags** on the detail cycle, so the accurate claim is that it reports the value a host ended up with and never which authority produced it |
+| Four setup booleans cannot distinguish absence | Split three from one, as finding 4 |
+| Android merges every profile | Scoped to eligible profiles, as finding 5 |
+| One whole plane cannot be confirmed | Softened to partly, as finding 9 |
+
+**Rows classed `E` were left alone. The two classed `U` were left alone deliberately**, because a
+methodology assertion and an editorial completeness claim are not Fleet propositions and dressing
+them as verified would be the same error in a new place.
+
+## Finding 16 overruled, with the reasoning
+
+**The reviewer says `verified_source` violates STYLE by embedding a commit hash and a research
+path. Overruled on both halves.**
+
+**On the hash.** STYLE §9 requires verification to pin to a release tag rather than a branch or a
+bare commit, and the reason it gives is that a commit hash pins to something no reader can install.
+This field carries the tag **and** the commit that tag resolves to, which is strictly more
+reproducible than the tag alone: a reader can install the release, and a future editor can confirm
+the tag has not moved. The rule's purpose is served rather than broken. **Forty-two chapters already
+use this form**, so changing this one alone would manufacture the inconsistency the rule exists to
+prevent.
+
+**On the research path.** STYLE §8 forbids pointing reader-facing prose at *source code*. It
+explicitly directs the verification trail into `research/section-notes/`, which is exactly where
+this field points, and doing so is the documented convention rather than a leak of it.
+
+**The general point, recorded because it will recur.** A reviewer working from the artifact alone
+cannot see which conventions are project-wide, and a house-style finding is the class most likely to
+be locally correct and globally wrong. CONTRIBUTING already says to surface a disagreement with our
+own rules rather than apply them silently; this is the same thing in reverse, and the overrule is
+recorded here rather than argued in the appendix.
