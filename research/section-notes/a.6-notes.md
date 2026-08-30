@@ -107,9 +107,9 @@ minimum Chrome version key. Recorded as documented-only.
 | **5.6** | Fleet sends the combined Windows deadline node, and it is unknown whether Windows 11 still honours it | Fleet sends **both split nodes**. The question does not arise |
 | **2.2** | "Redis has no minimum version stated" | **6.2**, required by the host-lookup cache |
 | **5.6** | The Apple version check "does not run on the team-spec and GitOps path" | Narrower: global and Unassigned **do** validate; the per-fleet spec endpoint does not, and iOS gets no validation there at all |
-| **3.7** | 1.38.1 as the stepping stone | **Kept at 1.38.1**, with the discrepancy explained. See below |
+| **3.8** | 1.38.1 as the stepping stone | **Kept at 1.38.1**, with the discrepancy explained. See below |
 
-**The 3.7 correction is recorded because I got it wrong first.** The research reported the boundary as
+**The 3.8 correction is recorded because I got it wrong first.** The research reported the boundary as
 1.38.0, which is true of where the migration code lives. I swept five instances to 1.38.0 before
 checking Fleet's own guidance, which names **1.38.1** as the bridge; the two releases are three days
 apart and Fleet shipped a rollback with 1.38.0 in case it needed one. The chapter is back at 1.38.1

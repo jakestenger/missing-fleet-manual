@@ -161,17 +161,17 @@ off its workflow is the same error as reading it off a title. **The Unix counts 
 15 unowned**, and the absence of the command's name from 4.2 stays a gap in 4.2 rather than a reason
 to leave the row unowned.
 
-**Two things are worth the owner's attention rather than a.7's.** `6.4:L59` asserts that 3.7 owns
-the packaging and update-repository semantics, and **that deferral is unfulfilled**: 3.7 teaches
+**Two things are worth the owner's attention rather than a.7's.** `6.4:L59` asserts that 3.8 owns
+the packaging and update-repository semantics, and **that deferral is unfulfilled**: 3.8 teaches
 consuming Fleet's repository and never creating one. And `setup` has zero occurrences anywhere in
 the manual, so no chapter covers standing a server up or creating its first administrator.
 `goquery` has zero occurrences too, and **4.2 should name it**, now that 4.2 owns it.
 
-**One row is in the list against the raw evidence.** `3.7:L51` does name `updates add`, in a
+**One row is in the list against the raw evidence.** `3.8:L51` does name `updates add`, in a
 subordinate clause carrying a licence claim and a platform limit. That is a mention rather than a
 chapter explaining the workflow, and assigning it would split the update family across two answers
 and let the unfulfilled deferral pass unnoticed. **If the owner prefers the literal reading, that row
-moves to 3.7 and the count becomes fifteen.**
+moves to 3.8 and the count becomes fifteen.**
 
 ### The register states its class before its rows
 

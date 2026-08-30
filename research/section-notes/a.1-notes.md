@@ -100,7 +100,7 @@ do.
 **Two symptom rows were assigned a chapter the research did not assign.** The research lists the
 symptom entries with no capability row and says they "route to a chapter" without naming one. Where
 the routing followed from an existing row it was taken from that row. Two did not: "my EDR is flagging
-the fleetd agent" was routed to 3.7 then 8.4, and "switch to Fleet from Kolide Fleet" was **dropped**
+the fleetd agent" was routed to 3.8 then 8.4, and "switch to Fleet from Kolide Fleet" was **dropped**
 rather than routed, because no chapter covers it and asserting `None` would have been a new coverage
 claim beyond what the research checked. Fleet's own two removed-surface questions, "Where did the
 Packs page go?" and "What happened to the Schedule page?", are in the closing section instead, where

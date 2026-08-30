@@ -134,7 +134,7 @@ The vocabulary is closed in the other direction too. Exactly ten top-level keys 
 >
 > Four rows have exactly one supported interface and it is the UI, and all four are enrollment: enrolling an Android device as a personal work profile, enrolling a company-owned Android device by QR code at first boot, issuing the single-use Android enrollment token behind both, and enrolling a Chromebook.
 >
-> **A fully automated enrollment pipeline is therefore impossible for those two platforms at this release.** Everything downstream of enrollment is available through other interfaces; getting the device into Fleet in the first place is not. Plan the Android and ChromeOS rollout as an interactive step, and see [3.6](../03-connect-devices/3.6-enroll-android-and-chromeos-devices.md) for what that step involves.
+> **A fully automated enrollment pipeline is therefore impossible for those two platforms at this release.** Everything downstream of enrollment is available through other interfaces; getting the device into Fleet in the first place is not. Plan the Android and ChromeOS rollout as an interactive step, and see [3.6](../03-connect-devices/3.6-enroll-android-devices.md) and [3.7](../03-connect-devices/3.7-enroll-chromeos-devices.md) for what that step involves.
 
 > ### Every Apple credential renewal is half automatable
 >

@@ -156,7 +156,7 @@ statement about Fleet's implementation and was false as one.
 ## Checks run
 
 `check-links`, `check-em-dashes`, `check-crossrefs`, `check-absolutes`, `check-frequency-claims`,
-`unwrap` dry run. Read against 2.5, 2.6, 2.9, 2.10, 2.11, 3.1, 3.2, 3.5, 3.7 and 6.3, which are the
+`unwrap` dry run. Read against 2.5, 2.6, 2.9, 2.10, 2.11, 2.12, 3.1, 3.2, 3.5, 3.8 and 6.3, which are the
 chapters that defer here or describe the same paths.
 
 

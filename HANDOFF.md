@@ -723,14 +723,14 @@ Every one is the natural inference from a true adjacent fact, which is why it su
 therefore no lock; ADE installs the agent therefore only ADE does; MDM does disk encryption elsewhere
 therefore it does here.
 
-3.6 and 3.7 completed the set at six for six. 3.6 said Android has no agent and everything arrives
+3.6 and 3.8 completed the set at six for six. 3.6 said Android has no agent and everything arrives
 unsolicited; Fleet ships a narrow force-installed app that reports certificate results, and polls Google
-hourly. **1.2, 2.11 and 8.10 all had that right.** 3.7 said Orbit checks for updates at startup; it starts
+hourly. **1.2, 2.12 and 8.10 all had that right.** 3.8 said Orbit checks for updates at startup; it starts
 a timer and waits, so a channel change reaches the host in under a minute and changes the version fifteen
 to twenty-five minutes later.
 
 **And each correction rippled.** Writing and reviewing these chapters produced corrections in **thirteen
-places in already-reviewed chapters**: 1.2 four separate times, plus 2.10, 2.11, 3.1, 3.2, 8.1, 8.2, 8.4,
+places in already-reviewed chapters**: 1.2 four separate times, plus 2.10, 2.12, 3.1, 3.2, 8.1, 8.2, 8.4,
 8.8, and 8.10 twice. A reviewed chapter is not a verified one, and the cheapest way to find what a
 reviewed chapter got wrong turns out to be writing its neighbour.
 
@@ -807,7 +807,7 @@ sounds like one, since a reader will carry it into chapters that were never chec
 
 **Licence claims are the least reliable claim class in the project and no checker catches them.**
 **Seven wrong on 2026-08-27 alone**, in both directions and in every part of the book: 3.5 said ADE's licensing was undocumented when ADE is
-Premium, then said owner mapping was free when end-user authentication is Premium; 2.11 gated
+Premium, then said owner mapping was free when end-user authentication is Premium; 2.12 gated
 company-owned Android when it is not gated; 1.2's rollout table listed lock, wipe and LUKS escrow
 with no gate at all when every lock is Premium, every wipe except company-owned Android is Premium,
 and disk encryption is Premium; and 1.1 presented a platform table that read as an edition promise.
@@ -971,7 +971,7 @@ because what it found changes how to weigh the rest.
    fewer defects but not none.
 
 4. **Part III has had two review rounds and every finding applied.** Five first reviews, five
-   confirming reviews, and a first review of 3.7, which had never had one. All twelve verdicts and
+   confirming reviews, and a first review of 3.8, which had never had one. All twelve verdicts and
    their findings are at `reviews/2026-08-27/part3/` and `part3-confirm/`.
 
    It is in exactly the position Part VIII is: **every chapter was corrected after its last
@@ -1048,8 +1048,8 @@ Withdraw rather than soften.
   building a.7's owning-chapter field, which is a required column the part agreement sets. Two of
   the sixteen are findings against this manual rather than gaps in a reference:
 
-  **6.4 promised something 3.7 does not deliver.** Its surface table said 3.7 owns "the packaging and
-  update-repository semantics". 3.7 teaches packaging and channel behaviour and never teaches
+  **6.4 promised something 3.8 does not deliver.** Its surface table said 3.8 owns "the packaging and
+  update-repository semantics". 3.8 teaches packaging and channel behaviour and never teaches
   creating, signing, rotating or re-timestamping a repository; `fleetctl updates add` appears in one
   subordinate clause. **Corrected in place on 2026-08-29** to say packaging and channels, and to say
   plainly that running your own repository is not covered. That is honest and it is still a hole.
@@ -1060,7 +1060,7 @@ Withdraw rather than soften.
   `preview` leaves, `get carve` and `get carves`, `setup`, `new`, and `goquery`. Read strictly it is
   fifteen, because `updates add` has that one subordinate clause.
 
-  **What closing it would take:** a section in 3.7 on running a private update repository, covering
+  **What closing it would take:** a section in 3.8 on running a private update repository, covering
   initialisation, root keys, adding targets, timestamps and rotation, which is where the key-retention
   finding S15 also belongs. The `preview` and `goquery` commands are development conveniences and a
   short honest note in 6.4 may be the right answer for them rather than a chapter. **This is a
@@ -1071,7 +1071,7 @@ Withdraw rather than soften.
   them.** Part III's confirming reviews found one chapter asserting a capability was Premium and
   then, forty lines later, asserting a related one was free; both were wrong, in opposite
   directions. Sweeping the rest found two more: 8.6's schedule table omitted Premium on
-  `send_recovery_lock_commands` and `google_workspace_sync`, and **2.11, a `verified` chapter, called
+  `send_recovery_lock_commands` and `google_workspace_sync`, and **2.12, a `verified` chapter, called
   company-owned Android enrollment Premium when nothing in Fleet's Android module checks a licence
   at all.**
 

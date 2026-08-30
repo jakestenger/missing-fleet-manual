@@ -240,9 +240,9 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 | Following an update channel to a current release | **Orbit 1.38.0 in the code, 1.38.1 as the bridge** | not applicable | Silent in Fleet. The failure is in the agent's own log on the host, and nothing in the console says the estate has stopped updating. See below |
 | Enrolling and talking to a 4.90.1 server | **no minimum** | not applicable | **No boundary**, listed because its absence is the useful fact |
 
-> **The update-server migration has two numbers and they answer different questions.** The rewrite to the new update server is in the code from **1.38.0**. **1.38.1** is what Fleet's own configuration reference names as the stepping stone, it shipped three days later, and Fleet also shipped a rollback with 1.38.0 in case one was needed. **Step through 1.38.1** ([3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md)).
+> **The update-server migration has two numbers and they answer different questions.** The rewrite to the new update server is in the code from **1.38.0**. **1.38.1** is what Fleet's own configuration reference names as the stepping stone, it shipped three days later, and Fleet also shipped a rollback with 1.38.0 in case one was needed. **Step through 1.38.1** ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
 
-> **`update_channels` is the one to know**, because it fails in the shape most likely to be misread. An agent below 1.20.0 ignores the channel you set. Fleet accepts the configuration, stores it, shows it back, and the host keeps running whatever it was running. There is no error and no log line, so the estate looks pinned and is not ([3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md)).
+> **`update_channels` is the one to know**, because it fails in the shape most likely to be misread. An agent below 1.20.0 ignores the channel you set. Fleet accepts the configuration, stores it, shows it back, and the host keeps running whatever it was running. There is no error and no log line, so the estate looks pinned and is not ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
 
 **The two packaging floors behave differently from the rest**, because they bind when the installer is built rather than when the host runs. An old `fleetctl` produces a package that cannot carry the property, and no later upgrade of the agent fixes it. Rebuild the package instead.
 
@@ -331,6 +331,6 @@ So there are two planning questions rather than one. **Plan remediation around b
 
 One practical note: **this policy lives in Fleet's company handbook rather than its documentation**, so a reader working through the product docs will not meet it.
 
-**There is no constrained upgrade path within version 4.** Fleet's own guidance says skipping versions is fine and nothing in the server enforces an ordering. The exception is the agent, where the update server migration makes one release a stepping stone ([3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md)).
+**There is no constrained upgrade path within version 4.** Fleet's own guidance says skipping versions is fine and nothing in the server enforces an ordering. The exception is the agent, where the update server migration makes one release a stepping stone ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
 
 Fleet's cadence, for planning: one minor and one patch release every three weeks, with scheduled patches weekly in between and immediate patches for critical bugs. [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) turns that into a release-review rhythm.

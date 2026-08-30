@@ -105,7 +105,8 @@ administrator, before devices arrive.
 | 2.8 | Activity, audit logs, and log delivery | `2.8-activity-audit-logs-and-log-delivery.md` | ★★ | ◐ |
 | 2.9 | MDM architecture and foundations | `2.9-mdm-architecture-and-foundations.md` | ★★★ | ◐ |
 | 2.10 | Apple MDM configuration | `2.10-apple-mdm-configuration.md` | ★★★ | ○ |
-| 2.11 | Windows and Android management configuration | `2.11-windows-and-android-management-configuration.md` | ★★★ | ○ |
+| 2.11 | Configure Windows management | `2.11-configure-windows-management.md` | ★★★ | ○ |
+| 2.12 | Bind Android Enterprise | `2.12-bind-android-enterprise.md` | ★★★ | ○ |
 
 ## Part III — Connect devices
 
@@ -118,8 +119,9 @@ administrator, before devices arrive.
 | 3.3 | Enroll Windows devices | `3.3-enroll-windows-devices.md` | ★★★ | ○ |
 | 3.4 | Enroll Linux devices | `3.4-enroll-linux-devices.md` | ★★ | ○ |
 | 3.5 | Enroll iOS and iPadOS devices | `3.5-enroll-ios-and-ipados-devices.md` | ★★ | ○ |
-| 3.6 | Enroll Android and ChromeOS devices | `3.6-enroll-android-and-chromeos-devices.md` | ★★ | ○ |
-| 3.7 | Manage fleetd, Orbit, and updates | `3.7-manage-fleetd-orbit-and-updates.md` | ★★★ | ○ |
+| 3.6 | Enroll Android devices | `3.6-enroll-android-devices.md` | ★★ | ○ |
+| 3.7 | Enroll ChromeOS devices | `3.7-enroll-chromeos-devices.md` | ★★ | ○ |
+| 3.8 | Manage fleetd, Orbit, and updates | `3.8-manage-fleetd-orbit-and-updates.md` | ★★★ | ○ |
 
 ## Part IV — Know your devices
 
@@ -313,7 +315,7 @@ hint, not evidence.
 |---|---|---|
 | Software / installers / packages | 752 | 5.4, 5.5, 4.4 |
 | Queries | 620 | 4.2, 4.6 |
-| Enrollment (ADE / Autopilot / DEP) | 457 | 3.1 to 3.6 |
+| Enrollment (ADE / Autopilot / DEP) | 457 | 3.1 to 3.7 |
 | Policies | 319 | 4.3, 5.7 |
 | Profiles / DDM / CSPs | 314 | 5.2 |
 | Vulnerabilities / CVEs | 272 | 4.4 |
@@ -325,10 +327,10 @@ hint, not evidence.
 | VPP / App Store | 119 | 5.4 |
 | Self Service / Fleet Desktop | 115 | 5.5 |
 | Webhooks / integrations | 100 | 6.5 |
-| Android | 80 | 3.6, 2.11 |
+| Android | 80 | 3.6, 2.12 |
 | Disk encryption | 78 | 5.6 |
 | Host vitals / inventory | 68 | 4.1 |
-| OS updates / patching | 51 | 5.5, 3.7 |
+| OS updates / patching | 51 | 5.5, 3.8 |
 
 This heuristic is a placeholder. Once the weekly support sweep has a few weeks
 of data, hits-per-section replaces it with something real.
