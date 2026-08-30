@@ -25,17 +25,20 @@ chapter is long enough.
 **Site:** https://d4ch3x2jqqmix.cloudfront.net (public, deploys from `main` on push)
 **Repo:** https://github.com/jakestenger/missing-fleet-manual (**public**)
 **Status artifact:** https://claude.ai/code/artifact/8b5267d3-3e77-4867-8ed9-5a6bdf9119f6
-**Fleet defect queue:** `~/Vault/Claude Cowork/Work/General/Fleet bugs to file.md`
+**Fleet defect queue:** a private repo outside this one; the owner has the location
 
 ### Where Fleet defects go
 
 Researching this manual finds real Fleet bugs, and the standing instruction is that this project
-files nothing and commits nothing to any Fleet repo. **Record them in the defect queue above**, which
-deliberately sits in the vault outside every git repo: this repo is public, and some findings should
-not be published before Fleet can fix them. It is shared with other sessions, so take the next free
-number in your class (C code defect, D documentation error, S security-shaped) rather than renumbering.
+files nothing and commits nothing to any Fleet repo. **Record them in the defect queue.** It lives
+in its own private repo, deliberately outside this one: this repo is public, and some findings
+should not be published before Fleet can fix them. It is also shared beyond this project and outlives
+it, so it is not the manual's property to hold.
 
-Note the file is not version controlled. Do not assume you can recover a bad edit.
+It is shared with other sessions, so take the next free number in your class (C code defect,
+D documentation error, S security-shaped) rather than renumbering. Commit and push after adding —
+the queue is version controlled as of 2026-08-30, so a bad edit is recoverable, but only if your
+addition was committed.
 
 ### Resolved 2026-08-28: sensitive research purged from history
 
