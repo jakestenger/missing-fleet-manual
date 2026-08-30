@@ -112,17 +112,29 @@ loop below.
   split/merge junction dots entirely. In the pilot this took the arrow count from a noisy tangle to
   one dark arrow plus the coloured paths, and it was a clear improvement.
 - **Terminate external arrows at a group's bounding-box EDGE**, not reaching in to touch each
-  internal object; the internal boxes connect to each other with internal arrows. Less noisy, and
-  band edges become the alignment anchors so routing stays symmetric regardless of internal
-  placement.
+  internal object. And when a bounding box groups a sequence of stacked steps, the box plus the
+  top-to-bottom stacking already conveys the order, so **the internal step-to-step arrows are
+  redundant: drop them and keep only the entry arrow (into the box's top edge) and the exit arrow
+  (out of its bottom edge)**. This was v7's biggest single cleanup.
 - Short arrows render as a line-with-a-smudge with a small marker; specify a **crisp filled
   triangular arrowhead (~20x15), with enough shaft length that the head reads as a head**, used
   identically on every arrow.
+- **Centre ALL text, group/lane labels included.** A left-aligned label leaves whitespace to its
+  right and reads inconsistent next to centred box text; make everything centred (or commit fully
+  to one alignment). v5 and v6 both regressed here; v7 fixed it.
+- **One routing style, and orthogonal beats diagonal.** Right-angle routing (straight runs plus
+  90-degree elbows) reads as designed; a stray diagonal branch among orthogonal arrows reads as
+  auto-generated. Do not mix.
+- **Make balance, symmetry and design consistency the explicit priority of a polish pass** and a
+  named self-review criterion. Sol improves markedly when told the goal of the pass is balance and
+  symmetry, not just correctness.
 
 The working prompts live in `missing-fleet-manual-private/reviews/phase2/` (`imgtest/`), versioned
-v1..v6+ with their iteration logs. **v6 is the settled pilot** for 2.13's `ca-delivery-loop`; its
-prompt (`v6-prompt.txt`, a revision of v5) encodes the three defaults above and is the model to
-copy for the next diagram. The same recipe applies to every other IMAGE-TODO in the book.
+v1..v7 with their iteration logs. **v7 is the accepted pilot** for 2.13's `ca-delivery-loop`
+(accepted for now with minor polish debt: the shorter lane's boxes sit slightly high in their
+band). Its prompt (`v7-prompt.txt`) plus its ancestors encode every default above and are the model
+to copy for the next diagram. The same recipe applies to every other IMAGE-TODO in the book; the
+state-machine diagram in 5.2 is the next test of whether it generalises to a non-linear shape.
 
 ### Standing rule: refresh the status artifact after every step
 
