@@ -31,7 +31,7 @@ feature_requests:
 
 ## The authorities
 
-![Reference](../_assets/icons/reference.svg) Three things get conflated and are worth separating before any table makes sense: **where a value is declared**, **where it is stored at runtime**, and **which interface can write it**. A source owns a runtime store. Something that only writes into another source's store is a writer, not an authority.
+![Reference](../_assets/icons/reference.svg) Do not memorize the authority tables. When a value seems ignored, ask three questions in order: where was it declared, where is the live value stored, and which interface wrote that store? A source owns a runtime store. Something that only writes into another source's store is a writer, not an authority.
 
 **On the server:**
 

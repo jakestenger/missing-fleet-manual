@@ -83,7 +83,7 @@ Five situations produce answers worth knowing in advance:
 |---|---|
 | No configuration file at all | One is created, and the command then fails, asking you to set an address |
 | `--context` names a context that does not exist | A hard error, for every command except `config get` and `config set` |
-| The same, under `config get` or `config set` | **The context is created**, with a printed note. So `config set --context prod-typo` succeeds and writes a second context under the typo. **That context is perfectly usable**: a later command passing the same typo selects exactly it. What breaks is the name you meant, which still holds whatever it held before, or does not exist and fails outright |
+| The same, under `config get` or `config set` | **The context is created**, with a printed note. Fleet does not know `prod-typo` is a typo: it creates a perfectly usable context with exactly that name, and a later command passing the same typo selects exactly it. The `prod` context you meant is untouched, still holding whatever it held before, or does not exist and fails outright |
 | An address is set and the token is empty | An instruction to log in, on standard error, or the single sign-on instructions where the server reports it enabled |
 | **Windows, with no certificate authority and no skip-verify setting** | A hard refusal. A genuine platform difference in the client, not a convention |
 
@@ -518,7 +518,7 @@ Ranked on five axes: whether it can be undone, how much one invocation reaches, 
 
 ![How-to](../_assets/icons/howto.svg) `fleetctl package` never contacts your Fleet, and it is the command whose mistakes are hardest to undo, because the result is installed on hosts. **It is not the only row that never calls your Fleet**, as the fourteen listed earlier show, and it is not fully offline either: it downloads signed agent artifacts from Fleet's update server while it builds. [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md), [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) and [3.7](../03-connect-devices/3.7-manage-fleetd-orbit-and-updates.md) defer the option choice here rather than each carrying a flag list; run `fleetctl package --help` for the list itself, which is current for your client.
 
-**Five decisions, and the last two are the expensive ones.**
+**Before packaging, settle five choices: server address and secret, Fleet Desktop, scripts, certificate verification, and package type. The last two are the expensive ones.**
 
 **Whether the package carries the server address and the enroll secret.** You may pass both, or neither. **What the command refuses is one without the other.** Omitting both is a deliberate configuration: the host then has to be told where Fleet is by some other means, which on macOS is a configuration profile delivered by MDM.
 

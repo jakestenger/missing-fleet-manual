@@ -19,17 +19,19 @@ feature_requests:
 
 # Roles and permissions matrix
 
+**Choose the table for your scope, find the action, then read across to your role. `Conditional` points to the condition register.**
+
 **Authorisation is the intersection of an action, a role and a scope.** Licensing, platform support and interface availability are separate gates that this appendix does not answer, and a reader who conflates them will diagnose the wrong one.
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) The administrator-visible actions this appendix's research found, against all six roles, at both scopes. That is the breakdown [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) promises and the reason this appendix is the most-referenced unwritten one in the book. **The row universe is a search result and not a proof**: two rows were added after a review round found routes the earlier passes had missed, so a reader who finds another has found a gap rather than a contradiction.
+![Reference](../_assets/icons/reference.svg) The administrator-visible actions this appendix's research found, against all six roles, at both scopes. That is the breakdown [2.3](../02-administer-and-deploy-fleet/2.3-user-accounts-roles-and-service-identities.md) promises and the reason this appendix is the most-referenced one in the book. **The row universe is a search result and not a proof**: two rows were added after a review round found routes the earlier passes had missed, so a reader who finds another has found a gap rather than a contradiction.
 
 **A cell answers what an administrator can actually obtain**, not what Fleet's authorization policy returns. Those are different questions more often than they should be. The policy is the largest input, and a decision can also be made by service middleware before the policy runs, by a response having a field stripped from it after the policy allowed the whole object, or by a database query that filters the result to nothing after the request succeeded. **All four change the answer, so all four are in the cells wherever this appendix found them.**
 
 > **Masking is a property of the route, not of the object, and this appendix is organised by intent rather than by route.** Where a value is stripped from one response and not from another, the cell describes the reading route, and any row where that is known to differ says so. Reading the organisation settings is the case to know about: **the write response applies credential obfuscation and not the role masks the read response applies**, so an identity authorised to write receives fields it is masked from on read. At this release that affects exactly one identity, global GitOps, and three settings groups.
 
-Three questions belong elsewhere. **Whether the capability exists on your platform is [a.2](a.2-platform-capability-matrix.md)**, which answers it per platform with the licence and prerequisites beside it. **Whether your licence includes it is a separate gate again**, and it is not folded into any cell here: a role that is allowed an action it has no licence for gets a licence error, not a permission error, and telling them apart is most of diagnosing a `403`. **Which interface can perform it will be [a.5](a.5-interface-index.md)**, also unwritten.
+Three questions belong elsewhere. **Whether the capability exists on your platform is [a.2](a.2-platform-capability-matrix.md)**, which answers it per platform with the licence and prerequisites beside it. **Whether your licence includes it is a separate gate again**, and it is not folded into any cell here: a role that is allowed an action it has no licence for gets a licence error, not a permission error, and telling them apart is most of diagnosing a `403`. **Which interface can perform it is [a.5](a.5-interface-index.md)**, which answers it interface by interface.
 
 ## How Fleet decides
 

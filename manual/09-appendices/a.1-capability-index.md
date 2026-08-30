@@ -19,6 +19,8 @@ feature_requests:
 
 # Capability index
 
+**Search the last column for the word you have. Open the owning chapter. `(no)` means Fleet does not provide the capability.** The rows themselves are in [The index](#the-index); the sections before it explain where its words come from.
+
 **Every outcome this manual teaches has one chapter that owns it, and this index gets you there from the word you would actually type.** A table of contents can only expose the book's own vocabulary. Administrators arrive holding Apple's word, Microsoft's word, the name of the product they are migrating off, or the name Fleet itself used two releases ago, and none of those is what a chapter is called.
 
 That distance is the appendix. A row earns its place when the words in its last column are words the contents page would not have given you.
