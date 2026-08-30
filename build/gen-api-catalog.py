@@ -52,6 +52,9 @@ HANDLER_FILES = [
 
 CONSTRUCTOR_CLASS = {
     "newUserAuthenticatedEndpointer": "user (session or API token)",
+    # The chart module builds its own middleware wrapping auth.AuthenticatedUser,
+    # so its one route authenticates as an ordinary user (verified at the tag).
+    "newChartEndpointer": "user (session or API token)",
     "newDeviceAuthenticatedEndpointer": "device (device token)",
     "newHostAuthenticatedEndpointer": "host (osquery node key)",
     "newOrbitAuthenticatedEndpointer": "orbit (orbit node key)",
@@ -452,7 +455,7 @@ if ALIASES_GO.exists():
                 unparsed.append((arel, lineno, f"{method} {dep} -> {primary}",
                                  "primary route not found among parsed registrations"))
             else:
-                alias_rows.append((method, dep, auth, f"alias of {primary}", arel, lineno, ""))
+                alias_rows.append((method, dep, auth, primary, arel, lineno, ""))
     if matched != alias_entries_found:
         unparsed.append((arel, 0, f"{alias_entries_found - matched} alias entries",
                          "entry shape did not match the Method/PrimaryPath/DeprecatedPaths pattern"))
@@ -495,41 +498,45 @@ out.append("`server/service/handler.go` and the feature-module handler files mou
 out.append("`cmd/fleet/serve.go`, the declarative alias table in `handler_deprecated_paths.go`,")
 out.append("and the raw mux registrations for the MDM protocol services. `_version_` stands")
 out.append("for the supported API versions (`v1`, `2022-04`) unless a note constrains it.")
-out.append("Authentication class comes from the endpointer the route is registered on:")
+out.append("The Auth column names what a caller must present. The classes are:")
 out.append("")
-for ctor, label in sorted(CONSTRUCTOR_CLASS.items()):
-    out.append(f"- `{ctor}` -- {label}")
+for label in sorted(set(CONSTRUCTOR_CLASS.values())):
+    out.append(f"- {label}")
+out.append("- route-local or protocol (registered directly on the router; see the raw mux section)")
+out.append("")
+out.append("The handler function and, for raw routes, the registration group are kept in each")
+out.append("row's HTML comment beside the source line, not in a reader-facing column.")
 out.append("")
 out.append("## API endpoints")
 out.append("")
-out.append("| Method | Path | Auth | Handler |")
-out.append("|---|---|---|---|")
+out.append("| Method | Path | Auth |")
+out.append("|---|---|---|")
 for method, path, auth, hname, rel, lineno, note in rows:
-    comment = f"<!-- {rel}:{lineno}{'; ' + note if note else ''} -->"
-    out.append(f"| {method} | `{path}` | {auth} | `{hname}` {comment}|")
+    comment = f"<!-- {rel}:{lineno}{'; ' + note if note else ''}; handler {hname} -->"
+    out.append(f"| {method} | `{path}` | {auth} {comment}|")
 out.append("")
 out.append("## Deprecated path aliases")
 out.append("")
-out.append("Old paths still served, mapped onto the handler of their primary path by the")
-out.append("declarative table in `handler_deprecated_paths.go`.")
+out.append("Old paths still served, mapped onto the same handler as their current path by the")
+out.append("server's declarative alias table.")
 out.append("")
 out.append("| Method | Deprecated path | Auth | Serves |")
 out.append("|---|---|---|---|")
 for method, path, auth, target, rel, lineno, _ in alias_rows:
     comment = f"<!-- {rel}:{lineno} -->"
-    out.append(f"| {method} | `{path}` | {auth} | `{target}` {comment}|")
+    out.append(f"| {method} | `{path}` | {auth} | alias of `{target}` {comment}|")
 out.append("")
 out.append("## Raw mux routes (MDM protocol and setup)")
 out.append("")
-out.append("Registered directly on an `http.ServeMux`/router rather than through an")
-out.append("endpointer; these protocols carry their own authentication (MDM certificates,")
-out.append("SCEP, or pre-setup state), named here by registering function.")
+out.append("Registered directly on the router rather than through an endpointer. Each of these")
+out.append("carries its own protocol authentication (a device-management certificate, a SCEP")
+out.append("challenge, or pre-setup state) rather than a Fleet credential.")
 out.append("")
-out.append("| Method | Path | Registration group | Handler |")
-out.append("|---|---|---|---|")
+out.append("| Method | Path | Auth |")
+out.append("|---|---|---|")
 for method, path, group, hname, rel, lineno, _ in raw_rows:
-    comment = f"<!-- {rel}:{lineno} -->"
-    out.append(f"| {method} | `{path}` | {group} | `{hname}` {comment}|")
+    comment = f"<!-- {rel}:{lineno}; {group}; handler {hname} -->"
+    out.append(f"| {method} | `{path}` | route-local or protocol {comment}|")
 out.append("")
 if unparsed:
     out.append("## UNPARSED registrations")

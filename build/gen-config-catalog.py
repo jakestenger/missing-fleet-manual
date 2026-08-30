@@ -295,6 +295,61 @@ def parse_key(expr, closure_params=None):
     return None
 
 
+# --- reader-facing rendering of computed defaults -----------------------------
+# A computed default is a source expression evaluated at runtime. Shown verbatim
+# it would put Go identifiers in a reader-facing cell (STYLE forbids that), so the
+# recognised forms are translated to a reader term and the raw expression is kept
+# only in the row's HTML comment. An unrecognised computed form falls back to a
+# neutral marker, again with the expression in the comment alone.
+SIZE_UNITS = {"KB": 10**3, "MB": 10**6, "GB": 10**9, "TB": 10**12,
+              "KiB": 1 << 10, "MiB": 1 << 20, "GiB": 1 << 30, "TiB": 1 << 40}
+_size_cache = {}
+
+
+def _resolve_size_const(ident):
+    """Resolve a Go size constant (possibly package-qualified) to a display form
+    like '10 GiB' by reading its single declaration from the Fleet source. The
+    unit and multiplier come straight from the source, so a change to the constant
+    flows through on regeneration. Returns None if it cannot be resolved uniquely."""
+    if ident in _size_cache:
+        return _size_cache[ident]
+    name = ident.split(".")[-1]
+    decl_re = re.compile(r"^\s*(?:const\s+|var\s+)?" + re.escape(name) + r"\b[^\n=]*=\s*(.+?)\s*$", re.M)
+    unit_re = re.compile(r"^\s*(?:(\d+)\s*\*\s*)?units\.(\w+)\b")
+    found = set()
+    server_dir = SRC_ROOT / "server"
+    for f in server_dir.rglob("*.go"):
+        if f.name.endswith("_test.go"):
+            continue
+        try:
+            txt = f.read_text()
+        except Exception:
+            continue
+        if name not in txt:
+            continue
+        for m in decl_re.finditer(txt):
+            um = unit_re.match(m.group(1))
+            if um and um.group(2) in SIZE_UNITS:
+                mult = int(um.group(1)) if um.group(1) else 1
+                found.add(f"{mult} {um.group(2)}")
+    result = found.pop() if len(found) == 1 else None
+    _size_cache[ident] = result
+    return result
+
+
+def render_computed(expr):
+    """Return a reader-facing string for a computed default, or None to fall back
+    to a neutral marker. Never returns Go identifiers."""
+    expr = expr.strip()
+    m = re.match(r'^filepath\.Join\(os\.TempDir\(\),\s*"([^"]+)"\)$', expr)
+    if m:
+        return "<system temp dir>/" + m.group(1)
+    m = re.match(r"^installersize\.Human\((.+)\)$", expr)
+    if m:
+        return _resolve_size_const(m.group(1).strip())
+    return None
+
+
 found_calls = 0       # registration call sites seen in addConfigs (closure bodies count once)
 rows = []             # (key, kind, default_display, lineno, via) in registration order
 unparsed = []         # (lineno, raw_stmt_or_call, reason)
@@ -405,9 +460,16 @@ out.append("|---|---|---|---|")
 for key, kind, default, is_computed, lineno, via in rows:
     env = ENV_PREFIX + "_" + key.replace(".", "_").upper()
     marker = " *(hidden)*" if key in hidden else ""
-    escaped = default.replace("|", "\\|")  # keep table cells intact (also: not valid inside an f-string before py3.12)
-    default_cell = f"`{escaped}` *(computed)*" if is_computed else f"`{default}`"
     note = f"; {via}" if via else ""
+    if is_computed:
+        # Never put the raw Go expression in a reader-facing cell; keep it in the
+        # comment. Show a resolved reader term where the form is recognised.
+        note += f"; expr {default}"
+        human = render_computed(default)
+        default_cell = f"`{human}` *(computed)*" if human else "*(computed at runtime)*"
+    else:
+        escaped = default.replace("|", "\\|")  # keep table cells intact
+        default_cell = f"`{escaped}`"
     anchor = f"<!-- server/config/config.go:{lineno}{note} -->"
     out.append(f"| `{key}`{marker} | `{env}` | {TYPES[kind]} | {default_cell} {anchor}|")
 out.append("")

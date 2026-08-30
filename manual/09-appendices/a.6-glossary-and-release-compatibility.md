@@ -183,6 +183,14 @@ This is why documentation, forum posts, and scripts written before March 2026 us
 A related change in the same release: `no-team.yml` in GitOps was deprecated in favour of `unassigned.yml`.
 
 
+## What this book's version pin means
+
+![Reference](../_assets/icons/reference.svg) Every chapter in this book was verified against **Fleet 4.90.1**, and the two generated catalogs, the configuration keys in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and the routes in [a.8](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog), were read from that exact release. The pin is what lets the book be specific: a default, a route, an edition gate or a field name is stated as a fact about a named release rather than about Fleet in general.
+
+Two signals tell you a claim may no longer match the release you run. The first is the version itself: if your server is not 4.90.1, treat commands, fields, defaults and gates as version-sensitive and read the chapter's version notes, because behaviour moves between releases. The second is more precise, and it is what the catalogs are for: if a configuration default you observe on your own server differs from the registered default in a.3's catalog, the book is describing a different binary from yours, and that key is where to look for what changed.
+
+When this book is updated for a newer Fleet release, both catalogs are regenerated against that release's tag, so they keep describing the version each chapter names rather than a fixed snapshot.
+
 ## Version boundaries
 
 ![Reference](../_assets/icons/reference.svg) A **version boundary** is a version below which something behaves differently. They are not all floors and treating them as one list is how a diagnosis goes wrong, so each row below is one of these:
