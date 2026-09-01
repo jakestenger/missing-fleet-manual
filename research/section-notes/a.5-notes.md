@@ -324,3 +324,20 @@ every entry as a hypothesis until the other columns' evidence for that row has b
 exclusive cell is the highest-consequence cell in an interface matrix and it is the one a naive
 assembly gets wrong most often, because it is produced by three negatives rather than by one
 positive.
+
+---
+
+## 2026-09-01 reconciliation to the current register
+
+Owner-requested focused pass. A.5 was a stale projection: A.1 holds 354 unique CAP IDs; A.5 projected 347. Programmatic set-diff (grep CAP IDs, `comm`) showed A.5 is a strict subset of A.1 missing exactly 7 IDs: CAP-048, CAP-349, CAP-350, CAP-351, CAP-352, CAP-353, CAP-354.
+
+**Resolutions:**
+- **CAP-048** ("Enroll a personally owned iPhone or iPad"): a.2 and A.5 had both dropped it, citing a.2's strict-subset merge. But 3.5 documents the personal-link BYOD path (serial+UDID, Free) as **distinct** from account-driven Managed Apple Account enrollment (CAP-049; enrollment identifier, Premium) — line 119 says so explicitly. So CAP-048 is a genuine distinct interface action. **Restored to A.5** (Full/Partial/Unsupported/Unsupported, mirroring CAP-047). a.2's merge stands as its own platform-scope decision; the a.2 relationship note now frames this as a scope decision, not a contradiction. A.1 unchanged.
+- **CAP-349** (connect a CA): Full/Full/Full/Full. GitOps confirmed by 2.13's "GitOps representation" / certificate-authorities spec. Section A.
+- **CAP-350** (enumerate egress destinations): Not established/Not established/Not established/Unsupported (GitOps has no read direction; no single Fleet interface enumerates egress — the manual assembles it in 2.2). Section H.
+- **CAP-351** (retire 2017 pack): Partial/Full/Full/Unsupported, from 4.2 (native `upgrade-packs`/`convert`/`get packs`; pack apply API; UI disables at the packs page; not modern GitOps). Section E.
+- **CAP-352** (retry install by hand): Full/Full/Unsupported/Unsupported (A.1: no fleetctl verb, no GitOps path). Section K.
+- **CAP-353** (managed local admin pw): Full/Full/Unsupported/Unsupported. Section L.
+- **CAP-354** (MCP): deliberate exclusion — a client of the REST API, not an interface of its own (the "MCP server is not a column here" note). A.5 now covers all of A.1 except this one.
+
+**Counts recomputed from the matrix (awk), all updated to stay consistent:** 353 rows / 1,412 cells; value table (UI 196/54/12/21/70, REST 185/104/6/46/12, fleetctl 178/56/8/108/3, GitOps 121/34/0/196/2, Total 353 each); Full+Partial reach 289/250/234/155; api-only 47; gitops-served 101 (×2 sites); GitOps-Unsupported 196; GitOps-Unsupported-but-UI+REST-perform 104; all-four-Full 82 / all-agree 95; UI Not-established 70; rows with ≥1 Not-established 72. (Left "247 boundaries" in the Partial discussion as-is — its derivation was already non-obvious and not cleanly recomputable; flagged, not guessed.)

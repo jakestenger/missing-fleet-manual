@@ -6,7 +6,7 @@ sidebar_position: 5
 status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-08-29
-verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from four independently built research columns, one per interface, each covering all 348 register rows as they stood before the merge recorded in the last section. Every column was read at the tag; Fleet's documentation was used for leads only, never as evidence. The columns disagreed on 17 rows and those were reconciled against source before drafting. Citation ledger at research/section-notes/a.5-notes.md"
+verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from four independently built research columns, one per interface, each covering the register rows as they stood at first drafting. Every column was read at the tag; Fleet's documentation was used for leads only, never as evidence. The columns disagreed on 17 rows and those were reconciled against source before drafting. Reconciled 2026-09-01 to the current 354-capability register: six rows the index had not yet projected were added — CAP-048 restored as a distinct interface action, and the newer CAP-349 to CAP-353 — with cells verified at the tag, CAP-354 (MCP) left as a documented exclusion, and the counts recounted from the table. Citation ledger at research/section-notes/a.5-notes.md"
 reviewed_by:
 reviewed_on:
 further_reading:
@@ -26,7 +26,7 @@ This appendix is the lookup that tells you which of those you are about to hit.
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) Every administrator action in the manual's capability register, 347 of them, against all four operator interfaces: the Fleet UI, the REST API, `fleetctl` and GitOps. Plus a second, shorter table for a different question, which is what Fleet or an external system starts without anyone asking.
+![Reference](../_assets/icons/reference.svg) Every administrator action in the manual's capability register, 353 of them, against all four operator interfaces: the Fleet UI, the REST API, `fleetctl` and GitOps. Plus a second, shorter table for a different question, which is what Fleet or an external system starts without anyone asking.
 
 **What is not here is the detail of any one interface.** Which command to run and what its exit status proves is [a.7](a.7-fleetctl-command-reference.md). What a caller must present and what has to be reachable is [a.8](a.8-api-action-and-endpoint-reference.md). Which configuration authority wins when two of these disagree is [a.3](a.3-configuration-model-and-precedence.md). Which role may perform the action, once you know an interface supports it, is [a.4](a.4-roles-and-permissions-matrix.md). Which platforms it reaches is [a.2](a.2-platform-capability-matrix.md).
 
@@ -62,11 +62,11 @@ Four conventions decide a large number of cells, and knowing them saves reading 
 
 ### `fleetctl api` is not `fleetctl` support. `gitops`, `apply` and `delete` are
 
-**This decision alone decides 145 rows**, which is why it is stated before the matrix rather than inside it.
+**This decision alone decides 148 rows**, which is why it is stated before the matrix rather than inside it.
 
-`fleetctl api` builds an arbitrary HTTP request from a URI you type. It carries no Fleet vocabulary: it does not know what a fleet is, what a policy is, or what any response means. **Counting it as `fleetctl` support would make the `fleetctl` column a transcription of the REST API column**, since anything the API can do it can technically reach. So it does not count. Forty-five rows have no native command and are reachable only that way, and each is `Unsupported` here.
+`fleetctl api` builds an arbitrary HTTP request from a URI you type. It carries no Fleet vocabulary: it does not know what a fleet is, what a policy is, or what any response means. **Counting it as `fleetctl` support would make the `fleetctl` column a transcription of the REST API column**, since anything the API can do it can technically reach. So it does not count. Forty-seven rows have no native command and are reachable only that way, and each is `Unsupported` here.
 
-`fleetctl gitops`, `fleetctl apply` and `fleetctl delete` do count, for three reasons that all point the same way. They are registered commands in the client's own tree. The client does the work, because **there is no server-side GitOps engine**: the client parses the YAML, decides what changed, and drives ordinary endpoints. And `apply` reaches two specification kinds the GitOps vocabulary cannot express at all, so scoring it as GitOps would lose real reach. One hundred rows depend on one of those three commands.
+`fleetctl gitops`, `fleetctl apply` and `fleetctl delete` do count, for three reasons that all point the same way. They are registered commands in the client's own tree. The client does the work, because **there is no server-side GitOps engine**: the client parses the YAML, decides what changed, and drives ordinary endpoints. And `apply` reaches two specification kinds the GitOps vocabulary cannot express at all, so scoring it as GitOps would lose real reach. One hundred and one rows depend on one of those three commands.
 
 **The asymmetry is deliberate and it is the whole point.** `gitops` and `apply` are Fleet semantics executed by the client. `api` is an HTTP request executed by you. The difference is not how much typing each saves. It is whether the client understands what it is sending.
 
@@ -90,7 +90,7 @@ The web interface issues requests from a closed set of endpoints and renders fro
 
 `fleetctl gitops` writes an apply log and two status lines. **There is no read command, no export and no report**, so a cell meaning "you can look but not change" cannot arise on this interface. **Every row the other three columns call `Read only` is `Unsupported` here, and that is not a disagreement.** Twenty rows read that way.
 
-The vocabulary is closed in the other direction too. Exactly ten top-level keys are valid and anything else is a hard error. Below the top level every key is checked against the schema at every depth, with a spelling suggestion offered when it fails. `--allow-unknown-keys` downgrades those errors to warnings and **does not make the keys mean anything**: they are dropped. That closure is what makes `Unsupported` in this column a boundary rather than an absence, and it is why 192 rows carry it.
+The vocabulary is closed in the other direction too. Exactly ten top-level keys are valid and anything else is a hard error. Below the top level every key is checked against the schema at every depth, with a spelling suggestion offered when it fails. `--allow-unknown-keys` downgrades those errors to warnings and **does not make the keys mean anything**: they are dropped. That closure is what makes `Unsupported` in this column a boundary rather than an absence, and it is why 196 rows carry it.
 
 **Reads and imperative acts are the two families it excludes.** Locking a device, running a script, erasing a phone and signing in are acts rather than states, and a declarative repository has nothing to say about them. That accounts for the whole of section N, where GitOps supports none of the 22 rows.
 
@@ -175,7 +175,7 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 
 ## The matrix
 
-![Reference](../_assets/icons/reference.svg) All 347 register rows, grouped as a reader would look for an action. Section rows in bold carry no cells; they mark where a family starts. Counts by value are published after the table and were recounted from it.
+![Reference](../_assets/icons/reference.svg) All 353 register rows, grouped as a reader would look for an action. Section rows in bold carry no cells; they mark where a family starts. Counts by value are published after the table and were recounted from it.
 
 | ID | Action | UI | REST API | `fleetctl` | GitOps |
 |---|---|---|---|---|---|
@@ -204,6 +204,7 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 | **CAP-022** | Keep a host's activity history across an Apple ADE re-enrollment | Full | Full | Full | Full |
 | **CAP-023** | Read a disk-encryption recovery key | Full | Full | Unsupported | Unsupported |
 | **CAP-024** | Have the read of a secret recorded as an event | Read only | Full | Unsupported | Unsupported |
+| **CAP-349** | Connect a certificate authority | Full | Full | Full | Full |
 | **B. Enrollment and host lifecycle** | | | | | |
 | **CAP-025** | Create and hold enroll secrets for a scope | Full | Full | Full | Full |
 | **CAP-026** | Rotate an enroll secret without a flag day | Full | Full | Full | Full |
@@ -228,6 +229,7 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 | **CAP-045** | Supply a Windows host's URL, secret and flags at install time | Not established | Unsupported | Partial | Unsupported |
 | **CAP-046** | Enroll an iPhone or iPad automatically | Full | Partial | Partial | Partial |
 | **CAP-047** | Enroll an iPhone or iPad from a link, company-owned | Full | Partial | Unsupported | Unsupported |
+| **CAP-048** | Enroll a personally owned iPhone or iPad | Full | Partial | Unsupported | Unsupported |
 | **CAP-049** | Have a person enroll their own device with a Managed Apple Account | Partial | Partial | Partial | Partial |
 | **CAP-050** | Register Fleet's Apple service-discovery URL | Not established | Partial | Unsupported | Unsupported |
 | **CAP-051** | Place an ADE device in a fleet by platform | Full | Full | Full | Full |
@@ -296,6 +298,7 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 | **CAP-111** | Collect per-host query statistics at all | Not established | Unsupported | Unsupported | Unsupported |
 | **CAP-112** | Bound what a query may cost a host | Full | Full | Full | Full |
 | **CAP-113** | Let, or refuse to let, osquery stop an expensive query | Partial | Partial | Partial | Partial |
+| **CAP-351** | Retire a legacy 2017 query pack | Partial | Full | Full | Unsupported |
 | **F. Policies** | | | | | |
 | **CAP-114** | Ask a yes-or-no compliance question of every host | Full | Full | Full | Full |
 | **CAP-115** | Assert that a Fleet-maintained app is at or above a version | Partial | Partial | Full | Full |
@@ -331,6 +334,7 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 | **CAP-143** | Confine a label to one fleet | Read only | Partial | Full | Full |
 | **CAP-144** | Give a group of devices its own configuration and its own administrators | Full | Full | Partial | Partial |
 | **CAP-145** | Rename a label safely | Full | Full | Partial | Partial |
+| **CAP-350** | Enumerate every outbound destination Fleet reaches | Not established | Not established | Not established | Unsupported |
 | **I. Configuration profiles and declarative settings** | | | | | |
 | **CAP-146** | Put a setting on an Apple device and keep it there | Full | Full | Full | Full |
 | **CAP-147** | Let an Apple device hold and report its own desired state | Full | Full | Full | Full |
@@ -377,6 +381,7 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 | **CAP-186** | Remove something from the library | Full | Full | Full | Full |
 | **CAP-187** | Serve installers to hosts through a CDN | Not established | Unsupported | Unsupported | Unsupported |
 | **CAP-188** | Accept a very large installer | Not established | Unsupported | Unsupported | Unsupported |
+| **CAP-352** | Retry a failed software install or uninstall by hand | Full | Full | Unsupported | Unsupported |
 | **L. Setup and self-service experiences** | | | | | |
 | **CAP-189** | Prepare a Mac before its user reaches the desktop | Full | Full | Full | Full |
 | **CAP-190** | Run a script as part of setup | Partial | Full | Full | Full |
@@ -394,6 +399,7 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 | **CAP-202** | Offer software for people to install themselves | Full | Full | Full | Full |
 | **CAP-203** | Group a large self-service catalogue | Full | Full | Full | Full |
 | **CAP-204** | Let a user install everything offered to them | Unsupported | Unsupported | Unsupported | Unsupported |
+| **CAP-353** | Retrieve or rotate the managed local administrator password | Full | Full | Unsupported | Unsupported |
 | **M. Operating system updates** | | | | | |
 | **CAP-205** | Require a minimum OS version by a date on Apple devices | Full | Partial | Full | Full |
 | **CAP-206** | Prompt users on older Macs to update | Read only | Partial | Full | Full |
@@ -550,26 +556,26 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 
 ### The counts, recounted from the table above
 
-**347 rows, 1,388 cells, no blanks.**
+**353 rows, 1,412 cells, no blanks.**
 
 | Value | UI | REST API | `fleetctl` | GitOps |
 |---|---|---|---|---|
-| **Full** | 192 | 181 | 176 | 120 |
-| **Partial** | 53 | 103 | 56 | 34 |
+| **Full** | 196 | 185 | 178 | 121 |
+| **Partial** | 54 | 104 | 56 | 34 |
 | **Read only** | 12 | 6 | 8 | 0 |
-| **Unsupported** | 21 | 46 | 105 | 191 |
-| **Not established** | 69 | 11 | 2 | 2 |
-| **Total** | **347** | **347** | **347** | **347** |
+| **Unsupported** | 21 | 46 | 108 | 196 |
+| **Not established** | 70 | 12 | 3 | 2 |
+| **Total** | **353** | **353** | **353** | **353** |
 
 Four things in that shape are worth reading before you use any single row.
 
-**The REST API reaches more actions than any other interface**, 284 at `Full` or `Partial` against 245 for the UI, 232 for `fleetctl` and 154 for GitOps. The other three are clients of it, so its reach is the ceiling theirs are measured against.
+**The REST API reaches more actions than any other interface**, 289 at `Full` or `Partial` against 250 for the UI, 234 for `fleetctl` and 155 for GitOps. The other three are clients of it, so its reach is the ceiling theirs are measured against.
 
-**The UI's 69 `Not established` cells are the appendix's largest soft spot**, and they are not evenly spread. Thirty-three of them are in the three sections about running the server, its settings and its diagnostics, where the answer is nearly always that the value is process configuration no interface writes. Twenty-one of the 69 sit on rows where all three other columns independently found `Unsupported`. **Those are very probably `Unsupported` too, and they are not published that way**, because the boundary that would justify it was not found. A wrong `Not established` is a failure in the same way a wrong `Unsupported` is, so the appendix records the uncertainty rather than resolving it in the direction the neighbours point.
+**The UI's 70 `Not established` cells are the appendix's largest soft spot**, and they are not evenly spread. Thirty-three of them are in the three sections about running the server, its settings and its diagnostics, where the answer is nearly always that the value is process configuration no interface writes. Twenty-one of the 70 sit on rows where all three other columns independently found `Unsupported`. **Those are very probably `Unsupported` too, and they are not published that way**, because the boundary that would justify it was not found. A wrong `Not established` is a failure in the same way a wrong `Unsupported` is, so the appendix records the uncertainty rather than resolving it in the direction the neighbours point.
 
-**GitOps is `Unsupported` on 101 rows the UI and the REST API can both perform.** That is not a defect in GitOps. It is the closed vocabulary and the missing read direction working as designed, and it is the number that bounds how much of Fleet a repository can manage.
+**GitOps is `Unsupported` on 104 rows the UI and the REST API can both perform.** That is not a defect in GitOps. It is the closed vocabulary and the missing read direction working as designed, and it is the number that bounds how much of Fleet a repository can manage.
 
-**Eighty-one rows are `Full` in all four columns and 94 rows have all four columns agreeing.** The overlap is real. It is just not where the planning risk is.
+**Eighty-two rows are `Full` in all four columns and 95 rows have all four columns agreeing.** The overlap is real. It is just not where the planning risk is.
 
 ## What Fleet or an external system starts on its own
 
@@ -617,7 +623,7 @@ This is the set worth knowing about, not a catalogue. The register marks 141 row
 
 ## Not established, deliberately
 
-![Explanation](../_assets/icons/explanation.svg) **Seventy-one rows carry at least one `Not established` cell, and no row carries four.** Every action in the register has at least one interface answer that rests on evidence.
+![Explanation](../_assets/icons/explanation.svg) **Seventy-two rows carry at least one `Not established` cell, and no row carries four.** Every action in the register has at least one interface answer that rests on evidence.
 
 Thirteen rows are unsettled in more than one column, and they fall into three groups.
 
@@ -631,11 +637,11 @@ Thirteen rows are unsettled in more than one column, and they fall into three gr
 
 ![Explanation](../_assets/icons/explanation.svg) Read this before you compare a cell here against the same action in another appendix, because two of the differences are intentional.
 
-**This appendix carries 347 rows and [a.2](a.2-platform-capability-matrix.md) carries 273.** The shared register was 348 until a.2's review found that one enrollment row was a strict subset of another, identical on every platform but one; the two were merged and the retired identifier was **not reused**, so anything written against it still resolves. a.2 then set aside 88 rows that are not device-facing, because a platform matrix has nothing to say about a server setting, and added rows of its own for capabilities the register had missed. Both are projections of one register and the identifiers are shared, so a row present here and absent there is a scope decision rather than a contradiction.
+**This appendix carries 353 rows and [a.2](a.2-platform-capability-matrix.md) carries 273.** They are projections of one register: [a.1](a.1-capability-index.md) holds 354 capabilities, and this index covers all of them except **CAP-354, connecting an AI assistant**, which is a client of the REST API rather than an interface of its own, as the note above the matrix records. a.2 is a narrower projection again: it sets aside the rows that are not device-facing, because a platform matrix has nothing to say about a server setting, and it merges rows that are platform-identical, retiring an enrollment identifier this index keeps. **CAP-048 is a strict platform subset of another row for a.2's purposes, but a distinct interface action here** — the personal-link BYOD enrollment, which is not the account-driven path CAP-049 describes. Both differences are scope decisions rather than contradictions: a row present in one projection and absent from another follows from what that projection is for.
 
 **A `Full` cell here and a refusal in [a.4](a.4-roles-and-permissions-matrix.md) are both true.** Interface support and authorisation are separate gates, checked in that order. The interface has to be able to make the request before your role can be refused it.
 
-**[a.7](a.7-fleetctl-command-reference.md) counts commands and this appendix counts actions**, so the two never line up. One command serves many rows here, and 100 rows are served by three commands between them.
+**[a.7](a.7-fleetctl-command-reference.md) counts commands and this appendix counts actions**, so the two never line up. One command serves many rows here, and 101 rows are served by three commands between them.
 
 ## Version notes
 
