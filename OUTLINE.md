@@ -242,6 +242,9 @@ them, not at the end.
 | A.7 | fleetctl command reference | `a.7-fleetctl-command-reference.md` | ★★ | ○ |
 | A.8 | API action and endpoint reference | `a.8-api-action-and-endpoint-reference.md` | ★★ | ○ |
 | A.10 | Subject index (A-Z of concepts and nouns) | `a.10-subject-index.md` | ★★ | ○ |
+| A.11 | Fleet MCP tool reference | `a.11-mcp-tool-reference.md` | ★★ | ◐ |
+
+**A.11 (Fleet MCP tool reference) added 2026-09-01** — the argument-level reference for the MCP tools that 6.6 teaches.
 
 **A.9 (Hands-on labs) was removed 2026-09-01** on owner decision to keep this book explanation/reference-only and build a separate labs & exercises compendium later. The ten labs are preserved (with the Lab 6 GitOps dry-run defect corrected) in the private companion repo at `future-labs-book/`. The A.9 slot is left vacant rather than renumbering A.10, pending an owner call on whether to renumber the subject index to close the gap (which would change its published URL).
 
