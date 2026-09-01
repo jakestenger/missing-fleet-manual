@@ -6,7 +6,7 @@ sidebar_position: 1
 status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-08-30
-verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from a pass over all 353 rows of the shared capability register. Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Citation ledger at research/section-notes/a.1-notes.md"
+verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from a pass over all 354 rows of the shared capability register. Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Citation ledger at research/section-notes/a.1-notes.md"
 reviewed_by:
 reviewed_on:
 further_reading:
@@ -27,7 +27,7 @@ That distance is the appendix. A row earns its place when the words in its last 
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) 353 outcomes in eight groups, each with one canonical chapter, and the attested words that lead to it: Fleet's older names that still work, the vendors' names, the strings Fleet prints on screen, and the terms this manual coined. Group 8 also carries the sentences people arrive with when something has already gone wrong. The last section says where the index stops.
+![Reference](../_assets/icons/reference.svg) 354 outcomes in eight groups, each with one canonical chapter, and the attested words that lead to it: Fleet's older names that still work, the vendors' names, the strings Fleet prints on screen, and the terms this manual coined. Group 8 also carries the sentences people arrive with when something has already gone wrong. The last section says where the index stops.
 
 **What is not here.** Whether your platform can do it is [a.2](a.2-platform-capability-matrix.md). Which role may do it is [a.4](a.4-roles-and-permissions-matrix.md). Which interface can do it is [a.5](a.5-interface-index.md). Which configuration authority owns a key you find here, and what wins when two disagree, is [a.3](a.3-configuration-model-and-precedence.md). What a route requires is [a.8](a.8-api-action-and-endpoint-reference.md), and what a `fleetctl` command asks Fleet to do is [a.7](a.7-fleetctl-command-reference.md). What a word means is [a.6](a.6-glossary-and-release-compatibility.md), which owns meaning while this index owns routing. How to do the thing is the chapter each row names. This appendix answers where, and makes no claim about capability, licence or procedure.
 
@@ -58,7 +58,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ## The index
 
-![Reference](../_assets/icons/reference.svg) 353 outcomes. Find the row by the words you would type, then open the linked chapter.
+![Reference](../_assets/icons/reference.svg) 354 outcomes. Find the row by the words you would type, then open the linked chapter.
 
 ### 1. Access and accountability
 
@@ -380,7 +380,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ### 6. Automating Fleet
 
-**Making Fleet, or another system, act without a person.** 23 outcomes.
+**Making Fleet, or another system, act without a person.** 24 outcomes.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -407,6 +407,7 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-266** | Call an endpoint the command line has no verb for | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.3 | `fleetctl api` |
 | **CAP-267** | Push or delete spec files | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.2 | `fleetctl apply` · `fleetctl delete` · `--policies-team` (still accepted) · `--policies-fleet` |
 | **CAP-268** | Generate a pipeline for Fleet | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.2 | `fleetctl new` · GitHub Action · CI scaffold |
+| **CAP-354** | Connect an AI assistant to Fleet | [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) | 6.3, 2.6 | MCP · Model Context Protocol · Fleet MCP server · AI assistant · Claude (vendor) · Cursor (vendor) · `fleet-mcp` · natural-language queries · live query from an assistant |
 
 ### 7. Running the service
 
