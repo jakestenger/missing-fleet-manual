@@ -94,6 +94,10 @@ The vocabulary is closed in the other direction too. Exactly ten top-level keys 
 
 **Reads and imperative acts are the two families it excludes.** Locking a device, running a script, erasing a phone and signing in are acts rather than states, and a declarative repository has nothing to say about them. That accounts for the whole of section N, where GitOps supports none of the 22 rows.
 
+### The MCP server is not a column here
+
+The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)) lets an AI assistant operate Fleet, but it is a client of the REST API rather than an interface of its own, so it earns no column in the matrix. What an assistant can reach through it is exactly the REST API column, narrowed by whatever its token's role forbids. Read that column for the boundary, and 6.6 for how the proxy and its one destructive tool change the security model around it.
+
 ## Five boundaries worth knowing before you plan
 
 ![Troubleshooting](../_assets/icons/troubleshooting.svg) Each of these is a place where the interface does less than its name suggests, and each one is in the matrix below with its answer.

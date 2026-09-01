@@ -24,6 +24,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **ABM**, see Apple Business Manager.
 - **activity and audit log:** the record of what changed and who caused it is defined in [1.5](../01-foundations/1.5-audit-and-activity.md); where those records are delivered is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md); reading them during an investigation is [8.12](../08-troubleshooting/8.12-audit-logs.md).
 - **ADE** (Automated Device Enrollment): [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) for Macs and [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) for iPhones and iPads. DEP is the former name; the two are separated in the [glossary](a.6-glossary-and-release-compatibility.md).
+- **AI assistant** (Claude, Cursor, and other MCP clients): connecting one to Fleet through the MCP server is [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
 - **AMAPI** (Android Management API): the binding is [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md); the one-policy-per-device model and its return path are [8.10](../08-troubleshooting/8.10-android-diagnostics.md).
 - **Android Enterprise:** [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md).
 - **APNs** (Apple Push Notification service): the push channel is [2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md); the certificate that authorises it is [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md).
@@ -94,6 +95,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 ## M
 
+- **MCP** (Model Context Protocol) and the **Fleet MCP server**: connecting an AI assistant to Fleet is [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md); the term is glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **MDM enrollment:** the model is [2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md); the status values are pinned down in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **My Device page:** designed in [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md); the channel behind it is [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md).
 - **MySQL:** its role as Fleet's authoritative store is [1.6](../01-foundations/1.6-the-fleet-server.md).
