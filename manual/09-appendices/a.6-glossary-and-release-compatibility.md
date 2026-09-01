@@ -97,6 +97,10 @@ Two SCEPs are easy to confuse and the manual keeps them apart. **Fleet's own MDM
 
 The Windows counterpart is WSTEP, which does the same job over Microsoft's protocol ([8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md#898-wstep-device-identity-certificates)).
 
+### MCP, and the Fleet MCP server
+
+**Model Context Protocol.** An open standard for how an AI assistant discovers and calls external tools, so a client such as Claude operates a system through named, typed tools rather than raw API calls. **The Fleet MCP server** is Fleet's implementation: a small server that ships in the Fleet repository, holds one Fleet API token, and exposes selected Fleet reads and live osquery to an MCP-capable assistant. Keep five things apart, because the security model turns on the difference — the protocol, the MCP client inside the assistant, the model service the assistant runs on, the Fleet MCP server, and the Fleet REST API it proxies. [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) is the chapter.
+
 ### VPP
 
 **Apps and Books**, formerly the Volume Purchase Program. Apple's mechanism for an organisation buying app licences and assigning them to devices or to people. Fleet uses it to install App Store apps, which is why an App Store install has no installer and no download of Fleet's own: Fleet asks Apple to associate a licence and sends an `InstallApplication` command.
