@@ -727,21 +727,23 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Where this index ends
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **One thing a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Twelve earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
+![Troubleshooting](../_assets/icons/troubleshooting.svg) **One thing a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Eleven earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
 
 **No link is invented for any of them.** A chapter owns an outcome when it explains the workflow, not when it mentions the thing in passing, and not when it explains the surrounding workflow without covering this step.
 
-**[a.7](a.7-fleetctl-command-reference.md#every-command-in-the-index-now-has-an-owning-chapter) keeps the sibling register at command granularity, and this revision emptied it**: the `fleetctl` commands it once listed without an owning chapter, the local evaluation sandbox and first-run `setup`, are now taught in [a.9](a.9-hands-on-labs.md) Lab 1 and Lab 2. The local sandbox leaves this index's no-row list for the same reason and joins the re-audited-out entries below. The two registers describe overlapping gaps at different grain, so never add one count to the other.
+**[a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter) keeps the sibling register at command granularity.** The `fleetctl` commands it lists without an owning chapter, the local evaluation sandbox and first-run `setup`, are named in the book but taught by no chapter. The local sandbox is one of this index's no-row absences below. The two registers describe overlapping gaps at different grain, so never add one count to the other.
 
-### One thing with no row and no chapter
+### Two things with no row and no chapter
 
-It is attested in Fleet and mentioned in this manual, but it has no capability row, so it does not appear in the index above.
+These are attested in Fleet and mentioned in this manual, but have no capability row, so they do not appear in the index above.
 
 **Android enrollment through a Google account.** A named absence: [3.6](../03-connect-devices/3.6-enroll-android-devices.md) says a third path exists and this manual cannot describe it, and [8.13](../08-troubleshooting/8.13-escalation.md) adds that no expected status has been established for it.
 
-### Twelve entries re-audited out of the count
+**The local evaluation sandbox.** `fleetctl preview` is named as a hazard and in lists of surfaces, but no chapter teaches how to run it, and it has no capability row of its own. Its command contracts are in [a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter).
 
-**An entry leaves this register by being taught, and these twelve left it that way: three when a re-audit found the teaching already in the book, and nine when new content or the hands-on-labs appendix took the outcome on.** They stay listed so the register never shrinks silently, and so the next audit does not re-open them.
+### Eleven entries re-audited out of the count
+
+**An entry leaves this register by being taught, and these eleven left it that way: three when a re-audit found the teaching already in the book, and eight when new content took the outcome on.** They stay listed so the register never shrinks silently, and so the next audit does not re-open them.
 
 **The device-authenticated API.** Counted here in an earlier revision on the grounds that it was covered only through the things that run on it. The coverage stands in its own right: [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md#the-five-channels) explains the channel, its per-host token and who consumes it, and [a.8](a.8-api-action-and-endpoint-reference.md#who-calls-fleet-and-what-they-present) carries the Device caller class and enumerates the surface that token authenticates.
 
@@ -760,8 +762,6 @@ It is attested in Fleet and mentioned in this manual, but it has no capability r
 **Prompting a Mac's user to migrate from another MDM.** Counted here while [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) had no migration section and [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md) taught only the webhook contract. [3.2](../03-connect-devices/3.2-enroll-macos-devices.md#migrating-a-mac-from-another-mdm) now owns it: enabling the `macos_migration` block, voluntary against forced mode, the eligibility floor, and the device flow through the webhook your own automation receives. CAP-040 routes there, and the webhook contract stays with [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md#understand-each-webhook-contract).
 
 **Running a script across many hosts at once.** Counted here while no chapter owned the batch, and separately while the batch's per-host records were said to reach no external log destination that any chapter owned. [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md#running-it-on-many-at-once) now owns both: targeting, the 5,000-host ceiling and the incompatible-host reasons, and that the per-host `ran_script` records a batch produces stay host-only, off the global feed and the external log stream. CAP-162 routes there.
-
-**The local evaluation sandbox.** Counted here while `fleetctl preview` was named only as a hazard and in a list of surfaces, with nothing teaching how to run it. [a.9](a.9-hands-on-labs.md#lab-1-preview-as-a-sandbox) Lab 1 now stands the sandbox up, runs reports against it, and stops and resets it, and [a.7](a.7-fleetctl-command-reference.md#every-command-in-the-index-now-has-an-owning-chapter) records the command contracts. It has no capability row of its own, so it leaves the no-row list rather than the index.
 
 **Creating a custom host vital definition.** Counted here while [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) named the feature and taught only reading a value. [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) now teaches the definition lifecycle: creating, listing, renaming and deleting a definition, setting or clearing a host's value, and declaring the whole set in a GitOps spec, each written to the activity log. It is on Fleet Free.
 

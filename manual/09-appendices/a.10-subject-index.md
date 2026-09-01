@@ -117,7 +117,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **Platform SSO:** the device registration token and its delivery are [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 - **policy:** [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md).
 - **pprof:** the profiling set is [8.5](../08-troubleshooting/8.5-fleetctl-debug.md); the term is glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
-- **Preview** (`fleetctl preview`, alias `sandbox`): the throwaway local Fleet is exercised in [a.9](a.9-hands-on-labs.md) Lab 1; its command contracts are in [a.7](a.7-fleetctl-command-reference.md).
+- **Preview** (`fleetctl preview`, alias `sandbox`): the throwaway local Fleet; its command contracts are in [a.7](a.7-fleetctl-command-reference.md).
 - **profile**, see configuration profile.
 
 ## Q

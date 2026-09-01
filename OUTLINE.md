@@ -241,8 +241,9 @@ them, not at the end.
 | A.6 | Glossary and release compatibility | `a.6-glossary-and-release-compatibility.md` | ★★★ | ○ |
 | A.7 | fleetctl command reference | `a.7-fleetctl-command-reference.md` | ★★ | ○ |
 | A.8 | API action and endpoint reference | `a.8-api-action-and-endpoint-reference.md` | ★★ | ○ |
-| A.9 | Hands-on labs | `a.9-hands-on-labs.md` | ★★ | ◐ |
 | A.10 | Subject index (A-Z of concepts and nouns) | `a.10-subject-index.md` | ★★ | ○ |
+
+**A.9 (Hands-on labs) was removed 2026-09-01** on owner decision to keep this book explanation/reference-only and build a separate labs & exercises compendium later. The ten labs are preserved (with the Lab 6 GitOps dry-run defect corrected) in the private companion repo at `future-labs-book/`. The A.9 slot is left vacant rather than renumbering A.10, pending an owner call on whether to renumber the subject index to close the gap (which would change its published URL).
 
 A.6 is the third layer of the definitions model in `STYLE.md` §14, so every section that
 glosses a term inline should be linking to it.
