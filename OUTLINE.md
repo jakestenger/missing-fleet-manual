@@ -169,9 +169,13 @@ Changing state on devices: profiles, scripts, software, remediation.
 | 6.3 | Use the Fleet REST API | `6.3-use-the-fleet-rest-api.md` | ★★ | ○ |
 | 6.4 | Use fleetctl | `6.4-use-fleetctl.md` | ★★ | ○ |
 | 6.5 | Integrations, webhooks, and external workflows | `6.5-integrations-webhooks-and-external-workflows.md` | ★★ | ○ |
+| 6.6 | Connect an AI assistant to Fleet | `6.6-connect-fleet-to-an-ai-assistant.md` | ★★ | ◐ |
 
 Exhaustive command and endpoint listings belong in `a.7` and `a.8`, not in these sections
 (`STYLE.md` §17).
+
+6.6 covers the Fleet MCP server (`cmd/fleet-mcp`), the assistant-facing sibling of 6.5: it exposes
+the same REST API 6.3 documents as typed MCP tools. Added 2026-09-01.
 
 ## Part VII — Operate Fleet
 
