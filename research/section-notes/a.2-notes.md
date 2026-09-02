@@ -155,3 +155,15 @@ delivering one. Fleet's write validator accepts the platform in question.
 So the sweep had the right denominator and the wrong result, which is the most expensive kind of
 error a sweep can make: it is reported as coverage. **Checking which endpoint a validator guards is
 part of the job**, not a refinement of it.
+
+## 2026-09-02 fix: CAP-ID collision with a.1 (round3 B1)
+
+Twelve rows (old CAP-349-360) collided with a.1's live register — six overwrote real a.1
+capabilities with unrelated ones, six more were invented IDs a.1 never assigned. Renumbered to
+CAP-361-372 in table-appearance order; one of the twelve (old CAP-360, "Rotate the managed local
+account's password") turned out to be a duplicate of a.1's existing CAP-353 and was reassigned there
+instead of kept as a new ID. Footnote citations C041, C053, C106 updated to match. Full accounting
+and the eleven new a.1 rows/absence-entries this drove: [[a.1-notes]]. Six pre-existing label
+mismatches against a.5 (CAP-178, 189, 196, 228, 243, 275), surfaced by the new
+`build/check-cap-ids.py`, were resolved in a.2's favor after checking cell values against source —
+a.2's wording was more accurate in every case.

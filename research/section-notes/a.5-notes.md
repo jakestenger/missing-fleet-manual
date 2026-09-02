@@ -341,3 +341,13 @@ Owner-requested focused pass. A.5 was a stale projection: A.1 holds 354 unique C
 - **CAP-354** (MCP): deliberate exclusion — a client of the REST API, not an interface of its own (the "MCP server is not a column here" note). A.5 now covers all of A.1 except this one.
 
 **Counts recomputed from the matrix (awk), all updated to stay consistent:** 353 rows / 1,412 cells; value table (UI 196/54/12/21/70, REST 185/104/6/46/12, fleetctl 178/56/8/108/3, GitOps 121/34/0/196/2, Total 353 each); Full+Partial reach 289/250/234/155; api-only 47; gitops-served 101 (×2 sites); GitOps-Unsupported 196; GitOps-Unsupported-but-UI+REST-perform 104; all-four-Full 82 / all-agree 95; UI Not-established 70; rows with ≥1 Not-established 72. (Left "247 boundaries" in the Partial discussion as-is — its derivation was already non-obvious and not cleanly recomputable; flagged, not guessed.)
+
+## 2026-09-02 fix: six label mismatches against a.2 (round3 B1)
+
+The new `build/check-cap-ids.py` (written for round3's a.2 collision fix, [[a.2-notes]]) checks
+that a.2 and a.5 agree verbatim wherever they carry the same CAP-ID. Six didn't: CAP-178, 189, 196,
+228, 243, 275. Checked each against its own cell values rather than just picking a side — a.2's
+wording won every time, because a.5's was narrower than the row's actual platform reach (e.g.
+"Prepare a Mac before its user reaches the desktop" for CAP-189, a row whose cells are Full across
+macOS, iOS/iPadOS and Windows; "Allow a custom FileVault profile" for CAP-243, which is also
+Windows-conditional per C091). Relabeled to match a.2 in all six.

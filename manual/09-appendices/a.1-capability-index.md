@@ -27,7 +27,7 @@ That distance is the appendix. A row earns its place when the words in its last 
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) 354 outcomes in eight groups, each with one canonical chapter, and the attested words that lead to it: Fleet's older names that still work, the vendors' names, the strings Fleet prints on screen, and the terms this manual coined. Group 8 also carries the sentences people arrive with when something has already gone wrong. The last section says where the index stops.
+![Reference](../_assets/icons/reference.svg) 360 outcomes in eight groups, each with one canonical chapter, and the attested words that lead to it: Fleet's older names that still work, the vendors' names, the strings Fleet prints on screen, and the terms this manual coined. Group 8 also carries the sentences people arrive with when something has already gone wrong. The last section says where the index stops.
 
 **What is not here.** Whether your platform can do it is [a.2](a.2-platform-capability-matrix.md). Which role may do it is [a.4](a.4-roles-and-permissions-matrix.md). Which interface can do it is [a.5](a.5-interface-index.md). Which configuration authority owns a key you find here, and what wins when two disagree, is [a.3](a.3-configuration-model-and-precedence.md). What a route requires is [a.8](a.8-api-action-and-endpoint-reference.md), and what a `fleetctl` command asks Fleet to do is [a.7](a.7-fleetctl-command-reference.md). What a word means is [a.6](a.6-glossary-and-release-compatibility.md), which owns meaning while this index owns routing. How to do the thing is the chapter each row names. This appendix answers where, and makes no claim about capability, licence or procedure.
 
@@ -37,7 +37,7 @@ That distance is the appendix. A row earns its place when the words in its last 
 
 | Column | What it holds |
 |---|---|
-| **ID** | The shared capability identifier. Use it to find the same capability in [a.2](a.2-platform-capability-matrix.md) and [a.4](a.4-roles-and-permissions-matrix.md) |
+| **ID** | The shared capability identifier. Use it to find the same capability in [a.2](a.2-platform-capability-matrix.md) and [a.5](a.5-interface-index.md), which carry it at the same grain. [a.4](a.4-roles-and-permissions-matrix.md) does not: its 152 administrator intents are a coarser grouping than this index's 360 outcomes, so no row-for-row ID exists there |
 | **What you are trying to do** | The outcome in the words somebody would use for it, rather than the words the chapter uses |
 | **Chapter** | The one section that teaches this outcome. `None` means no chapter does, and those rows are collected at the end |
 | **Also** | Sections carrying part of the answer, as plain numbers, because the linked chapter is the one to open first |
@@ -58,7 +58,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ## The index
 
-![Reference](../_assets/icons/reference.svg) 354 outcomes. Find the row by the words you would type, then open the linked chapter.
+![Reference](../_assets/icons/reference.svg) 360 outcomes. Find the row by the words you would type, then open the linked chapter.
 
 ### 1. Access and accountability
 
@@ -101,7 +101,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ### 2. Connecting devices
 
-**Getting a device enrolled, and the platform connections that must exist first.** 67 outcomes. The credentials that make these connections work are in group 7, because you meet them again at renewal.
+**Getting a device enrolled, and the platform connections that must exist first.** 68 outcomes. The credentials that make these connections work are in group 7, because you meet them again at renewal.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -154,6 +154,7 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-071** | Stop an agent updating at all | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 8.4 | `--disable-updates` · `ORBIT_DISABLE_UPDATES` |
 | **CAP-072** | Publish agent versions from your own repository | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 6.4 | TUF · `fleetctl updates init` · `updates add` · `updates roots` · `updates timestamp` · `updates rotate` · air-gapped agents · where does fleetd get update information |
 | **CAP-073** | See what agent version a host is running | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) | 4.5, 8.4 | Agent card · component versions |
+| **CAP-364** | Force an agent update check without waiting for the interval | [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) |  | restart the agent to check for updates now · Orbit restart triggers an immediate update check · skip the update interval |
 | **CAP-074** | Ship an osquery extension to hosts | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 3.8 | custom table · `extensions` · bundle osquery extensions into fleetd |
 | **CAP-075** | Send an extension only to some hosts | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 1.3 | targeting extensions with labels |
 | **CAP-076** | Set osquery runtime options | [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md) | 4.6, 6.2 | agent options · `distributed_interval` · `config_refresh` · `config_tls_refresh` (clash) · `command_line_flags` · global config · `edited_agent_options` |
@@ -255,7 +256,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ### 5. Changing a device
 
-**Writing state, split by the mechanism that carries it.** 100 outcomes, in the three lanes [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) teaches: settings that persist, work that runs once, and experiences. If you know which lane you are in, you know which sub-table to scan.
+**Writing state, split by the mechanism that carries it.** 104 outcomes, in the three lanes [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) teaches: settings that persist, work that runs once, and experiences. If you know which lane you are in, you know which sub-table to scan.
 
 #### Settings that persist
 
@@ -356,7 +357,7 @@ Six markers, and each changes what you do with the word next to it.
 
 #### Experiences
 
-17 outcomes. What the person holding the device sees, at first boot and afterwards.
+21 outcomes. What the person holding the device sees, at first boot and afterwards.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -377,6 +378,10 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-202** | Let people install applications themselves | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.4 | self-service · self service · app catalog · software library · web clip |
 | **CAP-203** | Group the self-service catalogue | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 6.2 | self-service categories · End user experience · `added_self_service_category` |
 | **CAP-204** | Offer everything in a category at once | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 8.11 | Install all · `installed_all_self_service_software` |
+| **CAP-361** | Let an end user see their own device's details and software | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 4.1 | My Device page · device summary as the end user sees it |
+| **CAP-362** | Let an end user see the summary the desktop menu shows | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |  | Fleet Desktop menu-bar item · tray icon summary |
+| **CAP-365** | Let an end user uninstall their own software | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.4 | self-service uninstall · Uninstall button on My Device |
+| **CAP-366** | Choose whether a Play application is offered as self-service | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) |  | Android self-service toggle · Play app self-service setting |
 
 ### 6. Automating Fleet
 
@@ -463,7 +468,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ### 8. When it did not work
 
-**Symptoms, and the surfaces that answer them.** 20 outcomes, plus the sentences people actually arrive with. This is the group that cannot be reconstructed from the table of contents, because nobody types a capability name when something is broken.
+**Symptoms, and the surfaces that answer them.** 21 outcomes, plus the sentences people actually arrive with. This is the group that cannot be reconstructed from the table of contents, because nobody types a capability name when something is broken.
 
 #### Sentences people type
 
@@ -511,6 +516,7 @@ Six markers, and each changes what you do with the word next to it.
 |---|---|---|---|---|
 | **CAP-329** | Find the agent's logs on the host | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.4 | orbit log · osqueryd log · finding fleetd logs · `logger_path` (clash) |
 | **CAP-330** | Find out what the agent puts on disk | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.4 | `/opt/orbit` · `secret.txt` · `fleet.pem` |
+| **CAP-363** | Open an interactive query shell on the host itself | [8.4](../08-troubleshooting/8.4-host-side-investigation.md) |  | `orbit shell` · `orbit osqueryi` · interactive osquery shell · local osquery shell |
 | **CAP-331** | Turn debug logging on for a while | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.4 | `debug_logging_on_enroll_duration` · `debug_logging` |
 | **CAP-332** | Turn verbose logging on permanently | [8.2](../08-troubleshooting/8.2-log-surfaces.md) | 8.4 | `--debug` · `--verbose` · enabling debug mode for fleetd |
 | **CAP-333** | Collect diagnostics for support | [8.5](../08-troubleshooting/8.5-fleetctl-debug.md) | 8.13 | `fleetctl debug archive` · `db-process-list` · pprof · [a.6] |
@@ -537,13 +543,13 @@ Six markers, and each changes what you do with the word next to it.
 | | Group | The question it answers | Outcomes |
 |---|---|---|---|
 | 1 | Access and accountability | Who can use Fleet, how they prove it, and what is recorded | 32 |
-| 2 | Connecting devices | Getting a device enrolled, and the platform connections that must exist first | 67 |
+| 2 | Connecting devices | Getting a device enrolled, and the platform connections that must exist first | 68 |
 | 3 | Scope and targeting | Deciding who a change reaches and whose data you are reading | 8 |
 | 4 | Knowing what a device is | Reading state: vitals, reports, policies, software, vulnerabilities, estate counts | 58 |
-| 5 | Changing a device | Writing state, split by the mechanism that carries it | 100 |
+| 5 | Changing a device | Writing state, split by the mechanism that carries it | 104 |
 | 6 | Automating Fleet | Making Fleet or another system act without a person | 24 |
 | 7 | Running the service | Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive | 45 |
-| 8 | When it did not work | Symptoms, and the surfaces that answer them | 20 |
+| 8 | When it did not work | Symptoms, and the surfaces that answer them | 21 |
 
 **Group 5 gets one level of sub-grouping and no more**, along the line [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) already teaches: settings that persist, work that runs once, and experiences. Every reader of Part V has met that distinction, so it costs nothing to reuse and it splits the largest group along a boundary people already hold.
 
@@ -728,19 +734,25 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Where this index ends
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Two things a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Eleven earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
+![Troubleshooting](../_assets/icons/troubleshooting.svg) **Seven things a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Eleven earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
 
 **No link is invented for any of them.** A chapter owns an outcome when it explains the workflow, not when it mentions the thing in passing, and not when it explains the surrounding workflow without covering this step.
 
 **[a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter) keeps the sibling register at command granularity.** Every `fleetctl` command group there now has an owning chapter, including first-run `setup` ([2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md#complete-first-run-setup)). The local evaluation sandbox has an owning chapter there too ([1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything)) even though it remains one of this index's no-row absences below, since a.7 tracks commands and this index tracks outcomes. The two registers describe overlapping gaps at different grain, so never add one count to the other.
 
-### Two things with no row and no chapter
+### Seven things with no row and no chapter
 
-These are attested in Fleet and mentioned in this manual, but have no capability row, so they do not appear in the index above.
+These are attested in Fleet, but have no capability row, so they do not appear in the index above. The first two are mentioned in a chapter's prose; the last five are attested only in [a.2](a.2-platform-capability-matrix.md)'s platform research, which found them while answering a different question and gave each a shared-register ID with nowhere in the manual yet to send a reader.
 
 **Android enrollment through a Google account.** A named absence: [3.6](../03-connect-devices/3.6-enroll-android-devices.md) says a third path exists and this manual cannot describe it, and [8.13](../08-troubleshooting/8.13-escalation.md) adds that no expected status has been established for it.
 
 **The local evaluation sandbox.** [1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything) teaches running `fleetctl preview`, but it still has no capability row of its own in the matrix above. Its command contracts are in [a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter).
+
+**Locking, releasing and erasing a Chromebook.** CAP-367, CAP-368 and CAP-369. Fleet refuses all three outright: the lock, unlock and wipe handlers each fall through to a `default:` case that returns "Unsupported host platform" for ChromeOS (`ee/server/service/hosts.go:139,230,330` at fleet-v4.90.1), and [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md)'s own lock-unlock-wipe matrix does not carry a ChromeOS column at all, so no chapter records the refusal the way it does for CAP-222's Android unlock.
+
+**Turning Fleet's device management off for one host, independent of the platform-wide switch.** CAP-370. `UnenrollMDM` (`server/service/mdm.go:4253`) is real and [a.4](a.4-roles-and-permissions-matrix.md) authorises it, but no chapter teaches an administrator when or how to invoke it standalone; the only worked example in the book is Android's estate-wide toggle in [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md#turning-android-mdm-off-deletes-your-enterprise), which is a different operation.
+
+**Rotating the FileVault recovery key Fleet holds for a Mac.** CAP-371. Fleet does this itself, agent-side, when the stored key turns out to be undecryptable (`setDiskEncryptionNotifications`, `server/service/orbit.go:905`); no chapter teaches the mechanism, and [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) states only that reading a key never rotates it.
 
 ### Eleven entries re-audited out of the count
 

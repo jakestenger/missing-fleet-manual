@@ -372,7 +372,7 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 | **CAP-175** | Gate an install on a condition the device reports | Full | Full | Full | Full |
 | **CAP-176** | Have Fleet write the install and uninstall logic for you | Full | Full | Full | Full |
 | **CAP-177** | Install software on a host | Full | Partial | Unsupported | Unsupported |
-| **CAP-178** | Uninstall software from a host | Full | Partial | Unsupported | Unsupported |
+| **CAP-178** | Uninstall software from a host, as an administrator | Full | Partial | Unsupported | Unsupported |
 | **CAP-179** | Ship different builds of one title to different hosts | Full | Full | Not established | Not established |
 | **CAP-180** | Hold a catalogue app at a version | Full | Full | Full | Full |
 | **CAP-181** | Keep the library's catalogue apps current | Not established | Partial | Partial | Partial |
@@ -385,14 +385,14 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 | **CAP-188** | Accept a very large installer | Not established | Unsupported | Unsupported | Unsupported |
 | **CAP-352** | Retry a failed software install or uninstall by hand | Full | Full | Unsupported | Unsupported |
 | **L. Setup and self-service experiences** | | | | | |
-| **CAP-189** | Prepare a Mac before its user reaches the desktop | Full | Full | Full | Full |
+| **CAP-189** | Prepare a device before its user starts using it | Full | Full | Full | Full |
 | **CAP-190** | Run a script as part of setup | Partial | Full | Full | Full |
 | **CAP-191** | Deliver a package to a Mac before the agent exists | Full | Full | Full | Full |
 | **CAP-192** | Create the user's local account during setup | Not established | Full | Full | Full |
 | **CAP-193** | Show the user an agreement during setup | Full | Partial | Full | Full |
 | **CAP-194** | Hold a Windows device at a status page until setup finishes | Partial | Partial | Partial | Partial |
 | **CAP-195** | Show setup progress without holding anyone up | Read only | Unsupported | Unsupported | Unsupported |
-| **CAP-196** | Install software as part of an ADE iPhone's setup | Full | Full | Full | Full |
+| **CAP-196** | Install software during an automated Apple enrollment | Full | Full | Full | Full |
 | **CAP-197** | Push an app to an Android device at enrollment | Full | Full | Full | Full |
 | **CAP-198** | Install setup software only on devices that need it | Not established | Full | Full | Full |
 | **CAP-199** | Stop setup when a piece of software fails | Full | Full | Full | Full |
@@ -427,7 +427,7 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 | **CAP-225** | Erase a Windows host | Full | Full | Full | Unsupported |
 | **CAP-226** | Erase a Linux host | Full | Full | Full | Unsupported |
 | **CAP-227** | Erase a company-owned Android device | Full | Full | Full | Unsupported |
-| **CAP-228** | Deal with a personally owned Android device | Full | Full | Unsupported | Unsupported |
+| **CAP-228** | Remove Fleet's management from a personally owned Android device | Full | Full | Unsupported | Unsupported |
 | **CAP-229** | Find where a device is | Full | Partial | Unsupported | Unsupported |
 | **CAP-230** | Clear a device's passcode | Full | Partial | Full | Unsupported |
 | **CAP-231** | Send a raw command to Apple devices | Unsupported | Full | Full | Unsupported |
@@ -443,7 +443,7 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 | **CAP-240** | Know whether a disk is encrypted at all | Full | Partial | Full | Unsupported |
 | **CAP-241** | Read the disk-encryption status summary | Full | Full | Unsupported | Unsupported |
 | **CAP-242** | Set a BitLocker startup PIN | Full | Partial | Full | Full |
-| **CAP-243** | Allow a custom FileVault profile alongside Fleet's own | Not established | Unsupported | Unsupported | Unsupported |
+| **CAP-243** | Allow a custom disk-encryption profile alongside Fleet's own | Not established | Unsupported | Unsupported | Unsupported |
 | **CAP-244** | Protect a Mac's recovery environment | Full | Full | Partial | Full |
 | **CAP-245** | Stop enforcing encryption without losing what is held | Full | Full | Full | Full |
 | **P. Policy automations, integrations, and outbound events** | | | | | |
@@ -478,7 +478,7 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 | **CAP-272** | Connect Fleet to Apple Business | Full | Full | Partial | Partial |
 | **CAP-273** | Renew the Apple Business token | Full | Full | Read only | Unsupported |
 | **CAP-274** | Control what Setup Assistant shows on an ADE device | Full | Partial | Full | Full |
-| **CAP-275** | Buy and distribute App Store apps | Full | Full | Read only | Partial |
+| **CAP-275** | Add or remove an App Store application | Full | Full | Read only | Partial |
 | **CAP-276** | Renew the Volume Purchasing token | Full | Full | Unsupported | Unsupported |
 | **CAP-277** | Learn from Fleet that an Apple credential is expiring | Read only | Partial | Partial | Unsupported |
 | **CAP-278** | Turn on Windows device management | Partial | Partial | Partial | Partial |

@@ -278,3 +278,42 @@ chapter." That was true when written but a.7 was fixed in the same round3 batch 
 owning chapter, while keeping the unrelated point that the local evaluation sandbox still has no
 capability row in this index (a.7 and a.1 track different granularities — that gap is real and
 unchanged).
+
+## 2026-09-02 fix: CAP-ID register regeneration (round3 B1+M1, folding in m2's investigation)
+
+Round 3 found a.2 silently reusing six of a.1's live IDs (CAP-349-354) for six unrelated
+capabilities, and inventing six more (CAP-355-360) nowhere in a.1. Cross-checking each of the
+twelve against a.1 and Fleet source (fleet-v4.90.1) rather than just renumbering them:
+
+- **One was a straight duplicate.** a.2's "Rotate the managed local account's password" is the
+  same capability as a.1's existing CAP-353 ("Retrieve or rotate the managed local administrator
+  password"), authored independently under a colliding ID. Reassigned to CAP-353, no new row.
+- **Eleven were genuinely new capabilities** a.2's platform research had verified against source
+  but a.1 had never registered. Six get real chapter homes and joined the main tables: CAP-361/362
+  (My Device page and Fleet Desktop menu-bar summary, [5.5]), CAP-363 (`orbit shell`, [8.4]),
+  CAP-364 (agent restart forces an immediate update check, [3.8]), CAP-365 (self-service uninstall,
+  [5.5]), CAP-366 (Android Play self-service toggle, [5.4]). Five have no owning chapter at all —
+  Fleet does them but no chapter teaches them — and joined "Where this index ends" instead of the
+  main tables: CAP-367/368/369 (Chromebook lock/release/erase, refused outright at source, and
+  [5.7]'s own platform matrix has no ChromeOS column to record the refusal in), CAP-370 (per-host
+  MDM unenrollment independent of the platform-wide switch — a.4 authorises it, no chapter teaches
+  invoking it), CAP-371 (Fleet's own agent-side FileVault key rotation on an undecryptable key).
+- Total outcomes: 354 → 360 (six real rows). Group/subsection counts updated: group 2 (68), group
+  5 (104, Experiences 21), group 8 (21).
+
+Also fixed the "How to read a row" promise that a.4 carries the same CAP-ID: it does not (152
+administrator intents is a coarser grouping than 360 outcomes), corrected to name a.2/a.5 only, per
+the finding's own sanctioned alternative rather than fabricating an unreliable a.4 crosswalk.
+
+**m2's investigation, not adopted as a fix.** The round3 finding "a.1 has no capability row for
+`fleetctl preview`" turns out to describe a.1's own long-standing, deliberate, documented design
+decision (see "The local evaluation sandbox" in this same "Where this index ends" section, present
+before this pass) — not a defect. Left as-is; see FIX-STATE.md's ledger for the SKIP reasoning.
+
+New machine check added: `build/check-cap-ids.py` verifies every CAP-ID a.2 or a.5 uses exists in
+a.1, and that a.2/a.5 agree verbatim wherever they carry the same row — the two checks a plain
+uniqueness check inside one file cannot catch, and the exact shape of this bug. Six pre-existing
+a.2/a.5 label mismatches surfaced by the new check (CAP-178, 189, 196, 228, 243, 275) were aligned
+to a.2's wording, which cross-checking against source found more accurate in every case (a.5's
+versions were narrower than the row's real platform scope, e.g. "Prepare a Mac" for a cross-platform
+setup-experience row).
