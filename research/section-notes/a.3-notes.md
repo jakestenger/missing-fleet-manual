@@ -324,3 +324,36 @@ cannot see which conventions are project-wide, and a house-style finding is the 
 be locally correct and globally wrong. CONTRIBUTING already says to surface a disagreement with our
 own rules rather than apply them silently; this is the same thing in reverse, and the overrule is
 recorded here rather than argued in the appendix.
+
+## Round-3 fix M3: catalog now carries each key's own usage string
+
+**Finding (M3):** the appendix said outright "It does not explain what every setting is for,"
+citing 283/320 keys with no description anywhere else in the book, and suggested extending
+`build/gen-config-catalog.py` to pull each key's `usage` string, then hand-curate per subsystem.
+
+**What shipped instead of the suggested fix, and why.** `Manager.addConfigs` in
+`server/config/config.go` passes a plain (optionally concatenated) string literal as the third
+argument to nearly every `addConfig*` call — the same text `fleet serve --help` prints for that
+flag. That is a *generated* semantic description already sitting in the source, not something that
+needs hand-curating and therefore going stale the next time the server adds a key. Extending the
+generator to read it mechanically (`parse_usage`, handling both a bare literal and the
+`"literal"+usageSuffix` concatenation the `addMysqlConfig` closure uses, via a quote-aware
+`split_on_plus`) got **319 of 320 keys** a real, source-pinned "What it's for" cell with zero hand
+authoring and zero staleness risk — more complete than a hand-curated "per subsystem" pass would
+have been able to promise, and consistent with this appendix's own stated preference for generated
+content over copied prose.
+
+**The one gap, left honestly blank rather than guessed:** `server.tls_compatibility`'s usage
+argument is built with `fmt.Sprintf(...)` over two named TLS-profile constants, not a plain string
+literal or concatenation chain. The generator does not evaluate `fmt.Sprintf`, so that one cell is
+blank; the prose above the table says so explicitly rather than leaving a silent, unexplained gap.
+Verified: this is the only blank cell across all 320 rows (checked by regenerating and scanning for
+rows ending in `| <!--` with nothing between the pipes).
+
+**Also revised:** the "It does not explain..." paragraph near the top of the appendix and the
+"Read the columns as..." paragraph just above the table, both of which described a four-column
+table that no longer matches; both now describe the fifth column and its one known gap.
+
+Regenerated against `fleet-v4.90.1` (`dd0200f062`), the same tag and commit already pinned in this
+file's header. `build/check-links.py`, `build/check-column-names.py`, and `build/check-table-names.py`
+all pass against the full book after this change.

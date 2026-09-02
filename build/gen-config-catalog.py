@@ -132,6 +132,43 @@ def split_args(text):
     return args
 
 
+def split_on_plus(text):
+    """Split a Go string-concatenation expression on top-level '+', respecting
+    quoted strings so a literal '+' inside a usage string isn't mistaken for
+    concatenation."""
+    parts, buf, depth, i, n = [], [], 0, 0, len(text)
+    quote = None
+    while i < n:
+        c = text[i]
+        if quote:
+            buf.append(c)
+            if c == "\\" and quote == '"' and i + 1 < n:
+                buf.append(text[i + 1])
+                i += 2
+                continue
+            if c == quote:
+                quote = None
+            i += 1
+            continue
+        if c in ('"', "`"):
+            quote = c
+            buf.append(c)
+        elif c in "([{":
+            depth += 1
+            buf.append(c)
+        elif c in ")]}":
+            depth -= 1
+            buf.append(c)
+        elif c == "+" and depth == 0:
+            parts.append("".join(buf))
+            buf = []
+        else:
+            buf.append(c)
+        i += 1
+    parts.append("".join(buf))
+    return parts
+
+
 def find_call_args(stmt, start):
     """Given index of '(' opening a call, return (args_text, index_after_close)."""
     depth, i, n = 0, start, len(stmt)
@@ -295,6 +332,33 @@ def parse_key(expr, closure_params=None):
     return None
 
 
+def parse_usage(expr, binding=None):
+    """Return the registered usage string for a config key, or None if the
+    third addConfig* argument isn't a chain of string literals and/or bound
+    closure parameters (e.g. "a"+usageSuffix, or "a"+"b"+"c"). Never guessed:
+    an unreadable segment (fmt.Sprintf, an unbound identifier) yields None
+    for the whole string rather than a fabricated or partial one."""
+    if expr is None:
+        return None
+    expr = expr.strip()
+    if not expr:
+        return None
+    segments = [s.strip() for s in split_on_plus(expr)]
+    parts = []
+    for seg in segments:
+        m = re.match(r'^"((?:[^"\\]|\\.)*)"$', seg)
+        if m:
+            parts.append(m.group(1))
+            continue
+        if binding is not None and seg in binding:
+            bm = re.match(r'^"((?:[^"\\]|\\.)*)"$', binding[seg].strip())
+            if bm:
+                parts.append(bm.group(1))
+                continue
+        return None
+    return "".join(parts)
+
+
 # --- reader-facing rendering of computed defaults -----------------------------
 # A computed default is a source expression evaluated at runtime. Shown verbatim
 # it would put Go identifiers in a reader-facing cell (STYLE forbids that), so the
@@ -371,7 +435,8 @@ for lineno, stmt in statements:
         call_line = line_at(lineno, stmt, cm.start())
         args_text, pos = find_call_args(stmt, cm.end() - 1)
         args = split_args(args_text) if args_text is not None else []
-        calls.append((call_line, cm.group(1), args[0] if args else "", args[1] if len(args) > 1 else ""))
+        calls.append((call_line, cm.group(1), args[0] if args else "", args[1] if len(args) > 1 else "",
+                     args[2] if len(args) > 2 else ""))
     closures[m.group(1)] = {"params": params, "calls": calls}
     found_calls += len(calls)
 
@@ -397,7 +462,7 @@ for lineno, stmt in statements:
             args_text = " ".join(args_text.split())
         cargs = split_args(args_text) if args_text is not None else []
         binding = dict(zip(cl["params"], cargs))
-        for c_line, kind, key_expr, def_expr in cl["calls"]:
+        for c_line, kind, key_expr, def_expr, usage_expr in cl["calls"]:
             key_expr_b, def_expr_b = key_expr.strip(), def_expr.strip()
             pm = re.match(r'^(\w+)\s*\+\s*"([a-z0-9_.]+)"$', key_expr_b)
             if pm and pm.group(1) in binding and re.match(r'^"[a-z0-9_.]+"$', binding[pm.group(1)].strip()):
@@ -407,11 +472,12 @@ for lineno, stmt in statements:
             if def_expr_b in binding:
                 def_expr_b = binding[def_expr_b].strip()
             default = parse_default(kind, def_expr_b) if def_expr_b else None
+            usage = parse_usage(usage_expr, binding)
             if key is None or default is None:
                 unparsed.append((c_line, f"{cim.group(1)}({args_text}) -> addConfig{kind}({key_expr}, {def_expr})",
                                  "key not mechanically readable through helper expansion"))
             else:
-                rows.append((key, kind, default[0], default[1], c_line, f"via {cim.group(1)}({args_text})" if args_text else f"via {cim.group(1)}"))
+                rows.append((key, kind, default[0], default[1], c_line, f"via {cim.group(1)}({args_text})" if args_text else f"via {cim.group(1)}", usage))
         continue
     # direct registrations
     pos = 0
@@ -428,11 +494,12 @@ for lineno, stmt in statements:
         args = split_args(args_text) if args_text is not None else []
         key = parse_key(args[0]) if args else None
         default = parse_default(kind, args[1]) if len(args) > 1 else None
+        usage = parse_usage(args[2]) if len(args) > 2 else None
         if key is None or default is None:
             unparsed.append((call_line, f"addConfig{kind}({args_text[:140] if args_text else ''})",
                              "key not mechanically readable"))
         else:
-            rows.append((key, kind, default[0], default[1], call_line, ""))
+            rows.append((key, kind, default[0], default[1], call_line, "", usage))
 
 # Registration order is source order; keep it (deterministic, matches config.go grouping).
 dupes = len(rows) - len({r[0] for r in rows})
@@ -454,10 +521,14 @@ out.append("generated reference documents. A key absent from this table is not b
 out.append("server, whatever the documentation says. Keys marked *hidden* are bound and")
 out.append("functional but suppressed from `fleet serve --help`. A default marked *computed*")
 out.append("is evaluated at runtime; the cell shows the exact source expression, not a value.")
+out.append("The \"What it's for\" column is the registration's own usage string -- the same")
+out.append("text `fleet serve --help` prints for that flag -- read mechanically, not summarised.")
+out.append("A blank cell means the usage argument wasn't a plain string the generator could")
+out.append("read; that is a generator gap, not a claim the server has no description.")
 out.append("")
-out.append("| Key | Environment variable | Type | Registered default |")
-out.append("|---|---|---|---|")
-for key, kind, default, is_computed, lineno, via in rows:
+out.append("| Key | Environment variable | Type | Registered default | What it's for |")
+out.append("|---|---|---|---|---|")
+for key, kind, default, is_computed, lineno, via, usage in rows:
     env = ENV_PREFIX + "_" + key.replace(".", "_").upper()
     marker = " *(hidden)*" if key in hidden else ""
     note = f"; {via}" if via else ""
@@ -470,8 +541,9 @@ for key, kind, default, is_computed, lineno, via in rows:
     else:
         escaped = default.replace("|", "\\|")  # keep table cells intact
         default_cell = f"`{escaped}`"
+    usage_cell = usage.replace("|", "\\|").replace("`", "'") if usage else ""
     anchor = f"<!-- server/config/config.go:{lineno}{note} -->"
-    out.append(f"| `{key}`{marker} | `{env}` | {TYPES[kind]} | {default_cell} {anchor}|")
+    out.append(f"| `{key}`{marker} | `{env}` | {TYPES[kind]} | {default_cell} | {usage_cell} {anchor}|")
 out.append("")
 if unparsed:
     out.append("## UNPARSED registrations")
