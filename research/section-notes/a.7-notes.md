@@ -349,3 +349,14 @@ a cell-by-cell evidence audit, and a fresh whole-appendix read against the regis
 None has been run against this draft. **The rounds above are research rounds, not draft reviews**,
 and the distinction is the one CONTRIBUTING makes when it says verification is necessary and not
 sufficient.
+
+## 2026-09-02 fix: stale "setup has no owning chapter" claim (round3 B4)
+
+The "Which commands have an owning chapter" table said `setup` had no owner, with prose explaining
+it was briefly owned by a since-removed labs appendix. Verified against the book at HEAD: commit
+`f091d69` (today) added a full `## Complete first-run setup` section to 2.2 — the `fleetctl setup`
+command, `config set --address` pairing, password-prompt behavior, the `fleetctl get config`
+verification step, and the "Fleet has already been setup" second-run failure. That commit fixed
+2.3/2.4's cross-references to point at 2.2 but never updated this row. Fixed: assigned the row to
+2.2, removed the labs-appendix prose, and updated the closing "outcome-level sibling" paragraph
+since `setup` is no longer a named absence in a.7.

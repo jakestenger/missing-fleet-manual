@@ -269,3 +269,12 @@ in the same chapter.
 `manual/00-Introduction/0.1-how-to-use-this-manual.md:143` tells the reader the platform capability
 matrix "is not written yet" and gives a workaround. a.2 is drafted, 272 rows and 1,632 platform cells.
 The line is 0.1's to fix and touching it was out of scope for this pass.
+
+## 2026-09-02 fix: stale a.7 cross-reference in "Where this index ends" (round3 B4)
+
+The closing "Where this index ends" section said a.7 "still lists" `setup` "without an owning
+chapter." That was true when written but a.7 was fixed in the same round3 batch (2.2 now owns
+`setup`, [[a.7-notes]]). Updated the sentence to reflect that every a.7 command group now has an
+owning chapter, while keeping the unrelated point that the local evaluation sandbox still has no
+capability row in this index (a.7 and a.1 track different granularities — that gap is real and
+unchanged).
