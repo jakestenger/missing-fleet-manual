@@ -84,7 +84,7 @@ Twenty tools. One of them, `run_live_query`, changes devices; every other tool o
 
 | Tool | What it does | Arguments |
 |---|---|---|
-| `get_software` | Stored software. Two auto-selected modes: **per-host** with a host argument returns every package on that host with versions, source and matching CVEs; **cross-host** with no host argument returns software titles seen across hosts | per-host: `host_id` or `host_identifier`; cross-host: optional `fleet`, `vulnerable`, and `platform` (which requires `fleet`); `source` (e.g. `apps`, `deb_packages`, `chrome_extensions`) and `query` filter client-side |
+| `get_software` | Stored software. Two auto-selected modes: **per-host** with a host argument returns up to `per_page` packages (default 50, max 200) on that host with versions, source and matching CVEs; **cross-host** with no host argument returns software titles seen across hosts | per-host: `host_id` or `host_identifier`; cross-host: optional `fleet`, `vulnerable`, and `platform` (which requires `fleet`); `source` (e.g. `apps`, `deb_packages`, `chrome_extensions`) filters client-side; `query` filters server-side |
 | `get_host_users` | OS-local user accounts on one host as inventoried by osquery: uid, username, type, groupname, shell | `host_id` (preferred) or `host_identifier`; optional `query` to filter the returned users |
 
 ## The schema-first workflow is advised, not enforced
