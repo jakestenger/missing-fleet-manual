@@ -67,6 +67,8 @@ Twenty tools. One of them, `run_live_query`, changes devices; every other tool o
 | `prepare_live_query` | Step 1 of 2: validate targets and return the schema for the platforms in scope, so the assistant can author valid SQL | the target filters (`hostnames`, `host_ids`, and the intersecting host filters above) |
 | `run_live_query` | Step 2 of 2: run an osquery SQL statement against live devices. **Destructive.** Re-resolves its own targets when it runs; SQL is checked against canonical column types first, and a text-column-versus-bare-integer comparison is rejected | `sql`; direct selectors `hostnames` / `host_ids`; intersecting `fleet`, `platform`, `label`, `status`, `query`, `policy_id`, `policy_response`, `cve_id` |
 
+Both `prepare_live_query` and `run_live_query` also accept three undocumented legacy aliases, kept for backward compatibility: `labels`, `platforms`, and `fleets`, each a comma-separated string where only the first item is used. Prefer the singular `label` / `platform` / `fleet` arguments above; the plural forms silently drop everything past the first value rather than intersecting on all of them.
+
 ## Policies and vulnerabilities
 
 ![Reference](../_assets/icons/reference.svg) Policy pass/fail counts and the hosts on either side, and the hosts a CVE affects. All read-only. The host-listing tools here return a capped page with no running total; read a count question from the counting tools rather than the length of a list (see [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) on completeness limits).

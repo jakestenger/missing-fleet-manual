@@ -348,6 +348,71 @@
   }
   footer { color: var(--faint); font-size: 13px; border-top: 1px solid var(--band); padding-top: 18px; }
   footer p { margin: 0 0 6px; }
+
+  /* ---- overnight review panel ---- */
+  .review { display: flex; flex-direction: column; gap: 18px; }
+  .review .subhead { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .review .subhead h2 {
+    font-family: var(--serif); font-weight: 600; font-size: 21px;
+    letter-spacing: -.01em; margin: 0;
+  }
+  .review .subhead .when {
+    margin-left: auto; font-family: var(--mono); font-size: 12px;
+    color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+  .sev-blocker { --bar: var(--s-blocked); }
+  .sev-major   { --bar: var(--s-capped); }
+  .sev-minor   { --bar: var(--s-drafting); }
+  .sev-voice   { --bar: var(--faint); }
+  .sev-fixed   { --bar: var(--s-clean); }
+
+  .rounds { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; }
+  .round-card {
+    background: var(--panel); border: 1px solid var(--rule); border-radius: 3px;
+    padding: 15px 16px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .round-card .rc-head { display: flex; align-items: baseline; gap: 10px; }
+  .round-card .rc-head .n {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .round-card .rc-head .applied {
+    margin-left: auto; font-family: var(--mono); font-size: 11.5px;
+    color: var(--s-clean); font-variant-numeric: tabular-nums;
+  }
+  /* stacked severity bar */
+  .sevbar { display: flex; height: 22px; border-radius: 2px; overflow: hidden; background: var(--band); }
+  .sevbar span { background: var(--bar); display: block; }
+  .sevbar .sev-blocker { background: var(--s-blocked); }
+  .sevbar .sev-major   { background: var(--s-capped); }
+  .sevbar .sev-minor   { background: var(--s-drafting); }
+  .sevbar .sev-voice   { background: var(--faint); }
+  .sevkey { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .sevkey .k { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .sevkey .k::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--sw, var(--faint)); flex: none; }
+  .sevkey .k.sev-blocker::before { background: var(--s-blocked); }
+  .sevkey .k.sev-major::before   { background: var(--s-capped); }
+  .sevkey .k.sev-minor::before   { background: var(--s-drafting); }
+  .sevkey .k.sev-voice::before   { background: var(--faint); }
+  .rc-note { margin: 0; font-size: 13px; color: var(--muted); }
+
+  /* lens strip */
+  .lenses { display: flex; flex-wrap: wrap; gap: 6px; }
+  .lens {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .04em;
+    padding: 3px 9px; border-radius: 2px; border: 1px solid var(--rule);
+    color: var(--s-clean); background: var(--panel); white-space: nowrap;
+  }
+  .lens.out { color: var(--faint); border-style: dashed; text-decoration: line-through; }
+
+  /* open blockers */
+  .blockers { border: 1px solid var(--rule); border-left: 3px solid var(--s-blocked); border-radius: 3px; background: var(--panel); padding: 14px 16px; box-shadow: var(--shadow); }
+  .blockers .bh { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--s-blocked); margin-bottom: 10px; }
+  .blockers ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .blockers li { font-size: 14px; }
+  .blockers li b { font-weight: 600; }
+  .blockers li .where { font-family: var(--mono); font-size: 12px; color: var(--faint); }
 </style>
 
 <div class="wrap">
@@ -360,7 +425,7 @@
   <section class="rules" aria-label="Governing rules">
     <div class="rule-card"><span class="k">Verification freeze</span><span class="v">In force</span><span class="n">No chapter carries <code>verified</code> until every part is drafted and every chapter has had a review round. Enforced by <code>check-verified.py</code>.</span></div>
     <div class="rule-card"><span class="k">Review reset</span><span class="v">All counts zero, 2026-08-29</span><span class="n">With every chapter drafted, the owner retired the per-chapter rounds (the five-round cap, three per appendix) and reset every count to zero. The next phase reviews <strong>the whole book as a single entity</strong>.</span></div>
-    <div class="rule-card"><span class="k">Whole-book review</span><span class="v">0 chapters reviewed, 0 rounds</span><span class="n">Counted from the whole-book era only. In the retired per-chapter era, no chapter ever passed a round without a material finding.</span></div>
+    <div class="rule-card"><span class="k">Whole-book review</span><span class="v">2 rounds &middot; 14 fixes applied</span><span class="n">Overnight loop, 2026-09-01&rarr;02: two whole-book rounds, six Codex lenses each. 14 low-risk fixes re-verified against <code>fleet-public</code> at the tag and pushed; the rest triaged to a supervised morning queue. Detail below.</span></div>
     <div class="rule-card"><span class="k">Graphics run</span><span class="v">Complete — 56 of 56 placed</span><span class="n">Diagrams are drawn by the reviewer as SVG and placed as lossless WebP, part by part. Every diagram is placed: Parts 0, I, II, III, IV, V, VI, VII all complete. Parts VIII (Troubleshooting) and IX (Appendices) carry no diagrams by design.</span></div>
   </section>
 
@@ -370,9 +435,69 @@
     <div class="tot"><span class="num">0</span><span class="lab">Outline</span></div>
     <div class="tot"><span class="num">0</span><span class="lab">Verified</span></div>
     <div class="tot"><span class="num">353k</span><span class="lab">Words</span></div>
-    <div class="tot"><span class="num">0</span><span class="lab">Review rounds</span></div>
+    <div class="tot"><span class="num">2</span><span class="lab">Review rounds</span></div>
     <div class="tot"><span class="num">56/56</span><span class="lab">Diagrams placed</span></div>
-    <div class="tot"><span class="num">437</span><span class="lab">Commits</span></div>
+    <div class="tot"><span class="num">468</span><span class="lab">Commits</span></div>
+  </section>
+
+  <section class="review" aria-label="Overnight whole-book review">
+    <div class="subhead">
+      <h2>Overnight whole-book review</h2>
+      <span class="when">2026-09-01 22:50 &rarr; 09-02 06:03 PT</span>
+    </div>
+    <p class="note">Two full rounds, six Codex lenses each (<code>gpt-5.6-sol</code>, high reasoning). Every applied fix was re-verified against <code>fleet-public</code> at <code>fleet-v4.90.1</code> and the link-checker ran clean after each. Findings the loop would not touch unattended — register/count work, structural change, prose rewrites, anything not source-verifiable in one sitting — were triaged to the supervised morning queue with severity, snippet, and originating lenses.</p>
+
+    <div class="rounds">
+      <div class="round-card">
+        <div class="rc-head"><span class="n">Round 1</span><span class="applied">8 fixes applied &amp; pushed</span></div>
+        <div class="sevbar" role="img" aria-label="Round 1 deferred: 4 blocker, 12 major, 8 minor, 10 voice">
+          <span class="sev-blocker" style="flex:4"></span>
+          <span class="sev-major" style="flex:12"></span>
+          <span class="sev-minor" style="flex:8"></span>
+          <span class="sev-voice" style="flex:10"></span>
+        </div>
+        <div class="sevkey">
+          <span class="k sev-blocker">4 blocker</span>
+          <span class="k sev-major">12 major</span>
+          <span class="k sev-minor">8 minor</span>
+          <span class="k sev-voice">10 voice/style</span>
+        </div>
+        <p class="rc-note">34 deferred. Root theme: a drifted capability-ID register and MCP over-scoping across the appendices.</p>
+      </div>
+
+      <div class="round-card">
+        <div class="rc-head"><span class="n">Round 2</span><span class="applied">6 fixes applied &amp; pushed</span></div>
+        <div class="sevbar" role="img" aria-label="Round 2 deferred: 19 new blocker or major, 10 new minor">
+          <span class="sev-major" style="flex:19"></span>
+          <span class="sev-minor" style="flex:10"></span>
+        </div>
+        <div class="sevkey">
+          <span class="k sev-major">19 new blocker/major</span>
+          <span class="k sev-minor">10 new minor</span>
+        </div>
+        <p class="rc-note">29 new, mostly reproducibility gaps — unnamed MCP client config, unrunnable smoke tests, undefined shell vars. Round 1's four blockers reconfirmed, none new.</p>
+      </div>
+    </div>
+
+    <div class="lenses" aria-label="Lenses run">
+      <span class="lens">accuracy</span>
+      <span class="lens">completeness</span>
+      <span class="lens">consistency</span>
+      <span class="lens">organization</span>
+      <span class="lens">reproducibility</span>
+      <span class="lens">voice</span>
+      <span class="lens out">gemini — out both nights</span>
+    </div>
+
+    <div class="blockers">
+      <div class="bh">4 open blockers &middot; carried to supervised pass</div>
+      <ol>
+        <li><b>Capability-ID register drift.</b> CAP-349&ndash;354 mean different things in A.1 vs A.2; A.4 carries no CAP IDs at all, so A.1's promised crosswalk can't be followed. <span class="where">a.1 / a.2 / a.4 / a.5 &middot; 4 of 6 lenses</span></li>
+        <li><b>A.5 says MCP reach = the whole REST API.</b> It's a fixed 20-tool subset (<code>cmd/fleet-mcp/mcp_server.go</code>) — no delete-host, no passthrough. <span class="where">a.5-interface-index.md &middot; 4 of 6 lenses</span></li>
+        <li><b>&ldquo;Complete guide&rdquo; overclaim + non-runnable AWS Terraform.</b> 2.3 references an undefined <code>module.acm</code> then tells the reader to <code>terraform apply</code> and claims success. <span class="where">0.1 &middot; 2.3 &middot; 2.4</span></li>
+        <li><b>Trace-sampler rollback is a silent no-op.</b> A prose placeholder sits where JSON needs a boolean, so the PATCH 400s and leaves full tracing on. <span class="where">8.5 &middot; 8.14</span></li>
+      </ol>
+    </div>
   </section>
 
   <section class="part">
