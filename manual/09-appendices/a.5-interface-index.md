@@ -88,7 +88,9 @@ The web interface issues requests from a closed set of endpoints and renders fro
 
 ### GitOps has no read direction at all
 
-`fleetctl gitops` writes an apply log and two status lines. **There is no read command, no export and no report**, so a cell meaning "you can look but not change" cannot arise on this interface. **Every row the other three columns call `Read only` is `Unsupported` here, and that is not a disagreement.** Twenty rows read that way.
+`fleetctl gitops` writes an apply log and two status lines. **There is no read command, no export and no report**, so a cell meaning "you can look but not change" cannot arise on this interface: **GitOps has zero `Read only` cells**, because it has no read direction to put one in.
+
+That is not the same claim as "every row the other three columns call `Read only` is `Unsupported` here." Eighteen rows carry `Read only` in the UI, REST API, or `fleetctl` column. Twelve of them are `Unsupported` for GitOps too, because nothing about the underlying data has a declarative form. The other six are independently writable through GitOps despite no interface exposing a matching read: collecting local accounts (CAP-088), collecting software inventory and turning it on per fleet (CAP-122, CAP-123), confining a label to one fleet (CAP-143), and prompting users on older Macs to update (CAP-206) are all `Full` for GitOps against a `Read only` UI cell; buying and distributing App Store apps (CAP-275) is `Partial` for GitOps against a `Read only` `fleetctl` cell. A `Read only` cell elsewhere is a hint GitOps might be `Unsupported`, not a guarantee.
 
 The vocabulary is closed in the other direction too. Exactly ten top-level keys are valid and anything else is a hard error. Below the top level every key is checked against the schema at every depth, with a spelling suggestion offered when it fails. `--allow-unknown-keys` downgrades those errors to warnings and **does not make the keys mean anything**: they are dropped. That closure is what makes `Unsupported` in this column a boundary rather than an absence, and it is why 196 rows carry it.
 
