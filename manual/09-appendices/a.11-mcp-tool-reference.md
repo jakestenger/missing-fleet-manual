@@ -56,11 +56,11 @@ Twenty tools. One of them, `run_live_query`, changes devices; every other tool o
 
 ## Queries
 
-![Reference](../_assets/icons/reference.svg) The saved-query list, the osquery schema, and running live osquery. `run_live_query` is the one destructive tool; the rest are read-only.
+![Reference](../_assets/icons/reference.svg) The saved-report list (`get_queries`), the osquery schema, and running live osquery. `run_live_query` is the one destructive tool; the rest are read-only.
 
 | Tool | What it does | Arguments |
 |---|---|---|
-| `get_queries` | List saved queries, global and per-fleet | none |
+| `get_queries` | List saved reports, global and per-fleet | none |
 | `get_osquery_schema` | Canonical osquery table schema, source of truth for column types | `platform` (returns a curated short list) or `tables` (comma-separated, for full coverage of any of the 360+ tables) |
 | `refresh_osquery_schema` | Force an immediate refresh of the in-memory schema from Fleet's published schema file | none |
 | `get_vetted_queries` | A library of vetted, production-safe CIS-8.1 policy queries for macOS, Windows and Linux, read from data bundled into the server | optional `platform` (`darwin`/`macos`, `windows`, `linux`, or `all`; defaults to `all`) |
