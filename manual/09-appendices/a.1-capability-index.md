@@ -728,7 +728,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Where this index ends
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **One thing a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Eleven earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
+![Troubleshooting](../_assets/icons/troubleshooting.svg) **Two things a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Eleven earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
 
 **No link is invented for any of them.** A chapter owns an outcome when it explains the workflow, not when it mentions the thing in passing, and not when it explains the surrounding workflow without covering this step.
 
