@@ -732,7 +732,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 **No link is invented for any of them.** A chapter owns an outcome when it explains the workflow, not when it mentions the thing in passing, and not when it explains the surrounding workflow without covering this step.
 
-**[a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter) keeps the sibling register at command granularity.** The `fleetctl` commands it lists without an owning chapter, the local evaluation sandbox and first-run `setup`, are named in the book but taught by no chapter. The local sandbox is one of this index's no-row absences below. The two registers describe overlapping gaps at different grain, so never add one count to the other.
+**[a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter) keeps the sibling register at command granularity.** The one `fleetctl` command group it still lists without an owning chapter is first-run `setup`, named in the book but taught by no chapter. The local evaluation sandbox now has an owning chapter ([1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything)) even though it remains one of this index's no-row absences below, since a.7 tracks commands and this index tracks outcomes. The two registers describe overlapping gaps at different grain, so never add one count to the other.
 
 ### Two things with no row and no chapter
 
@@ -740,7 +740,7 @@ These are attested in Fleet and mentioned in this manual, but have no capability
 
 **Android enrollment through a Google account.** A named absence: [3.6](../03-connect-devices/3.6-enroll-android-devices.md) says a third path exists and this manual cannot describe it, and [8.13](../08-troubleshooting/8.13-escalation.md) adds that no expected status has been established for it.
 
-**The local evaluation sandbox.** `fleetctl preview` is named as a hazard and in lists of surfaces, but no chapter teaches how to run it, and it has no capability row of its own. Its command contracts are in [a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter).
+**The local evaluation sandbox.** [1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything) teaches running `fleetctl preview`, but it still has no capability row of its own in the matrix above. Its command contracts are in [a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter).
 
 ### Eleven entries re-audited out of the count
 
