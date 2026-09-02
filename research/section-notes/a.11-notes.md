@@ -53,3 +53,31 @@ The R1-M8 pass above built the Fleet-routes column but several rows only capture
 | `prepare_live_query` / `run_live_query` | the CVE-composition branch and the explicit `host_ids`/`hostnames` resolution routes | `ResolveLiveQueryTargets`: `cve_id` set routes through `GetHostsForCVE` instead of `GetEndpointsWithFilters`; each `host_ids` entry is a direct `GetHostByID` call; each `hostnames` entry is a query-first `GetEndpointsWithFilters` call, then `GetHostByID` to confirm, then `GetHostByIdentifier` as a last resort |
 
 All confirmed via direct read of the named functions at `fleet-v4.90.1` (`dd0200f062`), not inferred from names. `check-links.py`, `check-table-names.py`, `check-column-names.py` clean after the edit.
+
+## 2026-09-02 fix: get_software's own tool description overclaims freshness (round3 M5)
+
+The Inventory intro correctly distinguishes "last inventory collection" from "last check-in," but
+never warned that `get_software`'s own MCP tool description — the text baked into the tool
+registration and handed to the assistant, not anything in this book — literally says the data is
+"refreshed on each host check-in." Verified against `fleet-v4.90.1`:
+`cmd/fleet-mcp/mcp_tools_inventory.go:34`'s `mcp.WithDescription(...)` string contains that exact
+phrase, while `server/service/osquery.go:762-773`'s `detailQueriesForHost` gates detail-query
+issuance (software included) on `svc.shouldUpdate(host.DetailUpdatedAt,
+svc.config.Osquery.DetailUpdateInterval, host.ID)` — throttled to the configured interval, not
+tied to every check-in. Since the assistant receives the tool's self-description as part of its
+context, a false freshness guarantee baked into the tool itself is a defect the book's accurate
+prose doesn't cover on its own. Added a warning that operators shouldn't trust the assistant's own
+freshness claims for this tool and should check the host's last-collection time instead.
+
+## 2026-09-02 fix: "vetted, production-safe" CIS library overclaim (round3 M6)
+
+The `get_vetted_queries` row called the bundled CIS-8.1 library "vetted, production-safe" with no
+qualification. Verified against `fleet-v4.90.1`: `cmd/fleet-mcp/vetted_queries.go` is static data
+transcribed from the CIS benchmarks (the file's own comment says "DO NOT add any query that has
+not been read verbatim from a CIS benchmark"), but no test anywhere under `cmd/fleet-mcp/*_test.go`
+executes or validates any of these queries — `fleet_integration_test.go` is the only test file and
+doesn't reference them. "Vetted" against the benchmark text and "production-safe" against this
+codebase's own execution evidence are two different claims, and only the first is backed here.
+Reworded to say the queries are transcribed verbatim (real) without asserting execution safety
+that isn't tested, and to tell the reader to treat the library as a tested starting point rather
+than pre-validated.
