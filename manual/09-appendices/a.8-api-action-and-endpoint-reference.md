@@ -11,6 +11,7 @@ reviewed_by:
 reviewed_on:
 further_reading:
   - https://fleetdm.com/docs/rest-api/rest-api
+  - https://github.com/fleetdm/fleet/blob/fleet-v4.90.1/docs/REST%20API/rest-api.md
   - https://fleetdm.com/guides/what-api-endpoints-to-expose-to-the-public-internet
 feature_requests:
   labels: [":product"]
@@ -196,7 +197,7 @@ An endpoint's valid `order_key` values are its own, and Fleet's reference docume
 
 ## Where the rest lives
 
-![Reference](../_assets/icons/reference.svg) Request bodies, response shapes, per-endpoint parameters and error codes are in Fleet's REST API reference at `fleetdm.com/docs/rest-api/rest-api`, and endpoints intended for contributors rather than administrators are documented separately in the Fleet repository.
+![Reference](../_assets/icons/reference.svg) This appendix gives the method, path and authentication class for each action; it does not reproduce request bodies, response shapes, per-endpoint parameters or error codes. Fleet's own REST API reference at `fleetdm.com/docs/rest-api/rest-api` is the best available account of those, but it is hand-maintained and describes the current release rather than 4.90.1 specifically, so a mismatch against what you observe is a version question, not necessarily an error in either source; the version-pinned copy of that same reference, checked out at the tag this book verifies against, is linked under further reading. Endpoints intended for contributors rather than administrators are documented separately in the Fleet repository.
 
 Which actions each role may perform is [a.4](a.4-roles-and-permissions-matrix.md). Which surface can perform one at all is [a.5](a.5-interface-index.md), which carries every action against all four interfaces.
 
