@@ -27,6 +27,8 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **AI assistant** (Claude, Cursor, and other MCP clients): connecting one to Fleet through the MCP server is [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md); the exact tools it can call are [A.11](a.11-mcp-tool-reference.md).
 - **AMAPI** (Android Management API): the binding is [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md); the one-policy-per-device model and its return path are [8.10](../08-troubleshooting/8.10-android-diagnostics.md).
 - **Android Enterprise:** [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md).
+- **API-only user**, see service identity.
+- **API token:** creating one belongs to the identity that holds it — a person's own token is retrieved from their account page ([1.4](../01-foundations/1.4-identity-and-roles.md)); a service identity's token is minted when the API-only user is created ([2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md)).
 - **APNs** (Apple Push Notification service): the push channel is [2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md); the certificate that authorises it is [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md).
 - **Apple Business Manager** (ABM): [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md); the AB, ABM, and DEP token names are pinned down in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Apps and Books**, see VPP.
@@ -81,6 +83,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## G
 
 - **GitOps:** [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md).
+- **GitOps mode** (locking the managed parts of the interface to read-only, `gitops_mode_enabled`, Premium): [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
 
 ## H
 
@@ -93,6 +96,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 - **label:** [1.3](../01-foundations/1.3-hosts-fleets-labels.md).
 - **LAPS and the managed local administrator account:** [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
+- **licence** (Fleet Premium, licence key, and licence expiry): [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md); choosing a licence tier is [2.1](../02-administer-and-deploy-fleet/2.1-administration-model-and-deployment-choices.md).
 - **live query**, see report.
 - **LUKS** (Linux disk encryption): escrow is [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
 
@@ -112,6 +116,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## O
 
 - **object storage** (S3 and compatible): its place in the server's stores is [1.6](../01-foundations/1.6-the-fleet-server.md); provider specifics are [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
+- **Observer+** (`observer_plus`, Observer with the ability to run any report, Premium): choosing between Fleet's roles is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md).
 - **OS updates** (operating system update enforcement and deferral): [5.6](../05-manage-devices/5.6-control-operating-system-updates.md).
 - **Orbit:** introduced in [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md) as the bundle's supervisor; managed in [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md).
 - **osquery:** introduced in [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md); query design and performance are [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md).
@@ -149,6 +154,8 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **secret variables:** [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); their use in version-controlled configuration is [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md).
 - **self-service:** [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
 - **server logs:** what Fleet's own process logs actually tell you is [8.3](../08-troubleshooting/8.3-server-logs.md); the full set of log surfaces (agent, server, and MDM protocol) is [8.2](../08-troubleshooting/8.2-log-surfaces.md); delivering them onward is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md).
+- **server URL** (the Fleet server's own address, `server_url`): [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
+- **service identity** (a non-human, API-only user for automation): [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md); scoping its token to one fleet or a named list of endpoints is [1.4](../01-foundations/1.4-identity-and-roles.md).
 - **setup assistant:** [3.2](../03-connect-devices/3.2-enroll-macos-devices.md); the wider setup experience is [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
 - **SIEM** (security information and event management): sending Fleet's activity and audit logs to one is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md).
 - **Smallstep:** one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
@@ -161,6 +168,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## T
 
 - **team**, see fleet.
+- **Technician** (a role defined by what it can change — run scripts, install or uninstall software — with read access much wider than that summary suggests, including recovery secrets; Premium): choosing between Fleet's roles is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md).
 - **Terraform:** the AWS reference architecture module is [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
 - **TLS:** the certificate that protects communication with the service, and the server private key it depends on, is [1.6](../01-foundations/1.6-the-fleet-server.md); planning the DNS name and certificate as server settings is [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
 - **TUF** (The Update Framework): the update repository is [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md); confirming what a host is running is [8.4](../08-troubleshooting/8.4-host-side-investigation.md).
