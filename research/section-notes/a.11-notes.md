@@ -37,3 +37,19 @@ Drafted 2026-09-01 from `cmd/fleet-mcp` at tag `fleet-v4.90.1` (commit `dd0200f0
 | `GET /results/websocket` is **not** in Fleet's endpoint-restriction catalog and is not gated by the same per-route check as the rest of this table | Grepped `server/api_endpoints/api_endpoints.yml` for `websocket` — zero matches. Its mux registration (`server/service/handler.go` `ne.UsePathPrefix().PathHandler("GET", "/api/_version_/fleet/results/", ...)`) is on the unauthenticated-endpointer group; `makeStreamDistributedQueryCampaignResultsHandler` (`server/service/endpoint_campaigns.go`) authenticates the bearer token itself when the socket opens (`auth.AuthViewer`) rather than through `APIOnlyEndpointCheck` (`server/service/middleware/auth/api_only.go`), which is the function that actually consults the restriction list |
 
 This surfaced a real gap in the existing 6.6 "endpoint allowlist" paragraph — it didn't previously say the live-query results stream sits outside the allowlist mechanism — so 6.6 was updated in the same batch with a matching note and two reference allowlist profiles (read-only; read + live query).
+
+## 2026-09-02 fix: fan-out routes missing from the R1-M8 column (round3 B3, REGRESSION)
+
+The R1-M8 pass above built the Fleet-routes column but several rows only captured the tool's primary call, not its full transitive route set. Re-traced each flagged tool's handler against `fleet_integration.go` / `live_query_campaign.go` at `fleet-v4.90.1`:
+
+| Tool | Was missing | Traced to |
+|---|---|---|
+| `get_queries` | `GET /fleets` + per-team `GET /reports` | `GetQueries` calls `GetTeams` (`GET /fleets`) then fans out `GET /reports?team_id=N` per team, concurrently |
+| `get_host_policies` | query-first `GET /hosts` search when called by `identifier` | `registerGetHostPolicies` → `resolveHostDetail` generic helper (`mcp_helpers.go`) always tries `GetEndpointsWithFilters` (→ `GET /hosts`) first when no `host_id`, only falling back to the identifier route on zero/ambiguous matches |
+| `get_host_users` | same query-first `GET /hosts`, plus a second call on the identifier-fallback path | `resolveHostWithUsers` (`mcp_tools_inventory.go`) wraps the same `resolveHostDetail` helper; its `byIdentifier` closure calls `GetHostByIdentifier` (`GET /hosts/identifier/{id}`) *then* `GetHostByIDWithUsers` (`GET /hosts/{id}`) as a second call, because the identifier route doesn't return the `users` array — unlike `get_host_policies`, whose identifier route does return policies directly via `?populate_policies=true`, one call |
+| `get_vulnerability_impact` | `GET /software/titles/{id}` per title, `GET /hosts` per version id, `GET /hosts/count` | `GetVulnerabilityImpact` calls `GetHostsForCVE` (the full 3-step composition) for the impacted set, then `GetHostCount` for the denominator |
+| `get_vulnerability_hosts` | `GET /fleets` when `fleet` is set | `GetHostsForCVE` calls `resolveTeamNames` (→ `GET /fleets`) before the 3-step composition when `teamName` is non-empty |
+| `get_software` (cross-host) | `GET /fleets` when `fleet` is set | `ListSoftwareTitles` calls `resolveTeamNames` (→ `GET /fleets`) before `GET /software/titles` when `teamName` is non-empty |
+| `prepare_live_query` / `run_live_query` | the CVE-composition branch and the explicit `host_ids`/`hostnames` resolution routes | `ResolveLiveQueryTargets`: `cve_id` set routes through `GetHostsForCVE` instead of `GetEndpointsWithFilters`; each `host_ids` entry is a direct `GetHostByID` call; each `hostnames` entry is a query-first `GetEndpointsWithFilters` call, then `GetHostByID` to confirm, then `GetHostByIdentifier` as a last resort |
+
+All confirmed via direct read of the named functions at `fleet-v4.90.1` (`dd0200f062`), not inferred from names. `check-links.py`, `check-table-names.py`, `check-column-names.py` clean after the edit.
