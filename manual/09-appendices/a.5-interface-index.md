@@ -96,7 +96,7 @@ The vocabulary is closed in the other direction too. Exactly ten top-level keys 
 
 ### The MCP server is not a column here
 
-The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)) lets an AI assistant operate Fleet, but it is a client of the REST API rather than an interface of its own, so it earns no column in the matrix. What an assistant can reach through it is exactly the REST API column, narrowed by whatever its token's role forbids. Read that column for the boundary, and 6.6 for how the proxy and its one destructive tool change the security model around it.
+The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)) lets an AI assistant operate Fleet, but it is a client of the REST API rather than an interface of its own, so it earns no column in the matrix. What an assistant can reach through it is **not** the REST API column: it is the fixed twenty-tool subset in [A.11](a.11-mcp-tool-reference.md), spanning four groups (hosts, queries, policies and vulnerabilities, inventory), further narrowed by whatever its token's role forbids. There is no delete-host tool, no generic REST passthrough and no config-writing tool, even though REST itself can do all three. Read A.11 for the exact tool list, and 6.6 for how the proxy and its one destructive tool change the security model around it.
 
 ## Five boundaries worth knowing before you plan
 
