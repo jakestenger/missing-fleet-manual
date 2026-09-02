@@ -28,7 +28,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **AMAPI** (Android Management API): the binding is [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md); the one-policy-per-device model and its return path are [8.10](../08-troubleshooting/8.10-android-diagnostics.md).
 - **Android Enterprise:** [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md).
 - **API-only user**, see service identity.
-- **API token:** creating one belongs to the identity that holds it — a person's own token is retrieved from their account page ([1.4](../01-foundations/1.4-identity-and-roles.md)); a service identity's token is minted when the API-only user is created ([2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md)).
+- **API token:** creating one belongs to the identity that holds it: a person's own token is retrieved from their account page ([1.4](../01-foundations/1.4-identity-and-roles.md)); a service identity's token is minted when the API-only user is created ([2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md)).
 - **APNs** (Apple Push Notification service): the push channel is [2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md); the certificate that authorises it is [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md).
 - **Apple Business Manager** (ABM): [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md); the AB, ABM, and DEP token names are pinned down in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Apps and Books**, see VPP.
@@ -37,7 +37,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 ## B
 
-- **backup and restore** (of service state — MySQL, Redis, object storage, and the server private key): [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md).
+- **backup and restore** (of service state: MySQL, Redis, object storage, and the server private key): [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md).
 - **batch script** (running one saved script across many hosts at once): [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md).
 - **BitLocker:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md); the Windows escrow key it depends on is the WSTEP certificate, [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md).
 - **BitLocker startup PIN:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
@@ -168,7 +168,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## T
 
 - **team**, see fleet.
-- **Technician** (a role defined by what it can change — run scripts, install or uninstall software — with read access much wider than that summary suggests, including recovery secrets; Premium): choosing between Fleet's roles is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md).
+- **Technician** (a role defined by what it can change: run scripts, install or uninstall software, with read access much wider than that summary suggests, including recovery secrets; Premium): choosing between Fleet's roles is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md).
 - **Terraform:** the AWS reference architecture module is [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
 - **TLS:** the certificate that protects communication with the service, and the server private key it depends on, is [1.6](../01-foundations/1.6-the-fleet-server.md); planning the DNS name and certificate as server settings is [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
 - **TUF** (The Update Framework): the update repository is [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md); confirming what a host is running is [8.4](../08-troubleshooting/8.4-host-side-investigation.md).
