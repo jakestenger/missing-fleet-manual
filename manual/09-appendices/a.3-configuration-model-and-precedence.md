@@ -152,7 +152,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 **Within the server's process configuration the order is stable**, and it is the one place a simple rule holds. **Fleet states it itself**, in the help text of its own configuration dump: command-line flags, then environment variables, then the configuration file, then the built-in defaults.
 
-> **What that statement does not settle is how an *empty* environment variable is treated, and this appendix declines to guess.** An earlier draft said an empty value is ignored, so that an orchestrator would have to remove a variable rather than blank it. That behaviour belongs to the configuration library, **which this release does not vendor**, and Fleet neither states it nor tests it. **Remove the variable rather than blanking it**, which is the safe action whichever way it resolves.
+> **What that statement does not settle is how an *empty* environment variable is treated, and this appendix declines to guess.** Whether an empty value is treated as ignored, so that an orchestrator would have to remove a variable rather than blank it, is a property of the configuration library, **which this release does not vendor**, and Fleet neither states it nor tests it. **Remove the variable rather than blanking it**, which is the safe action whichever way it resolves.
 
 ### Pairs that must not both be set
 
@@ -512,7 +512,7 @@ The rest are sorted **by name, alphabetically**, and merged in that order, so **
 
 ![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.1. The server's configuration manager registers **320 distinct keys** at this release.
 
-**This appendix deliberately publishes no count of how many of those Fleet documents.** An earlier draft did, and the comparison was withdrawn because "documented" had not been defined consistently enough for the number to mean anything: a setting can have its own reference section, be described in prose under another, or appear only in an example. **The count of registered keys is derived and stated; the comparison is not, until it can be produced reproducibly.**
+**This appendix deliberately publishes no count of how many of those Fleet documents.** "Documented" is not defined consistently enough for that comparison to mean anything: a setting can have its own reference section, be described in prose under another, or appear only in an example. **The count of registered keys is derived and stated; the comparison is not, until it can be produced reproducibly.**
 
 ## The complete configuration-key catalog
 
