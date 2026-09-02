@@ -541,7 +541,7 @@ Six markers, and each changes what you do with the word next to it.
 | 3 | Scope and targeting | Deciding who a change reaches and whose data you are reading | 8 |
 | 4 | Knowing what a device is | Reading state: vitals, reports, policies, software, vulnerabilities, estate counts | 58 |
 | 5 | Changing a device | Writing state, split by the mechanism that carries it | 100 |
-| 6 | Automating Fleet | Making Fleet or another system act without a person | 23 |
+| 6 | Automating Fleet | Making Fleet or another system act without a person | 24 |
 | 7 | Running the service | Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive | 45 |
 | 8 | When it did not work | Symptoms, and the surfaces that answer them | 20 |
 
