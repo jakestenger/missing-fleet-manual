@@ -62,7 +62,7 @@ Twenty tools. One of them, `run_live_query`, changes devices; every other tool o
 | `get_queries` | List saved queries, global and per-fleet | none |
 | `get_osquery_schema` | Canonical osquery table schema, source of truth for column types | `platform` (returns a curated short list) or `tables` (comma-separated, for full coverage of any of the 360+ tables) |
 | `refresh_osquery_schema` | Force an immediate refresh of the in-memory schema from Fleet's published schema file | none |
-| `get_vetted_queries` | A library of vetted, production-safe CIS-8.1 policy queries for macOS, Windows and Linux, read from data bundled into the server | none |
+| `get_vetted_queries` | A library of vetted, production-safe CIS-8.1 policy queries for macOS, Windows and Linux, read from data bundled into the server | optional `platform` (`darwin`/`macos`, `windows`, `linux`, or `all`; defaults to `all`) |
 | `prepare_live_query` | Step 1 of 2: validate targets and return the schema for the platforms in scope, so the assistant can author valid SQL | the target filters (`hostnames`, `host_ids`, and the intersecting host filters above) |
 | `run_live_query` | Step 2 of 2: run an osquery SQL statement against live devices. **Destructive.** Re-resolves its own targets when it runs; SQL is checked against canonical column types first, and a text-column-versus-bare-integer comparison is rejected | `sql`; direct selectors `hostnames` / `host_ids`; intersecting `fleet`, `platform`, `label`, `status`, `query`, `policy_id`, `policy_response`, `cve_id` |
 
@@ -74,9 +74,9 @@ Twenty tools. One of them, `run_live_query`, changes devices; every other tool o
 |---|---|---|
 | `get_policies` | List all policies, global and per-fleet, with pass/fail host counts | none |
 | `get_policy_compliance` | Pass/fail counts for one policy; global aggregate by default | `policy_id`; optional `fleet` to scope to one fleet |
-| `get_policy_hosts` | The hosts that pass or fail a given policy | `policy_id`, `policy_response`; optional `fleet`, `platform`, `label`, `status`, `query` (compose) |
+| `get_policy_hosts` | The hosts that pass or fail a given policy | `policy_id` (required); optional `response`, `fleet`, `platform`, `label`, `status`, `query`, `per_page` (compose) |
 | `get_vulnerability_impact` | Aggregate count of systems affected by a CVE; can report a lower bound at the internal host ceiling | `cve_id` |
-| `get_vulnerability_hosts` | The specific hosts affected by a CVE, composed across several Fleet calls because Fleet's single-filter path is unreliable | `cve_id`; optional `fleet`, `platform`, `label`, `status`, `query` |
+| `get_vulnerability_hosts` | The specific hosts affected by a CVE, composed across several Fleet calls because Fleet's single-filter path is unreliable | `cve_id`; optional `fleet`, `platform`, `label`, `status`, `query`, `per_page` |
 
 ## Inventory
 
