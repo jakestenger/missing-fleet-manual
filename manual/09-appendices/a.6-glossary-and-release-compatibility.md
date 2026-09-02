@@ -206,6 +206,7 @@ When this book is updated for a newer Fleet release, both catalogs are regenerat
 | **Fallback or routing** | Both sides work. The version decides which path is taken |
 | **Published baseline** | Fleet states it and nothing in the code enforces it |
 | **Dependency constraint** | A floor or a ceiling on something Fleet runs on |
+| **Runtime-fetched** | The binary is pinned to a release, but a specific input inside it is re-fetched on a schedule from somewhere that is not that release, so what it validates against can drift while the version number does not move |
 
 Only cross-cutting boundaries are collected here. One that a single chapter needs and no one would plan an estate around stays in that chapter.
 
@@ -325,6 +326,20 @@ These are the server side of the capabilities above, **including the two web set
 **Aurora MySQL 3.10.3**, where you are running Aurora rather than MySQL. It is the same class of constraint as the two above and is stated in the same place.
 
 **`fleetctl` against the server: no enforced floor.** The client compares its version with the server's and, when they differ, **prints a warning and continues**. So a mismatched client is a caution rather than a refusal, and a command that behaves oddly against a server of a different version will not tell you that is why ([6.4](../06-automate-fleet/6.4-use-fleetctl.md) on pinning it in automation).
+
+### Runtime-fetched moving inputs
+
+**A version pin covers the binary, not necessarily everything the binary reads at runtime.** The book's one example is the Fleet MCP server's osquery schema ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)): the binary is built from the 4.90.1 tag, but the schema it validates queries against is replaced at startup, and every 24 hours after by default, with the file from Fleet's `main` branch rather than from the tag.
+
+| | |
+|---|---|
+| **Source** | Fleet's `main` branch, not the 4.90.1 tag |
+| **Refresh interval** | 24 hours by default; set with `FLEET_MCP_SCHEMA_REFRESH_INTERVAL` (a Go duration such as `12h`) |
+| **Failure behavior** | An unset or unparseable interval falls back to the 24-hour default rather than failing startup; the variable is read once at startup, so a change needs a restart |
+| **Inspection** | Compare a column or table you rely on against the schema shipped in the 4.90.1 tag if you need to know whether it moved |
+| **Pin or disable** | Set `FLEET_MCP_SCHEMA_REFRESH_DISABLE` to any non-empty value to keep only the embedded snapshot, for an air-gapped or strictly release-pinned deployment |
+
+**Treat this as a second version to track, not a defect in the first one.** A server pinned to 4.90.1 and an MCP server built from the same tag can still validate queries against a schema newer than either, and nothing about the release pin says so on its own.
 
 ### Fleet publishes support scopes, and no dated end of life
 
