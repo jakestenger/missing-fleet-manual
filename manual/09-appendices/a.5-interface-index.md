@@ -50,7 +50,7 @@ Four conventions decide a large number of cells, and knowing them saves reading 
 
 **A read served completely is `Full`, not `Read only`.** Where the action itself is a read, an interface that returns the thing has performed the action. `Read only` is reserved for a row whose action includes changing something and where the interface can only report the current state. **All four columns are held to this.**
 
-**`Read only` does not imply that some other interface can write.** Forty-one rows have no `Full` and no `Partial` in any column, and seven of those are readable somewhere. Reading the audit-log destination, the osquery log destinations and two of the host-freshness intervals is possible; changing any of them means restarting the server with different process configuration, which is [a.3](a.3-configuration-model-and-precedence.md)'s subject and no interface's.
+**`Read only` does not imply that some other interface can write.** Forty-two rows have no `Full` and no `Partial` in any column, and seven of those are readable somewhere. Reading the audit-log destination, the osquery log destinations and two of the host-freshness intervals is possible; changing any of them means restarting the server with different process configuration, which is [a.3](a.3-configuration-model-and-precedence.md)'s subject and no interface's.
 
 **Arming a capability is `Partial`. Performing it is `Full`.** Several actions are performed by Fleet itself or by the person holding the device, and what an administrator controls is the switch that decides whether they happen at all. Just-in-time account creation, attaching the end user's identity to their devices, and granting a one-time conditional-access bypass all read this way. An interface that can write the switch and cannot perform the act is `Partial` in every column.
 
@@ -171,7 +171,7 @@ The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assi
 | **UI** | 4 | Android and ChromeOS enrollment |
 | **GitOps** | 0 | GitOps expresses no action that another interface cannot also perform, which follows from it being a client over ordinary endpoints |
 
-**Forty-one rows have no supported interface at all.** Most are `fleet serve` process configuration and deployment infrastructure, where the answer is a restart with different settings rather than a request of any kind. Seven of the 41 are readable somewhere without being writable anywhere.
+**Forty-two rows have no supported interface at all.** Most are `fleet serve` process configuration and deployment infrastructure, where the answer is a restart with different settings rather than a request of any kind. Seven of the 42 are readable somewhere without being writable anywhere.
 
 ## The matrix
 
@@ -625,13 +625,15 @@ This is the set worth knowing about, not a catalogue. The register marks 141 row
 
 ![Explanation](../_assets/icons/explanation.svg) **Seventy-two rows carry at least one `Not established` cell, and no row carries four.** Every action in the register has at least one interface answer that rests on evidence.
 
-Thirteen rows are unsettled in more than one column, and they fall into three groups.
+Fourteen rows are unsettled in more than one column, and they fall into three groups.
 
-**Two are open in three columns and are the same two questions in both.** Whether Fleet's package variants map onto several software entries for one title, and which stored setting the Windows automatic-against-manual enrollment control writes. Two researchers reached each of those independently, which is a point in favour of the questions being real rather than of one search being bad.
+**One row is open in three columns: CAP-350, enumerating every outbound destination Fleet reaches**, where the UI, the REST API and `fleetctl` are all unsettled and only GitOps has a confident answer (`Unsupported`).
+
+**Two more are open in two columns each, and are the same two questions in both.** Whether Fleet's package variants map onto several software entries for one title (CAP-179), and which stored setting the Windows automatic-against-manual enrollment control writes (CAP-279). Two researchers reached each of those independently, which is a point in favour of the questions being real rather than of one search being bad.
 
 **Eleven are deployment and operations rows** where the question is what an operating practice looks like rather than what Fleet does. Backing up and restoring a deployment, running behind an outbound proxy, deploying from reference infrastructure code, running on Kubernetes or a virtual machine, simulating load, draining an instance, hosted Fleet, and collecting a sysdiagnose from an iPhone. **This manual verifies against Fleet's own source**, and a `Not established` cell in these rows means the interface answer is unsettled, not the practice: load simulation, for one, is settled by `osquery-perf`, a purpose-built tool Fleet ships in its own tree ([7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md)), which is reachable from none of the four interfaces scored here.
 
-**The single largest concentration is the UI column's 69 cells**, described in the counts above. **The honest characterisation is that the UI column is the most conservative of the four**, not that the UI is the least capable interface. Its `Not established` cells and the REST API column's `Unsupported` cells were often reached on the same underlying fact, from different standards of proof.
+**The single largest concentration is the UI column's 70 cells**, described in the counts above. **The honest characterisation is that the UI column is the most conservative of the four**, not that the UI is the least capable interface. Its `Not established` cells and the REST API column's `Unsupported` cells were often reached on the same underlying fact, from different standards of proof.
 
 ## Where this appendix and its siblings deliberately differ
 
