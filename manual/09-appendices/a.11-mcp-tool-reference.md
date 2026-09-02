@@ -26,6 +26,22 @@ Twenty tools. One of them, `run_live_query`, changes devices; every other tool o
 
 Every tool table below has a **Fleet routes** column, for building or auditing an endpoint allowlist on the server's API-only token ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)). Routes omit the common `/api/v1/fleet` prefix; Fleet's allowlist match is version-agnostic (`v1`, `latest`, and dated versions all fingerprint the same route), so don't pin an allowlist entry to one literal version ([a.8](a.8-api-action-and-endpoint-reference.md)). Every connection also calls `GET /me` once at startup, to identify the token and fail closed if it's invalid.
 
+## Outcome to tool
+
+![Reference](../_assets/icons/reference.svg) The fixed twenty-tool subset is not the REST API column — [a.1](a.1-capability-index.md)'s outcome rows are. This matrix keys the tools below to the [a.1](a.1-capability-index.md) capability ID whose outcome they answer, so an outcome you already have a CAP-ID for (from a.1, a.2 or a.5) resolves straight to a tool name instead of a scan of the twenty rows below. Several tools share a CAP-ID because a.1's outcome grain is coarser than the tool-argument grain this appendix carries; four resolution-only tools (`get_fleets`, `get_labels`, `get_osquery_schema`, `refresh_osquery_schema`) look up ids or schema for another tool's call rather than answering an outcome of their own, so they carry no CAP-ID here.
+
+| CAP-ID | Outcome ([a.1](a.1-capability-index.md)) | Tool(s) |
+|---|---|---|
+| CAP-138 | List hosts through the API | `get_endpoints` |
+| CAP-083 | See what a device is and what is on it | `get_host`, `get_host_users` |
+| CAP-114 | Ask a pass-or-fail question | `get_host_policies`, `get_policies`, `get_vetted_queries` |
+| CAP-133 | Count the estate | `get_total_system_count`, `get_aggregate_platforms` |
+| CAP-098 | Read one report across the estate | `get_queries` |
+| CAP-093 | Run a query right now | `prepare_live_query`, `run_live_query` |
+| CAP-119 | Count how many hosts are failing | `get_policy_compliance`, `get_policy_hosts` |
+| CAP-124 | Find vulnerable software | `get_vulnerability_impact`, `get_vulnerability_hosts` |
+| CAP-122 | List what is installed | `get_software` |
+
 ## Arguments common to several tools
 
 ![Reference](../_assets/icons/reference.svg) The host-facing tools share one filter vocabulary, resolved server-side. Learn it once and it reads across the tables below.
