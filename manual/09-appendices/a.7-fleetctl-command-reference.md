@@ -230,18 +230,18 @@ Neither reaches Fleet. Both read and write the local configuration file only.
 
 ### Which commands have an owning chapter
 
-**A chapter owns a row when it explains the workflow the command serves**, not when it mentions the command in passing, and not when it explains the workflow without naming the command. Every row has an owning chapter except one group, whose workflow the book names but does not teach at command level:
+**A chapter owns a row when it explains the workflow the command serves**, not when it mentions the command in passing, and not when it explains the workflow without naming the command. Every row has an owning chapter; two are called out here because their contract needs a note beyond the link itself:
 
 | Group | Commands | Owning chapter |
 |---|---|---|
 | **The local evaluation sandbox** | `preview`, `preview stop`, `preview reset` | [1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything) |
-| **First-run setup** | `setup` | None. The self-hosting chapters ([2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) to [2.4](../02-administer-and-deploy-fleet/2.4-deploy-with-containers-or-virtual-machines.md)) cover standing a server up, but the first-administrator `setup` step itself is taught nowhere at command level |
+| **First-run setup** | `setup` | [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md#complete-first-run-setup), which teaches both the browser and command-line paths, the one-time route Fleet retires once the first administrator exists, and the refusal a second attempt produces |
 
-First-run `setup` was briefly taken on by a hands-on-labs appendix; that appendix has moved to a separate labs book, so the row returns to having no owning chapter here. **The Windows-only `updates` row is owned**, by [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md#running-your-own-update-repository), which teaches the update-repository workflow and records that the family refuses on Windows and sends you to a Linux environment.
+**The Windows-only `updates` row is owned**, by [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md#running-your-own-update-repository), which teaches the update-repository workflow and records that the family refuses on Windows and sends you to a Linux environment.
 
 **Read every other row as a complete contract with an owning chapter.** The access, effect and result columns are verified for all 70 rows exactly as before, and each owned row also names a section explaining when you would want the command and what to do around it.
 
-**The outcome-level sibling of this register is [a.1](a.1-capability-index.md#where-this-index-ends)'s closing section, "Where this index ends".** First-run `setup` is a named absence in both registers; the local evaluation sandbox now has an owning chapter here even though it still carries no capability row in a.1, since a.1 tracks outcomes rather than commands. Quote either register on its own and never their sum.
+**The outcome-level sibling of this register is [a.1](a.1-capability-index.md#where-this-index-ends)'s closing section, "Where this index ends".** Both `setup` and the local evaluation sandbox have owning chapters here; the sandbox still carries no capability row in a.1, since a.1 tracks outcomes rather than commands, and that is the one difference in grain left between the two registers. Quote either register on its own and never their sum.
 
 ## Which server and which credential an invocation selects
 

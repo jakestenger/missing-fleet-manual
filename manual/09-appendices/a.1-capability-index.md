@@ -732,7 +732,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 **No link is invented for any of them.** A chapter owns an outcome when it explains the workflow, not when it mentions the thing in passing, and not when it explains the surrounding workflow without covering this step.
 
-**[a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter) keeps the sibling register at command granularity.** The one `fleetctl` command group it still lists without an owning chapter is first-run `setup`, named in the book but taught by no chapter. The local evaluation sandbox now has an owning chapter ([1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything)) even though it remains one of this index's no-row absences below, since a.7 tracks commands and this index tracks outcomes. The two registers describe overlapping gaps at different grain, so never add one count to the other.
+**[a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter) keeps the sibling register at command granularity.** Every `fleetctl` command group there now has an owning chapter, including first-run `setup` ([2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md#complete-first-run-setup)). The local evaluation sandbox has an owning chapter there too ([1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything)) even though it remains one of this index's no-row absences below, since a.7 tracks commands and this index tracks outcomes. The two registers describe overlapping gaps at different grain, so never add one count to the other.
 
 ### Two things with no row and no chapter
 
