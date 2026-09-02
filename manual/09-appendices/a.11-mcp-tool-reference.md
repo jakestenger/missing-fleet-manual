@@ -48,7 +48,7 @@ Twenty tools. One of them, `run_live_query`, changes devices; every other tool o
 | `get_endpoints` | List and filter enrolled hosts; the returned `total` reflects the filtered scope | `fleet`, `platform`, `status`, `query`, `label`, `policy_id`, `policy_response`, `per_page` (all compose) |
 | `get_host` | Full detail for one host, including labels, fleet, serial, primary IP, platform | `host_id` (preferred) or `identifier` |
 | `get_host_policies` | Every policy applied to one host with its pass/fail/not-run response, plus a summary block | `host_id` or `identifier`; optional `response` to narrow to passing or failing |
-| `get_total_system_count` | Count of active enrolled systems | none |
+| `get_total_system_count` | Count of retained enrolled host records visible to the API token, across all statuses | none |
 | `get_aggregate_platforms` | System counts broken down by OS platform | none |
 | `get_fleets` | List all fleets with ids and names | none |
 | `get_labels` | List all labels | none |
