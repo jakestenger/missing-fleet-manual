@@ -60,6 +60,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **dead lettering:** defined in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **declarative settings**, see DDM.
 - **decommissioning**, see retirement.
+- **device channel:** the default declaration and profile delivery target, [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); contrasted with the user channel there.
 - **DEP** (Device Enrollment Program), see ADE. DEP is the deprecated name, kept apart from ADE in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **DigiCert:** one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 - **disk encryption:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
@@ -134,6 +135,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## P
 
 - **pack:** the legacy 2017 query pack is covered in [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) and glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
+- **`PayloadScope`** (the declaration key choosing System or User channel delivery): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 - **Platform SSO:** the device registration token and its delivery are [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 - **policy:** [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md).
 - **pprof:** the profiling set is [8.5](../08-troubleshooting/8.5-fleetctl-debug.md); the term is glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
@@ -183,6 +185,10 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **Terraform:** the AWS reference architecture module is [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
 - **TLS:** the certificate that protects communication with the service, and the server private key it depends on, is [1.6](../01-foundations/1.6-the-fleet-server.md); planning the DNS name and certificate as server settings is [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
 - **TUF** (The Update Framework): the update repository is [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md); confirming what a host is running is [8.4](../08-troubleshooting/8.4-host-side-investigation.md).
+
+## U
+
+- **user channel** (the macOS-only, sign-in-gated declaration delivery target; exists only for hosts that automatically enrolled): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 
 ## V
 
