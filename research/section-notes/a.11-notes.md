@@ -81,3 +81,20 @@ codebase's own execution evidence are two different claims, and only the first i
 Reworded to say the queries are transcribed verbatim (real) without asserting execution safety
 that isn't tested, and to tell the reader to treat the library as a tested starting point rather
 than pre-validated.
+
+## Fix-loop round (2026-09-02, round4 RM6 + RM7)
+
+- **RM6 — outcome-to-tool matrix mapped CAP-098 ("read a report's results") to `get_queries`,
+  which only lists report definitions.** Verified `GetQueries` (`fleet_integration.go`) calls
+  `GET /reports` and returns Fleet's `Query` struct, which has no stored-result fields — no MCP
+  tool answers CAP-098. Removed the row; added `get_queries` to the "carries no CAP-ID" list
+  with a one-line explanation of the definitions-vs-results distinction, rather than inventing a
+  new CAP-ID (would reopen the register-drift class RB1 already fixed this cycle).
+- **RM7 — "version-agnostic" allowlist claim was backwards.** Verified
+  `server/fleet/api_endpoints.go`'s `versionSegmentRe` only rewrites the internal
+  `{fleetversion:...}` route-template placeholder to `/v1/`; a user-submitted literal path like
+  `/api/latest/fleet/hosts` never matches that pattern and is rejected by
+  `validateAPIEndpointRefs` (`server/service/users.go`) as unknown. Confirmed the real payload
+  shape (`{"method","path"}` with the full literal path) against
+  `integration_enterprise_test.go`. Corrected the claim to "only literal v1 is accepted" and
+  added a copyable full-path JSON example.
