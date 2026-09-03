@@ -40,6 +40,21 @@ through:
      cross-platform tree and the one Windows-only row) must equal the rows actually counted
      from its own tables, not just be internally consistent on paper.
 
+Extended 2026-09-03, round 5 T1, after MJ2 found seven current a.1 capabilities silently
+absent from a.2 and m8/m9 found a.5's own prose counts drifted from its matrix. The
+a.1-to-a.5 sync check (3 above) held, but the same drift class had simply moved: to a.2,
+which the contract never checked in reverse, and to a.5's internal arithmetic, which no
+check recomputed. Two more assertions close both:
+  8. Every formal a.1 CAP-### row is carried by a.2, as a platform-matrix row, a
+     not-platform-scoped bullet, a lettered split row (CAP-244a/b/c, CAP-341a/b), or an id
+     a.2's own prose names as a deliberate exclusion (CAP-342, CAP-048). An exclusion note
+     for an id that is in fact present as a row is flagged as stale in the other direction.
+  9. a.5's five-value-by-four-interface count table equals the tally recomputed from its
+     matrix, and its prose cross-counts (rows with no supported interface and how many are
+     readable, rows `Full` in all four columns, rows with all four columns agreeing) equal
+     the matrix too. This makes m9's GitOps `Unsupported` figure and every sibling count a
+     checked invariant rather than a hand-transcribed one.
+
 A.4 is not checked here. Its 152 administrator intents are a coarser grouping than A.1's
 360 outcomes (see a.1's "How to read a row"), so it carries no CAP-ID column and nothing
 to compare.
@@ -264,6 +279,154 @@ def check_a7_prefix_arithmetic(a7_path, problems):
         )
 
 
+def a2_covered_ids(a2_text):
+    """Every CAP-ID a.2 actually carries as a row: a platform-matrix row, a
+    not-platform-scoped bullet, or one of the lettered split rows (CAP-244a/b/c,
+    CAP-341a/b), normalised back to its base id. Prose mentions do not count."""
+    return {
+        "CAP-" + m.group(1)
+        for m in re.finditer(r"(?:^\||^-)\s*\*\*CAP-(\d+)[a-z]?\*\*", a2_text, re.M)
+    }
+
+
+def a2_documented_exclusions(a2_text):
+    """CAP-IDs a.2's own prose names as deliberately not given a row: CAP-342 (not a Fleet
+    capability at all) and CAP-048 (merged into another row because it is platform-identical).
+    Both are written as a bold '**CAP-NNN, <verb phrase>**' lead, distinct from a table row's
+    '**CAP-NNN**' which is immediately closed."""
+    return {"CAP-" + m.group(1) for m in re.finditer(r"\*\*CAP-(\d+),\s", a2_text)}
+
+
+def check_a2_reverse_coverage(a1_rows, a2_text, problems):
+    """The direction round 4's check took into a.5, now taken into a.2 as well: every formal
+    a.1 row must land somewhere in a.2, as a row or as a named exclusion. This is exactly the
+    hole round 5's MJ2 escaped through, where seven current a.1 capabilities (CAP-349, 350,
+    351, 352, 354, 372, 373) were silently absent from a.2's projection."""
+    covered = a2_covered_ids(a2_text)
+    excluded = a2_documented_exclusions(a2_text)
+
+    undocumented = set(a1_rows) - covered - excluded
+    if undocumented:
+        problems.append(
+            "a.2: missing these a.1 IDs with no documented exclusion (either add a row or "
+            "name the exclusion in a.2's prose): "
+            + ", ".join(sorted(undocumented, key=lambda c: int(c.split("-")[1])))
+        )
+
+    stale = excluded & covered
+    if stale:
+        problems.append(
+            "a.2: prose documents these IDs as excluded but they are present as rows "
+            "(stale exclusion note): "
+            + ", ".join(sorted(stale, key=lambda c: int(c.split("-")[1])))
+        )
+
+
+A5_CELL_ROW = re.compile(
+    r"^\|\s*\*\*CAP-\d+[a-z]?\*\*\s*\|[^|]*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|",
+    re.M,
+)
+
+
+def a5_cell_rows(a5_text):
+    """Every a.5 matrix row as its four interface cells (UI, REST API, fleetctl, GitOps),
+    stopping before the self-initiation table, which answers a different question in the same
+    column shape."""
+    body = a5_text.split(STOP_HEADING)[0]
+    return [
+        tuple(m.group(i).strip() for i in (1, 2, 3, 4))
+        for m in A5_CELL_ROW.finditer(body)
+    ]
+
+
+_ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
+_TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+
+
+def _words(n):
+    """English words for 0..999, lower-case and hyphenated ('forty-eight'), matching how a.5
+    spells the counts it also states in prose."""
+    if n < 20:
+        return _ONES[n]
+    if n < 100:
+        t, o = divmod(n, 10)
+        return _TENS[t] + ("-" + _ONES[o] if o else "")
+    h, r = divmod(n, 100)
+    return _ONES[h] + " hundred" + (" and " + _words(r) if r else "")
+
+
+def check_a5_count_table(cells, a5_text, problems):
+    """a.5 prints a five-value by four-interface count table. Every cell in it must equal the
+    tally recomputed from the matrix, which makes m9's GitOps `Unsupported` figure (203) and
+    every other per-interface count a checked invariant rather than a hand-transcribed one."""
+    values = ["Full", "Partial", "Read only", "Unsupported", "Not established"]
+    actual = {v: [0, 0, 0, 0] for v in values}
+    for row in cells:
+        for i in range(4):
+            if row[i] in actual:
+                actual[row[i]][i] += 1
+    for v in values:
+        m = re.search(
+            r"^\|\s*\*\*" + re.escape(v) + r"\*\*\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|",
+            a5_text, re.M,
+        )
+        if not m:
+            problems.append(f"a.5: count table has no '{v}' row to check")
+            continue
+        stated = [int(m.group(i)) for i in (1, 2, 3, 4)]
+        if stated != actual[v]:
+            problems.append(
+                f"a.5: count table '{v}' row says {stated} but the matrix has {actual[v]}"
+            )
+
+
+def check_a5_prose_cross_counts(cells, a5_text, problems):
+    """m8, plus the two all-column figures round 5 had to resync when CAP-372 moved from Full
+    to Partial: the number of rows with no supported interface (no `Full` and no `Partial`
+    anywhere) and how many of those are still readable, the count of rows `Full` in all four
+    columns, and the count with all four columns agreeing. Each is recomputed and matched
+    against the figure a.5 states, spelled or in digits."""
+    no_iface = [r for r in cells if not any(x in ("Full", "Partial") for x in r)]
+    readable = sum(1 for r in no_iface if "Read only" in r)
+    n = len(no_iface)
+
+    checks = [
+        (r"([A-Za-z-]+) rows have no supported interface", _words(n), "rows with no supported interface"),
+        (r"([A-Za-z-]+) rows have no `Full` and no `Partial`", _words(n), "rows with no Full and no Partial"),
+        (r"([A-Za-z-]+) rows are `Full` in all four columns", _words(sum(1 for r in cells if set(r) == {"Full"})), "rows Full in all four columns"),
+    ]
+    for pattern, expected_word, label in checks:
+        m = re.search(pattern, a5_text)
+        if not m:
+            problems.append(f"a.5: could not find the '{label}' figure to check")
+        elif m.group(1).lower() != expected_word:
+            problems.append(
+                f"a.5: prose says '{m.group(1)}' {label} but the matrix has {expected_word}"
+            )
+
+    m = re.search(r"([A-Za-z]+) of the (\d+) are readable", a5_text)
+    if not m:
+        problems.append("a.5: could not find the 'N of the M are readable' figure")
+    else:
+        if int(m.group(2)) != n:
+            problems.append(
+                f"a.5: 'of the {m.group(2)} are readable' but the matrix has {n} no-interface rows"
+            )
+        if m.group(1).lower() != _words(readable):
+            problems.append(
+                f"a.5: '{m.group(1)} of the {n} are readable' but the matrix has {readable} readable"
+            )
+
+    m = re.search(r"(\d+) rows have all four columns agreeing", a5_text)
+    agree = sum(1 for r in cells if len(set(r)) == 1)
+    if not m:
+        problems.append("a.5: could not find the 'N rows have all four columns agreeing' figure")
+    elif int(m.group(1)) != agree:
+        problems.append(
+            f"a.5: prose says {m.group(1)} rows have all four columns agreeing but the matrix has {agree}"
+        )
+
+
 def main():
     a1 = APPENDICES / "a.1-capability-index.md"
     a2 = APPENDICES / "a.2-platform-capability-matrix.md"
@@ -305,6 +468,14 @@ def main():
     check_a7_chapter_agreement(a7, problems)
     check_a7_prefix_arithmetic(a7, problems)
 
+    # Round 5 T1: a.2 reverse-coverage and a.5's own prose cross-counts (m8/m9), the two
+    # drift classes round 5 caught after the a.1-to-a.5 sync check already held.
+    a2_text = a2.read_text()
+    a5_cells = a5_cell_rows(a5_text)
+    check_a2_reverse_coverage(a1_rows, a2_text, problems)
+    check_a5_count_table(a5_cells, a5_text, problems)
+    check_a5_prose_cross_counts(a5_cells, a5_text, problems)
+
     if problems:
         print(f"{len(problems)} CAP-ID problem(s):\n")
         for p in problems:
@@ -314,8 +485,8 @@ def main():
     print(
         f"CAP-ID register: {len(a1_ids)} IDs in a.1; a.2 ({len(a2_rows)}) and a.5 "
         f"({len(a5_rows)}) are both subsets with {len(shared)} matching labels checked; "
-        f"reverse coverage, frontmatter/prose row counts, and a.7's chapter agreement and "
-        f"prefix arithmetic all hold"
+        f"reverse coverage into a.5 and a.2, frontmatter/prose row counts, a.5's count table "
+        f"and cross-counts, and a.7's chapter agreement and prefix arithmetic all hold"
     )
     return 0
 
