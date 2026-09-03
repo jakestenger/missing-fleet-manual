@@ -86,6 +86,11 @@ The same test settles a recurring question in the chapters. Where a reader needs
 the manual explains. Where a reader needs to *look something up mid-task*, the manual sends them
 somewhere that is maintained.
 
+Deployment is the standing exception. The self-hosting chapters (2.2 on architecture and capacity,
+and the deployment chapters 2.3 and 2.4) teach the model and the reference paths rather than every
+self-hosted topology, so pointing at Fleet's reference architectures and Terraform repos there is
+expected, not an unfinished chapter (STYLE §1).
+
 ## Verification is necessary and not sufficient
 
 **Established 2026-08-25.** All twelve Part II chapters carried `status: verified`, a citation

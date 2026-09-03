@@ -46,6 +46,14 @@ The official docs are a **floor, not a boundary**: we cover at least what they
 cover, then keep going into the mechanism they stop short of. Links to docs are
 *further reading*, never load-bearing.
 
+**The one carve-out is deployment.** The self-hosting chapters (2.2 on architecture
+and capacity, and the deployment chapters 2.3 and 2.4) aim to teach the self-hosting
+model and the reference paths well enough to operate, not to enumerate every possible
+topology. There, pointing at Fleet's reference architectures and the Terraform repos is
+expected rather than a sign the chapter is unfinished, and we do not try to write the
+spaghetti chapter of every self-hosted scenario. Everything else still meets the
+airplane test.
+
 ## 2. A customer question is a documentation gap
 
 If someone had to ask, the information wasn't findable. So the job isn't to answer
