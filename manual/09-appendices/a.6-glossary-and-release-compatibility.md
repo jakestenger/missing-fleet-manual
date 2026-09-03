@@ -337,7 +337,8 @@ These are the server side of the capabilities above, **including the two web set
 | **Refresh interval** | 24 hours by default; set with `FLEET_MCP_SCHEMA_REFRESH_INTERVAL` (a Go duration such as `12h`) |
 | **Failure behavior** | An unset or unparseable interval falls back to the 24-hour default rather than failing startup; the variable is read once at startup, so a change needs a restart |
 | **Inspection** | Compare a column or table you rely on against the schema shipped in the 4.90.1 tag if you need to know whether it moved |
-| **Pin or disable** | Set `FLEET_MCP_SCHEMA_REFRESH_DISABLE` to any non-empty value to keep only the embedded snapshot, for an air-gapped or strictly release-pinned deployment |
+| **Pin the automatic refresh** | Set `FLEET_MCP_SCHEMA_REFRESH_DISABLE` to any non-empty value to stop the startup/periodic fetch and serve only the embedded snapshot, for a strictly release-pinned deployment |
+| **Manual refresh still reaches out** | The variable above does not cover the `refresh_osquery_schema` tool: it calls the same GitHub fetch unconditionally whenever the assistant invokes it. For a genuinely air-gapped deployment, also block outbound access to `raw.githubusercontent.com` |
 
 **Treat this as a second version to track, not a defect in the first one.** A server pinned to 4.90.1 and an MCP server built from the same tag can still validate queries against a schema newer than either, and nothing about the release pin says so on its own.
 

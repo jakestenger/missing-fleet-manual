@@ -407,3 +407,11 @@ the opposite.
 | 2, evidence audit | NOT READY, six items | One wrong version split in two, "silent" defined, six rows re-kinded, five terminology entries corrected |
 | 3, whole read | NOT READY, six items | Three round-2 corrections found never applied, from unasserted replacements against reflowed text. Unassigned corrected from vocabulary to data model; the a.2 deferral made honest in four chapters |
 | 4, verification | NOT READY, five items | Two summaries that had outrun their tables. Two more Windows rows re-kinded. **Two new findings in old glossary content**: file carving was not the only path, and `mia` has a stated removal in 5.0 |
+
+## Fix-loop round (2026-09-02, round4 RM2)
+
+- **"Pin or disable" row implied `FLEET_MCP_SCHEMA_REFRESH_DISABLE` covers the manual
+  `refresh_osquery_schema` tool too.** Same source verification as 6.6's RM2 fix
+  (`schema.go`, `mcp_tools_queries.go`): the variable only stops the background fetch. Split
+  the row in two — one for the automatic-refresh pin, one stating the manual tool still
+  reaches `raw.githubusercontent.com` regardless.
