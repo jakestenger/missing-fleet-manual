@@ -73,3 +73,16 @@ pattern and contents survive.
   scoping citations replaced with behaviour.
 - All 24 path-shaped citations and the single line number are gone; grep for
   `server/`, `cmd/`, `*.go`, `*.sql` in the section returns nothing.
+
+## Round-5 voice phase (V2c §28 sweep) — 2026-09-03
+- STYLE §28 sweep of Part VIII (already fully de-AI'd 2026-08-21; this pass only re-checks
+  the two §28 shapes). One genuine hit in 8.6.1: the "read-only" safety paragraph was the
+  announce-then-correct rhythm stacked on a qualification stack (bold "Every query is
+  read-only" -> "Nothing here mutates... except" -> "Read-only is not the same as free,
+  though: ...several clauses..."). Rewrote to lead with the load-bearing caution
+  ("Read-only is not the same as free."), state the SELECT/one-mutation fact plainly, then
+  rank the scale-cost detail and the actions. No fact/identifier/anchor change; links=0.
+- Rest of Part VIII confirmed §28-clean: bold lead-ins are §26 list/branch labels (grep for
+  the bold-then-walk-back signature returned 0), and the long sentences (8.6:638 two-tier
+  cert renewal, the colon-introduced lists in 8.5/8.12) are ranked enumerations with worked
+  examples, not qualifier-on-qualifier stacks. No manufactured edits.
