@@ -12,6 +12,11 @@ a plane, with no network, should be able to understand and operate Fleet. That m
 we reproduce procedure, config, and payload shapes wherever the reader needs them —
 overlapping with fleetdm.com/docs is not a defect.
 
+The one deliberate exception is deployment. The self-hosting chapters teach the model
+and the reference paths rather than every possible topology, and there they point at
+Fleet's reference architectures and Terraform repos by design. Everything else aims
+for the airplane test.
+
 The official docs are a **floor, not a boundary.** We cover what they cover, then
 keep going into the mechanism they stop short of: how Fleet actually does the thing,
 where state lands, and how the edge cases resolve. That's what customers ask about,
