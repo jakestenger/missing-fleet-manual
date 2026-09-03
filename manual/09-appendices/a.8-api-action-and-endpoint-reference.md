@@ -3,12 +3,12 @@ title: "API access, versioning, and exposure"
 chapter: "Appendices and indexes"
 section: "A.8"
 sidebar_position: 8
-verified_against: Fleet 4.90.1
+verified_against: Fleet 4.90.0
 verified_on: 2026-08-29
-verified_source: "drafted against fleet-v4.90.1 (dd0200f062), with every path in the exposure matrix read from the server's own route registrations rather than from the published reference. Citation ledger at research/section-notes/a.8-notes.md, which records the evidence class of every path and distinguishes the routes Fleet registers from the ones it emits"
+verified_source: "drafted against fleet-v4.90.0 (7c428c6e46), with every path in the exposure matrix read from the server's own route registrations rather than from the published reference. Citation ledger at research/section-notes/a.8-notes.md, which records the evidence class of every path and distinguishes the routes Fleet registers from the ones it emits"
 further_reading:
   - https://fleetdm.com/docs/rest-api/rest-api
-  - https://github.com/fleetdm/fleet/blob/fleet-v4.90.1/docs/REST%20API/rest-api.md
+  - https://github.com/fleetdm/fleet/blob/fleet-v4.90.0/docs/REST%20API/rest-api.md
   - https://fleetdm.com/guides/what-api-endpoints-to-expose-to-the-public-internet
 feature_requests:
   labels: [":product"]

@@ -3,9 +3,9 @@ title: "Subject index"
 chapter: "Appendices and indexes"
 section: "A.10"
 sidebar_position: 10
-verified_against: Fleet 4.90.1
+verified_against: Fleet 4.90.0
 verified_on: 2026-08-30
-verified_source: "reference aid, not a behaviour claim. Each entry was checked to resolve to a section that defines or explains the term at fleet-v4.90.1; the terms themselves are grounded in the chapters they point at"
+verified_source: "reference aid, not a behaviour claim. Each entry was checked to resolve to a section that defines or explains the term at fleet-v4.90.0; the terms themselves are grounded in the chapters they point at"
 ---
 
 # Subject index

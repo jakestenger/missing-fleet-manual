@@ -3,9 +3,9 @@ title: "fleetctl command index and behaviour"
 chapter: "Appendices and indexes"
 section: "A.7"
 sidebar_position: 7
-verified_against: Fleet 4.90.1
+verified_against: Fleet 4.90.0
 verified_on: 2026-08-30
-verified_source: "drafted against fleet-v4.90.1 (dd0200f062). The inventory is the assembled root command tree at the tag rather than the output of any installed binary, and each permission chain was traced from the command to the authorization decisions this verification reached, then published as a floor rather than as a complete list. Citation ledger at research/section-notes/a.7-notes.md"
+verified_source: "drafted against fleet-v4.90.0 (7c428c6e46). The inventory is the assembled root command tree at the tag rather than the output of any installed binary, and each permission chain was traced from the command to the authorization decisions this verification reached, then published as a floor rather than as a complete list. Citation ledger at research/section-notes/a.7-notes.md"
 further_reading:
   - https://fleetdm.com/guides/fleetctl
   - https://fleetdm.com/docs/configuration/yaml-files
