@@ -808,7 +808,7 @@ So they are carried here, one line each, grouped by the same sections as the mat
 
 ## Version notes
 
-![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.1. Every cell was read from source at that tag. **Fleet's own documentation was used to find things and never as evidence for a cell**, because this project has confirmed it wrong at this release in four separate ways, including an operating-system floor Fleet documents that nothing implements ([a.6](a.6-glossary-and-release-compatibility.md)).
+![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.0. Every cell was read from source at that tag. **Fleet's own documentation was used to find things and never as evidence for a cell**, because this project has confirmed it wrong at this release in four separate ways, including an operating-system floor Fleet documents that nothing implements ([a.6](a.6-glossary-and-release-compatibility.md)).
 
 **Read `Unsupported` as a positive boundary and `Not established` as an unresolved one. Re-check either value when upgrading, especially where a platform accepts configuration but exposes no delivery path.** `Unsupported` marks a platform where Fleet enforces a real boundary against the operation; `Not established` marks a row where no delivery mechanism was found but no boundary blocks one either; `Not applicable` marks a row whose subject does not exist on the platform at all. A cell reading `Unsupported` where Fleet in fact accepts the request and the device simply never asks for it belongs in `Not established`, not `Unsupported`.
 

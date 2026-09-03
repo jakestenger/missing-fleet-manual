@@ -44,7 +44,7 @@ Six markers, and each changes what you do with the word next to it.
 
 | Marker | Means |
 |---|---|
-| **(still accepted)** | Fleet's own older name, live at 4.90.1. Type it, send it, leave it in your scripts |
+| **(still accepted)** | Fleet's own older name, live at 4.90.0. Type it, send it, leave it in your scripts |
 | **(vendor)** | Apple's, Microsoft's or Google's word. Fleet does not use it, so searching Fleet for it returns nothing |
 | **(ours)** | This manual's word. It will not appear in Fleet's interface, API or documentation |
 | **(clash)** | Two live Fleet names for one thing, disagreeing with each other. Both appear, neither is marked wrong |
@@ -581,7 +581,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Fleet's older names, and which ones still work
 
-![Reference](../_assets/icons/reference.svg) **Everything in this section is accepted at 4.90.1.** [a.6](a.6-glossary-and-release-compatibility.md) owns the rename itself and the surfaces it covered. What follows is the part you type: the spec kinds, keys, variables, flags and paths that carry the older word and still resolve.
+![Reference](../_assets/icons/reference.svg) **Everything in this section is accepted at 4.90.0.** [a.6](a.6-glossary-and-release-compatibility.md) owns the rename itself and the surfaces it covered. What follows is the part you type: the spec kinds, keys, variables, flags and paths that carry the older word and still resolve.
 
 **Fleet serves 47 route aliases covering 58 deprecated paths**, and accepts **44 deprecated GitOps keys**. Renamed request fields keep taking the old name in a body and answer with the new one. So a script written before March 2026 keeps working, a runbook keeps being correct, and a search of your own repository for the current word comes back empty while the deployment is running fine.
 

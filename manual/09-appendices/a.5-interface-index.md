@@ -664,7 +664,7 @@ The single largest concentration is the UI column's 70 cells, described in the c
 
 ## Version notes
 
-![Explanation](../_assets/icons/explanation.svg) Every cell is Fleet 4.90.1. Three things move faster than the rest and are worth re-checking rather than trusting at a later release.
+![Explanation](../_assets/icons/explanation.svg) Every cell is Fleet 4.90.0. Three things move faster than the rest and are worth re-checking rather than trusting at a later release.
 
 **The GitOps vocabulary grows.** New keys arrive at almost every release, so a `Unsupported` in that column ages faster than any other cell in this table. The closure argument behind it stays valid; the set it closes over does not.
 

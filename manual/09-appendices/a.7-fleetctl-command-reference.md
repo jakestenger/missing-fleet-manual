@@ -25,7 +25,7 @@ Those three gaps are what this appendix carries, and each one is a place where a
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) Every public command and leaf subcommand in the 4.90.1 tree on macOS and Linux, and the one entry that differs on Windows, with what it asks Fleet to do, what it must be allowed to do, whether it destroys anything, whether it returns before or after Fleet acted, what its exit status proves, and the chapter that explains the workflow.
+![Reference](../_assets/icons/reference.svg) Every public command and leaf subcommand in the 4.90.0 tree on macOS and Linux, and the one entry that differs on Windows, with what it asks Fleet to do, what it must be allowed to do, whether it destroys anything, whether it returns before or after Fleet acted, what its exit status proves, and the chapter that explains the workflow.
 
 **Exact syntax is the installed client's job.** Run `fleetctl <command> --help` for the flag list of the client you actually have, which is the only listing guaranteed to match your binary. What is here instead is the part help does not carry: the resolution model, the per-command contract, the register of results that mislead, and the option families that widen an operation past what its name suggests.
 
@@ -500,7 +500,7 @@ Ranked on five axes: whether it can be undone, how much one invocation reaches, 
 
 ## Where the inventory came from, and why a file search under-reports it
 
-![Explanation](../_assets/icons/explanation.svg) The inventory above is the command tree Fleet assembles at 4.90.1, read from source at the release tag, because no `fleetctl` binary trustworthy as 4.90.1 was available to interrogate. That matters when your client disagrees with this table: the likely explanation is that you are running a different version, and the version notes at the end say why that is easy to do without noticing.
+![Explanation](../_assets/icons/explanation.svg) The inventory above is the command tree Fleet assembles at 4.90.0, read from source at the release tag, because no `fleetctl` binary trustworthy as 4.90.0 was available to interrogate. That matters when your client disagrees with this table: the likely explanation is that you are running a different version, and the version notes at the end say why that is easy to do without noticing.
 
 **Four things make the tree non-uniform**, and each defeats a naive search of the source files. They are worth knowing because they are also the four places the tree differs between two machines running the same release.
 
@@ -535,7 +535,7 @@ A floor is useful and it is a different claim from a complete list. Where this a
 
 ## Aliases, deprecated surfaces, and version notes
 
-![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.1. **Every deprecated surface below still works at this release**, and each is the older half of a rename this manual's [a.6](a.6-glossary-and-release-compatibility.md) covers in full.
+![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.0. **Every deprecated surface below still works at this release**, and each is the older half of a rename this manual's [a.6](a.6-glossary-and-release-compatibility.md) covers in full.
 
 **A version mismatch between client and server produces a warning and nothing else.** There is no gate and no refusal, on any command, so a client built for another release will talk to your server and fail later in some unrelated-looking way. Pin the client to the server's release in automation ([6.4](../06-automate-fleet/6.4-use-fleetctl.md)).
 

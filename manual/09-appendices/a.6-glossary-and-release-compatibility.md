@@ -186,9 +186,9 @@ A related change in the same release: `no-team.yml` in GitOps was deprecated in 
 
 ## What this book's version pin means
 
-![Reference](../_assets/icons/reference.svg) Every chapter in this book was verified against **Fleet 4.90.1**, and the two generated catalogs, the configuration keys in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and the routes in [a.8](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog), were read from that exact release. The pin is what lets the book be specific: a default, a route, an edition gate or a field name is stated as a fact about a named release rather than about Fleet in general.
+![Reference](../_assets/icons/reference.svg) Every chapter in this book was verified against **Fleet 4.90.0**, and the two generated catalogs, the configuration keys in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and the routes in [a.8](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog), were read from that exact release. The pin is what lets the book be specific: a default, a route, an edition gate or a field name is stated as a fact about a named release rather than about Fleet in general.
 
-Two signals tell you a claim may no longer match the release you run. The first is the version itself: if your server is not 4.90.1, treat commands, fields, defaults and gates as version-sensitive and read the chapter's version notes, because behaviour moves between releases. The second is more precise, and it is what the catalogs are for: if a configuration default you observe on your own server differs from the registered default in a.3's catalog, the book is describing a different binary from yours, and that key is where to look for what changed.
+Two signals tell you a claim may no longer match the release you run. The first is the version itself: if your server is not 4.90.0, treat commands, fields, defaults and gates as version-sensitive and read the chapter's version notes, because behaviour moves between releases. The second is more precise, and it is what the catalogs are for: if a configuration default you observe on your own server differs from the registered default in a.3's catalog, the book is describing a different binary from yours, and that key is where to look for what changed.
 
 When this book is updated for a newer Fleet release, both catalogs are regenerated against that release's tag, so they keep describing the version each chapter names rather than a fixed snapshot.
 
@@ -209,7 +209,7 @@ Only cross-cutting boundaries are collected here. One that a single chapter need
 
 ### What Fleet enforces, and what it only negotiates
 
-**Fleet 4.90.1 declares and enforces no global minimum agent version.** Neither enrollment path reads one, and the agent's enrollment record has no version field, so a version mismatch is never the reason an agent is refused.
+**Fleet 4.90.0 declares and enforces no global minimum agent version.** Neither enrollment path reads one, and the agent's enrollment record has no version field, so a version mismatch is never the reason an agent is refused.
 
 What happens instead is not one mechanism but four, and telling them apart is what makes a symptom diagnosable:
 
@@ -248,7 +248,7 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 | `END_USER_EMAIL` as an installer property | Orbit 1.28.0 **when the package is built** | not applicable | Fallback. Falls back to the service command line |
 | `EUA_TOKEN` as an installer property | Orbit 1.55.0 **when the package is built** | not applicable | Silent floor. **No fallback branch** |
 | Following an update channel to a current release | **Orbit 1.38.0 in the code, 1.38.1 as the bridge** | not applicable | Silent in Fleet. The failure is in the agent's own log on the host, and nothing in the console says the estate has stopped updating. See below |
-| Enrolling and talking to a 4.90.1 server | **no minimum** | not applicable | **No boundary**, listed because its absence is the useful fact |
+| Enrolling and talking to a 4.90.0 server | **no minimum** | not applicable | **No boundary**, listed because its absence is the useful fact |
 
 > **The update-server migration has two numbers and they answer different questions.** The rewrite to the new update server is in the code from **1.38.0**. **1.38.1** is what Fleet's own configuration reference names as the stepping stone, it shipped three days later, and Fleet also shipped a rollback with 1.38.0 in case one was needed. **Step through 1.38.1** ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
 
@@ -280,7 +280,7 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 
 ### Published host baselines
 
-**This is a snapshot of what Fleet published at 4.90.1, and it is the kind of list this appendix warns about.** It has moved before and it will move again, so read it as where the baseline stood at this release and check Fleet's own current table before planning against it.
+**This is a snapshot of what Fleet published at 4.90.0, and it is the kind of list this appendix warns about.** It has moved before and it will move again, so read it as where the baseline stood at this release and check Fleet's own current table before planning against it.
 
 **No global admission gate enforces this matrix.** Fleet does not refuse an enrollment for being below a line here. Individual features do have their own gates, several of them in the table above, so "unsupported" here means untested rather than blocked:
 
@@ -326,22 +326,22 @@ These are the server side of the capabilities above, **including the two web set
 
 ### Runtime-fetched moving inputs
 
-**A version pin covers the binary, not necessarily everything the binary reads at runtime.** The book's one example is the Fleet MCP server's osquery schema ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)): the binary is built from the 4.90.1 tag, but the schema it validates queries against is replaced at startup, and every 24 hours after by default, with the file from Fleet's `main` branch rather than from the tag.
+**A version pin covers the binary, not necessarily everything the binary reads at runtime.** The book's one example is the Fleet MCP server's osquery schema ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)): the binary is built from the 4.90.0 tag, but the schema it validates queries against is replaced at startup, and every 24 hours after by default, with the file from Fleet's `main` branch rather than from the tag.
 
 | | |
 |---|---|
-| **Source** | Fleet's `main` branch, not the 4.90.1 tag |
+| **Source** | Fleet's `main` branch, not the 4.90.0 tag |
 | **Refresh interval** | 24 hours by default; set with `FLEET_MCP_SCHEMA_REFRESH_INTERVAL` (a Go duration such as `12h`) |
 | **Failure behavior** | An unset or unparseable interval falls back to the 24-hour default rather than failing startup; the variable is read once at startup, so a change needs a restart |
-| **Inspection** | Compare a column or table you rely on against the schema shipped in the 4.90.1 tag if you need to know whether it moved |
+| **Inspection** | Compare a column or table you rely on against the schema shipped in the 4.90.0 tag if you need to know whether it moved |
 | **Pin the automatic refresh** | Set `FLEET_MCP_SCHEMA_REFRESH_DISABLE` to any non-empty value to stop the startup/periodic fetch and serve only the embedded snapshot, for a strictly release-pinned deployment |
 | **Manual refresh still reaches out** | The variable above does not cover the `refresh_osquery_schema` tool: it calls the same GitHub fetch unconditionally whenever the assistant invokes it. For a genuinely air-gapped deployment, also block outbound access to `raw.githubusercontent.com` |
 
-**Treat this as a second version to track, not a defect in the first one.** A server pinned to 4.90.1 and an MCP server built from the same tag can still validate queries against a schema newer than either, and nothing about the release pin says so on its own.
+**Treat this as a second version to track, not a defect in the first one.** A server pinned to 4.90.0 and an MCP server built from the same tag can still validate queries against a schema newer than either, and nothing about the release pin says so on its own.
 
 ### Fleet publishes support scopes, and no dated end of life
 
-**No dated end-of-life policy was found anywhere in the 4.90.1 repository.** What Fleet publishes there is two release-relative scopes:
+**No dated end-of-life policy was found anywhere in the 4.90.0 repository.** What Fleet publishes there is two release-relative scopes:
 
 | | Bug fixes | Troubleshooting help |
 |---|---|---|

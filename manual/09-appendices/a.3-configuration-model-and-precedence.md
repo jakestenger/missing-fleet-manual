@@ -507,7 +507,7 @@ The rest are sorted **by name, alphabetically**, and merged in that order, so **
 
 ## Version notes
 
-![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.1. The server's configuration manager registers **320 distinct keys** at this release.
+![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.0. The server's configuration manager registers **320 distinct keys** at this release.
 
 **This appendix deliberately publishes no count of how many of those Fleet documents.** "Documented" is not defined consistently enough for that comparison to mean anything: a setting can have its own reference section, be described in prose under another, or appear only in an example. **The count of registered keys is derived and stated; the comparison is not, until it can be produced reproducibly.**
 

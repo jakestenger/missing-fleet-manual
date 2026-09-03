@@ -558,7 +558,7 @@ Three kinds of refusal get confused, and they fail differently:
 
 ## Version notes
 
-![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.1. The policy carries 154 rules over 49 object types and 16 actions; the 152 rows here are the administrator-facing projection of them, reconciled against the manual's shared capability register.
+![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.0. The policy carries 154 rules over 49 object types and 16 actions; the 152 rows here are the administrator-facing projection of them, reconciled against the manual's shared capability register.
 
 **Ten policy grants are not published as rows**, because no administrator-facing route exercises them, and in at least one case the grant is the fossil of a route that no longer exists. **That is a search result and not a proof.** So are the row universe itself and the list of untested refusal families above: those are the three claims in this appendix that rest on having failed to find something, and all three are written that way so a reader who does find the missing thing knows which claim gave first.
 
