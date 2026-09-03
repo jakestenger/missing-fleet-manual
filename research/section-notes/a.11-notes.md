@@ -121,3 +121,14 @@ than pre-validated.
   schema on success (`RefreshSchemaNow`/`storeSchema` in `cmd/fleet-mcp/schema.go:163-186`), so
   subsequent `get_osquery_schema` calls in that process see the new data. Added a disclosure
   sentence naming it as a partial exception.
+
+## Fix-loop round (2026-09-02, round4 m7, m8)
+
+- **`get_software` row's Arguments cell omitted `per_page`**, though the description prose
+  already mentioned it. Confirmed `per_page` is a real registered arg applying to both per-host
+  and cross-host modes (`cmd/fleet-mcp/mcp_tools_inventory.go:33-49`, `parsePerPageArg`). Added
+  it to the Arguments cell.
+- **`run_live_query` row stated the bare-integer TEXT-column rejection without the `0`/`1`
+  boolean-flag exception** that 6.6's prose already carries correctly (6.6:72, fixed there by
+  round-3 m7 but never propagated here). Confirmed exception at `cmd/fleet-mcp/schema.go:361-458`
+  ("Don't flag literal 0 / 1 against TEXT"). Added the parenthetical to the row.
