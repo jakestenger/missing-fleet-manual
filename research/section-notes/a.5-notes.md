@@ -476,3 +476,19 @@ of those buckets. `check-cap-ids.py` passes green with the new totals.
   fleetctl or GitOps so does not join either bucket. `Partial`/`Read only`/`Not established`
   totals unaffected. `check-cap-ids.py` passes green with the new totals and the reverse-coverage
   check (364 a.1 rows − 362 a.5 rows = 2, matching the two now-documented exclusions).
+- **Round 5 (2026-09-03), m8 + m9 + m10 (commits aaf7870, ccbfa44).** Three narrative figures had
+  drifted from the matrix these very notes already recompute correctly. m8: the "How to read it"
+  prose said "Forty-two rows have no `Full` and no `Partial` in any column" while the later
+  no-supported-interface paragraph said 48 for the same set (both say "seven readable"). Recount
+  of the 362 main-matrix rows (before the self-initiation `STOP_HEADING`): 48 rows with no
+  Full/Partial, 7 of them carrying a `Read only` cell. Set the prose to "Forty-eight". m9: the
+  GitOps closed-vocabulary paragraph said `Unsupported` carries "196 rows"; the actual GitOps
+  column has 203 `Unsupported` (matching this ledger's own 202→203 recompute for CAP-370). Set it
+  to 203. While there, reconfirmed the adjacent counts the same paragraph family cites — 18 rows
+  with `Read only` in UI/API/fleetctl, 12 of them GitOps `Unsupported`, the six exceptions
+  (CAP-088/122/123/143/206 Full, CAP-275 Partial), GitOps `Read only` = 0, and 248 `Partial`
+  cells across the four columns — all recount correctly and were left unchanged. m10: the "new
+  since" reconciliation paragraph still asserted CAP-354 was "the only row this appendix omits
+  outright", contradicting the current two-item exclusion list above it (CAP-354 left out
+  entirely; CAP-371 moved to the self-initiation table). Reworded to name CAP-371 as the second
+  set-aside row. Links + cap-ids green after each.

@@ -437,3 +437,16 @@ are recorded in `a.5-notes.md`.
   contract when touching a file that carries one, not just the one row a finding named.
   Register: 362 formal rows → 364 (CAP-370 to the "work that runs once" lane, 53→54 outcomes;
   CAP-371 to "settings that persist", 31→32; "writing state" total 105→107).
+- **Round 5 (2026-09-03), m1 + m11 (commit 6400965).** m1: the "How the groups were chosen"
+  group-summary table still carried the pre-+2 subtotals for two groups — group 5 read 104 and
+  group 7 read 45, so the table summed to 360 while the file's own headline and each group
+  heading already said 364/107/46. RM9's earlier fix updated the group headings and the headline
+  prose but not this table's two cells. Recounted `| **CAP-` rows per group heading:
+  32+68+8+58+107+24+46+21 = 364; set the two stale cells to 107 and 46. m11: the ID-column
+  description claimed a.2 and a.5 both "carry it at the same grain", but a.2 splits CAP-244 into
+  244a/b/c (Recovery Lock on / reveal / rotate) and CAP-341 into 341a/b (trigger collection /
+  retrieve archive) where the parts of one A.1 outcome have different platform answers; a.5
+  keeps both as single rows. Reworded the cell so a.5 is one-row-per-ID and a.2 is noted as
+  splitting a few outcomes into lettered sub-rows. `check-cap-ids.py` unaffected: its ROW regex
+  only matches `CAP-<digits>`, so lettered sub-rows are invisible to the formal-row checks, and
+  a prose "CAP-244a" reads only as CAP-244 to `ANY_ID`. Links + cap-ids green.
