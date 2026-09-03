@@ -5,8 +5,8 @@ section: "A.1"
 sidebar_position: 1
 status: drafting
 verified_against: Fleet 4.90.1
-verified_on: 2026-08-30
-verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from a pass over all 360 rows of the shared capability register. Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Citation ledger at research/section-notes/a.1-notes.md"
+verified_on: 2026-09-02
+verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from a pass over all 361 rows of the shared capability register (360 in the original pass, plus one amendment below). Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Amended 2026-09-02 (round4 RB3): CAP-003's `fpsso` search term was misrouted to 2.5's Fleet-console JIT provisioning; `fpsso` is Fleet's own settings-search term for the unrelated Platform SSO account-provisioning and password-sync feature, which had no capability row at all. Removed from CAP-003, added as the new CAP-372, routed to 5.5. Citation ledger at research/section-notes/a.1-notes.md"
 reviewed_by:
 reviewed_on:
 further_reading:
@@ -27,7 +27,7 @@ That distance is the appendix. A row earns its place when the words in its last 
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) 360 outcomes in eight groups, each with one canonical chapter, and the attested words that lead to it: Fleet's older names that still work, the vendors' names, the strings Fleet prints on screen, and the terms this manual coined. Group 8 also carries the sentences people arrive with when something has already gone wrong. The last section says where the index stops.
+![Reference](../_assets/icons/reference.svg) 361 outcomes in eight groups, each with one canonical chapter, and the attested words that lead to it: Fleet's older names that still work, the vendors' names, the strings Fleet prints on screen, and the terms this manual coined. Group 8 also carries the sentences people arrive with when something has already gone wrong. The last section says where the index stops.
 
 **What is not here.** Whether your platform can do it is [a.2](a.2-platform-capability-matrix.md). Which role may do it is [a.4](a.4-roles-and-permissions-matrix.md). Which interface can do it is [a.5](a.5-interface-index.md). Which configuration authority owns a key you find here, and what wins when two disagree, is [a.3](a.3-configuration-model-and-precedence.md). What a route requires is [a.8](a.8-api-action-and-endpoint-reference.md), and what a `fleetctl` command asks Fleet to do is [a.7](a.7-fleetctl-command-reference.md). What a word means is [a.6](a.6-glossary-and-release-compatibility.md), which owns meaning while this index owns routing. How to do the thing is the chapter each row names. This appendix answers where, and makes no claim about capability, licence or procedure.
 
@@ -37,7 +37,7 @@ That distance is the appendix. A row earns its place when the words in its last 
 
 | Column | What it holds |
 |---|---|
-| **ID** | The shared capability identifier. Use it to find the same capability in [a.2](a.2-platform-capability-matrix.md) and [a.5](a.5-interface-index.md), which carry it at the same grain. [a.4](a.4-roles-and-permissions-matrix.md) does not: its 152 administrator intents are a coarser grouping than this index's 360 outcomes, so no row-for-row ID exists there |
+| **ID** | The shared capability identifier. Use it to find the same capability in [a.2](a.2-platform-capability-matrix.md) and [a.5](a.5-interface-index.md), which carry it at the same grain. [a.4](a.4-roles-and-permissions-matrix.md) does not: its 152 administrator intents are a coarser grouping than this index's 361 outcomes, so no row-for-row ID exists there |
 | **What you are trying to do** | The outcome in the words somebody would use for it, rather than the words the chapter uses |
 | **Chapter** | The one section that teaches this outcome. `None` means no chapter does, and those rows are collected at the end |
 | **Also** | Sections carrying part of the answer, as plain numbers, because the linked chapter is the one to open first |
@@ -58,7 +58,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ## The index
 
-![Reference](../_assets/icons/reference.svg) 360 outcomes. Find the row by the words you would type, then open the linked chapter.
+![Reference](../_assets/icons/reference.svg) 361 outcomes. Find the row by the words you would type, then open the linked chapter.
 
 ### 1. Access and accountability
 
@@ -68,7 +68,7 @@ Six markers, and each changes what you do with the word next to it.
 |---|---|---|---|---|
 | **CAP-001** | Sign in, or reset a password | [1.4](../01-foundations/1.4-identity-and-roles.md) | 2.6 | `user_logged_in` · `user_failed_login` · Access denied · my account · change password · API token · disable password-based authentication |
 | **CAP-002** | Sign in through the identity provider | [1.4](../01-foundations/1.4-identity-and-roles.md) | 2.5 | SSO · SAML · single sign-on · log in with Okta · log in with Entra · IdP · authentik · Google Workspace · `user_added_by_sso` |
-| **CAP-003** | Create accounts the first time someone signs in | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 1.4 | JIT · just-in-time provisioning · auto-create users · account provisioning · `fpsso` |
+| **CAP-003** | Create accounts the first time someone signs in | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 1.4 | JIT · just-in-time provisioning · auto-create users · account provisioning |
 | **CAP-004** | Remove accounts when people leave | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 1.4 | SCIM · deprovision · offboarding · account provisioning |
 | **CAP-005** | Work out why an account was not deprovisioned | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 2.6 | required SCIM attributes · `email` · `userName` · `givenName` · `familyName` · deprovisioning matches by email · API-only and non-SSO accounts skipped · last global admin never deleted |
 | **CAP-006** | Require a second factor | [1.5](../01-foundations/1.5-audit-and-activity.md) | 2.5 | 2FA · MFA · email two-factor · one-time code |
@@ -256,11 +256,11 @@ Six markers, and each changes what you do with the word next to it.
 
 ### 5. Changing a device
 
-**Writing state, split by the mechanism that carries it.** 104 outcomes, in the three lanes [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) teaches: settings that persist, work that runs once, and experiences. If you know which lane you are in, you know which sub-table to scan.
+**Writing state, split by the mechanism that carries it.** 105 outcomes, in the three lanes [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) teaches: settings that persist, work that runs once, and experiences. If you know which lane you are in, you know which sub-table to scan.
 
 #### Settings that persist
 
-30 outcomes. Profiles, operating system updates and disk encryption: things Fleet keeps true rather than things Fleet does once.
+31 outcomes. Profiles, operating system updates and disk encryption: things Fleet keeps true rather than things Fleet does once.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -271,6 +271,7 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-152** | Put a host's own values into a profile | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 6.2 | Fleet variable · `$FLEET_VAR_` · Variables · built-in variables · put the serial in a profile |
 | **CAP-153** | Issue a certificate to a device | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 2.13, 2.12, 8.9 | SCEP · EST · PKI · NDES (vendor) · DigiCert (vendor) · Smallstep (vendor) · Hydrant (vendor) · certificate authority · CA · Certificate enrollment · `certificate-authorities` (clash) · `added_hydrant` · `added_custom_est_proxy` · [a.6] |
 | **CAP-154** | Deliver a Platform SSO registration token | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 5.5 | Platform SSO · PSSO · Okta Verify · Entra Platform SSO |
+| **CAP-372** | Provision a Mac's local account and sync its password with the identity provider | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.2 | Platform SSO · PSSO · account provisioning · password sync · OAuth IdP · ROPG · Resource Owner Password Grant · `apple_account_provisioning` · `oauth_idp_token_url` · `fpsso` |
 | **CAP-155** | Keep a password out of a spec file | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 6.1 | `$FLEET_SECRET_` · custom variable · secret · `created_custom_variable` |
 | **CAP-156** | Read a profile's delivery state | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 8.8, 8.9 | pending · verifying · verified · failed · the profile says failed · configuration profile status |
 | **CAP-157** | Push a profile again | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 8.8 | resend · batch-resend · `resent_configuration_profile` |

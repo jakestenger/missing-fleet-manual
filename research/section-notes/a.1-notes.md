@@ -332,3 +332,64 @@ This is exactly the escape pattern RB1 named: a fix that touches the file it sta
 leaving a sibling claim (here, a frontmatter field in the same file) stale. `check-cap-ids.py` now
 asserts the frontmatter count against the actual row count on every run, so this specific drift
 cannot recur silently.
+
+## 2026-09-02 fix: CAP-003 misrouted the `fpsso` search term (round4 RB3)
+
+CAP-003 ("Create accounts the first time someone signs in") carried `fpsso` in its search-terms
+cell, routing to 2.5's Fleet-console JIT provisioning. `fpsso` is not that. It is Fleet's own
+settings-search keyword for the **Account provisioning** page
+(`frontend/components/CommandPalette/groups/settings.ts:141-144` at fleet-v4.90.1: `id:
+"settings-int-fpsso"`, `label: "Account provisioning"`, `keywords: ["sso", "fpsso", "provision",
+"scim"]`), a wholly different feature: Platform SSO account provisioning and password sync, which
+provisions and authenticates a Mac's **local user account** by OAuth against the identity provider,
+not a Fleet console account. That feature had no capability row anywhere in the register.
+
+**Stated**, verified directly against fleet-v4.90.1: `server/service/appconfig.go:775-827` (the
+`mdm.apple_account_provisioning` write path: all-or-nothing validation across token URL/client
+ID/secret, the Premium gate via `lic.IsPremium()`, the private-key prerequisite, the
+must-reprovide-secret-on-URL-change rule, and that the secret is stripped from AppConfig JSON and
+stored encrypted in `mdm_config_assets` under `fleet.MDMAssetAppleAccountProvisioningIdPClientSecret`,
+`server/fleet/mdm.go:1067-1070`); `server/fleet/apple_psso.go` in full (`AppleAccountProvisioning`,
+`PSSOClaims` with `RefreshToken`/`ExpiresIn` marked `json:"-"`, `PSSODevice`/`PSSOKey` keyed by kid,
+`PSSODeviceRegistrationRequest`, `PSSONonceStore`, `PSSOSettings`); `ee/server/service/apple_psso_idp_oidc_ropg.go`
+in full (the ROPG `grant_type=password` POST, the 1 MiB response cap, `parseOIDCIDTokenClaims`
+parsing the `id_token` without signature verification, with the reasoning recorded in its own
+comment: received directly from the issuer over TLS, not a cross-trust assertion); `ee/server/service/apple_psso.go`
+in full (device registration binds to the registration token's subject, not the device-reported
+UUID; `handlePSSOPasswordLogin` relays the password via ROPG and never persists it;
+`buildPSSOIDTokenClaims` forwards standard claims plus any `account`-prefixed custom claim, then
+sets Fleet's own iss/sub/aud/nonce/iat/exp last so the IdP cannot override them; the `TokenToUserMapping`
+reference in the account-claim-prefix comment; the key-request/key-exchange pair for the offline
+unlock key, `pssoKeyPurposeUserUnlock`); `server/service/integration_mdm_apple_psso_test.go`
+(end-to-end: registration, password login against a mocked ROPG IdP, the `accountName` custom claim
+forwarded to `TokenToUserMapping`, `enableApplePSSO` test helper confirming the AppConfig/asset
+split). Config surface confirmed from `docs/Configuration/yaml-files.md:416-419,479-485` (GitOps
+`apple_account_provisioning` key, default.yml/all-fleets only, macOS only) and
+`frontend/pages/admin/IntegrationsPage/cards/AccountProvisioning/AccountProvisioning.tsx` (the UI
+page: Token URL/Client ID/Client secret fields, GitOps-mode-aware, Premium-gated).
+
+**Derived.** No rate-limiting, lockout or retry logic specific to this feature was found anywhere in
+`ee/server/service/apple_psso*.go` or `server/fleet/apple_psso.go`: a rejected password is relayed
+from the IdP's own `error`/`error_description` response with nothing added. Written in the new 5.5
+subsection as "no separate lockout on this path" rather than "Fleet never locks accounts", which is
+narrower and is what the source actually supports. The offline-unlock key exchange
+(`handlePSSOKeyRequest`/`handlePSSOKeyExchange`) is described only in general terms (a certified key
+pair the device keeps locally) rather than with the internal research doc's own claimed 4-hour sync
+window (`docs/Contributing/research/mdm/psso.md`), because that number is the doc author's own
+manual testing note, not a value read from Fleet's source, and citing it without that caveat would
+misattribute field-tested behaviour as verified fact.
+
+**Unverified, and not written into the chapter.** Whether an admin-visible recovery path exists
+beyond re-enrollment (FileVault-adjacent recovery, an explicit unlock override) was searched for and
+not found; the new 5.5 subsection says so plainly and cross-links the chapter's existing re-enrollment
+paragraph rather than inventing a mechanism.
+
+Added CAP-372 ("Provision a Mac's local account and sync its password with the identity provider"),
+routed to 5.5, Also 5.2, with `fpsso` moved into its search terms alongside Platform SSO, PSSO,
+account provisioning, password sync, OAuth IdP, ROPG and `apple_account_provisioning`/
+`oauth_idp_token_url`. Removed `fpsso` from CAP-003. Register grows 360 → 361; every in-body count
+("361 outcomes", group 5's 104 → 105, its "Settings that persist" subsection's 30 → 31) and the
+frontmatter's `verified_source` row count updated together, per the RB1 lesson above.
+`build/check-cap-ids.py` also required the matching a.5 row and its cascade of derived counts (Full
+column totals, the 359→360 row/cell totals, the Full-or-Partial and all-four-agree sentences); those
+are recorded in `a.5-notes.md`.

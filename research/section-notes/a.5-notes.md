@@ -390,3 +390,37 @@ updated to match: Unsupported per column +6 each (21→27 UI, 46→52 REST API, 
 `Full`/`Partial`/`Read only`/`Not established` totals and every count keyed off them (the
 Full-or-Partial reach figures, GitOps's 104-row overlap, the UI's 70 `Not established` cells) were
 unaffected, because all six additions are `Unsupported` everywhere and so move none of those buckets.
+
+## 2026-09-02 fix: CAP-372 added, Platform SSO account provisioning (round4 RB3)
+
+a.1 grew from 360 to 361 rows today ([[a.1-notes]]), adding CAP-372 (configuring the OAuth identity
+provider behind Platform SSO account provisioning and password sync) after the `fpsso` search term
+was found misrouted to CAP-003/2.5. `check-cap-ids.py`'s reverse-coverage check requires every a.1
+formal row to land in this appendix too, as a row or a documented exclusion; CAP-372 earned a row
+rather than an exclusion, because it is a genuine, answerable interface-support question, unlike
+CAP-354's REST-API-client carve-out.
+
+**Stated**, from the same source read for the 5.5 subsection (`a.1-notes.md` carries the full
+citation list): the three OAuth fields (token URL, client ID, client secret) are exposed identically
+through the UI's Account provisioning page
+(`frontend/pages/admin/IntegrationsPage/cards/AccountProvisioning/AccountProvisioning.tsx`), the
+REST API's `mdm.apple_account_provisioning` config keys (`server/service/appconfig.go:775-827`),
+and GitOps's `apple_account_provisioning` key (`docs/Configuration/yaml-files.md:416-419,479-485`).
+`fleetctl` carries the same config through `fleetctl apply`/`get config`, since this is an ordinary
+AppConfig field with no separate command surface. Scored `Full` in all four columns: nothing about
+this row narrows to one interface the way CAP-361 through CAP-366 did.
+
+Row count moved 359 → 360. Every downstream count recomputed from the edited table with the same
+small script as the CAP-361-366 pass, not by hand: `Full` per column +1 each (196→197 UI, 185→186
+REST API, 178→179 fleetctl, 121→122 GitOps), total rows/cells 359/1,436 → 360/1,440, Full-or-Partial
+reach 289/250/234/155 → 290/251/235/156 (REST API/UI/fleetctl/GitOps), "`Full` in all four columns"
+82→83, "all four columns agreeing" 101→102. `Partial`/`Read only`/`Unsupported`/`Not established`
+totals were unaffected, because the new row is `Full` everywhere and moves none of those buckets.
+
+**2026-09-02, Codex review correction:** the prose calling the four columns "identically" readable
+and writable for CAP-372 overclaimed. `fleetctl apply`/`get config` and the REST API both mask the
+secret on read the same way the UI does, GitOps has no read direction at all, and a GitOps file
+generated from a live config emits a `TODO` placeholder for the secret rather than exporting it
+(`cmd/fleetctl/fleetctl/generate_gitops.go:1452-1470`, "mirrors the other secret placeholders").
+Ratings unchanged (`Full` is still correct — all four *can* set it), only the "identically" framing
+was corrected; see `5.5-notes.md`'s 2026-09-02 addendum for the full review.

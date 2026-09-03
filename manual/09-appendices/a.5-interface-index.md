@@ -5,8 +5,8 @@ section: "A.5"
 sidebar_position: 5
 status: drafting
 verified_against: Fleet 4.90.1
-verified_on: 2026-08-29
-verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from four independently built research columns, one per interface, each covering the register rows as they stood at first drafting. Every column was read at the tag; Fleet's documentation was used for leads only, never as evidence. The columns disagreed on 17 rows and those were reconciled against source before drafting. Reconciled 2026-09-01 to the then-current 354-capability register: six rows the index had not yet projected were added: CAP-048 restored as a distinct interface action, and the newer CAP-349 to CAP-353, with cells verified at the tag, CAP-354 (MCP) left as a documented exclusion, and the counts recounted from the table. Reconciled again 2026-09-02 to a.1's 360-capability register: CAP-361, CAP-362, CAP-363, CAP-364, CAP-365 and CAP-366, labelled from a.2's existing platform research, were added as Unsupported in every column, each for the reason its own row states; CAP-354 remains the sole documented exclusion, and the counts were recounted from the table again. Citation ledger at research/section-notes/a.5-notes.md"
+verified_on: 2026-09-02
+verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from four independently built research columns, one per interface, each covering the register rows as they stood at first drafting. Every column was read at the tag; Fleet's documentation was used for leads only, never as evidence. The columns disagreed on 17 rows and those were reconciled against source before drafting. Reconciled 2026-09-01 to the then-current 354-capability register: six rows the index had not yet projected were added: CAP-048 restored as a distinct interface action, and the newer CAP-349 to CAP-353, with cells verified at the tag, CAP-354 (MCP) left as a documented exclusion, and the counts recounted from the table. Reconciled again 2026-09-02 to a.1's 360-capability register: CAP-361, CAP-362, CAP-363, CAP-364, CAP-365 and CAP-366, labelled from a.2's existing platform research, were added as Unsupported in every column, each for the reason its own row states; CAP-354 remains the sole documented exclusion, and the counts were recounted from the table again. Reconciled a third time 2026-09-02 (round4 RB3) to a.1's 361-capability register: CAP-372, the Platform SSO account-provisioning and password-sync OAuth IdP configuration, was added scored Full in every column, because the same three settings are readable and writable identically through the UI's Account provisioning page, the REST API, `fleetctl` and GitOps; the counts were recounted from the table again. Citation ledger at research/section-notes/a.5-notes.md"
 reviewed_by:
 reviewed_on:
 further_reading:
@@ -26,7 +26,7 @@ This appendix is the lookup that tells you which of those you are about to hit.
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) Every administrator action in the manual's capability register, 359 of them, against all four operator interfaces: the Fleet UI, the REST API, `fleetctl` and GitOps. Plus a second, shorter table for a different question, which is what Fleet or an external system starts without anyone asking.
+![Reference](../_assets/icons/reference.svg) Every administrator action in the manual's capability register, 360 of them, against all four operator interfaces: the Fleet UI, the REST API, `fleetctl` and GitOps. Plus a second, shorter table for a different question, which is what Fleet or an external system starts without anyone asking.
 
 **What is not here is the detail of any one interface.** Which command to run and what its exit status proves is [a.7](a.7-fleetctl-command-reference.md). What a caller must present and what has to be reachable is [a.8](a.8-api-action-and-endpoint-reference.md). Which configuration authority wins when two of these disagree is [a.3](a.3-configuration-model-and-precedence.md). Which role may perform the action, once you know an interface supports it, is [a.4](a.4-roles-and-permissions-matrix.md). Which platforms it reaches is [a.2](a.2-platform-capability-matrix.md).
 
@@ -181,7 +181,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 ## The matrix
 
-![Reference](../_assets/icons/reference.svg) All 359 register rows, grouped as a reader would look for an action. Section rows in bold carry no cells; they mark where a family starts. Counts by value are published after the table and were recounted from it.
+![Reference](../_assets/icons/reference.svg) All 360 register rows, grouped as a reader would look for an action. Section rows in bold carry no cells; they mark where a family starts. Counts by value are published after the table and were recounted from it.
 
 | ID | Action | UI | REST API | `fleetctl` | GitOps |
 |---|---|---|---|---|---|
@@ -352,6 +352,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 | **CAP-152** | Fill in a per-host value in a profile | Full | Partial | Full | Full |
 | **CAP-153** | Have a profile enrol a certificate | Full | Full | Full | Full |
 | **CAP-154** | Supply a value that is never stored anywhere | Not established | Full | Full | Full |
+| **CAP-372** | Configure the OAuth identity provider for local-account provisioning and password sync | Full | Full | Full | Full |
 | **CAP-155** | Keep a credential out of a profile's stored content | Full | Full | Full | Partial |
 | **CAP-156** | Know whether a profile reached a device | Full | Partial | Unsupported | Unsupported |
 | **CAP-157** | Send a profile to a host again | Partial | Partial | Unsupported | Unsupported |
@@ -568,26 +569,26 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 ### The counts, recounted from the table above
 
-**359 rows, 1,436 cells, no blanks.**
+**360 rows, 1,440 cells, no blanks.**
 
 | Value | UI | REST API | `fleetctl` | GitOps |
 |---|---|---|---|---|
-| **Full** | 196 | 185 | 178 | 121 |
+| **Full** | 197 | 186 | 179 | 122 |
 | **Partial** | 54 | 104 | 56 | 34 |
 | **Read only** | 12 | 6 | 8 | 0 |
 | **Unsupported** | 27 | 52 | 114 | 202 |
 | **Not established** | 70 | 12 | 3 | 2 |
-| **Total** | **359** | **359** | **359** | **359** |
+| **Total** | **360** | **360** | **360** | **360** |
 
 Four things in that shape are worth reading before you use any single row.
 
-**The REST API reaches more actions than any other interface**, 289 at `Full` or `Partial` against 250 for the UI, 234 for `fleetctl` and 155 for GitOps. The other three are clients of it, so its reach is the ceiling theirs are measured against.
+**The REST API reaches more actions than any other interface**, 290 at `Full` or `Partial` against 251 for the UI, 235 for `fleetctl` and 156 for GitOps. The other three are clients of it, so its reach is the ceiling theirs are measured against.
 
 **The UI's 70 `Not established` cells are the appendix's largest soft spot**, and they are not evenly spread. Thirty-three of them are in the three sections about running the server, its settings and its diagnostics, where the answer is nearly always that the value is process configuration no interface writes. Twenty-one of the 70 sit on rows where all three other columns independently found `Unsupported`. **Those are very probably `Unsupported` too, and they are not published that way**, because the boundary that would justify it was not found. A wrong `Not established` is a failure in the same way a wrong `Unsupported` is, so the appendix records the uncertainty rather than resolving it in the direction the neighbours point.
 
 **GitOps is `Unsupported` on 104 rows the UI and the REST API can both perform.** That is not a defect in GitOps. It is the closed vocabulary and the missing read direction working as designed, and it is the number that bounds how much of Fleet a repository can manage.
 
-**Eighty-two rows are `Full` in all four columns and 101 rows have all four columns agreeing.** The overlap is real. It is just not where the planning risk is.
+**Eighty-three rows are `Full` in all four columns and 102 rows have all four columns agreeing.** The overlap is real. It is just not where the planning risk is.
 
 ## What Fleet or an external system starts on its own
 
@@ -651,9 +652,11 @@ Fourteen rows are unsettled in more than one column, and they fall into three gr
 
 ![Explanation](../_assets/icons/explanation.svg) Read this before you compare a cell here against the same action in another appendix, because two of the differences are intentional.
 
-**This appendix carries 359 rows and [a.2](a.2-platform-capability-matrix.md) carries 273.** They are projections of one register: [a.1](a.1-capability-index.md) holds 360 capabilities, and this index covers all of them except **CAP-354, connecting an AI assistant**, which is a client of the REST API rather than an interface of its own, as the note above the matrix records. a.2 is a narrower projection again: it sets aside the rows that are not device-facing, because a platform matrix has nothing to say about a server setting, and it merges rows that are platform-identical, retiring an enrollment identifier this index keeps. **CAP-048 is a strict platform subset of another row for a.2's purposes, but a distinct interface action here**: the personal-link BYOD enrollment, which is not the account-driven path CAP-049 describes. Both differences are scope decisions rather than contradictions: a row present in one projection and absent from another follows from what that projection is for.
+**This appendix carries 360 rows and [a.2](a.2-platform-capability-matrix.md) carries 273.** They are projections of one register: [a.1](a.1-capability-index.md) holds 361 capabilities, and this index covers all of them except **CAP-354, connecting an AI assistant**, which is a client of the REST API rather than an interface of its own, as the note above the matrix records. a.2 is a narrower projection again: it sets aside the rows that are not device-facing, because a platform matrix has nothing to say about a server setting, and it merges rows that are platform-identical, retiring an enrollment identifier this index keeps. **CAP-048 is a strict platform subset of another row for a.2's purposes, but a distinct interface action here**: the personal-link BYOD enrollment, which is not the account-driven path CAP-049 describes. Both differences are scope decisions rather than contradictions: a row present in one projection and absent from another follows from what that projection is for.
 
 **Six more rows are new since a.1 last grew: CAP-361 and CAP-362 (the My Device page and the Fleet Desktop menu-bar summary), CAP-363 (`orbit shell`), CAP-364 (an agent restart forcing an immediate update check), CAP-365 (self-service uninstall) and CAP-366 (the Android self-service toggle a.2's CAP-366 note records Fleet as accepting and then discarding).** All six read `Unsupported` in every column here, and each for a different reason the row's own action explains rather than the general boundary text above needing to. CAP-361, CAP-362 and CAP-365 are end-user-surface actions in the sense already defined: the only route is the device owner's own page, authenticated by that device's token, so no administrator interface performs them, the same shape as CAP-204. CAP-363 and CAP-364 are narrower still: `orbit shell` and the update check both run locally, on the host, through the agent's own binary rather than through any interface Fleet exposes to an administrator, so none of the four columns ever had a claim to make. CAP-366 is the odd one: an administrator can set the toggle through every interface, and Fleet stores what was sent, but a.2 records that Fleet then discards it on Android rather than acting on it, so no interface performs the outcome the row names even though all four accept the input. **CAP-354 remains the only row this appendix omits outright**, because it is a client of an interface already in the matrix rather than a boundary case of one; the six above earned rows because each is answerable, and the answer for all six happens to be the same.
+
+**A seventh row is new since: CAP-372, configuring the OAuth identity provider behind Platform SSO account provisioning and password sync.** It reads `Full` in every column: the token URL, client ID and client secret can all be set through the UI's Account provisioning page, the REST API's config endpoint, `fleetctl` and GitOps, and nothing about this one narrows to a single interface the way the six above do. That is not quite "identically," though: none of the four ever returns the secret in the clear on a read, GitOps carries no read direction at all, and a GitOps file generated from a live config gets a `TODO` placeholder in the secret's place rather than the value itself.
 
 **A `Full` cell here and a refusal in [a.4](a.4-roles-and-permissions-matrix.md) are both true.** Interface support and authorisation are separate gates, checked in that order. The interface has to be able to make the request before your role can be refused it.
 
