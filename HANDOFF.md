@@ -319,6 +319,10 @@ organising claim rather than a detail.
 
 ### The status ladder
 
+**Superseded 2026-09-03: the status ladder and its per-chapter stamps are retired in favour of
+whole-book versioning; see "The verification freeze" below. `status`, `reviewed_by`, and
+`reviewed_on` no longer exist in any chapter's frontmatter. Kept as historical context.**
+
 `outline` → `drafting` → `verified`. `check-verified.py` gates the top rung and will fail CI if a
 chapter claims `verified` without all of:
 
@@ -758,9 +762,11 @@ per-chapter *verification stamps* is not dropping *correctness* — the owner's 
 stamp, not the requirement that facts be right. See CONTRIBUTING "Claims about Fleet get verified"
 (kept) versus "Verification is necessary and not sufficient" (now applies at the whole-book pass).
 
-Mechanical follow-up still open: retire the `FREEZE` flag path in `check-verified.py`, reconcile
-the scattered per-chapter-round mentions in this file and STYLE.md, and refresh the status
-artifact to the single book-readiness gate.
+Mechanical follow-up: the `status`, `reviewed_by`, and `reviewed_on` frontmatter keys were
+stripped from every chapter on 2026-09-03 and `check-verified.py` was repurposed to keep them out
+(the `FREEZE` path is gone). Still open: refreshing the status artifact to the single
+book-readiness gate, and reconciling the remaining per-chapter-round narration in this file and
+STYLE.md.
 
 ---
 

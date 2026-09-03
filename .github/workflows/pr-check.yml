@@ -35,10 +35,10 @@ jobs:
       - name: Check cross-reference attributions
         run: python3 build/check-crossrefs.py
 
-      # A gate, not advice. status: verified now means a source check AND an
-      # independent review pass. Twelve chapters once carried the stamp on the
-      # first alone and an external review found a defect in every one.
-      - name: Check verified stamps are backed by evidence
+      # A gate, not advice. Per-chapter status and reviewer stamps were retired
+      # 2026-09-03 in favour of whole-book versioning; this fails if a retired
+      # status / reviewed_by / reviewed_on key drifts back into any frontmatter.
+      - name: Check retired verification stamps stay out of frontmatter
         run: python3 build/check-verified.py
 
       # Three invented activity names shipped in reference tables, where a reader

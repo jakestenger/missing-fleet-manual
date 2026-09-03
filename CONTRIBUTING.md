@@ -29,8 +29,8 @@ Anything the manual asserts about how Fleet behaves is checked against a **relea
 never a branch and never `CHANGELOG.md`, and the check is written down in
 `research/section-notes/`.
 
-A section may only carry `status: verified` and the `verified_*` fields when that check
-actually happened and its notes file exists. If you are unsure, write:
+A section carries the `verified_*` fields only when that check actually happened and its
+notes file exists. If you are unsure, write:
 
 ```yaml
 verified_source: "unverified: drafted from prior work, not checked at a tag"
@@ -103,22 +103,18 @@ None of those is a sourcing failure, which is why checking sources did not find 
 cannot reliably audit the distance between what a source said and what they concluded from it,
 because by the time they check, the conclusion has become their belief about the source.
 
-**So `verified` now requires an independent review pass as well as a source check.** Both, with
-the findings resolved or explicitly declined in the notes file. Add to the frontmatter:
-
-```yaml
-reviewed_by:            # e.g. codex gpt-5.6-sol
-reviewed_on:            # YYYY-MM-DD
-```
-
-`build/check-verified.py` reports any section stamped `verified` without them.
+**So the book's readiness now requires an independent review pass as well as a source check**,
+with the findings resolved or explicitly declined in the notes file. Per-chapter `verified`
+stamps and the `reviewed_by` / `reviewed_on` frontmatter were retired on 2026-09-03: the book is
+versioned and reviewed as a whole, so this review pass applies to the whole book rather than
+being recorded chapter by chapter.
 
 The review must not work from `STYLE.md`. A reviewer following our own rules returns our own
 opinion with more steps. See `review/BRIEFING.md`, which was written by the reviewer from its own
 context for exactly that reason.
 
-Two things follow that are easy to get wrong. The review happens **before** the stamp, not as a
-later audit of chapters already published. And where the reviewer disagrees with a rule in
+Two things follow that are easy to get wrong. The review happens **before** the book is called
+ready, not as a later audit of chapters already published. And where the reviewer disagrees with a rule in
 `STYLE.md`, surface the disagreement rather than applying the rule silently: the rules are ours,
 they are not evidence, and one of them has already turned out to be wrong.
 
@@ -233,7 +229,7 @@ have caught something on nearly every run.
 | Script | Gates CI | Built after |
 |---|---|---|
 | `check-links.py` | Yes | A renamed heading silently broke every anchor into it |
-| `check-verified.py` | Yes | Twelve chapters carried `status: verified` on a source check alone, and a review found a defect in every one |
+| `check-verified.py` | Yes | Per-chapter `status` / `reviewed_by` / `reviewed_on` stamps were retired 2026-09-03; now fails if one drifts back into frontmatter |
 | `check-crossrefs.py` | Advisory | "As 2.2 notes, escrowed Linux disk encryption data", where 2.2 said no such thing. Also carries the §8 and eaten-code-span checks |
 | `check-activity-names.py` | Advisory | `user_mfa_requested`, documented in two chapters, exists nowhere in Fleet |
 | `check-schedule-names.py` | Advisory | `software_checksum_migration`, given an interval and a description, exists nowhere in Fleet |

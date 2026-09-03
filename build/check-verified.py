@@ -1,101 +1,50 @@
 #!/usr/bin/env python3
-"""Report sections claiming verification they have not had.
+"""Guard the retired per-chapter verification stamps.
 
-`status: verified` means two things since 2026-08-25: claims were checked against a release tag,
-and an independent review pass ran and its findings were resolved. Twelve chapters previously
-carried the stamp on the first alone, and an external review found a material defect in every one.
+Per-chapter status tracking was retired on 2026-09-03 by the owner's decision. The book is now
+versioned as a whole, per minor release (4.90.x, 4.91.x, ...), selectable from a nav-bar
+dropdown, so a per-chapter `status:` field tracks nothing the reader can use. The
+reviewer-attribution pair `reviewed_by:` / `reviewed_on:` went with it: no reviewer should feel
+obligated to sign a chapter and carry the blame for a later-found mistake.
 
-Checks that a verified section has its `verified_*` fields, a notes file, and `reviewed_by` /
-`reviewed_on`. Exits 1 on a section that overclaims, because this one is a gate rather than
-advice.
+What remains is the release-provenance triple, which every chapter keeps:
+`verified_against` (the release the content was checked against), `verified_on`, and
+`verified_source`. That records what the content was written against; it never claimed a review
+pass, so nothing is lost by dropping the retired stamps.
 
-**A freeze is in force from 2026-08-27, by the owner's decision: nothing carries `verified`
-until every part is drafted and every chapter has had at least one review round.** The reason
-is that the stamp kept going stale through no fault of the chapter carrying it. Writing a Part
-III chapter found real errors in Part I; reviewing Part I found real errors in Part II. Twelve
-chapters were demoted in one day, eight of them because a neighbour's review corrected them
-hours after their own verdict. A stamp that a neighbour can invalidate is not measuring what it
-claims to, and while whole parts are still outlines every chapter has neighbours that do not
-exist yet.
-
-Lift the freeze by deleting FREEZE below, once the condition it names is met.
+This check used to enforce the status ladder and the `verified` stamp. Its job now is the
+inverse: make sure none of the three retired keys drift back into a chapter's frontmatter. It is
+a gate rather than advice, because a reintroduced `status:` would quietly resurrect a model the
+book no longer runs. Exits 1 on any retired key found; otherwise reports clean.
 """
 import re, sys, pathlib
 
-MANUAL, NOTES = pathlib.Path("manual"), pathlib.Path("research/section-notes")
-problems = []
+MANUAL = pathlib.Path("manual")
 
-# The ladder has exactly three rungs. A section reached `status: written` once, which is not a
-# rung, so it sat outside every check here: it claimed nothing this file tests and nothing the
-# ladder means. Anything that is not one of these three is a typo or an invention, and both
-# are worth failing on.
-LADDER = {"outline", "drafting", "verified"}
-offladder = []
+# The exact top-level keys retired on 2026-09-03. Anchored so `verified_on` (kept) is never
+# matched by `reviewed_on`, and indented list children (e.g. under further_reading) are ignored.
+RETIRED = ("status", "reviewed_by", "reviewed_on")
+RETIRED_RE = re.compile(rf"^({'|'.join(RETIRED)}):", re.M)
 
-# See the module docstring. Set to False once every part is drafted and every chapter has had a
-# review round; until then a `verified` stamp is premature by definition rather than by evidence.
-FREEZE = True
-frozen = []
-
+offenders = []
 for path in sorted(MANUAL.rglob("*.md")):
-    head = path.read_text().split("---")
-    if len(head) < 3:
+    parts = path.read_text(encoding="utf-8").split("---")
+    if len(parts) < 3:
         continue
-    fm = head[1]
-    m = re.search(r"^status:\s*(\S+)\s*$", fm, re.M)
-    if not m:
-        offladder.append((path, "no status field"))
-    elif m.group(1) not in LADDER:
-        offladder.append((path, m.group(1)))
-    elif FREEZE and m.group(1) == "verified":
-        frozen.append(path)
-    if not re.search(r"^status:\s*verified\s*$", fm, re.M):
-        continue
-    def has(field):
-        m = re.search(rf"^{field}:\s*(\S.*)$", fm, re.M)
-        return bool(m and m.group(1).strip() not in {'""', "''", "~", "null"})
-    missing = [f for f in ("verified_against", "verified_on", "verified_source",
-                           "reviewed_by", "reviewed_on") if not has(f)]
-    sec = re.search(r'^section:\s*"?([\d.a-z]+)"?', fm, re.M)
-    note = None
-    if sec:
-        hits = list(NOTES.glob(f"{sec.group(1)}-*.md"))
-        note = hits[0] if hits else None
-        if not hits:
-            missing.append("a notes file in research/section-notes/")
-    if missing:
-        problems.append((path, missing))
+    fm = parts[1]
+    found = sorted({m.group(1) for m in RETIRED_RE.finditer(fm)})
+    if found:
+        offenders.append((path, found))
 
-if offladder:
-    print(f"{len(offladder)} section(s) with a status outside the ladder "
-          "(outline, drafting, verified):\n")
-    for path, got in offladder:
-        print(f"  {path}: {got}")
-    print()
-
-if problems:
-    print(f"{len(problems)} section(s) stamped verified without the evidence:\n")
-    for path, missing in problems:
-        print(f"  {path}")
-        for m in missing:
-            print(f"    missing: {m}")
-        print()
-
-if frozen:
-    print(f"{len(frozen)} section(s) stamped verified while the freeze is in force:\n")
-    for path in frozen:
-        print(f"  {path}")
-    print("\nNothing carries `verified` until every part is drafted and every chapter has had a\n"
-          "review round. Set it to `drafting`, or lift the freeze in this file if the condition\n"
-          "has actually been met.\n")
-
-if problems or offladder or frozen:
+if offenders:
+    print(f"{len(offenders)} chapter(s) carry a retired per-chapter verification key "
+          "(status / reviewed_by / reviewed_on):\n")
+    for path, found in offenders:
+        print(f"  {path}: {', '.join(found)}")
+    print("\nThese were retired 2026-09-03; the book is versioned as a whole now. Remove the key\n"
+          "and keep only verified_against / verified_on / verified_source.")
     sys.exit(1)
 
-if FREEZE:
-    print("verified stamps: none, and none permitted while the freeze holds; "
-          "every status is on the ladder")
-else:
-    print("verified stamps: all backed by a source check and a review pass; "
-          "every status is on the ladder")
+print("verification stamps: no retired per-chapter status/reviewed keys; "
+      "every chapter carries only whole-book release provenance")
 sys.exit(0)
