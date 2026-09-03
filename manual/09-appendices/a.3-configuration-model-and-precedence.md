@@ -3,12 +3,9 @@ title: "Configuration sources, scopes, and precedence"
 chapter: "Appendices and indexes"
 section: "A.3"
 sidebar_position: 3
-status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-08-29
 verified_source: "drafted against fleet-v4.90.1 (dd0200f062) over three research rounds, then rebuilt against the same tag after independent review round 1 returned NOT READY. Every source, resolution and exception was read from the code that performs it, and every finding applied in that round was re-verified rather than taken on the reviewer's authority; where a claim rests on release history rather than the tag, the ledger says so. Citation ledger at research/section-notes/a.3-notes.md"
-reviewed_by:
-reviewed_on:
 further_reading:
   - https://fleetdm.com/docs/configuration/fleet-server-configuration
 feature_requests:

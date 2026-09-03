@@ -3,12 +3,9 @@ title: "Capability index"
 chapter: "Appendices and indexes"
 section: "A.1"
 sidebar_position: 1
-status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-09-03
 verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from a pass over all 364 rows of the shared capability register (360 in the original pass, plus four amendments below). Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Amended 2026-09-02 (round4 RB3): CAP-003's `fpsso` search term was misrouted to 2.5's Fleet-console JIT provisioning; `fpsso` is Fleet's own settings-search term for the unrelated Platform SSO account-provisioning and password-sync feature, which had no capability row at all. Removed from CAP-003, added as the new CAP-372, routed to 5.5. Amended again 2026-09-02 (round4 RM9): added CAP-373, requiring ACME/Managed Device Attestation for eligible Macs' identity certificates, routed to 2.10; verified against `appconfig.go`, `apple_mdm.go` (`isMDMAppleACMERequired`, `RenewSCEPCertificates`, `maybeQueueCertificateListForACMEProfile`) and the frontend's `HostLifecycleSection.tsx` at the tag. Amended again 2026-09-03 (round4 RM17): CAP-370 (turning MDM off for one host) and CAP-371 (Fleet's own FileVault-key repair) already existed in this register with no owning chapter; gave both formal rows now that 5.7 and 5.8 teach them, verified against `server/service/mdm.go` (`UnenrollMDM`), `server/mdm/android/service/service.go` (`UnenrollAndroidHost`), `cmd/fleet/cron.go` (`verifyDiskEncryptionKeys`) and `server/service/orbit.go` (`setDiskEncryptionNotifications`) at the tag. Citation ledger at research/section-notes/a.1-notes.md"
-reviewed_by:
-reviewed_on:
 further_reading:
   - https://fleetdm.com/docs/get-started/faq
 feature_requests:

@@ -3,12 +3,9 @@ title: "Fleet MCP tool reference"
 chapter: "Appendices and indexes"
 section: "A.11"
 sidebar_position: 11
-status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-09-01
 verified_source: "drafted against fleet-v4.90.1 (dd0200f062), reading cmd/fleet-mcp at that tag: the tool registrations in mcp_tools_hosts.go, mcp_tools_queries.go, mcp_tools_policies.go and mcp_tools_inventory.go, the argument parsing in mcp_helpers.go, and the server instructions in mcp_server.go. Citation ledger at research/section-notes/a.11-notes.md."
-reviewed_by:
-reviewed_on:
 further_reading:
   - https://github.com/fleetdm/fleet/tree/fleet-v4.90.1/cmd/fleet-mcp
   - https://modelcontextprotocol.io/

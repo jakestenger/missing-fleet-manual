@@ -3,12 +3,9 @@ title: "Platform capability matrix"
 chapter: "Appendices and indexes"
 section: "A.2"
 sidebar_position: 2
-status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-08-29
 verified_source: "drafted against fleet-v4.90.1 (dd0200f062) over two research passes. Every cell rests on source read at the tag; Fleet's documentation was used for leads only, never as evidence. Citation ledger at research/section-notes/a.2-notes.md"
-reviewed_by:
-reviewed_on:
 further_reading:
   - https://fleetdm.com/docs/get-started/faq
 feature_requests:

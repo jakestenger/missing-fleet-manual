@@ -3,12 +3,9 @@ title: "Terminology and version boundaries"
 chapter: "Appendices and indexes"
 section: "A.6"
 sidebar_position: 6
-status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-08-29
 verified_source: "drafted against fleet-v4.90.1 (dd0200f062). Boundaries that Fleet enforces were read from the gate; the version at which a capability was introduced is derived from release history rather than from the tag, and the ledger marks which is which. Citation ledger at research/section-notes/a.6-notes.md"
-reviewed_by:
-reviewed_on:
 ---
 
 # Terminology and version boundaries

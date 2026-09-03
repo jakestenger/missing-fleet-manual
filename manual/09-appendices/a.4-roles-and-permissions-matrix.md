@@ -3,12 +3,9 @@ title: "Roles and permissions matrix"
 chapter: "Appendices and indexes"
 section: "A.4"
 sidebar_position: 4
-status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-08-29
 verified_source: "drafted against fleet-v4.90.1 (dd0200f062). The row universe was reconciled against the shared capability register over four research rounds and two later corrections; every published cell resolves to a policy rule, a Go-side decision, or an explicit Not established, and the row universe itself is a search result rather than a proof that nothing is missing. Citation ledger at research/section-notes/a.4-notes.md"
-reviewed_by:
-reviewed_on:
 further_reading:
  - https://fleetdm.com/docs/rest-api/rest-api
 feature_requests:
