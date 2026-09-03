@@ -393,3 +393,12 @@ frontmatter's `verified_source` row count updated together, per the RB1 lesson a
 `build/check-cap-ids.py` also required the matching a.5 row and its cascade of derived counts (Full
 column totals, the 359→360 row/cell totals, the Full-or-Partial and all-four-agree sentences); those
 are recorded in `a.5-notes.md`.
+
+## Fix-loop round (2026-09-02, round4 m9)
+
+- **Gap register claimed "no chapter records the [Chromebook lock/unlock/wipe] refusal," but
+  5.7 already states it in prose.** Verified: `5.7:66` reads "ChromeOS supports none of it,"
+  directly beneath the lock/unlock/wipe matrix, which itself carries no ChromeOS column.
+  Narrowed the claim: the blanket refusal is recorded in prose, but no chapter gives it
+  per-command detail the way CAP-222's Android unlock refusal gets. No CAP-ID or count change
+  (CAP-367/368/369 status is unaffected; this was a wording correction only).
