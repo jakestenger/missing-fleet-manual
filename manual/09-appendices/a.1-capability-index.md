@@ -6,7 +6,7 @@ sidebar_position: 1
 status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-09-02
-verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from a pass over all 361 rows of the shared capability register (360 in the original pass, plus one amendment below). Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Amended 2026-09-02 (round4 RB3): CAP-003's `fpsso` search term was misrouted to 2.5's Fleet-console JIT provisioning; `fpsso` is Fleet's own settings-search term for the unrelated Platform SSO account-provisioning and password-sync feature, which had no capability row at all. Removed from CAP-003, added as the new CAP-372, routed to 5.5. Citation ledger at research/section-notes/a.1-notes.md"
+verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from a pass over all 362 rows of the shared capability register (360 in the original pass, plus two amendments below). Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Amended 2026-09-02 (round4 RB3): CAP-003's `fpsso` search term was misrouted to 2.5's Fleet-console JIT provisioning; `fpsso` is Fleet's own settings-search term for the unrelated Platform SSO account-provisioning and password-sync feature, which had no capability row at all. Removed from CAP-003, added as the new CAP-372, routed to 5.5. Amended again 2026-09-02 (round4 RM9): added CAP-373, requiring ACME/Managed Device Attestation for eligible Macs' identity certificates, routed to 2.10; verified against `appconfig.go`, `apple_mdm.go` (`isMDMAppleACMERequired`, `RenewSCEPCertificates`, `maybeQueueCertificateListForACMEProfile`) and the frontend's `HostLifecycleSection.tsx` at the tag. Citation ledger at research/section-notes/a.1-notes.md"
 reviewed_by:
 reviewed_on:
 further_reading:
@@ -417,12 +417,13 @@ Six markers, and each changes what you do with the word next to it.
 
 ### 7. Running the service
 
-**Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive.** 45 outcomes. The credentials are here rather than in group 2 because a token is a connection task once and a renewal task every year after that, and it is the renewal you arrive searching for.
+**Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive.** 46 outcomes. The credentials are here rather than in group 2 because a token is a connection task once and a renewal task every year after that, and it is the renewal you arrive searching for.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
 | **CAP-270** | Renew the Apple push certificate | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 7.6 | APNs · push certificate expired · renew APNs · APNs expiration |
 | **CAP-271** | Understand how host certificates renew themselves | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 8.8 | `mdm.apple_scep_signer_validity_days` · SCEP renewal |
+| **CAP-373** | Require hardware-attested device identity for eligible Macs | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 3.2 | ACME · Managed Device Attestation · hardware attestation · Secure Enclave · `apple_require_hardware_attestation` · attested identity |
 | **CAP-273** | Renew the Apple Business token | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 7.6 | ABM token expired · AB token · renew AB · `/fleet/abm_tokens/{id}/renew` (still accepted) |
 | **CAP-274** | Customise what Setup Assistant shows | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 5.5 | `macos_setup_assistant` (still accepted) · `apple_setup_assistant` · `changed_macos_setup_assistant` |
 | **CAP-276** | Renew the Apps and Books token | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 7.6 | VPP token (vendor) · renew VPP · `enabled_vpp` |

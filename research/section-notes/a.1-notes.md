@@ -402,3 +402,18 @@ are recorded in `a.5-notes.md`.
   Narrowed the claim: the blanket refusal is recorded in prose, but no chapter gives it
   per-command detail the way CAP-222's Android unlock refusal gets. No CAP-ID or count change
   (CAP-367/368/369 status is unaffected; this was a wording correction only).
+
+## Fix-loop round (2026-09-02, round4 RM9)
+
+- **ACME/Managed Device Attestation for eligible Macs was recorded only in a.6's compatibility
+  table, with no owning chapter and no CAP-ID.** Added CAP-373 ("Require hardware-attested device
+  identity for eligible Macs"), routed to 2.10, Also 3.2, in the "Running the service" group
+  (group 7) next to CAP-271, which already owns SCEP renewal generally. Did not fold this into
+  CAP-056 ("Give a host a hardware-backed identity"): that capability is specifically Fleet's
+  Linux/TPM fleetd request-signing certificate feature, a different mechanism on a different
+  platform for a different purpose (API request authentication, not MDM enrollment identity).
+  Register grows 361 → 362; group 7's in-body count ("45 outcomes" → "46 outcomes") and the
+  frontmatter's `verified_source` row count and amendment note updated together, per the RB1
+  lesson above. `build/check-cap-ids.py` also required the matching a.5 row and its cascade of
+  derived counts; those are recorded in `a.5-notes.md`. Full verification citations are in
+  `2.10-notes.md`.

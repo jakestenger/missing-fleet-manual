@@ -432,3 +432,21 @@ was corrected; see `5.5-notes.md`'s 2026-09-02 addendum for the full review.
   104, 56, 34) sum to 248, not 247, and Partial is only the largest non-Full category in the REST
   API column — Not established (UI) and Unsupported (fleetctl, GitOps) are larger in the other
   three. Corrected both the ranking claim and the count.
+
+## Fix-loop round (2026-09-02, round4 RM9)
+
+Added CAP-373 (a.1's "Require hardware-attested device identity for eligible Macs"), scored
+`Full` in every column. Verified against `fleet-v4.90.1`: the UI checkbox
+(`HostLifecycleSection.tsx:66-83`), the REST API's `mdm.apple_require_hardware_attestation` on
+the config endpoint, the same field round-tripped through classic `fleetctl get`/`apply config`
+(`cmd/fleetctl/fleetctl/testdata/expectedGetConfigAppConfigYaml.yml:56` and sibling fixtures, no
+redaction, unlike CAP-372's secret field), and `controls.apple_require_hardware_attestation` in
+GitOps (`pkg/spec/gitops.go:194,212`). All four read and write the one boolean identically, with
+no asymmetry to flag this time.
+
+Counts recomputed: row/cell totals 360/1,440 → 361/1,444; per-column `Full` totals (197→198 UI,
+186→187 REST API, 179→180 fleetctl, 122→123 GitOps); Total row 360→361 in every column;
+Full-or-Partial reach 290/251/235/156 → 291/252/236/157 (REST API/UI/fleetctl/GitOps); "`Full` in
+all four columns" 83→84; "all four columns agreeing" 102→103. `Partial`/`Read only`/`Unsupported`/
+`Not established` totals were unaffected, because the new row is `Full` everywhere and moves none
+of those buckets. `check-cap-ids.py` passes green with the new totals.
