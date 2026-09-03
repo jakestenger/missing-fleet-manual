@@ -1,0 +1,23 @@
+# A.10 subject index — section notes
+
+## Fix-loop round (2026-09-02, round4 RM11)
+
+Second wave of missing front-door terms, same defect class as round-3's M16 (a different eight
+terms, no overlap). Confirmed via direct grep that A.10 had zero hits for: endpoint allowlist,
+observer-plus, managed local account, CSP, LocURI, OMA-DM, OOBE, ESP, CVSS, EPSS, healthz,
+sysdiagnose, Prometheus.
+
+- **observer-plus:** no fix needed under that spelling. Round4 m5 (this same fix loop, earlier
+  batch) corrected every book occurrence of the hyphenated form to canonical **Observer+**, which
+  A.10 already indexes. The hyphenated term no longer appears anywhere in `manual/`.
+- **managed local account:** added as an alias pointing at the existing "LAPS and the managed
+  local administrator account" entry rather than duplicating it.
+- Added: CSP (owning section 8.9, §8.9.6), endpoint allowlist (6.6 + A.11), EPSS (4.4), ESP (5.5),
+  healthz (8.14 + 8.3), LocURI (8.9), OMA-DM (8.9 + 1.2), OOBE (5.5), Prometheus (7.4),
+  sysdiagnose (8.2 + 8.8).
+- Each entry's owning section was picked by finding where the book actually explains the term
+  (not just mentions it), same standard A.10's frontmatter already commits to.
+
+A.10 has no generated/systematic coverage check, so this defect class (new vocabulary entering
+the book without an index entry) will keep recurring; a future round could consider generating a
+candidate-term list from bolded first-use spots and diffing it against A.10's headword list.
