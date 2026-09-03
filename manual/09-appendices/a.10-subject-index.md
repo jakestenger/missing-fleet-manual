@@ -52,6 +52,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **conditional access:** the policy-driven side is [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md); the identity-provider side is [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md).
 - **configuration profile:** [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 - **`cron_stats`:** the table that records whether a scheduled job ran is in [8.6](../08-troubleshooting/8.6-server-state.md).
+- **CSP** (Configuration Service Provider, the Windows-side component a SyncML command targets): [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md).
 
 ## D
 
@@ -66,9 +67,12 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## E
 
 - **egress destinations** (the outbound map for a firewall review): [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md).
+- **endpoint allowlist** (the Premium restriction narrowing an API-only user's routes below what its role allows): [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md); the route set per tool is [A.11](a.11-mcp-tool-reference.md).
 - **enroll secret:** [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md).
 - **enrollment profile:** [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md); the macOS route that uses it is [3.2](../03-connect-devices/3.2-enroll-macos-devices.md).
 - **Entra** (Microsoft Entra ID): as an identity provider it is [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md); its part in Windows automatic enrollment is [3.3](../03-connect-devices/3.3-enroll-windows-devices.md).
+- **EPSS** (Exploit Prediction Scoring System, the exploitation-probability score Fleet Premium attaches to a vulnerability): [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md).
+- **ESP** (Enrollment Status Page, Windows): holding and releasing a device at it is [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
 - **EST** (Enrollment over Secure Transport): one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 
 ## F
@@ -87,6 +91,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 ## H
 
+- **healthz** (the `/healthz` endpoint): what it checks and returns is [8.14](../08-troubleshooting/8.14-degradation.md); reading its failure in the server log is [8.3](../08-troubleshooting/8.3-server-logs.md).
 - **Helm** (the Kubernetes chart): [2.4](../02-administer-and-deploy-fleet/2.4-deploy-with-containers-or-virtual-machines.md).
 - **host identity certificate:** [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md); which platforms support it is a row in the [platform capability matrix](a.2-platform-capability-matrix.md).
 - **host vitals:** [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md).
@@ -98,10 +103,12 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **LAPS and the managed local administrator account:** [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
 - **licence** (Fleet Premium, licence key, and licence expiry): [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md); choosing a licence tier is [2.1](../02-administer-and-deploy-fleet/2.1-administration-model-and-deployment-choices.md).
 - **live query**, see report.
+- **LocURI**: the CSP node path a SyncML command targets, [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md).
 - **LUKS** (Linux disk encryption): escrow is [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
 
 ## M
 
+- **managed local account**, see LAPS and the managed local administrator account.
 - **MCP** (Model Context Protocol) and the **Fleet MCP server**: connecting an AI assistant to Fleet is [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md); the fixed twenty-tool list it exposes is [A.11](a.11-mcp-tool-reference.md); the term is glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **MDM enrollment:** the model is [2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md); the status values are pinned down in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **My Device page:** designed in [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md); the channel behind it is [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md).
@@ -117,6 +124,8 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 - **object storage** (S3 and compatible): its place in the server's stores is [1.6](../01-foundations/1.6-the-fleet-server.md); provider specifics are [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
 - **Observer+** (`observer_plus`, Observer with the ability to run any report, Premium): choosing between Fleet's roles is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md).
+- **OMA-DM:** the device-management protocol Windows speaks (SyncML is its XML wire format); diagnosed in [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md), introduced as the fifth reach-a-device channel in [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md).
+- **OOBE** (out-of-box experience): the Windows and macOS setup window a device can be held in is [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
 - **OS updates** (operating system update enforcement and deferral): [5.6](../05-manage-devices/5.6-control-operating-system-updates.md).
 - **Orbit:** introduced in [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md) as the bundle's supervisor; managed in [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md).
 - **osquery:** introduced in [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md); query design and performance are [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md).
@@ -130,6 +139,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **pprof:** the profiling set is [8.5](../08-troubleshooting/8.5-fleetctl-debug.md); the term is glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Preview** (`fleetctl preview`, alias `sandbox`): the throwaway local Fleet; its command contracts are in [a.7](a.7-fleetctl-command-reference.md).
 - **profile**, see configuration profile.
+- **Prometheus:** Fleet's metrics naming, and which suffixed series to query, is [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md).
 
 ## Q
 
@@ -164,6 +174,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **SSO and SAML:** [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md).
 - **stdio** (the standard-input/output MCP transport for local clients like Claude Desktop): [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
 - **SyncML:** the Windows MDM wire format is diagnosed in [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md).
+- **sysdiagnose** (Apple's on-demand diagnostic archive): pulling one from iOS/iPadOS is [8.2](../08-troubleshooting/8.2-log-surfaces.md); Apple MDM diagnostics generally are [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md).
 
 ## T
 
