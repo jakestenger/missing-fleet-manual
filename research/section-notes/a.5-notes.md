@@ -351,3 +351,42 @@ wording won every time, because a.5's was narrower than the row's actual platfor
 "Prepare a Mac before its user reaches the desktop" for CAP-189, a row whose cells are Full across
 macOS, iOS/iPadOS and Windows; "Allow a custom FileVault profile" for CAP-243, which is also
 Windows-conditional per C091). Relabeled to match a.2 in all six.
+
+## 2026-09-02 fix: a.5 never projected a.1's CAP-361-to-366 growth (round4 RB1)
+
+a.1 grew from 354 to 360 rows earlier today ([[a.1-notes]]), adding CAP-361 through CAP-366 with
+real chapter homes. a.2's platform-research columns already carried all six (they were the source
+a.1 drew the six labels from). a.5 carried none of them, and its sibling-differences paragraph still
+said "a.1 holds 354 capabilities... covers all of them except CAP-354" — a claim that was current in
+the 2026-09-01 reconciliation above and stale the moment a.1 grew past it. Exactly the defect this
+appendix's own `check-cap-ids.py` was extended today to catch in general: the old check only asked
+whether a.5's IDs exist in a.1, never the reverse.
+
+**Resolved each of the six on its own facts, not by blanket-excluding them next to CAP-354:**
+
+- **CAP-361, CAP-362, CAP-365** (My Device page, the Fleet Desktop menu-bar summary, self-service
+  uninstall): end-user-surface actions in the sense this appendix already defines at "An end-user
+  surface is not administrator support" — the only route is the device owner's own page,
+  authenticated by that device's token. Same shape as the existing CAP-204 row. Added as `Unsupported`
+  in all four columns, matching CAP-204's precedent rather than inventing a new treatment.
+- **CAP-363** (`orbit shell`, alias `osqueryi`): confirmed against source
+  (`orbit/cmd/orbit/shell.go:27-29` at fleet-v4.90.1) that this is a subcommand of the `orbit` agent
+  binary, run locally on the host — not `fleetctl`, not a REST route, not a GitOps key. `Unsupported`
+  in all four columns; none of them was ever a candidate.
+- **CAP-364** (agent restart forces an immediate update check): a.1's own words for it are "restart
+  the agent" and "Orbit restart triggers an immediate update check" — a side effect of a local
+  action, not a Fleet feature any of the four interfaces exposes. `Unsupported` in all four.
+- **CAP-366** (Android Play self-service toggle): a.2's own footnote (its C053 note, on the CAP-202
+  row) records that "on Android Fleet does not refuse that setting, it discards it" — an
+  administrator can set the toggle through every interface, but Fleet never acts on the value on
+  Android, so no interface performs the outcome the row names. `Unsupported` in all four, on that
+  narrower "accepted but discarded" boundary rather than a plain refusal.
+
+Row count moved 353 → 359 (CAP-354 stays the one prose exclusion). Every downstream count in "The
+counts, recounted from the table above" and the two "no supported interface" / "all four agree"
+figures earlier in the file were recomputed from the edited table (a small script, not by hand) and
+updated to match: Unsupported per column +6 each (21→27 UI, 46→52 REST API, 108→114 fleetctl,
+196→202 GitOps), "no supported interface at all" 42→48, "all four columns agreeing" 95→101. The
+`Full`/`Partial`/`Read only`/`Not established` totals and every count keyed off them (the
+Full-or-Partial reach figures, GitOps's 104-row overlap, the UI's 70 `Not established` cells) were
+unaffected, because all six additions are `Unsupported` everywhere and so move none of those buckets.

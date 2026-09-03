@@ -17,8 +17,31 @@ uniqueness check cannot:
      identical. Those two files have always agreed verbatim where they share a row; this
      makes that agreement a checked invariant instead of an accident.
 
+Extended 2026-09-02, round 4 RB1, after A.1 grew from 354 to 360 rows (CAP-361 to CAP-366)
+and A.5 was never updated to match: for four straight rounds this exact class of defect —
+one appendix's register drifting out from under its siblings — escaped review because every
+fix before this one patched only the file the finding named, never the whole contract A.1,
+A.5 and A.7 make with each other and with their own stated counts. The checks below assert
+that whole contract, not just the one hole (missing reverse-direction coverage) that let RB1
+through:
+  3. Every A.1 formal CAP-### row's ID is either a formal row in A.5, or named in A.5's own
+     prose as a documented exclusion (the "covers all of them except **CAP-NNN" sentences).
+     A.5's exclusion list must also not go stale in the other direction: an ID it claims to
+     exclude must actually be absent from its matrix, or the exclusion note itself is wrong.
+  4. A.1's frontmatter states how many rows it verified. That number must equal the actual
+     count of CAP-### rows in A.1.
+  5. A.5's own prose states how many rows its matrix carries. That number must equal the
+     actual row count.
+  6. A.7's main per-command table and its own ownership-audit table must agree on which
+     chapter owns a command: no "No owning chapter" text may survive in the main table for
+     a command the audit table assigns a chapter to, and the two chapters named must match.
+  7. A.7's shared-prefix-contract arithmetic (how many of its command rows carry the common
+     authorization prefix, how many do not, and how the index's own total splits between the
+     cross-platform tree and the one Windows-only row) must equal the rows actually counted
+     from its own tables, not just be internally consistent on paper.
+
 A.4 is not checked here. Its 152 administrator intents are a coarser grouping than A.1's
-354 outcomes (see a.1's "How to read a row"), so it carries no CAP-ID column and nothing
+360 outcomes (see a.1's "How to read a row"), so it carries no CAP-ID column and nothing
 to compare.
 
 Exit code 1 on any failure, so CI blocks the merge.
@@ -51,16 +74,208 @@ def all_ids(path):
     return {"CAP-" + m.group(1) for m in ANY_ID.finditer(path.read_text())}
 
 
+def a5_documented_exclusions(a5_text):
+    """CAP-IDs a.5's own prose names as deliberately outside its matrix, e.g. "this index
+    covers all of them except **CAP-354, connecting an AI assistant**". A row named here is
+    a claim, not a fact; callers reconcile it against what the matrix actually contains."""
+    return {"CAP-" + m.group(1) for m in re.finditer(r"except \*\*CAP-(\d+)", a5_text)}
+
+
+def check_reverse_coverage(a1_rows, a5_rows, a5_text, problems):
+    """The direction round 3's check never took: every formal a.1 row must land somewhere
+    in a.5, either as a row or as a named exclusion. This is exactly the hole RB1 escaped
+    through — CAP-361 to CAP-366 were new a.1 rows that a.5 silently never projected, and
+    the old check only ever asked whether a.5's IDs existed in a.1, never the reverse."""
+    missing = set(a1_rows) - set(a5_rows)
+    excluded = a5_documented_exclusions(a5_text)
+
+    undocumented = missing - excluded
+    if undocumented:
+        problems.append(
+            "a.5: missing these a.1 IDs with no documented exclusion (either add a row or "
+            "name the exclusion in a.5's sibling-differences prose): "
+            + ", ".join(sorted(undocumented, key=lambda c: int(c.split("-")[1])))
+        )
+
+    stale = excluded - missing
+    if stale:
+        problems.append(
+            "a.5: prose excludes these IDs but they are actually present as formal rows "
+            "(stale exclusion note): " + ", ".join(sorted(stale, key=lambda c: int(c.split("-")[1])))
+        )
+
+
+def check_a1_frontmatter_count(a1_path, a1_rows, problems):
+    text = a1_path.read_text()
+    m = re.search(r"verified_source:.*?all (\d+) rows", text)
+    if not m:
+        problems.append("a.1: could not find the frontmatter's stated row count ('all N rows')")
+        return
+    stated, actual = int(m.group(1)), len(a1_rows)
+    if stated != actual:
+        problems.append(
+            f"a.1: frontmatter's verified_source says {stated} rows but {actual} formal "
+            f"CAP-### rows actually exist"
+        )
+
+
+def check_a5_prose_count(a5_path, a5_rows, problems):
+    text = a5_path.read_text()
+    m = re.search(r"This appendix carries (\d+) rows", text)
+    if not m:
+        problems.append("a.5: could not find the 'This appendix carries N rows' claim")
+        return
+    stated, actual = int(m.group(1)), len(a5_rows)
+    if stated != actual:
+        problems.append(
+            f"a.5: prose says this appendix carries {stated} rows but its matrix actually "
+            f"has {actual}"
+        )
+    # The two other headline row-count mentions must agree with the same actual count too.
+    for label, pattern in (
+        ("'carries N of them, against all four'", r"capability register, (\d+) of them, against"),
+        ("'All N register rows'", r"All (\d+) register rows, grouped"),
+        ("'N rows, 1,'", r"\*\*(\d+) rows, [\d,]+ cells"),
+    ):
+        m2 = re.search(pattern, text)
+        if not m2:
+            problems.append(f"a.5: could not find the {label} row-count mention")
+            continue
+        if int(m2.group(1)) != actual:
+            problems.append(
+                f"a.5: the {label} mention says {m2.group(1)} rows but the matrix has {actual}"
+            )
+
+
+def a7_index_segment(text):
+    start = text.index("### Top-level commands")
+    end = text.index("### The seventeen rows")
+    return text[start:end]
+
+
+def a7_command_rows(text):
+    """(command_name, chapter_cell_or_None) for every row in the main per-command index, in
+    the macOS/Linux tree. The Windows-only `updates` entry is deliberately not matched here:
+    its row is `**\\`updates\\` on Windows**`, which this pattern (closing backtick flush
+    against `**`) does not catch, mirroring how the index's own prose counts it separately.
+
+    Split on "|" rather than a single greedy regex: the tables are not uniform width. Most
+    rows carry five content columns (Command, Access contract, Effect, Result contract,
+    Chapter); the `debug` family's table carries only four (no Chapter column at all, since
+    that family is covered by its own paragraph rather than per-row links)."""
+    out = []
+    for line in a7_index_segment(text).split("\n"):
+        m = re.match(r"^\|\s*\*\*`([^`]+)`\*\*", line)
+        if not m:
+            continue
+        fields = [f.strip() for f in line.split("|")]
+        # fields[0] and fields[-1] are the empty strings outside the leading/trailing pipes.
+        content = fields[1:-1]
+        chapter = content[4] if len(content) >= 5 else None
+        out.append((m.group(1), chapter))
+    return out
+
+
+def a7_audit_table(text):
+    """command name -> chapter citation, from 'Which commands have an owning chapter'."""
+    start = text.index("### Which commands have an owning chapter")
+    end = text.index("###", start + 1)
+    segment = text[start:end]
+    out = {}
+    for line in segment.split("\n"):
+        m = re.match(r"^\|\s*\*\*[^*]+\*\*\s*\|\s*(.+?)\s*\|\s*(\[[\d.]+\].*?)\s*\|\s*$", line)
+        if not m:
+            continue
+        chapter_cite = m.group(2)
+        for cmd in re.findall(r"`([^`]+)`", m.group(1)):
+            out[cmd] = chapter_cite
+    return out
+
+
+def check_a7_chapter_agreement(a7_path, problems):
+    text = a7_path.read_text()
+
+    if "No owning chapter" in text:
+        problems.append(
+            "a.7: the literal string 'No owning chapter' still appears in the file, but the "
+            "prose claims every row has an owning chapter"
+        )
+
+    main_rows = dict(a7_command_rows(text))
+    audit = a7_audit_table(text)
+    for cmd, audit_cite in audit.items():
+        if cmd not in main_rows:
+            problems.append(f"a.7: audit table names `{cmd}` but it has no row in the main index")
+            continue
+        main_cell = main_rows[cmd] or ""
+        audit_chapter = re.match(r"\[([\d.]+)\]", audit_cite)
+        main_chapter = re.match(r"\[([\d.]+)\]", main_cell)
+        if not main_chapter:
+            problems.append(
+                f"a.7: main index's Chapter cell for `{cmd}` is \"{main_cell}\", which names no "
+                f"chapter, but the audit table assigns it {audit_cite}"
+            )
+        elif audit_chapter and main_chapter.group(1) != audit_chapter.group(1):
+            problems.append(
+                f"a.7: main index sends `{cmd}` to [{main_chapter.group(1)}] but the audit "
+                f"table sends it to [{audit_chapter.group(1)}]"
+            )
+
+
+def check_a7_prefix_arithmetic(a7_path, problems):
+    text = a7_path.read_text()
+
+    actual_rows = len(a7_command_rows(text))
+
+    m = re.search(r"(\d+) rows, grouped by top-level family: the (\d+) behaviours", text)
+    if not m:
+        problems.append("a.7: could not find the '70 rows ... 69 behaviours' total-count sentence")
+        return
+    stated_total, stated_tree = int(m.group(1)), int(m.group(2))
+
+    if stated_tree != actual_rows:
+        problems.append(
+            f"a.7: says {stated_tree} behavioural rows in the macOS/Linux tree, but the main "
+            f"index actually has {actual_rows} rows"
+        )
+    if stated_total != stated_tree + 1:
+        problems.append(
+            f"a.7: says {stated_total} rows total but {stated_tree} (the tree) + 1 (the "
+            f"Windows-only row) is {stated_tree + 1}"
+        )
+
+    m2 = re.search(r"for the (\d+) rows that carry it", text)
+    m3 = re.search(r"Eighteen of the (\d+) rows do not carry the prefix", text)
+    if not (m2 and m3):
+        problems.append("a.7: could not find both halves of the shared-prefix-contract count")
+        return
+    carry, prefix_universe = int(m2.group(1)), int(m3.group(1))
+    without_prefix = 18  # the sentence's own word, cross-checked against `carry` below
+    if prefix_universe != stated_tree:
+        problems.append(
+            f"a.7: the shared-prefix discussion's universe is {prefix_universe} rows, but the "
+            f"index says the macOS/Linux tree has {stated_tree}"
+        )
+    if carry + without_prefix != prefix_universe:
+        problems.append(
+            f"a.7: {carry} rows carrying the shared prefix plus {without_prefix} that do not "
+            f"should equal the {prefix_universe}-row universe, but {carry} + {without_prefix} "
+            f"= {carry + without_prefix}"
+        )
+
+
 def main():
     a1 = APPENDICES / "a.1-capability-index.md"
     a2 = APPENDICES / "a.2-platform-capability-matrix.md"
     a5 = APPENDICES / "a.5-interface-index.md"
-    for p in (a1, a2, a5):
+    a7 = APPENDICES / "a.7-fleetctl-command-reference.md"
+    for p in (a1, a2, a5, a7):
         if not p.exists():
             print(f"skipped: {p} not found")
             return 0
 
     a1_rows, a2_rows, a5_rows = rows(a1), rows(a2), rows(a5)
+    a5_text = a5.read_text()
     problems = []
 
     for name, reg in (("a.1", a1_rows), ("a.2", a2_rows), ("a.5", a5_rows)):
@@ -83,6 +298,13 @@ def main():
                 f"{cid}: a.2 says \"{a2_label}\" but a.5 says \"{a5_label}\" for the same ID"
             )
 
+    # The whole-contract checks added for round 4 RB1.
+    check_reverse_coverage(a1_rows, a5_rows, a5_text, problems)
+    check_a1_frontmatter_count(a1, a1_rows, problems)
+    check_a5_prose_count(a5, a5_rows, problems)
+    check_a7_chapter_agreement(a7, problems)
+    check_a7_prefix_arithmetic(a7, problems)
+
     if problems:
         print(f"{len(problems)} CAP-ID problem(s):\n")
         for p in problems:
@@ -91,7 +313,9 @@ def main():
 
     print(
         f"CAP-ID register: {len(a1_ids)} IDs in a.1; a.2 ({len(a2_rows)}) and a.5 "
-        f"({len(a5_rows)}) are both subsets with {len(shared)} matching labels checked"
+        f"({len(a5_rows)}) are both subsets with {len(shared)} matching labels checked; "
+        f"reverse coverage, frontmatter/prose row counts, and a.7's chapter agreement and "
+        f"prefix arithmetic all hold"
     )
     return 0
 

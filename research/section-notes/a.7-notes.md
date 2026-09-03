@@ -360,3 +360,34 @@ verification step, and the "Fleet has already been setup" second-run failure. Th
 2.3/2.4's cross-references to point at 2.2 but never updated this row. Fixed: assigned the row to
 2.2, removed the labs-appendix prose, and updated the closing "outcome-level sibling" paragraph
 since `setup` is no longer a named absence in a.7.
+
+## 2026-09-02 fix: the round3 B4 fix above never reached the main table (round4 RB1)
+
+The previous entry's fix apparently didn't survive, or was scoped to the audit table alone: the main
+per-command index's Chapter cell for `setup` still read the literal string "No owning chapter" going
+into this pass, and so did `preview`, `preview stop` and `preview reset` — while the "Which commands
+have an owning chapter" audit table (added specifically to close this gap) correctly named `setup`
+→ 2.2 and all three `preview` variants → 1.1, and the prose between the two tables flatly asserted
+"Every row has an owning chapter." The file had been contradicting itself since at least round 3.
+
+Fixed all four main-table cells to match the audit table exactly, rather than re-deriving the
+chapters independently: `setup` → `[2.2](.../2.2-self-hosting-architecture-and-capacity.md#complete-first-run-setup)`,
+`preview`/`preview stop`/`preview reset` → `[1.1](.../1.1-what-fleet-is.md#try-fleet-without-deploying-anything)`.
+Confirmed zero remaining occurrences of "No owning chapter" anywhere in the file afterward.
+
+Also checked the "70 vs 69" shared-prefix-contract arithmetic RB1 flagged as a MINOR sub-item.
+Recounted directly: 69 behavioural rows in the macOS/Linux tree (regex-counted off the actual
+tables, not read off the prose), of which the file says 51 carry the shared authorization prefix and
+eighteen do not (the fourteen that call no Fleet at all, plus `setup`/`login`/`debug connection`,
+plus `preview` itself) — 51 + 18 = 69, and 69 (the tree) + 1 (the Windows-only `updates` entry) = 70
+matches the file's own "70 rows... 69 behaviours... one row that exists only on Windows" total. The
+arithmetic is already internally consistent and matches the actual row count as of this pass; the
+finding's literal "the file states 70" for the prefix-carrying total does not describe the file as it
+stands now, so no change was made there beyond confirming it. `build/check-cap-ids.py` now recomputes
+this from the tables on every run rather than trusting the prose, so if it drifts again the check
+catches it instead of a fifth review round.
+
+New machine check: `build/check-cap-ids.py` (extended today, [[a.1-notes]], [[a.5-notes]]) now also
+asserts the main index and the audit table agree on every command's chapter, that no row's Chapter
+cell is the literal "No owning chapter" string, and that the 51/18/69/70 shared-prefix arithmetic
+above holds against the actual row count rather than just against itself on paper.

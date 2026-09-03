@@ -317,3 +317,18 @@ a.2/a.5 label mismatches surfaced by the new check (CAP-178, 189, 196, 228, 243,
 to a.2's wording, which cross-checking against source found more accurate in every case (a.5's
 versions were narrower than the row's real platform scope, e.g. "Prepare a Mac" for a cross-platform
 setup-experience row).
+
+## 2026-09-02 fix: frontmatter row count never updated after the 354→360 growth (round4 RB1)
+
+The CAP-361-to-371 growth recorded above (this same file, same date) updated every in-body count —
+"360 outcomes", the group subtotals, the "How to read a row" cross-reference — but missed the
+frontmatter's own `verified_source` field, which still said "a pass over all 354 rows". A reader
+citing the frontmatter as the appendix's own claim about itself would get the pre-growth number.
+Recounted the actual `CAP-###` table rows directly (360, confirmed by `grep -c` and independently by
+`build/check-cap-ids.py`'s row-count assertion) and corrected the frontmatter to match. No other
+number in the body needed touching; this was the one place the fix from earlier today didn't reach.
+
+This is exactly the escape pattern RB1 named: a fix that touches the file it started in and stops,
+leaving a sibling claim (here, a frontmatter field in the same file) stale. `check-cap-ids.py` now
+asserts the frontmatter count against the actual row count on every run, so this specific drift
+cannot recur silently.

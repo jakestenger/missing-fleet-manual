@@ -6,7 +6,7 @@ sidebar_position: 1
 status: drafting
 verified_against: Fleet 4.90.1
 verified_on: 2026-08-30
-verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from a pass over all 354 rows of the shared capability register. Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Citation ledger at research/section-notes/a.1-notes.md"
+verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from a pass over all 360 rows of the shared capability register. Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Citation ledger at research/section-notes/a.1-notes.md"
 reviewed_by:
 reviewed_on:
 further_reading:
