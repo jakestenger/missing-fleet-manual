@@ -205,3 +205,11 @@ who held it. C19 carries it at both scopes.
   (tables report what an administrator receives, which can differ from the policy's own
   decision) and trimmed the immediately following sentence to avoid restating the same point
   twice before the existing "four mechanisms" list. No cells or ratings changed.
+
+## Fix-loop round (2026-09-03, round5 V2d, voice — MJ15)
+
+- **Revision-diary register** in the "What this appendix carries" note ("...two rows were added
+  after a review round found routes the earlier passes had missed..."). Reframed to describe the
+  row universe as a search result rather than narrate the review history; kept the load-bearing
+  "search result and not a proof / a reader who finds another has found a gap" point verbatim in
+  substance. No cells or ratings changed. links=0.

@@ -364,3 +364,12 @@ all pass against the full book after this change.
   independently scoped authorities") before giving the reader anything concrete. Rewrote to name
   the actual sources (server, organization settings, a fleet, the host) and state the appendix's
   job directly. No factual change — the authorities and precedence model below are unchanged.
+
+## Fix-loop round (2026-09-03, round5 V2d, voice — STYLE §28)
+
+- **Double bold-led announce-then-correct** in the agent-options paragraph ("**Agent options are
+  the plane where stored and in-force genuinely diverge**, ... **Host-side, per-consumer
+  observation is the only complete method**, and there is no single question that answers it: ...").
+  Dropped both bold lead-ins and the "is the only complete method" scaffolding; led with the
+  action (read what is in force by observing each consumer on the host). No factual change — the
+  osquery/update-channel/extension/debug/script split below is unchanged. links=0.

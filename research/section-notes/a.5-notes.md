@@ -492,3 +492,17 @@ of those buckets. `check-cap-ids.py` passes green with the new totals.
   outright", contradicting the current two-item exclusion list above it (CAP-354 left out
   entirely; CAP-371 moved to the self-initiation table). Reworded to name CAP-371 as the second
   set-aside row. Links + cap-ids green after each.
+
+## Fix-loop round (2026-09-03, round5 V2d, voice — STYLE §28 + MJ15)
+
+- **Revision-diary register** in "Where this appendix and its siblings deliberately differ": the
+  two openers narrated the register's growth ("**Six more rows are new since a.1 last grew:** ..."
+  and "**A seventh row is new since:** CAP-372..."). Reframed both to describe the rows by what they
+  are and how they score, not when they were added: six rows read `Unsupported` in every column
+  (each for its own reason), and a further row (CAP-372) reads `Partial`. Every CAP id, score,
+  reason, and the CAP-354/CAP-371 set-aside pair (m10) preserved.
+- **Announce-then-correct** in the UI-column paragraph ("**The honest characterisation is that the
+  UI column is the most conservative of the four**, not that the UI is the least capable
+  interface."). De-bolded and merged into flowing prose leading with the claim ("The UI column is
+  the most conservative of the four, not the least capable interface: ..."). Counts (70 cells) and
+  the same-fact/different-proof point unchanged. links=0, no em-dashes.
