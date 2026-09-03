@@ -37,7 +37,7 @@ That distance is the appendix. A row earns its place when the words in its last 
 
 | Column | What it holds |
 |---|---|
-| **ID** | The shared capability identifier. Use it to find the same capability in [a.2](a.2-platform-capability-matrix.md) and [a.5](a.5-interface-index.md), which carry it at the same grain. [a.4](a.4-roles-and-permissions-matrix.md) does not: its 152 administrator intents are a coarser grouping than this index's 364 outcomes, so no row-for-row ID exists there |
+| **ID** | The shared capability identifier. Use it to find the same capability in [a.2](a.2-platform-capability-matrix.md) and [a.5](a.5-interface-index.md). [a.5](a.5-interface-index.md) carries one row per ID. [a.2](a.2-platform-capability-matrix.md) carries the same set, but splits a few outcomes into lettered sub-rows (CAP-244a and its siblings, CAP-341a and its sibling) where the parts of one outcome answer differently by platform, so an ID can land you on more than one row there. [a.4](a.4-roles-and-permissions-matrix.md) is coarser again: its 152 administrator intents are a coarser grouping than this index's 364 outcomes, so no row-for-row ID exists there |
 | **What you are trying to do** | The outcome in the words somebody would use for it, rather than the words the chapter uses |
 | **Chapter** | The one section that teaches this outcome. `None` means no chapter does, and those rows are collected at the end |
 | **Also** | Sections carrying part of the answer, as plain numbers, because the linked chapter is the one to open first |
@@ -550,9 +550,9 @@ Six markers, and each changes what you do with the word next to it.
 | 2 | Connecting devices | Getting a device enrolled, and the platform connections that must exist first | 68 |
 | 3 | Scope and targeting | Deciding who a change reaches and whose data you are reading | 8 |
 | 4 | Knowing what a device is | Reading state: vitals, reports, policies, software, vulnerabilities, estate counts | 58 |
-| 5 | Changing a device | Writing state, split by the mechanism that carries it | 104 |
+| 5 | Changing a device | Writing state, split by the mechanism that carries it | 107 |
 | 6 | Automating Fleet | Making Fleet or another system act without a person | 24 |
-| 7 | Running the service | Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive | 45 |
+| 7 | Running the service | Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive | 46 |
 | 8 | When it did not work | Symptoms, and the surfaces that answer them | 21 |
 
 **Group 5 gets one level of sub-grouping and no more**, along the line [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) already teaches: settings that persist, work that runs once, and experiences. Every reader of Part V has met that distinction, so it costs nothing to reuse and it splits the largest group along a boundary people already hold.
