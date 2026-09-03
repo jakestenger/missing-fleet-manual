@@ -19,7 +19,7 @@ feature_requests:
 
 # Configuration sources, scopes, and precedence
 
-**Fleet's configuration comes from several independently scoped authorities.** Correctness depends on knowing which one owns a value and what happens when two of them have an opinion, and neither question has a single answer.
+The same-looking Fleet setting can come from the server, organization settings, a fleet, or the host. When two sources disagree, the winner depends on the setting. Use this appendix to find the owner and the precedence rule.
 
 ## What this appendix carries
 
