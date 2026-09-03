@@ -1155,3 +1155,59 @@ this style guide. The lesson is not that review is useful, which is obvious. It 
 verification process can be followed correctly and still be blind in a specific, describable
 direction, and that the blindness is invisible from inside the process. Build the checks that
 look where you do not.
+
+## 28. The announce-then-correct rhythm, and qualification stacks
+
+**Jake's rule, 2026-09-03. The systemic one.** Across five review rounds the most consistent
+machine-writing tell in this book was not a phrase, as in §24, but a rhythm, repeated until the
+page had a texture. Each instance passes review because each instance is defensible. The damage
+is cumulative: a reader feels the pattern well before they can name it, and what they feel is
+"written by a model." The two shapes below are the dominant ones, and this rule names them so a
+pass can be run against them directly.
+
+### The bold-led announce-then-correct paragraph
+
+A paragraph that opens with a bold claim, states it, then immediately swerves into a corrective
+contrast that qualifies or reverses it. The bold lead announces; the clause after it walks the
+announcement back, which is the tell: the bold sentence was written in order to be corrected, so
+the correction is the real content and the announcement is scaffolding.
+
+> **X is not the same as Y.** In most cases it only does A, but ...
+> **Both of them work.** What is genuinely missing is narrower than it looks ...
+> **This one path is the exception.** That is the platform's constraint rather than Fleet's ...
+
+One is fine. As the default shape for section after section it becomes a tic, and it is
+measurable in this book: bold lead-ins run at about one visible line in seven, and the word
+*worth* ("worth knowing", "worth being precise about") appears in the hundreds, standing in for a
+claim the sentence does not otherwise carry.
+
+Write the load-bearing sentence first. If the correction is the point, lead with it and drop the
+setup. Keep a bold lead-in only where it labels a real list item (§26) or a branch the reader
+chooses between, never as a way to pre-announce the sentence you are about to deliver (see §24's
+related forms, which catch the same move at sentence scale).
+
+**Test.** Over a run of paragraphs, count how many open with bold text and how many of those
+openers are then qualified by the sentence after them. If most of a section is this shape, most
+of it is rhythm rather than structure. Rewrite until each bold marks something a reader navigates
+by, not something the paragraph immediately takes back.
+
+### The qualification stack
+
+A single sentence, or an unbroken paragraph, that hangs qualifier on qualifier until the thing
+the reader came to decide is buried among the clauses.
+
+> The binary carries an embedded schema and serves it immediately, then attempts a background
+> refresh about two seconds after startup and every 24 hours thereafter by default, replacing the
+> in-memory copy only on a successful fetch and keeping the previous one when a fetch fails.
+
+Every clause is true and the whole is exhausting, because several facts arrive in one breath with
+no ranking. The reader cannot tell which clause they act on and which is reassurance they can
+skim.
+
+Find the one thing the reader does with the paragraph and lead with it. Promote the qualifiers
+that survive into their own sentences, and cut the ones that were only there for completeness
+(§20). A fact that needs three subordinate clauses to be stated safely is usually two facts
+wearing one sentence.
+
+**Test.** Read the sentence aloud. If you run out of breath before the main verb reaches its
+object, or you cannot say in one clause what the reader is meant to do, it is a stack. Break it.
