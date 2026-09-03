@@ -26,7 +26,7 @@ This appendix is the lookup that tells you which of those you are about to hit.
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) Every administrator action in the manual's capability register, 361 of them, against all four operator interfaces: the Fleet UI, the REST API, `fleetctl` and GitOps. Plus a second, shorter table for a different question, which is what Fleet or an external system starts without anyone asking.
+![Reference](../_assets/icons/reference.svg) Every administrator action in the manual's capability register, 362 of them, against all four operator interfaces: the Fleet UI, the REST API, `fleetctl` and GitOps. Plus a second, shorter table for a different question, which is what Fleet or an external system starts without anyone asking.
 
 **What is not here is the detail of any one interface.** Which command to run and what its exit status proves is [a.7](a.7-fleetctl-command-reference.md). What a caller must present and what has to be reachable is [a.8](a.8-api-action-and-endpoint-reference.md). Which configuration authority wins when two of these disagree is [a.3](a.3-configuration-model-and-precedence.md). Which role may perform the action, once you know an interface supports it, is [a.4](a.4-roles-and-permissions-matrix.md). Which platforms it reaches is [a.2](a.2-platform-capability-matrix.md).
 
@@ -181,7 +181,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 ## The matrix
 
-![Reference](../_assets/icons/reference.svg) All 361 register rows, grouped as a reader would look for an action. Section rows in bold carry no cells; they mark where a family starts. Counts by value are published after the table and were recounted from it.
+![Reference](../_assets/icons/reference.svg) All 362 register rows, grouped as a reader would look for an action. Section rows in bold carry no cells; they mark where a family starts. Counts by value are published after the table and were recounted from it.
 
 | ID | Action | UI | REST API | `fleetctl` | GitOps |
 |---|---|---|---|---|---|
@@ -440,6 +440,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 | **CAP-228** | Remove Fleet's management from a personally owned Android device | Full | Full | Unsupported | Unsupported |
 | **CAP-229** | Find where a device is | Full | Partial | Unsupported | Unsupported |
 | **CAP-230** | Clear a device's passcode | Full | Partial | Full | Unsupported |
+| **CAP-370** | Turn Fleet's device management off for one host | Full | Full | Unsupported | Unsupported |
 | **CAP-231** | Send a raw command to Apple devices | Unsupported | Full | Full | Unsupported |
 | **CAP-232** | Send a raw command to Windows devices | Unsupported | Full | Full | Unsupported |
 | **CAP-233** | Read what a device said about a command | Partial | Partial | Partial | Unsupported |
@@ -570,24 +571,24 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 ### The counts, recounted from the table above
 
-**361 rows, 1,444 cells, no blanks.**
+**362 rows, 1,448 cells, no blanks.**
 
 | Value | UI | REST API | `fleetctl` | GitOps |
 |---|---|---|---|---|
-| **Full** | 198 | 187 | 180 | 123 |
+| **Full** | 199 | 188 | 180 | 123 |
 | **Partial** | 54 | 104 | 56 | 34 |
 | **Read only** | 12 | 6 | 8 | 0 |
-| **Unsupported** | 27 | 52 | 114 | 202 |
+| **Unsupported** | 27 | 52 | 115 | 203 |
 | **Not established** | 70 | 12 | 3 | 2 |
-| **Total** | **361** | **361** | **361** | **361** |
+| **Total** | **362** | **362** | **362** | **362** |
 
 Four things in that shape are worth reading before you use any single row.
 
-**The REST API reaches more actions than any other interface**, 291 at `Full` or `Partial` against 252 for the UI, 236 for `fleetctl` and 157 for GitOps. The other three are clients of it, so its reach is the ceiling theirs are measured against.
+**The REST API reaches more actions than any other interface**, 292 at `Full` or `Partial` against 253 for the UI, 236 for `fleetctl` and 157 for GitOps. The other three are clients of it, so its reach is the ceiling theirs are measured against.
 
 **The UI's 70 `Not established` cells are the appendix's largest soft spot**, and they are not evenly spread. Thirty-three of them are in the three sections about running the server, its settings and its diagnostics, where the answer is nearly always that the value is process configuration no interface writes. Twenty-one of the 70 sit on rows where all three other columns independently found `Unsupported`. **Those are very probably `Unsupported` too, and they are not published that way**, because the boundary that would justify it was not found. A wrong `Not established` is a failure in the same way a wrong `Unsupported` is, so the appendix records the uncertainty rather than resolving it in the direction the neighbours point.
 
-**GitOps is `Unsupported` on 104 rows the UI and the REST API can both perform.** That is not a defect in GitOps. It is the closed vocabulary and the missing read direction working as designed, and it is the number that bounds how much of Fleet a repository can manage.
+**GitOps is `Unsupported` on 105 rows the UI and the REST API can both perform.** That is not a defect in GitOps. It is the closed vocabulary and the missing read direction working as designed, and it is the number that bounds how much of Fleet a repository can manage.
 
 **Eighty-four rows are `Full` in all four columns and 103 rows have all four columns agreeing.** The overlap is real. It is just not where the planning risk is.
 
@@ -618,6 +619,7 @@ This is the set worth knowing about, not a catalogue. The register marks 141 row
 | **CAP-181** | Refresh the catalogue of maintained apps | Fleet | Hourly | None |
 | **CAP-189** | Hold a Mac at setup and run the setup experience | Fleet | Enrollment | Premium |
 | **CAP-236**, **CAP-238** | Encrypt a disk and escrow the credential | Fleet | Enforcement reaching the host. **No dialog and no person** on a TPM-backed Ubuntu host; on Windows any message the user sees comes from Windows | Premium |
+| **CAP-371** | Rotate a Mac's FileVault recovery key | Fleet | A scheduled job marking the currently held key undecryptable. The agent then prompts the person at the keyboard for their password at their next login | Escrow Buddy capability declared by the agent; disk encryption enforced for the host's scope |
 | **CAP-249** | POST when hosts start failing a policy | Fleet | Policy evaluation | A destination URL |
 | **CAP-250** | Open a ticket when hosts start failing a policy | Fleet | Policy evaluation | Premium, and a configured ticketing integration |
 | **CAP-251** | Book a maintenance window on a user's calendar | Fleet | A job that runs **every five minutes** | Premium, and a calendar integration |
@@ -653,7 +655,7 @@ Fourteen rows are unsettled in more than one column, and they fall into three gr
 
 ![Explanation](../_assets/icons/explanation.svg) Read this before you compare a cell here against the same action in another appendix, because two of the differences are intentional.
 
-**This appendix carries 361 rows and [a.2](a.2-platform-capability-matrix.md) carries 273.** They are projections of one register: [a.1](a.1-capability-index.md) holds 362 capabilities, and this index covers all of them except **CAP-354, connecting an AI assistant**, which is a client of the REST API rather than an interface of its own, as the note above the matrix records. a.2 is a narrower projection again: it sets aside the rows that are not device-facing, because a platform matrix has nothing to say about a server setting, and it merges rows that are platform-identical, retiring an enrollment identifier this index keeps. **CAP-048 is a strict platform subset of another row for a.2's purposes, but a distinct interface action here**: the personal-link BYOD enrollment, which is not the account-driven path CAP-049 describes. Both differences are scope decisions rather than contradictions: a row present in one projection and absent from another follows from what that projection is for.
+**This appendix carries 362 rows and [a.2](a.2-platform-capability-matrix.md) carries 273.** They are projections of one register: [a.1](a.1-capability-index.md) holds 364 capabilities, and this index covers all of them except **CAP-354, connecting an AI assistant**, which is a client of the REST API rather than an interface of its own, as the note above the matrix records, and except **CAP-371, Fleet's own repair of an undecryptable FileVault key**, which no operator interface invokes at all; it is listed in the self-initiation table below instead. a.2 is a narrower projection again: it sets aside the rows that are not device-facing, because a platform matrix has nothing to say about a server setting, and it merges rows that are platform-identical, retiring an enrollment identifier this index keeps. **CAP-048 is a strict platform subset of another row for a.2's purposes, but a distinct interface action here**: the personal-link BYOD enrollment, which is not the account-driven path CAP-049 describes. Both differences are scope decisions rather than contradictions: a row present in one projection and absent from another follows from what that projection is for.
 
 **Six more rows are new since a.1 last grew: CAP-361 and CAP-362 (the My Device page and the Fleet Desktop menu-bar summary), CAP-363 (`orbit shell`), CAP-364 (an agent restart forcing an immediate update check), CAP-365 (self-service uninstall) and CAP-366 (the Android self-service toggle a.2's CAP-366 note records Fleet as accepting and then discarding).** All six read `Unsupported` in every column here, and each for a different reason the row's own action explains rather than the general boundary text above needing to. CAP-361, CAP-362 and CAP-365 are end-user-surface actions in the sense already defined: the only route is the device owner's own page, authenticated by that device's token, so no administrator interface performs them, the same shape as CAP-204. CAP-363 and CAP-364 are narrower still: `orbit shell` and the update check both run locally, on the host, through the agent's own binary rather than through any interface Fleet exposes to an administrator, so none of the four columns ever had a claim to make. CAP-366 is the odd one: an administrator can set the toggle through every interface, and Fleet stores what was sent, but a.2 records that Fleet then discards it on Android rather than acting on it, so no interface performs the outcome the row names even though all four accept the input. **CAP-354 remains the only row this appendix omits outright**, because it is a client of an interface already in the matrix rather than a boundary case of one; the six above earned rows because each is answerable, and the answer for all six happens to be the same.
 

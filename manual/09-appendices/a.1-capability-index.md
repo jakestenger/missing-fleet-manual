@@ -5,8 +5,8 @@ section: "A.1"
 sidebar_position: 1
 status: drafting
 verified_against: Fleet 4.90.1
-verified_on: 2026-09-02
-verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from a pass over all 362 rows of the shared capability register (360 in the original pass, plus two amendments below). Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Amended 2026-09-02 (round4 RB3): CAP-003's `fpsso` search term was misrouted to 2.5's Fleet-console JIT provisioning; `fpsso` is Fleet's own settings-search term for the unrelated Platform SSO account-provisioning and password-sync feature, which had no capability row at all. Removed from CAP-003, added as the new CAP-372, routed to 5.5. Amended again 2026-09-02 (round4 RM9): added CAP-373, requiring ACME/Managed Device Attestation for eligible Macs' identity certificates, routed to 2.10; verified against `appconfig.go`, `apple_mdm.go` (`isMDMAppleACMERequired`, `RenewSCEPCertificates`, `maybeQueueCertificateListForACMEProfile`) and the frontend's `HostLifecycleSection.tsx` at the tag. Citation ledger at research/section-notes/a.1-notes.md"
+verified_on: 2026-09-03
+verified_source: "drafted against fleet-v4.90.1 (dd0200f062) from a pass over all 364 rows of the shared capability register (360 in the original pass, plus four amendments below). Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Amended 2026-09-02 (round4 RB3): CAP-003's `fpsso` search term was misrouted to 2.5's Fleet-console JIT provisioning; `fpsso` is Fleet's own settings-search term for the unrelated Platform SSO account-provisioning and password-sync feature, which had no capability row at all. Removed from CAP-003, added as the new CAP-372, routed to 5.5. Amended again 2026-09-02 (round4 RM9): added CAP-373, requiring ACME/Managed Device Attestation for eligible Macs' identity certificates, routed to 2.10; verified against `appconfig.go`, `apple_mdm.go` (`isMDMAppleACMERequired`, `RenewSCEPCertificates`, `maybeQueueCertificateListForACMEProfile`) and the frontend's `HostLifecycleSection.tsx` at the tag. Amended again 2026-09-03 (round4 RM17): CAP-370 (turning MDM off for one host) and CAP-371 (Fleet's own FileVault-key repair) already existed in this register with no owning chapter; gave both formal rows now that 5.7 and 5.8 teach them, verified against `server/service/mdm.go` (`UnenrollMDM`), `server/mdm/android/service/service.go` (`UnenrollAndroidHost`), `cmd/fleet/cron.go` (`verifyDiskEncryptionKeys`) and `server/service/orbit.go` (`setDiskEncryptionNotifications`) at the tag. Citation ledger at research/section-notes/a.1-notes.md"
 reviewed_by:
 reviewed_on:
 further_reading:
@@ -27,7 +27,7 @@ That distance is the appendix. A row earns its place when the words in its last 
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) 361 outcomes in eight groups, each with one canonical chapter, and the attested words that lead to it: Fleet's older names that still work, the vendors' names, the strings Fleet prints on screen, and the terms this manual coined. Group 8 also carries the sentences people arrive with when something has already gone wrong. The last section says where the index stops.
+![Reference](../_assets/icons/reference.svg) 364 outcomes in eight groups, each with one canonical chapter, and the attested words that lead to it: Fleet's older names that still work, the vendors' names, the strings Fleet prints on screen, and the terms this manual coined. Group 8 also carries the sentences people arrive with when something has already gone wrong. The last section says where the index stops.
 
 **What is not here.** Whether your platform can do it is [a.2](a.2-platform-capability-matrix.md). Which role may do it is [a.4](a.4-roles-and-permissions-matrix.md). Which interface can do it is [a.5](a.5-interface-index.md). Which configuration authority owns a key you find here, and what wins when two disagree, is [a.3](a.3-configuration-model-and-precedence.md). What a route requires is [a.8](a.8-api-action-and-endpoint-reference.md), and what a `fleetctl` command asks Fleet to do is [a.7](a.7-fleetctl-command-reference.md). What a word means is [a.6](a.6-glossary-and-release-compatibility.md), which owns meaning while this index owns routing. How to do the thing is the chapter each row names. This appendix answers where, and makes no claim about capability, licence or procedure.
 
@@ -37,7 +37,7 @@ That distance is the appendix. A row earns its place when the words in its last 
 
 | Column | What it holds |
 |---|---|
-| **ID** | The shared capability identifier. Use it to find the same capability in [a.2](a.2-platform-capability-matrix.md) and [a.5](a.5-interface-index.md), which carry it at the same grain. [a.4](a.4-roles-and-permissions-matrix.md) does not: its 152 administrator intents are a coarser grouping than this index's 361 outcomes, so no row-for-row ID exists there |
+| **ID** | The shared capability identifier. Use it to find the same capability in [a.2](a.2-platform-capability-matrix.md) and [a.5](a.5-interface-index.md), which carry it at the same grain. [a.4](a.4-roles-and-permissions-matrix.md) does not: its 152 administrator intents are a coarser grouping than this index's 364 outcomes, so no row-for-row ID exists there |
 | **What you are trying to do** | The outcome in the words somebody would use for it, rather than the words the chapter uses |
 | **Chapter** | The one section that teaches this outcome. `None` means no chapter does, and those rows are collected at the end |
 | **Also** | Sections carrying part of the answer, as plain numbers, because the linked chapter is the one to open first |
@@ -58,7 +58,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ## The index
 
-![Reference](../_assets/icons/reference.svg) 361 outcomes. Find the row by the words you would type, then open the linked chapter.
+![Reference](../_assets/icons/reference.svg) 364 outcomes. Find the row by the words you would type, then open the linked chapter.
 
 ### 1. Access and accountability
 
@@ -256,11 +256,11 @@ Six markers, and each changes what you do with the word next to it.
 
 ### 5. Changing a device
 
-**Writing state, split by the mechanism that carries it.** 105 outcomes, in the three lanes [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) teaches: settings that persist, work that runs once, and experiences. If you know which lane you are in, you know which sub-table to scan.
+**Writing state, split by the mechanism that carries it.** 107 outcomes, in the three lanes [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) teaches: settings that persist, work that runs once, and experiences. If you know which lane you are in, you know which sub-table to scan.
 
 #### Settings that persist
 
-31 outcomes. Profiles, operating system updates and disk encryption: things Fleet keeps true rather than things Fleet does once.
+32 outcomes. Profiles, operating system updates and disk encryption: things Fleet keeps true rather than things Fleet does once.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -294,11 +294,12 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-242** | Require a BitLocker startup PIN | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |  | `windows_require_bitlocker_pin` · BitLocker PIN enforcement |
 | **CAP-243** | Use your own encryption profile instead | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 5.2 | `mdm.enable_custom_filevault` · `mdm.enable_custom_disk_encryption` · escape hatch |
 | **CAP-244** | Set and read a firmware password on Apple silicon | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 1.4 | Recovery Lock · `laps` · rotation · Show Recovery Lock password · `viewed_host_recovery_lock_password` · `rotated_host_recovery_lock_password` |
+| **CAP-371** | Have Fleet rotate an undecryptable FileVault recovery key on its own | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 4.5 | Escrow Buddy · `RotateDiskEncryptionKey` · `setDiskEncryptionNotifications` · key repair · undecryptable key |
 | **CAP-245** | Stop enforcing encryption without losing the keys | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 7.2 | disable enforcement |
 
 #### Work that runs once
 
-53 outcomes. Scripts, software installs and device actions: a single unit of work, queued, delivered and finished.
+54 outcomes. Scripts, software installs and device actions: a single unit of work, queued, delivered and finished.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -351,6 +352,7 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-228** | Wipe a personally owned Android device | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.6 | unenroll · remove the work profile |
 | **CAP-229** | Locate a device | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5 | find my device · Apple device location |
 | **CAP-230** | Clear a passcode | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5, 3.6 | Clear passcode · forgotten PIN · `cleared_passcode` · `fleetctl mdm clear-passcode` · `clear_passcode` |
+| **CAP-370** | Turn MDM off for one host, independent of the platform-wide switch | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 2.12 | Turn off MDM · Unenroll · `UnenrollMDM` · `mdmUnenrollEndpoint` |
 | **CAP-231** | Send a payload Fleet has no button for | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 6.4 | custom MDM command · raw Apple command · `fleetctl mdm run-command` · `run_command` · `/fleet/mdm/apple/enqueue` (still accepted) · `/mdm/commands/run` |
 | **CAP-232** | Send a raw Windows command | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 8.9 | SyncML Exec (vendor) · raw Windows MDM command |
 | **CAP-233** | Read what the device said back | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 8.8, 8.9 | command results · `fleetctl get mdm-command-results` · `mdm_command_results` · `/fleet/mdm/apple/commandresults` (still accepted) |
@@ -736,15 +738,15 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Where this index ends
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Seven things a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Eleven earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
+![Troubleshooting](../_assets/icons/troubleshooting.svg) **Five things a reader will search for that this manual does not teach.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. Thirteen earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
 
 **No link is invented for any of them.** A chapter owns an outcome when it explains the workflow, not when it mentions the thing in passing, and not when it explains the surrounding workflow without covering this step.
 
 **[a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter) keeps the sibling register at command granularity.** Every `fleetctl` command group there now has an owning chapter, including first-run `setup` ([2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md#complete-first-run-setup)). The local evaluation sandbox has an owning chapter there too ([1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything)) even though it remains one of this index's no-row absences below, since a.7 tracks commands and this index tracks outcomes. The two registers describe overlapping gaps at different grain, so never add one count to the other.
 
-### Seven things with no row and no chapter
+### Five things with no row and no chapter
 
-These are attested in Fleet, but have no capability row, so they do not appear in the index above. The first two are mentioned in a chapter's prose; the last five are attested only in [a.2](a.2-platform-capability-matrix.md)'s platform research, which found them while answering a different question and gave each a shared-register ID with nowhere in the manual yet to send a reader.
+These are attested in Fleet, but have no capability row, so they do not appear in the index above. The first two are mentioned in a chapter's prose; the last three are attested only in [a.2](a.2-platform-capability-matrix.md)'s platform research, which found them while answering a different question and gave each a shared-register ID with nowhere in the manual yet to send a reader.
 
 **Android enrollment through a Google account.** A named absence: [3.6](../03-connect-devices/3.6-enroll-android-devices.md) says a third path exists and this manual cannot describe it, and [8.13](../08-troubleshooting/8.13-escalation.md) adds that no expected status has been established for it.
 
@@ -752,13 +754,9 @@ These are attested in Fleet, but have no capability row, so they do not appear i
 
 **Locking, releasing and erasing a Chromebook.** CAP-367, CAP-368 and CAP-369. Fleet refuses all three outright: the lock, unlock and wipe handlers each fall through to a `default:` case that returns "Unsupported host platform" for ChromeOS (`ee/server/service/hosts.go:139,230,330` at fleet-v4.90.1). [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) records the blanket refusal in prose directly beneath its lock-unlock-wipe matrix ("ChromeOS supports none of it"), but the matrix itself carries no ChromeOS column, so no chapter gives the refusal per-command detail the way it does for CAP-222's Android unlock.
 
-**Turning Fleet's device management off for one host, independent of the platform-wide switch.** CAP-370. `UnenrollMDM` (`server/service/mdm.go:4253`) is real and [a.4](a.4-roles-and-permissions-matrix.md) authorises it, but no chapter teaches an administrator when or how to invoke it standalone; the only worked example in the book is Android's estate-wide toggle in [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md#turning-android-mdm-off-deletes-your-enterprise), which is a different operation.
+### Thirteen entries re-audited out of the count
 
-**Rotating the FileVault recovery key Fleet holds for a Mac.** CAP-371. Fleet does this itself, agent-side, when the stored key turns out to be undecryptable (`setDiskEncryptionNotifications`, `server/service/orbit.go:905`); no chapter teaches the mechanism, and [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) states only that reading a key never rotates it.
-
-### Eleven entries re-audited out of the count
-
-**An entry leaves this register by being taught, and these eleven left it that way: three when a re-audit found the teaching already in the book, and eight when new content took the outcome on.** They stay listed so the register never shrinks silently, and so the next audit does not re-open them.
+**An entry leaves this register by being taught, and these thirteen left it that way: three when a re-audit found the teaching already in the book, and ten when new content took the outcome on.** They stay listed so the register never shrinks silently, and so the next audit does not re-open them.
 
 **The device-authenticated API.** Counted here in an earlier revision on the grounds that it was covered only through the things that run on it. The coverage stands in its own right: [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md#the-five-channels) explains the channel, its per-host token and who consumes it, and [a.8](a.8-api-action-and-endpoint-reference.md#who-calls-fleet-and-what-they-present) carries the Device caller class and enumerates the surface that token authenticates.
 
@@ -781,3 +779,7 @@ These are attested in Fleet, but have no capability row, so they do not appear i
 **Creating a custom host vital definition.** Counted here while [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) named the feature and taught only reading a value. [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) now teaches the definition lifecycle: creating, listing, renaming and deleting a definition, setting or clearing a host's value, and declaring the whole set in a GitOps spec, each written to the activity log. It is on Fleet Free.
 
 **The mutual-TLS proxy in front of Okta conditional access.** Counted here while the proxy was a one-sentence prerequisite no chapter owned. [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md#device-conditional-access-trusts-the-proxy-set-certificate-serial) now owns it: the client-certificate-serial header the proxy sets, that Fleet trusts it with no cryptographic binding to the request, and the requirement that the terminator derive the serial from the verified peer certificate and discard every inbound copy, with the origin restriction and the serial-format setting. It is Premium.
+
+**Turning Fleet's device management off for one host, independent of the platform-wide switch.** Counted here while no chapter taught an administrator when or how to invoke it standalone, only Android's estate-wide toggle in [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md#turning-android-mdm-off-deletes-your-enterprise). [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md#turn-mdm-off-for-one-host) now owns it: which platforms offer it and which refuse, what re-enrollment looks like per enrollment type, and the record-flips-before-the-device inversion between Apple and Android BYOD. CAP-370 routes there. It is Free.
+
+**Rotating the FileVault recovery key Fleet holds for a Mac.** Counted here while [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) said only that reading a key never rotates it, with no mention of the one case where Fleet rotates a key on its own. [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md#the-one-credential-fleet-repairs-on-its-own) now owns it: the scheduled verification job that marks a stored key undecryptable, the Escrow Buddy capability that turns that into an automatic re-key at the person's next login, and that Windows and Linux have no equivalent. CAP-371 routes there.

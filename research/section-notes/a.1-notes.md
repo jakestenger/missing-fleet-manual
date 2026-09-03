@@ -417,3 +417,23 @@ are recorded in `a.5-notes.md`.
   lesson above. `build/check-cap-ids.py` also required the matching a.5 row and its cascade of
   derived counts; those are recorded in `a.5-notes.md`. Full verification citations are in
   `2.10-notes.md`.
+
+## Fix-loop round (2026-09-03, round4 RM17)
+
+- **CAP-370 and CAP-371 already existed in the register with no owning chapter** (the "Seven
+  things with no row and no chapter" section). Now that 5.7 and 5.8 teach them, gave both formal
+  rows and removed their no-chapter paragraphs, moving them to the "entries re-audited out of
+  the count" list instead (which is why that list's count and its own "three re-audit / N
+  new-content" breakdown both needed updating, not just its total).
+- **Found and fixed a pre-existing staleness while touching this file's own counts.** The "N
+  outcomes in eight groups" prose (three mentions: "What this appendix carries", the ID-column
+  description, and the index's own opening line) still said 361 after RM9's earlier batch added
+  CAP-373, taking the formal row count to 362 — RM9's log shows it updated the frontmatter and
+  group-7 count but missed these three sentences. Not caught by `check-cap-ids.py`, which only
+  checks the frontmatter's `all N rows` figure and a.5's echoes, not a.1's own prose. Fixed
+  alongside this round's own +2, so all three now read 364, matching the actual row count and
+  the sum of all eight groups' own published subtotals (32+68+8+58+107+24+46+21=364).
+  Recorded here rather than silently folded in, per the standing instruction to fix the whole
+  contract when touching a file that carries one, not just the one row a finding named.
+  Register: 362 formal rows → 364 (CAP-370 to the "work that runs once" lane, 53→54 outcomes;
+  CAP-371 to "settings that persist", 31→32; "writing state" total 105→107).

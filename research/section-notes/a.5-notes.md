@@ -450,3 +450,29 @@ Full-or-Partial reach 290/251/235/156 → 291/252/236/157 (REST API/UI/fleetctl/
 all four columns" 83→84; "all four columns agreeing" 102→103. `Partial`/`Read only`/`Unsupported`/
 `Not established` totals were unaffected, because the new row is `Full` everywhere and moves none
 of those buckets. `check-cap-ids.py` passes green with the new totals.
+
+## Fix-loop round (2026-09-03, round4 RM17)
+
+- **Added CAP-370** ("Turn Fleet's device management off for one host", label copied verbatim
+  from a.2 since both files now carry this ID), scored `Full`/`Full`/`Unsupported`/`Unsupported`
+  (UI, REST API, `fleetctl`, GitOps): the UI has the Actions-menu button, `DELETE
+  .../hosts/{id}/mdm` and `PATCH .../mdm/hosts/{id}/unenroll` are both real REST routes, and
+  neither `fleetctl` nor GitOps wraps it (no command found).
+- **Added CAP-371 as a documented exclusion, not a matrix row.** No operator interface invokes
+  it at all — it is Fleet's own scheduled repair, reachable only from the self-initiation table
+  below the main matrix, so it does not belong in a UI/API/fleetctl/GitOps grid. Extended the
+  existing "except **CAP-354" sentence to also name CAP-371 and say why, and added a row to
+  "What Fleet or an external system starts on its own" describing the trigger (the verification
+  job marking a key undecryptable) and the material gate (Escrow Buddy capability declared,
+  encryption enforced).
+- Counts recomputed for CAP-370's one new matrix row (`Full`/`Full`/`Unsupported`/`Unsupported`):
+  row/cell totals 361/1,444 → 362/1,448; `Full` totals 198→199 UI, 187→188 REST API (fleetctl
+  and GitOps unchanged); `Unsupported` totals 114→115 fleetctl, 202→203 GitOps (UI and REST API
+  unchanged); Total row 361→362 in every column; Full-or-Partial reach 291/252/236/157 →
+  292/253/236/157 (REST API/UI/fleetctl/GitOps, fleetctl and GitOps unchanged since CAP-370 is
+  `Unsupported` in both); "GitOps `Unsupported` on N rows UI and REST API can both perform"
+  104→105 (CAP-370 qualifies: UI Full, REST API Full, GitOps Unsupported); "`Full` in all four
+  columns" 84 and "all four columns agreeing" 103 both unchanged, since CAP-370 is not `Full` in
+  fleetctl or GitOps so does not join either bucket. `Partial`/`Read only`/`Not established`
+  totals unaffected. `check-cap-ids.py` passes green with the new totals and the reverse-coverage
+  check (364 a.1 rows − 362 a.5 rows = 2, matching the two now-documented exclusions).
