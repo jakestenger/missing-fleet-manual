@@ -156,7 +156,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 ## What decides a `Partial` cell
 
-![Explanation](../_assets/icons/explanation.svg) `Partial` is the most common non-`Full` answer in three of the four columns, so it is worth knowing the shapes it takes rather than reading 247 boundaries one at a time.
+![Explanation](../_assets/icons/explanation.svg) `Partial` is the most common non-`Full` answer in one of the four columns (REST API); `Unsupported` and `Not established` are larger in the other three. It is still worth knowing the shapes `Partial` takes, since it appears 248 times across the four columns, rather than reading each of those boundaries one at a time.
 
 **In the REST API column** it is nearly always that part of the action belongs to another caller. The administrator half is there and the device, agent or protocol half is not, and the missing half is usually the one that touches the machine.
 
