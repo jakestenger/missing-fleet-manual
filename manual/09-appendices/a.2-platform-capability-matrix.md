@@ -99,7 +99,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 
 ## The matrix
 
-![Reference](../_assets/icons/reference.svg) Grouped as a reader would look for a capability, 273 rows. Section rows in bold carry no cells; they mark where a family starts.
+![Reference](../_assets/icons/reference.svg) Grouped as a reader would look for a capability, 276 rows. Section rows in bold carry no cells; they mark where a family starts.
 
 | ID | Capability | macOS | iOS/iPadOS | Windows | Linux | Android | ChromeOS | Licence | Prerequisite |
 |---|---|---|---|---|---|---|---|---|---|
@@ -262,6 +262,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-177** | Install software on a host | Supported | Supported | Supported | Supported | Unsupported | Unsupported | Premium | Agent installed, or MDM connected for the Apple path |
 | **CAP-178** | Uninstall software from a host, as an administrator | Conditional (C041) | Unsupported | Supported | Supported | Unsupported | Unsupported | Premium | Agent installed with scripts enabled, and an uninstall script on file |
 | **CAP-365** | Let an end user uninstall their own software | Conditional (C041) | Unsupported | Supported | Supported | Unsupported | Unsupported | Premium | The title offered as self-service, and the end-user surface installed. Authenticated by the device's own address, not by a Fleet account |
+| **CAP-352** | Retry a failed software install or uninstall by hand | Supported | Supported | Supported | Supported | Unsupported | Unsupported | Premium | A failed install or uninstall to retry. Re-issuing the action, which is what the retry does, carries the same requirements as the original |
 | **CAP-179** | Ship different builds of one title to different hosts | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Premium | At most ten packages per title |
 | **CAP-180** | Hold a catalogue app at a version | Supported | Supported | Supported | Supported | Supported | Supported | Premium | A cached version must exist |
 | **CAP-181** | Keep the library's catalogue apps current | Supported | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Premium | An installer store, and no literal version pin |
@@ -277,6 +278,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-190** | Run a script as part of setup | Supported | Unsupported | Unsupported | Unsupported | Not applicable | Not applicable | Premium | Automated enrollment, with manual agent install off |
 | **CAP-191** | Deliver a package to a Mac before the agent exists | Supported | Unsupported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Automated enrollment, and Apple MDM configured |
 | **CAP-192** | Create the user's local account during setup | Supported | Unsupported | Not applicable | Not applicable | Not applicable | Not applicable | Premium at delivery, not refused at the settings interface | Automated enrollment, and Apple MDM configured |
+| **CAP-372** | Provision a Mac's local account and sync its password with the identity provider | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple MDM configured, an OAuth identity provider set for account provisioning, and the server private key set |
 | **CAP-193** | Show the user an agreement during setup | Conditional (C046) | Supported | Unsupported | Not applicable | Not applicable | Not applicable | Premium | An identity provider configured for MDM features |
 | **CAP-194** | Hold a Windows device at a status page until setup finishes | Not applicable | Not applicable | Conditional (C047) | Not applicable | Not applicable | Not applicable | No direct gate, Premium-only prerequisite | Windows MDM configured, and automatic enrollment at first boot |
 | **CAP-195** | Show setup progress without holding anyone up | Unsupported | Not applicable | Conditional (C049) | Supported | Not applicable | Not applicable | Premium | Agent installed with the end-user surface enabled |
@@ -361,6 +363,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-275** | Add or remove an App Store application | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple MDM already on, and the licence already purchased in Apple Business. Fleet cannot buy one: it looks for an asset you already hold and tells you to purchase it there when it finds none |
 | **CAP-276** | Renew the Volume Purchasing token | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | A purchase token uploaded |
 | **CAP-277** | Learn from Fleet that an Apple credential is expiring | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Free for the push certificate, Premium for the rest | The relevant Apple credential must be on file |
+| **CAP-373** | Require hardware-attested device identity for eligible Macs | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple MDM configured, automated enrollment, and an Apple Silicon Mac on macOS 14 or later. The requirement is skipped for a Mac that does not qualify |
 | **CAP-278** | Turn on Windows device management | Not applicable | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Free | A certificate and key pair configured in server settings |
 | **CAP-279** | Choose whether Windows enrollment asks the end user | Not applicable | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Free | Windows MDM already on |
 | **CAP-280** | Turn Windows device management off | Not applicable | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Free | Windows MDM already on |
@@ -605,9 +608,9 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 ## Rows that are not platform-scoped
 
-88 rows have no platform answer. Most are about the Fleet server rather than a device: server configuration, a server-side store, an identity operation, or a property of how the deployment is run. **A few are not server-side and still have no platform answer**, which is why the section is named for what is true of all of them rather than for the common case. An automation interface is one, and a commercial arrangement with no corresponding mode in the software is another.
+92 rows have no platform answer. Most are about the Fleet server rather than a device: server configuration, a server-side store, an identity operation, or a property of how the deployment is run. **A few are not server-side and still have no platform answer**, which is why the section is named for what is true of all of them rather than for the common case. An automation interface is one, and a commercial arrangement with no corresponding mode in the software is another.
 
-Carrying all 88 as six `Not applicable` cells each would add 528 cells that say nothing and would distort every per-platform count. Omitting them would be worse, because a reader who looked one up and found nothing could not tell whether a.2 does not cover it or whether it simply has no platform answer.
+Carrying all 92 as six `Not applicable` cells each would add 552 cells that say nothing and would distort every per-platform count. Omitting them would be worse, because a reader who looked one up and found nothing could not tell whether a.2 does not cover it or whether it simply has no platform answer.
 
 So they are carried here, one line each, grouped by the same sections as the matrix. The role answer for these rows is in a.4 and the interface answer is in a.5, which is where they genuinely resolve.
 
@@ -647,6 +650,7 @@ So they are carried here, one line each, grouped by the same sections as the mat
 - **CAP-107** Stop storing report results server-wide. Server configuration: one setting that stops results being stored.
 - **CAP-108** Stop storing one report's results. A server-side field on one report, with no device component.
 - **CAP-109** Cap how many report rows Fleet keeps across hosts. Server configuration: a storage policy over retained report rows.
+- **CAP-351** Retire a legacy 2017 query pack. A server-side operation on saved queries: converting or disabling an imported osquery pack, with nothing asked of any device.
 
 **F. Policies**
 
@@ -671,6 +675,7 @@ So they are carried here, one line each, grouped by the same sections as the mat
 - **CAP-251** Book a maintenance window on the user's calendar. A server-side job over policies and the calendars of the people who own hosts.
 - **CAP-256** POST when a new vulnerability is detected. A server-side automation over the vulnerability tables.
 - **CAP-258** Block webhook destinations on internal addresses. A deployment property of Fleet's outbound network behaviour.
+- **CAP-349** Connect a certificate authority. A server-side integration: Fleet stores an external issuing authority's connection details and credentials. Delivering a certificate to a device is the separate CAP-153.
 
 **Q. Automation interfaces**
 
@@ -684,6 +689,7 @@ So they are carried here, one line each, grouped by the same sections as the mat
 - **CAP-266** Reach a route `fleetctl` has no command for. An automation interface: a raw pass-through to any route.
 - **CAP-267** Apply or delete a one-off spec file. An automation interface: applying or deleting a single specification file.
 - **CAP-268** Generate a CI pipeline for GitOps. An automation interface: pipeline templates the tool writes out.
+- **CAP-354** Connect an AI assistant to Fleet. An automation interface: the Fleet MCP server brokers an assistant's read and live-query requests to Fleet's own routes.
 
 **S. Organization and server settings**
 
@@ -714,6 +720,7 @@ So they are carried here, one line each, grouped by the same sections as the mat
 - **CAP-315** Add read replicas. A deployment property: read replicas behind the server.
 - **CAP-316** Configure shared object storage. A deployment property: shared object storage for server-side stores.
 - **CAP-317** Put Fleet behind an outbound proxy. A deployment property: outbound proxy configuration for the server process.
+- **CAP-350** Enumerate every outbound destination Fleet reaches. A deployment property: the set of addresses the server calls, read for a firewall review rather than asked of any device.
 - **CAP-318** Deploy Fleet on AWS from Fleet's reference Terraform. A deployment property: reference infrastructure code for one cloud.
 - **CAP-319** Deploy Fleet on GCP from Fleet's reference Terraform. A deployment property: reference infrastructure code for one cloud.
 - **CAP-320** Authenticate object storage without a stored key. A deployment property: object-store credentials without a stored key.
@@ -796,6 +803,10 @@ So they are carried here, one line each, grouped by the same sections as the mat
 ## One row that is not a Fleet capability
 
 **CAP-342, collect a sysdiagnose from an iPhone or iPad.** This row is not in the matrix, and it is not server-side either. Fleet neither triggers nor retrieves a sysdiagnose on any platform. The Apple command set Fleet implements is a closed list of eighteen request types, none of which collects a log or an archive; the four diagnostic-log recipes Fleet documents are all Windows; and there is no agent and no script execution on iPhone or iPad. On those devices the artefact does exist, and the person holding the phone produces it through iOS itself. That is a fact about Apple's platform rather than about Fleet, so it cannot honestly be written as a Fleet capability cell in either direction.
+
+## One row merged into another
+
+**CAP-048, enroll a personally owned iPhone or iPad,** has no row of its own here on purpose. On the platform axis it is the iPhone and iPad case of enrolling a personally owned device from a link, which the matrix already carries as one cross-platform row (CAP-029). [a.5](a.5-interface-index.md) keeps CAP-048 as a separate row because the interface answer differs; this projection folds it in because the platform answer does not.
 
 
 ## Version notes
