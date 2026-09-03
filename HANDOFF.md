@@ -741,6 +741,31 @@ Reviews run through ChatGPT's Codex CLI, invoked directly, with no human relayin
 
 ### The verification freeze
 
+**SUPERSEDED 2026-09-03 by the owner — read this first.** Per-part and per-chapter
+verification is retired. There are no longer per-chapter `verified` stamps, per-chapter review
+rounds, round counts, a five-round cap, or a "freeze" to lift. **The only unit of verification
+now is the whole book, and the only gate is a single question: is the book ready for the owner's
+human review, yes or no.** Right now the answer is **no**. When it is yes, the owner reads it end
+to end and returns notes chapter by chapter; his read is the review. Everything below about the
+freeze, the demotion, `check-verified.py FREEZE`, per-chapter `reviewed_by/on` bookkeeping and
+review-round ledgers is historical context, not a live process.
+
+**What this does NOT change: claim-level accuracy still stands, in full.** Every assertion about
+Fleet is still checked against the release tag, still recorded in `research/section-notes/`, and
+the honesty rule ("not documented; unverified" rather than a guess) is untouched. Dropping
+per-chapter *verification stamps* is not dropping *correctness* — the owner's standard is still
+"complete AND correct". The retired thing is the per-chapter sign-off ceremony and its status
+stamp, not the requirement that facts be right. See CONTRIBUTING "Claims about Fleet get verified"
+(kept) versus "Verification is necessary and not sufficient" (now applies at the whole-book pass).
+
+Mechanical follow-up still open: retire the `FREEZE` flag path in `check-verified.py`, reconcile
+the scattered per-chapter-round mentions in this file and STYLE.md, and refresh the status
+artifact to the single book-readiness gate.
+
+---
+
+_Historical (pre-2026-09-03):_
+
 **Set by the owner on 2026-08-27:**
 
 > Let's demote anything listed as "verified" to drafting until we've completed drafting all the
