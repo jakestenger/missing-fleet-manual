@@ -132,3 +132,17 @@ than pre-validated.
   boolean-flag exception** that 6.6's prose already carries correctly (6.6:72, fixed there by
   round-3 m7 but never propagated here). Confirmed exception at `cmd/fleet-mcp/schema.go:361-458`
   ("Don't flag literal 0 / 1 against TEXT"). Added the parenthetical to the row.
+
+## Fix-loop round (2026-09-03, round5 MJ4)
+
+- **The opening summary conflated "reads Fleet" with "reads at all" and mislabeled
+  `run_live_query`.** It said "one changes devices; every other tool only reads Fleet's own data,"
+  which is wrong on both counts: three tools never touch Fleet, and `run_live_query` does not
+  change devices. Counted the registrations in `cmd/fleet-mcp` (fleet-v4.90.1): 20 `mcp.NewTool`
+  calls total. Three operate outside Fleet — `get_vetted_queries` (bundled library via
+  `GetVettedQueries`, no fleetClient), `get_osquery_schema` and `refresh_osquery_schema` (osquery
+  schema from the embedded snapshot / `raw.githubusercontent.com`, `openWorld=true`). One,
+  `run_live_query`, is annotated `ReadOnly=false`/`Destructive=true` with the source comment that
+  it "consumes device CPU and surfaces in EDR telemetry" — i.e. executes on and consumes resources
+  on devices, not persistent mutation. The remaining 16 read Fleet. Rewrote line 25 to that single
+  model, consistent with 6.6's own carve-out (MJ4). Verified fleet-v4.90.1.
