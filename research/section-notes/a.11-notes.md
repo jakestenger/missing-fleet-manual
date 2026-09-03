@@ -98,3 +98,15 @@ than pre-validated.
   shape (`{"method","path"}` with the full literal path) against
   `integration_enterprise_test.go`. Corrected the claim to "only literal v1 is accepted" and
   added a copyable full-path JSON example.
+
+## Fix-loop round (2026-09-02, round4 RM1)
+
+- **RM1 — fan-out routes still incomplete after round-3's B3 "complete transitive call graph"
+  fix.** Verified against source: `get_endpoints` (via `GetEndpointsWithFilters`,
+  `fleet_integration.go`) taking Path 2 (label/platform filter, no `policy_id`) calls
+  `enrichHostLabels`, which issues one `GET /hosts/{id}` per host still missing labels, because
+  `/labels/{id}/hosts` silently ignores `populate_labels=true`. That fan-out wasn't in the row.
+  Separately, `get_software`'s per-host mode calls `resolveHost` (`mcp_tools_inventory.go`) —
+  `GET /hosts/{id}` for a numeric `host_id`, or a query-first `GET /hosts` search falling back to
+  `GET /hosts/identifier/{identifier}` for `host_identifier` — before its own
+  `GET /hosts/{id}/software` call, and none of that resolution sequence was listed. Added both.
