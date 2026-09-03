@@ -424,3 +424,11 @@ generated from a live config emits a `TODO` placeholder for the secret rather th
 (`cmd/fleetctl/fleetctl/generate_gitops.go:1452-1470`, "mirrors the other secret placeholders").
 Ratings unchanged (`Full` is still correct — all four *can* set it), only the "identically" framing
 was corrected; see `5.5-notes.md`'s 2026-09-02 addendum for the full review.
+
+## Fix-loop round (2026-09-02, round4 m4)
+
+- **"Partial is the most common non-Full answer in three of the four columns" was wrong**, and so
+  was "247 boundaries." Direct count against the published table: the four Partial values (54,
+  104, 56, 34) sum to 248, not 247, and Partial is only the largest non-Full category in the REST
+  API column — Not established (UI) and Unsupported (fleetctl, GitOps) are larger in the other
+  three. Corrected both the ranking claim and the count.

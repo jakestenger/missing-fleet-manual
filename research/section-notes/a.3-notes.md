@@ -357,3 +357,10 @@ table that no longer matches; both now describe the fifth column and its one kno
 Regenerated against `fleet-v4.90.1` (`dd0200f062`), the same tag and commit already pinned in this
 file's header. `build/check-links.py`, `build/check-column-names.py`, and `build/check-table-names.py`
 all pass against the full book after this change.
+
+## Fix-loop round (2026-09-02, round4 RM18, voice)
+
+- **Opening paragraph led with a bold abstract claim** ("Fleet's configuration comes from several
+  independently scoped authorities") before giving the reader anything concrete. Rewrote to name
+  the actual sources (server, organization settings, a fleet, the host) and state the appendix's
+  job directly. No factual change — the authorities and precedence model below are unchanged.

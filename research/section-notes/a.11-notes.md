@@ -110,3 +110,14 @@ than pre-validated.
   `GET /hosts/{id}` for a numeric `host_id`, or a query-first `GET /hosts` search falling back to
   `GET /hosts/identifier/{identifier}` for `host_identifier` — before its own
   `GET /hosts/{id}/software` call, and none of that resolution sequence was listed. Added both.
+
+## Fix-loop round (2026-09-02, round4 m1, m2)
+
+- **"Every connection also calls `GET /me`" was wrong** — the identity check runs once per MCP
+  server process at startup, not per connection (matches 6.6:86's correct "checked by the server
+  at startup, once"). Corrected the wording.
+- **"Every other tool only reads" hid `refresh_osquery_schema`'s side effects.** It performs an
+  outbound fetch to `raw.githubusercontent.com` and replaces the MCP server's shared in-memory
+  schema on success (`RefreshSchemaNow`/`storeSchema` in `cmd/fleet-mcp/schema.go:163-186`), so
+  subsequent `get_osquery_schema` calls in that process see the new data. Added a disclosure
+  sentence naming it as a partial exception.
