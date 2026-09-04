@@ -64,3 +64,12 @@ readiness gate (7.7:154-164), not a Fleet-attested capability, so it fails that 
 intake checklist was re-audited out (a.1:768). The reviewer's real concern is searchability, so it
 is served here in a.10 rather than by a false register row; the a.1 register stays at eight (first-run
 setup only, MJ-H). links=0, crossrefs/headings=0.
+
+## round9 a.10 index routing (MIN8-9, MIN8-10) — 2026-09-04
+
+- MIN8-9 (seed discoverability): added S-section "seed mode" and "standard saved reports" plus a B-section
+  "bootstrap reports" cross-ref, all pointing at 6.6's One-shot seed mode. Verified the `fleet-mcp -seed`
+  behaviour at fleet-v4.90.0 (main.go:70/104-107, seed_fleet.go:14-66). Full note in [[a.11-notes]].
+- MIN8-10 (Preview under-routed): the **Preview** entry pointed only to a.7 command contracts. Added the
+  1.1 route first (`#try-fleet-without-deploying-anything`, the conceptual "try Fleet without deploying"
+  section), keeping the a.7 contracts pointer second. Pure routing, no product claim. links=0.
