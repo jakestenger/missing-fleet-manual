@@ -326,7 +326,7 @@ These are the server side of the capabilities above, **including the two web set
 
 ### Runtime-fetched moving inputs
 
-**A version pin covers the binary, not necessarily everything the binary reads at runtime.** The book's one example is the Fleet MCP server's osquery schema ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)): the binary is built from the 4.90.0 tag, but the schema it validates queries against is replaced at startup, and every 24 hours after by default, with the file from Fleet's `main` branch rather than from the tag.
+**A version pin covers the binary, not necessarily everything the binary reads at runtime.** The book's one example is the Fleet MCP server's osquery schema ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)): the binary is built from the 4.90.0 tag and serves the schema embedded in it at startup, but a background refresh then attempts to replace that snapshot with the file from Fleet's `main` branch, roughly two seconds after startup and every 24 hours after by default. Only a successful fetch replaces it; a failed one keeps the copy already in memory, so the schema it validates queries against can end up newer than the tag rather than always being so.
 
 | | |
 |---|---|
