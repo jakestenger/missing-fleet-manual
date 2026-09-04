@@ -287,7 +287,7 @@ def main():
     a = out.append
     a('<div class="wrap">\n')
     a('  <header class="masthead">\n')
-    a('    <div class="eyebrow">Fleet 4.90.1 &middot; tag fleet-v4.90.1 &middot; commit dd0200f062</div>\n')
+    a('    <div class="eyebrow">Fleet 4.90.0 &middot; tag fleet-v4.90.0 &middot; commit 7c428c6e46</div>\n')
     a("    <h1>The Missing Fleet Manual: build status</h1>\n")
     a(
         '    <p class="standfirst">%d chapters across nine parts. %d drafted, %d still outline. '
@@ -392,7 +392,7 @@ def main():
 
     a("  <footer>\n")
     a("    <p>Every product claim verified against <code>~/Source/Fleet/fleet-public</code> at tag "
-      "<code>fleet-v4.90.1</code>, commit <code>dd0200f062</code>. Never against the product "
+      "<code>fleet-v4.90.0</code>, commit <code>7c428c6e46</code>. Never against the product "
       "documentation, and never against <code>main</code>.</p>\n")
     a("    <p>Word counts exclude HTML comments, which carry the image briefs. Round counts come "
       "from the review directories rather than from memory, and zero-byte transcripts from failed "
