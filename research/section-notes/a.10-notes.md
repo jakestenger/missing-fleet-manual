@@ -38,3 +38,9 @@ classification (see), data egress, data inventory and trust boundaries (D); pers
 (see), privacy review (see) (P); retention (R); trust boundary (see) (T). All resolve to the
 new A.8 map anchor. Closes the M14 reference-test dead-end ("conduct a privacy review").
 links=0.
+
+## round6 M17: declaration asset routes (2026-09-03)
+
+Added "declaration asset" (D) routing to 5.2#declaration-assets and 8.8#888-ddm-declarations, plus
+an "asset (Apple DDM)" see-reference (A). Closes the M17 dead-end where A.8 emitted the five asset
+routes but no index term led a reader to the workflow that makes them usable. links=0.

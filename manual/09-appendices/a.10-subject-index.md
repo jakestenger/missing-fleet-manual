@@ -31,6 +31,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **Apple Business Manager** (ABM): [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md); the AB, ABM, and DEP token names are pinned down in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Apps and Books**, see VPP.
 - **async host processing:** the experimental `osquery_enable_async_host_processing` mode, which moves label, policy and last-seen writes through Redis, is [8.14](../08-troubleshooting/8.14-degradation.md); its use as a capacity lever is [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md).
+- **asset** (Apple DDM), see declaration asset.
 - **Autopilot:** Microsoft's zero-touch Windows provisioning path is set up for enrollment in [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) and diagnosed, including why Fleet never talks to it, in [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md).
 
 ## B
@@ -59,6 +60,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **data inventory and trust boundaries** (what data Fleet holds, where it lives, and what crosses a boundary, for a privacy review): [A.8](a.8-api-action-and-endpoint-reference.md#data-inventory-and-trust-boundaries).
 - **DDM** (Declarative Device Management): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); diagnosing declaration delivery is [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md).
 - **dead lettering:** defined in the [glossary](a.6-glossary-and-release-compatibility.md).
+- **declaration asset** (the Premium Apple DDM `com.apple.asset.*` object a declaration references for large or binary content, with its own upload, uniqueness and delete rules, and a Fleet-Free GitOps licence trap): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#declaration-assets); the device requests that follow are [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md#888-ddm-declarations).
 - **declarative settings**, see DDM.
 - **decommissioning**, see retirement.
 - **device channel:** the default declaration and profile delivery target, [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); contrasted with the user channel there.

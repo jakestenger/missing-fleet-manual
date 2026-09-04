@@ -486,3 +486,14 @@ with related 2.5, so a reader looking up how to enable MFA landed on why it leav
 not how to turn it on. Now that 2.6 gained a "Require a second factor" subsection (round6
 M12), retargeted CAP-006 primary -> 2.6, related -> 1.5, 2.5. Keywords unchanged. cap-ids
 still 367; links=0.
+
+## round6 M17: Apple DDM declaration asset added to the no-capability-row register (2026-09-03)
+
+5.2 now teaches the Apple DDM declaration asset (new "Declaration assets" section, verified at
+fleet-v4.90.0). Grew the "no capability row" register from six outcomes to seven: intro count
+Six->Seven, "only one of the six"->"seven", "other five"->"six", heading "Six things"->"Seven
+things", and a new "The Apple DDM declaration asset" entry beside the host display name template
+(endpoints in a.8; GitOps key `controls.macos_settings.assets`). It keeps NO formal CAP row, so
+the 364-row CAP count and check-cap-ids (367 IDs / a.5 362) are unchanged. Formal CAP row + A.2/A.5
+matrix entries deferred for the same count-coupled reason as M16. Full source ledger in 5.2-notes.md.
+links=0; cap-ids 367.
