@@ -167,3 +167,10 @@ and the eleven new a.1 rows/absence-entries this drove: [[a.1-notes]]. Six pre-e
 mismatches against a.5 (CAP-178, 189, 196, 228, 243, 275), surfaced by the new
 `build/check-cap-ids.py`, were resolved in a.2's favor after checking cell values against source —
 a.2's wording was more accurate in every case.
+
+## 2026-09-04 fix: CAP-279 licence Free -> Premium (round8 MJ-A)
+
+CAP-279 ("Choose whether Windows enrollment asks the end user") scored licence = Free (a.2:365),
+contradicting 3.3 (which correctly says Fleet Free rejects it). Verified at fleet-v4.90.0:
+`server/service/appconfig.go` appends `ErrMissingLicense` for `enable_turn_on_windows_mdm_manually`
+via the `mdm.EnableTurnOnWindowsMDMManually && !lic.IsPremium()` guard. Licence cell set to Premium.
