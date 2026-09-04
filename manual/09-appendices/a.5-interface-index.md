@@ -5,7 +5,7 @@ section: "A.5"
 sidebar_position: 5
 verified_against: Fleet 4.90.0
 verified_on: 2026-09-02
-verified_source: "drafted against fleet-v4.90.0 (7c428c6e46) from four independently built research columns, one per interface, each covering the register rows as they stood at first drafting. Every column was read at the tag; Fleet's documentation was used for leads only, never as evidence. The columns disagreed on 17 rows and those were reconciled against source before drafting. Reconciled 2026-09-01 to the then-current 354-capability register: six rows the index had not yet projected were added: CAP-048 restored as a distinct interface action, and the newer CAP-349 to CAP-353, with cells verified at the tag, CAP-354 (MCP) left as a documented exclusion, and the counts recounted from the table. Reconciled again 2026-09-02 to a.1's 360-capability register: CAP-361, CAP-362, CAP-363, CAP-364, CAP-365 and CAP-366, labelled from a.2's existing platform research, were added as Unsupported in every column, each for the reason its own row states; CAP-354 remains the sole documented exclusion, and the counts were recounted from the table again. Reconciled a third time 2026-09-02 (round4 RB3) to a.1's 361-capability register: CAP-372, provisioning a Mac's local account and syncing its password with the identity provider, was added scored Full and later corrected to Partial in every column, because setting the OAuth IdP through the UI's Account provisioning page, the REST API, `fleetctl` and GitOps only arms an outcome the Mac itself performs; the counts were recounted from the table again. Reconciled a fourth time 2026-09-02 (round4 RM9) to a.1's 362-capability register: CAP-373, requiring ACME/Managed Device Attestation for eligible Macs, was added scored Full in every column, because the checkbox, `mdm.apple_require_hardware_attestation` on the REST API's config endpoint, the same field via classic `fleetctl get/apply config`, and `controls.apple_require_hardware_attestation` in GitOps all read and write the one boolean identically, confirmed against fleetctl's own testdata fixtures; the counts and the derived narrative figures (Full/Partial totals, all-four-agree rows) were recounted from the table again. Citation ledger at research/section-notes/a.5-notes.md"
+verified_source: "drafted against fleet-v4.90.0 (7c428c6e46) from four independently built research columns, one per interface, each covering the register rows as they stood at first drafting. Every column was read at the tag; Fleet's documentation was used for leads only, never as evidence. The columns disagreed on 17 rows and those were reconciled against source before drafting. Reconciled 2026-09-01 to the then-current 354-capability register: six rows the index had not yet projected were added: CAP-048 restored as a distinct interface action, and the newer CAP-349 to CAP-353, with cells verified at the tag, CAP-354 (MCP) left as a documented exclusion, and the counts recounted from the table. Reconciled again 2026-09-02 to a.1's 360-capability register: CAP-361, CAP-362, CAP-363, CAP-364, CAP-365 and CAP-366, labelled from a.2's existing platform research, were added as Unsupported in every column, each for the reason its own row states; CAP-354 remains the sole documented exclusion, and the counts were recounted from the table again. Reconciled a third time 2026-09-02 (round4 RB3) to a.1's 361-capability register: CAP-372, provisioning a Mac's local account and syncing its password with the identity provider, was added scored Full and later corrected to Partial in every column, because setting the OAuth IdP through the UI's Account provisioning page, the REST API, `fleetctl` and GitOps only arms an outcome the Mac itself performs; the counts were recounted from the table again. Reconciled a fourth time 2026-09-02 (round4 RM9) to a.1's 362-capability register: CAP-373, requiring ACME/Managed Device Attestation for eligible Macs, was added scored Full in every column, because the checkbox, `mdm.apple_require_hardware_attestation` on the REST API's config endpoint, the same field via classic `fleetctl get/apply config`, and `controls.apple_require_hardware_attestation` in GitOps all read and write the one boolean identically, confirmed against fleetctl's own testdata fixtures; the counts and the derived narrative figures (Full/Partial totals, all-four-agree rows) were recounted from the table again. Reconciled a fifth time 2026-09-04 (round8) after two cells were rescored against the tag: CAP-279 (Windows enrollment prompt) `fleetctl` and GitOps moved from Not established to Full, because GitOps writes `controls.enable_turn_on_windows_mdm_manually` (pkg/spec/gitops.go) and classic `fleetctl apply` writes the same `mdm` key (server/service/client.go), and CAP-181 (keep the library's catalogue apps current) UI moved from Not established to Partial, because the UI arms the no-pin auto-update through the software title's Versions control the same way the other three interfaces do; the rows-with-any-Not-established total fell 72 to 70, the UI Not-established total 70 to 69, the Partial total rose 252 to 253, the more-than-one-column group 14 to 13, and section N was corrected 22 to 23 rows. Citation ledger at research/section-notes/a.5-notes.md"
 further_reading:
   - https://fleetdm.com/docs/configuration/yaml-files
   - https://fleetdm.com/docs/rest-api/rest-api
@@ -93,7 +93,7 @@ The other six are independently writable through GitOps despite no interface exp
 
 The vocabulary is closed in the other direction too. Exactly ten top-level keys are valid and anything else is a hard error. Below the top level every key is checked against the schema at every depth, with a spelling suggestion offered when it fails. `--allow-unknown-keys` downgrades those errors to warnings and **does not make the keys mean anything**: they are dropped. That closure is what makes `Unsupported` in this column a boundary rather than an absence, and it is why 203 rows carry it.
 
-**Reads and imperative acts are the two families it excludes.** Locking a device, running a script, erasing a phone and signing in are acts rather than states, and a declarative repository has nothing to say about them. That accounts for the whole of section N, where GitOps supports none of the 22 rows.
+**Reads and imperative acts are the two families it excludes.** Locking a device, running a script, erasing a phone and signing in are acts rather than states, and a declarative repository has nothing to say about them. That accounts for the whole of section N, where GitOps supports none of the 23 rows.
 
 ### The MCP server is not a column here
 
@@ -153,7 +153,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 ## What decides a `Partial` cell
 
-![Explanation](../_assets/icons/explanation.svg) `Partial` is the most common non-`Full` answer in one of the four columns (REST API); `Unsupported` and `Not established` are larger in the other three. It is still worth knowing the shapes `Partial` takes, since it appears 252 times across the four columns, rather than reading each of those boundaries one at a time.
+![Explanation](../_assets/icons/explanation.svg) `Partial` is the most common non-`Full` answer in one of the four columns (REST API); `Unsupported` and `Not established` are larger in the other three. It is still worth knowing the shapes `Partial` takes, since it appears 253 times across the four columns, rather than reading each of those boundaries one at a time.
 
 **In the REST API column** it is nearly always that part of the action belongs to another caller. The administrator half is there and the device, agent or protocol half is not, and the missing half is usually the one that touches the machine.
 
@@ -378,7 +378,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 | **CAP-178** | Uninstall software from a host, as an administrator | Full | Partial | Unsupported | Unsupported |
 | **CAP-179** | Ship different builds of one title to different hosts | Full | Full | Not established | Not established |
 | **CAP-180** | Hold a catalogue app at a version | Full | Full | Full | Full |
-| **CAP-181** | Keep the library's catalogue apps current | Not established | Partial | Partial | Partial |
+| **CAP-181** | Keep the library's catalogue apps current | Partial | Partial | Partial | Partial |
 | **CAP-182** | Go back to the previous catalogue version | Full | Full | Full | Full |
 | **CAP-183** | Configure a managed application on an Apple device | Partial | Partial | Full | Full |
 | **CAP-184** | Configure a managed application on Android | Full | Full | Full | Full |
@@ -491,7 +491,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 | **CAP-276** | Renew the Volume Purchasing token | Full | Full | Unsupported | Unsupported |
 | **CAP-277** | Learn from Fleet that an Apple credential is expiring | Read only | Partial | Partial | Unsupported |
 | **CAP-278** | Turn on Windows device management | Partial | Partial | Partial | Partial |
-| **CAP-279** | Choose whether Windows enrollment asks the end user | Full | Full | Not established | Not established |
+| **CAP-279** | Choose whether Windows enrollment asks the end user | Full | Full | Full | Full |
 | **CAP-280** | Turn Windows device management off | Partial | Partial | Partial | Partial |
 | **CAP-281** | Bind Fleet to an Android Enterprise | Full | Partial | Unsupported | Unsupported |
 | **CAP-282** | Deliver client certificates to Android devices | Not established | Unsupported | Full | Full |
@@ -572,22 +572,22 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 | Value | UI | REST API | `fleetctl` | GitOps |
 |---|---|---|---|---|
-| **Full** | 198 | 187 | 179 | 122 |
-| **Partial** | 55 | 105 | 57 | 35 |
+| **Full** | 198 | 187 | 180 | 123 |
+| **Partial** | 56 | 105 | 57 | 35 |
 | **Read only** | 12 | 6 | 8 | 0 |
 | **Unsupported** | 27 | 52 | 115 | 203 |
-| **Not established** | 70 | 12 | 3 | 2 |
+| **Not established** | 69 | 12 | 2 | 1 |
 | **Total** | **362** | **362** | **362** | **362** |
 
 Four things in that shape are worth reading before you use any single row.
 
 **The REST API reaches more actions than any other interface**, 292 at `Full` or `Partial` against 253 for the UI, 236 for `fleetctl` and 157 for GitOps. The other three are clients of it, so its reach is the ceiling theirs are measured against.
 
-**The UI's 70 `Not established` cells are the appendix's largest soft spot**, and they are not evenly spread. Thirty-three of them are in the three sections about running the server, its settings and its diagnostics, where the answer is nearly always that the value is process configuration no interface writes. Twenty-one of the 70 sit on rows where all three other columns independently found `Unsupported`. **Those are very probably `Unsupported` too, and they are not published that way**, because the boundary that would justify it was not found. A wrong `Not established` is a failure in the same way a wrong `Unsupported` is, so the appendix records the uncertainty rather than resolving it in the direction the neighbours point.
+**The UI's 69 `Not established` cells are the appendix's largest soft spot**, and they are not evenly spread. Thirty-three of them are in the three sections about running the server, its settings and its diagnostics, where the answer is nearly always that the value is process configuration no interface writes. Twenty-one of the 69 sit on rows where all three other columns independently found `Unsupported`. **Those are very probably `Unsupported` too, and they are not published that way**, because the boundary that would justify it was not found. A wrong `Not established` is a failure in the same way a wrong `Unsupported` is, so the appendix records the uncertainty rather than resolving it in the direction the neighbours point.
 
 **GitOps is `Unsupported` on 105 rows the UI and the REST API can both perform.** That is not a defect in GitOps. It is the closed vocabulary and the missing read direction working as designed, and it is the number that bounds how much of Fleet a repository can manage.
 
-**Eighty-three rows are `Full` in all four columns and 103 rows have all four columns agreeing.** The overlap is real. It is just not where the planning risk is.
+**Eighty-four rows are `Full` in all four columns and 105 rows have all four columns agreeing.** The overlap is real. It is just not where the planning risk is.
 
 ## What Fleet or an external system starts on its own
 
@@ -636,17 +636,17 @@ This is the set worth knowing about, not a catalogue. The register marks 141 row
 
 ## Not established, deliberately
 
-![Explanation](../_assets/icons/explanation.svg) **Seventy-two rows carry at least one `Not established` cell, and no row carries four.** Every action in the register has at least one interface answer that rests on evidence.
+![Explanation](../_assets/icons/explanation.svg) **Seventy rows carry at least one `Not established` cell, and no row carries four.** Every action in the register has at least one interface answer that rests on evidence.
 
-Fourteen rows are unsettled in more than one column, and they fall into three groups.
+Thirteen rows are unsettled in more than one column, and they fall into three groups.
 
 **One row is open in three columns: CAP-350, enumerating every outbound destination Fleet reaches**, where the UI, the REST API and `fleetctl` are all unsettled and only GitOps has a confident answer (`Unsupported`).
 
-**Two more are open in two columns each, and are the same two questions in both.** Whether Fleet's package variants map onto several software entries for one title (CAP-179), and which stored setting the Windows automatic-against-manual enrollment control writes (CAP-279). Two researchers reached each of those independently, which is a point in favour of the questions being real rather than of one search being bad.
+**One more is open in two columns: whether Fleet's package variants map onto several software entries for one title (CAP-179)**, unsettled in `fleetctl` and GitOps alike. Two researchers reached it independently, which is a point in favour of the question being real rather than of one search being bad.
 
 **Eleven are deployment and operations rows** where the question is what an operating practice looks like rather than what Fleet does. Backing up and restoring a deployment, running behind an outbound proxy, deploying from reference infrastructure code, running under Docker Compose, on Kubernetes or on a virtual machine, simulating load, draining an instance, hosted Fleet, and collecting a sysdiagnose from an iPhone. **This manual verifies against Fleet's own source**, and a `Not established` cell in these rows means the interface answer is unsettled, not the practice: load simulation, for one, is settled by `osquery-perf`, a purpose-built tool Fleet ships in its own tree ([7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md)), which is reachable from none of the four interfaces scored here.
 
-The single largest concentration is the UI column's 70 cells, described in the counts above. The UI column is the most conservative of the four, not the least capable interface: its `Not established` cells and the REST API column's `Unsupported` cells were often reached on the same underlying fact, from different standards of proof.
+The single largest concentration is the UI column's 69 cells, described in the counts above. The UI column is the most conservative of the four, not the least capable interface: its `Not established` cells and the REST API column's `Unsupported` cells were often reached on the same underlying fact, from different standards of proof.
 
 ## Where this appendix and its siblings deliberately differ
 
