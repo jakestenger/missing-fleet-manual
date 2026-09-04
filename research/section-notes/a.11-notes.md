@@ -160,3 +160,14 @@ findings (verified against 4.90.1) hold unchanged at the book's 4.90.0 base; not
   ("the hosts affected", not "the specific hosts", + over-include note), and added a shared
   **"Both CVE tools over-include hosts on unaffected versions"** caveat paragraph after the
   policies/vulnerabilities table routing readers to per-host software inventory. links=0.
+- **C2 (`label` overrides `platform`, does not intersect).** Verified at fleet-v4.90.0:
+  `resolvePlatformOrLabelToLabelID` (~1207-1226) returns immediately when `labelName != ""`
+  ("labelName takes precedence over platform when both are set"), so `platform` is never resolved
+  when both are supplied. `GetEndpointsWithFilters` shows the *other* filters do compose: the
+  label-routing path calls `/labels/:id/hosts` (respects `team_id`/`status`/`query`) and intersects
+  a `policy_id` side via `/hosts`, so only the `label`/`platform` pair fails to intersect. Softened
+  the overclaims: common-args `label`+`platform` rows note the override; `get_endpoints` and
+  `get_policy_hosts` "(compose, except that `label` overrides `platform`)"; `prepare_live_query`/
+  `run_live_query` "composing" not "intersecting"; added a **"Never combine `label` and `platform`
+  on a live query"** warning (SQL validated for the declared `platform` can hit labeled hosts on a
+  different OS). links=0.
