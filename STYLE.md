@@ -252,6 +252,21 @@ are actually running, which is the only comparison that helps them.
 (`orbit-v1.59.0`), independent of the Fleet server release. When a claim depends on agent
 behaviour rather than server behaviour, say which agent version you checked.
 
+### Point releases are footnotes, not versions
+
+Each book version tracks a Fleet **minor** release line (4.90, 4.91, and so on). A **point
+release** within that line (4.90.1, 4.90.2) is not a separate book version: do not re-cut or
+re-stamp the book for one. Represent it inline instead, inside the minor-release book, as a
+short footnote or parenthetical wherever the book teaches behaviour the point release fixed
+or changed.
+
+Use the flag forms already in the book: a parenthetical for a single clause, for example
+"(Fleet 4.90.0 has a bug here; 4.90.1 fixes it.)", or a `:::note Fixed in 4.90.1` admonition
+for one or two sentences. Every flag must contain the literal point-release number (here
+`4.90.1`) so the set stays greppable and can seed the next minor's changelog chapter. Flag
+only where the book actually teaches the affected behaviour, and skip internal or one-time
+fixes the book makes no claim about.
+
 ### Two traps that produced a wrong stamp on every Part VIII section
 
 **Never derive the version from `CHANGELOG.md`.** In `fleet-public` that file is assembled

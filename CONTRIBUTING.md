@@ -39,6 +39,10 @@ verified_source: "unverified: drafted from prior work, not checked at a tag"
 An honest unverified stamp is worth more than a confident wrong one. Sections have twice
 shipped here claiming verification that never ran.
 
+**Point releases are not new book versions.** The book tracks a Fleet minor line (4.90,
+4.91); a point release (4.90.1) is flagged inline as a footnote or parenthetical, not
+re-stamped as its own version. `STYLE.md` §9 has the rule and the flag forms.
+
 ### Read the schema, not the migration that created the table
 
 A migration tells you what a table looked like on the day it was added. It does not tell you what
