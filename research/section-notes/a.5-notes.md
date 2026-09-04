@@ -538,3 +538,12 @@ Not established UI 70->69, fleetctl 3->2, GitOps 2->1. Narrative figures: rows-w
 established 72->70, more-than-one-column group 14->13, UI Not-established narrative 70->69 (the
 "twenty-one of the" denominator followed), all-four-Full 83->84, all-columns-agree 103->105.
 Frontmatter audit trail amended with a fifth reconciliation note. check-links=0; check-cap-ids exit 0.
+
+round8 review CO-MINOR-1 (self-introduced regression fix, commit 6992de3): the MJ-E/m8/m9 recount
+bumped the counts-table columns (UI Partial 55->56, fleetctl Full 179->180, GitOps Full 122->123) but
+left the "reaches more actions than any other interface" reach sentence (a.5:584) at the pre-recount
+Full+Partial figures 253/236/157. That sentence sums Full+Partial per column, which is distinct from
+the four-column agreement totals the recount log tracked. Corrected to 254/237/158 (UI 198+56,
+fleetctl 180+57, GitOps 123+35); REST 292 was already right. check-links=0, check-cap-ids exit 0.
+Lesson: extend check-cap-ids to assert every published Full+Partial reach figure, not only column
+totals, so this class can't slip through again (the consistency lens flagged the same gap).
