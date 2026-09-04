@@ -96,9 +96,11 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 - **GitOps:** [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md).
 - **GitOps mode** (locking the managed parts of the interface to read-only, `gitops_mode_enabled`, Premium): [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
+- **go-live decision** (the readiness gate a deployment clears before it carries real hosts), see production readiness.
 
 ## H
 
+- **handoff and handover** (handing a running deployment to the team that will operate it), see production readiness.
 - **healthz** (the `/healthz` endpoint): what it checks and returns is [8.14](../08-troubleshooting/8.14-degradation.md); reading its failure in the server log is [8.3](../08-troubleshooting/8.3-server-logs.md).
 - **Helm** (the Kubernetes chart): [2.4](../02-administer-and-deploy-fleet/2.4-deploy-with-containers-or-virtual-machines.md).
 - **host display name template** (the per-scope, per-host template that sets the display name an Apple device reports, Premium): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#naming-hosts-from-a-template).
@@ -158,6 +160,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **pprof:** the profiling set is [8.5](../08-troubleshooting/8.5-fleetctl-debug.md); the term is glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Preview** (`fleetctl preview`, alias `sandbox`): the throwaway local Fleet; its command contracts are in [a.7](a.7-fleetctl-command-reference.md).
 - **privacy review**, see data inventory and trust boundaries.
+- **production readiness** (the go-live checklist and handover before a deployment carries real hosts, including the go-live decision itself): [7.7](../07-operate-fleet/7.7-production-readiness-checklist-and-handoff.md#the-go-live-decision); the pilot that turns its criteria into observations is [2.1](../02-administer-and-deploy-fleet/2.1-administration-model-and-deployment-choices.md).
 - **profile**, see configuration profile.
 - **Prometheus:** Fleet's metrics naming, and which suffixed series to query, is [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md).
 
@@ -167,6 +170,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 ## R
 
+- **readiness** (production go-live), see production readiness.
 - **recovery key escrow:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
 - **Recovery Lock** (the Apple silicon firmware password): [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
 - **Redis:** what it holds, and what its loss does and does not cost, is [1.6](../01-foundations/1.6-the-fleet-server.md).
