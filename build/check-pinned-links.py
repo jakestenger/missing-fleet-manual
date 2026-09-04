@@ -11,7 +11,7 @@ them in a chapter whose review had already asked for four of them to be pinned.
 """
 import re, sys, pathlib
 
-TAG = "fleet-v4.90.1"
+TAG = "fleet-v4.90.0"
 PAT = re.compile(r"github\.com/fleetdm/fleet/blob/([^/\s)\]`]+)/")
 
 problems = []
