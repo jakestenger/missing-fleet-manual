@@ -66,7 +66,7 @@ exists to prevent.
 
 - **Fleets are durable configuration and administrative boundaries.**
 - **Labels are flexible selections.** Global labels can cross fleets; fleet labels stay
-  within their fleet. *(Verify at 4.90.1 before writing — see the note on verification at
+  within their fleet. *(Verify at 4.90.0 before writing — see the note on verification at
   the top of this file.)*
 - **Global and fleet-scoped configuration work together**, rather than one overriding the
   other as a blanket rule. The precedence detail belongs in `a.3`.

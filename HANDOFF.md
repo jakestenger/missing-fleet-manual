@@ -9,7 +9,7 @@ the work is done. Those two say what the work has to satisfy.
 
 ## 1. What this is
 
-A complete, self-contained technical reference for **Fleet 4.90.1**, deep enough to explain how
+A complete, self-contained technical reference for **Fleet 4.90.0**, deep enough to explain how
 Fleet actually works underneath rather than restating the product documentation.
 
 The standard the project owner set, verbatim:
@@ -356,8 +356,8 @@ applying a finding, grep the chapter for every phrasing of the claim you just ch
 
 ### Part VIII's version debt is closed
 
-All fourteen chapters carry `verified_against: Fleet 4.90.1` and `verified_source: git tag
-fleet-v4.90.1`. 8.1 through 8.10 were swept on 2026-08-26; nine of the ten had material defects,
+All fourteen chapters carry `verified_against: Fleet 4.90.0` and `verified_source: git tag
+fleet-v4.90.0`. 8.1 through 8.10 were swept on 2026-08-26; nine of the ten had material defects,
 and three of those existed only because the check ran at 4.90.1 rather than at the `main` checkout
 the chapters were first verified against. A further round on 2026-08-27 found more, including seven
 errors in prose written during that sweep. Details in `PROJECT_STATUS.md`.
@@ -384,7 +384,7 @@ contradiction: the book already contains the right answer, in a different chapte
 chapter contradicts it. Eight of the fourteen findings in the last session were exactly that.
 
 **3. Verify every product claim against the tag**, in `~/Source/Fleet/fleet-public` at
-`fleet-v4.90.1` (commit `dd0200f062`). Not against memory, not against fleetdm.com, and not
+`fleet-v4.90.0` (commit `7c428c6e46`). Not against memory, not against fleetdm.com, and not
 against `main`. Fleet's published documentation is wrong often enough to matter: six documentation
 bugs found so far, including three separate settings where the generated reference disagrees with
 what the server registers: a default documented as `1h` that registers as `2m`, an Android batch
@@ -496,8 +496,8 @@ project — whereas a clumsy sentence does not survive one.
    (Part V's spine was already negotiated at the part level on 2026-08-27 — this step re-confirms
    the one chapter's slice of it, not the whole structure again.)
 2. **Research the chapter's subject** the normal way: `claims.py` on every mechanism first, then
-   verify every claim against `~/Source/Fleet/fleet-public` at tag `fleet-v4.90.1` (commit
-   `dd0200f062`), never `main`, never the published docs as a primary source. Write the findings as
+   verify every claim against `~/Source/Fleet/fleet-public` at tag `fleet-v4.90.0` (commit
+   `7c428c6e46`), never `main`, never the published docs as a primary source. Write the findings as
    normal notes, then send them to the reviewer and ask if the research looks correct and complete.
    Iterate — more research, back to the reviewer — until you agree. Do this **before** drafting
    prose, not after.
@@ -1368,6 +1368,6 @@ missing-fleet-manual-private/    (NOT a git repo, local only, does not sync)
 ├── PROJECT_STATUS.md            dated session log
 └── reviews/2026-08-25/          16 completed reviews + README
 
-~/Source/Fleet/fleet-public      at tag fleet-v4.90.1: the source of truth
+~/Source/Fleet/fleet-public      at tag fleet-v4.90.0: the source of truth
 ~/Source/Fleet/fleet-confidential OFF LIMITS
 ```

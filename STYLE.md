@@ -234,15 +234,15 @@ release too. Work from a local branch cut at the release tag:
 cd ~/Source/Fleet/fleet-public
 git fetch --tags --quiet
 git tag -l "fleet-v4.9*" --sort=-v:refname | head -3       # find the current release
-git checkout -b manual-verify-<version> fleet-v<version>    # e.g. fleet-v4.90.1
+git checkout -b manual-verify-<version> fleet-v<version>    # e.g. fleet-v4.90.0
 git rev-parse --abbrev-ref HEAD                             # confirm before writing
 ```
 
 Frontmatter records the tag:
 
 ```yaml
-verified_against: Fleet 4.90.1
-verified_source: git tag fleet-v4.90.1
+verified_against: Fleet 4.90.0
+verified_source: git tag fleet-v4.90.0
 ```
 
 A commit hash pins to something no reader can install. A release tag pins to what they

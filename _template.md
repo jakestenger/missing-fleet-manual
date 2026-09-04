@@ -3,9 +3,9 @@ title: ""               # quote it; unquoted values with a colon break the build
 chapter: ""             # e.g. "V. Manage devices"
 section: ""             # e.g. "5.2" — quoted, or YAML reads it as a float
 sidebar_position:       # integer, position within the part
-verified_against:       # e.g. Fleet 4.90.1 — see the rule below
+verified_against:       # e.g. Fleet 4.90.0 — see the rule below
 verified_on:            # YYYY-MM-DD
-verified_source:        # e.g. git tag fleet-v4.90.1
+verified_source:        # e.g. git tag fleet-v4.90.0
 further_reading:        # official docs URLs — NOT load-bearing; the section stands alone
 feature_requests:       # drives the website's open-FR widget; see PLATFORM.md
   labels: []            #   e.g. [":product", "#g-apple-at-work"]
@@ -28,7 +28,7 @@ STATUS VOCABULARY, and the rule that matters:
 
 The three verified_* fields may be filled ONLY when status is `verified` and that
 notes file exists. Do not inherit them from a neighbouring section, and never derive
-a version from CHANGELOG.md (STYLE.md §9). The book targets Fleet 4.90.1; that is
+a version from CHANGELOG.md (STYLE.md §9). The book targets Fleet 4.90.0; that is
 the target, not a claim that this section was checked against it.
 
 If the section is unverified, say so rather than leaving the field blank and looking
