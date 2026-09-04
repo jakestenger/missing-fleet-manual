@@ -41,6 +41,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **batch script** (running one saved script across many hosts at once): [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md).
 - **BitLocker:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md); the Windows escrow key it depends on is the WSTEP certificate, [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md).
 - **BitLocker startup PIN:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
+- **bootstrap reports** (the standard saved reports `fleet-mcp -seed` creates), see seed mode.
 
 ## C
 
@@ -188,6 +189,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **scheduled query:** [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md); writing efficient ones is [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md).
 - **second factor**, see two-factor authentication.
 - **secret variables:** [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); their use in version-controlled configuration is [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md).
+- **seed mode** (the `fleet-mcp -seed` flag that creates the four standard saved reports against Fleet, then exits without serving): [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
 - **self-service:** [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
 - **server logs:** what Fleet's own process logs actually tell you is [8.3](../08-troubleshooting/8.3-server-logs.md); the full set of log surfaces (agent, server, and MDM protocol) is [8.2](../08-troubleshooting/8.2-log-surfaces.md); delivering them onward is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md).
 - **server URL** (the Fleet server's own address, `server_url`): [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
@@ -199,6 +201,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **software installer:** [5.4](../05-manage-devices/5.4-manage-software-and-applications.md).
 - **SSE** (Server-Sent Events, one of the two MCP transports): [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
 - **SSO and SAML:** [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md).
+- **standard saved reports** (the four global reports `fleet-mcp -seed` bootstraps: macOS admin users, Windows update failures, Linux running containers, universal OS version), see seed mode.
 - **stdio** (the standard-input/output MCP transport for local clients like Claude Desktop): [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
 - **SyncML:** the Windows MDM wire format is diagnosed in [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md).
 - **sysdiagnose** (Apple's on-demand diagnostic archive): pulling one from iOS/iPadOS is [8.2](../08-troubleshooting/8.2-log-surfaces.md); Apple MDM diagnostics generally are [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md).

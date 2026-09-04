@@ -412,7 +412,7 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-266** | Call an endpoint the command line has no verb for | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.3 | `fleetctl api` |
 | **CAP-267** | Push or delete spec files | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.2 | `fleetctl apply` · `fleetctl delete` · `--policies-team` (still accepted) · `--policies-fleet` |
 | **CAP-268** | Generate a pipeline for Fleet | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.2 | `fleetctl new` · GitHub Action · CI scaffold |
-| **CAP-354** | Connect an AI assistant to Fleet | [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) | 6.3, 2.6 | MCP · Model Context Protocol · Fleet MCP server · AI assistant · Claude (vendor) · Cursor (vendor) · `fleet-mcp` · natural-language queries · live query from an assistant |
+| **CAP-354** | Connect an AI assistant to Fleet | [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) | 6.3, 2.6 | MCP · Model Context Protocol · Fleet MCP server · AI assistant · Claude (vendor) · Cursor (vendor) · `fleet-mcp` · `-seed` · seed standard saved reports · bootstrap reports · natural-language queries · live query from an assistant |
 
 ### 7. Running the service
 

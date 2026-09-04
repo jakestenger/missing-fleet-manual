@@ -247,3 +247,17 @@ labels (struct :16-18). Nothing at the tag verifies the transcription, and the t
 Reworded to "labelled in the source as transcribed from those benchmarks" and made the caveat cover the
 labelling too (nothing verifies the labelling, executes, or validates them). Kept the existing
 starting-point-not-pre-validated pushback. check-links=0.
+
+## round9 MIN8-9: route the fleet-mcp -seed bootstrap from the indices (2026-09-04)
+
+6.6 documents `-seed` fully (### One-shot seed mode) but it was undiscoverable from any index. Verified
+at fleet-v4.90.0: main.go:70 (`flag.Bool("seed", false, "Seed Fleet with standard saved queries and
+exit")`), main.go:104-107 (runs after requireAPIOnlyUser, then returns before any transport), and
+seed_fleet.go:14-66 (creates four Global saved reports: "Standard: MacOS Admin Users" darwin, "Standard:
+Windows Missing Updates" windows, "Standard: Linux Running Containers" linux, "Standard: Universal OS
+Version" all; via CreateSavedQuery, i.e. a write). Added routes in four places, no new product claim
+beyond 6.6's: a.10 subject index ("seed mode" + "standard saved reports" in S, "bootstrap reports" in B),
+a.11 intro (a one-line note that -seed is a non-tool flag, not one of the twenty tools), a.1 CAP-354 alias
+cell (added `-seed` / "seed standard saved reports" / "bootstrap reports" — alias-only, no new CAP row, so
+the 367-ID register and all count invariants hold), and OUTLINE.md's 6.6 coverage line. check-cap-ids /
+check-register-counts / check-links all 0.
