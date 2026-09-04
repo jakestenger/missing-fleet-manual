@@ -21,3 +21,12 @@ sysdiagnose, Prometheus.
 A.10 has no generated/systematic coverage check, so this defect class (new vocabulary entering
 the book without an index entry) will keep recurring; a future round could consider generating a
 candidate-term list from bolded first-use spots and diffing it against A.10's headword list.
+
+## Round6 M12 (2026-09-03) — index routes for account lifecycle + MFA
+
+Added: "account lifecycle" (see -> user account, A); "MFA" (see -> two-factor
+authentication, M); "second factor" (see -> two-factor authentication, S); "two-factor
+authentication" (2.6 to enable, 1.5 for the audit caveat, T); "user account" (2.6, U).
+Closes the M12 reference-test dead-ends ("Enable email MFA", role/account lifecycle). Owning
+sections picked where the book actually teaches the thing (2.6), same standard as the rest of
+A.10. links=0.

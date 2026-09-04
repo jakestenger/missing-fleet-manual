@@ -19,6 +19,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## A
 
 - **ABM**, see Apple Business Manager.
+- **account lifecycle** (of a person's Fleet account), see user account.
 - **activity and audit log:** the record of what changed and who caused it is defined in [1.5](../01-foundations/1.5-audit-and-activity.md); where those records are delivered is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md); reading them during an investigation is [8.12](../08-troubleshooting/8.12-audit-logs.md).
 - **ADE** (Automated Device Enrollment): [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) for Macs and [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) for iPhones and iPads. DEP is the former name; the two are separated in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **AI assistant** (Claude, Cursor, and other MCP clients): connecting one to Fleet through the MCP server is [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md); the exact tools it can call are [A.11](a.11-mcp-tool-reference.md).
@@ -109,6 +110,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **managed local account**, see LAPS and the managed local administrator account.
 - **MCP** (Model Context Protocol) and the **Fleet MCP server**: connecting an AI assistant to Fleet is [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md); the fixed twenty-tool list it exposes is [A.11](a.11-mcp-tool-reference.md); the term is glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **MDM enrollment:** the model is [2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md); the status values are pinned down in the [glossary](a.6-glossary-and-release-compatibility.md).
+- **MFA** (multi-factor authentication), see two-factor authentication.
 - **My Device page:** designed in [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md); the channel behind it is [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md).
 - **MySQL:** its role as Fleet's authoritative store is [1.6](../01-foundations/1.6-the-fleet-server.md).
 
@@ -160,6 +162,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **SCEP:** [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md); glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **SCIM:** [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md).
 - **scheduled query:** [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md); writing efficient ones is [4.6](../04-know-your-devices/4.6-advanced-osquery-queries-and-tables.md).
+- **second factor**, see two-factor authentication.
 - **secret variables:** [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); their use in version-controlled configuration is [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md).
 - **self-service:** [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
 - **server logs:** what Fleet's own process logs actually tell you is [8.3](../08-troubleshooting/8.3-server-logs.md); the full set of log surfaces (agent, server, and MDM protocol) is [8.2](../08-troubleshooting/8.2-log-surfaces.md); delivering them onward is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md).
@@ -182,9 +185,11 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **Terraform:** the AWS reference architecture module is [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
 - **TLS:** the certificate that protects communication with the service, and the server private key it depends on, is [1.6](../01-foundations/1.6-the-fleet-server.md); planning the DNS name and certificate as server settings is [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
 - **TUF** (The Update Framework): the update repository is [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md); confirming what a host is running is [8.4](../08-troubleshooting/8.4-host-side-investigation.md).
+- **two-factor authentication** (Fleet's own email-delivered second factor, Premium): enabling it per account is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md); why it leaves almost no trace in the activity record is [1.5](../01-foundations/1.5-audit-and-activity.md).
 
 ## U
 
+- **user account** (creating or inviting a person, editing their role and scope, forcing a password reset, ending their sessions, deleting them): [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md).
 - **user channel** (the macOS-only, sign-in-gated declaration delivery target; exists only for hosts that automatically enrolled): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 
 ## V

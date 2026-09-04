@@ -478,3 +478,11 @@ counts 367 IDs in a.1). Considered the finding's heavier option (add formal CAP 
 preview + the three Chromebook actions); deferred it as a larger a.1/a.2/a.5/a.7 counting
 change with no correctness benefit over the reframe. links=0, cap-ids/crossrefs/headings/
 em-dashes green.
+
+## Round6 M12 (2026-09-03) — CAP-006 retargeted to the new 2.6 MFA workflow
+
+CAP-006 "Require a second factor" pointed primary -> 1.5 (the audit-invisibility caveat)
+with related 2.5, so a reader looking up how to enable MFA landed on why it leaves no trace,
+not how to turn it on. Now that 2.6 gained a "Require a second factor" subsection (round6
+M12), retargeted CAP-006 primary -> 2.6, related -> 1.5, 2.5. Keywords unchanged. cap-ids
+still 367; links=0.
