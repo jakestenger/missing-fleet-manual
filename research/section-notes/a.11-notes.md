@@ -171,3 +171,13 @@ findings (verified against 4.90.1) hold unchanged at the book's 4.90.0 base; not
   `run_live_query` "composing" not "intersecting"; added a **"Never combine `label` and `platform`
   on a live query"** warning (SQL validated for the declared `platform` can hit labeled hosts on a
   different OS). links=0.
+- **M1 (`get_software` cross-host `platform` filters installable artifacts, not host OS).** Verified
+  at fleet-v4.90.0: `fleet_integration.go:632-657` (`ListSoftwareTitles`) passes `platform` to
+  `GET /software/titles` with `team_id`; datastore comment `software_titles.go:250-256` states "the
+  platform filters for **installable** software on the given platform ... supported on a per team
+  basis, so we require both", and the SQL postfix (`:774`, `:777`) applies the platform set to the
+  software-installer / VPP-app / in-house-app platform columns, not to host-observed inventory.
+  Added a bold note after the Inventory table: cross-host `platform` narrows to titles carrying an
+  installable artifact targeting that platform for the fleet (hence it requires `fleet`), not
+  software observed on hosts of that OS; to inventory by host OS, resolve hosts first then read
+  per-host inventory. links=0.
