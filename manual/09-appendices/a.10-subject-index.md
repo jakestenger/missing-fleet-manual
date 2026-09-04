@@ -85,6 +85,8 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 - **file carving:** defined in the [glossary](a.6-glossary-and-release-compatibility.md); it surfaces as an introspection tool in [8.7](../08-troubleshooting/8.7-live-query-introspection.md) and as a storage and limits question in [8.14](../08-troubleshooting/8.14-degradation.md).
 - **FileVault:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
+- **first administrator**, see first-run setup.
+- **first-run setup** (creating the first administrator on a new server, before anyone can sign in; the setup screen, and what "initialize the server" means): [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md#complete-first-run-setup).
 - **fleet** (the scoping construct, renamed from team): [1.3](../01-foundations/1.3-hosts-fleets-labels.md); the rename is recorded in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Fleet Desktop:** introduced as one of the host-side components in [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md); its end-user surface is designed in [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
 - **Fleet-maintained apps** (FMA): the curated catalogue is defined in [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md); installing one is [5.4](../05-manage-devices/5.4-manage-software-and-applications.md).
@@ -103,6 +105,10 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **host identity certificate:** [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md); which platforms support it is a row in the [platform capability matrix](a.2-platform-capability-matrix.md).
 - **host vitals:** [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md).
 - **Hydrant:** one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
+
+## I
+
+- **initialize the server**, see first-run setup.
 
 ## L
 
@@ -183,6 +189,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **server URL** (the Fleet server's own address, `server_url`): [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
 - **service identity** (a non-human, API-only user for automation): [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md); scoping its token to one fleet or a named list of endpoints is [1.4](../01-foundations/1.4-identity-and-roles.md).
 - **setup assistant:** [3.2](../03-connect-devices/3.2-enroll-macos-devices.md); the wider setup experience is [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
+- **setup screen** (the first-run screen that creates the first administrator), see first-run setup.
 - **SIEM** (security information and event management): sending Fleet's activity and audit logs to one is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md).
 - **Smallstep:** one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 - **software installer:** [5.4](../05-manage-devices/5.4-manage-software-and-applications.md).
