@@ -547,3 +547,9 @@ the four-column agreement totals the recount log tracked. Corrected to 254/237/1
 fleetctl 180+57, GitOps 123+35); REST 292 was already right. check-links=0, check-cap-ids exit 0.
 Lesson: extend check-cap-ids to assert every published Full+Partial reach figure, not only column
 totals, so this class can't slip through again (the consistency lens flagged the same gap).
+
+round9 MIN8-2 (cross-ref direction): the "What Fleet or an external system starts on its own"
+self-initiation table sits at a.5:592/598, above the "Where this appendix and its siblings
+deliberately differ" section (a.5:651+). Two references there pointed to it as the table "below"
+(CAP-371 mentions at ~655 and ~657). Both corrected "self-initiation table below" -> "above". Pure
+direction fix, no counts moved. check-links=0; check-register-counts + check-cap-ids exit 0.
