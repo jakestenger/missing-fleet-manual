@@ -213,3 +213,13 @@ findings (verified against 4.90.1) hold unchanged at the book's 4.90.0 base; not
 - **mi1 get_host is a projection, not full detail.** `GetHostByID` (cmd/fleet-mcp/fleet_integration.go:403-424) decodes `GET /hosts/{id}` into the limited `Endpoint` struct (`:187-202`: hostname/display/computer name, status, last_seen, platform, osquery_version, hardware_serial, primary_ip, team_id/name, labels), dropping the much richer `HostDetail` the API returns. A.11's get_host row and 6.6's Hosts category row reworded from "full detail" to "a selected projection ... not Fleet's full host detail."
 - **mi2 shared platform filter = four values only.** `platformToBuiltinLabel`/`resolvePlatformOrLabelToLabelID` (fleet_integration.go:326-345,1207-1227) accept only macos/windows/linux/chromeos and error otherwise ("use one of: macos, windows, linux, chromeos"); the shared-vocabulary "etc." was wrong. `get_software` cross-host `platform` is a wider, differently-matched set (macos/windows/linux/chrome/ios/ipados; mcp_tools_inventory.go:38) filtering the installable catalogue, cross-referenced. The CVE-tool nuance is already at A.11's get_aggregate_platforms note (M2, e3b31d9).
 - **mi3 (A.6, not A.11) schema-refresh timing.** schema.go:115-122 serves the embedded snapshot synchronously at init; StartSchemaRefresh (:144-158) sleeps 2s then RefreshSchemaNow, then every interval (default 24h); RefreshSchemaNow (:164-166) replaces only on success, retains previous on failure. A.6 reworded from "replaced at startup" accordingly.
+
+## 2026-09-04 fix: state the MCP SQL check's exact boundary (round8 m7)
+
+a.11:86 already described the text-vs-bare-integer rejection but not the platform-compat check or the
+unknown-table pass-through. Verified at fleet-v4.90.0: `cmd/fleet-mcp/schema.go` ValidateSQLForPlatforms
+-> (1) IsTableSupportedOnPlatform returns true for tables absent from schemaIndex ("we never block on
+unknowns, Fleet itself decides"), rejects only a known table on a known-incompatible platform; (2)
+bare-int-vs-TEXT fires only when the column is known in every used table and TEXT everywhere, skips
+literals 0/1, does not flag quoted strings. Restated the cell with both checks + the pass-through, and
+that the check catches common mistakes rather than proving the query valid. [[6.6-notes]]

@@ -373,3 +373,10 @@ all pass against the full book after this change.
   Dropped both bold lead-ins and the "is the only complete method" scaffolding; led with the
   action (read what is in force by observing each consumer on the host). No factual change — the
   osquery/update-channel/extension/debug/script split below is unchanged. links=0.
+
+## 2026-09-04 fix: narrow the opening to the known precedence rules (round8 m12)
+
+a.3:23 opening promised "how collisions resolve", but the body says there is no single precedence order
+(137) and some comparisons were never carried out in full (237, 512). Internal-to-book (no fleet fact).
+Narrowed the opening to "the known rules for how collisions resolve" and added that where a comparison
+has not been carried out in full the appendix says so rather than implying a settled order.
