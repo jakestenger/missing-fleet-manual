@@ -207,3 +207,9 @@ findings (verified against 4.90.1) hold unchanged at the book's 4.90.0 base; not
   in the A.11 intro (after the allowlist paragraph) covering `get_queries`/`get_policies`, the CVE
   tools, and the total-systems fallback; instructs retry + reading the server process log before
   using as a census/compliance total/security decision. links=0.
+
+## round6 mMIN (mi1, mi2): MCP tool-reference accuracy fixes (2026-09-03, verified fleet-v4.90.0)
+
+- **mi1 get_host is a projection, not full detail.** `GetHostByID` (cmd/fleet-mcp/fleet_integration.go:403-424) decodes `GET /hosts/{id}` into the limited `Endpoint` struct (`:187-202`: hostname/display/computer name, status, last_seen, platform, osquery_version, hardware_serial, primary_ip, team_id/name, labels), dropping the much richer `HostDetail` the API returns. A.11's get_host row and 6.6's Hosts category row reworded from "full detail" to "a selected projection ... not Fleet's full host detail."
+- **mi2 shared platform filter = four values only.** `platformToBuiltinLabel`/`resolvePlatformOrLabelToLabelID` (fleet_integration.go:326-345,1207-1227) accept only macos/windows/linux/chromeos and error otherwise ("use one of: macos, windows, linux, chromeos"); the shared-vocabulary "etc." was wrong. `get_software` cross-host `platform` is a wider, differently-matched set (macos/windows/linux/chrome/ios/ipados; mcp_tools_inventory.go:38) filtering the installable catalogue, cross-referenced. The CVE-tool nuance is already at A.11's get_aggregate_platforms note (M2, e3b31d9).
+- **mi3 (A.6, not A.11) schema-refresh timing.** schema.go:115-122 serves the embedded snapshot synchronously at init; StartSchemaRefresh (:144-158) sleeps 2s then RefreshSchemaNow, then every interval (default 24h); RefreshSchemaNow (:164-166) replaces only on success, retains previous on failure. A.6 reworded from "replaced at startup" accordingly.
