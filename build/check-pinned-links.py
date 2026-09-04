@@ -8,11 +8,16 @@ no link: it looks like a citation and behaves like a guess.
 Every `github.com/fleetdm/fleet/blob/<ref>/` link must name the tag this manual is verified
 against. Sixteen such links were found unpinned across seven chapters on 2026-08-27, five of
 them in a chapter whose review had already asked for four of them to be pinned.
+
+`tree/<ref>` (directory) links are checked the same way: this originally inspected only
+`/blob/`, so three `tree/main` frontmatter links (8.2, 8.9, 8.13) floated on the moving branch
+until round 9 (MIN8-4). Both kinds pin to the tag; the trailing path is optional so a bare
+`tree/<ref>` to a repository root cannot slip through.
 """
 import re, sys, pathlib
 
 TAG = "fleet-v4.90.0"
-PAT = re.compile(r"github\.com/fleetdm/fleet/blob/([^/\s)\]`]+)/")
+PAT = re.compile(r"github\.com/fleetdm/fleet/(?:blob|tree)/([^/\s)\]`]+)")
 
 problems = []
 for path in sorted(pathlib.Path("manual").rglob("*.md")):
