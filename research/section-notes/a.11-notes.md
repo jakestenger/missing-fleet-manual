@@ -196,3 +196,14 @@ findings (verified against 4.90.1) hold unchanged at the book's 4.90.0 base; not
   "All Linux" built-in label. Added a bold note after the Hosts table naming the seven-string
   subset, the Other-bucket effect, the CVE `platform=linux` drop, and the recommendation to use the
   built-in All Linux label for census. Kept out of 6.6 (density, M21). links=0.
+- **M3 (fan-out tools silently return incomplete successes).** Verified at fleet-v4.90.0:
+  per-team query/report fan-out (`fleet_integration.go` ~723-759) logs `logrus.Warnf` and `return`s
+  from the goroutine on any per-team error/non-200/decode failure, dropping that fleet's items; if
+  `GetTeams` itself fails it warns and returns only global items (~723-726). Same shape for
+  policies. CVE per-version host fetch (~1735-1738) does `Warnf ... continue`, dropping that
+  version's hosts. `get_vulnerability_impact` denominator (~1541-1544): `totalSystems := 0; if
+  count, err := GetHostCount; err == nil { totalSystems = count }` so a failed estate count leaves
+  the denominator at 0 silently. None sets a partial/incomplete marker. Added a shared bold caveat
+  in the A.11 intro (after the allowlist paragraph) covering `get_queries`/`get_policies`, the CVE
+  tools, and the total-systems fallback; instructs retry + reading the server process log before
+  using as a census/compliance total/security decision. links=0.
