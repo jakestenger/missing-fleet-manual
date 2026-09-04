@@ -30,3 +30,11 @@ authentication" (2.6 to enable, 1.5 for the audit caveat, T); "user account" (2.
 Closes the M12 reference-test dead-ends ("Enable email MFA", role/account lifecycle). Owning
 sections picked where the book actually teaches the thing (2.6), same standard as the rest of
 A.10. links=0.
+
+## Round6 M14 (2026-09-03) — privacy/data-boundary vocabulary added
+
+Added index routes for the privacy-review vocabulary the finding flagged as missing: data
+classification (see), data egress, data inventory and trust boundaries (D); personal data
+(see), privacy review (see) (P); retention (R); trust boundary (see) (T). All resolve to the
+new A.8 map anchor. Closes the M14 reference-test dead-end ("conduct a privacy review").
+links=0.

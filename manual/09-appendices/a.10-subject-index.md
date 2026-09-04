@@ -54,6 +54,9 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 ## D
 
+- **data classification**, see data inventory and trust boundaries.
+- **data egress** (what data leaves Fleet, and to whom): the map is [A.8](a.8-api-action-and-endpoint-reference.md#data-inventory-and-trust-boundaries); log delivery specifically is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md).
+- **data inventory and trust boundaries** (what data Fleet holds, where it lives, and what crosses a boundary, for a privacy review): [A.8](a.8-api-action-and-endpoint-reference.md#data-inventory-and-trust-boundaries).
 - **DDM** (Declarative Device Management): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); diagnosing declaration delivery is [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md).
 - **dead lettering:** defined in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **declarative settings**, see DDM.
@@ -135,10 +138,12 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 - **pack:** the legacy 2017 query pack is covered in [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) and glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **`PayloadScope`** (the declaration key choosing System or User channel delivery): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
+- **personal data**, see data inventory and trust boundaries.
 - **Platform SSO:** the device registration token and its delivery are [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 - **policy:** [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md).
 - **pprof:** the profiling set is [8.5](../08-troubleshooting/8.5-fleetctl-debug.md); the term is glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Preview** (`fleetctl preview`, alias `sandbox`): the throwaway local Fleet; its command contracts are in [a.7](a.7-fleetctl-command-reference.md).
+- **privacy review**, see data inventory and trust boundaries.
 - **profile**, see configuration profile.
 - **Prometheus:** Fleet's metrics naming, and which suffixed series to query, is [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md).
 
@@ -154,6 +159,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **report and live report** (renamed from query and live query in 4.82.0): [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md); a live report used as an introspection tool is [8.7](../08-troubleshooting/8.7-live-query-introspection.md). The rename is in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **REST API:** using it is [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md); the indexed route and endpoint reference is [A.8](a.8-api-action-and-endpoint-reference.md).
 - **restore**, see backup and restore.
+- **retention** (how long Fleet keeps each class of data): routed by class from [A.8](a.8-api-action-and-endpoint-reference.md#data-inventory-and-trust-boundaries).
 - **retirement** (decommissioning a Fleet deployment): [7.8](../07-operate-fleet/7.8-retire-a-fleet-deployment.md).
 
 ## S
@@ -184,6 +190,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **Technician** (a role defined by what it can change: run scripts, install or uninstall software, with read access much wider than that summary suggests, including recovery secrets; Premium): choosing between Fleet's roles is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md).
 - **Terraform:** the AWS reference architecture module is [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
 - **TLS:** the certificate that protects communication with the service, and the server private key it depends on, is [1.6](../01-foundations/1.6-the-fleet-server.md); planning the DNS name and certificate as server settings is [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
+- **trust boundary**, see data inventory and trust boundaries.
 - **TUF** (The Update Framework): the update repository is [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md); confirming what a host is running is [8.4](../08-troubleshooting/8.4-host-side-investigation.md).
 - **two-factor authentication** (Fleet's own email-delivered second factor, Premium): enabling it per account is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md); why it leaves almost no trace in the activity record is [1.5](../01-foundations/1.5-audit-and-activity.md).
 

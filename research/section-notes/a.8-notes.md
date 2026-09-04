@@ -292,3 +292,32 @@ and `latest` literally; and the governing structure note still described a.8's c
 | 3, whole read | NOT READY, seven items | Six were round-2 fixes that had not landed, two only in this ledger. The caller frame demoted; two chapters corrected |
 | 4, verification | NOT READY, four items | The ledger reclassification claimed a second time and not performed. The Apple origin table corrected |
 | 5, verification | NOT READY, four items | **Capped here.** The Windows authentication claim reversed and S10 withdrawn; the CDN fallbacks qualified; the ledger's outstanding evidence rows written into the tables |
+
+## Round6 M14 (2026-09-03) — added "Data inventory and trust boundaries" map
+
+A privacy/data-protection review had no route: the material was dispersed across
+1.6/2.8/4.1/6.6/7.2/7.6/8.13 and A.10 carried no entry for privacy, personal data, data
+classification, retention, or data egress ("conduct a privacy review" dead-ended). A.9 is
+intentionally reserved (0.1:250, labs out of scope) and a new appendix is a large ripple, so
+the map went into A.8, whose charter word is "exposure" and which already frames itself as
+"the matrix network reviews ask for" (a privacy review is the sibling). New section placed
+after the exposure matrix, before "API conventions".
+
+It is a NAVIGATIONAL map, deliberately: every cell points to the owning chapter that carries
+the verified fact, rather than re-asserting retention/egress specifics I would have to verify
+independently (the finding's defect is a missing route, not wrong facts). Storage framing is
+taken verbatim-in-substance from 7.2:41-60 (verified at fleet-v4.90.0 via the 7.2 chapter,
+itself source-checked): MySQL system of record incl. Apple CA material encrypted; file/object
+storage for installer/icon/bootstrap bytes; Redis transient; server private key + Windows
+enrollment identity live outside the DB in configuration; three separate disk-encryption
+escrow chains. Egress recipients cited to their owning chapters (2.8 logs, 2.9/2.10 Apple,
+2.12 Google, 2.13 CAs, 2.5 IdP, 6.6/A.11 MCP, Part VI integrations, 8.13 support diagnostics);
+inbound = vuln feed (4.4). No new product claims beyond those already in the cited chapters.
+
+Also: 0.1 gained a 7th reading path ("If you are conducting a privacy or data-protection
+review...") -> the A.8 map anchor; the intro count "Six indexes" -> "Seven starting points"
+(only occurrence, grep-confirmed; not a frequency-claim check target). A.10 gained: data
+classification, data egress, data inventory and trust boundaries (D); personal data, privacy
+review (P); retention (R); trust boundary (T) -> all route to the A.8 map. check-links 0
+(anchor resolves); table-names/column-names/crossrefs/headings/cap-ids(367)/em-dashes/
+absolutes/shell-placeholders/pinned-links/activity-names all green.
