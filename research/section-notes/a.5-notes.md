@@ -506,3 +506,35 @@ of those buckets. `check-cap-ids.py` passes green with the new totals.
   interface."). De-bolded and merged into flowing prose leading with the claim ("The UI column is
   the most conservative of the four, not the least capable interface: ..."). Counts (70 cells) and
   the same-fact/different-proof point unchanged. links=0, no em-dashes.
+
+## 2026-09-04 fix: rescore CAP-279 and CAP-181, correct section N, recount (round8 MJ-E m8 m9)
+
+Three count-coupled a.5 corrections, done as one atomic recount so the published count table never
+went stale between edits.
+
+MJ-E (CAP-279, "Choose whether Windows enrollment asks the end user"): fleetctl and GitOps were
+scored Not established. Both write the setting. Confirmed at fleet-v4.90.0: `pkg/spec/gitops.go`
+carries `GitOpsControls.EnableTurnOnWindowsMDMManually` (json `enable_turn_on_windows_mdm_manually`),
+and `server/service/client.go` transfers it into `mdmAppConfig["enable_turn_on_windows_mdm_manually"]`
+on apply; classic `fleetctl apply` writes the same `mdm` key. Both cells moved to Full, and CAP-279
+was removed from the "open in two columns" discussion (which drops to one row, CAP-179, unsettled in
+fleetctl and GitOps alike).
+
+m8 (CAP-181, "Keep the library's catalogue apps current"): UI was Not established, understating the
+Premium software UI. Confirmed at the tag: `frontend/pages/SoftwarePage/SoftwareTitleDetailsPage/
+VersionsModal/VersionsModal.tsx` offers "Automatically update to latest" (the no-pin default), which
+is the same auto-update arming the other three interfaces expose via the software package `version`
+field. 5.4:493-495 describes the hourly auto-update facet, and a.2's CAP-181 gate is "no literal
+version pin". The UI arms the no-pin choice identically, but Fleet's hourly job performs the actual
+currency, so the shape is arming-vs-performing = Partial, matching the other three columns, not Full.
+UI moved Not established -> Partial.
+
+m9 (section N off by one): section N (Device actions and MDM commands, rows 422-444) is 23 rows, not
+22, since CAP-370 now sits in it; all 23 GitOps cells are Unsupported. a.5:96 corrected 22 -> 23.
+
+Recount, verified by build/check-cap-ids.py (which derives the true per-column counts from the
+matrix): Full fleetctl 179->180, GitOps 122->123; Partial UI 55->56 (four-column total 252->253);
+Not established UI 70->69, fleetctl 3->2, GitOps 2->1. Narrative figures: rows-with-any-Not-
+established 72->70, more-than-one-column group 14->13, UI Not-established narrative 70->69 (the
+"twenty-one of the" denominator followed), all-four-Full 83->84, all-columns-agree 103->105.
+Frontmatter audit trail amended with a fifth reconciliation note. check-links=0; check-cap-ids exit 0.

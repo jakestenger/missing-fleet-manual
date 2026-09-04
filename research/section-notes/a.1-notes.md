@@ -512,3 +512,11 @@ disambiguates it from CAP-189), amended the frontmatter audit trail, and kept th
 count unchanged (no new CAP minted). Subject-index routing added in a.10. The structural new
 "Initialize Fleet" chapter half of the finding is DEFERRED to the owner's editorial call.
 [[a.10-notes]]
+
+## 2026-09-04 fix: reconcile "a.2 carries the same set" (round8 m10)
+
+The ID-column description said a.2 "carries the same set" as a.1/a.5. Not quite: CAP-367, CAP-368 and
+CAP-369 (Chromebook lock/release/erase) are rows in a.2 (a.2:307/313/319) but appear in a.1 only in
+the "eight things with no capability row" list (a.1:758), not as index rows, a distinction a.1:746
+already draws. Softened a.1:37 to "carries nearly the same set, with two differences", naming both the
+lettered sub-row split and the Chromebook trio. No CAP minted, counts unchanged; check-cap-ids exit 0.
