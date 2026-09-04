@@ -749,7 +749,7 @@ These are attested in Fleet, but have no capability row, so they do not appear i
 
 **The local evaluation sandbox.** [1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything) teaches running `fleetctl preview`, but it still has no capability row of its own in the matrix above. Its command contracts are in [a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter).
 
-**Locking, releasing and erasing a Chromebook.** CAP-367, CAP-368 and CAP-369. Fleet refuses all three outright: the lock, unlock and wipe handlers each fall through to a `default:` case that returns "Unsupported host platform" for ChromeOS (`ee/server/service/hosts.go:139,230,330` at fleet-v4.90.1). [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) records the blanket refusal in prose directly beneath its lock-unlock-wipe matrix ("ChromeOS supports none of it"), but the matrix itself carries no ChromeOS column, so no chapter gives the refusal per-command detail the way it does for CAP-222's Android unlock.
+**Locking, releasing and erasing a Chromebook.** CAP-367, CAP-368 and CAP-369. Fleet refuses all three outright: the lock, unlock and wipe handlers each fall through to a `default:` case that returns "Unsupported host platform" for ChromeOS (`ee/server/service/hosts.go:139,230,330` at fleet-v4.90.0). [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) records the blanket refusal in prose directly beneath its lock-unlock-wipe matrix ("ChromeOS supports none of it"), but the matrix itself carries no ChromeOS column, so no chapter gives the refusal per-command detail the way it does for CAP-222's Android unlock.
 
 ### Thirteen entries re-audited out of the count
 
