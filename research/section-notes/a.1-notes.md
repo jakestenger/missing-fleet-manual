@@ -450,3 +450,31 @@ are recorded in `a.5-notes.md`.
   splitting a few outcomes into lettered sub-rows. `check-cap-ids.py` unaffected: its ROW regex
   only matches `CAP-<digits>`, so lettered sub-rows are invisible to the formal-row checks, and
   a prose "CAP-244a" reads only as CAP-244 to `ANY_ID`. Links + cap-ids green.
+
+## Fix-loop round (2026-09-03, round6 M15 — closing register conflated "no row" with "no chapter")
+
+The "Where this index ends" register historically tracked outcomes with no owning chapter
+(the thirteen "re-audited out" entries all read "counted here while no chapter owned X; now
+[chapter] owns it"), but four of the five remaining entries had since gained chapter coverage
+and were retained only because they still lack a formal capability row. The heading "Five
+things with no row and no chapter" and the framing "five things this manual does not teach"
+therefore overclaimed: the local evaluation sandbox is taught in 1.1 (`fleetctl preview`), and
+the Chromebook lock/unlock/erase refusal is recorded in 5.7. Only Android enrollment through a
+Google account genuinely has neither a row nor an owning chapter. 0.1 (lines 14, 61)
+compounded it by describing the register as outcomes "no chapter yet owns," which is the
+book's coverage-completeness claim resting on a register that is really a no-row index.
+
+Fix (internal-consistency only, no product-fact change):
+- Retitled the H3 to "Five things with no capability row" (H3 anchor had zero inbound refs;
+  the H2 `#where-this-index-ends` anchor, which has 3 refs, is unchanged).
+- Reframed the section intro and the five-intro to state the split explicitly: only Android
+  Google-account enrollment also has no owning chapter (the one real coverage gap); the other
+  four wait on a row, not a chapter, with the 1.1 and 5.7 coverage named inline.
+- Aligned 0.1's two completeness sentences to say the register lists "no formal capability
+  row" outcomes and flags any that also have no owning chapter, made forward-safe ("any," not
+  "the one") so it survives future rounds.
+All CAP tokens preserved (CAP-367/368/369 still in the Chromebook bullet, so cap-ids still
+counts 367 IDs in a.1). Considered the finding's heavier option (add formal CAP rows for
+preview + the three Chromebook actions); deferred it as a larger a.1/a.2/a.5/a.7 counting
+change with no correctness benefit over the reframe. links=0, cap-ids/crossrefs/headings/
+em-dashes green.
