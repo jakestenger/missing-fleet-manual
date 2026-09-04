@@ -223,3 +223,16 @@ unknowns, Fleet itself decides"), rejects only a known table on a known-incompat
 bare-int-vs-TEXT fires only when the column is known in every used table and TEXT everywhere, skips
 literals 0/1, does not flag quoted strings. Restated the cell with both checks + the pass-through, and
 that the check catches common mistakes rather than proving the query valid. [[6.6-notes]]
+
+## round9 MIN8-6: extend the "don't trust the tool self-description" warning to filter composition (2026-09-04)
+
+The get_software freshness warning (a.11:114) taught "the assistant reads the tool description as fact,
+so verify it" for one case only. Extended it to the get_endpoints compose overclaim. Verified at
+fleet-v4.90.0: get_endpoints' own tool description (cmd/fleet-mcp/mcp_tools_hosts.go:24) advertises
+"All filters compose", but resolvePlatformOrLabelToLabelID (fleet_integration.go:1207-1227) returns on
+labelName first and never consults platform, so setting label+platform scopes to the label alone and
+drops platform silently (GetEndpointsWithFilters comment :1250-1252). The label/platform
+non-composition itself was already documented (round6 C2: a.11:53/54/67/92/104); this adds only the
+"the tool's self-description overclaims it" framing and cross-refs the argument notes above. Client-side
+intersection (label/platform set intersected with the policy set, :1374-1389) left as-is; the route
+notes already imply it and the finding's crisp instance is the compose overclaim. check-links=0. [[6.6-notes]]
