@@ -52,3 +52,15 @@ Added "first administrator" (see first-run setup) and "first-run setup" ->
 first-run setup), and "setup screen" (see first-run setup) under S. Disambiguated from the device
 "setup assistant" / "setup experience" entries that route to 3.2/5.5. Full source citation in
 [[a.1-notes]].
+
+## 2026-09-04 fix: subject-index routing for the go-live decision (round8 m14)
+
+Added "go-live decision" (G, see production readiness), "handoff and handover" (H, see production
+readiness), "production readiness" (P) -> 7.7#the-go-live-decision plus the 2.1 pilot cross-ref, and
+"readiness" (R, see production readiness). m14 asked to extend a.1's no-capability-row register to
+cover the go-live decision; research showed the go-live decision is the book's own synthesized
+readiness gate (7.7:154-164), not a Fleet-attested capability, so it fails that register's criterion
+("attested in Fleet but have no capability row") the same way the manual-assembled infrastructure
+intake checklist was re-audited out (a.1:768). The reviewer's real concern is searchability, so it
+is served here in a.10 rather than by a false register row; the a.1 register stays at eight (first-run
+setup only, MJ-H). links=0, crossrefs/headings=0.
