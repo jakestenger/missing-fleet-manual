@@ -4,8 +4,8 @@ chapter: "Appendices and indexes"
 section: "A.10"
 sidebar_position: 10
 verified_against: Fleet 4.90.0
-verified_on: 2026-08-30
-verified_source: "reference aid, not a behaviour claim. Each entry was checked to resolve to a section that defines or explains the term at fleet-v4.90.0; the terms themselves are grounded in the chapters they point at"
+verified_on: 2026-09-03
+verified_source: "reference aid, not a behaviour claim. Each entry was checked to resolve to a section that defines or explains the term at fleet-v4.90.0; the terms themselves are grounded in the chapters they point at. Extended 2026-09-03 (round6 M16) with host display name template, name template and device name routes to 5.2's new 'Naming hosts from a template' section"
 ---
 
 # Subject index
@@ -62,6 +62,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **declarative settings**, see DDM.
 - **decommissioning**, see retirement.
 - **device channel:** the default declaration and profile delivery target, [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); contrasted with the user channel there.
+- **device name**, see host display name template.
 - **DEP** (Device Enrollment Program), see ADE. DEP is the deprecated name, kept apart from ADE in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **DigiCert:** one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 - **disk encryption:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
@@ -95,6 +96,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 - **healthz** (the `/healthz` endpoint): what it checks and returns is [8.14](../08-troubleshooting/8.14-degradation.md); reading its failure in the server log is [8.3](../08-troubleshooting/8.3-server-logs.md).
 - **Helm** (the Kubernetes chart): [2.4](../02-administer-and-deploy-fleet/2.4-deploy-with-containers-or-virtual-machines.md).
+- **host display name template** (the per-scope, per-host template that sets the display name an Apple device reports, Premium): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#naming-hosts-from-a-template).
 - **host identity certificate:** [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md); which platforms support it is a row in the [platform capability matrix](a.2-platform-capability-matrix.md).
 - **host vitals:** [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md).
 - **Hydrant:** one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
@@ -119,6 +121,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 ## N
 
+- **name template** (host display name), see host display name template.
 - **NDES:** the Microsoft SCEP proxy, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 - **node key:** [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md); also glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Nudge:** [5.6](../05-manage-devices/5.6-control-operating-system-updates.md).
