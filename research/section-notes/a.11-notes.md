@@ -146,3 +146,17 @@ than pre-validated.
   it "consumes device CPU and surfaces in EDR telemetry" — i.e. executes on and consumes resources
   on devices, not persistent mutation. The remaining 16 read Fleet. Rewrote line 25 to that single
   model, consistent with 6.6's own carve-out (MJ4). Verified fleet-v4.90.1.
+
+## Round 6 fix cycle (2026-09-03) — re-validated vs fleet-v4.90.0
+
+`cmd/fleet-mcp/` is byte-identical between fleet-v4.90.0 and fleet-v4.90.1, so the round6 MCP
+findings (verified against 4.90.1) hold unchanged at the book's 4.90.0 base; not point-release fixes.
+
+- **C1 (both CVE tools over-include hosts on unaffected versions).** `fleet_integration.go` CVE
+  composition (Step 2 ~1651-1689) decodes only `SoftwareTitle.Versions[].ID` and appends every
+  version id, discarding the per-version vulnerability array; Step 3 (~1695+) fetches hosts for
+  every version id. Adjusted the `get_vulnerability_impact` row (added over-count of unaffected
+  versions alongside the existing lower-bound-at-ceiling note), the `get_vulnerability_hosts` row
+  ("the hosts affected", not "the specific hosts", + over-include note), and added a shared
+  **"Both CVE tools over-include hosts on unaffected versions"** caveat paragraph after the
+  policies/vulnerabilities table routing readers to per-host software inventory. links=0.
