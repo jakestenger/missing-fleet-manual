@@ -236,3 +236,14 @@ non-composition itself was already documented (round6 C2: a.11:53/54/67/92/104);
 "the tool's self-description overclaims it" framing and cross-refs the argument notes above. Client-side
 intersection (label/platform set intersected with the policy set, :1374-1389) left as-is; the route
 notes already imply it and the finding's crisp instance is the compose overclaim. check-links=0. [[6.6-notes]]
+
+## round9 MIN8-7: "transcribed verbatim" for the vetted queries is a source label, not a verified fact (2026-09-04)
+
+a.11:86 (get_vetted_queries) said the CIS queries are "transcribed verbatim from the benchmarks", stated
+as fact. That rests only on a source comment: cmd/fleet-mcp/vetted_queries.go:5-8 ("All queries in this
+file are transcribed verbatim from the CIS ... benchmarks") and :22, plus per-query Category="CIS"/CISRef
+labels (struct :16-18). Nothing at the tag verifies the transcription, and the tool's own description
+(mcp_tools_queries.go:41) further overclaims "100% vetted, production-safe ... they have been tested".
+Reworded to "labelled in the source as transcribed from those benchmarks" and made the caveat cover the
+labelling too (nothing verifies the labelling, executes, or validates them). Kept the existing
+starting-point-not-pre-validated pushback. check-links=0.
