@@ -581,7 +581,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 Four things in that shape are worth reading before you use any single row.
 
-**The REST API reaches more actions than any other interface**, 292 at `Full` or `Partial` against 253 for the UI, 236 for `fleetctl` and 157 for GitOps. The other three are clients of it, so its reach is the ceiling theirs are measured against.
+**The REST API reaches more actions than any other interface**, 292 at `Full` or `Partial` against 254 for the UI, 237 for `fleetctl` and 158 for GitOps. The other three are clients of it, so its reach is the ceiling theirs are measured against.
 
 **The UI's 69 `Not established` cells are the appendix's largest soft spot**, and they are not evenly spread. Thirty-three of them are in the three sections about running the server, its settings and its diagnostics, where the answer is nearly always that the value is process configuration no interface writes. Twenty-one of the 69 sit on rows where all three other columns independently found `Unsupported`. **Those are very probably `Unsupported` too, and they are not published that way**, because the boundary that would justify it was not found. A wrong `Not established` is a failure in the same way a wrong `Unsupported` is, so the appendix records the uncertainty rather than resolving it in the direction the neighbours point.
 
