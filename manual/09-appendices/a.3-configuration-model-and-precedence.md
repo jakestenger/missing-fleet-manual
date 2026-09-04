@@ -20,7 +20,7 @@ The same-looking Fleet setting can come from the server, organization settings, 
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) The authorities, what each one owns, and how collisions resolve. That is the part nothing else collects.
+![Reference](../_assets/icons/reference.svg) The authorities, what each one owns, and the known rules for how collisions resolve. That is the part nothing else collects. Where a comparison has not been carried out in full, this appendix says so rather than implying a settled order.
 
 **It explains what nearly every setting is for, in the binary's own words rather than copied prose.** The full catalog carries each key's registered usage string (the same one-line description `fleet serve --help` prints), read mechanically from the server binary rather than transcribed from Fleet's hand-maintained reference: this project has confirmed the reference and the server disagreeing in two different ways at this release, about what a default is and about whether a documented key is bound at all. A usage string names what a setting does, not when or why you'd change it; for that, see [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md). The disagreements that change a decision are called out first; the full catalog, keys and their usage strings both generated rather than copied, closes the appendix.
 
