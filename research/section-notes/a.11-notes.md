@@ -181,3 +181,18 @@ findings (verified against 4.90.1) hold unchanged at the book's 4.90.0 base; not
   installable artifact targeting that platform for the fleet (hence it requires `fleet`), not
   software observed on hosts of that OS; to inventory by host OS, resolve hosts first then read
   per-host inventory. links=0.
+- **M2 (MCP recognizes only a subset of Fleet's Linux platform class).** Verified at
+  fleet-v4.90.0: `fleet_integration.go` buckets only seven Linux strings (`normalizePlatform`
+  ~302-316; `matchesPlatform` ~318-324; host-summary re-bucket ~903-922, `default` case dumps the
+  rest into Other) = linux/ubuntu/centos/rhel/debian/fedora/amzn. Fleet's own `HostLinuxOSs`
+  (`server/fleet/hosts.go:1231-1257`) lists 26 (linux, ubuntu, zorin, debian, rhel, centos, sles,
+  kali, gentoo, amzn, pop, arch, linuxmint, void, nixos, endeavouros, manjaro, manjaro-arm,
+  opensuse-leap/-tumbleweed, tuxedo, neon, archarm, flatcar, coreos, cachyos); `fedora` is in the
+  MCP set but not in Fleet's list. Finding said "27"; actual is 26 at both 4.90.0 and 4.90.1 (file
+  unchanged between tags) — behaviour unaffected. Scope: bites `get_aggregate_platforms` (Linux
+  census undercounts, Other overcounts) and the CVE post-filter `matchesPlatform` at ~1763-1788
+  (`platform=linux` on `get_vulnerability_hosts`). Host-listing (`get_endpoints`/`get_policy_hosts`)
+  is NOT affected: `platform=linux` resolves via `platformToBuiltinLabel` (~1216) to the complete
+  "All Linux" built-in label. Added a bold note after the Hosts table naming the seven-string
+  subset, the Other-bucket effect, the CVE `platform=linux` drop, and the recommendation to use the
+  built-in All Linux label for census. Kept out of 6.6 (density, M21). links=0.

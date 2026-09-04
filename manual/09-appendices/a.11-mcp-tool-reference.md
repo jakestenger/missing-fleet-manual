@@ -68,6 +68,8 @@ Every tool table below has a **Fleet routes** column, for building or auditing a
 | `get_fleets` | List all fleets with ids and names | none | `GET /fleets` |
 | `get_labels` | List all labels | none | `GET /labels` |
 
+**`get_aggregate_platforms` buckets only a fixed subset of Linux distributions as Linux.** It reads Fleet's server-side host summary, which counts each distribution under its own platform string, then re-buckets those counts: only `linux`, `ubuntu`, `centos`, `rhel`, `debian`, `fedora`, and `amzn` are summed into the Linux total. Hosts Fleet reports under any other Linux platform string it recognizes (Zorin, SLES, Kali, Arch, and roughly twenty more) fall into the breakdown's Other line, so the Linux count reads low and Other reads high. The same fixed subset governs the `platform` filter on the CVE host tools, so `platform=linux` on `get_vulnerability_hosts` drops those same hosts. The plain host-listing tools (`get_endpoints`, `get_policy_hosts`) are unaffected: they resolve `platform=linux` to Fleet's built-in All Linux label, which is complete. For an accurate Linux census, filter or count against that built-in All Linux label rather than the aggregate's Linux line.
+
 ## Queries
 
 ![Reference](../_assets/icons/reference.svg) The saved-report list (`get_queries`), the osquery schema, and running live osquery. `run_live_query` is the one destructive tool; the rest are read-only.
