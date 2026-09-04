@@ -20,6 +20,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 - **ABM**, see Apple Business Manager.
 - **account lifecycle** (of a person's Fleet account), see user account.
+- **account provisioning** (creating a Mac's local account and syncing its password with the identity provider through Platform SSO, Premium and macOS-only; the `fpsso` settings-search term): [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#provision-and-sync-the-local-account-with-platform-sso). This is not the Fleet-console account [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) provisions.
 - **activity and audit log:** the record of what changed and who caused it is defined in [1.5](../01-foundations/1.5-audit-and-activity.md); where those records are delivered is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md); reading them during an investigation is [8.12](../08-troubleshooting/8.12-audit-logs.md).
 - **ADE** (Automated Device Enrollment): [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) for Macs and [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) for iPhones and iPads. DEP is the former name; the two are separated in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **AI assistant** (Claude, Cursor, and other MCP clients): connecting one to Fleet through the MCP server is [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md); the exact tools it can call are [A.11](a.11-mcp-tool-reference.md).
@@ -109,6 +110,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **LAPS and the managed local administrator account:** [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
 - **licence** (Fleet Premium, licence key, and licence expiry): [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md); choosing a licence tier is [2.1](../02-administer-and-deploy-fleet/2.1-administration-model-and-deployment-choices.md).
 - **live query**, see report.
+- **local account** (a Mac's own user account that a person logs in with, provisioned and password-synced through Platform SSO; distinct from the managed local administrator account): [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#provision-and-sync-the-local-account-with-platform-sso).
 - **LocURI**: the CSP node path a SyncML command targets, [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md).
 - **LUKS** (Linux disk encryption): escrow is [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
 
@@ -142,9 +144,10 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## P
 
 - **pack:** the legacy 2017 query pack is covered in [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) and glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
+- **password sync** (keeping a Mac's local-account password in step with the identity provider, through Platform SSO in Password mode, Premium and macOS-only): [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#provision-and-sync-the-local-account-with-platform-sso).
 - **`PayloadScope`** (the declaration key choosing System or User channel delivery): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 - **personal data**, see data inventory and trust boundaries.
-- **Platform SSO:** the device registration token and its delivery are [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
+- **Platform SSO:** the device registration token and its delivery are [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); provisioning and password-syncing a Mac's local account through Platform SSO is [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#provision-and-sync-the-local-account-with-platform-sso).
 - **policy:** [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md).
 - **pprof:** the profiling set is [8.5](../08-troubleshooting/8.5-fleetctl-debug.md); the term is glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Preview** (`fleetctl preview`, alias `sandbox`): the throwaway local Fleet; its command contracts are in [a.7](a.7-fleetctl-command-reference.md).
