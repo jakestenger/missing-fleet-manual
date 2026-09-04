@@ -497,3 +497,18 @@ things", and a new "The Apple DDM declaration asset" entry beside the host displ
 the 364-row CAP count and check-cap-ids (367 IDs / a.5 362) are unchanged. Formal CAP row + A.2/A.5
 matrix entries deferred for the same count-coupled reason as M16. Full source ledger in 5.2-notes.md.
 links=0; cap-ids 367.
+
+## 2026-09-04 fix: route first-run setup (round8 MJ-H)
+
+First-run server setup (creating the first administrator) is taught in
+2.2#complete-first-run-setup but had no capability row and no a.1/a.10 routing, so a cold reader
+searching "first administrator / initialize server" landed nowhere. It is distinct from CAP-189
+("first boot / setup experience" -> 5.5), which is the device onboarding, not the server's own
+initialization. Confirmed at fleet-v4.90.0: `server/service/handler.go:1276-1295` serves
+`/api/v1/setup` and `/api/setup` only while `SetupRequired` is true (`RedirectLoginToSetup` forces
+the UI to `/setup`), a distinct lifecycle step. Added first-run setup to the a.1 no-capability-row
+register (seven outcomes to eight: headline, section heading, intro enumeration, and a bullet that
+disambiguates it from CAP-189), amended the frontmatter audit trail, and kept the 364-row CAP
+count unchanged (no new CAP minted). Subject-index routing added in a.10. The structural new
+"Initialize Fleet" chapter half of the finding is DEFERRED to the owner's editorial call.
+[[a.10-notes]]

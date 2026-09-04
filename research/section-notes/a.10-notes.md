@@ -44,3 +44,11 @@ links=0.
 Added "declaration asset" (D) routing to 5.2#declaration-assets and 8.8#888-ddm-declarations, plus
 an "asset (Apple DDM)" see-reference (A). Closes the M17 dead-end where A.8 emitted the five asset
 routes but no index term led a reader to the workflow that makes them usable. links=0.
+
+## 2026-09-04 fix: subject-index routing for first-run setup (round8 MJ-H)
+
+Added "first administrator" (see first-run setup) and "first-run setup" ->
+2.2#complete-first-run-setup under F, a new ## I section carrying "initialize the server" (see
+first-run setup), and "setup screen" (see first-run setup) under S. Disambiguated from the device
+"setup assistant" / "setup experience" entries that route to 3.2/5.5. Full source citation in
+[[a.1-notes]].
