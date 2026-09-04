@@ -63,6 +63,20 @@ jobs:
       - name: Check queried columns exist in Fleet's schema
         run: python3 build/check-column-names.py
 
+      # a.1 / a.2 / a.5 / a.7 are one capability register projected four ways. An ID invented in
+      # one projection, or a stated row count that drifts from the rows actually present, slipped
+      # past review every round a capability moved. This recomputes the whole cross-file contract
+      # from the tables themselves rather than trusting the hand-written totals.
+      - name: Check the CAP-ID register contract holds across appendices
+        run: python3 build/check-cap-ids.py
+
+      # a.5's narrative counts are derived from its matrix and drifted from it again at round 8
+      # (Partial 252 to 253, section N 22 to 23, and three more). This recomputes the derived
+      # tallies check-cap-ids.py leaves untouched (the Partial total, the exactly-one-interface
+      # table, the Not-established row counts, section N) and fails on any prose-vs-matrix drift.
+      - name: Check a.5's derived register counts match its matrix
+        run: python3 build/check-register-counts.py
+
       # The manual states what one release does. A link to blob/main promises a
       # source and hands the reader a file that has since changed, which is
       # worse than no link: it looks like a citation and behaves like a guess.

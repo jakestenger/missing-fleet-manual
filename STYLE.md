@@ -1057,6 +1057,22 @@ instead of the template.** The same goes for a command with a platform-dependent
 name with a suffix. If the list is too long to enumerate, that is a signal the table cell is the
 wrong home for it.
 
+### Derived counts in the appendices are machine-checked
+
+**Added 2026-09-04, after a.5's narrative counts drifted from its own matrix at round 8.** The
+appendix register is one set of tables projected several ways, and every count stated about it is
+derived from those tables: a.5's `Partial` total, its exactly-one-interface figures, its
+`Not established` row counts and its section sizes, plus the a.1/a.2/a.5/a.7 row counts and
+cross-projection coverage. Those figures had drifted from the tables under them on nearly every
+round a capability moved, because a cell was rescored and a total was recounted by hand and one
+was missed.
+
+Two checks now recompute them from the tables and fail CI on any drift: `build/check-cap-ids.py`
+(the cross-file register contract) and `build/check-register-counts.py` (a.5's derived tallies).
+So when you change a matrix cell, do not hand-edit the totals that describe it; change the cell and
+rerun the checks, which recount from the table the same way a reader would. A stated count that no
+longer matches its table is now a build failure, not a reviewer's catch.
+
 ## 27. What a citation ledger has to separate
 
 **Written 2026-08-25, after an external review found a material defect in every one of the twelve

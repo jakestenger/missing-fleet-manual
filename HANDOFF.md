@@ -429,6 +429,8 @@ python3 build/check-activity-names.py
 python3 build/check-schedule-names.py
 python3 build/check-table-names.py
 python3 build/check-column-names.py
+python3 build/check-cap-ids.py        # CI gate: a.1/a.2/a.5/a.7 register contract
+python3 build/check-register-counts.py # CI gate: a.5's derived counts vs its matrix
 ```
 
 **9. Unwrap, build, commit, push, confirm the deploy.**

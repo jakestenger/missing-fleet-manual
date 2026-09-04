@@ -238,6 +238,8 @@ have caught something on nearly every run.
 | `check-activity-names.py` | Advisory | `user_mfa_requested`, documented in two chapters, exists nowhere in Fleet |
 | `check-schedule-names.py` | Advisory | `software_checksum_migration`, given an interval and a description, exists nowhere in Fleet |
 | `check-column-names.py` | Advisory | Part VIII prints column inventories for ~20 tables; `check-table-names.py` covered table names and nothing covered columns |
+| `check-cap-ids.py` | Yes | A.2 silently reused six of A.1's live CAP-IDs for unrelated capabilities and invented six more; every round since, one register projection (a.1/a.2/a.5/a.7) drifted out from under its siblings. Recomputes the whole cross-file contract |
+| `check-register-counts.py` | Yes | a.5's narrative counts are derived from its matrix and drifted from it at round 8 (`Partial` 252 to 253, section N 22 to 23, three more). Recomputes the derived tallies `check-cap-ids.py` does not: the `Partial` total, the exactly-one-interface table, the `Not established` row counts, and section N |
 | `check-absolutes.py` | Advisory | Five defects that were universal claims built from a partial reading |
 | `check-headings.py` | Advisory | Headings asserting more than the paragraph beneath them |
 | `check-em-dashes.py` | Yes | Eleven accumulated in one session in a manual whose STYLE forbids them, which is what a rule with no check behind it looks like |
