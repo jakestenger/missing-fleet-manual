@@ -148,7 +148,9 @@ Neither reaches Fleet. Both read and write the local configuration file only.
 | Command and purpose | Access contract | Effect | Result contract | Chapter |
 |---|---|---|---|---|
 | **`preview stop`** Stop the sandbox | `local` | Stops the containers and the sandbox agent. `local` | The stop was issued | [1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything) |
-| **`preview reset`** Delete the sandbox | `local` | **Destroys the sandbox's data**, its containers and its agent directory. `local` | The sandbox was removed | [1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything) |
+| **`preview reset`** Delete the sandbox | `local` | Removes the sandbox's containers and Orbit's downloaded update files. **Reuses the saved private key and certificates in the config directory and leaves the named Docker volumes**, so the stored data survives and this is not a clean wipe. `local` | The sandbox was removed | [1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything) |
+
+Neither subcommand removes the preview directory itself: the saved configuration, private key and certificates, and the named database volumes all persist a reset, which is what lets a later `preview` reuse them. For a genuine clean slate, take down the Compose stacks with their volumes and delete the preview directory by hand after resetting, then start fresh.
 
 ### `fleetctl updates`, five subcommands on macOS and Linux and one behaviour on Windows
 
