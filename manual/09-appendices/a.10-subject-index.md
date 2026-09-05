@@ -50,7 +50,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **certificate renewal:** the recurring operational calendar, and the difference between renewing a certificate and replacing key material, is [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md); the four Apple credentials with their own renewal stories are [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md).
 - **Chromebook**, see ChromeOS.
 - **ChromeOS extension:** [3.7](../03-connect-devices/3.7-enroll-chromeos-devices.md).
-- **conditional access:** the policy-driven side is [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md); the identity-provider side is [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md).
+- **conditional access:** the feature and its proxy-trust security boundary are [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md); [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) points to it from the identity-provider side.
 - **configuration profile:** [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 - **`cron_stats`:** the table that records whether a scheduled job ran is in [8.6](../08-troubleshooting/8.6-server-state.md).
 - **CSP** (Configuration Service Provider, the Windows-side component a SyncML command targets): [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md).
