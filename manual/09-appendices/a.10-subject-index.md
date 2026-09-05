@@ -48,6 +48,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **carve**, see file carving.
 - **certificate authority** (CA): [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 - **certificate renewal:** the recurring operational calendar, and the difference between renewing a certificate and replacing key material, is [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md); the four Apple credentials with their own renewal stories are [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md).
+- **certificate resend** (resending one certificate a profile issued, per host, separate from resending the profile): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#changing-resending-and-removing).
 - **Chromebook**, see ChromeOS.
 - **ChromeOS extension:** [3.7](../03-connect-devices/3.7-enroll-chromeos-devices.md).
 - **conditional access:** the feature and its proxy-trust security boundary are [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md); [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) points to it from the identity-provider side.
