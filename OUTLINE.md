@@ -158,7 +158,7 @@ Changing state on devices: profiles, scripts, software, remediation.
 | 5.8 | Enforce disk encryption and manage recovery credentials | `5.8-enforce-disk-encryption-and-manage-recovery-credentials.md` | ★★★ | ○ |
 | 5.9 | Automate responses to policy failures | `5.9-automate-remediation-with-policies.md` | ★★★ | ○ |
 
-## Part VI — Automate Fleet
+## Part VI — Integrate and automate Fleet
 
 `manual/06-automate-fleet/`
 
