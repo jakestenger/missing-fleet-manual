@@ -553,3 +553,59 @@ self-initiation table sits at a.5:592/598, above the "Where this appendix and it
 deliberately differ" section (a.5:651+). Two references there pointed to it as the table "below"
 (CAP-371 mentions at ~655 and ~657). Both corrected "self-initiation table below" -> "above". Pure
 direction fix, no counts moved. check-links=0; check-register-counts + check-cap-ids exit 0.
+
+## 2026-09-05 round11 (D-COMP8): CAP-179 fleetctl + GitOps closed against source
+
+Round-10 finding D-COMP8 asked to close the a.5 `Not established` cells against source. The two
+flagship non-deployment unsettled rows the appendix itself named were CAP-350 (open in three
+columns) and CAP-179 (open in `fleetctl` and GitOps). CAP-179 is now settled; CAP-350 and the 69
+UI-column cells are left as documented, deliberate `Not established` (see the disposition note at
+the end).
+
+**CAP-179 "Ship different builds of one title to different hosts": `fleetctl` and GitOps were
+`Not established`, now `Full`.** The notes above (Deliberately not established) recorded the settling
+criterion as "the server-side batch software-installer handler, read for how it groups entries by
+title." Read at fleet-v4.90.0 (7c428c6e46):
+
+- Migration `20260723181411_MultipleCustomPackagesPerTitle` adds `software_installers.dedup_token`
+  (a generated column resolving to `storage_id` for custom packages, `version` for FMA rows) and the
+  unique key `idx_software_installers_dedup (global_or_team_id, title_id, dedup_token)`
+  (schema.sql:3131/3133 at the tag). Its own comment: "A title can now hold several packages...
+  letting different builds of one version coexist." So one title carries multiple content-hash-
+  deduped installers within one team.
+- Each package is independently label-scoped (`labels_include_any` / `labels_exclude_any` /
+  `labels_include_all`), which is how different builds reach different hosts.
+- Both scored interfaces feed the same write path. Classic `fleetctl apply`:
+  `server/service/client.go` `extractTmSpecsSoftwarePackages` reads a team's `software.packages`
+  list (does not collapse by title) and hands it to `BatchSetSoftwareInstallers`. GitOps:
+  `pkg/spec/gitops.go` `Software.Packages []SoftwarePackage`, with `validatePackageFieldPlacement`'s
+  `multiple` handling explicitly supporting several packages per title, each with its own labels.
+  Both land in the same `software/batch` handler (`ee/server/service/software_installers.go:2607`)
+  the UI and REST API use, which the researchers had already scored `Full`.
+
+So both columns "perform the action" under the a.5 rubric. This meets the researchers' own named
+settling bar (the batch handler's title grouping), not neighbour inference. Consistent with a.2's
+CAP-179 row (Supported for the same interfaces, note "At most ten packages per title" — a
+capability-wide cap all four interfaces share equally, so it did not drop UI/REST below `Full` and
+does not drop these two either) and a.1's per-architecture framing ("Ship different builds per
+architecture", arm64 / x86).
+
+**Counts recounted from the table:** rows-with-any-`Not-established` 70 -> 69; more-than-one-column
+unsettled group 13 -> 12 (now CAP-350 three-column + eleven deployment rows, two groups);
+`fleetctl` Full 180 -> 181, GitOps Full 123 -> 124; Full-or-Partial reach `fleetctl` 237 -> 238,
+GitOps 158 -> 159; all-four-`Full` rows 84 -> 85, all-four-agree 105 -> 106. `Not established`
+column totals: `fleetctl` 2 -> 1 (CAP-350 remains), GitOps 1 -> 0. Frontmatter `verified_source`
+carries the sixth-reconciliation sentence. check-links / check-register-counts / check-cap-ids and
+the full suite exit 0.
+
+**D-COMP8 disposition on the remaining cells (owner-delegated judgment, 2026-09-05).** The residual
+`Not established` cells are left as they stand, and that is the correct close, not unfinished work:
+CAP-350 (enumerate every outbound destination) is a proving-a-negative across the whole request
+surface that the appendix assembles by hand in 2.2 and no single interface exposes; the eleven
+deployment/operations rows are unsettled as an interface question by design (the manual verifies
+against Fleet source, and these are operating practices Fleet's source cannot settle either way);
+and the 69 UI-column cells include the 21 the appendix flags as very probably `Unsupported` but
+forbids resolving on neighbour evidence under the part agreement. Closing those would require
+per-cell frontend absence-proof or would inject probably-wrong values into a reference, so the
+appendix keeps recording the uncertainty. The one cell pair that decisive source could close, it
+closed.
