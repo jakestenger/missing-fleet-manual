@@ -76,6 +76,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 - **egress destinations** (the outbound map for a firewall review): [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md).
 - **endpoint allowlist** (the Premium restriction narrowing an API-only user's routes below what its role allows): [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md); the route set per tool is [A.11](a.11-mcp-tool-reference.md).
+- **endpoint catalogue** (the Premium read that returns every method-and-path pair an allowlist will accept): retrieving it is [A.8](a.8-api-action-and-endpoint-reference.md#retrieving-the-endpoint-catalog); what it constrains is the endpoint allowlist above.
 - **enroll secret:** [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md).
 - **enrollment profile:** [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md); the macOS route that uses it is [3.2](../03-connect-devices/3.2-enroll-macos-devices.md).
 - **Entra** (Microsoft Entra ID): as an identity provider it is [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md); its part in Windows automatic enrollment is [3.3](../03-connect-devices/3.3-enroll-windows-devices.md).

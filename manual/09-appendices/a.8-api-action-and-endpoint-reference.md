@@ -225,6 +225,28 @@ Which actions each role may perform is [a.4](a.4-roles-and-permissions-matrix.md
 
 **The exposure matrix is the part most likely to change between releases**, because it grows as features are enabled and as features are added. Re-check it against Fleet's own guidance when adding a capability rather than assuming this list still covers it, and re-check it after an upgrade.
 
+## Retrieving the endpoint catalog
+
+![How-to](../_assets/icons/howto.svg) Fleet serves that catalogue itself, so you do not have to transcribe method-and-path pairs by hand when building an API-only user's endpoint restriction list. One read returns every entry Fleet will accept in such a list:
+
+```
+GET /api/v1/fleet/rest_api
+```
+
+The request authenticates as a user, presenting either a console session or an API token, and it is Premium only: on Free the same request returns a missing-license error instead of a catalogue. The caller must be a global admin or a team admin; any other role is refused, so this is an administrator's build step rather than something the restricted account can run for itself. There is no `fleetctl` command and no GitOps form, and the caller cannot reach it through the console either; the API is the only surface that answers it.
+
+The response is a JSON object with one field, `api_endpoints`, an array whose entries each carry the `method` and `path` an allowlist entry needs, alongside a `display_name` and a `deprecated` flag:
+
+```json
+{
+  "api_endpoints": [
+    { "method": "GET", "path": "/api/v1/fleet/hosts", "display_name": "List hosts", "deprecated": false }
+  ]
+}
+```
+
+Copy the literal `method` and `path` values into the API-only user's own list, as full pairs with the `/api/v1/fleet` prefix intact, which is the shape [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md#two-starting-allowlist-profiles) submits when it attaches an allowlist to a user. This read is the authoritative source for that list: Fleet permits a restricted request only when its route appears both in this catalogue and in the user's own list, so a pair you compose by hand that this catalogue does not carry can never match. It is the same catalogue the [Version notes](#version-notes) above describe; this is how you read it, not a second list.
+
 ## The complete route catalog
 
 ![Reference](../_assets/icons/reference.svg) Like the configuration catalog in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog), this table is generated rather than written. It is read directly from the route registrations the server makes as it builds its router, at the release this book is pinned to, so it lists what the server actually serves rather than what the REST reference documents. Where the two disagree, the catalog is the authority, for the same reason: it is the registration the running server performs.

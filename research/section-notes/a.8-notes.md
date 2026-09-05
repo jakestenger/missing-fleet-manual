@@ -321,3 +321,30 @@ classification, data egress, data inventory and trust boundaries (D); personal d
 review (P); retention (R); trust boundary (T) -> all route to the A.8 map. check-links 0
 (anchor resolves); table-names/column-names/crossrefs/headings/cap-ids(367)/em-dashes/
 absolutes/shell-placeholders/pinned-links/activity-names all green.
+
+## round11 D-COMP4 (2026-09-05): endpoint-catalogue retrieval how-to
+
+Added a "Retrieving the endpoint catalogue" how-to section to a.8 (after Version notes,
+before the complete route catalog). Verified vs fleet-v4.90.0 (7c428c6e46):
+- Route: `ue.GET("/api/_version_/fleet/rest_api", listAPIEndpointsEndpoint, ...)` at
+  server/service/handler.go:618 (user-authenticated; session or API token).
+- Free/OSS path server/service/api_endpoints.go: ListAPIEndpoints SkipAuthorization then
+  returns fleet.ErrMissingLicense -> Premium only.
+- EE path ee/server/service/api_endpoints.go:11-15: Authorize(api_endpoint, ActionRead)
+  then apiendpoints.GetAPIEndpoints().
+- authz server/authz/policy.rego ~1476-1488: allow read on object.type=="api_endpoint"
+  for global admin OR any team admin only; all other roles denied.
+- Response shape server/service/api_endpoints.go: listAPIEndpointsResponse wraps
+  `api_endpoints` = []fleet.APIEndpoint; struct fields method, path, display_name,
+  deprecated (NormalizedPath is json:"-", not serialized) — server/fleet/api_endpoints.go:13.
+
+Register decision (JUDGMENT, diverges from the finding's literal "formal CAP + a.5 row"):
+used the a.1 no-capability-row register (nine outcomes -> ten, eight rows) matching D-COMP3
+one firing earlier, NOT a formal CAP. Reasons: (1) a formal CAP couples a.1's frontmatter
+count to a new a.2 platform-matrix row + an a.5 interface row + a.5's recomputed interface
+tallies (check-cap-ids assertions 8/9); (2) two structurally identical register additions in
+the same round should be handled the same way; the honest state is taught-but-unrowed. The
+capability's own permission (`api_endpoint · read`) already exists as an a.4 row, and its
+API-only interface is noted in the register row prose. a.10 gained an "endpoint catalogue"
+subject entry. Full checker suite exit 0 (links/em-dashes/cap-ids 367/register-counts/
+crossrefs/headings/table-names/column-names/verified/absolutes/shell-placeholders/pinned).
