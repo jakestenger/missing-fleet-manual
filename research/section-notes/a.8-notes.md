@@ -348,3 +348,48 @@ capability's own permission (`api_endpoint · read`) already exists as an a.4 ro
 API-only interface is noted in the register row prose. a.10 gained an "endpoint catalogue"
 subject entry. Full checker suite exit 0 (links/em-dashes/cap-ids 367/register-counts/
 crossrefs/headings/table-names/column-names/verified/absolutes/shell-placeholders/pinned).
+
+## D-COMP6 (round 11) — the shared response and error contract
+
+Added a "The shared response and error contract" section between "API conventions" and
+"Where the rest lives", per round-10 FINDINGS §D COMP-6 ("add an API request/response
+contract layer for a.8"). SCOPE call (bounded, my judgment): documented the *shared
+envelope* every JSON route uses, NOT per-endpoint request/response bodies. Per-endpoint
+shapes stay deferred to Fleet's own REST reference (a.8 has always declined them, and
+reproducing hundreds of bodies would rot per release and duplicate Fleet's reference). The
+envelope is stable across releases and verifiable, so it is the reference-appropriate slice.
+
+Verified vs fleet-v4.90.0 (7c428c6e46):
+- Error envelope: `server/platform/endpointer/transport_error.go` — `JsonError{Message,
+  Code(omitempty), Errors []map[string]string(omitempty), UUID(omitempty)}`; `EncodeError`
+  maps error class -> message + status: validationErrorInterface -> "Validation Failed" 422
+  (or the error's own Status() if it implements one), permissionErrorInterface ->
+  "Permission Denied" 403, NotFoundErrorInterface -> "Resource Not Found" 404,
+  ExistsErrorInterface -> "Resource Already Exists" 409, conflictErrorInterface ->
+  "Conflict" 409, badRequestErrorInterface -> "Bad request" 400. `errors` entries use
+  {name, reason} (baseError uses name:"base"). 401 (missing/invalid credential) and 402
+  (license, `licenseError.StatusCode()` = PaymentRequired, per C2) are raised around the
+  handler, so they are named as out-of-table.
+- Success envelope: `server/platform/endpointer/endpoint_utils.go` generic encoder — default
+  200; `statuser` responses set their own status; `204 No Content` returns empty body. Body
+  is the JSON-marshalled response struct (top-level object keyed by resource name; embedded
+  `Err error json:"error,omitempty"` absent on success because the error path is taken via
+  Errorer/EncodeError first).
+- List envelope: resource under a named field (`hosts` = `listHostsResponse` at
+  server/service/hosts.go:107; `activities`), `meta *fleet.PaginationMetadata json:"meta"`
+  with `has_next_results`/`has_previous_results` (server/fleet/meta.go:8), some responses add
+  a top-level `count` (e.g. listHostUpcomingActivitiesResponse at activities.go:48).
+  PaginationMetadata.TotalResults is `json:"-"`, so not surfaced as `count`; `count` is a
+  separate per-response field, hence "some list responses add".
+- Forwards-compat key duplication: the generic encoder's `aliasRules`/`DuplicateJSONKeys`
+  path emits old+new keys for a renamed field (endpoint_utils.go ~1218). Ties to 6.3's
+  "renamed fields" section.
+
+Adjusted "Where the rest lives" so it no longer contradicts the new section: it now says it
+gives method/path/auth "and the shared envelope above" and defers only *per-endpoint*
+bodies/fields/parameters (previously it said it did not reproduce "response shapes ... or
+error codes", which the new section now does at the envelope level). Pure prose + one
+6-row class->status->message markdown table + two code blocks; no CAP, no register row, no
+counted-table change, so cap-ids/register-counts untouched. Cross-refs to 6.3 anchors
+(#page-filter-and-order-complete-result-sets, #the-renamed-fields-which-will-bite-you-on-a-write,
+#handle-errors-limits-and-ambiguous-writes) validated by check-links. Full suite exit 0.

@@ -211,9 +211,32 @@ GET /api/v1/fleet/activities?page=0&per_page=10&order_key=created_at&order_direc
 
 An endpoint's valid `order_key` values are its own, and Fleet's reference documents them per endpoint. [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) covers paginating a large result set in practice.
 
+## The shared response and error contract
+
+![Reference](../_assets/icons/reference.svg) The catalog gives each route its method, path and authentication class, and Fleet's REST reference gives each endpoint its own fields. What every JSON route shares underneath those per-endpoint details is one envelope, and knowing its shape lets a client be written once against the contract rather than rediscovered endpoint by endpoint. Verified against Fleet 4.90.0.
+
+A successful call returns a single JSON object, keyed by what it carries, not a bare array. A read returns its resource under a named field, `hosts` for a host list, `activities` for an activity list, `api_endpoints` for the catalog above; a write returns the object it created or changed under the same kind of key. A call with nothing to return answers `204 No Content` with an empty body rather than an empty object, and the rest answer `200 OK` unless the handler declares its own success status.
+
+A list response carries paging alongside its array. A `meta` object holds `has_next_results` and `has_previous_results`, two booleans that tell a client whether another page exists in either direction without inferring it from the row count, and some list responses add a top-level `count`. This is the response side of the `page` and `per_page` request convention above; [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md#page-filter-and-order-complete-result-sets) walks a full paged sweep.
+
+Where Fleet has renamed a field, the response can carry the value under both the old and the new key for a release, so a client written before the rename keeps working after it. Read the name you expect and do not assume only one is present. [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md#the-renamed-fields-which-will-bite-you-on-a-write) is where this bites on a write.
+
+A failed call replaces that envelope with a consistent one of its own: a `message` naming the class of failure, an `errors` array whose entries each carry a `name` and a `reason`, and, where the server attached one, a `uuid` you can quote in a support case to tie the response to its own log line. The `message` and the status follow the failure class rather than the endpoint.
+
+| Failure | Status | `message` |
+|---|---|---|
+| Validation failed | 422, or the handler's own status | `Validation Failed` |
+| Caller lacks permission | 403 | `Permission Denied` |
+| Resource not found | 404 | `Resource Not Found` |
+| Resource already exists | 409 | `Resource Already Exists` |
+| Conflicting state | 409 | `Conflict` |
+| Malformed request | 400 | `Bad request` |
+
+Statuses raised around a handler rather than by it sit outside this table: a missing or invalid credential is a 401 and a license limit is a 402, both decided before the handler's own logic runs. [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md#handle-errors-limits-and-ambiguous-writes) reads all of these codes in practice, including the ones that turn on the route rather than the failure class.
+
 ## Where the rest lives
 
-![Reference](../_assets/icons/reference.svg) This appendix gives the method, path and authentication class for each action; it does not reproduce request bodies, response shapes, per-endpoint parameters or error codes. Fleet's own REST API reference at `fleetdm.com/docs/rest-api/rest-api` is the best available account of those, but it is hand-maintained and describes the current release rather than 4.90.0 specifically, so a mismatch against what you observe is a version question, not necessarily an error in either source; the version-pinned copy of that same reference, checked out at the tag this book verifies against, is linked under further reading. Endpoints intended for contributors rather than administrators are documented separately in the Fleet repository.
+![Reference](../_assets/icons/reference.svg) This appendix gives the method, path and authentication class for each action, and the shared envelope above; it does not reproduce per-endpoint request bodies, response fields, or parameters. Fleet's own REST API reference at `fleetdm.com/docs/rest-api/rest-api` is the best available account of those, but it is hand-maintained and describes the current release rather than 4.90.0 specifically, so a mismatch against what you observe is a version question, not necessarily an error in either source; the version-pinned copy of that same reference, checked out at the tag this book verifies against, is linked under further reading. Endpoints intended for contributors rather than administrators are documented separately in the Fleet repository.
 
 Which actions each role may perform is [a.4](a.4-roles-and-permissions-matrix.md). Which surface can perform one at all is [a.5](a.5-interface-index.md), which carries every action against all four interfaces.
 
