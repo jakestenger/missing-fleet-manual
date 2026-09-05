@@ -354,7 +354,8 @@ Three further setup-experience settings, whether to release the device manually,
 | `yara_rules` | **Cleared.** The client sends an explicit empty list |
 | `certificate_authorities` | **Cleared, by a route worth knowing.** The run queues a second pass that re-applies the empty grouping with deletion enabled, so the emptiness is acted on after the main apply rather than during it. Global files only, never a dry run, and a silent no-op on Free |
 | `custom_host_vitals` | **Cleared** |
-| `features`, `webhook_settings`, `integrations`, and most of the `mdm` and `controls` blocks | **Reset or cleared**, field by field |
+| `features`, `webhook_settings`, `integrations`, and most of the `mdm` block | **Reset or cleared**, field by field |
+| `controls` | **Named-fleet omission resets it.** Across the global and unassigned files exactly one must define it: setting both is an error, setting neither is an error, and the unassigned file's controls are applied to the global scope when the global file omits them |
 | `agent_options` | **A hard error.** It is required in a global or named-fleet file |
 | `conditional_access` | **Left alone** |
 
