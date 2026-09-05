@@ -261,3 +261,9 @@ a.11 intro (a one-line note that -seed is a non-tool flag, not one of the twenty
 cell (added `-seed` / "seed standard saved reports" / "bootstrap reports" — alias-only, no new CAP row, so
 the 367-ID register and all count invariants hold), and OUTLINE.md's 6.6 coverage line. check-cap-ids /
 check-register-counts / check-links all 0.
+
+round10 RV9-C2 (team->fleet prose, conservative): fixed reader-facing slips where the arg is
+literally `fleet` and the endpoint `/fleets`: two "(to resolve the team name)" -> "(to resolve the
+fleet name)" (rows for get_vulnerability_hosts and get_software), and "answers only for a team`s own
+installers" -> "a fleet`s own installers". Left the `fleet`/`fleet_id`/`team_id` identifiers and all
+endpoint/arg names as-is. check-cap-ids/register-counts/table-names/column-names all clean.
