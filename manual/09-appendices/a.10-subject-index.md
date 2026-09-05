@@ -113,7 +113,13 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 ## I
 
+- **idempotency** (an action safe to repeat): defined in [a.6](a.6-glossary-and-release-compatibility.md#terms-the-book-uses-across-chapters); why Fleet gives no guarantee of its own is [6.1](../06-automate-fleet/6.1-automation-design-and-change-control.md).
 - **initialize the server**, see first-run setup.
+- **IRSA** (IAM Roles for Service Accounts): defined in [a.6](a.6-glossary-and-release-compatibility.md#terms-the-book-uses-across-chapters); using it with Fleet's S3 client on AWS is [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
+
+## J
+
+- **JSON-RPC** (the request and response protocol MCP speaks): defined in [a.6](a.6-glossary-and-release-compatibility.md#terms-the-book-uses-across-chapters); smoke-testing the Fleet MCP server over it is [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
 
 ## L
 
@@ -216,7 +222,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **Terraform:** the AWS reference architecture module is [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
 - **TLS:** the certificate that protects communication with the service, and the server private key it depends on, is [1.6](../01-foundations/1.6-the-fleet-server.md); planning the DNS name and certificate as server settings is [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
 - **trust boundary**, see data inventory and trust boundaries.
-- **TUF** (The Update Framework): the update repository is [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md); confirming what a host is running is [8.4](../08-troubleshooting/8.4-host-side-investigation.md).
+- **TUF** (The Update Framework): defined in [a.6](a.6-glossary-and-release-compatibility.md#terms-the-book-uses-across-chapters); the update repository is [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md); confirming what a host is running is [8.4](../08-troubleshooting/8.4-host-side-investigation.md).
 - **two-factor authentication** (Fleet's own email-delivered second factor, Premium): enabling it per account is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md); why it leaves almost no trace in the activity record is [1.5](../01-foundations/1.5-audit-and-activity.md).
 
 ## U

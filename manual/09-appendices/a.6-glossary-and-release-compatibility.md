@@ -157,6 +157,24 @@ The two words describe different layers of the same action. Running a live repor
 
 Part VIII works at all of these layers at once, which is why both words appear there. Its opening section carries a note explaining the split in context.
 
+### Terms the book uses across chapters
+
+These are not naming collisions; they are specialist words the book uses as house vocabulary and defines once here rather than in every chapter that reaches for them. Where a term has an owning chapter, it is named.
+
+**Blast radius.** Borrowed from incident response: how far the effect of an action or a failure reaches if it goes wrong, measured by what it touches rather than by whether it succeeds. The book uses it to frame destructive commands, over-broad queries and credential exposure ([8.1](../08-troubleshooting/8.1-diagnostic-method.md) turns it into a diagnostic question).
+
+**Estate.** The whole population of devices one Fleet deployment manages. The book reaches for it where "your hosts" is too small a word, because capacity, rollout and policy decisions are made against the population rather than a single machine.
+
+**Idempotency.** A property of an action that is safe to repeat: running it twice leaves the same result as running it once. It matters for scripts, software installs and automated remediation, where Fleet may retry or a policy may fire more than once. Fleet offers no idempotency guarantee of its own ([6.1](../06-automate-fleet/6.1-automation-design-and-change-control.md)), so the safety has to be built into what you send.
+
+**Fan-out.** One request that expands into many: a live query dispatched to hundreds of hosts at once, or an assistant question that becomes one API call per fleet. The cost and the failure modes live in the many rather than the one ([1.6](../01-foundations/1.6-the-fleet-server.md) on the Redis side, [a.11](a.11-mcp-tool-reference.md) on the assistant side).
+
+**JSON-RPC.** The request and response protocol the Model Context Protocol speaks: named methods with typed parameters, carried over the Fleet MCP server's stdio or SSE transport ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)).
+
+**IRSA.** IAM Roles for Service Accounts, AWS's mechanism for giving a Kubernetes pod an IAM role without static keys. Fleet on EKS uses it, alongside ECS task roles, for token-based access to AWS APIs ([2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md)).
+
+**TUF.** The Update Framework, the signed-metadata update system fleetd's updater uses to decide which version to run and to verify what it fetched ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)). Fleetd for Chrome does not use it; Chrome updates that extension instead.
+
 ## Deprecated names and APIs
 
 ### Fleet 4.82.0 renamed teams to fleets, and queries to reports
