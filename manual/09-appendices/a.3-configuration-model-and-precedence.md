@@ -498,6 +498,7 @@ The rest are sorted **by name, alphabetically**, and merged in that order, so **
 | The private-key external identifier | Names an environment variable without the middle component | That variable is not read. The documented form is silently ignored |
 | The "secret key" for invite and reset tokens (`app.token_key`, default `CHANGEME`) | A secret that those tokens are generated from | **Never reads the key.** Invite and reset tokens are random text sized by `token_key_size`, so setting `token_key` changes nothing and its `CHANGEME` default is inert |
 | The invite-token validity period | Its usage text ends "i.e. 1h" | Registers a five-day (`120h`) default. The "1h" is stale and contradicts the default the same key registers, which the catalog below shows correctly as `120h` |
+| The session validity period (`session.duration`) | Its usage text ends "i.e. 4h" | Registers the same five-day (`120h`) default. The "4h" is stale in exactly the same way, so a login lasts five days rather than four hours unless you shorten it, which matters because it sets how long a stolen session stays valid |
 
 **Read per-key defaults out of Fleet's reference with that in mind**, and confirm anything you are about to depend on rather than trusting the published default. **How you confirm it depends on the plane, and one of the two is only partly confirmable:**
 
