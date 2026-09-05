@@ -118,6 +118,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **label:** [1.3](../01-foundations/1.3-hosts-fleets-labels.md).
 - **LAPS and the managed local administrator account:** [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
 - **licence** (Fleet Premium, licence key, and licence expiry): [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md); choosing a licence tier is [2.1](../02-administer-and-deploy-fleet/2.1-administration-model-and-deployment-choices.md).
+- **license**, see licence.
 - **live query**, see report.
 - **local account** (a Mac's own user account that a person logs in with, provisioned and password-synced through Platform SSO; distinct from the managed local administrator account): [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#provision-and-sync-the-local-account-with-platform-sso).
 - **LocURI**: the CSP node path a SyncML command targets, [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md).
