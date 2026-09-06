@@ -38,7 +38,7 @@ Every tool table below has a **Fleet routes** column, for building or auditing a
 | CAP-114 | Ask a pass-or-fail question | `get_host_policies`, `get_policies`; `get_vetted_queries` supplies starting-point check definitions to build from, not a pass/fail result |
 | CAP-133 | Count the estate | `get_total_system_count`, `get_aggregate_platforms` |
 | CAP-093 | Run a query right now | `prepare_live_query`, `run_live_query` |
-| CAP-119 | Count how many hosts are failing | `get_policy_compliance`, `get_policy_hosts` |
+| CAP-119 | Count how many hosts are failing | `get_policy_compliance` for the count; `get_policy_hosts` returns only a capped page of which hosts, not a total |
 | CAP-124 | Find vulnerable software | `get_vulnerability_impact`, `get_vulnerability_hosts` |
 | CAP-122 | List what is installed | `get_software` |
 
