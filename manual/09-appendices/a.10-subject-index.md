@@ -71,6 +71,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **DEP** (Device Enrollment Program), see ADE. DEP is the deprecated name, kept apart from ADE in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **DigiCert:** one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 - **disk encryption:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
+- **drift** (a live setting no longer matching what GitOps declares, together with the out-of-band change that caused it and the partial apply that can leave it behind): resolving it is [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md#resolve-drift-partial-applies-and-disagreement).
 
 ## E
 
