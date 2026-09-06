@@ -749,7 +749,7 @@ Every route the server registers is listed, in three groups: the endpointer rout
 | POST | `/api/v1/fleet/sso` | none <!-- server/service/handler.go:1217; handler initiateSSOEndpoint -->|
 | POST | `/api/v1/fleet/sso/callback` | none <!-- server/service/handler.go:1222; handler makeCallbackSSOEndpoint -->|
 | GET | `/api/v1/fleet/sso` | none <!-- server/service/handler.go:1223; handler settingsSSOEndpoint -->|
-| GET | `/api/_version_/fleet/results/` | none <!-- server/service/handler.go:1230; path prefix, not exact match; handler makeStreamDistributedQueryCampaignResultsHandler -->|
+| GET | `/api/_version_/fleet/results/` | user (session or API token), authenticated inside the websocket handler <!-- server/service/handler.go:1230; path prefix, not exact match; handler makeStreamDistributedQueryCampaignResultsHandler -->|
 | POST | `/api/_version_/fleet/forgot_password` | none <!-- server/service/handler.go:1236; handler forgotPasswordEndpoint -->|
 | POST | `/api/_version_/fleet/login` | none <!-- server/service/handler.go:1239; handler loginEndpoint -->|
 | POST | `/api/_version_/fleet/sessions` | none <!-- server/service/handler.go:1241; handler sessionCreateEndpoint -->|

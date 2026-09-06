@@ -65,6 +65,18 @@ CONSTRUCTOR_CLASS = {
     # endpointer itself installs no auth, which is what the constructor name says.
     "newEndpointerWithNoAuth": "none (protocol auth in handler)",
 }
+
+# Routes registered on a no-auth endpointer that nonetheless authenticate a
+# credential inside their own handler. Rendering these as a bare "none" reads as
+# unauthenticated, which is wrong. Keyed by (method, path); the value replaces
+# the endpointer-derived auth label. Verified at the pinned tag.
+#   /results/ : the live-query results websocket reads a user token in the
+#   handler (server/service/endpoint_campaigns.go: conn.ReadAuthToken ->
+#   auth.AuthViewer -> reject !vc.CanPerformActions()), not via middleware.
+HANDLER_LOCAL_AUTH = {
+    ("GET", "/api/_version_/fleet/results/"):
+        "user (session or API token), authenticated inside the websocket handler",
+}
 VERBS = ("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD")
 
 
@@ -396,6 +408,7 @@ def scan_file(rel):
         if "UsePathPrefix()" in chain.replace(" ", ""):
             notes.append("path prefix, not exact match")
         hname = handler_name(h_expr)
+        auth = HANDLER_LOCAL_AUTH.get((method, route_path), auth)
         rows.append((method, route_path, auth, hname, rel, lineno, "; ".join(notes)))
         # WithAltPaths aliases are real registered routes
         for am in re.finditer(r"\.\s*WithAltPaths\(", chain):
