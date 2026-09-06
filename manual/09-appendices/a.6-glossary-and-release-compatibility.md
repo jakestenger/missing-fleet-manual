@@ -127,7 +127,7 @@ The output is not readable by eye. It is a binary file you open with `go tool pp
 
 ### file carving
 
-**osquery's mechanism for collecting whole files off a host**, rather than facts about them. You run a report against the `carves` table with a path, osquery reads the file, splits it into blocks, and uploads them; Fleet reassembles them and stores the result on disk or in object storage.
+**osquery's mechanism for collecting whole files off a host**, rather than facts about them. You run a report against the `carves` table with a path, osquery reads the file, splits it into blocks, and uploads them; Fleet reassembles them and stores the metadata in MySQL and the block bytes in MySQL by default, or in S3/GCS when a carves bucket is configured.
 
 It is the **purpose-built** path for getting a file's contents off a host through osquery, which makes it both the answer to "I need to see that file" and a capability worth knowing is enabled. It is not the only such path: osquery can read a file line by line, and Fleet's own disk-encryption query does exactly that to ingest a key file. Blocks and their ceilings are configuration, and the per-carve size limit is in [8.14](../08-troubleshooting/8.14-degradation.md).
 
