@@ -35,7 +35,7 @@ Every tool table below has a **Fleet routes** column, for building or auditing a
 |---|---|---|
 | CAP-138 | List hosts through the API | `get_endpoints` |
 | CAP-083 | See what a device is and what is on it | `get_host`, `get_host_users` |
-| CAP-114 | Ask a pass-or-fail question | `get_host_policies`, `get_policies`, `get_vetted_queries` |
+| CAP-114 | Ask a pass-or-fail question | `get_host_policies`, `get_policies`; `get_vetted_queries` supplies starting-point check definitions to build from, not a pass/fail result |
 | CAP-133 | Count the estate | `get_total_system_count`, `get_aggregate_platforms` |
 | CAP-093 | Run a query right now | `prepare_live_query`, `run_live_query` |
 | CAP-119 | Count how many hosts are failing | `get_policy_compliance`, `get_policy_hosts` |
