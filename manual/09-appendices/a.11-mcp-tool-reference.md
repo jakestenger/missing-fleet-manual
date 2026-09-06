@@ -55,7 +55,7 @@ Every tool table below has a **Fleet routes** column, for building or auditing a
 | `status` | Host status (online, offline, and the rest) | A standard Fleet host filter. |
 | `policy_id` + `policy_response` | Hosts on one side of a policy | `policy_response` is `passing` or `failing` and requires `policy_id`; the orphan is rejected at the server. |
 | `per_page` | Page size for host listings | Clamped to a maximum of 200. |
-| `host_id` vs `identifier` | Which host | A numeric `host_id` is exact. An `identifier` (hostname, UUID, serial, computer name, or a fuzzy substring) may match several hosts, in which case the tool returns a candidate list to disambiguate; re-call with the chosen `host_id`. |
+| `host_id` vs `identifier` | Which host | A numeric `host_id` is exact. An `identifier` (hostname, UUID, serial, computer name, or a fuzzy substring) may match several hosts, in which case a successful preliminary search returns a candidate list to disambiguate; re-call with the chosen `host_id`. That candidate return depends on the search succeeding: if it errors, the tool falls back to a single-record identifier lookup that returns one host with no defined ordering and can pick one of several duplicates silently, so use `host_id` for safety-critical targeting. |
 | `cve_id` | A CVE | Must match `CVE-YYYY-NNNN` (`^CVE-\d{4}-\d{4,}$`); a malformed value is rejected before Fleet is called. |
 
 ## Hosts
