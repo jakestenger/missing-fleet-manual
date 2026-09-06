@@ -37,7 +37,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 ## B
 
-- **backup and restore** (of service state: MySQL, Redis, object storage, and the server private key): [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md).
+- **backup and restore** (of service state: MySQL, object storage, and the server private key; Redis is deliberately not backed up): [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md).
 - **batch script** (running one saved script across many hosts at once): [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md).
 - **BitLocker:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md); the Windows escrow key it depends on is the WSTEP certificate, [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md).
 - **BitLocker startup PIN:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
