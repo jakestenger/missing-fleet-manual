@@ -686,7 +686,7 @@ So they are carried here, one line each, grouped by the same sections as the mat
 - **CAP-266** Reach a route `fleetctl` has no command for. An automation interface: a raw pass-through to any route.
 - **CAP-267** Apply or delete a one-off spec file. An automation interface: applying or deleting a single specification file.
 - **CAP-268** Generate a CI pipeline for GitOps. An automation interface: pipeline templates the tool writes out.
-- **CAP-354** Connect an AI assistant to Fleet. An automation interface: the Fleet MCP server brokers an assistant's read and live-query requests to Fleet's own routes.
+- **CAP-354** Connect an AI assistant to Fleet. An automation interface: the Fleet MCP server brokers an assistant's read and live-query requests to Fleet's own routes ([a.11](a.11-mcp-tool-reference.md) is the tool reference).
 
 **S. Organization and server settings**
 
