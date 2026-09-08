@@ -43,6 +43,7 @@ it actually work?"
 | # | Section | File | Pri | Status |
 |---|---|---|---|---|
 | 0.1 | How to use this manual | `0.1-how-to-use-this-manual.md` | ★ | ◐ |
+| 0.2 | What changed, by release | `0.2-changelog.md` | ★ | ◐ |
 
 ## Part I — Foundations
 
