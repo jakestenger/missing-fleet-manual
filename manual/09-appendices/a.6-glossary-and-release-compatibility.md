@@ -3,9 +3,9 @@ title: "Terminology and version boundaries"
 chapter: "Appendices and indexes"
 section: "A.6"
 sidebar_position: 6
-verified_against: Fleet 4.90.0
-verified_on: 2026-08-29
-verified_source: "drafted against fleet-v4.90.0 (7c428c6e46). Boundaries that Fleet enforces were read from the gate; the version at which a capability was introduced is derived from release history rather than from the tag, and the ledger marks which is which. Citation ledger at research/section-notes/a.6-notes.md"
+verified_against: Fleet 4.91.0
+verified_on: 2026-09-08
+verified_source: "drafted against fleet-v4.90.0 (7c428c6e46). Boundaries that Fleet enforces were read from the gate; the version at which a capability was introduced is derived from release history rather than from the tag, and the ledger marks which is which. Citation ledger at research/section-notes/a.6-notes.md. The end-user-authentication agent-floor row was amended 2026-09-08 for the 4.91 `mdm.allow_orbit_end_user_auth_bypass` setting, verified against fleet-v4.91.0 (35fc1c0244)"
 ---
 
 # Terminology and version boundaries
@@ -260,7 +260,7 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 | macOS ADE **setup experience** | Orbit 1.35.0 | 4.60.0 | **Fallback.** An older agent is released by the older worker-based path instead, which is a different mechanism rather than an absence |
 | **Web setup experience, Linux** | Orbit 1.48.0 | 4.74.0 | Silent. **The agent refuses to start the flow** when the server does not declare the capability, which is the reverse of every other row |
 | **Web setup experience, Windows** | Orbit 1.49.0 | 4.75.0 | Silent, as above. The two platforms arrived a release apart and are separate boundaries |
-| **End-user authentication** at enrollment, Linux and Windows | Orbit 1.50.0 | 4.77.0 | **Silent, and it fails open.** Below it Fleet allows the enrollment unauthenticated. There is a warning in the server's process log and nothing in Fleet, so an unauthenticated enrollment looks like an ordinary one |
+| **End-user authentication** at enrollment, Linux and Windows | Orbit 1.50.0 | 4.77.0 | **Silent, and it fails open by default.** Below it Fleet allows the enrollment unauthenticated. There is a warning in the server's process log and nothing in Fleet, so an unauthenticated enrollment looks like an ordinary one. **From server 4.91.0 this is a choice**: `mdm.allow_orbit_end_user_auth_bypass` defaults to true, preserving the fail-open, and set to false it refuses these hosts instead ([5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#end-user-authentication)) |
 | Windows on-demand sync, the relaxed poll | Orbit 1.57.0 | 4.87.0 | Fallback. Negotiated, cadence only, and **the one capability flag Fleet persists** |
 | `python_packages` in software inventory | osquery 5.16.0 | not applicable | Fallback, chosen locally. Two complementary queries, so both sides work, and the boundary changes whether packages in user directories are found |
 | `END_USER_EMAIL` as an installer property | Orbit 1.28.0 **when the package is built** | not applicable | Fallback. Falls back to the service command line |
