@@ -95,6 +95,42 @@ The vocabulary is closed in the other direction too. Exactly ten top-level keys 
 
 **Reads and imperative acts are the two families it excludes.** Locking a device, running a script, erasing a phone and signing in are acts rather than states, and a declarative repository has nothing to say about them. That accounts for the whole of section N, where GitOps supports none of the 23 rows.
 
+
+<!-- IMAGE-TODO: assets/a.5-gitops-interface-direction.webp
+     QUESTION: What does a GitOps apply write, and where must an operator go to read state?
+     PROMPT: DIAGRAM: Repository desired configuration flows through fleetctl gitops into Fleet. A
+     separate return arrow to the process is labelled Apply log / status, ending outside any Live
+     state export box. For inspection, a separate Operator read request enters REST API / UI /
+     dedicated fleetctl read command and returns current state, with Per-action support varies. Put
+     imperative device actions in a separate branch outside GitOps. Do not say GitOps never performs
+     internal reads; the boundary is its operator-facing absence of a read/export interface.
+     DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
+     vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
+     titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
+     720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px node
+     padding, and consistent corner radii. Center short node names; left-align multiline
+     explanations. Never shrink text to fit. Use #F9FAFC background, #192147 headings and primary
+     connectors, #515774 text, #8B8FA2 secondary connectors, #C5C7D1 borders, and #D3E8F3 or #E8F1F6
+     quiet fills. Use #5CABDF and #C98DEF for named categories, #3AEFC4 for labelled positive
+     outcomes, #D66C7B for labelled failures, and #FAA669 for labelled cautions. Tint large panels
+     to 20 to 25 percent; full strength is for small marks. Keep text navy or slate, or off-white on
+     a navy anchor. Never rely on colour alone. Use one arrowhead shape, consistent stroke weights,
+     box-edge termination, and labelled branches and return paths. Keep connectors clear of text. No
+     gradients, shadows, decorative icons, logo, watermark, em-dashes, or slogan footer. Render only
+     the specified reader-facing labels. Choose orientation to fit the relationship, not a default
+     poster. Keep captions outside the artwork. If labels crowd, split the figure before shrinking
+     them. Keep editable SVG when the production method supports it.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Replace the opening
+     no-read-direction explanation. Preserve exact cell semantics, schema closure,
+     allow-unknown-keys behavior, and the enumerated exceptions. Keep current prose and this TODO
+     until the actual image is reviewed. Then check alt text against the artwork and retain an
+     accessible summary plus all required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![GitOps applies desired configuration and emits run output; operator reads of live state use separate supported interfaces.](assets/a.5-gitops-interface-direction.webp)
+-->
+
 ### The MCP server is not a column here
 
 The Fleet MCP server ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)) lets an AI assistant operate Fleet, but it is a client of the REST API rather than an interface of its own, so it earns no column in the matrix. What an assistant can reach through it is **not** the REST API column: it is the fixed twenty-tool subset in [A.11](a.11-mcp-tool-reference.md), spanning four groups (hosts, queries, policies and vulnerabilities, inventory), further narrowed by whatever its token's role forbids.

@@ -64,106 +64,87 @@ line. `research/section-notes/README.md` records the policy.
 They are the easier of the two to forget, because nobody reviews them as prose. When a chapter's
 subject is sensitive, keep its working notes out of this repository and cite them from the ledger.
 
-### Generating chapter diagrams with Sol (established 2026-08-30, evolving)
+### Generating chapter diagrams (updated 2026-09-08)
 
-The book's content diagrams exist only as `IMAGE-TODO` prompts; the owner was going to render
-them separately. They can instead be generated through the codex CLI, and this process produces
-designer-grade technical diagrams. Sol has no image-generation model, so it does NOT paint. It
-authors an **SVG** and rasterises it with `rsvg-convert`. For technical diagrams (flows, state
-machines, architecture, matrices) this beats an image model because the text is exact and the
-geometry deterministic; it cannot do illustrative or painterly art.
+`STYLE.md` §13 is the canonical visual design guidance. This section describes production.
+The dated pilot prompts and progress entries below are historical records; copy current
+rules from STYLE.md rather than their old portrait, symmetry, or all-centered-text defaults.
 
-**Sol can see rendered rasters.** Confirmed 2026-08-30: given only a PNG and forbidden the SVG, it
-accurately critiqued the layout. So it can self-review its own output, which is the engine of the
-loop below.
+**Select by marker.** Existing images needing replacement use `IMAGE-REDO: assets/name.webp`
+with a `WHY:` line and a complete `PROMPT:`. Missing images use `IMAGE-TODO:`. Skip `IMAGE-OK`
+unless a new review or a chapter correction invalidates its acceptance. File existence is
+not acceptance: a real image may still have an outstanding TODO or REDO marker.
 
-**Mechanics.**
-- Work in a scratch dir, not the repo. codex needs write+execute:
-  `-s workspace-write --skip-git-repo-check -C <scratchdir>`. On the machine: `rsvg-convert`
-  (SVG to PNG), `cwebp` (PNG to lossless WebP), PIL.
-- Convert the accepted PNG to lossless WebP (`cwebp -lossless`) so the diagram text stays crisp,
-  place it at the chapter's `assets/` path named by the IMAGE-TODO, and add a live
-  `![alt](assets/name.webp)` line. Leave the IMAGE-TODO comment as the prompt/record.
-- CDN caching: the deployed site caches by filename, so reusing an asset name across iterations
-  serves the stale image until a hard refresh (Cmd+Shift+R). The owner shift-refreshes; keep the
-  stable filename.
+**Prepare an isolated, self-contained prompt.** Read the chapter around the image and its
+citation ledger. Keep one reader question, the exact labels, the scope qualifiers, and an
+explicit topology: nodes, edges, containment, branches, and time scales. Include STYLE.md's
+shared design block in the HTML comment because a downstream tool may receive only that
+comment. Do not send a bare reference to STYLE.md and expect the renderer to have the file.
+The automation should extract the whole comment, including WHY, PROMPT, DESIGN, and NOTE.
 
-**The prompt recipe that works, four parts:**
-1. **Format-first.** Tell Sol it is a vertically-scrolling web book: prefer portrait, never cram
-   horizontally to stay landscape, and set a hard floor on body text size (~34px on a ~1400-wide
-   canvas). This single instruction fixed the worst problems in one jump.
-2. **A locked layout system.** Uniform box sizes (a few tiers, e.g. step boxes vs anchor boxes),
-   fixed row/column centres, symmetry about a centre axis, ONE arrow style, consistent inter-box
-   gaps, tinted bands that hug their content. Design to the grid; make the text fit the box, never
-   the box fit the text.
-3. **A self-review loop.** Instruct Sol to render, then LOOK at the raster as a critic, write down
-   every defect with its location, fix, and repeat up to 5 passes before presenting, with an
-   ITERATION LOG. Give it an explicit rubric (uniform boxes, aligned rows, symmetry, no arrowhead
-   touching text, bands hug content, legible text, not cramped).
-4. **Targeted revision over regeneration.** For polish, have Sol LOAD the prior SVG and change only
-   the named things, so the wins already banked are not lost.
+New briefs also include a `QUESTION:` identifying the reader's need. The `PROMPT:` starts
+with `DIAGRAM:`, `ILLUSTRATION:`, or `SCREENSHOT:`. Route screenshots to a real demo capture;
+do not send them to an image model to invent a product screen. Use the chapter's pinned
+release and record the observed UI state at acceptance. Keep screenshot typography intact.
 
-**Design lessons from the 2.13 pilot, reusable on every diagram:**
-- A landscape brief crams content and shrinks text; reorienting to vertical is usually the fix.
-- Two lanes with different step counts create a tension between {equal-height bands, aligned ends,
-  no empty tinted area}. You cannot have all three with uniform boxes. The 2.13 pilot settled it as
-  **matched-height, aligned bands with the shorter lane's boxes centred inside** (balanced padding
-  above and below), because a matched pair reads better than either a mismatched band size or a
-  stretched empty middle. Symmetry of the bands beats filling every pixel.
-- **Minimise structural (dark) arrows: keep only the single shared pre-branch arrow; let the
-  coloured lane arrows carry each path the whole way, including into the terminal node.** Drop the
-  split/merge junction dots entirely. In the pilot this took the arrow count from a noisy tangle to
-  one dark arrow plus the coloured paths, and it was a clear improvement.
-- **Terminate external arrows at a group's bounding-box EDGE**, not reaching in to touch each
-  internal object. And when a bounding box groups a sequence of stacked steps, the box plus the
-  top-to-bottom stacking already conveys the order, so **the internal step-to-step arrows are
-  redundant: drop them and keep only the entry arrow (into the box's top edge) and the exit arrow
-  (out of its bottom edge)**. This was v7's biggest single cleanup.
-- Short arrows render as a line-with-a-smudge with a small marker; specify a **crisp filled
-  triangular arrowhead (~20x15), with enough shaft length that the head reads as a head**, used
-  identically on every arrow.
-- **Centre ALL text, group/lane labels included.** A left-aligned label leaves whitespace to its
-  right and reads inconsistent next to centred box text; make everything centred (or commit fully
-  to one alignment). v5 and v6 both regressed here; v7 fixed it.
-- **One routing style, and orthogonal beats diagonal.** Right-angle routing (straight runs plus
-  90-degree elbows) reads as designed; a stray diagonal branch among orthogonal arrows reads as
-  auto-generated. Do not mix.
-- **Make balance, symmetry and design consistency the explicit priority of a polish pass** and a
-  named self-review criterion. Sol improves markedly when told the goal of the pass is balance and
-  symmetry, not just correctness.
+The additional briefs proposed on 2026-09-08 are indexed in
+`research/visual-opportunities.md`: one per chapter/appendix plus the four priority gaps.
+Each NOTE identifies prose to consolidate after acceptance. Read it before adding an image
+above an unchanged wall of explanation. Preserve concise accessible text and the exact
+commands, tables, prerequisites, and exceptions; keep atmosphere outside lookup groups.
 
-Node-graph diagrams (state machines, branchy flows) taught more, validated on 5.2's profile-status
-state machine:
-- **Specify the TOPOLOGY explicitly.** Sol lays out a linear diagram from principles but tangles a
-  graph left to itself. Give it the shape: the forward spine, where each branch node sits, and
-  which edges curve where. The generic layout system is not enough for a graph.
-- **Two edge styles, deliberately: straight forward, curved backward.** Relax "orthogonal only" for
-  return/back edges - curved arcs are how state diagrams keep back-edges from fighting the forward
-  flow. Nest multiple back-arcs into separate lanes so they never overlap.
-- **Fold a node's description INSIDE the node** (two-part node: name on top, meaning beneath, both
-  inside the box). A description floating in the gap below a node reads as an edge label and makes
-  arrows appear to point at text. This was the single biggest clarity win on 5.2.
-- **Explanatory asides go in a bordered "Note" callout**, not a floating label.
-- **Reuse a known-good arrowhead marker VERBATIM** rather than re-describing "crisp" each time. The
-  accepted one: `<marker viewBox="0 0 20 15" refX="20" refY="7.5" markerWidth="20" markerHeight="15"
-  orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L20 7.5 L0 15 Z" fill="..."/></marker>`
-  on a stroke-width-3 path. Re-describing it regressed to blobs; pasting it verbatim fixed it.
-- **Every arrow terminates identically** at its target box's edge - none stopping short or pointing
-  at empty space.
-- **De-AI the BRIEF and cut secondary content before generating.** The IMAGE-TODO prompts carry
-  slogan captions ("the gap is where silent failure lives") and bolted-on second panels; give them
-  the same de-AI and single-purpose review as prose. These are brief problems, not rendering
-  problems, and rendering a bad brief faithfully just ships the bad brief.
-- **Tell the self-review to "judge the arrows hard."** Sol's edge-routing self-critique is weaker
-  than its box-level critique; v1 falsely passed a tangle, and naming edge-traceability as the
-  thing to scrutinise made it separate the arcs.
+**Separate editorial revision from verification.** A prompt revised from existing prose
+remains an editorial draft until its claims are checked. Do not inherit the original
+reviewer's acceptance after changing the prompt. Check arrow direction and ordering as
+carefully as text. If the prose and evidence disagree, resolve that before producing an
+accepted image; do not invent a compromise to make the layout work.
 
-The working prompts live in `missing-fleet-manual-private/reviews/phase2/` (`imgtest/`), versioned
-v1..v7 with their iteration logs. **v7 is the accepted pilot** for 2.13's `ca-delivery-loop`
-(accepted for now with minor polish debt: the shorter lane's boxes sit slightly high in their
-band). Its prompt (`v7-prompt.txt`) plus its ancestors encode every default above and are the model
-to copy for the next diagram. The same recipe applies to every other IMAGE-TODO in the book; the
-state-machine diagram in 5.2 is the next test of whether it generalises to a non-linear shape.
+**Choose the output form first.** Keep lookup matrices as native Markdown tables. Use a
+technical diagram when spatial structure explains a relationship and a real screenshot
+when the reader needs to recognize the interface. For a technical-diagram job that can
+produce SVG, preserve editable text, reusable components, and deterministic geometry.
+Illustrative artwork can use an image-generation model. Use the existing Claude-to-ChatGPT
+handoff; these guidelines do not change the configured tool or model.
+
+**Render and inspect.** Work in a scratch directory. Where the tool produces SVG, render it
+with `rsvg-convert` and inspect the raster, then revise the source. Use the figure's topology
+to choose orientation. On a 1400 px wide canvas use 48 px titles, 36 px body labels, and no
+secondary text below 28 px; inspect at 720 px reading width and the intended print size.
+Keep node padding and arrow styles consistent. Center short node names and left-align
+multiline explanations. Enlarge or split an overfull figure instead of shrinking its text.
+
+For the existing local CLI route, retain the scratch-directory invocation options
+`-s workspace-write --skip-git-repo-check -C <scratchdir>`. The local rendering tools are
+`rsvg-convert`, `cwebp`, and PIL. Reuse an accepted SVG's arrowhead definition and layout
+components when available, then check their appearance at the new figure's reading size.
+
+Use this review rubric and record remaining defects with their locations:
+
+- Can a reader see the intended relationship before reading every label?
+- Does each arrow assert an order or dependency the chapter actually establishes?
+- Are asynchronous work, independent clocks, and selected examples clearly distinguished?
+- Can every edge be traced, including return paths, without crossing text or merging labels?
+- Are text size, padding, hierarchy, and connector weight consistent with accepted figures?
+- Do colors have labelled meanings that survive grayscale? Are captions free of slogans?
+- Does the image fit its final reading context without requiring zoom to read essential text?
+
+For polish, load the prior SVG when available and change the named defects. Preserve the
+wins already accepted. A generation call finishing successfully does not pass this review.
+
+**Install only the reviewed replacement.** Keep the current asset and its live Markdown
+reference until a replacement has been reviewed. Keep the stable image filename. Convert
+the accepted PNG to lossless WebP with `cwebp -lossless`, and retain an editable SVG beside
+it when one was produced. Update the alt text for the actual replacement and keep any
+explanatory caption as native prose outside the image. Never add placeholder artwork.
+
+For a new image, leave its Markdown reference inside the `IMAGE PENDING` comment until the
+reviewed asset exists. Then activate the reference, check the alt text against the actual
+image, and carry out the NOTE's prose consolidation without losing technical qualifications.
+
+Change the marker to `IMAGE-OK` only after rendered review; retain the complete prompt and
+record acceptance in a NOTE. If work stops before acceptance, keep the TODO or REDO marker
+and state what remains. Check the rendered site after a hard refresh when reusing a cached
+asset filename. Run `python3 build/check-image-redo.py` and `python3 build/check-links.py`.
 
 ### Graphics production run: progress and the delegation trap (2026-08-30)
 

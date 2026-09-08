@@ -248,6 +248,43 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 
 **Upgrades follow semantic versioning with three stated exceptions**: experimental features, security fixes, and changes to default values. All three can break a minor or patch upgrade, and all three are called out in the version notes, which is the practical reason [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) asks you to read them rather than diff the version number.
 
+
+<!-- IMAGE-TODO: assets/a.6-agent-feature-compatibility.webp
+     QUESTION: Why can an agent enroll successfully and still lack one feature?
+     PROMPT: DIAGRAM: Separate Enrollment accepted from four feature paths. Named capability
+     advertised → server selects branch; Ungated setting sent → older agent may ignore it;
+     Agent/tool local decision → feature choice; Explicit version comparison → Linux passphrase
+     escrow gate. Do not place a universal Minimum agent version gate before enrollment. Keep the
+     lanes independent, and note osquery protocol has no capability header. The single persisted
+     Windows sync capability can be a small storage tag on the negotiated lane, not a universal
+     capability inventory.
+     DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
+     vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
+     titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
+     720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px node
+     padding, and consistent corner radii. Center short node names; left-align multiline
+     explanations. Never shrink text to fit. Use #F9FAFC background, #192147 headings and primary
+     connectors, #515774 text, #8B8FA2 secondary connectors, #C5C7D1 borders, and #D3E8F3 or #E8F1F6
+     quiet fills. Use #5CABDF and #C98DEF for named categories, #3AEFC4 for labelled positive
+     outcomes, #D66C7B for labelled failures, and #FAA669 for labelled cautions. Tint large panels
+     to 20 to 25 percent; full strength is for small marks. Keep text navy or slate, or off-white on
+     a navy anchor. Never rely on colour alone. Use one arrowhead shape, consistent stroke weights,
+     box-edge termination, and labelled branches and return paths. Keep connectors clear of text. No
+     gradients, shadows, decorative icons, logo, watermark, em-dashes, or slogan footer. Render only
+     the specified reader-facing labels. Choose orientation to fit the relationship, not a default
+     poster. Keep captions outside the artwork. If labels crowd, split the figure before shrinking
+     them. Keep editable SVG when the production method supports it.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Reduce the paragraph
+     introducing compatibility mechanisms. Retain all version floors, exact feature exceptions,
+     direction-of-compatibility qualifications, and the native mechanism table. Keep current prose
+     and this TODO until the actual image is reviewed. Then check alt text against the artwork and
+     retain an accessible summary plus all required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![Enrollment acceptance is separate from feature negotiation, ignored settings, local decisions, and the explicit Linux escrow version check.](assets/a.6-agent-feature-compatibility.webp)
+-->
+
 ### Agent floors
 
 | Capability | Agent | Server | Kind |

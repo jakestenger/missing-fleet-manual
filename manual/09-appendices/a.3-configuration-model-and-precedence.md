@@ -292,6 +292,43 @@ Four further claims get run together, and separating them is what makes the boun
 
 **Replacement is wholesale, so a hand-maintained flag file does not survive the first non-empty value**, comments included. It does not lose a merge, because there is no merge. **And clearing the key afterwards does not restore it**, because absent means "leave alone" rather than "undo": the file keeps whatever Fleet last wrote. If you maintain osquery flags locally, keep them in your packaging inputs, not only on the host ([8.11](../08-troubleshooting/8.11-reproducing-and-isolating.md)).
 
+
+<!-- IMAGE-TODO: assets/a.3-startup-flags-file-lifecycle.webp
+     QUESTION: Why does omitting command_line_flags fail to restore a locally maintained file?
+     PROMPT: DIAGRAM: A file-state sequence starts with Local flags and comments. Receiving
+     command_line_flags with a differing value replaces the whole file and restarts osquery. A later
+     configuration that omits the key leaves that replacement untouched, with No restoration of
+     original file. Branch separately from the original input: explicit {} or null clears the file
+     and restarts; matching value leaves it unchanged. Use small representative flag lines, not real
+     configuration secrets. Absent, Empty, Changed, and Matching must have distinct labels; no merge
+     arrow.
+     DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
+     vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
+     titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
+     720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px node
+     padding, and consistent corner radii. Center short node names; left-align multiline
+     explanations. Never shrink text to fit. Use #F9FAFC background, #192147 headings and primary
+     connectors, #515774 text, #8B8FA2 secondary connectors, #C5C7D1 borders, and #D3E8F3 or #E8F1F6
+     quiet fills. Use #5CABDF and #C98DEF for named categories, #3AEFC4 for labelled positive
+     outcomes, #D66C7B for labelled failures, and #FAA669 for labelled cautions. Tint large panels
+     to 20 to 25 percent; full strength is for small marks. Keep text navy or slate, or off-white on
+     a navy anchor. Never rely on colour alone. Use one arrowhead shape, consistent stroke weights,
+     box-edge termination, and labelled branches and return paths. Keep connectors clear of text. No
+     gradients, shadows, decorative icons, logo, watermark, em-dashes, or slogan footer. Render only
+     the specified reader-facing labels. Choose orientation to fit the relationship, not a default
+     poster. Keep captions outside the artwork. If labels crowd, split the figure before shrinking
+     them. Keep editable SVG when the production method supports it.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Replace the
+     paragraph explaining replacement and failed restoration. Retain the exact four-case table and
+     packaging-input preservation advice. Keep current prose and this TODO until the actual image is
+     reviewed. Then check alt text against the artwork and retain an accessible summary plus all
+     required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![Replacing osquery startup flags overwrites the file; later omitting the key preserves the replacement rather than restoring local content.](assets/a.3-startup-flags-file-lifecycle.webp)
+-->
+
 ## What the two document writers do with what you leave out
 
 ![Reference](../_assets/icons/reference.svg) **Omission is not one behaviour, and the answer depends on the writer rather than on the field.** Fleet has two document writers with different contracts, and the GitOps client changes the question before either of them sees it. Read this before assuming a value you did not mention is safe.

@@ -128,3 +128,39 @@ Both `prepare_live_query` and `run_live_query` also accept three undocumented le
 - **Read plus live query**: the read-only list above, plus `POST /hosts/{id}/query` and `POST /reports/run` for running queries. It cannot add the results stream: `GET /results/websocket` sits outside the allowlist mechanism entirely (above), so anyone who can reach `POST /reports/run` can already read what it returns.
 
 ![Reference](../_assets/icons/reference.svg) The server tells a cooperating client to fetch the schema before writing SQL and to confirm before running a live query, and it advertises the read/destructive annotations above. These are instructions to the assistant, not gates the server keeps: a client can ignore them, and `run_live_query` resolves its targets and validates its SQL itself at call time regardless. The controls that hold are the token's Fleet role and, on the agent, osquery's own table controls, both covered in [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
+
+<!-- IMAGE-TODO: assets/a.11-mcp-tool-route-allowlist.webp
+     QUESTION: How do tool choices become an API endpoint allowlist?
+     PROMPT: DIAGRAM: Selected assistant tasks → Chosen MCP tools → Each tool's Fleet routes →
+     Deduplicate and add startup GET /me → Full method/path allowlist → Test with the intended role
+     and scope. Show Read plus live query as an explicit expansion, adding POST /hosts/{id}/query
+     and POST /reports/run. Put GET /results/websocket in a separate boundary note Outside this
+     allowlist mechanism, not an entry granted by the list. Client confirmation/schema instructions
+     sit outside the authorization gate, labelled Advisory. No invented tool-level server
+     enforcement.
+     DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
+     vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
+     titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
+     720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px node
+     padding, and consistent corner radii. Center short node names; left-align multiline
+     explanations. Never shrink text to fit. Use #F9FAFC background, #192147 headings and primary
+     connectors, #515774 text, #8B8FA2 secondary connectors, #C5C7D1 borders, and #D3E8F3 or #E8F1F6
+     quiet fills. Use #5CABDF and #C98DEF for named categories, #3AEFC4 for labelled positive
+     outcomes, #D66C7B for labelled failures, and #FAA669 for labelled cautions. Tint large panels
+     to 20 to 25 percent; full strength is for small marks. Keep text navy or slate, or off-white on
+     a navy anchor. Never rely on colour alone. Use one arrowhead shape, consistent stroke weights,
+     box-edge termination, and labelled branches and return paths. Keep connectors clear of text. No
+     gradients, shadows, decorative icons, logo, watermark, em-dashes, or slogan footer. Render only
+     the specified reader-facing labels. Choose orientation to fit the relationship, not a default
+     poster. Keep captions outside the artwork. If labels crowd, split the figure before shrinking
+     them. Keep editable SVG when the production method supports it.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Reduce the paragraph
+     explaining how the starter lists are derived. Keep the complete copyable allowlists, prefixes,
+     method/path format, route exception, and role requirements. Keep current prose and this TODO
+     until the actual image is reviewed. Then check alt text against the artwork and retain an
+     accessible summary plus all required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![Selected MCP tools determine method-and-path allowlists, subject to role, scope, startup routes, and the results-stream exception.](assets/a.11-mcp-tool-route-allowlist.webp)
+-->

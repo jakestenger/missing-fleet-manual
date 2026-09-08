@@ -53,6 +53,42 @@ Six markers, and each changes what you do with the word next to it.
 
 **Where the last column is empty, the row's own words are the search words.** The row is present so the enumeration is complete, and it is not what the appendix is for.
 
+
+<!-- IMAGE-TODO: assets/a.1-reference-index-navigation.webp
+     QUESTION: How does one capability identifier lead to platform and interface answers?
+     PROMPT: DIAGRAM: Start at Reader's desired outcome → a.1 Capability ID. That ID branches to a.2
+     Platform support and a.5 Interface support, while the a.1 row's Chapter link goes directly to
+     the owning explanation. Put a.4 Permissions in a separate related lookup, labelled Coarser
+     administrator intents; no row-for-row CAP ID join. Add a.2 may split an ID and Some IDs are
+     handled separately as two small exception notes, not a giant exception inventory. This is a
+     navigation map; keep all real links in Markdown.
+     DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
+     vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
+     titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
+     720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px node
+     padding, and consistent corner radii. Center short node names; left-align multiline
+     explanations. Never shrink text to fit. Use #F9FAFC background, #192147 headings and primary
+     connectors, #515774 text, #8B8FA2 secondary connectors, #C5C7D1 borders, and #D3E8F3 or #E8F1F6
+     quiet fills. Use #5CABDF and #C98DEF for named categories, #3AEFC4 for labelled positive
+     outcomes, #D66C7B for labelled failures, and #FAA669 for labelled cautions. Tint large panels
+     to 20 to 25 percent; full strength is for small marks. Keep text navy or slate, or off-white on
+     a navy anchor. Never rely on colour alone. Use one arrowhead shape, consistent stroke weights,
+     box-edge termination, and labelled branches and return paths. Keep connectors clear of text. No
+     gradients, shadows, decorative icons, logo, watermark, em-dashes, or slogan footer. Render only
+     the specified reader-facing labels. Choose orientation to fit the relationship, not a default
+     poster. Keep captions outside the artwork. If labels crowd, split the figure before shrinking
+     them. Keep editable SVG when the production method supports it.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Reduce the long
+     ID-column explanation. Preserve exact exception IDs, split-row details, counts, and linked
+     instructions in the native reference text. Keep current prose and this TODO until the actual
+     image is reviewed. Then check alt text against the artwork and retain an accessible summary
+     plus all required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![Capability IDs connect outcome, platform, and interface indexes; permission intents use a coarser lookup without a row-for-row join.](assets/a.1-reference-index-navigation.webp)
+-->
+
 ## The index
 
 ![Reference](../_assets/icons/reference.svg) 364 outcomes. Find the row by the words you would type, then open the linked chapter.
