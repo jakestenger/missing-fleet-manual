@@ -27,6 +27,15 @@ const config = {
         sidebarPath: './sidebars.js',
         include: ['**/*.md'],
         exclude: ['**/_*.md'],
+        // Versioned per Fleet MINOR line (STYLE.md, "Point releases are footnotes").
+        // The living docs in ../manual are the newest minor being worked; released
+        // minors are frozen under versioned_docs/ and picked from the navbar dropdown.
+        // Bumping a minor: freeze the outgoing line with `docusaurus docs:version <minor>`,
+        // then relabel current below to the new minor.
+        lastVersion: 'current',
+        versions: {
+          current: { label: '4.91', path: '' },
+        },
       },
       blog: false,
       theme: { customCss: './src/css/custom.css' },
@@ -36,7 +45,10 @@ const config = {
   themeConfig: {
     navbar: {
       title: 'The Missing Fleet Manual',
-      items: [{ type: 'docSidebar', sidebarId: 'manualSidebar', position: 'left', label: 'Contents' }],
+      items: [
+        { type: 'docSidebar', sidebarId: 'manualSidebar', position: 'left', label: 'Contents' },
+        { type: 'docsVersionDropdown', position: 'right' },
+      ],
     },
     docs: { sidebar: { hideable: true, autoCollapseCategories: false } },
     colorMode: { defaultMode: 'light', respectPrefersColorScheme: true },
