@@ -1035,6 +1035,13 @@ than filling it with a plausible-sounding generalization.
 
 ## 26. If you state a count, make the items findable
 
+> **§§26-27 are verification rules, not voice (2026-09-08).** They come from the Part II defect:
+> findable counts, machine-checked totals, and the Stated-vs-Derived citation ledger. A later pass
+> that consolidates the voice guidance (a revision may target §§10, 12, 15, 22-28) must treat the
+> voice cluster as §§22-25 and §28 only, and leave §§26 and 27 in place, unmerged. §26's findability
+> point is style-adjacent, but its machine-checked-counts subsection and all of §27 are sourcing,
+> and must not move into a voice section.
+
 **Jake's rule, 2026-08-25.** Announcing "Fleet has six roles" or "three named exceptions" is a
 promise that the reader can locate each one. Deliver on it.
 
@@ -1271,3 +1278,18 @@ wearing one sentence.
 
 **Test.** Read the sentence aloud. If you run out of breath before the main verb reaches its
 object, or you cannot say in one clause what the reader is meant to do, it is a stack. Break it.
+
+### The cumulative test applies to the other patterns too
+
+**Added 2026-09-08.** The two shapes above are the dominant rhythms, but the cumulative tell is not
+unique to them. Meta-narration (§23) and definition-by-denial or real-contrast negation (§24) fail
+the same way: any single instance is defensible, and a section thick with them still reads as
+machine-written. The density test in this section is a general one, not a rule about bold text alone.
+
+**Budget, not ban.** Over a run of paragraphs in one section, count the instances of each pattern:
+bold-led corrections, "not X, but Y" contrasts, and sentences that narrate the manuscript or its own
+structure ("the rest of this manual...", "this chapter owns..."). Each is defensible on its own; in
+a cluster they are the texture a reader names as "a model wrote this." When a section is thick with
+one, thin it, even where each instance would survive alone. This is the harder failure to catch,
+because a per-sentence pass never sees it: read several consecutive paragraphs for rhythm, not just
+each sentence for correctness.
