@@ -22,7 +22,7 @@ feature_requests:
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) The administrator-visible actions this appendix's research found, against all six roles, at both scopes. That is the breakdown [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) promises and the reason this appendix is the most-referenced one in the book. **The row universe is a search result and not a proof**: it is what this appendix's research could find, so a reader who finds another route has found a gap rather than a contradiction.
+![Reference](../_assets/icons/reference.svg) The administrator-visible actions this appendix's research found, against all six roles, at both scopes. That is the breakdown [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) promises and the reason this appendix is the most-referenced one in the manual. **The row universe is a search result and not a proof**: it is what this appendix's research could find, so a reader who finds another route has found a gap rather than a contradiction.
 
 These tables report the result an administrator receives, which can differ from the authorization policy's own decision. The policy is the largest input, and a decision can also be made by service middleware before the policy runs, by a response having a field stripped from it after the policy allowed the whole object, or by a database query that filters the result to nothing after the request succeeded. **All four change the answer, so all four are in the cells wherever this appendix found them.**
 
@@ -526,7 +526,7 @@ A request carries a **subject**, which is the authenticated identity and the rol
 
 **Sixteen actions, not two.** Reading and writing are the common pair, and the rest exist because Fleet needed to give one role one verb without the general one. Running a report is not writing it. Transferring a host between fleets is not writing the host. Reading a secret is not reading the object that holds it. **A matrix built on read and write would be wrong**, and it would be wrong in the permissive direction, which is why this one is not built that way.
 
-> **Two vocabularies for one idea.** This book says *fleet*, which is Fleet's current product term. **Fleet's authorization vocabulary still says *team***, and so do the API fields, the object type printed under each action in the tables, and the role a fleet membership records. The two words mean the same thing, and a reader who traces a cell into the API or into a GitOps file will meet the older one.
+> **Two vocabularies for one idea.** This manual says *fleet*, which is Fleet's current product term. **Fleet's authorization vocabulary still says *team***, and so do the API fields, the object type printed under each action in the tables, and the role a fleet membership records. The two words mean the same thing, and a reader who traces a cell into the API or into a GitOps file will meet the older one.
 
 ### Role and scope combine, and are exclusive
 

@@ -157,13 +157,13 @@ The two words describe different layers of the same action. Running a live repor
 
 Part VIII works at all of these layers at once, which is why both words appear there. Its opening section carries a note explaining the split in context.
 
-### Terms the book uses across chapters
+### Terms the manual uses across chapters
 
-These are not naming collisions; they are specialist words the book uses as house vocabulary and defines once here rather than in every chapter that reaches for them. Where a term has an owning chapter, it is named.
+These are not naming collisions; they are specialist words the manual uses as house vocabulary and defines once here rather than in every chapter that reaches for them. Where a term has an owning chapter, it is named.
 
-**Blast radius.** Borrowed from incident response: how far the effect of an action or a failure reaches if it goes wrong, measured by what it touches rather than by whether it succeeds. The book uses it to frame destructive commands, over-broad queries and credential exposure ([8.1](../08-troubleshooting/8.1-diagnostic-method.md) turns it into a diagnostic question).
+**Blast radius.** Borrowed from incident response: how far the effect of an action or a failure reaches if it goes wrong, measured by what it touches rather than by whether it succeeds. The manual uses it to frame destructive commands, over-broad queries and credential exposure ([8.1](../08-troubleshooting/8.1-diagnostic-method.md) turns it into a diagnostic question).
 
-**Estate.** The whole population of devices one Fleet deployment manages. The book reaches for it where "your hosts" is too small a word, because capacity, rollout and policy decisions are made against the population rather than a single machine.
+**Estate.** The whole population of devices one Fleet deployment manages. The manual reaches for it where "your hosts" is too small a word, because capacity, rollout and policy decisions are made against the population rather than a single machine.
 
 **Idempotency.** A property of an action that is safe to repeat: running it twice leaves the same result as running it once. It matters for scripts, software installs and automated remediation, where Fleet may retry or a policy may fire more than once. Fleet offers no idempotency guarantee of its own ([6.1](../06-automate-fleet/6.1-automation-design-and-change-control.md)), so the safety has to be built into what you send.
 
@@ -202,13 +202,13 @@ This is why documentation, forum posts, and scripts written before March 2026 us
 A related change in the same release: `no-team.yml` in GitOps was deprecated in favour of `unassigned.yml`.
 
 
-## What this book's version pin means
+## What this manual's version pin means
 
-![Reference](../_assets/icons/reference.svg) Every chapter in this book was verified against **Fleet 4.90.0**, and the two generated catalogs, the configuration keys in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and the routes in [a.8](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog), were read from that exact release. The pin is what lets the book be specific: a default, a route, an edition gate or a field name is stated as a fact about a named release rather than about Fleet in general.
+![Reference](../_assets/icons/reference.svg) Every chapter in this manual was verified against **Fleet 4.90.0**, and the two generated catalogs, the configuration keys in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and the routes in [a.8](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog), were read from that exact release. The pin is what lets the manual be specific: a default, a route, an edition gate or a field name is stated as a fact about a named release rather than about Fleet in general.
 
-Two signals tell you a claim may no longer match the release you run. The first is the version itself: if your server is not 4.90.0, treat commands, fields, defaults and gates as version-sensitive and read the chapter's version notes, because behaviour moves between releases. The second is more precise, and it is what the catalogs are for: if a configuration default you observe on your own server differs from the registered default in a.3's catalog, the book is describing a different binary from yours, and that key is where to look for what changed.
+Two signals tell you a claim may no longer match the release you run. The first is the version itself: if your server is not 4.90.0, treat commands, fields, defaults and gates as version-sensitive and read the chapter's version notes, because behaviour moves between releases. The second is more precise, and it is what the catalogs are for: if a configuration default you observe on your own server differs from the registered default in a.3's catalog, the manual is describing a different binary from yours, and that key is where to look for what changed.
 
-When this book is updated for a newer Fleet release, both catalogs are regenerated against that release's tag, so they keep describing the version each chapter names rather than a fixed snapshot.
+When this manual is updated for a newer Fleet release, both catalogs are regenerated against that release's tag, so they keep describing the version each chapter names rather than a fixed snapshot.
 
 ## Version boundaries
 
@@ -344,7 +344,7 @@ These are the server side of the capabilities above, **including the two web set
 
 ### Runtime-fetched moving inputs
 
-**A version pin covers the binary, not necessarily everything the binary reads at runtime.** The book's one example is the Fleet MCP server's osquery schema ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)): the binary is built from the 4.90.0 tag and serves the schema embedded in it at startup, but a background refresh then attempts to replace that snapshot with the file from Fleet's `main` branch, roughly two seconds after startup and every 24 hours after by default. Only a successful fetch replaces it; a failed one keeps the copy already in memory, so the schema it validates queries against can end up newer than the tag rather than always being so.
+**A version pin covers the binary, not necessarily everything the binary reads at runtime.** The manual's one example is the Fleet MCP server's osquery schema ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)): the binary is built from the 4.90.0 tag and serves the schema embedded in it at startup, but a background refresh then attempts to replace that snapshot with the file from Fleet's `main` branch, roughly two seconds after startup and every 24 hours after by default. Only a successful fetch replaces it; a failed one keeps the copy already in memory, so the schema it validates queries against can end up newer than the tag rather than always being so.
 
 | | |
 |---|---|

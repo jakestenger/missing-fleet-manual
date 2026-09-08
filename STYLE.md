@@ -287,6 +287,27 @@ Avoid "simply", "just", "easy", "seamless", "powerful", "robust". If a thing is
 finicky, say it's finicky. Short declarative sentences. Tables for anything
 enumerable. Real runnable commands — never pseudo-commands.
 
+**Call it "the manual", never "a book" (Jake, 2026-09-08).** In rendered content
+(everything under `manual/` and the versioned snapshots), the artifact refers to itself
+as "this manual" or "the manual". Do not write "a book", "this book", "the book", or
+"the whole book". It is a collection of documentation, closer to a wiki than a bound
+volume, and may fold into Fleet's existing documentation someday, so the framing has to
+survive that: prefer neutral wording over bound-book metaphors. "book" stays fine as our
+internal shorthand in project files (this file, HANDOFF, RUNBOOK); it just must not reach
+reader-facing prose.
+
+Two uses of the word are legitimate and stay: **Apple's product name** ("Apps and Books",
+"App and Book token"), which is theirs to spell, and **the ordinary verb** ("book a meeting",
+"books a maintenance window"). Greppable check before shipping:
+
+```sh
+grep -rinw book manual/ website/versioned_docs/ \
+  | grep -viE 'apps? (and|&) books?|books? a (meeting|maintenance window)'
+```
+
+That returns nothing. A bare `grep -riw book` does not, and never will, because of the two
+exceptions above.
+
 ## 11. Don't slot-fill the template
 
 `_template.md` is a checklist of things worth considering, not a form. Drop

@@ -18,7 +18,7 @@ feature_requests:
 
 **Search the last column for the word you have. Open the owning chapter. `(no)` means Fleet does not provide the capability.** The rows themselves are in [The index](#the-index); the sections after it explain where its words come from.
 
-**Every outcome this manual teaches has one chapter that owns it, and this index gets you there from the word you would actually type.** A table of contents can only expose the book's own vocabulary. Administrators arrive holding Apple's word, Microsoft's word, the name of the product they are migrating off, or the name Fleet itself used two releases ago, and none of those is what a chapter is called.
+**Every outcome this manual teaches has one chapter that owns it, and this index gets you there from the word you would actually type.** A table of contents can only expose the manual's own vocabulary. Administrators arrive holding Apple's word, Microsoft's word, the name of the product they are migrating off, or the name Fleet itself used two releases ago, and none of those is what a chapter is called.
 
 That distance is the appendix. A row earns its place when the words in its last column are words the contents page would not have given you.
 
@@ -554,7 +554,7 @@ Six markers, and each changes what you do with the word next to it.
 
 **Group 5 gets one level of sub-grouping and no more**, along the line [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) already teaches: settings that persist, work that runs once, and experiences. Every reader of Part V has met that distinction, so it costs nothing to reuse and it splits the largest group along a boundary people already hold.
 
-**One outcome, one group.** A row appears once and is reached from elsewhere through its `Also` column. Duplicating a row is how two projections of the same set of capabilities drift apart, and this book has already paid for that once.
+**One outcome, one group.** A row appears once and is reached from elsewhere through its `Also` column. Duplicating a row is how two projections of the same set of capabilities drift apart, and this manual has already paid for that once.
 
 **Outcomes Fleet refuses keep their rows.** Enforcing a Linux operating system version, releasing a locked Android device, rotating an API token, backing Fleet up with Fleet's own tooling, and keeping a restored copy from acting on the real world are all things people search for and Fleet does not do. Each keeps a row, marked **(no)**, pointing at the chapter that records the refusal. An index that leaves them out sends you off to look for them.
 
@@ -641,7 +641,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## The vendors' words for things Fleet renames
 
-![Reference](../_assets/icons/reference.svg) **These are the words an administrator arrives holding**, and the third column is the one that matters: how many of this book's chapters use the word at all. Where that count is low, the index is the only route from the word to the chapter.
+![Reference](../_assets/icons/reference.svg) **These are the words an administrator arrives holding**, and the third column is the one that matters: how many of this manual's chapters use the word at all. Where that count is low, the index is the only route from the word to the chapter.
 
 | You arrive with | Fleet or this manual calls it | Chapters using the word | Route |
 |---|---|---|---|
@@ -665,11 +665,11 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 | LUKS | Linux disk encryption | Eight | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) |
 | Okta, Jira, Zendesk | conditional access, ticketing | Three, four and four | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) |
 
-**Five of those words appear in no chapter of this book**: Azure AD, LDAP, Munki, OMA-URI and Managed Apple ID. Their rows are the ones that earn the appendix, because there is no other route from the word to the page.
+**Five of those words appear in no chapter of this manual**: Azure AD, LDAP, Munki, OMA-URI and Managed Apple ID. Their rows are the ones that earn the appendix, because there is no other route from the word to the page.
 
-**Fleet documents all of them.** At this release Jamf heads twenty-six sections of Fleet's own documentation, Kandji and Munki eight each, and Workspace ONE three. [3.2](../03-connect-devices/3.2-enroll-macos-devices.md)'s migration section now names Jamf, Workspace ONE and Kandji, so Munki is the only one of the four still absent from this book: standard in the industry and present in the vendor's material, but not used here, which is a gap in the book rather than in the reader.
+**Fleet documents all of them.** At this release Jamf heads twenty-six sections of Fleet's own documentation, Kandji and Munki eight each, and Workspace ONE three. [3.2](../03-connect-devices/3.2-enroll-macos-devices.md)'s migration section now names Jamf, Workspace ONE and Kandji, so Munki is the only one of the four still absent from this manual: standard in the industry and present in the vendor's material, but not used here, which is a gap in the manual rather than in the reader.
 
-**OMA-URI is the one word neither Fleet nor this book gives a heading to**, and it is the only word an Intune administrator has for the thing [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) calls a Windows configuration profile. Managed Google Play and AMAPI have no heading in Fleet's documentation either, though both are used in this book's chapters.
+**OMA-URI is the one word neither Fleet nor this manual gives a heading to**, and it is the only word an Intune administrator has for the thing [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) calls a Windows configuration profile. Managed Google Play and AMAPI have no heading in Fleet's documentation either, though both are used in this manual's chapters.
 
 ## Words this manual uses that Fleet does not
 
@@ -699,7 +699,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Where two live Fleet names disagree
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Fourteen places where Fleet, or this book, uses two names for one thing and neither is marked wrong.** Each is a row in the index. Seven are defects rather than dialects: a name that Fleet prints, documents or emits where a different name is the one that actually works, so following the visible name gets you nothing and says nothing.
+![Troubleshooting](../_assets/icons/troubleshooting.svg) **Fourteen places where Fleet, or this manual, uses two names for one thing and neither is marked wrong.** Each is a row in the index. Seven are defects rather than dialects: a name that Fleet prints, documents or emits where a different name is the one that actually works, so following the visible name gets you nothing and says nothing.
 
 **The seven that will waste your time.**
 
@@ -731,7 +731,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 **`channels` and `families` both name the ways Fleet reaches a device**, in adjacent lines of [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md), and both spellings of Apple Business appear across Part I and Part II. Search for both.
 
-**`fleet` means two opposite things inside this book.** [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) uses it for the whole estate in one heading and for a single scope in the same chapter, and [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) says fleet-wide meaning estate-wide. It is the most-typed word in the manual and it is ambiguous; when a sentence could mean either, the scope reading is the one Fleet's API uses.
+**`fleet` means two opposite things inside this manual.** [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) uses it for the whole estate in one heading and for a single scope in the same chapter, and [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) says fleet-wide meaning estate-wide. It is the most-typed word in the manual and it is ambiguous; when a sentence could mean either, the scope reading is the one Fleet's API uses.
 
 ## Where this index ends
 
@@ -758,7 +758,7 @@ These outcomes are attested somewhere in Fleet but carry no capability row, so t
 
 ### Thirteen entries re-audited out of the count
 
-**An entry leaves this register by being taught, and these thirteen left it that way: three when a re-audit found the teaching already in the book, and ten when new content took the outcome on.** They stay listed so the register never shrinks silently, and so the next audit does not re-open them.
+**An entry leaves this register by being taught, and these thirteen left it that way: three when a re-audit found the teaching already in the manual, and ten when new content took the outcome on.** They stay listed so the register never shrinks silently, and so the next audit does not re-open them.
 
 | Outcome | Now owned by | What closed it |
 |---|---|---|
