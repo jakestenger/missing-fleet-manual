@@ -380,6 +380,131 @@ def check_a5_count_table(cells, a5_text, problems):
             )
 
 
+def check_a5_total_row(cells, a5_text, problems):
+    """The count table's **Total** row. Added 2026-09-08 (overnight step 7, round 3) after
+    CAP-395 was scored into the matrix and the five value rows were recomputed while the
+    Total row below them kept the old 381 in all four columns. check_a5_count_table walks a
+    fixed list of the five values and never looked at Total, so nothing caught it."""
+    actual = len(cells)
+    m = re.search(r"^\|\s*\*\*Total\*\*\s*\|\s*\*\*(\d+)\*\*\s*\|\s*\*\*(\d+)\*\*\s*\|"
+                  r"\s*\*\*(\d+)\*\*\s*\|\s*\*\*(\d+)\*\*\s*\|", a5_text, re.M)
+    if not m:
+        problems.append("a.5: count table has no **Total** row to check")
+        return
+    stated = [int(m.group(i)) for i in (1, 2, 3, 4)]
+    if stated != [actual] * 4:
+        problems.append(
+            f"a.5: count table Total row says {stated} but the matrix has {actual} rows in "
+            f"every column"
+        )
+
+
+def check_a5_reach_figures(cells, a5_text, problems):
+    """a.5's two reach sentences, both recomputed from the matrix. Added 2026-09-08 with the
+    Total row check and for the same reason: CAP-395 moved both and neither had a check.
+
+      1. "N at `Full` or `Partial` against N for the UI, N for `fleetctl` and N for GitOps".
+      2. "GitOps is `Unsupported` on N rows the UI and the REST API can both perform."
+    """
+    can = ("Full", "Partial")
+    reach = [sum(1 for r in cells if r[i] in can) for i in range(4)]  # UI, REST, fleetctl, GitOps
+    m = re.search(
+        r"(\d+) at `Full` or `Partial` against (\d+) for the UI, (\d+) for `fleetctl` and "
+        r"(\d+) for GitOps", a5_text)
+    if not m:
+        problems.append("a.5: could not find the 'N at `Full` or `Partial` against ...' reach sentence")
+    else:
+        stated = [int(m.group(i)) for i in (2, 1, 3, 4)]  # sentence order is REST, UI, fleetctl, GitOps
+        if stated != reach:
+            problems.append(
+                f"a.5: the reach sentence says UI {stated[0]}, REST {stated[1]}, fleetctl "
+                f"{stated[2]}, GitOps {stated[3]} at Full or Partial but the matrix has "
+                f"UI {reach[0]}, REST {reach[1]}, fleetctl {reach[2]}, GitOps {reach[3]}"
+            )
+
+    both = sum(1 for r in cells if r[3] == "Unsupported" and r[0] in can and r[1] in can)
+    m = re.search(r"GitOps is `Unsupported` on (\d+) rows the UI and the REST API can both perform", a5_text)
+    if not m:
+        problems.append("a.5: could not find the 'GitOps is `Unsupported` on N rows' sentence")
+    elif int(m.group(1)) != both:
+        problems.append(
+            f"a.5: says GitOps is Unsupported on {m.group(1)} rows the UI and REST can both "
+            f"perform but the matrix has {both}"
+        )
+
+
+def check_a1_outcome_counts(a1_path, a1_rows, problems):
+    """a.1 states its own size twice in prose and once inside "How to read a row", and states
+    a subtotal under each of its eight group headings. Added 2026-09-08 (overnight step 7,
+    round 3): CAP-395 left all three headline figures at 383 and group 4's subtotal at 62,
+    and the only count this file had a check behind was the one in its frontmatter.
+
+    Every "N outcomes" figure written in digits is checked: inside a group section it must
+    equal that group's own formal rows, outside one it must equal the register total. The
+    no-capability-row register spells its counts as words ("nine outcomes to ten"), which is
+    what keeps those out of scope here rather than an exemption list."""
+    text = a1_path.read_text()
+    total = len(a1_rows)
+    # Group headings ("### 5. Changing a device") and, inside three of them, the lane
+    # headings that carry a subtotal of their own ("#### Settings that persist"). A figure
+    # is checked against the innermost heading above it.
+    heads = [(m.start(), m.group(1).count("#"), m.group(2).strip())
+             for m in re.finditer(r"^(#{3,4}) (\d+\. .+|.+)$", text, re.M)]
+    groups = [(pos, name) for pos, level, name in heads if level == 3 and re.match(r"\d+\. ", name)]
+    if len(groups) != 8:
+        problems.append(f"a.1: expected eight numbered group headings, found {len(groups)}")
+
+    def section_of(pos, level):
+        """The last heading at or above `level` before `pos`, as (start, name)."""
+        out = None
+        for start, lvl, name in heads:
+            if start < pos and lvl <= level:
+                out = (start, name)
+        return out
+
+    counts = {}
+    for m in re.finditer(r"^\|\s*\*\*CAP-\d+\*\*\s*\|", text, re.M):
+        for level in (3, 4):
+            sec = section_of(m.start(), level)
+            if sec:
+                counts[(level, sec[0])] = counts.get((level, sec[0]), 0) + 1
+    in_groups = sum(counts.get((3, pos), 0) for pos, _ in groups)
+    if in_groups != total:
+        problems.append(
+            f"a.1: the eight group sections hold {in_groups} formal rows but the file has {total}"
+        )
+    for m in re.finditer(r"(\d+) outcomes", text):
+        stated = int(m.group(1))
+        sec4 = section_of(m.start(), 4)
+        sec3 = section_of(m.start(), 3)
+        if sec4 and sec4 != sec3:
+            expected, where = counts.get((4, sec4[0]), 0), f"the '{sec4[1]}' lane"
+        elif sec3:
+            expected, where = counts.get((3, sec3[0]), 0), f"'{sec3[1]}'"
+        else:
+            expected, where = total, "the register total"
+        if stated != expected:
+            problems.append(
+                f"a.1: a '{stated} outcomes' figure describing {where} should be {expected}"
+            )
+
+
+def check_a2_prose_count(a2_path, problems):
+    """a.2's own headline row count, the a.2 half of the same 2026-09-08 gap: CAP-395 was
+    added to the matrix and the "N rows" sentence above it kept 291. a.2 counts lettered
+    split rows (CAP-244a and friends) as rows of its own, so this counts them too."""
+    text = a2_path.read_text()
+    actual = len(re.findall(r"^\|\s*\*\*CAP-\d+[a-z]?\*\*\s*\|", text, re.M))
+    m = re.search(r"Grouped as a reader would look for a capability, (\d+) rows", text)
+    if not m:
+        problems.append("a.2: could not find the 'Grouped as a reader would look ..., N rows' claim")
+        return
+    if int(m.group(1)) != actual:
+        problems.append(
+            f"a.2: prose says the matrix carries {m.group(1)} rows but it actually has {actual}"
+        )
+
+
 def check_a5_prose_cross_counts(cells, a5_text, problems):
     """m8, plus the two all-column figures round 5 had to resync when CAP-372 moved from Full
     to Partial: the number of rows with no supported interface (no `Full` and no `Partial`
@@ -475,6 +600,14 @@ def main():
     check_a2_reverse_coverage(a1_rows, a2_text, problems)
     check_a5_count_table(a5_cells, a5_text, problems)
     check_a5_prose_cross_counts(a5_cells, a5_text, problems)
+
+    # Round 3 of the 4.91 overnight campaign: the count table's Total row, a.5's two reach
+    # sentences, a.1's headline and per-group outcome counts and a.2's headline row count.
+    # Every one of them went stale when CAP-395 was minted and every check above stayed green.
+    check_a5_total_row(a5_cells, a5_text, problems)
+    check_a5_reach_figures(a5_cells, a5_text, problems)
+    check_a1_outcome_counts(a1, a1_rows, problems)
+    check_a2_prose_count(a2, problems)
 
     if problems:
         print(f"{len(problems)} CAP-ID problem(s):\n")

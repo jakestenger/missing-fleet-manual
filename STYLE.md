@@ -1190,6 +1190,14 @@ So when you change a matrix cell, do not hand-edit the totals that describe it; 
 rerun the checks, which recount from the table the same way a reader would. A stated count that no
 longer matches its table is now a build failure, not a reviewer's catch.
 
+**Extended 2026-09-08, after a new capability row left six figures stale and both checks stayed
+green.** Minting CAP-395 during the 4.91 campaign moved a.5's count-table `Total` row, its two
+reach sentences, a.1's three headline outcome counts and one group subtotal, and a.2's headline
+row count — none of which either check read. All six are now recomputed by `check-cap-ids.py`
+too. The lesson is the one this section already carries, one level up: a figure is only checked
+if some check names it, so when you write a new count into an appendix, either derive it in a
+check or expect it to go stale the next time the tables move.
+
 ## 27. What a citation ledger has to separate
 
 **Written 2026-08-25, after an external review found a material defect in every one of the twelve

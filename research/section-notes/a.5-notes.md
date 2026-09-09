@@ -656,7 +656,7 @@ went 148 to 160. CAP-379 was deliberately left out of the second group because
 `fleetctl run-script` reaches it natively. If a later round wants these mechanically checked, that
 is a new assertion in `check-register-counts.py` rather than a correction here. [[a.2-notes]]
 
-## overnight step 7 (2026-09-09): the three `fleetctl api` figures, replaced rather than re-derived
+## overnight step 7 (2026-09-08): the three `fleetctl api` figures, replaced rather than re-derived
 
 The previous pass flagged 51 / 109 / 160 as the weakest numbers in this appendix and asked a
 later round to spot-check them. Round 2 did, parsed all 381 matrix rows, and could not
@@ -688,7 +688,7 @@ If a later round wants the original per-row facts counted, that needs a per-row 
 / `[spec-file]` annotation carried in the matrix, and then an assertion in
 `check-register-counts.py` — a new column, not a corrected number. [[a.1-notes]]
 
-## overnight step 7 (2026-09-09): CAP-395 added
+## overnight step 7 (2026-09-08): CAP-395 added
 
 Round 2 finding 6: CAP-083, "See what a device is and what is on it", had absorbed the new
 sortable **Added to Fleet** column during step 3, and that made a.5's `fleetctl Full` on
@@ -712,3 +712,28 @@ the matrix, not adjusted: a.5's stated row count (381 to 382), cell count (1,524
 the `Full` row of the count table (213/201/194/133 to 214/202/194/133), the `Unsupported` row
 (31/55/121/213 to 31/55/122/214), a.1's register size (383 to 384) and a.2's (291 to 292).
 `check-cap-ids.py` and `check-register-counts.py` both agree with the prose.
+
+## overnight step 7 (2026-09-08), round 3: four stale figures and one sentence that outran its own paragraph
+
+**The figures.** CAP-395's row was scored into the matrix and the five value rows of the count
+table were recomputed, but four figures below them were not. Every replacement here was recomputed
+by parsing the committed matrix, not adjusted by hand:
+
+| Figure | Was | Is |
+|---|---|---|
+| Count table **Total** row, all four columns | 381 | **382** |
+| REST API at `Full` or `Partial` | 308 | **309** |
+| UI at `Full` or `Partial` | 269 | **270** |
+| GitOps `Unsupported` where UI and REST can both act | 112 | **113** |
+
+`fleetctl` 251 and GitOps 168 were already right and did not move, as were the 122/85/168 figures
+this round confirmed. `check-cap-ids.py` now recomputes the Total row and both reach sentences;
+it previously walked a fixed list of the five value names and never read the row beneath them.
+
+**The sentence.** The boundary section opened with "This decision alone decides the `fleetctl`
+column on the 122 rows it reads `Unsupported` and on every row a specification file reaches",
+which the same section's own third paragraph contradicts: on 37 of those 122 the REST column is
+`Unsupported` too, so no policy about `fleetctl api` could have changed them. It now names the 85
+rows that would actually flip, which is the figure the later paragraph already states, and keeps
+the second half as what it is: the reason a specification file's reach counts as `fleetctl`
+support at all. [[a.1-notes]] [[a.2-notes]]

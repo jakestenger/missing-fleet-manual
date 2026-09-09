@@ -58,7 +58,7 @@ Each row's gate cited in the research at
 | `update_channels`, fleetd 1.20.0, **nothing checks**; the server sends the block unconditionally | `server/service/orbit.go:752,833`; only gate is licence, `server/fleet/agent_options.go:118` |
 | FileVault rotation, fleetd 1.30.0, capability, **no fallback** | `server/service/orbit.go:937` |
 | ADE setup experience, fleetd 1.35.0, capability, with a fallback for older agents | `server/service/orbit.go:542,838` |
-| End-user auth, fleetd 1.50.1, and **below it Fleet allows the enrollment unauthenticated** | `server/service/orbit.go:259` |
+| End-user auth, fleetd 1.50.0, and **below it Fleet allows the enrollment unauthenticated** | `server/service/orbit.go:259` |
 | `EUA_TOKEN` packaging property, orbit 1.55.0, **no fallback branch** | `orbit/pkg/packaging/windows.go:107-109` |
 
 ### Operating system boundaries
@@ -415,3 +415,18 @@ the opposite.
   (`schema.go`, `mcp_tools_queries.go`): the variable only stops the background fetch. Split
   the row in two — one for the automatic-refresh pin, one stating the manual tool still
   reaches `raw.githubusercontent.com` regardless.
+
+## Overnight campaign, step 7 round 3 (2026-09-08): the end-user-authentication row returns to Orbit 1.50.0
+
+The agent-floors row was changed to 1.50.1 in the previous step and is restored to 1.50.0.
+`orbit-v1.50.0` exists as a tag (commit `b3ca45564a`, 2025-11-12, between `orbit-v1.49.1` and
+`orbit-v1.50.1`); `CapabilityEndUserAuth` is absent from `orbit-v1.49.1:server/fleet/capabilities.go`
+and present at `orbit-v1.50.0:server/fleet/capabilities.go:99`, advertised unconditionally by
+`GetOrbitClientCapabilities()` at `:127`; and the entire `orbit-v1.50.0..orbit-v1.50.1` diff is one
+file refactoring how Orbit opens a browser window. `orbit/CHANGELOG.md` at fleet-v4.91.0 files the
+feature under 1.50.1 because the pending change file `orbit/changes/34528-support-end-user-auth`,
+present in the 1.50.0 tree, was folded in at the next cut.
+
+**Evidence kind for this row: tag reading**, not the release history the frontmatter warns about,
+and not a vendor statement. The `server/service/orbit.go:259` citation beside it establishes the
+mechanism, not the version, and is unchanged. Full working in `5.5-notes.md` under the same heading.

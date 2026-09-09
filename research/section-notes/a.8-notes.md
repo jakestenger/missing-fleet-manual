@@ -448,7 +448,7 @@ failure-class table is unaffected by the only 4.91 change to server/fleet/errors
 adds message constants and nothing else), and the further-reading link to the version-pinned
 REST reference, which build/check-pinned-links.py holds at fleet-v4.90.0 book-wide.
 
-## overnight step 7 (2026-09-09): the catalog's scope, and three auth cells corrected
+## overnight step 7 (2026-09-08): the catalog's scope, and three auth cells corrected
 
 Round 2's blocker and the step-6 worker's own W2 landed on the same defect from different
 directions, and both are right: the catalog's "None is omitted" was false. The generator
@@ -497,3 +497,48 @@ path and needed no per-row note.
 Regenerated output was diffed row-for-row against the committed appendix: 562 rows both
 sides, exactly six differing, all six intended. Registration counts unchanged at
 562/496/58/8, source commit 35fc1c024490.
+
+## overnight step 7 (2026-09-08): the catalog's real boundary, and what `none` does not promise
+
+Round 3's blocker and its finding 5, both against sentences the previous step wrote. Every path
+below was read at fleet-v4.91.0 (35fc1c0244).
+
+**The boundary.** The scope sentence said the catalog lists "every route the server registers *on
+its API router*". That is not the line the generator draws, in either direction:
+
+| Read | Source |
+|---|---|
+| The raw protocol group is bound on the root mux, not under `/api/` | `cmd/fleet/serve.go:893` hands `rootMux` to `service.RegisterAppleMDMProtocolServices` and `:912` to `service.RegisterSCEPProxy`; both live in `server/service/handler.go`, which is why their eight routes are in the table |
+| Six root-mux paths registered from `ee/` are in neither the table nor the exclusion list | `ee/server/scim/scim.go:283-284` (`/api/v1/fleet/scim/`, `/api/latest/fleet/scim/`), `ee/server/service/hostidentity/scep.go:103` (`/api/fleet/orbit/host_identity/scep`), `ee/server/service/condaccess/scep.go:85` (`/api/fleet/conditional_access/scep`), `ee/server/service/condaccess/idp.go:156-157` (`/api/fleet/conditional_access/idp/metadata`, `/idp/sso`); handed `rootMux` at `serve.go:915,924,933,938` |
+| Those six are the whole of what `ee/` binds | `git grep -n 'mux\.Handle' fleet-v4.91.0 -- ee/ cmd/` returns exactly those six plus two separate binaries (`cmd/android-amapi-mock`, `cmd/fleet-mcp`), neither of which is the Fleet server's mux |
+| `serve.go`'s own mounts beside `/api/` are nine | `rootMux.Handle`/`HandleFunc` at `:844,845,846,948,956,971,975,976,978,979,984`: `/healthz`, `/version`, `/assets/`, `/metrics` (twice, one path), `/api/`, the two `scim/details` shims, `/enroll`, `/`, `/debug/` |
+
+So the paragraph now says the boundary is which files the generator reads, names the raw group as
+the reason the router is not it, and enumerates all fifteen root-mux paths outside the table.
+Nine plus six is exhaustive at this tag, which is why it is stated as a count.
+
+**Why the wording rather than the generator, again.** The same reasoning as the previous step:
+widening `gen-api-catalog.py` into `ee/` would replace a catalog verified three times with a
+larger unreviewed one, and the six paths are Premium, conditionally registered (SCIM needs
+Premium; host identity and conditional access additionally need a server private key), and
+already named in the exposure matrix where a reader opening a firewall needs them. **Alternative
+if a later round disagrees:** widen the generator and re-review the result as a step of its own.
+
+**What `none` does not promise.** The legend said "where they do, the row says which one". The
+rows disprove it: `GET /api/_version_/fleet/invites/{token}` reads a bare `none` while
+`server/service/invites.go:332` skips authorization and then requires an exact token match and an
+expiry check, and the EULA and bootstrap-package token reads do the same
+(`ee/server/service/mdm.go:461,606`, both "skipauth: ... gated by token"). The generator's
+`HANDLER_LOCAL_AUTH` map holds three entries, and those three are hand-read rather than the output
+of an audit. The legend now says so, and tells the reader to treat `none` as a question to answer
+at the handler. **Alternative:** add every path-token route to `HANDLER_LOCAL_AUTH` and
+regenerate, which is a full audit of the 60 `none` rows and a pass of its own. [[a.3-notes]]
+
+**One gap this round names rather than closes.** Of the six `ee/` root-mux paths, five are already
+in the exposure matrix (`/api/v1/fleet/scim/` and `/api/latest/fleet/scim/` at the SCIM entry,
+the three conditional-access paths at the Okta entry). `/api/fleet/orbit/host_identity/scep`
+appears nowhere else in the appendix: the matrix's Apple entry covers hardware attestation through
+`/api/mdm/acme/*` and its certificate entry covers the SCEP proxy at `/mdm/scep/proxy/*`, neither
+of which is this path. The completeness paragraph now names it and says so. Giving it a matrix
+entry of its own means stating which hosts fetch it and under what conditions, which is a
+verification pass rather than a wording fix, so it is left for a later round.

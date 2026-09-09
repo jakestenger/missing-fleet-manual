@@ -606,7 +606,7 @@ bullets in a.2. The runbook's step 3 named only a.1 and a.10; leaving the other 
 have shipped a red gate to main. See [[a.2-notes]] and [[a.5-notes]]. All fourteen build checks
 pass. [[a.10-notes]]
 
-## overnight step 7 (2026-09-09): CAP-385 narrowed, CAP-395 minted
+## overnight step 7 (2026-09-08): CAP-385 narrowed, CAP-395 minted
 
 **CAP-385.** Round 2 finding 2. Step 3 wrote the outcome as "Put a custom host vital into a
 profile, an app configuration or a host name" while a.2 and a.5 both wrote "Fill in a custom
@@ -643,3 +643,17 @@ Sorting is a separate outcome from seeing, which this register already accepts: 
 inside them. CAP-395 rather than 386 or 394: both were retired deliberately in step 3 and the
 flagged decision says the gap is not a mistake, so reusing them would erase that record.
 Register 383 to 384 rows. [[a.5-notes]] [[a.2-notes]]
+
+## overnight step 7 (2026-09-08), round 3: the counts CAP-395 left behind
+
+Minting CAP-395 updated this file's frontmatter count and none of the figures a reader sees.
+Recomputed from the rows themselves rather than adjusted by hand: 384 formal `CAP-###` rows, group
+subtotals 34, 72, 9, 63, 111, 26, 47, 22, which sum to 384. Three prose statements of the register's
+size read 383 (the appendix-carries line, "How to read a row"'s comparison with a.4's 152 intents,
+and the index heading) and group 4's subtotal read 62. All four corrected.
+
+`build/check-cap-ids.py` passed before and after, because it checked the count in this file's
+frontmatter and nothing else in it. It now checks every "N outcomes" figure written in digits
+against the rows under the heading it sits in, group by group and lane by lane, so this class
+cannot pass again. The no-capability-row register spells its counts as words, which is what keeps
+them out of the check's scope. [[a.2-notes]] [[a.5-notes]]

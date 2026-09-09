@@ -208,7 +208,7 @@ because each could reasonably have gone the other way:
 The Version notes stamp stays at 4.90.0 deliberately. This pass added rows; it did not re-read the
 276 cells that were already there. [[a.5-notes]]
 
-## overnight step 7 (2026-09-09): CAP-395 added, CAP-385 relabelled
+## overnight step 7 (2026-09-08): CAP-395 added, CAP-385 relabelled
 
 CAP-395, sorting the host list by when a host last enrolled, scored `Supported` on all six
 platforms, Free, prerequisite `None`. The evidence for a uniform row rather than a per-platform
@@ -222,3 +222,10 @@ CAP-385's label was already the correct, narrower one here ("Fill in a custom ho
 profile or a managed app configuration") and its cells were scored for exactly that. a.1 was the
 file carrying the wider wording, and it was brought into line. No cell in this file changed.
 [[a.1-notes]]
+
+## overnight step 7 (2026-09-08), round 3: the headline row count
+
+CAP-395 took the matrix to 292 rows and the sentence above it still read 291. Recounted from the
+matrix (292, counting the lettered split rows this appendix treats as rows of their own) and
+corrected. `build/check-cap-ids.py` now recomputes that sentence too; before this round the only
+a.2 figure it checked was reverse coverage from a.1. [[a.1-notes]] [[a.5-notes]]
