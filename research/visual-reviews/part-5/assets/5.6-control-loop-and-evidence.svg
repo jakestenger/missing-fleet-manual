@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1464" viewBox="0 0 1400 1464" role="img">
+<title>OS-update configuration, delivery, platform action and later inventory are separate; built-in enforcement lacks a delivery-status rung.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1464" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">OS-update control and its evidence</text>
+<rect x="48" y="180" width="360" height="180" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="228.0" y="241.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">1  Publish requirement</text>
+<text x="228.0" y="280.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Setting or</text>
+<text x="228.0" y="319.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">custom profile</text>
+<rect x="496" y="180" width="408" height="180" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="241.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">2  Fleet validates</text>
+<text x="700.0" y="280.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Known fields</text>
+<text x="700.0" y="319.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">and exclusions</text>
+<rect x="992" y="180" width="360" height="180" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1172.0" y="241.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">3  Fleet prepares</text>
+<text x="1172.0" y="280.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">payload</text>
+<text x="1172.0" y="319.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Platform policy</text>
+<rect x="992" y="532" width="360" height="180" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1172.0" y="613.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">4  Policy reaches</text>
+<text x="1172.0" y="652.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">device</text>
+<rect x="432" y="532" width="472" height="180" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="668.0" y="593.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="600" fill="#F9FAFC">5  The OS decides</text>
+<text x="668.0" y="632.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="600" fill="#F9FAFC">Availability, prompt,</text>
+<text x="668.0" y="671.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="600" fill="#F9FAFC">download, install, restart</text>
+<rect x="48" y="532" width="296" height="180" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="196.0" y="577.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">6  Fleet</text>
+<text x="196.0" y="613.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">observes later</text>
+<text x="196.0" y="649.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Periodic OS</text>
+<text x="196.0" y="685.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">inventory</text>
+<path d="M408 270 L496 270" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M904 270 L992 270" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1172 360 L1172 532" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M992 622 L904 622" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M432 622 L344 622" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="408" y="508" width="520" height="228" rx="12" fill="none" stroke="#8B8FA2" stroke-width="2.5" stroke-dasharray="7 7"/>
+<text x="668" y="432" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Fleet server cannot see</text>
+<text x="668" y="471" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">installation or restart</text>
+<path d="M668 736 L668 800" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="432" y="800" width="472" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="668.0" y="837.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">macOS 13 and earlier:</text>
+<text x="668.0" y="873.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">fleetd logs Nudge launch</text>
+<text x="668.0" y="909.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">attempts locally</text>
+<text x="48" y="1020" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Evidence ladder</text>
+<rect x="48" y="1080" width="384" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="240.0" y="1143.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">1  Configured requirement</text>
+<text x="240.0" y="1182.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Activity record</text>
+<rect x="508" y="1080" width="384" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1143.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">4  Custom profile</text>
+<text x="700.0" y="1182.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Delivery status</text>
+<rect x="968" y="1080" width="384" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160.0" y="1143.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">6  Observed version</text>
+<text x="1160.0" y="1182.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">OS inventory</text>
+<text x="600" y="1020" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Numbers refer to stages above</text>
+<path d="M508 1080 L892 1080" fill="none" stroke="#009A7D" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M508 1276 L640 1276" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M724 1276 L892 1276" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M669 1263 L695 1289" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M669 1289 L695 1263" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="508" y="1324" width="384" height="92" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1379.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Built-in: no delivery evidence</text>
+</svg>

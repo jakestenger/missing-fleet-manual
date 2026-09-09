@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1088" viewBox="0 0 1400 1088" role="img">
+<title>Install success requests refetch; script success waits for ordinary policy cadence unless another refetch brings evaluation forward.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1088" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Action success and policy evidence arrive separately</text>
+<rect x="48" y="180" width="320" height="144" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="208.0" y="241.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Failing</text>
+<text x="208.0" y="288.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">policy result</text>
+<path d="M368 252 L420 252 L420 416 L488 416" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M420 416 L420 772 L488 772" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="488" y="344" width="368" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="672.0" y="406.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Software / App Store</text>
+<text x="672.0" y="448.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">install succeeded</text>
+<path d="M856 416 L1000 416" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="928" y="374" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Refetch</text>
+<rect x="1000" y="328" width="352" height="176" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1176.0" y="407.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Policy re-evaluation</text>
+<text x="1176.0" y="446.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Subsequent check-in</text>
+<rect x="488" y="700" width="368" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="672.0" y="762.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Script succeeded</text>
+<text x="672.0" y="804.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">No refetch requested</text>
+<path d="M856 772 L1000 772" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+<text x="928" y="730" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Gap</text>
+<rect x="1000" y="684" width="352" height="176" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1176.0" y="763.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Policy re-evaluation</text>
+<text x="1176.0" y="802.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Ordinary cadence</text>
+<path d="M1136 600 L1136 684" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 8" marker-end="url(#arrow)"/>
+<text x="1060" y="564" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">External refetch can bring this forward</text>
+<text x="700" y="962" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Timing schematic: next check-in versus ordinary cadence</text>
+<text x="700" y="1024" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">Action succeeded does not establish Policy passed</text>
+</svg>

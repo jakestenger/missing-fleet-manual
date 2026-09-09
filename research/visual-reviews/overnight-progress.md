@@ -23,16 +23,16 @@ Heartbeat: `complete-fleet-manual-visuals-overnight`, every 30 minutes in this t
 | Part 0–1 | 9 | Completed baseline; direction approved | `2a1c793` |
 | Part II | 14 | Completed candidates; final review pending | `d857e42` |
 | Part III | 10 | Completed candidates; final review pending | `b3cdd13` |
-| Part IV | 7 | Completed candidates; final review pending | Part IV batch commit (see git log) |
-| Part V | 18 | Next batch | — |
-| Part VI | 11 | Pending | — |
+| Part IV | 7 | Completed candidates; final review pending | `e1f047e` |
+| Part V | 18 | 17 candidates ready; 1 authentic capture outstanding | Part V batch commit (see git log) |
+| Part VI | 11 | Next batch | — |
 | Part VII | 15 | Pending | — |
 | Part VIII | 15 | Pending | — |
 | Appendices | 10 | Pending | — |
 
 ## Blockers
 
-None established yet. A My Device screenshot and some older capture briefs require authentic demo UI. Inspect available capture sources when reaching those chapters, document missing access precisely, and continue the diagrams.
+Part V’s 5.5 My Device screenshot requires an accessible, consented demo host on Fleet 4.90.0 with Fleet Desktop and self-service configured. No suitable capture was found in the repos or available app/browser surfaces, and the local Docker daemon is unavailable. `part-5/capture-blockers.json` records the checks and capture plan. Continue Parts VI–VIII and appendices; do not repeatedly retry this capture without a new source. Other legacy capture briefs still need inspection when reached.
 
 ## Validation
 
@@ -63,3 +63,15 @@ Completed seven new native SVG diagrams. The collection now contains 40 candidat
 All seven candidates were inspected at 720 px; policy populations and uptime history were checked in grayscale. Layout fixes separated labels from connectors, kept row marks inside source cards, and connected the sync-failure annotation to its source. Validation passed: website production build, 83 chapter links, em-dash and whitespace checks, seven source/asset pairs, SVG XML/fonts/terminology, and unchanged visible chapter prose.
 
 Next: Part V's 18 pending briefs, including a genuine My Device screenshot requirement. Read the chapter-local prompts and evidence before production. Continue independent diagrams if a capture source is unavailable. Keep all candidates pending joint review and commit each completed part. No routine per-part notification.
+
+## Part V handoff
+
+Prepared 17 candidates: thirteen native SVG diagrams and four built-in raster replacements. The collection now contains 57 candidates. One authentic My Device screenshot remains outstanding, with no fabricated placeholder asset. Part V's gallery and the collection index explicitly flag the capture requirement. All independent Part V artwork is complete; **continue Part VI next**, leaving the capture for an available demo source or the final input-needed handoff.
+
+The profile-status prompt and candidate now qualify Verified by platform instead of claiming universal independent confirmation. The OS-update flow folds its numbered process into two rows with evidence-stage references to preserve reading-size labels, and the two-audience diagram uses a taller canvas. Both briefs record those layouts. Generated replacements required corrections to independent setup paths, policy-response destinations, the Android unlock annotation, a Windows success mark and a corrupted subtitle. Final selected raster paths and every correction prompt are saved in Part V.
+
+Native candidates were inspected at 720 px, with grayscale spot checks for Windows deadlines, disk-encryption signals and policy trigger traces. Raster candidates were inspected for labels, scope and topology; final print-size typography remains part of joint review. Validation passed: production website build, 83 chapter links, em-dash and whitespace checks, 17 candidate/source pairs, current packaged briefs, native SVG XML/fonts/terminology, unchanged visible prose, and gallery links including the explicit capture blocker.
+
+`package-review.py` now accepts a part-local `capture-blockers.json` solely for genuine screenshot briefs with documented missing access. It packages available candidates, preserves the outstanding brief, and flags the capture in both galleries. It also keeps the current chapter prompt in inventory/brief records, including production corrections. Do not use blockers to skip ordinary diagram work.
+
+Next: Part VI’s eleven briefs, then VII (15), VIII (15), and appendices (10). Keep the heartbeat active while this independent work remains. Commit each batch and maintain the output copy. No routine per-part notification; final joint review follows the whole collection.

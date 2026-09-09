@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1200" viewBox="0 0 1400 1200" role="img">
+<title>Recovery credential reads try the current credential then only the newest archive; returned plaintext alone does not prove recovery.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1200" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Current credential, then the newest archive</text>
+<rect x="48" y="184" width="280" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="188.0" y="252.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Read request</text>
+<path d="M328 240 L440 240" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="440" y="168" width="416" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="648.0" y="229.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Try current</text>
+<text x="648.0" y="276.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">credential</text>
+<path d="M856 240 L1016 240" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="936" y="206" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Success</text>
+<rect x="1016" y="168" width="336" height="176" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1184.0" y="247.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="600" fill="#F9FAFC">Return key</text>
+<text x="1184.0" y="286.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="600" fill="#F9FAFC">Record read activity</text>
+<path d="M648 312 L648 456" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="676" y="376" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Missing /</text>
+<text x="676" y="412" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">decrypt failure</text>
+<rect x="440" y="456" width="416" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="648.0" y="517.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Try newest</text>
+<text x="648.0" y="561.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">archived credential</text>
+<path d="M856 528 L1184 528 L1184 344" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="936" y="496" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Success</text>
+<text x="1184" y="626" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Archive use not</text>
+<text x="1184" y="665" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">marked to caller</text>
+<path d="M648 600 L648 756" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="676" y="694" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Fails</text>
+<rect x="440" y="756" width="416" height="176" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="648.0" y="813.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Retrieval error</text>
+<text x="648.0" y="855.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">No successful-read</text>
+<text x="648.0" y="897.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">activity</text>
+<rect x="48" y="1016" width="560" height="128" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="328.0" y="1070.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">External checkpoint:</text>
+<text x="328.0" y="1112.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Test credential against device</text>
+<text x="1004" y="1060" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Returned plaintext alone</text>
+<text x="1004" y="1099" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">does not prove recovery</text>
+</svg>

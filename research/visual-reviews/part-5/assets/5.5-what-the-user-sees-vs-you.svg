@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1440" viewBox="0 0 1400 1440" role="img">
+<title>Installed and Failed each cover two different outcomes; administrators inspect evidence in separate places, without a consolidated setup checklist.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1440" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">TWO AUDIENCES, TWO DIFFERENT PICTURES</text>
+<rect x="48" y="156" width="344" height="108" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="220.0" y="221.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">The user sees</text>
+<text x="536" y="222" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">What it can actually mean</text>
+<rect x="48" y="382" width="344" height="112" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="220.0" y="451.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">Installed</text>
+<path d="M392 438 L464 438 L464 380 L536 380" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M464 438 L464 548 L536 548" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="536" y="320" width="816" height="120" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="944.0" y="369.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Installer ran</text>
+<text x="944.0" y="413.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">and succeeded</text>
+<rect x="536" y="488" width="816" height="120" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="944.0" y="537.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Policy-gated:</text>
+<text x="944.0" y="581.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">skipped, never ran</text>
+<rect x="48" y="714" width="344" height="112" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="220.0" y="783.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">Failed</text>
+<path d="M392 770 L464 770 L464 712 L536 712" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M464 770 L464 880 L536 880" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="536" y="652" width="816" height="120" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="944.0" y="723.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Step failed</text>
+<rect x="536" y="820" width="816" height="120" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="944.0" y="869.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Cancelled</text>
+<text x="944.0" y="913.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">without running</text>
+<text x="536" y="1038" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Separate administrator places</text>
+<path d="M1352 380 L1376 380" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 8"/>
+<path d="M1352 548 L1376 548" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 8"/>
+<path d="M1352 712 L1376 712" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 8"/>
+<path d="M1352 880 L1376 880" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 8"/>
+<path d="M1376 380 L1376 976 L448 976 L448 1080" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 8"/>
+<rect x="48" y="1100" width="336" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="216.0" y="1147.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">OS settings</text>
+<text x="216.0" y="1186.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Profile state</text>
+<rect x="472" y="1160" width="416" height="120" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="680.0" y="1211.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">macOS only</text>
+<text x="680.0" y="1250.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Bootstrap package status</text>
+<rect x="968" y="1088" width="384" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160.0" y="1150.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Upcoming activities</text>
+<rect x="968" y="1252" width="384" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160.0" y="1314.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Past activities</text>
+<text x="1160" y="1406" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Skipped: no install activity</text>
+</svg>

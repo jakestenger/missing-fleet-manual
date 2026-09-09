@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1024" viewBox="0 0 1400 1024" role="img">
+<title>Only three partial signals contribute to a platform-specific disk-encryption summary; credential recovery requires a separate test.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1024" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">What Fleet’s disk-encryption status can tell you</text>
+<rect x="48" y="192" width="480" height="136" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="288.0" y="271.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Is enforcement desired?</text>
+<path d="M528 260 L724 260" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="626" y="232" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">partial signal</text>
+<rect x="48" y="376" width="480" height="136" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="288.0" y="434.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Is the disk observed</text>
+<text x="288.0" y="476.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">encrypted?</text>
+<path d="M528 444 L724 444" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="626" y="416" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">partial signal</text>
+<rect x="48" y="560" width="480" height="136" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="288.0" y="618.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Does Fleet hold a</text>
+<text x="288.0" y="660.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">recovery credential?</text>
+<path d="M528 628 L724 628" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="626" y="600" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">partial signal</text>
+<rect x="724" y="192" width="216" height="504" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="832.0" y="396.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Lossy,</text>
+<text x="832.0" y="435.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">platform-</text>
+<text x="832.0" y="474.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">specific</text>
+<text x="832.0" y="513.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">summary</text>
+<path d="M940 444 L1016 444" fill="none" stroke="#192147" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1016" y="192" width="336" height="504" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<rect x="1016" y="192" width="336" height="100" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1184.0" y="253.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#F9FAFC">Displayed status</text>
+<text x="1184" y="376" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">macOS: six states</text>
+<text x="1184" y="496" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Windows: five states</text>
+<text x="1184" y="616" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Linux: three states</text>
+<text x="1184" y="770" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">No archived-credential</text>
+<text x="1184" y="806" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">marker</text>
+<rect x="48" y="816" width="624" height="160" rx="12" fill="#F6E4E8" stroke="#D66C7B" stroke-width="3"/>
+<text x="360" y="875" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Would that credential actually work?</text>
+<text x="360" y="933" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Only a recovery test answers this</text>
+</svg>
