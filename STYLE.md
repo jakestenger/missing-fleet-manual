@@ -286,8 +286,15 @@ Concision should remove repetition, not the context a reader needs. Vary sentenc
 a run of clipped declarations can make a correct explanation feel abrupt.
 
 Part 0 welcomes readers who may be evaluating Fleet for the first time. Its product
-overview can use a benefits-led, lightly promotional voice grounded in real daily work.
-Its company introduction describes Fleet's public ethos and values with public sources.
+overview should use a confident marketing voice grounded in concrete problems and real daily work.
+Its company introduction makes the case for transparency across development, documentation,
+and company operations, with concrete public examples. Give these two chapters room to
+explain why the approach matters to an administrator, including scenarios and connections
+between features. Jake explicitly requested this fuller marketing treatment on 2026-09-09.
+Describe advantages through supported capabilities and practical outcomes. Public-by-default
+working does not imply disclosing confidential information; support for audit evidence does
+not promise that buying Fleet guarantees an audit result. Preserve platform distinctions and
+the difference between maintaining an app catalog and deploying its updates.
 Keep detailed mechanisms, licence matrices, flags, and edge cases in their owning
 chapters; the reading guide routes readers there. Use light technical context where it
 helps an overview, without turning each benefit into a stack of qualifications. This
