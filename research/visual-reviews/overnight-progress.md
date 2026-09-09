@@ -22,9 +22,9 @@ Heartbeat: `complete-fleet-manual-visuals-overnight`, every 30 minutes in this t
 |---|---:|---|---|
 | Part 0–1 | 9 | Completed baseline; direction approved | `2a1c793` |
 | Part II | 14 | Completed candidates; final review pending | `d857e42` |
-| Part III | 10 | Completed candidates; final review pending | Part III batch commit (see git log) |
-| Part IV | 7 | Next batch | — |
-| Part V | 18 | Pending | — |
+| Part III | 10 | Completed candidates; final review pending | `b3cdd13` |
+| Part IV | 7 | Completed candidates; final review pending | Part IV batch commit (see git log) |
+| Part V | 18 | Next batch | — |
 | Part VI | 11 | Pending | — |
 | Part VII | 15 | Pending | — |
 | Part VIII | 15 | Pending | — |
@@ -55,3 +55,11 @@ Review fixed crossing labels, ChromeOS credential/reporting path separation, MSI
 Validation: website production build passed; all 83 chapter links passed; em-dash and diff whitespace checks passed; ten candidate/source pairs exist; native SVG XML, minimum 28 px fonts, and Fleet/fleets terminology checks passed; visible chapter content is unchanged after stripping HTML comments.
 
 Next: Part IV's seven pending briefs. Continue from the chapter comments and current evidence. No new blockers were found in Part III. Keep working through the remaining parts and appendices, committing each completed batch and saving the output copy. No routine per-part notification to Jake.
+
+## Part IV handoff
+
+Completed seven new native SVG diagrams. The collection now contains 40 candidates. Sources, PNG masters, WebP assets, briefs and gallery are in `part-4/`. The query-denylisting brief now requires `denylist: true` and treats the coverage gap as an explanatory annotation outside the collector, not an invented Fleet UI status or a marker received from the host.
+
+All seven candidates were inspected at 720 px; policy populations and uptime history were checked in grayscale. Layout fixes separated labels from connectors, kept row marks inside source cards, and connected the sync-failure annotation to its source. Validation passed: website production build, 83 chapter links, em-dash and whitespace checks, seven source/asset pairs, SVG XML/fonts/terminology, and unchanged visible chapter prose.
+
+Next: Part V's 18 pending briefs, including a genuine My Device screenshot requirement. Read the chapter-local prompts and evidence before production. Continue independent diagrams if a capture source is unavailable. Keep all candidates pending joint review and commit each completed part. No routine per-part notification.

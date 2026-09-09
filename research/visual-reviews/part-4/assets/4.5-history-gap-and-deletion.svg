@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1016" viewBox="0 0 1400 1016" role="img">
+<title>An absent uptime bucket can mean no hosts were online or collection did not run; disabling collection scrubs history.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1016" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Illustrative hourly observations</text>
+<text x="80" y="176" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">No hosts online at this slot</text>
+<rect x="80" y="220" width="128" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<path d="M108 252 L180 252" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M108 270 L180 270" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M108 288 L180 288" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="144" y="378" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">1</text>
+<rect x="248" y="220" width="128" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<path d="M276 252 L348 252" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M276 270 L348 270" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M276 288 L348 288" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="312" y="378" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">2</text>
+<rect x="416" y="220" width="128" height="112" rx="12" fill="#F9FAFC" stroke="#8B8FA2" stroke-width="2.5" stroke-dasharray="7 7"/>
+<text x="480" y="378" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">3</text>
+<rect x="584" y="220" width="128" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<path d="M612 252 L684 252" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M612 270 L684 270" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M612 288 L684 288" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="648" y="378" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">4</text>
+<rect x="752" y="220" width="128" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<path d="M780 252 L852 252" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M780 270 L852 270" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M780 288 L852 288" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="816" y="378" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">5</text>
+<text x="80" y="424" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Collection did not run at this slot</text>
+<rect x="80" y="468" width="128" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<path d="M108 500 L180 500" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M108 518 L180 518" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M108 536 L180 536" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="144" y="626" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">1</text>
+<rect x="248" y="468" width="128" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<path d="M276 500 L348 500" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M276 518 L348 518" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M276 536 L348 536" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="312" y="626" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">2</text>
+<rect x="416" y="468" width="128" height="112" rx="12" fill="#F9FAFC" stroke="#8B8FA2" stroke-width="2.5" stroke-dasharray="7 7"/>
+<text x="480" y="626" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">3</text>
+<rect x="584" y="468" width="128" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<path d="M612 500 L684 500" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M612 518 L684 518" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M612 536 L684 536" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="648" y="626" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">4</text>
+<rect x="752" y="468" width="128" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<path d="M780 500 L852 500" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M780 518 L852 518" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M780 536 L852 536" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="816" y="626" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">5</text>
+<rect x="1032" y="318" width="320" height="172" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1192.0" y="392.0" text-anchor="middle" font-family="Inter" font-size="40" font-weight="500" fill="#192147">Missing</text>
+<text x="1192.0" y="444.0" text-anchor="middle" font-family="Inter" font-size="40" font-weight="500" fill="#192147">bucket</text>
+<path d="M480 332 L480 348 L960 348 L1032 348" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M480 468 L480 438 L960 438 L1032 438" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="700" y="674" text-anchor="middle" font-family="Inter" font-size="34" font-weight="400" fill="#515774">Cannot distinguish from stored history alone</text>
+<text x="48" y="750" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Collection lifecycle</text>
+<rect x="48" y="798" width="216" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="156.0" y="845.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Collection</text>
+<text x="156.0" y="884.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">on</text>
+<rect x="320" y="798" width="216" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="428.0" y="864.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Disable</text>
+<rect x="592" y="798" width="216" height="112" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="845.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">History</text>
+<text x="700.0" y="884.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">scrubbed</text>
+<rect x="864" y="798" width="216" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="972.0" y="864.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Re-enable</text>
+<rect x="1136" y="798" width="216" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1244.0" y="845.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">New history</text>
+<text x="1244.0" y="884.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">starts</text>
+<path d="M264 854 L320 854" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M536 854 L592 854" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M808 854 L864 854" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1080 854 L1136 854" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="700" y="975" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Display defaults to 3-hour aggregation</text>
+</svg>
