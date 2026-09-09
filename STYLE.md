@@ -336,6 +336,13 @@ has that context, with concrete examples and enough transitions to connect the s
 Retain procedures, important limits, platform differences, and evidence requirements.
 A warmer chapter can be longer when the added explanation helps the reader understand it.
 
+Jake extended this pass through A.11 on 2026-09-09. Apply the same clear, welcoming
+voice to the remaining operating chapters, troubleshooting, and appendices. Preserve
+the reference register: keep exact commands and lookup tables easy to scan, and use
+connected prose to explain what an observation means and what to check next. Remove
+artificial contrasts and repeated warnings without weakening diagnostic limits or
+changing edition-specific facts.
+
 For screenshots, add a structured `SCREENSHOT:` HTML comment with a stable `SS-` ID,
 a purpose, preparation, exact capture, framing, edition, and proposed filename. Keep the
 capture checklist in `SCREENSHOTS.md` synchronized with those comments. Use
