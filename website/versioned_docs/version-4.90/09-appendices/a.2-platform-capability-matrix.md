@@ -16,61 +16,57 @@ feature_requests:
 
 # Platform capability matrix
 
-![Reference](../_assets/icons/reference-light.svg) **Platform support is a per-capability contract, not a property of an operating system.** Fleet does not support macOS and not support Android. It supports a particular thing on a particular platform, by a particular mechanism, sometimes on one licence and not another, and the answer changes capability by capability rather than platform by platform.
+![Reference](../_assets/icons/reference-light.svg) Use this matrix to check a specific capability on each platform. Read its license and prerequisites alongside the platform result: support can depend on the management channel, ownership type, and configuration already in place.
 
 ## What this appendix carries
 
 ![Reference](../_assets/icons/reference-light.svg) Every device-facing capability the manual teaches, across six platform columns, with the licence and the prerequisites that change the answer.
 
-**Licence and prerequisite are columns, never cell values**, which is the appendix's main structural decision. Folding a licence into a cell would put this project's least reliable claim class inside its most consulted table, and it would answer two questions with one word. The rule itself is restated where you will need it, above the matrix.
+License and prerequisites have their own columns so you can check them separately from platform support.
 
-**What is not here.** Operating system versions and floors are [a.6](a.6-glossary-and-release-compatibility.md). Which role may do it is [a.4](a.4-roles-and-permissions-matrix.md). Which interface can do it is [a.5](a.5-interface-index.md). And how the thing actually works is the chapter that owns it: this appendix answers whether, not how, and does not repeat a chapter's explanation. Use [a.1](a.1-capability-index.md) to get from a capability to its chapter.
+Use [a.6](a.6-glossary-and-release-compatibility.md) for OS-version requirements, [a.4](a.4-roles-and-permissions-matrix.md) for roles, and [a.5](a.5-interface-index.md) for interfaces. [a.1](a.1-capability-index.md) links each task to the chapter with its procedure.
 
 ## What decides most cells
 
-![Explanation](../_assets/icons/explanation-light.svg) Most cells are decided by a small number of structural facts, and knowing them lets you predict a row this table does not contain.
+![Explanation](../_assets/icons/explanation-light.svg) Four structural differences help explain the platform results below.
 
-**Whether the platform runs an agent.** macOS, Windows and Linux run fleetd. iOS, iPadOS and Android do not, so nothing that depends on running a query or a script reaches them. Which of `Unsupported` and `Not applicable` a given cell gets is decided per row rather than by the platform: where Fleet holds a target list that mobile platforms are absent from, the cell is `Unsupported` on that evidence, and where the subject simply has no mobile version, it is `Not applicable`. ChromeOS runs an extension that answers some of the same questions with none of the same machinery.
+macOS, Windows, and Linux run fleetd. iOS, iPadOS, and Android do not provide its osquery and script paths. ChromeOS uses an extension with a smaller set of capabilities. Each row distinguishes an explicit Fleet restriction from a feature that has no applicable platform equivalent.
 
-**Whether Fleet holds a management channel, and whose it is.** Apple's protocol, Microsoft's, and Google's management API differ in what they will carry, so the same administrator intent arrives by three mechanisms with three sets of failure modes ([1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md)).
+Apple MDM, Windows MDM, and Google's AMAPI offer different operations and delivery mechanisms. The same administrator task may follow a different path on each platform ([1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md)).
 
-**Whether the operation exists at the provider at all.** Several rows are not applicable on a platform because the vendor offers nothing Fleet could call, which is a different thing from Fleet not having implemented it.
+Some capabilities depend on a vendor operation that has no equivalent on another platform. Those rows use `Not applicable` where the subject itself does not exist.
 
-**Whether ownership changes the answer.** Personally owned and company-owned devices differ, most sharply on Android, and that difference is a condition rather than a platform column.
+Ownership can also change the result, especially for personally owned versus company-owned Android devices. The condition register explains these differences.
 
-## Three rows worth reading before you plan
+<a id="three-rows-worth-reading-before-you-plan"></a>
 
-![Troubleshooting](../_assets/icons/troubleshooting-light.svg) Each of these is a place where the obvious expectation is wrong, and each is in the matrix below with its evidence.
+## Three platform differences to check when planning
 
-> ### Requiring signed host requests locks out every Mac and Windows host
->
-> Fleet can require that agent requests carry a signature. **The setting is deployment-wide and has no platform exception.** It covers the agent's own request paths, everything under the osquery path, and the certificate-request route, refusing an unsigned request on any of them with an authentication error. The capability handshake is the one exemption.
->
-> **Only Linux can satisfy it, and Fleet says so twice.** Packaging refuses the option for anything other than a Linux package type, and the agent refuses it again at startup on any operating system that is not Linux.
->
-> So on a mixed estate, turning this on stops every macOS and Windows host checking in, reporting or receiving work, and no packaging option produces a Mac or Windows agent that can sign. **Nothing warns you at the point of change**, and Fleet knows which platforms are enrolled.
->
-> The end-user surface is outside the covered set, so **a locked-out host can still look reachable**: My Device answers while the host itself has stopped participating.
+![Troubleshooting](../_assets/icons/troubleshooting-light.svg) The following examples show why the platform, license, and prerequisite columns need to be read together.
 
-> ### Downgrading to Free does not stop disk encryption escrow
+> ### Signed host requests require Linux agents
 >
-> What Free refuses is narrow: a write that **switches disk encryption on**. Everything downstream of that switch is gated on the stored setting rather than on the licence.
+> The setting that requires signed host requests applies deployment-wide to the covered agent, osquery, and certificate-request paths. The capability handshake is exempt.
 >
-> So a deployment that ran Premium with encryption enforced, and then drops to Free, does not stop. The stored setting is still on, because nothing clears it, and Fleet **goes on collecting and storing new recovery keys from Windows hosts**. Reading a key was never licence-gated at all, so it also goes on surrendering every key it holds, to every role that can read the host ([a.4](a.4-roles-and-permissions-matrix.md)).
+> At this release, only Linux packages and agents support the signing option. Enabling the server requirement on a mixed deployment therefore rejects unsigned macOS and Windows requests without a platform exception or warning at configuration time.
 >
-> **Linux is narrower and worth stating exactly**, because the difference is the kind a reader would otherwise generalise wrongly. Free refuses to start a new Linux escrow outright. What it will do is finish one that was already pending when the licence changed, and accept that upload without checking the licence again.
->
-> There is a second effect that is easier to hit and harder to diagnose. Because the refusal fires on any write whose new value is on, **a downgraded deployment cannot save any device-management setting** until it first turns disk encryption off, and the error names the encryption field rather than the change you were making.
+> My Device uses a separate path and can remain reachable while the affected agents stop reporting or receiving work.
 
-> ### Wipe has three different answers, not two
+> ### Disk-encryption behavior after a downgrade to Free
 >
-> One administrator intent, three outcomes. On Free, only a company-owned Android device can be wiped; every other platform gets a licence error before Fleet looks at the platform at all. On Premium, macOS, iPhone and iPad, Windows, Linux and Android all work. **ChromeOS works on neither**, because the Premium path rejects it by name as an unsupported platform.
+> Free rejects a settings write that turns disk encryption on, but an existing enabled setting remains in place after a downgrade. Windows key collection can continue under that stored setting, and roles permitted to read the host can still retrieve held keys ([a.4](a.4-roles-and-permissions-matrix.md)).
 >
-> A reader who learns the licence answer on one platform will get it wrong on the others, which is the whole argument for this appendix being organised the way it is.
+> Linux rejects a new escrow attempt on Free. An attempt already pending at the downgrade can finish because its upload does not recheck the license.
+>
+> An enabled encryption setting can also prevent other device-management settings from being saved after a downgrade: the write is rejected while the new encryption value remains on. Disable enforcement before saving those changes.
+
+> ### Wipe support depends on platform and license
+>
+> Free supports wiping a company-owned Android device. Other platforms encounter the Premium requirement first. Premium supports wipe on macOS, iOS/iPadOS, Windows, Linux, and Android, subject to the row's prerequisites. ChromeOS is unsupported on both editions.
 
 ## How to read it
 
-![Reference](../_assets/icons/reference-light.svg) Five values, and the distinction between three of them is the whole discipline of the appendix.
+![Reference](../_assets/icons/reference-light.svg) Platform cells use these five values:
 
 | Value | What it means |
 |---|---|
@@ -80,23 +76,25 @@ feature_requests:
 | **Not applicable** | The row's subject does not exist on this platform. This is a statement about the platform, not about Fleet. |
 | **Not established (Enn)** | No boundary was found in either direction. The record says what was searched. |
 
-Four habits of this table are worth knowing before you use it.
+Apply the following reading rules throughout the matrix.
 
-**Absence is never evidence of a refusal.** `Unsupported` always rests on something Fleet actually does to say no. Where the only finding was that no code path exists, the answer is `Not established`, which is an honest answer rather than a failure.
+`Unsupported` requires evidence of an explicit platform restriction. If the source review found neither a working path nor a restriction, the cell uses `Not established`.
 
-**Fleet does not always refuse out loud**, and this is the one shape the five values cannot name: the request is accepted, returns success, and the thing you asked for is then thrown away, so nothing reaches the device and nothing tells you. The appendix records that as `Unsupported`, because a branch that names the platform and discards the value is a boundary in the same way an error arm is. What it is not is a loud one, so **an `Unsupported` cell promises that Fleet will not do the thing, never that you will be told.** Configuring a managed application on a Mac is the case worth knowing: the configuration is accepted when the application is added and again when it is edited, cleared on every macOS path, and no error is returned at any point. **There is a second instance, and it decides for you rather than dropping what you sent.** Offering a Play application as self-service is not refused: adding the application overwrites whatever you asked for with self-service on, and editing it afterwards ignores the value you supply and keeps the stored one. Either way the answer you sent is gone and nothing says so. The distinction that keeps this honest is whether Fleet's own code names the platform. Where it does, the cell is `Unsupported`. Where nothing names the platform and the only finding is that the device never asks, the cell is `Not established`, which is why the Chromebook agent-options rows read that way instead.
+An explicit restriction can discard a value without returning an error. For example, the macOS managed-app paths accept configuration input and then clear it. Android Play-app creation forces self-service on, while edits retain the stored value regardless of the supplied setting. These cases are marked `Unsupported` for the requested capability.
 
-**Licence and prerequisite are columns, not cell values.** A Premium capability is `Supported` with `Premium` in the licence column. A capability that needs MDM configured first is `Supported` with that named as its prerequisite. Neither ever appears as `Conditional`, because neither is a condition on whether Fleet does the thing, only on whether you may ask or on what you must have in place first.
+A missing consumer alone is classified differently. ChromeOS agent options use `Not established` because the shared server accepts them, while the extension has no observed request path for them.
 
-**Three actions are named differently here than in the sibling appendices, deliberately.** This appendix says release, erase, and turn Fleet's device management off, because those describe what happens to the device. [a.4](a.4-roles-and-permissions-matrix.md) and [a.7](a.7-fleetctl-command-reference.md) say unlock, wipe, and unenroll, because those are the administrator's request and the command's name. **They are the same three capabilities**, and [a.1](a.1-capability-index.md) carries both sets of words.
+Read `Supported` with the separate license and prerequisite columns. A Premium requirement or prior MDM setup is recorded there. `Conditional` refers to the additional behavior explained by its condition ID.
 
-**Some rows are deliberately per-platform.** Locking a Mac and locking a Windows host are separate rows, so each reads `Not applicable` on the platforms the other covers. That is the grain at which the six platforms can actually disagree.
+This appendix uses release, erase, and turn off device management for the actions called unlock, wipe, and unenroll in [a.4](a.4-roles-and-permissions-matrix.md) and [a.7](a.7-fleetctl-command-reference.md). [a.1](a.1-capability-index.md) includes both sets of terms.
 
-No cell holds two values. Where a cell needs explaining, that is what a condition identifier is for.
+Some tasks have separate platform-specific rows. For example, the Mac-lock row uses `Not applicable` for Windows because Windows lock has its own row.
+
+Each cell has one value. Follow its condition ID when the behavior needs further explanation.
 
 ## The matrix
 
-![Reference](../_assets/icons/reference-light.svg) Grouped as a reader would look for a capability, 276 rows. Section rows in bold carry no cells; they mark where a family starts.
+![Reference](../_assets/icons/reference-light.svg) The matrix contains 276 capability rows. Bold section rows group related tasks and have no platform values.
 
 | ID | Capability | macOS | iOS/iPadOS | Windows | Linux | Android | ChromeOS | Licence | Prerequisite |
 |---|---|---|---|---|---|---|---|---|---|
@@ -216,7 +214,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-134** | Read how many hosts are low on disk | Supported | Supported | Supported | Supported | Supported | Unsupported | Premium | A threshold between 1 and 100 GiB |
 | **CAP-135** | See how many automated enrollments are not healthy | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Free to read the count, Premium to make it non-zero | An Apple Business Manager token, and MDM configured |
 | **CAP-136** | See which hosts were online over time | Supported | Supported | Supported | Supported | Supported | Supported | Free | Historical uptime collection left on |
-| **CAP-137** | Hand a population to somebody who does not use Fleet | Supported | Supported | Supported | Supported | Supported | Supported | Free | None |
+| **CAP-137** | Export a host list for use outside Fleet | Supported | Supported | Supported | Supported | Supported | Supported | Free | None |
 | **CAP-138** | Read the host list programmatically | Supported | Supported | Supported | Supported | Supported | Supported | Free, with Premium-only filters silently dropped | None |
 | **CAP-139** | Be told when too much of the estate goes quiet | Supported | Conditional (C037) | Supported | Supported | Conditional (C038) | Supported | Free globally, Premium per fleet | A destination URL, a day count and a percentage |
 | **CAP-140** | Select hosts by a query that keeps itself current | Supported | Not applicable | Supported | Supported | Unsupported | Supported | Free globally, Premium per fleet | Agent installed |
@@ -240,7 +238,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-159** | Run a one-off script on a device | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | Free globally, Premium per fleet | Agent installed with scripts enabled |
 | **CAP-160** | Keep a script in a library and run it | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | Free globally, Premium per fleet | A recognised file extension, and matching interpreter line |
 | **CAP-161** | Wait for a script's result | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | Free globally, Premium per fleet | Host online, with nothing already pending |
-| **CAP-162** | Run a script across many hosts at once | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | No licence check on the run; Premium only to create the fleets a team batch targets | All targets in the same fleet as the script |
+| **CAP-162** | Run a script across many hosts at once | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | No licence check on the run; Premium only to create the fleets a fleet batch targets | All targets in the same fleet as the script |
 | **CAP-163** | Stop every script running anywhere | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | None |
 | **CAP-164** | Let a script run for longer than five minutes | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | A value of 18,000 seconds or less |
 | **CAP-165** | Read what a script did | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | A script must have run |
@@ -283,7 +281,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-197** | Push an app to an Android device at enrollment | Not applicable | Not applicable | Not applicable | Not applicable | Supported | Not applicable | Premium | Android Enterprise bound |
 | **CAP-198** | Install setup software only on devices that need it | Unsupported | Unsupported | Supported | Supported | Not applicable | Not applicable | Premium | A fleet policy whose automation points at the same installer |
 | **CAP-199** | Stop setup when a piece of software fails | Supported | Unsupported | Conditional (C050) | Unsupported | Not applicable | Not applicable | Premium | Windows MDM turned on |
-| **CAP-200** | Take release of a Mac or iPhone into your own hands | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple MDM configured |
+| **CAP-200** | Control when a Mac or iPhone is released | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple MDM configured |
 | **CAP-201** | Retry only the setup steps that failed | Conditional (C051) | Not applicable | Unsupported | Unsupported | Not applicable | Not applicable | Premium | Require-all-software on, a failed install, and an agent restart |
 | **CAP-202** | Offer software for people to install themselves | Supported | Conditional (C052) | Supported | Supported | Conditional (C053) | Unsupported | Premium | The end-user surface on desktop platforms, a web clip on Apple mobile |
 | **CAP-203** | Group a large self-service catalogue | Supported | Conditional (C054) | Supported | Supported | Unsupported | Not applicable | Premium | As the row above |
@@ -399,7 +397,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 
 ## The condition register
 
-Every `Conditional` cell in the matrix, with both of its branches: what makes Fleet do the thing on that platform, and what makes it not. **A cell is conditional only when one of its branches is Fleet doing the thing**, so a record that could state no such branch has been retired rather than kept, and the numbering skips the identifiers those records held rather than renumbering ones a reader may already have cited. 101 condition records, serving 102 conditional cells: one condition governs two rows, because an end user's self-service uninstall runs the same machinery as an administrator's.
+Each `Conditional` cell links to a record explaining when the operation works and when it does not. The 101 records cover 102 cells because administrator and self-service uninstall share one condition. Gaps in condition numbering preserve IDs from retired records so existing citations remain stable.
 
 **C001** CAP-022, macOS. Supported when the preserve setting is on for the host's scope and the Mac reaches Setup Assistant on the first check-in of the new enrollment: past activity survives. Not supported when the setting is off, in which case past activity and the pending command queue are both cleared. On macOS only, a migration already in progress skips the reset entirely, so history survives whatever the setting says.
 
@@ -423,7 +421,7 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C011** CAP-036, Windows. Supported when the Entra tenant and client lists are populated: the enrollment handler accepts the device's Azure token, extracts the user name and records the enrollment as automatic. Not supported when the tenant list is empty, in which case the request is refused outright. Ownership is recorded as company-owned only when the device is also at first boot.
 
-**C012** CAP-037, Windows. Supported when the device reports that it is not at first boot, which makes Fleet record the enrollment as manual and keep it that way on every refetch. Not this row when the device is at first boot, because that is the automatic enrollment answer and a different row.
+**C012** CAP-037, Windows. Settings-app enrollment is recorded as manual when the device reports that it is outside first boot, and refetch preserves that classification. First-boot enrollment follows the automatic path described by CAP-036.
 
 **C013** CAP-039, Windows. Supported when Windows migration is turned on and the host is currently enrolled in a non-Fleet MDM: the agent is told to unenroll itself and Fleet shortens the refetch window so the change is ingested quickly. Not supported when the host is not in a third-party MDM, in which case nothing happens.
 
@@ -437,9 +435,9 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C018** CAP-056, Linux. Supported when the agent was packaged with the managed host identity certificate option and the host has a usable TPM 2.0: the agent generates a hardware-backed key, obtains a certificate over the enrollment protocol using a valid enroll secret, and signs later requests through a local signing proxy. Not supported when no TPM is present, in which case setup fails and the end-user surface reports the device as unavailable. The option is refused outright on any operating system other than Linux.
 
-**C019** CAP-057, macOS. Not supported when the setting is off, which is the default: an unsigned request from a Mac is passed through unverified, so nothing changes. Supported when the setting is on, in the sense that it is then enforced: an unsigned request from a Mac on a covered path is refused with an authentication error. Enforced but not satisfiable, because no macOS package can carry a host identity certificate and the agent refuses the option on macOS anyway, so turning the setting on locks every Mac out. The setting is deployment-wide and has no platform exception.
+**C019** CAP-057, macOS. With signature enforcement off, unsigned requests pass without signature verification. With it on, Fleet rejects unsigned requests on covered paths. The requirement applies to Macs, but macOS packages and agents cannot satisfy it at this release. Enabling it therefore disconnects those agent paths.
 
-**C020** CAP-057, Windows. Not supported when the setting is off, which is the default: an unsigned request from a Windows host is passed through unverified. Supported when the setting is on, in the sense that it is then enforced: an unsigned request from a Windows host on a covered path is refused with an authentication error. Enforced but not satisfiable, because no Windows package can carry a host identity certificate and the agent refuses the option on Windows anyway, so turning the setting on locks every Windows host out.
+**C020** CAP-057, Windows. Unsigned requests pass when enforcement is off. Enabling it rejects unsigned Windows requests on covered paths, while Windows packages and agents cannot provide the required host-identity signing. The enabled requirement is enforced but cannot be satisfied at this release.
 
 **C021** CAP-057, Linux. Supported when the setting is on and the host holds a certificate: requests are signed and the server verifies them. Not supported when the setting is on and the host has no certificate, in which case every agent and osquery request is refused with an authentication error.
 
@@ -447,7 +445,7 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C023** CAP-062, macOS. Supported, meaning the deletion sticks, when the Mac has no live automated enrollment assignment, or when the licence is Free, where the restore path never runs. Not supported when the Mac has a live assignment on Premium, because the delete restores a pending host inside the same request. The restore reuses the host identifier and unique identifier but deliberately not the agent identifier.
 
-**C024** CAP-062, iOS/iPadOS. Supported, meaning the deletion sticks, when the device has no live automated enrollment assignment, is no longer enrolled, or the licence is Free. Not supported when it has a live assignment on Premium, which restores a pending record inside the same request, and separately Not supported for any still-enrolled iPhone or iPad, which reappears on its next MDM check-in whether or not it is assigned in Apple Business Manager. That second resurrection path involves no automated enrollment at all.
+**C024** CAP-062, iOS/iPadOS. A deletion can remain effective when the device has no live ADE assignment, is no longer enrolled, or the Premium restore path does not run on Free. On Premium, a live ADE assignment recreates a pending record within the deletion request. Separately, any still-enrolled iPhone or iPad can reappear at its next MDM check-in, including devices without an ADE assignment.
 
 **C025** CAP-063, macOS. Supported when the Mac has no live automated enrollment assignment and its last contact is older than the configured window. Not supported when it has a live assignment, which makes the record permanently immune to expiry.
 
@@ -459,7 +457,7 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C030** CAP-125, Windows. Supported when the setting that disables Windows operating-system vulnerability processing is left off, which is the default: Fleet analyses Windows builds against the vendor's security data. Not supported when it is turned on, in which case the definition sync still runs but no Windows operating-system finding is ever produced.
 
-**C031** CAP-125, Android. Supported when the open-source vulnerability feed setting is on, which is the default: Fleet lists the Android builds in the estate, refreshes the feed artefacts and analyses each build. Not supported when it is off, because the Android analysis is never called and no Android operating-system finding is produced. Turning it off does not remove findings already stored, which persist and go stale until no host reports that build any more. The same setting also diverts Ubuntu and Red Hat analysis, so it is not an Android-only switch.
+**C031** CAP-125, Android. With the open-source vulnerability feed enabled, Fleet refreshes feed data and analyzes Android OS builds. Disabling it stops new Android OS analysis but leaves existing findings until no host reports the build, so retained findings can become stale. The setting also affects Ubuntu and Red Hat analysis.
 
 **C032** CAP-126, Android. Supported when the open-source vulnerability feed setting is on, so Android operating-system findings exist for the scoring, filtering and fixed-version machinery to shape. That machinery is per-vulnerability, joined from the shared vulnerability metadata, with no Android-specific branch. Not supported when the setting is off, because no Android finding is produced for these fields to describe. Whether Android application findings additionally exist is unsettled and recorded separately; if they do, the same shaping applies with no extra gate.
 
@@ -471,15 +469,15 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C036** CAP-133, Android. Supported for the totals and for the missing count, which falls back to the detail-update time Fleet writes on every management check-in, so an actively managed Android host is not permanently missing. Not supported for the online and offline split, for the same reason as Apple mobile: no agent last-seen record is ever written.
 
-**C037** CAP-139, iOS/iPadOS. Supported in the sense that these hosts are counted in the denominator of the quiet-estate check. Not supported as a signal, because they never write an agent last-seen record, so they fall into the unseen numerator once the day count elapses after creation and stay there permanently. This path has no MDM-channel fallback, unlike the headline counts.
+**C037** CAP-139, iOS/iPadOS. These hosts enter the quiet-estate check's total count, but the check cannot provide a useful management-availability signal for them. They never write the agent last-seen field, so they enter the unseen count once the configured days have elapsed. This path has no MDM last-seen fallback.
 
-**C038** CAP-139, Android. Supported in the sense that Android hosts are counted in the denominator of the quiet-estate check. Not supported as a signal, on identical grounds to Apple mobile: no agent last-seen record is ever written for an Android host, so it falls into the unseen numerator once the day count elapses after creation and stays there permanently.
+**C038** CAP-139, Android. Android hosts enter the total count, then the unseen count after the configured days, because they never write an agent last-seen value. The check therefore does not reflect whether Android management is active.
 
 **C040** CAP-176, Windows. Supported for a Windows installer package, for which Fleet generates both the install and the uninstall script, including the variant that uninstalls by upgrade code. Not supported for an executable or an archive, where both generators return nothing, so the upload is refused unless the administrator supplies both scripts by hand.
 
 **C041** CAP-178 and CAP-365, macOS. The same constraint governs both, because an end user's self-service uninstall runs the same machinery as an administrator's. Supported for a package Fleet stores as macOS, meaning an installer package or a Fleet-maintained app: the uninstall script is queued and run like any other script. Not supported for a shell or Python package, which Fleet stores as Linux and refuses to uninstall on a Mac, even though the same host was allowed to install it.
 
-**C043** CAP-189, iOS/iPadOS. Supported to the extent that an automatically enrolled iPhone or iPad is held at Setup Assistant and released by Fleet when its items finish. Not supported for the substance of the row: there is no dialog, no agent, no installer and no script, only purchased applications, and any other item is force-failed with a message saying so. When the device is not automatically enrolled, items are still enqueued once but nothing blocks.
+**C043** CAP-189, iOS/iPadOS. Automated enrollment can hold the device in Setup Assistant until purchased applications finish. Fleet provides no agent, script, installer, or setup dialog on these platforms, and unsupported item types fail with an explanatory message. Outside automated enrollment, items can be queued once without holding the device.
 
 **C044** CAP-189, Windows. Supported by a different mechanism: at first boot with automatic enrollment the device is held at the Windows enrollment status page. Not supported as Fleet's macOS pre-desktop experience, which Windows never gets. Outside first boot the device gets the non-blocking browser page instead.
 
@@ -497,7 +495,7 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C052** CAP-202, iOS/iPadOS. Supported for the mechanism: Fleet provides the device authentication these platforms need, by client certificate or by an address carrying the host identifier, and refuses ordinary device-token authentication for them explicitly. Not supported for the surface: Fleet builds no web clip, so the administrator must supply the shortcut that puts the catalogue on the device.
 
-**C053** CAP-202, Android. Supported in the sense that Fleet marks applications as available rather than forced in managed Google Play, which is offered-not-required. Not supported as Fleet's self-service feature: no install request is recorded when a person installs from the store, so only the forced setup path leaves a trace. Fleet's own self-service setting is a separate question with a separate answer, CAP-366, because on Android Fleet does not refuse that setting, it discards it.
+**C053** CAP-202, Android. Apps marked available can be installed from Managed Google Play. That user action creates no Fleet install-request record; forced setup installs have a separate record. CAP-366 covers the self-service setting, whose supplied value is not honored on Android.
 
 **C054** CAP-203, iOS/iPadOS. Supported only through a shortcut the administrator authored, on the same terms as the row above. Not supported as a Fleet-built surface, because Fleet builds no web clip to group anything in.
 
@@ -523,7 +521,7 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C065** CAP-216, Linux. Supported when the host is not known to have scripts disabled: a lock script is queued. Not supported when scripts are disabled, with the same redeploy-and-refetch refusal as Windows. No MDM of any kind is required, because the Windows MDM check is skipped for Linux.
 
-**C066** CAP-217, Android. Supported when Android MDM is configured and the host is MDM-connected: a lock command with a very long duration is sent. Not supported when Android MDM is not configured or the host is unenrolled. Both ownership models are allowed, and Fleet says so in the source: lock works for personal and company-owned devices alike.
+**C066** CAP-217, Android. Lock is supported for personal and company-owned devices when Android MDM is configured and the host is connected. Fleet sends a long-duration AMAPI command. The request is refused if Android management is not configured or the device is unenrolled.
 
 **C067** CAP-220, Windows. Supported when Windows MDM is configured and the host is not known to have scripts disabled: an unlock script is queued. Not supported when scripts are disabled, which is refused with the redeploy-and-refetch message.
 
@@ -533,7 +531,7 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C070** CAP-224, iOS/iPadOS. Supported when the enrollment is not personal, Apple MDM is configured, and the host is connected. Not supported for a personal enrollment, which includes account-driven user enrollment, since that is recorded as personal. A manual non-personal enrollment is allowed here, unlike lock, which refuses it.
 
-**C071** CAP-225, Windows. Supported when Windows MDM is configured and the host is MDM-connected: a remote-wipe command is sent, protected by default, with the unprotected variant available by request. Not supported when Windows MDM is off or the host is disconnected, and a wipe type other than the two Fleet accepts is rejected when the request is read. Unlike Windows lock, wipe needs no scripts, because it is not a script.
+**C071** CAP-225, Windows. Wipe requires configured Windows MDM and a connected host. Fleet sends a protected remote-wipe command by default and accepts an explicitly requested unprotected variant. Other wipe types are rejected. This MDM operation does not require scripts; requests fail when MDM is off or the host is disconnected.
 
 **C072** CAP-226, Linux. Supported when the host is not known to have scripts disabled: a wipe script is queued and runs as root. Not supported when scripts are disabled, which is refused with the redeploy-and-refetch message. No MDM of any kind is required or checked on this path.
 
@@ -567,7 +565,7 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C087** CAP-239, Linux. Supported when a graphical dialog tool is installed, the disk tool is present, a desktop session exists, the person knows the current passphrase, and a key slot is free: Fleet adds an escrow passphrase and posts it with its salt and slot number. Not supported when no dialog tool is found, which fails immediately, and a cancelled or timed-out prompt is a clean no-op. If the submission fails the added slot is removed again.
 
-**C088** CAP-241, Linux. Supported when disk encryption is enforced for the scope and the host runs a distribution Fleet escrows for: it contributes to the verified, action-required and failed counts. Not supported when encryption is not enforced, because Fleet says outright that with nothing enforced there is nothing to report, and Linux never appears in the verifying, enforcing or removing-enforcement counts at all.
+**C088** CAP-241, Linux. A supported Linux distribution contributes to verified, action-required, and failed counts when encryption is enforced for its scope. With enforcement off, it contributes no encryption-status result. Linux does not enter verifying, enforcing, or removing-enforcement counts.
 
 **C089** CAP-242, Windows. Supported when disk encryption is on for the same scope, in which case the PIN requirement is accepted and the PIN-related queries are added to the host. Not supported on its own: turning the PIN on without encryption is refused, and turning encryption off while the PIN is required is refused too, each with its own message.
 
@@ -583,7 +581,7 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C095** CAP-285, iOS/iPadOS. Supported for future enrollments and only on Premium, because the automated enrollment re-sync is platform-blind: devices enrolling after the change get the new address. Not supported for devices already enrolled, whose check-in address was baked into the profile they installed.
 
-**C096** CAP-285, Android. Supported to change the setting, which is never refused. Not supported in effect, and in two concrete ways. The binding between Fleet and Google's management service is keyed by the server address, so after a change Fleet no longer finds the existing enterprise and re-signing up creates a different record. And the push address Google delivers status reports to is fixed when the enterprise is created and never updated, so reports keep going to the old address.
+**C096** CAP-285, Android. Fleet accepts a server-address change, but the existing Android binding remains tied to the old address. The proxy no longer finds that binding under the new address, and a new signup creates another enterprise record. Google's status push destination also remains the address set at enterprise creation.
 
 **C097** CAP-307, Linux. Supported when the host runs a distribution Fleet escrows for and the server private key is still configured, which is what the stored key was encrypted with. Not supported when the private key is missing or has changed, in which case the stored key cannot be decrypted and nothing can be proved.
 
@@ -601,15 +599,17 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 **C104** CAP-347, ChromeOS. Supported for the two request-size limits that apply to the write endpoint, which the extension does call. Not supported for the log-write limit, because the extension never calls the log endpoint, and not for the event and carving limits, which are agent flags for a process ChromeOS does not run.
 
-**C106** CAP-371, macOS. Supported when the Mac's agent tells Fleet it can rotate the key and Fleet finds that the key it holds cannot be decrypted: Fleet sets the rotation instruction in the host's configuration, and the agent asks the person at the keyboard for their password at the next login, generates a replacement key and escrows it. Not supported when the agent does not declare that capability, in which case the instruction is never sent at all, the server writes a debug line, and nothing appears in Fleet or on the device. Not supported as an on-demand action either: Fleet asks for a rotation only when the key it holds is undecryptable, so there is no way to rotate a healthy key deliberately. The agent and server version floors for the capability are in [a.6](a.6-glossary-and-release-compatibility.md).
+**C106** CAP-371, macOS. When Fleet finds an undecryptable stored FileVault key and the agent advertises rotation support, Fleet sends a rotation instruction. At the next login, the agent asks for the user's password, creates a replacement key, and escrows it. Without the advertised capability, Fleet logs at DEBUG and sends no instruction or user-visible notification.
+
+This automatic repair applies only to an undecryptable stored key; it provides no on-demand rotation of a healthy key. [a.6](a.6-glossary-and-release-compatibility.md) lists the version requirements.
 
 ## Rows that are not platform-scoped
 
-92 rows have no platform answer. Most are about the Fleet server rather than a device: server configuration, a server-side store, an identity operation, or a property of how the deployment is run. **A few are not server-side and still have no platform answer**, which is why the section is named for what is true of all of them rather than for the common case. An automation interface is one, and a commercial arrangement with no corresponding mode in the software is another.
+92 rows have no device-platform result. They cover server settings, stored data, identity, automation interfaces, service operations, and hosting arrangements.
 
-Carrying all 92 as six `Not applicable` cells each would add 552 cells that say nothing and would distort every per-platform count. Omitting them would be worse, because a reader who looked one up and found nothing could not tell whether a.2 does not cover it or whether it simply has no platform answer.
+They are listed separately below so you can find the task without interpreting six identical `Not applicable` cells.
 
-So they are carried here, one line each, grouped by the same sections as the matrix. The role answer for these rows is in a.4 and the interface answer is in a.5, which is where they genuinely resolve.
+Use [a.4](a.4-roles-and-permissions-matrix.md) for their permissions and [a.5](a.5-interface-index.md) for their interfaces.
 
 
 **A. Identity, access, and governance**
@@ -739,83 +739,95 @@ So they are carried here, one line each, grouped by the same sections as the mat
 
 ## Not established
 
-**28 records for 28 cells**, each one a place where no boundary was found in either direction. Twenty-seven are platform cells. **One is a licence answer**, which is the only one in the matrix, and it is here because the decision is made by something outside the deployment rather than by Fleet. Each record says what was searched, which is the part a later pass needs.
+The 28 records below document unresolved cells: 27 platform results and one license result decided by an external service. Each preserves the evidence and search scope from the source review for a later update.
 
-**E01** CAP-034, ChromeOS. Whether an end user's identity can be attached to a Chromebook at enrollment. The extension enrolls through the ordinary agent enrollment endpoint, and that handler has no end-user-authentication branch, but absence from one path is not a boundary. Searched: the end-user-authentication flag, the over-the-air authentication requirement, the identity-required error, and the word identity, across the enrollment handler; and ChromeOS crossed with identity, end user and authentication across the server and the extension. No hits in either direction. Every other platform on this row is established.
+**E01** CAP-034, ChromeOS. End-user identity at enrollment is unverified. The extension uses the normal agent endpoint, whose handler has no ChromeOS identity-authentication branch. The review searched enrollment handling and the extension for identity, end-user authentication, its flags, and related errors without finding an explicit support or rejection path.
 
-**E02** CAP-124, Android. Whether Android applications, as opposed to Android operating-system builds, are matched against known vulnerabilities. Android application rows are not on the exclusion list that keeps Apple mobile applications out of matching, so they do enter it. No generator was found that produces a match for a Play Store package name, and no positive rejection was found either. Searched: Android across the whole vulnerability tree, the Android application source name, and a full read of the matching translation. Android operating-system findings are a separate and definite yes.
+**E02** CAP-124, Android. Application vulnerability matching is unverified. Android application rows enter matching, but the reviewed vulnerability tree and translation logic supplied neither a Play Store package-name match generator nor an explicit rejection. Android OS vulnerability analysis is established separately.
 
-**E03** CAP-124, ChromeOS. Whether browser extensions are matched against known vulnerabilities. Extension rows are likewise absent from the exclusion list, so they enter matching, but no extension-specific source was found and no explicit rejection either. Searched: ChromeOS across the whole vulnerability tree, the translation path, and a full read of the matching translation.
+**E03** CAP-124, ChromeOS. Extension vulnerability matching is unverified. Extension rows enter the shared matcher, but searches across the vulnerability tree and translation logic found no extension-specific source or explicit rejection.
 
-**E04** CAP-126, ChromeOS. Follows the extension question above. If extension findings exist, the severity and exploitation fields apply to them with no ChromeOS-specific branch, because those fields are per-vulnerability. If they do not, there is nothing to score. Nothing was found that settles which. Searched as for the row above.
+**E04** CAP-126, ChromeOS. Severity and exploitation fields apply to any generated finding through shared metadata. Whether ChromeOS extension findings exist remains unresolved in E03; this result depends on that same evidence.
 
-**E05** CAP-127, ChromeOS. Follows the extension question above, on the same evidence: the filter and sort fields are per-vulnerability and carry no ChromeOS branch, so the answer depends entirely on whether extension findings exist at all. Searched as for the row above.
+**E05** CAP-127, ChromeOS. Filtering and sorting use shared vulnerability fields. Their usefulness for ChromeOS depends on the unresolved extension findings in E03.
 
-**E06** CAP-128, ChromeOS. Follows the extension question above, on the same evidence: the fixed-version field is carried on the finding, so the answer depends entirely on whether extension findings exist at all. Searched as for the row above.
+**E06** CAP-128, ChromeOS. The fixed-version field belongs to the finding. This result depends on whether extension findings exist, as documented in E03.
 
-**E07** CAP-154, iOS/iPadOS. Whether the platform single sign-on registration variable can be used in a profile for an iPhone or iPad. Fleet applies no platform check to it: it sits in the shared Apple profile allow-list, which serves macOS, iOS and iPadOS alike. Searched: every spelling of platform single sign-on, the shared-device-key option and the related stored assets, across the server, the enterprise code and the four platform single sign-on packages; then those files searched again for each Apple platform name. The only evidence of macOS scope is documentary, describing a Mac extension, and a naming rule on the extension identifier. There is no allow-list that iPhone and iPad are absent from, so this is not a refusal.
+**E07** CAP-154, iOS/iPadOS. Use of the Platform SSO registration variable is unverified. It appears in the shared Apple profile allowlist without an iOS/iPadOS exclusion. The review searched Platform SSO packages, stored assets, shared-device-key settings, extension identifiers, and platform checks. Documentation describes a Mac extension, but no enforced mobile-platform boundary was found.
 
-**E08** CAP-240, ChromeOS. Whether Fleet can tell that a Chromebook's disk is encrypted. The three disk-encryption queries carry platform allow-lists that ChromeOS is absent from, but no extension table was found that answers the question either, so calling it a refusal would rest on absence alone. Searched: disk encryption across the query definitions, and ChromeOS across the whole query-definition package.
+**E08** CAP-240, ChromeOS. Disk-encryption reporting is unverified. ChromeOS is absent from the three agent-query platform lists, and the reviewed extension and query definitions offered no alternate table. The review did not establish a complete support or refusal boundary.
 
-**E09** CAP-253, Windows. Whether a Windows host can be refused a sign-in for failing a policy. The policy side explicitly permits it: a policy carrying the conditional-access flag must name macOS or Windows, and Windows is one of the two. The evaluator itself contains no platform check. What is missing is a Windows certificate-delivery route, and the only such route in the tree is the Apple profile one. Searched: every conditional-access route, the Windows-specific profile handler names, and every mention of platform inside the conditional-access package. That is absence, not a refusal.
+**E09** CAP-253, Windows. Conditional-access policies permit Windows, and the evaluator has no platform check. The source review found only an Apple certificate-delivery path, leaving Windows consumption unverified. Searches covered conditional-access routes, Windows profile handlers, and platform checks.
 
-**E10** CAP-254, Windows. Whether a bypass granted to a Windows host can actually be consumed. Granting one is platform-blind: the grant tests only that bypass is enabled for the deployment, and the record is written against the host with no platform consulted. Consuming it happens inside the identity-provider flow, which a host reaches only over the client certificate the row above leaves unsettled, so the two questions turn on the same missing piece. Searched: the grant operation and its enabled check; the consume operation and the branch that decides whether a host is let through; and every occurrence of platform inside the conditional-access package, which yields only the filter that passes a host's platform to policy selection and the same value carried on the request. No platform test and no refusal were found in either direction, and no second certificate route exists. There is no branch to state, so this is unsettled rather than conditional.
+**E10** CAP-254, Windows. A bypass grant can be stored without a platform check, but consuming it depends on the unresolved Windows certificate path in E09. The review covered the grant, enabled check, consume logic, and platform references in conditional access. No additional delivery path or explicit refusal was found.
 
-**E11** CAP-285, Windows. Whether changing the address everything uses to reach Fleet re-points an already-enrolled Windows host, or is refused. Neither was found. Searched: the address-changed signal in the settings handler, which has one use and feeds only the Apple re-sync; and the server address across the whole Windows MDM package. Absence of a path is not evidence of a boundary.
+**E11** CAP-285, Windows. Repointing an enrolled Windows host after a server-address change is unverified. The settings-change signal feeds Apple re-sync; searches of that handler and Windows MDM found neither a Windows repoint path nor an explicit refusal.
 
-**E12** CAP-285, Linux. The same question for Linux, where the agent's server address comes from packaging. No re-point path and no refusal were found. Searched: the server address across the agent enrollment handler and the whole agent tree.
+**E12** CAP-285, Linux. Automatic repointing after a server-address change is unverified. The packaged agent supplies its address. Searches of the enrollment handler and agent tree found no repoint path or explicit refusal.
 
-**E13** CAP-310, ChromeOS. Whether the extension pins a certificate, and so whether rotating Fleet's own certificate disconnects Chromebooks. No pinning option was found. Searched: certificate, authority, pin and transport security across the extension source. The extension makes ordinary web requests, so the browser's trust store presumably applies, but there is no positive evidence for that, which makes it unsettled rather than supported.
+**E13** CAP-310, ChromeOS. The extension's behavior after server-certificate rotation is unverified. Searches for certificates, authority, pinning, and transport security found no pinning option. Ordinary browser requests suggest browser trust handling, but the review did not establish that behavior directly.
 
-**E14** CAP-341b, Windows. Whether the diagnostic archive a Windows device produces can be retrieved through Fleet. Fleet stores and returns the raw result the device sends rather than only a status code, so the storage side is not the obstacle, and the collection is triggered as an ordinary raw Windows command. What is unsettled is whether the archive definition returns its data inside that result or uploads it to an address the operator supplies, which is a question about Microsoft's protocol rather than about Fleet. Searched, and finished: Fleet's whole tree for the diagnostic-log configuration provider under every name it goes by, across the server, the web interface and the client, with no occurrence of any of them; the Windows command result store, which carries the raw result segment alongside the status code; and Fleet's command surface for any parsing, result handler, interface or command specific to that collection, of which there are none. **Fleet's source settles its own half of the question and cannot settle the other**, and no vendor reference carrying a version was available, which is why this stays unsettled rather than becoming a refusal.
+**E14** CAP-341b, Windows. Fleet can trigger the diagnostic collection as a raw command and store its raw result. The unresolved question is whether Microsoft's collection protocol returns the archive in that result or uploads it to a supplied destination.
 
-**E15** CAP-076, ChromeOS. Whether osquery runtime options set for a fleet reach a Chromebook. Nothing settles it. Fleet's server applies no platform test anywhere on the path: the validator accepts a ChromeOS platform override and checks it against the same schema it uses for every other platform, and the configuration endpoint serves whichever override matches the host's platform without a platform branch. The extension simply never asks: it requests enrollment and exchanges live-query work, and its collection interval is fixed in the extension rather than read from configuration. That is acceptance on one side and absence on the other, which is not a boundary. Fleet's own host details page states that Chromebooks ignore agent options and shows two of the three runtime options it surfaces as not supported, but that is a display declaration with nothing behind it: no server code reads it and no request is refused because of it. It is the closest thing to a boundary in the product and it is still not one. Searched: ChromeOS and Chromebook across the agent-options validator, its generated schema and its tests, which never mention either; the platform-override map, which is untyped, accepts any platform name and validates a ChromeOS block against the same schema as any other; the configuration endpoint and the per-host options lookup, neither of which branches on platform; the extension's whole source and its managed-policy schema; and each feature's own name crossed with ChromeOS across the server, the extension, the interface and Fleet's own configuration reference. No rejection, no error arm and no allow-list was found in either direction.
+The review covered Fleet's server, UI, and CLI for diagnostic-log providers, result storage, and collection-specific handling. No such parser or retrieval interface was found. A versioned Microsoft protocol reference is needed to settle the archive-delivery behavior.
 
-**E16** CAP-078, ChromeOS. Whether file integrity monitoring reaches a Chromebook. Follows the agent-options question above, on the same evidence and for the same reason: the feature is delivered as part of the agent options, it sits in the shared schema with no platform predicate of its own, the server would serve it to a Chromebook that asked, and the extension never asks. Searched as for the row above, and again for this feature's own name crossed with ChromeOS across the server, the extension and the interface, with no hit in either direction.
+**E15** CAP-076, ChromeOS. Agent-option delivery remains unverified. The shared server validator and configuration endpoint accept ChromeOS options, while the reviewed extension uses enrollment and live-query endpoints without fetching configuration. Its collection interval is fixed locally.
 
-**E17** CAP-079, ChromeOS. Whether YARA signature-set scanning reaches a Chromebook. Follows the agent-options question above, on the same evidence and for the same reason: the feature is delivered as part of the agent options, it sits in the shared schema with no platform predicate of its own, the server would serve it to a Chromebook that asked, and the extension never asks. Searched as for the row above, and again for this feature's own name crossed with ChromeOS across the server, the extension and the interface, with no hit in either direction.
+The UI says Chromebooks ignore agent options, but the review found no server rejection implementing that label. Searches covered validation, schema, platform overrides, configuration lookup, the extension and managed-policy schema, UI, and configuration reference.
 
-**E18** CAP-080, ChromeOS. Whether the provenance columns stamped on results reach a Chromebook. Follows the agent-options question above, on the same evidence and for the same reason: the feature is delivered as part of the agent options, it sits in the shared schema with no platform predicate of its own, the server would serve it to a Chromebook that asked, and the extension never asks. Searched as for the row above, and again for this feature's own name crossed with ChromeOS across the server, the extension and the interface, with no hit in either direction.
+**E16** CAP-078, ChromeOS. File integrity monitoring depends on the unresolved agent-options path in E15. The shared schema accepts it without a platform check, but the extension does not request those options. Feature-specific ChromeOS searches across the server, extension, and UI found no additional support or rejection.
 
-**E19** CAP-081, ChromeOS. Whether turning individual event subscribers on or off reaches a Chromebook. Follows the agent-options question above, on the same evidence and for the same reason: the feature is delivered as part of the agent options, it sits in the shared schema with no platform predicate of its own, the server would serve it to a Chromebook that asked, and the extension never asks. Searched as for the row above, and again for this feature's own name crossed with ChromeOS across the server, the extension and the interface, with no hit in either direction.
+**E17** CAP-079, ChromeOS. YARA scanning depends on E15's unresolved agent-options delivery. The shared schema has no platform restriction, and the extension does not fetch it. YARA/ChromeOS searches across the server, extension, and UI found no additional path or rejection.
 
-**E20** CAP-086, ChromeOS. Whether turning a SQLite file on the device into a queryable table reaches a Chromebook. Follows the agent-options question above, on the same evidence and for the same reason: the feature is delivered as part of the agent options, it sits in the shared schema with no platform predicate of its own, the server would serve it to a Chromebook that asked, and the extension never asks. Searched as for the row above, and again for this feature's own name crossed with ChromeOS across the server, the extension and the interface, with no hit in either direction.
+**E18** CAP-080, ChromeOS. Result provenance columns depend on E15's unresolved agent-options delivery. The shared schema accepts the configuration; searches for this feature with ChromeOS across the server, extension, and UI found no consumer or explicit restriction.
 
-**E21** CAP-091, Android. Whether asking a host to report again now reaches an Android device. Fleet accepts the request for any platform, records that a refetch was asked for, and returns success. The extra work it does for iPhone and iPad sits inside a branch naming only those two platforms, and the source carries an open question about whether Android should be added to it rather than a decision to leave Android out. Nothing refuses the request. Searched: the refetch operation and the whole of its body; the consumers of the refetch flag, which are the agent's own result submission and the Apple management path, neither of which an Android host uses; and the Android service tree for any refetch handling of its own. No rejection, no error arm and no allow-list was found in either direction, and no Android consumer of the flag was found either.
+**E19** CAP-081, ChromeOS. Event-subscriber settings depend on the agent-options behavior in E15. They are accepted by the shared schema, but the extension does not fetch them. Feature-specific searches across the server, extension, and UI found no other support or refusal path.
 
-**E32** CAP-131, iOS/iPadOS. Whether Fleet's catalogue can offer an application for iPhone and iPad. The catalogue is not Fleet's to bound. Fleet fetches the list from an address outside the deployment, falling back to the project's own main line of development when the first address does not answer, and each entry's platform is an unrestricted string. Ingestion copies that string onto the stored entry with no validation and no allow-list, and the operation that lists the catalogue applies a platform test only when the caller asks to filter by macOS or Windows, leaving any other value unfiltered. What names two platforms is a comment in Fleet's own source describing that filter, and a comment is a description rather than enforcement. Searched: the fetch and both of its addresses; the shape of a list entry and the type of its platform field; the ingestion that writes entries; the listing operation, its options and its filter; and each platform name crossed with the catalogue across the server. No rejection, no error arm and no allow-list was found in either direction, and no catalogue entry for this platform exists to test.
+**E20** CAP-086, ChromeOS. SQLite table construction follows E15's unresolved agent-options path. The shared schema accepts it, and the extension does not request it. Searches across the server, extension, and UI found no additional ChromeOS-specific behavior.
 
-**E33** CAP-131, Linux. Follows the catalogue question above, on the same evidence and for the same reason: an unrestricted platform string arriving from outside the deployment, copied without validation and listed without a platform limit. Searched as for the row above, and again for Linux crossed with the catalogue across the server, with no hit in either direction.
+**E21** CAP-091, Android. Fleet accepts refetch and sets the generic request flag, but the reviewed Android service has no consumer for it. The additional MDM refetch branch names iOS/iPadOS and contains an open question about Android. Searches covered the full refetch handler, flag consumers, and Android service. With no explicit Android refusal found, the cell remains unverified.
 
-**E34** CAP-131, Android. Follows the catalogue question above, on the same evidence and for the same reason. Searched as for the rows above, and again for Android crossed with the catalogue across the server, with no hit in either direction.
+**E32** CAP-131, iOS/iPadOS. The maintained-app catalog comes from an external list, with a fallback to the project's development branch. Its platform field is unrestricted; ingestion copies it, and listing filters only when macOS or Windows is requested.
 
-**E35** CAP-131, ChromeOS. Follows the catalogue question above, on the same evidence and for the same reason. Searched as for the rows above, and again for ChromeOS crossed with the catalogue across the server, with no hit in either direction.
+The review covered fetch addresses, entry types, ingestion, listing options, and platform references. It found no iOS/iPadOS rejection or entry to test, leaving catalog availability unverified.
 
-**E41** CAP-169, Linux. Whether Fleet's catalogue can deliver a Linux application. Ingestion accepts whatever platform the remote catalogue names, adding an application copies that platform straight into the installer, and installing accepts a host whose platform matches the stored installer, so **a Linux entry with a Linux installer meets no boundary anywhere in Fleet**. What is missing is the other half: the catalogue is external and mutable, so nothing in this release establishes that such an entry exists. Searched: ingestion, the add path, the install platform check, and every platform mention in the maintained-application package. The two named platforms appear only in a description.
+**E33** CAP-131, Linux. Catalog availability is unverified for the reasons in E32. Linux-specific searches across the catalog code found no additional entry or enforced restriction.
 
-**E42** CAP-281, licence. Whether binding Fleet to an Android Enterprise works on Free. Nothing in Fleet gates the operation by licence. **The binding is completed by an external proxy, which Fleet hands the licence key**, and Fleet reduces any refusal from it to a status code, so the decision is made somewhere this release cannot see. Searched: the signup path, the proxy client, and every licence test in the Android package.
+**E34** CAP-131, Android. Catalog availability is unverified on the evidence in E32 and an additional search for Android-specific catalog handling.
 
-**E40** CAP-189, Android. Whether Fleet prepares an Android device before its user starts using it in the sense this row names: a hold, progress the person can see, and an ordered set of steps. Fleet treats Android as a setup-experience platform rather than refusing it. Android is on the list of platforms the setup experience accepts, the operation that chooses which software runs at setup accepts an Android scope and stores it, and Fleet queues its own Android setup work and records how each item finished. What is missing is all three of the things the row names, and the only statement that they are missing is a note in Fleet's own source, which is a description rather than enforcement. The step-by-step engine is reached only over the agent's own endpoints, and an Android device has no agent to call them, which is absence rather than a boundary. Searched: the list of platforms the setup experience accepts; the software-selection operation and each of its platform branches; the step-by-step engine and every caller of it; the Android management path for any setup handling of its own; and Android crossed with hold, progress and ordering across the server. No rejection, no error arm and no allow-list was found in either direction. What Fleet does do on Android, delivering applications through the enrollment policy, is CAP-197 and is answered there.
+**E35** CAP-131, ChromeOS. Catalog availability is unverified on the evidence in E32 and an additional search for ChromeOS-specific catalog handling.
 
-## One row that is not a Fleet capability
+**E41** CAP-169, Linux. Fleet's ingestion and install paths would accept a Linux catalog entry with a matching installer and host platform. Whether the external catalog supplies that entry is unverified. The review covered ingestion, adding an app, install-platform checks, and platform references in maintained-app code.
 
-**CAP-342, collect a sysdiagnose from an iPhone or iPad.** This row is not in the matrix, and it is not server-side either. Fleet neither triggers nor retrieves a sysdiagnose on any platform. The Apple command set Fleet implements is a closed list of eighteen request types, none of which collects a log or an archive; the four diagnostic-log recipes Fleet documents are all Windows; and there is no agent and no script execution on iPhone or iPad. On those devices the artefact does exist, and the person holding the phone produces it through iOS itself. That is a fact about Apple's platform rather than about Fleet, so it cannot honestly be written as a Fleet capability cell in either direction.
+**E42** CAP-281, license. Android Enterprise binding on Free is unverified. Fleet's signup handler has no local license check, but sends the key to the external proxy that completes binding. The review covered signup, the proxy client, and Android license checks; the proxy's decision remains outside the reviewed source.
 
-## One row merged into another
+**E40** CAP-189, Android. Fleet accepts Android setup-software selection, queues work, and records results. The source review did not establish a device hold, visible progress, or ordered setup steps for Android. Those steps use agent endpoints that Android devices do not call.
 
-**CAP-048, enroll a personally owned iPhone or iPad,** has no row of its own here on purpose. On the platform axis it is the iPhone and iPad case of enrolling a personally owned device from a link, which the matrix already carries as one cross-platform row (CAP-029). [a.5](a.5-interface-index.md) keeps CAP-048 as a separate row because the interface answer differs; this projection folds it in because the platform answer does not.
+Searches covered accepted platforms, software selection, the setup engine and callers, Android management, and hold/progress/ordering behavior. No explicit refusal was found. App delivery through the enrollment policy is established separately in CAP-197.
+
+<a id="one-row-that-is-not-a-fleet-capability"></a>
+
+## Device diagnostics collected outside Fleet
+
+**CAP-342, collect a sysdiagnose from an iPhone or iPad.** The person holding the device collects this through iOS/iPadOS. Fleet neither triggers nor retrieves it: its eighteen-type Apple command list has no collection operation, and these devices have no fleetd script path. Fleet's four documented diagnostic-log recipes are for Windows. This task therefore sits outside the Fleet capability matrix.
+
+<a id="one-row-merged-into-another"></a>
+
+## Combined enrollment row
+
+**CAP-048, enroll a personally owned iPhone or iPad,** is included in the cross-platform CAP-029 row here. [a.5](a.5-interface-index.md) retains it separately because its interface result differs.
 
 
 ## Version notes
 
-![Reference](../_assets/icons/reference-light.svg) Verified against Fleet 4.90.0. Every cell was read from source at that tag. **Fleet's own documentation was used to find things and never as evidence for a cell**, because this project has confirmed it wrong at this release in four separate ways, including an operating-system floor Fleet documents that nothing implements ([a.6](a.6-glossary-and-release-compatibility.md)).
+![Reference](../_assets/icons/reference-light.svg) The baseline matrix was reviewed against Fleet 4.90.0 source. Documentation helped locate relevant code; cells follow the implementation evidence, including differences from published guidance noted in [a.6](a.6-glossary-and-release-compatibility.md).
 
-**Read `Unsupported` as a positive boundary and `Not established` as an unresolved one. Re-check either value when upgrading, especially where a platform accepts configuration but exposes no delivery path.** `Unsupported` marks a platform where Fleet enforces a real boundary against the operation; `Not established` marks a row where no delivery mechanism was found but no boundary blocks one either; `Not applicable` marks a row whose subject does not exist on the platform at all. A cell reading `Unsupported` where Fleet in fact accepts the request and the device simply never asks for it belongs in `Not established`, not `Unsupported`.
+Recheck `Unsupported` and `Not established` when upgrading. An explicit platform restriction supports the former; an unresolved delivery path without such a restriction supports the latter. `Not applicable` describes a subject without a platform equivalent.
 
-**A refusal can guard a different operation than the one a cell is checking, and that mistake is easy to carry into a cell.** For example, the filter that governs which platform you may name when *listing* saved Chromebook reports says nothing about *creating* or *delivering* one: Fleet's write path accepts ChromeOS as a report platform outright, so a listing refusal is not evidence that ChromeOS reporting is unsupported.
+Match each restriction to the exact operation in its row. A platform filter for listing reports, for example, does not establish whether Fleet accepts that platform when creating or delivering a report.
 
-**Checking which operation a refusal guards is part of the work rather than a refinement of it**, and it is the most expensive check to skip, because a sweep that skips it still reports itself as coverage.
+The condition and evidence records preserve those operation-specific distinctions for later reviews.
 
-**The catalogue rows were corrected twice, in opposite directions, and both corrections are worth knowing.** They had been left `Unsupported` with a note admitting the answer rested on Fleet describing its catalogue as covering two platforms rather than on anything enforcing it. A description is not a boundary. The search that was owed found that Fleet takes the catalogue from a list held outside the deployment, accepts whatever platform that list names, and applies no platform limit when it shows you what is in it, so those cells became `Not established`.
+Catalog availability remains `Not established` where the source accepts an external platform value but the reviewed catalog provides no entry to test. A description naming two platforms does not impose a code-level restriction.
 
-**Then one row went too far the other way.** Holding a catalogue application at a version was swept along with its neighbours, when the operation is **provably platform-blind once the row's own prerequisite holds**: with a cached version in hand, Fleet checks that the title is one of its own maintained applications and nothing else, then changes which installer is active. That row reads `Supported` on all six platforms. **A wrong `Not established` is a failure in the same way a wrong `Unsupported` is**, because it sends a reader to establish something this release already settles.
+Version pinning of an existing catalog app is different: once a cached version meets the row's prerequisite, the operation changes the active installer without a platform check. That row therefore remains `Supported` across all six columns.
