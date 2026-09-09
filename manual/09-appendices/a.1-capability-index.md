@@ -3,9 +3,9 @@ title: "Capability index"
 chapter: "Appendices and indexes"
 section: "A.1"
 sidebar_position: 1
-verified_against: Fleet 4.90.0
-verified_on: 2026-09-03
-verified_source: "drafted against fleet-v4.90.0 (7c428c6e46) from a pass over all 364 rows of the shared capability register (360 in the original pass, plus four amendments below). Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Amended 2026-09-02 (round4 RB3): CAP-003's `fpsso` search term was misrouted to 2.5's Fleet-console JIT provisioning; `fpsso` is Fleet's own settings-search term for the unrelated Platform SSO account-provisioning and password-sync feature, which had no capability row at all. Removed from CAP-003, added as the new CAP-372, routed to 5.5. Amended again 2026-09-02 (round4 RM9): added CAP-373, requiring ACME/Managed Device Attestation for eligible Macs' identity certificates, routed to 2.10; verified against `appconfig.go`, `apple_mdm.go` (`isMDMAppleACMERequired`, `RenewSCEPCertificates`, `maybeQueueCertificateListForACMEProfile`) and the frontend's `HostLifecycleSection.tsx` at the tag. Amended again 2026-09-03 (round4 RM17): CAP-370 (turning MDM off for one host) and CAP-371 (Fleet's own FileVault-key repair) already existed in this register with no owning chapter; gave both formal rows now that 5.7 and 5.8 teach them, verified against `server/service/mdm.go` (`UnenrollMDM`), `server/mdm/android/service/service.go` (`UnenrollAndroidHost`), `cmd/fleet/cron.go` (`verifyDiskEncryptionKeys`) and `server/service/orbit.go` (`setDiskEncryptionNotifications`) at the tag. Amended again 2026-09-03 (round6 M16): the host display name template, now taught in 5.2, joined the no-capability-row register (five outcomes to six); it keeps no formal CAP row, so the 364-row count above is unchanged. Amended again 2026-09-03 (round6 M17): the Apple DDM declaration asset, now taught in 5.2, joined the no-capability-row register (six outcomes to seven); it keeps no formal CAP row, so the 364-row count above is unchanged. Amended again 2026-09-04 (round8 MJ-H): first-run setup, taught in 2.2 and gated by SetupRequired in the Fleet server at the tag, joined the no-capability-row register (seven outcomes to eight) and gained subject-index routing in a.10; it keeps no formal CAP row, so the 364-row count above is unchanged. Amended again 2026-09-05 (round11 D-COMP3): resending a certificate to a host, now taught in 5.2 and verified against `resendHostCertificateTemplateEndpoint`/`ResendHostCertificateTemplate` at the tag (rejects only a pending template, resets for a single further attempt, records a `resent_certificate` activity, shares the `mdm_config_profile · resend` permission), joined the no-capability-row register (eight outcomes to nine) and gained subject-index routing in a.10; it keeps no formal CAP row, so the 364-row count above is unchanged. Amended again 2026-09-05 (round11 D-COMP4): listing the API endpoint catalogue, now taught in a.8 and verified against `listAPIEndpointsEndpoint`/`ListAPIEndpoints` at the tag (`GET /api/v1/fleet/rest_api`, Premium only with Free returning the missing-license error, authorized for global or team admins, response wrapped in `api_endpoints`), joined the no-capability-row register (nine outcomes to ten) and gained subject-index routing in a.10; it carries its own `api_endpoint · read` permission already recorded in a.4 but keeps no formal CAP row, so the 364-row count above is unchanged. This is deliberately handled the same way as D-COMP3 above rather than as a formal CAP: a formal row would couple a.1's count to a new a.2 platform-matrix entry and an a.5 interface row plus a.5's recomputed interface tallies, and the honest state is that the outcome is taught but unrowed. Citation ledger at research/section-notes/a.1-notes.md"
+verified_against: Fleet 4.91.0
+verified_on: 2026-09-08
+verified_source: "drafted against fleet-v4.90.0 (7c428c6e46) from a pass over all 383 rows of the shared capability register (360 in the original pass, plus the amendments below). Every word in the index was read somewhere it can be met: Fleet's source at the tag, Fleet's own published documentation at the same tag, or this manual. None was invented. Amended 2026-09-02 (round4 RB3): CAP-003's `fpsso` search term was misrouted to 2.5's Fleet-console JIT provisioning; `fpsso` is Fleet's own settings-search term for the unrelated Platform SSO account-provisioning and password-sync feature, which had no capability row at all. Removed from CAP-003, added as the new CAP-372, routed to 5.5. Amended again 2026-09-02 (round4 RM9): added CAP-373, requiring ACME/Managed Device Attestation for eligible Macs' identity certificates, routed to 2.10; verified against `appconfig.go`, `apple_mdm.go` (`isMDMAppleACMERequired`, `RenewSCEPCertificates`, `maybeQueueCertificateListForACMEProfile`) and the frontend's `HostLifecycleSection.tsx` at the tag. Amended again 2026-09-03 (round4 RM17): CAP-370 (turning MDM off for one host) and CAP-371 (Fleet's own FileVault-key repair) already existed in this register with no owning chapter; gave both formal rows now that 5.7 and 5.8 teach them, verified against `server/service/mdm.go` (`UnenrollMDM`), `server/mdm/android/service/service.go` (`UnenrollAndroidHost`), `cmd/fleet/cron.go` (`verifyDiskEncryptionKeys`) and `server/service/orbit.go` (`setDiskEncryptionNotifications`) at the tag. Amended again 2026-09-03 (round6 M16): the host display name template, now taught in 5.2, joined the no-capability-row register (five outcomes to six); it keeps no formal CAP row, so the 364-row count above is unchanged. Amended again 2026-09-03 (round6 M17): the Apple DDM declaration asset, now taught in 5.2, joined the no-capability-row register (six outcomes to seven); it keeps no formal CAP row, so the 364-row count above is unchanged. Amended again 2026-09-04 (round8 MJ-H): first-run setup, taught in 2.2 and gated by SetupRequired in the Fleet server at the tag, joined the no-capability-row register (seven outcomes to eight) and gained subject-index routing in a.10; it keeps no formal CAP row, so the 364-row count above is unchanged. Amended again 2026-09-05 (round11 D-COMP3): resending a certificate to a host, now taught in 5.2 and verified against `resendHostCertificateTemplateEndpoint`/`ResendHostCertificateTemplate` at the tag (rejects only a pending template, resets for a single further attempt, records a `resent_certificate` activity, shares the `mdm_config_profile · resend` permission), joined the no-capability-row register (eight outcomes to nine) and gained subject-index routing in a.10; it keeps no formal CAP row, so the 364-row count above is unchanged. Amended again 2026-09-05 (round11 D-COMP4): listing the API endpoint catalogue, now taught in a.8 and verified against `listAPIEndpointsEndpoint`/`ListAPIEndpoints` at the tag (`GET /api/v1/fleet/rest_api`, Premium only with Free returning the missing-license error, authorized for global or team admins, response wrapped in `api_endpoints`), joined the no-capability-row register (nine outcomes to ten) and gained subject-index routing in a.10; it carries its own `api_endpoint · read` permission already recorded in a.4 but keeps no formal CAP row, so the 364-row count above is unchanged. This is deliberately handled the same way as D-COMP3 above rather than as a formal CAP: a formal row would couple a.1's count to a new a.2 platform-matrix entry and an a.5 interface row plus a.5's recomputed interface tallies, and the honest state is that the outcome is taught but unrowed. Extended 2026-09-08 for Fleet 4.91.0 (overnight campaign step 3), verified at tag fleet-v4.91.0 (35fc1c0244): nineteen formal rows added for the release's new outcomes, CAP-374 to CAP-385 and CAP-387 to CAP-393, taking the register from 364 rows to 383. CAP-386 and CAP-394 were drafted and then dropped rather than kept as thin rows: nested identity-provider group resolution is the group half of CAP-292's outcome, and software excluded from vulnerability matching is why CAP-124's list comes back empty, so both became attested words on those rows instead. CAP-355 to CAP-360 stay retired and were not reused. Every new row's attested words were read at that tag rather than taken from the release notes: `windows_settings.enable_managed_local_account` and `ManagedLocalAccountUsername` in `server/fleet/managed_local_account.go` and `ee/server/service/teams.go`; `mdm.windows_automatic_enrollment.default_fleet` and `edited_windows_enrollment_default_fleet` in `server/fleet/app.go` and `server/service/appconfig.go`; `AppleOSUpdateLatestVersion` and `deadline_days` in `server/fleet/app.go`; `host_activities_webhook` in `server/fleet/teams.go`; `patch_when_closed` in `server/fleet/api_policies.go` and `server/fleet/policies.go`; `FleetVarsSupportedInScripts` (eight names) and `ExitCodeFleetVarResolutionFailed` (-5) in `server/fleet/script_variables.go` and `server/fleet/scripts.go`; the `adobe_plugins` table and its `Plugin (Adobe)` label in `orbit/pkg/table/adobe_plugins/` and `frontend/interfaces/software.ts`, with its vulnerability exclusion in `server/vulnerabilities/nvd/cpe.go`; `hardware_marketing_name` in `server/fleet/hostresponse.go` and `HardwareMarketingName` in `server/fleet/hosts.go`; `released_from_ab` in `server/fleet/activities.go`; `s3.software_installers_signed_url` and its three boot-time checks in `server/config/config.go`; `$FLEET_HOST_VITAL_<id>` in `server/fleet/name_template.go` and `server/mdm/android/service/profiles.go`; the SCIM recursive group walk in `server/datastore/mysql/scim.go`; `ValidLabelPlatformVariants` including `linux` in `server/fleet/labels.go`; `--bypass-end-user-auth` and `ORBIT_BYPASS_END_USER_AUTH` in `cmd/fleetctl/fleetctl/package.go` and `orbit/pkg/packaging/`; `mdm.allow_orbit_end_user_auth_bypass` in `server/config/config.go` and `server/service/orbit.go`; `token_invalid` in `server/fleet/mdm.go` and `dep_device_error` in `server/service/hosts.go`; `user_mfa_requested`, `created_setup_experience_script` and `deleted_setup_experience_script` in `server/fleet/activities.go`; and `last_enrolled_at` as a sort key in `server/datastore/mysql/hosts.go`. Six existing rows gained 4.91 words rather than a duplicate row, because the outcome was already registered: CAP-292 (nested Entra groups, the recursive walk in `server/datastore/mysql/scim.go`), CAP-124 (`adobe_plugins` in `ExcludedSources`, `server/vulnerabilities/nvd/cpe.go`), CAP-016 (the `mdm_enrolled` activity now carries `host_id` and `host_serial` and reaches the host timeline, `server/fleet/activities.go`), CAP-083 (the sortable Added to Fleet column), CAP-123 (software inventory per fleet over `PATCH /fleet/fleets/{id}`, `ee/server/service/teams.go`) and CAP-187 (a pointer to CAP-384). The 'still accepted at 4.90.0' stamps in 'How to read a row' and in the older-names section are deliberately left at 4.90.0: this pass added rows and did not re-verify the deprecated-name surface. Citation ledger at research/section-notes/a.1-notes.md"
 further_reading:
   - https://fleetdm.com/docs/get-started/faq
 feature_requests:
@@ -24,7 +24,7 @@ That distance is the appendix. A row earns its place when the words in its last 
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) 364 outcomes in eight groups, each with one canonical chapter, and the attested words that lead to it: Fleet's older names that still work, the vendors' names, the strings Fleet prints on screen, and the terms this manual coined. Group 8 also carries the sentences people arrive with when something has already gone wrong. The last section says where the index stops.
+![Reference](../_assets/icons/reference.svg) 383 outcomes in eight groups, each with one canonical chapter, and the attested words that lead to it: Fleet's older names that still work, the vendors' names, the strings Fleet prints on screen, and the terms this manual coined. Group 8 also carries the sentences people arrive with when something has already gone wrong. The last section says where the index stops.
 
 **What is not here.** Whether your platform can do it is [a.2](a.2-platform-capability-matrix.md). Which role may do it is [a.4](a.4-roles-and-permissions-matrix.md). Which interface can do it is [a.5](a.5-interface-index.md). Which configuration authority owns a key you find here, and what wins when two disagree, is [a.3](a.3-configuration-model-and-precedence.md). What a route requires is [a.8](a.8-api-action-and-endpoint-reference.md), and what a `fleetctl` command asks Fleet to do is [a.7](a.7-fleetctl-command-reference.md). What a word means is [a.6](a.6-glossary-and-release-compatibility.md), which owns meaning while this index owns routing. How to do the thing is the chapter each row names. This appendix answers where, and makes no claim about capability, licence or procedure.
 
@@ -34,7 +34,7 @@ That distance is the appendix. A row earns its place when the words in its last 
 
 | Column | What it holds |
 |---|---|
-| **ID** | The shared capability identifier. Use it to find the same capability in [a.2](a.2-platform-capability-matrix.md) and [a.5](a.5-interface-index.md). [a.5](a.5-interface-index.md) carries one row per ID, with two it sets aside: CAP-354 (connecting an AI assistant), which it excludes as a client of the REST API rather than an interface of its own, and CAP-371 (Fleet's repair of an undecryptable FileVault key), which no operator interface invokes and which it lists in its self-initiation table instead. [a.2](a.2-platform-capability-matrix.md) carries nearly the same set, with two differences: it splits a few outcomes into lettered sub-rows (CAP-244a and its siblings, CAP-341a and its sibling) where the parts of one outcome answer differently by platform, so an ID can land you on more than one row there, and it carries three Chromebook IDs (CAP-367, CAP-368 and CAP-369) that this index holds only in its no-row list below rather than as index rows. [a.4](a.4-roles-and-permissions-matrix.md) is coarser again: its 152 administrator intents are a coarser grouping than this index's 364 outcomes, so no row-for-row ID exists there |
+| **ID** | The shared capability identifier. Use it to find the same capability in [a.2](a.2-platform-capability-matrix.md) and [a.5](a.5-interface-index.md). [a.5](a.5-interface-index.md) carries one row per ID, with two it sets aside: CAP-354 (connecting an AI assistant), which it excludes as a client of the REST API rather than an interface of its own, and CAP-371 (Fleet's repair of an undecryptable FileVault key), which no operator interface invokes and which it lists in its self-initiation table instead. [a.2](a.2-platform-capability-matrix.md) carries nearly the same set, with two differences: it splits a few outcomes into lettered sub-rows (CAP-244a and its siblings, CAP-341a and its sibling) where the parts of one outcome answer differently by platform, so an ID can land you on more than one row there, and it carries three Chromebook IDs (CAP-367, CAP-368 and CAP-369) that this index holds only in its no-row list below rather than as index rows. [a.4](a.4-roles-and-permissions-matrix.md) is coarser again: its 152 administrator intents are a coarser grouping than this index's 383 outcomes, so no row-for-row ID exists there |
 | **What you are trying to do** | The outcome in the words somebody would use for it, rather than the words the chapter uses |
 | **Chapter** | The one section that teaches this outcome. `None` means no chapter does, and those rows are collected at the end |
 | **Also** | Sections carrying part of the answer, as plain numbers, because the linked chapter is the one to open first |
@@ -55,11 +55,11 @@ Six markers, and each changes what you do with the word next to it.
 
 ## The index
 
-![Reference](../_assets/icons/reference.svg) 364 outcomes. Find the row by the words you would type, then open the linked chapter.
+![Reference](../_assets/icons/reference.svg) 383 outcomes. Find the row by the words you would type, then open the linked chapter.
 
 ### 1. Access and accountability
 
-**Who can use Fleet, how they prove it, and what is recorded.** 32 outcomes, cutting across Parts I, II and VII.
+**Who can use Fleet, how they prove it, and what is recorded.** 34 outcomes, cutting across Parts I, II and VII.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -78,7 +78,7 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-013** | Add or remove a fleet's members | [1.4](../01-foundations/1.4-identity-and-roles.md) | 2.6 | team member (still accepted) · `/fleet/teams/{id}/users` (still accepted) · add users to fleet |
 | **CAP-014** | Make the interface read-only | [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md) | 6.2 | GitOps mode · change management · lock the interface · workflow · `enabled_gitops_mode` |
 | **CAP-015** | Find out who changed something | [1.5](../01-foundations/1.5-audit-and-activity.md) | 2.8, 8.12 | audit log · activity feed · who did that · `activities` (clash) · `activity_past` · [a.6] |
-| **CAP-016** | Read one host's history | [1.5](../01-foundations/1.5-audit-and-activity.md) | 8.12 | host timeline · past activity |
+| **CAP-016** | Read one host's history | [1.5](../01-foundations/1.5-audit-and-activity.md) | 8.12 | host timeline · past activity · `mdm_enrolled` · enrollment on the host timeline |
 | **CAP-017** | See what is queued for a host | [1.5](../01-foundations/1.5-audit-and-activity.md) | 5.1, 8.6 | upcoming activity · pending work · queued · [a.6] |
 | **CAP-018** | Push every activity to a webhook | [1.5](../01-foundations/1.5-audit-and-activity.md) | 6.5, 2.8 | activity automations · `enabled_activity_automations` · Manage automations |
 | **CAP-019** | Stream the audit record to a SIEM | [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md) | 1.5 | audit log destination · external activity audit logging · Splunk · Firehose · Kinesis · Lambda · Pub/Sub · Kafka · log destinations |
@@ -89,16 +89,18 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-024** | Prove nobody read a secret without permission | [1.5](../01-foundations/1.5-audit-and-activity.md) | 5.8 | `read_host_disk_encryption_key` · `viewed_host_recovery_lock_password` · `read_managed_local_account` |
 | **CAP-290** | Set roles from the identity provider | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 2.6 | role sync · SAML role attribute · `FLEET_JIT_USER_ROLE_TEAM_<id>` (still accepted) · `FLEET_JIT_USER_ROLE_FLEET_<id>` · customization of user roles |
 | **CAP-291** | Keep a way in when the identity provider is down | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 2.6 | break-glass account (ours) |
-| **CAP-292** | Put the end user's name on the host record | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 4.1 | human-device mapping · foreign host vitals · User mapping · `identity-provider` (clash) · Okta · Entra · Azure AD (vendor) · LDAP (vendor) |
+| **CAP-292** | Put the end user's name on the host record | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 4.1 | human-device mapping · foreign host vitals · User mapping · `identity-provider` (clash) · Okta · Entra · Azure AD (vendor) · LDAP (vendor) · nested groups · nested group in Entra (vendor) · a label on the parent group does not match |
 | **CAP-293** | Set a host's user by hand | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 4.1 | `edited_host_idp_data` |
 | **CAP-294** | Check the identity provider connection | [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) | 8.13 | No IdP connected · identity provider details |
 | **CAP-297** | Rotate an API token | [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) | 7.6 | revoke the authorization tokens for a user · **(no)** |
 | **CAP-298** | Remove a person, or demote an administrator | [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) | 1.4 | `deleted_user` · `deleted_user_global_role` · last admin |
 | **CAP-313** | Run an access review | [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md) | 2.6 | who has admin · least privilege · last token use · **(no)** |
+| **CAP-391** | Detect a valid password used against an account with a second factor | [8.12](../08-troubleshooting/8.12-audit-logs.md) | 1.5, 2.6 | `user_mfa_requested` · MFA verification email sent · a correct password with no sign-in · no completion activity |
+| **CAP-392** | Find out who changed the setup experience script | [8.12](../08-troubleshooting/8.12-audit-logs.md) | 5.5, 1.5 | `created_setup_experience_script` · `deleted_setup_experience_script` · replacing a setup script writes a create · `fleet_id` and `fleet_name` in the payload · an identical upload writes nothing |
 
 ### 2. Connecting devices
 
-**Getting a device enrolled, and the platform connections that must exist first.** 68 outcomes. The credentials that make these connections work are in group 7, because you meet them again at renewal.
+**Getting a device enrolled, and the platform connections that must exist first.** 72 outcomes. The credentials that make these connections work are in group 7, because you meet them again at renewal.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -170,10 +172,14 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-282** | Deliver certificates to Android | [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) | 5.2 | `COMPANION_APP` · `CERT_INSTALL` · `android_settings.certificates` · the Fleet Android app |
 | **CAP-283** | Tune the Android integration | [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) | 8.10 | `mdm.android_agent.package` · `mdm.android_batch_size` |
 | **CAP-349** | Connect a certificate authority | [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md) | 5.2, 2.5 | connect a certificate authority · connect an issuing authority · the certificate prerequisite · six certificate authority types · `certificate_authorities` · `ndes_scep_proxy` · `custom_scep_proxy` · what creation validates · where Fleet keeps the credentials · distinct from delivering a certificate (CAP-153) |
+| **CAP-375** | Decide which fleet user-driven Windows enrollments land in | [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md) | 3.3, 5.5 | default fleet for Windows · `mdm.windows_automatic_enrollment.default_fleet` · `edited_windows_enrollment_default_fleet` · User driven enrollment · where do Autopilot hosts go · Entra join (vendor) |
+| **CAP-383** | Release a device from Apple Business | [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md) | 3.2, 8.8 | Release from Apple Business · disown a device · `released_from_ab` · `/fleet/hosts/release_ab` · Allow this service to release devices (vendor) · remove the Apple Business assignment · this cannot be undone |
+| **CAP-388** | Build an installer that does not ask for end-user authentication | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 3.3, 3.4 | `--bypass-end-user-auth` · `ORBIT_BYPASS_END_USER_AUTH` · skip the end user authentication prompt · Linux and Windows only · fleetd 1.60.0 |
+| **CAP-389** | Decide on the server whether an unauthenticated host may enroll | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 3.1, 2.5 | `mdm.allow_orbit_end_user_auth_bypass` · strictly enforce end user authentication · fail open (ours) · an old agent enrolled without authenticating |
 
 ### 3. Scope and targeting
 
-**Deciding who a change reaches and whose data you are reading.** 8 outcomes, and they precede both the reading group and the writing group, which is why they are not filed inside either.
+**Deciding who a change reaches and whose data you are reading.** 9 outcomes, and they precede both the reading group and the writing group, which is why they are not filed inside either.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -185,14 +191,15 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-145** | Rename a label | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 6.2 | `edited_label` |
 | **CAP-150** | Give one fleet its own profiles | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 1.3 | exact scope · a global profile and a named fleet |
 | **CAP-151** | Send something to only some hosts | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 1.3 | label scoping · `labels_include_all` · `labels_include_any` · `labels_exclude_any` · `labels` (still accepted) · combining include and exclude |
+| **CAP-387** | Restrict a label to one platform | [1.3](../01-foundations/1.3-hosts-fleets-labels.md) | 4.2 | label platform · `linux` label platform · Ubuntu (Linux) · CentOS (Linux) · the platform cannot be changed afterwards · only a dynamic label takes one |
 
 ### 4. Knowing what a device is
 
-**Reading state: vitals, reports, policies, software, vulnerabilities and estate counts.** 58 outcomes.
+**Reading state: vitals, reports, policies, software, vulnerabilities and estate counts.** 62 outcomes.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
-| **CAP-083** | See what a device is and what is on it | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 4.5 | host details · vitals · inventory · devices · endpoints · machines · computers · serial number · hostname |
+| **CAP-083** | See what a device is and what is on it | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 4.5 | host details · vitals · inventory · devices · endpoints · machines · computers · serial number · hostname · Added to Fleet · `last_enrolled_at` · when was this host added |
 | **CAP-084** | Add a field to every host record | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.1 | `additional_queries` (clash: Fleet's own FAQ still asks about them by the pre-rename name) |
 | **CAP-085** | Record a value Fleet cannot collect | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 4.7 | custom host vital · asset tag · Variables · `created_custom_host_vital` |
 | **CAP-086** | Query an application's own database | [4.7](../04-know-your-devices/4.7-extend-osquery-with-custom-tables-and-plugins.md) | 4.6 | `auto_table_construction` · ATC · SQLite |
@@ -233,8 +240,8 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-120** | Clear a policy's stored results | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 4.3 | `reset_policy` · my policy is stuck · host not updating a policy's response |
 | **CAP-121** | Re-arm a policy's automations | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 4.3 | reset automations |
 | **CAP-122** | List what is installed | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 4.1 | software inventory · titles · library · managed · Software inventory disabled |
-| **CAP-123** | Turn software inventory on for one fleet | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 6.2 | `features` · `host_settings` (still accepted) |
-| **CAP-124** | Find vulnerable software | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | CVE · cves · vulns · CVSS · exploit · security findings · Vulnerabilities are not supported for this type of host |
+| **CAP-123** | Turn software inventory on for one fleet | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 6.2 | `features` · `host_settings` (still accepted) · `enable_software_inventory` · `PATCH /fleet/fleets/{id}` · omitting the key leaves the stored value unchanged |
+| **CAP-124** | Find vulnerable software | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | CVE · cves · vulns · CVSS · exploit · security findings · Vulnerabilities are not supported for this type of host · excluded from vulnerability scanning · Adobe plugins are not scanned · why does this title show no vulnerabilities |
 | **CAP-125** | Find out whether an operating system build is vulnerable | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.6 | OS vulnerabilities · operating systems |
 | **CAP-126** | Prioritise by exploitability | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 5.4 | EPSS · KEV · CISA · known exploited · `cisa_known_exploits_url` |
 | **CAP-127** | Sort and filter findings | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 6.3 | sort by severity · filter by exploited |
@@ -250,14 +257,18 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-137** | Hand a host list to somebody | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 6.3 | export to CSV |
 | **CAP-138** | List hosts through the API | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 6.3 | pagination · `after` key · No more hosts to display |
 | **CAP-139** | Be told when hosts go offline | [4.5](../04-know-your-devices/4.5-monitor-fleet-wide-state.md) | 6.5 | host status alerts · missing hosts · notification · host status automations |
+| **CAP-380** | See which Adobe plugins are installed | [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md) | 4.1 | Plugin (Adobe) · Adobe Creative Cloud plugin · CEP extension · UXP extension · `adobe_plugins` · a plugin with a blank version |
+| **CAP-381** | Read everything an iPhone or iPad reports | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 3.5 | View all · `battery_level` · `cellular_technology` · `accessibility_settings` · `service_subscriptions` · `is_cloud_backup_enabled` · `device_properties_attestation` · `DeviceInformation` (vendor) · a personally owned iPhone reports fewer fields |
+| **CAP-382** | Read a hardware model as a name rather than a code | [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md) | 4.6 | `hardware_marketing_name` · marketing name · MacBook Pro (16-inch, 2021) · `MacBookPro18,1` · Hardware model shows a code · `apple_hardware_info` |
+| **CAP-393** | Use Fleet's CIS benchmark policy library | [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md) | 6.2, 5.9 | CIS · benchmark · Center for Internet Security (vendor) · hardening · macOS 15 Sequoia v2.1.0 · macOS 26 Tahoe v1.1.0 · re-importing overwrites what you tuned |
 
 ### 5. Changing a device
 
-**Writing state, split by the mechanism that carries it.** 107 outcomes, in the three lanes [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) teaches: settings that persist, work that runs once, and experiences. If you know which lane you are in, you know which sub-table to scan.
+**Writing state, split by the mechanism that carries it.** 111 outcomes, in the three lanes [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) teaches: settings that persist, work that runs once, and experiences. If you know which lane you are in, you know which sub-table to scan.
 
 #### Settings that persist
 
-32 outcomes. Profiles, operating system updates and disk encryption: things Fleet keeps true rather than things Fleet does once.
+34 outcomes. Profiles, operating system updates and disk encryption: things Fleet keeps true rather than things Fleet does once.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -293,10 +304,12 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-244** | Set and read a firmware password on Apple silicon | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 1.4 | Recovery Lock · `laps` · rotation · Show Recovery Lock password · `viewed_host_recovery_lock_password` · `rotated_host_recovery_lock_password` |
 | **CAP-371** | Have Fleet rotate an undecryptable FileVault recovery key on its own | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 4.5 | Escrow Buddy · `RotateDiskEncryptionKey` · `setDiskEncryptionNotifications` · key repair · undecryptable key |
 | **CAP-245** | Stop enforcing encryption without losing the keys | [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) | 7.2 | disable enforcement |
+| **CAP-376** | Keep Apple hosts on the newest version Apple publishes | [5.6](../05-manage-devices/5.6-control-operating-system-updates.md) | 4.1 | `minimum_version: latest` · `deadline_days` · latest available version · rolling deadline · track the latest version |
+| **CAP-385** | Put a custom host vital into a profile, an app configuration or a host name | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md) | 4.1, 5.4 | `$FLEET_HOST_VITAL_<id>` · custom host vital in a profile · Android managed app configuration · the vital identifier is a number, not a name · no value set for this host · setting a value re-delivers |
 
 #### Work that runs once
 
-54 outcomes. Scripts, software installs and device actions: a single unit of work, queued, delivered and finished.
+55 outcomes. Scripts, software installs and device actions: a single unit of work, queued, delivered and finished.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -329,7 +342,7 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-184** | Configure an application on Android | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 2.12 | Android Managed App Configurations · Work Profile Widgets |
 | **CAP-185** | Choose when applications update | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 5.6 | app update window · configure automatic updates for an app |
 | **CAP-186** | Delete software from the library | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 6.2 | `deleted_software` · `deleted_app_store_app` |
-| **CAP-187** | Speed up installer downloads | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 2.3 | CDN · CloudFront signed URLs |
+| **CAP-187** | Speed up installer downloads | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 2.3 | CDN · CloudFront signed URLs · distinct from serving them from the bucket itself (CAP-384) |
 | **CAP-188** | Find the installer size limit | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) | 8.14 | too big · 10 GiB |
 | **CAP-213** | Lock a Mac | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.2 | Lock · remote lock · `locked_host` · lock and wipe hosts |
 | **CAP-214** | Lock an iPhone or iPad | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 3.5 | Lost Mode (vendor) · find my iPad |
@@ -354,10 +367,11 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-232** | Send a raw Windows command | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 8.9 | SyncML Exec (vendor) · raw Windows MDM command |
 | **CAP-233** | Read what the device said back | [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md) | 8.8, 8.9 | command results · `fleetctl get mdm-command-results` · `mdm_command_results` · `/fleet/mdm/apple/commandresults` (still accepted) |
 | **CAP-234** | Stop something before it runs | [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) | 5.7, 6.1 | cancel · upcoming activity · `canceled_run_script` · `canceled_install_software` |
+| **CAP-379** | Put Fleet's built-in variables into a script | [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md) | 5.4, 2.5 | `$FLEET_VAR_` in a script · `$FLEET_VAR_HOST_END_USER_IDP_USERNAME` · `$FLEET_VAR_HOST_HARDWARE_SERIAL` · eight supported names · exit code -5 · install, post-install and uninstall scripts |
 
 #### Experiences
 
-21 outcomes. What the person holding the device sees, at first boot and afterwards.
+22 outcomes. What the person holding the device sees, at first boot and afterwards.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -382,10 +396,11 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-362** | Let an end user see the summary the desktop menu shows | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) |  | Fleet Desktop menu-bar item · tray icon summary |
 | **CAP-365** | Let an end user uninstall their own software | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.4 | self-service uninstall · Uninstall button on My Device |
 | **CAP-366** | Choose whether a Play application is offered as self-service | [5.4](../05-manage-devices/5.4-manage-software-and-applications.md) |  | Android self-service toggle · Play app self-service setting |
+| **CAP-374** | Give a Windows host a Fleet-managed local administrator | [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md) | 5.8, 1.5 | LAPS (vendor) · Windows managed local account · `windows_settings.enable_managed_local_account` · `controls.windows_settings.enable_managed_local_account` · `_fleetadmin` on Windows · fleetd 1.60.0 · revealed but never rotated |
 
 ### 6. Automating Fleet
 
-**Making Fleet, or another system, act without a person.** 24 outcomes.
+**Making Fleet, or another system, act without a person.** 26 outcomes.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -413,10 +428,12 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-267** | Push or delete spec files | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.2 | `fleetctl apply` · `fleetctl delete` · `--policies-team` (still accepted) · `--policies-fleet` |
 | **CAP-268** | Generate a pipeline for Fleet | [6.4](../06-automate-fleet/6.4-use-fleetctl.md) | 6.2 | `fleetctl new` · GitHub Action · CI scaffold |
 | **CAP-354** | Connect an AI assistant to Fleet | [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) | 6.3, 2.6 | MCP · Model Context Protocol · Fleet MCP server · AI assistant · Claude (vendor) · Cursor (vendor) · `fleet-mcp` · `-seed` · seed standard saved reports · bootstrap reports · natural-language queries · live query from an assistant |
+| **CAP-377** | Push one fleet's host activities to a webhook | [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md) | 1.5, 6.2 | activity automations for fleets · per-fleet activity webhook · `host_activities_webhook` · `webhook_settings.host_activities_webhook` · host-linked activities only · `host_ids` |
+| **CAP-378** | Patch an application only while nobody has it open | [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md) | 4.3, 5.4 | Patch when app is closed · `patch_when_closed` · Force patch · End user initiated · the install was skipped because the app was open |
 
 ### 7. Running the service
 
-**Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive.** 46 outcomes. The credentials are here rather than in group 2 because a token is a connection task once and a renewal task every year after that, and it is the renewal you arrive searching for.
+**Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive.** 47 outcomes. The credentials are here rather than in group 2 because a token is a connection task once and a renewal task every year after that, and it is the renewal you arrive searching for.
 
 | ID | What you are trying to do | Chapter | Also | Words that lead here |
 |---|---|---|---|---|
@@ -466,10 +483,11 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-326** | Drain an instance before stopping it | [7.5](../07-operate-fleet/7.5-maintain-capacity-and-availability.md) | 7.3 | graceful shutdown |
 | **CAP-327** | Shut Fleet down for good | [7.8](../07-operate-fleet/7.8-retire-a-fleet-deployment.md) | 7.7 | decommission · release devices · release external assignments |
 | **CAP-328** | Ask whether Fleet can host it for you | [2.1](../02-administer-and-deploy-fleet/2.1-administration-model-and-deployment-choices.md) | 2.8 | managed cloud · SaaS · can you host Fleet for me |
+| **CAP-384** | Serve installer downloads straight from Google Cloud Storage | [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md) | 5.4, 2.2 | `s3.software_installers_signed_url` · `FLEET_S3_SOFTWARE_INSTALLERS_SIGNED_URL` · GCS presigned URL · presigned download · direct download from the bucket · `storage.googleapis.com` |
 
 ### 8. When it did not work
 
-**Symptoms, and the surfaces that answer them.** 21 outcomes, plus the sentences people actually arrive with. This is the group that cannot be reconstructed from the table of contents, because nobody types a capability name when something is broken.
+**Symptoms, and the surfaces that answer them.** 22 outcomes, plus the sentences people actually arrive with. This is the group that cannot be reconstructed from the table of contents, because nobody types a capability name when something is broken.
 
 #### Sentences people type
 
@@ -536,6 +554,7 @@ Six markers, and each changes what you do with the word next to it.
 | **CAP-346** | Stop hosts overwriting each other | [8.14](../08-troubleshooting/8.14-degradation.md) | 3.1 | duplicate hosts · enroll cooldown · `--host-identifier` |
 | **CAP-347** | Work out what truncated or refused a request | [8.14](../08-troubleshooting/8.14-degradation.md) | 6.3 | 429 · too many open files · body too large · partial results |
 | **CAP-348** | Find which query costs the most on the host | [8.14](../08-troubleshooting/8.14-degradation.md) | 4.6, 8.7 | per-query cost on the device |
+| **CAP-390** | Work out why Apple Business is not returning a device | [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md) | 2.10, 7.6 | `token_invalid` · `dep_device_error` · `/hosts/:id/dep_assignment` · terms not signed · the serial was not in Apple's response · the Apple Business token was rejected |
 
 ## Why the eight groups are not the table of contents
 
@@ -543,14 +562,14 @@ Six markers, and each changes what you do with the word next to it.
 
 | | Group | The question it answers | Outcomes |
 |---|---|---|---|
-| 1 | Access and accountability | Who can use Fleet, how they prove it, and what is recorded | 32 |
-| 2 | Connecting devices | Getting a device enrolled, and the platform connections that must exist first | 68 |
-| 3 | Scope and targeting | Deciding who a change reaches and whose data you are reading | 8 |
-| 4 | Knowing what a device is | Reading state: vitals, reports, policies, software, vulnerabilities, estate counts | 58 |
-| 5 | Changing a device | Writing state, split by the mechanism that carries it | 107 |
-| 6 | Automating Fleet | Making Fleet or another system act without a person | 24 |
-| 7 | Running the service | Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive | 46 |
-| 8 | When it did not work | Symptoms, and the surfaces that answer them | 21 |
+| 1 | Access and accountability | Who can use Fleet, how they prove it, and what is recorded | 34 |
+| 2 | Connecting devices | Getting a device enrolled, and the platform connections that must exist first | 72 |
+| 3 | Scope and targeting | Deciding who a change reaches and whose data you are reading | 9 |
+| 4 | Knowing what a device is | Reading state: vitals, reports, policies, software, vulnerabilities, estate counts | 62 |
+| 5 | Changing a device | Writing state, split by the mechanism that carries it | 111 |
+| 6 | Automating Fleet | Making Fleet or another system act without a person | 26 |
+| 7 | Running the service | Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive | 47 |
+| 8 | When it did not work | Symptoms, and the surfaces that answer them | 22 |
 
 **Group 5 gets one level of sub-grouping and no more**, along the line [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) already teaches: settings that persist, work that runs once, and experiences. Every reader of Part V has met that distinction, so it costs nothing to reuse and it splits the largest group along a boundary people already hold.
 
@@ -749,7 +768,7 @@ These outcomes are attested somewhere in Fleet but carry no capability row, so t
 |---|---|---|
 | **Android enrollment through a Google account** (triage vocabulary, no initiated path and no owning chapter) | None | [3.6](../03-connect-devices/3.6-enroll-android-devices.md) notes that a third label appears in Fleet's triage notes without a described path this manual can teach; [8.13](../08-troubleshooting/8.13-escalation.md) adds that no expected status has been established for it. |
 | **The local evaluation sandbox** | [1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything) teaches running `fleetctl preview` | Still no capability row of its own in the matrix above; its command contracts are in [a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter). |
-| **The host display name template** | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#naming-hosts-from-a-template) | Premium per-scope template that sets the display name Apple hosts report: its variables, the device-name byte limit and the enforcement lifecycle. Endpoints in [a.8](a.8-api-action-and-endpoint-reference.md); GitOps key `controls.name_template`. |
+| **The host display name template** | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#naming-hosts-from-a-template) | Premium per-scope template that sets the display name Apple hosts report: its variables, the device-name byte limit and the enforcement lifecycle. From Fleet 4.91 the variables include custom host vitals, written `$FLEET_HOST_VITAL_<id>`, validated on save and re-resolved for the one host whose value changes, so `$FLEET_HOST_VITAL_` leads here as well as to CAP-385. Endpoints in [a.8](a.8-api-action-and-endpoint-reference.md); GitOps key `controls.name_template`. |
 | **The Apple DDM declaration asset** | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#declaration-assets) | Premium `com.apple.asset.*` object a declaration references for large or binary content: the validation rules, the per-fleet name and identifier uniqueness, the delete-while-referenced refusal, and the licence trap where a GitOps run on Fleet Free uploads none of them without erroring. Endpoints in [a.8](a.8-api-action-and-endpoint-reference.md); GitOps key `controls.macos_settings.assets`. |
 | **First-run setup** | [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md#complete-first-run-setup) | Creating the first administrator on a new server, the one-time step whose route stops existing once an administrator has been created. The server's own initialization, distinct from CAP-189's device setup experience at first boot; its command form is in [a.7](a.7-fleetctl-command-reference.md#which-commands-have-an-owning-chapter). |
 | **Resending a certificate to a host** | [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#changing-resending-and-removing) | A per-host action on one certificate a profile issued, separate from resending the profile itself: it resets that certificate for a single further delivery attempt, refuses only a certificate still pending its first delivery, and records an activity with the host and the certificate. It shares CAP-157's profile-resend permission rather than carrying one of its own, and its endpoint is in [a.8](a.8-api-action-and-endpoint-reference.md). Taught in 5.2, so it waits only on a formal row. |

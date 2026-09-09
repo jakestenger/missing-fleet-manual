@@ -609,3 +609,49 @@ forbids resolving on neighbour evidence under the part agreement. Closing those 
 per-cell frontend absence-proof or would inject probably-wrong values into a reference, so the
 appendix keeps recording the uncertainty. The one cell pair that decisive source could close, it
 closed.
+
+## 2026-09-08 4.91.0 campaign step 3: nineteen rows, and every derived figure recounted
+
+a.1 gained nineteen rows for Fleet 4.91.0 (per-row source citations in [[a.1-notes]]), and
+`build/check-cap-ids.py` requires a.5 to carry each of them or name it as a documented exclusion.
+None qualified as an exclusion, so all nineteen became matrix rows: 362 to 381, 1,448 cells to
+1,524.
+
+**UI cells were decided by finding the rendered surface, never by assuming one.** The components
+found at fleet-v4.91.0 (35fc1c0244): `WindowsAccountSection.tsx` (CAP-374), `WindowsMdmPage.tsx`
+(CAP-375), `AppleOSTargetForm.tsx` (CAP-376), `ManageHostsPage.tsx` (CAP-377),
+`FleetAppDetailsForm.tsx` and `DeployModal.tsx` (CAP-378), the `adobe_plugins` to
+`Plugin (Adobe)` mapping in `frontend/interfaces/software.ts` (CAP-380), `ReleaseFromABModal.tsx`
+(CAP-383), `PlatformField.tsx` (CAP-387, whose six options match 1.3's table exactly),
+`MDMStatusModal.tsx` (CAP-390), and `GlobalActivityItem.tsx` (CAP-391 and CAP-392).
+
+**Three rows read against the grain and are worth stating.**
+
+- **CAP-393 (CIS benchmarks) is `Unsupported` in the UI.** Nothing under
+  `frontend/pages/policies/` mentions CIS, and the published sets are applied as specs; the UI
+  creates policies one at a time and imports no set.
+- **CAP-384 and CAP-389 are `Unsupported` in all four columns**, taking the all-`Unsupported`
+  group from nine rows to eleven and the no-supported-interface group from 48 to 50. Both are
+  `fleet serve` process configuration (`server/config/config.go`), so the value never enters the
+  configuration response the browser reads and no request writes it. This is the same shape as
+  the existing process-configuration rows, except that those read `Not established` in the UI
+  column; these two read `Unsupported` because the boundary is positive rather than unsearched.
+- **CAP-383 and CAP-390 are `Unsupported` for `fleetctl`.** There is no `release_ab` or
+  `dep_assignment` command anywhere under `cmd/fleetctl/` at the tag. The three host reads
+  (CAP-380, CAP-381, CAP-382) are `Full` there instead, because `fleetctl get hosts <id>` prints
+  the full `HostDetailResponse` (`cmd/fleetctl/fleetctl/get.go:165, 1135`).
+
+**Every derived figure was recounted from the matrix by script**, not adjusted by hand: the
+five-value table, the reach figures (308 / 269 / 251 / 168), the `Partial` total (255), all-four-
+`Full` (91) and all-four-agree (114), GitOps `Unsupported` where the UI and REST API can both
+perform (112), and the UI `Not established` breakdown (36 in the three server sections, 21 where
+the other three columns all read `Unsupported`). `check-register-counts.py` and
+`check-cap-ids.py` both pass.
+
+**Two figures no check recomputes were re-derived by hand and are the weakest numbers in this
+pass**: the `fleetctl api` narrative counts. Rows reachable only through `fleetctl api` went 47 to
+51 (CAP-383, CAP-390, CAP-391, CAP-392); rows depending on `gitops`, `apply` or `delete` went 101
+to 109 (CAP-374, CAP-375, CAP-376, CAP-377, CAP-378, CAP-385, CAP-387, CAP-393); the headline
+went 148 to 160. CAP-379 was deliberately left out of the second group because
+`fleetctl run-script` reaches it natively. If a later round wants these mechanically checked, that
+is a new assertion in `check-register-counts.py` rather than a correction here. [[a.2-notes]]

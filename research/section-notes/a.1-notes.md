@@ -520,3 +520,88 @@ CAP-369 (Chromebook lock/release/erase) are rows in a.2 (a.2:307/313/319) but ap
 the "eight things with no capability row" list (a.1:758), not as index rows, a distinction a.1:746
 already draws. Softened a.1:37 to "carries nearly the same set, with two differences", naming both the
 lettered sub-row split and the Chromebook trio. No CAP minted, counts unchanged; check-cap-ids exit 0.
+
+## 2026-09-08 4.91.0 campaign step 3: capability rows for the release's new outcomes
+
+The 4.91.0 draft phase extended twenty target sections but left a.1 and a.10 with only the
+book-to-manual terminology pass, which is what round 1's review meant by "contain none of the
+principal 4.91 concepts". Nineteen formal rows added, CAP-374 to CAP-385 and CAP-387 to CAP-393,
+register 364 to 383. Numbering follows the register's own rule: next free number, and CAP-355 to
+CAP-360 stay retired from the round-3 a.2 collision rather than being reused.
+
+Every attested word was read at fleet-v4.91.0 (35fc1c0244), not taken from the release notes.
+The verifications, one per row:
+
+- **CAP-374** (Windows managed local admin, 5.5): `ManagedLocalAccountUsername = "_fleetadmin"`
+  (`server/fleet/managed_local_account.go:11`); `windows_settings.enable_managed_local_account`
+  handled at `ee/server/service/teams.go:432-439`, so Premium; `controls.windows_settings` is in
+  the GitOps vocabulary (`pkg/spec/gitops.go:184`).
+- **CAP-375** (default fleet for Windows, 2.11): `WindowsAutomaticEnrollment` and its
+  `DefaultFleet` (`server/fleet/app.go:269-271, 2178-2179`); activity
+  `edited_windows_enrollment_default_fleet` (`server/fleet/activities.go:2146`); resolution and
+  clearing at `server/service/appconfig.go:296-302, 1057-1064, 2363`.
+- **CAP-376** (`minimum_version: latest`, 5.6): `AppleOSUpdateLatestVersion = "latest"` and the
+  mutually exclusive `deadline` / `deadline_days` validation (`server/fleet/app.go:403-437`).
+- **CAP-377** (per-fleet activity webhook, 6.5): `HostActivitiesWebhook`
+  (`server/fleet/teams.go:301, 399, 846`).
+- **CAP-378** (patch when closed, 5.9): `PatchWhenClosed` with `premium:"true"`
+  (`server/fleet/api_policies.go:192`, `server/fleet/policies.go:362`) and the
+  `20260807140831_PatchWhenClosed` migration.
+- **CAP-379** (`$FLEET_VAR_` in scripts, 5.3): `FleetVarsSupportedInScripts`, exactly eight names,
+  and `ValidateFleetVariablesInScript` returning `ErrMissingLicense` off Premium
+  (`server/fleet/script_variables.go`); `ExitCodeFleetVarResolutionFailed = -5`
+  (`server/fleet/scripts.go:420`).
+- **CAP-380** (Adobe plugins, 4.4): `softwareAdobePlugins` with
+  `Platforms: []string{"darwin", "windows"}` and `discoveryTable("adobe_plugins")`
+  (`server/service/osquery_utils/queries.go:1221-1235`); the `Plugin (Adobe)` label is
+  `frontend/interfaces/software.ts:321`.
+- **CAP-381** (iOS/iPadOS vitals, 4.1): the release's twenty-nine fields, collected on the
+  existing `DeviceInformation` request; the BYOD exclusion is the shorter request Fleet sends a
+  personal enrollment.
+- **CAP-382** (marketing name, 4.1): `HardwareMarketingName()` returning "" off Apple platforms or
+  off the mapping (`server/fleet/hosts.go:1118-1129`); the field is `hardware_marketing_name` with
+  a `csv` tag (`server/fleet/hostresponse.go:23`); the osquery-side table is
+  `orbit/pkg/table/apple_hardware_info/`.
+- **CAP-383** (release from Apple Business, 2.10): activity `released_from_ab`
+  (`server/fleet/activities.go:2487`); the route was already added to a.8 at step 2.
+- **CAP-384** (GCS presigned installers, 2.3): `SoftwareInstallersSignedURL` and the three
+  `initFatal` boot checks, https, a `storage.googleapis.com` host, and a key pair for presigning
+  (`server/config/config.go:522-591`).
+- **CAP-385** (custom host vital in a profile or managed app configuration, 5.2): the Android path
+  at `server/mdm/android/service/profiles.go:692-740`; the name-template path, which stays in the
+  no-capability-row register rather than earning a row, at `server/fleet/name_template.go:76-159`.
+- **CAP-387** (label platform, 1.3): `ValidLabelPlatformVariants` with `linux` commented "matches
+  hosts on any Linux distribution", and the manual/host-vitals platform rejections
+  (`server/fleet/labels.go:145-193`). No `chrome` variant exists, which is why a.2 reads
+  `Unsupported` rather than `Not applicable` for the three platforms the allow-list omits.
+- **CAP-388** (`--bypass-end-user-auth`, 5.5): the flag at
+  `cmd/fleetctl/fleetctl/package.go:133-137`, the env form `ORBIT_BYPASS_END_USER_AUTH` at
+  `orbit/pkg/packaging/linux_shared.go:396`, the Windows argument at
+  `windows_templates.go:117`, and no macOS template carrying it; the EUA-token precedence at
+  `orbit/cmd/orbit/orbit.go:1178-1184`.
+- **CAP-389** (`mdm.allow_orbit_end_user_auth_bypass`, 5.5): declared with default `true`
+  (`server/config/config.go:1929`) and enforced at `server/service/orbit.go:254-300`, whose
+  `if platform == "linux" || platform == "windows"` is the reason macOS reads `Not applicable`
+  rather than `Unsupported` across the siblings.
+- **CAP-390** (Apple Business diagnostics, 8.8): `TokenInvalid` (`server/fleet/mdm.go:200`) and
+  `DEPDeviceError` (`server/service/hosts.go:2631`).
+- **CAP-391** (`user_mfa_requested`, 8.12): `server/fleet/activities.go:338`.
+- **CAP-392** (setup experience script activities, 8.12): `created_setup_experience_script` and
+  `deleted_setup_experience_script` (`server/fleet/activities.go:2002, 2012`).
+- **CAP-393** (CIS benchmark library, 4.3): published policy files rather than shipped content, so
+  the verification here is the absence of any CIS surface under `frontend/pages/policies/` and the
+  fact that nothing in the server installs them.
+
+**Two drafted rows were dropped rather than kept as thin ones.** CAP-386 (nested Entra groups) is
+the group half of CAP-292's outcome, and CAP-394 (software excluded from vulnerability matching)
+is why CAP-124's list comes back empty. Both would have been rows no interface performs and no
+platform answers, so their words went onto CAP-292 and CAP-124 instead, verified at
+`server/datastore/mysql/scim.go:615` (the recursive membership walk) and
+`server/vulnerabilities/nvd/cpe.go:871` (`adobe_plugins` in `ExcludedSources`). CAP-016, CAP-083,
+CAP-123 and CAP-187 gained words for the same reason: the outcome was already registered.
+
+**Scope note.** `build/check-cap-ids.py` asserts that every formal a.1 row is carried by a.2 and
+a.5, so nineteen new rows in a.1 necessarily meant nineteen in a.5 and fifteen rows plus six
+bullets in a.2. The runbook's step 3 named only a.1 and a.10; leaving the other two behind would
+have shipped a red gate to main. See [[a.2-notes]] and [[a.5-notes]]. All fourteen build checks
+pass. [[a.10-notes]]

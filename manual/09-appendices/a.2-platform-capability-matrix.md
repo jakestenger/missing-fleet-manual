@@ -3,9 +3,9 @@ title: "Platform capability matrix"
 chapter: "Appendices and indexes"
 section: "A.2"
 sidebar_position: 2
-verified_against: Fleet 4.90.0
-verified_on: 2026-08-29
-verified_source: "drafted against fleet-v4.90.0 (7c428c6e46) over two research passes. Every cell rests on source read at the tag; Fleet's documentation was used for leads only, never as evidence. Citation ledger at research/section-notes/a.2-notes.md"
+verified_against: Fleet 4.91.0
+verified_on: 2026-09-08
+verified_source: "drafted against fleet-v4.90.0 (7c428c6e46) over two research passes. Every cell rests on source read at the tag; Fleet's documentation was used for leads only, never as evidence. Extended 2026-09-08 for Fleet 4.91.0 (overnight campaign step 3), verified at tag fleet-v4.91.0 (35fc1c0244): fifteen platform-matrix rows and six not-platform-scoped bullets added for a.1's new CAP-374 to CAP-385 and CAP-387 to CAP-393, taking the matrix from 276 rows to 291 and the bullet list from 92 to 98. Cells were read at the tag rather than inferred: the Adobe detail query's `Platforms: []string{'darwin', 'windows'}` allow-list and its `discoveryTable('adobe_plugins')` gate (`server/service/osquery_utils/queries.go`), `ValidLabelPlatformVariants` and the manual/host-vitals platform rejections (`server/fleet/labels.go`), the `platform == 'linux' || platform == 'windows'` gate on Orbit end-user authentication (`server/service/orbit.go`), the Windows-only `BypassEndUserAuth` packaging templates (`orbit/pkg/packaging/linux_shared.go`, `windows_templates.go`, with no macOS counterpart), `windows_settings.enable_managed_local_account` (`ee/server/service/teams.go`), and `AppleOSUpdateLatestVersion` with its mutually exclusive deadline fields (`server/fleet/app.go`). Two `Unsupported` cells rest on an allow-list a platform is absent from rather than on an error arm, which this appendix's own definition admits: the Adobe row and the label-platform row. The Version notes stamp below is left at 4.90.0 deliberately, because this pass added rows and did not re-read the 276 cells that were already there. Citation ledger at research/section-notes/a.2-notes.md"
 further_reading:
   - https://fleetdm.com/docs/get-started/faq
 feature_requests:
@@ -96,7 +96,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 
 ## The matrix
 
-![Reference](../_assets/icons/reference.svg) Grouped as a reader would look for a capability, 276 rows. Section rows in bold carry no cells; they mark where a family starts.
+![Reference](../_assets/icons/reference.svg) Grouped as a reader would look for a capability, 291 rows. Section rows in bold carry no cells; they mark where a family starts.
 
 | ID | Capability | macOS | iOS/iPadOS | Windows | Linux | Android | ChromeOS | Licence | Prerequisite |
 |---|---|---|---|---|---|---|---|---|---|
@@ -115,6 +115,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-032** | Have Fleet install the agent on a Mac it enrolls | Supported | Unsupported | Not applicable | Not applicable | Not applicable | Not applicable | Free | Apple MDM enrollment on the device channel |
 | **CAP-033** | Suppress Fleet's ADE agent install so a bootstrap package delivers it | Conditional (C004) | Not applicable | Not applicable | Not applicable | Not applicable | Not applicable | Premium | A bootstrap package already configured |
 | **CAP-034** | Attach the end user's identity at enrollment | Conditional (C005) | Conditional (C006) | Conditional (C007) | Conditional (C008) | Conditional (C009) | Not established (E01) | Premium | An identity provider configured for MDM features |
+| **CAP-389** | Decide on the server whether an agent that does not authenticate may enroll | Not applicable | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | A fleet that requires end-user authentication, and the setting made in server configuration rather than through any interface. The gate exists only for Linux and Windows agent enrollments, which is why macOS reads Not applicable: a Mac settles end-user authentication during MDM enrollment instead |
 | **CAP-035** | Enroll a Windows host by installing the agent | Not applicable | Not applicable | Conditional (C010) | Not applicable | Not applicable | Not applicable | Free | Windows MDM configured, and the host already agent-enrolled |
 | **CAP-036** | Enroll a Windows host at first boot through Autopilot | Not applicable | Not applicable | Conditional (C011) | Not applicable | Not applicable | Not applicable | Premium | Windows MDM configured, and the Entra tenant and client lists populated |
 | **CAP-037** | Let a person enroll a Windows host from Settings | Not applicable | Not applicable | Conditional (C012) | Not applicable | Not applicable | Not applicable | Premium | Windows MDM configured, and the Entra lists populated |
@@ -130,6 +131,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-047** | Enroll an iPhone or iPad from a link, company-owned | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Free to enroll, Premium to attach the owner | Apple MDM configured, and a valid enroll secret |
 | **CAP-049** | Have a person enroll their own device with a Managed Apple Account | Unsupported | Conditional (C016) | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple Business Manager token, MDM single sign-on, and a Managed Apple Account |
 | **CAP-051** | Place an ADE device in a fleet by platform | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple Business Manager token uploaded |
+| **CAP-383** | Release a device from Apple Business | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple Business connected, the device assigned to this Fleet server there, Apple Business itself set to allow this service to release devices, and a global administrator or an administrator of the host's fleet |
 | **CAP-052** | Enroll an Android device as a personal work profile | Not applicable | Not applicable | Not applicable | Not applicable | Supported | Not applicable | Free | Android Enterprise bound, and a valid enroll secret |
 | **CAP-053** | Enroll a company-owned Android device by QR at first boot | Not applicable | Not applicable | Not applicable | Not applicable | Conditional (C017) | Not applicable | Free | Android Enterprise bound, and the device at its out-of-box screen |
 | **CAP-054** | Issue a single-use Android enrollment token | Not applicable | Not applicable | Not applicable | Not applicable | Supported | Not applicable | Free | Android Enterprise bound, and a valid enroll secret |
@@ -144,6 +146,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-063** | Expire host records automatically after a silence window | Conditional (C025) | Conditional (C026) | Supported | Supported | Supported | Supported | Free globally, Premium per fleet | None |
 | **C. Agent (fleetd) management** | | | | | | | | | |
 | **CAP-064** | Build an installer for a platform | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | Build host must match the package type |
+| **CAP-388** | Build an installer that does not ask for end-user authentication | Not applicable | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | fleetd v1.60.0 or later, and an installer you build yourself. On Windows an installer carrying an end-user-authentication token takes precedence and the bypass does not apply |
 | **CAP-065** | Include the end-user surface in the agent | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | Chosen at packaging time on macOS and Linux, at install time on Windows |
 | **CAP-361** | Let an end user see their own device's details and software | Supported | Supported | Supported | Supported | Supported | Supported | Free | An address for the device. The end-user surface issues one where it runs, an administrator can mint one on every platform except iPhone and iPad, and those two authenticate by certificate or by their own issued address instead |
 | **CAP-362** | Let an end user see the summary the desktop menu shows | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Premium | The end-user surface installed. On Free the request is refused with a licence error |
@@ -168,6 +171,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-082** | Carve a file off a host | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | A carve store configured |
 | **D. Host data, vitals, and inventory** | | | | | | | | | |
 | **CAP-083** | See what a device is and what is on it | Supported | Supported | Supported | Supported | Supported | Supported | Free | Enrolled by the platform's own channel |
+| **CAP-382** | Read a hardware model as a marketing name rather than an identifier | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Free | The model identifier must be in the mapping the Fleet release ships. Anything else resolves to an empty name and the raw identifier is shown instead, so new hardware needs an upgrade rather than a refetch |
 | **CAP-084** | Put a value you collect on the host record | Supported | Not applicable | Supported | Supported | Not applicable | Supported | Free globally, Premium per fleet | None |
 | **CAP-085** | Record a value Fleet cannot collect | Supported | Supported | Supported | Supported | Supported | Supported | Free | The vital must be defined first |
 | **CAP-086** | Turn a SQLite file on the device into a queryable table | Supported | Not applicable | Supported | Supported | Not applicable | Not established (E20) | Free globally, Premium per fleet | The database file must exist at the given path |
@@ -177,6 +181,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-090** | Attach an email address to a host | Supported | Supported | Supported | Supported | Supported | Supported | Free set by hand, Premium from the identity provider | None |
 | **CAP-091** | Ask a host to report again now | Supported | Supported | Supported | Supported | Not established (E21) | Supported | Free | On iPhone and iPad, Apple MDM configured and connected. On the other platforms none: Fleet records the request for any host, and the agent collects it on its next check-in |
 | **CAP-092** | Refresh an iPhone or iPad's inventory on a schedule | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple MDM configured, and push notifications working |
+| **CAP-381** | Read the full device-information set an iPhone or iPad reports | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Free | Apple MDM configured, and a company-owned enrollment. A personal enrollment is sent a shorter request and receives three of the twenty-nine fields |
 | **E. Queries and reports** | | | | | | | | | |
 | **CAP-093** | Ask every online device a question now | Supported | Not applicable | Supported | Supported | Not applicable | Supported | Free | An enrolled agent, and live queries not disabled |
 | **CAP-095** | Collect a question's answer on a schedule | Supported | Not applicable | Supported | Supported | Not applicable | Unsupported | Free | An interval above zero, and results not discarded |
@@ -197,6 +202,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **F. Policies** | | | | | | | | | |
 | **CAP-114** | Ask a yes-or-no compliance question of every host | Supported | Not applicable | Supported | Supported | Not applicable | Supported | Free | Agent installed |
 | **CAP-115** | Assert that a Fleet-maintained app is at or above a version | Supported | Unsupported | Supported | Unsupported | Unsupported | Unsupported | No direct gate, Premium-only prerequisite | A Fleet-maintained app installer must exist, and the policy must be fleet-scoped |
+| **CAP-393** | Assess a host against Fleet's published CIS benchmark policies | Supported | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Premium | The benchmark set for the host's operating-system version converted and applied yourself, normally through GitOps. Fleet ships nothing: upgrading neither installs the policies nor updates copies already applied |
 | **CAP-116** | Scope a policy to a platform | Supported | Not applicable | Supported | Supported | Not applicable | Supported | Free | None |
 | **CAP-117** | Narrow a policy by label | Supported | Not applicable | Supported | Supported | Not applicable | Supported | Premium | Labels must exist and not appear on both sides |
 | **CAP-118** | Mark a policy as one whose failure matters | Supported | Not applicable | Supported | Supported | Not applicable | Supported | Premium | None |
@@ -204,6 +210,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-120** | Clear a policy's collected results | Supported | Not applicable | Supported | Supported | Not applicable | Supported | Free | None |
 | **G. Software and vulnerability knowledge** | | | | | | | | | |
 | **CAP-122** | Collect what software is installed | Supported | Conditional (C028) | Supported | Supported | Supported | Conditional (C029) | Free | Software inventory turned on, and enrollment by the platform's own channel |
+| **CAP-380** | Read the Adobe Creative Cloud plugins installed on a host | Supported | Unsupported | Supported | Unsupported | Unsupported | Unsupported | Free | Software inventory turned on, and a fleetd build that provides the `adobe_plugins` table. The detail query names macOS and Windows and no other platform, so the rest are never asked |
 | **CAP-123** | Turn software inventory on for one fleet | Supported | Not applicable | Supported | Supported | Not applicable | Supported | Free globally, Premium per fleet | The host must be assigned to the fleet |
 | **CAP-124** | See which installed software has known vulnerabilities | Supported | Unsupported | Supported | Supported | Not established (E02) | Not established (E03) | Free | Software inventory on, and a vulnerability database path configured |
 | **CAP-125** | See which operating system builds have known vulnerabilities | Supported | Unsupported | Conditional (C030) | Supported | Conditional (C031) | Unsupported | Free | A vulnerability database path configured |
@@ -220,6 +227,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-138** | Read the host list programmatically | Supported | Supported | Supported | Supported | Supported | Supported | Free, with Premium-only filters silently dropped | None |
 | **CAP-139** | Be told when too much of the estate goes quiet | Supported | Conditional (C037) | Supported | Supported | Conditional (C038) | Supported | Free globally, Premium per fleet | A destination URL, a day count and a percentage |
 | **CAP-140** | Select hosts by a query that keeps itself current | Supported | Not applicable | Supported | Supported | Unsupported | Supported | Free globally, Premium per fleet | Agent installed |
+| **CAP-387** | Restrict a label's query to one platform | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | Free | A dynamic label. Fleet rejects a platform on a manual or host-vitals label, and the accepted values are the empty string, `darwin`, `windows`, `linux`, `ubuntu` and `centos`, so no other platform can be named. The choice is fixed when the label is created |
 | **CAP-141** | Select a specific list of hosts | Supported | Supported | Supported | Supported | Supported | Supported | Free globally, Premium per fleet | A manual label, and write access to every target host |
 | **CAP-142** | Select hosts by a reported vital | Supported | Supported | Supported | Supported | Supported | Supported | Free for a hand-set vital, Premium for identity-provider vitals | Exactly one criterion, and the vital must exist |
 | **I. Configuration profiles and declarative settings** | | | | | | | | | |
@@ -230,6 +238,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-150** | Give one fleet its own profiles | Supported | Supported | Supported | Not applicable | Supported | Not applicable | Premium | The platform's MDM configured |
 | **CAP-151** | Narrow a profile to hosts carrying a label | Supported | Supported | Supported | Unsupported | Supported | Unsupported | Premium | The labels must exist and be visible to the fleet |
 | **CAP-152** | Fill in a per-host value in a profile | Supported | Supported | Supported | Not applicable | Supported | Not applicable | Premium on Apple and Windows, Free on Android | On Android the variable must sit inside a string value |
+| **CAP-385** | Fill in a custom host vital in a profile or a managed app configuration | Supported | Supported | Supported | Not applicable | Supported | Not applicable | Free | The vital must be defined and the host must have a value. An empty value fails that host's profile rather than substituting nothing, and setting a value re-delivers what depends on it for that host alone |
 | **CAP-153** | Have a profile enrol a certificate | Supported | Supported | Supported | Unsupported | Supported | Unsupported | Premium | A configured certificate authority of the matching type and name |
 | **CAP-154** | Supply a value that is never stored anywhere | Supported | Not established (E07) | Unsupported | Not applicable | Unsupported | Not applicable | Premium | Platform single sign-on configured |
 | **CAP-155** | Keep a credential out of a profile's stored content | Supported | Supported | Supported | Not applicable | Unsupported | Not applicable | Free | The server private key set when the secret is written |
@@ -246,6 +255,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-165** | Read what a script did | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | A script must have run |
 | **CAP-166** | Use a credential in a script without storing it | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | The server private key configured |
 | **CAP-167** | Use a host's own vital inside an install or script | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | The referenced vital must be defined |
+| **CAP-379** | Fill in one of Fleet's built-in variables inside a script | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Premium | One of eight supported names, and a value Fleet can resolve for the host. Any other `$FLEET_VAR_` name is refused when the script is saved, and an unresolvable one ends the run at exit code -5 before the script executes |
 | **K. Software delivery** | | | | | | | | | |
 | **CAP-168** | Deliver software you package yourself | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | Premium | Agent installed with scripts enabled |
 | **CAP-169** | Deliver an application from Fleet's catalogue | Supported | Unsupported | Supported | Not established (E41) | Unsupported | Unsupported | Premium | Outbound reach to the app catalogue |
@@ -276,6 +286,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-191** | Deliver a package to a Mac before the agent exists | Supported | Unsupported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Automated enrollment, and Apple MDM configured |
 | **CAP-192** | Create the user's local account during setup | Supported | Unsupported | Not applicable | Not applicable | Not applicable | Not applicable | Premium at delivery, not refused at the settings interface | Automated enrollment, and Apple MDM configured |
 | **CAP-372** | Provision a Mac's local account and sync its password with the identity provider | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple MDM configured, an OAuth identity provider set for account provisioning, and the server private key set |
+| **CAP-374** | Create and hold a managed local administrator account on Windows | Not applicable | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Premium | Windows MDM turned on, fleetd 1.60.0 or later on the host, and the server private key set for the escrowed password to have somewhere to land |
 | **CAP-193** | Show the user an agreement during setup | Conditional (C046) | Supported | Unsupported | Not applicable | Not applicable | Not applicable | Premium | An identity provider configured for MDM features |
 | **CAP-194** | Hold a Windows device at a status page until setup finishes | Not applicable | Not applicable | Conditional (C047) | Not applicable | Not applicable | Not applicable | No direct gate, Premium-only prerequisite | Windows MDM configured, and automatic enrollment at first boot |
 | **CAP-195** | Show setup progress without holding anyone up | Unsupported | Not applicable | Conditional (C049) | Supported | Not applicable | Not applicable | Premium | Agent installed with the end-user surface enabled |
@@ -291,6 +302,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-366** | Choose whether a Play application is offered as self-service | Not applicable | Not applicable | Not applicable | Not applicable | Unsupported | Not applicable | Premium | Android Enterprise bound, and the application already in the library |
 | **M. Operating system updates** | | | | | | | | | |
 | **CAP-205** | Require a minimum OS version by a date on Apple devices | Supported | Supported | Not applicable | Unsupported | Unsupported | Unsupported | Premium | Apple MDM on, with a minimum version and a deadline set together |
+| **CAP-376** | Track the latest OS version Apple publishes for each host | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple MDM on, `minimum_version` set to `latest` with `deadline_days` and no fixed deadline, and hosts on macOS 14, iOS 17 or iPadOS 17 and later |
 | **CAP-206** | Prompt users on older Macs to update | Conditional (C056) | Unsupported | Unsupported | Unsupported | Not applicable | Not applicable | Premium | Agent enrolled, host connected to MDM, and macOS updates configured |
 | **CAP-207** | Set an update deadline and restart grace on Windows | Not applicable | Not applicable | Supported | Unsupported | Unsupported | Unsupported | Premium | Windows MDM on, with both fields set together |
 | **CAP-208** | Control Android system updates | Not applicable | Not applicable | Not applicable | Unsupported | Supported | Unsupported | Premium | Android MDM configured, and Android Enterprise bound |
@@ -343,6 +355,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-245** | Stop enforcing encryption without losing what is held | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Premium | The decryption material for the platform must still be held |
 | **P. Policy automations, integrations, and outbound events** | | | | | | | | | |
 | **CAP-246** | Install software when a policy fails | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | Premium | Agent installed, and an installer for the host's platform |
+| **CAP-378** | Hold a patch policy's install until the app is closed | Supported | Unsupported | Supported | Unsupported | Unsupported | Unsupported | Premium | A patch policy on a Fleet-maintained app, with continuous automations on. Fleet refuses the option on a title you packaged yourself, because the closed-app check reads the maintained-app manifest |
 | **CAP-247** | Install an App Store app when a policy fails | Supported | Unsupported | Unsupported | Unsupported | Unsupported | Unsupported | Premium | Agent installed |
 | **CAP-248** | Run a script when a policy fails | Supported | Unsupported | Supported | Supported | Unsupported | Unsupported | Premium | Agent installed |
 | **CAP-252** | Report a host as non-compliant to Microsoft Entra | Supported | Unsupported | Supported | Unsupported | Unsupported | Unsupported | Premium | Agent installed |
@@ -363,6 +376,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-373** | Require hardware-attested device identity for eligible Macs | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Not applicable | Premium | Apple MDM configured, automated enrollment, and an Apple Silicon Mac on macOS 14 or later. The requirement is skipped for a Mac that does not qualify |
 | **CAP-278** | Turn on Windows device management | Not applicable | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Free | A certificate and key pair configured in server settings |
 | **CAP-279** | Choose whether Windows enrollment asks the end user | Not applicable | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Premium | Windows MDM already on |
+| **CAP-375** | Choose the fleet user-driven Windows enrollments land in | Not applicable | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Premium to name a fleet, Free to clear it | Windows MDM turned on and Fleet connected to Entra. A host is only moved when the enrollment carries a signed-in user, the host has no fleet yet, and its record is new to Fleet |
 | **CAP-280** | Turn Windows device management off | Not applicable | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Free | Windows MDM already on |
 | **CAP-281** | Bind Fleet to an Android Enterprise | Not applicable | Not applicable | Not applicable | Not applicable | Supported | Not applicable | Not established (E42) | The server private key set, a server address that is not localhost, and Android **not** already configured |
 | **CAP-282** | Deliver client certificates to Android devices | Not applicable | Not applicable | Not applicable | Not applicable | Supported | Not applicable | Premium | A custom SCEP proxy authority, which is the only type accepted, plus the Android binding and a non-empty companion application package |
@@ -387,6 +401,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 | **CAP-332** | Raise an agent's verbosity permanently | Supported | Not applicable | Supported | Supported | Not applicable | Not applicable | Free | Re-packaging, host shell access, or an agent-options push, by lever |
 | **CAP-335** | Read a host's own osquery introspection tables | Supported | Not applicable | Supported | Supported | Not applicable | Conditional (C102) | Free | Agent installed and checking in |
 | **CAP-336** | Read the Apple MDM command queue | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Free | Apple MDM configured and the host enrolled |
+| **CAP-390** | Read why Apple Business is not returning a device | Supported | Supported | Not applicable | Not applicable | Not applicable | Not applicable | Free | Apple Business connected. A false `token_invalid` means Apple is not known to have rejected the token, not that the token has been checked and is healthy |
 | **CAP-337** | Read the Windows MDM command queue | Not applicable | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Free | Windows MDM configured and the host enrolled |
 | **CAP-338** | Read Android's command and policy state | Not applicable | Not applicable | Not applicable | Not applicable | Supported | Not applicable | Free | Android Enterprise bound |
 | **CAP-341a** | Trigger a Windows MDM diagnostic collection | Not applicable | Not applicable | Supported | Not applicable | Not applicable | Not applicable | Free | Windows MDM configured, host connected, and a destination for the archive |
@@ -605,9 +620,9 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 ## Rows that are not platform-scoped
 
-92 rows have no platform answer. Most are about the Fleet server rather than a device: server configuration, a server-side store, an identity operation, or a property of how the deployment is run. **A few are not server-side and still have no platform answer**, which is why the section is named for what is true of all of them rather than for the common case. An automation interface is one, and a commercial arrangement with no corresponding mode in the software is another.
+96 rows have no platform answer. Most are about the Fleet server rather than a device: server configuration, a server-side store, an identity operation, or a property of how the deployment is run. **A few are not server-side and still have no platform answer**, which is why the section is named for what is true of all of them rather than for the common case. An automation interface is one, and a commercial arrangement with no corresponding mode in the software is another.
 
-Carrying all 92 as six `Not applicable` cells each would add 552 cells that say nothing and would distort every per-platform count. Omitting them would be worse, because a reader who looked one up and found nothing could not tell whether a.2 does not cover it or whether it simply has no platform answer.
+Carrying all 96 as six `Not applicable` cells each would add 576 cells that say nothing and would distort every per-platform count. Omitting them would be worse, because a reader who looked one up and found nothing could not tell whether a.2 does not cover it or whether it simply has no platform answer.
 
 So they are carried here, one line each, grouped by the same sections as the matrix. The role answer for these rows is in a.4 and the interface answer is in a.5, which is where they genuinely resolve.
 
@@ -635,6 +650,8 @@ So they are carried here, one line each, grouped by the same sections as the mat
 - **CAP-019** Stream activities to an audit-log destination. A server-side job draining unstreamed activity to a log destination.
 - **CAP-020** Know which activities never reach a streamed destination. A server-side store: a marker on the activity record itself.
 - **CAP-021** Set how long Fleet keeps activity records. Server configuration: a retention setting driving a cleanup job.
+- **CAP-391** Detect a valid password used against an account with a second factor. An identity operation: an activity written on the sign-in path when the verification email goes out.
+- **CAP-392** Find out who changed the setup experience script. A server-side store: two activity types written when the stored script is added, replaced or removed.
 
 **B. Enrollment and host lifecycle**
 
@@ -671,6 +688,7 @@ So they are carried here, one line each, grouped by the same sections as the mat
 - **CAP-250** Open a ticket when hosts start failing a policy. A server-side automation that opens a ticket through an integration.
 - **CAP-251** Book a maintenance window on the user's calendar. A server-side job over policies and the calendars of the people who own hosts.
 - **CAP-256** POST when a new vulnerability is detected. A server-side automation over the vulnerability tables.
+- **CAP-377** POST one fleet's host activities to a URL. A server-side outbound call made as host-linked activities are written, one request per fleet.
 - **CAP-258** Block webhook destinations on internal addresses. A deployment property of Fleet's outbound network behaviour.
 - **CAP-349** Connect a certificate authority. A server-side integration: Fleet stores an external issuing authority's connection details and credentials. Delivering a certificate to a device is the separate CAP-153.
 
@@ -721,6 +739,7 @@ So they are carried here, one line each, grouped by the same sections as the mat
 - **CAP-318** Deploy Fleet on AWS from Fleet's reference Terraform. A deployment property: reference infrastructure code for one cloud.
 - **CAP-319** Deploy Fleet on GCP from Fleet's reference Terraform. A deployment property: reference infrastructure code for one cloud.
 - **CAP-320** Authenticate object storage without a stored key. A deployment property: object-store credentials without a stored key.
+- **CAP-384** Serve installer downloads straight from Google Cloud Storage. A deployment property: whether the server proxies the bytes or hands the client a presigned URL. It is mutually exclusive with the row above, because presigning needs the stored key that workload identity exists to remove.
 - **CAP-321** Run Fleet with Docker Compose. A deployment property: running the server under container orchestration.
 - **CAP-322** Run Fleet on Kubernetes. A deployment property: running the server under container orchestration.
 - **CAP-323** Run Fleet as a binary on a virtual machine. A deployment property: running the server as a supervised process.

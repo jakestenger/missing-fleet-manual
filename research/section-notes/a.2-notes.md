@@ -174,3 +174,36 @@ CAP-279 ("Choose whether Windows enrollment asks the end user") scored licence =
 contradicting 3.3 (which correctly says Fleet Free rejects it). Verified at fleet-v4.90.0:
 `server/service/appconfig.go` appends `ErrMissingLicense` for `enable_turn_on_windows_mdm_manually`
 via the `mdm.EnableTurnOnWindowsMDMManually && !lic.IsPremium()` guard. Licence cell set to Premium.
+
+## 2026-09-08 4.91.0 campaign step 3: fifteen rows and six bullets for the new register entries
+
+a.1 gained nineteen rows for Fleet 4.91.0 (see [[a.1-notes]] for the per-row source citations),
+and `build/check-cap-ids.py` requires a.2 to carry every one of them. Fifteen are platform-scoped
+and became matrix rows, 276 to 291; six have no platform answer and became bullets, 92 to 98.
+
+Cells rest on source read at fleet-v4.91.0 (35fc1c0244). The four judgement calls worth recording,
+because each could reasonably have gone the other way:
+
+1. **CAP-380's Adobe row reads `Unsupported`, not `Not applicable`, on the four platforms it
+   omits.** The detail query carries `Platforms: []string{"darwin", "windows"}`
+   (`server/service/osquery_utils/queries.go:1234`), and this appendix's own definition counts
+   "an allow-list the platform is absent from" as a positive boundary. The same reasoning gives
+   CAP-387's label-platform row `Unsupported` for iOS/iPadOS, Android and ChromeOS, since
+   `ValidLabelPlatformVariants` (`server/fleet/labels.go:145`) has no entry for any of them.
+2. **CAP-388 and CAP-389 read `Not applicable` on macOS rather than `Unsupported`.** The gate they
+   both belong to exists only for Linux and Windows: `server/service/orbit.go:255` is
+   `if platform == "linux" || platform == "windows"`, with the comment that a Mac settles
+   end-user authentication during MDM enrollment instead. The subject does not exist on macOS,
+   which is what `Not applicable` means here.
+3. **CAP-381's BYOD distinction went in the prerequisite column, not a new condition identifier.**
+   A personal iPhone is sent a shorter device-information request and receives three of the
+   twenty-nine fields. That is a two-branch condition and could have earned a `Cnnn`, but a
+   company-owned enrollment is equally readable as something you must have in place first, and
+   the prerequisite column avoids coupling this pass to the condition register's own counts.
+4. **CAP-374 reads `Not applicable` on macOS.** The macOS managed local account is CAP-192's row.
+   This appendix already splits per-platform outcomes that way ("Locking a Mac and locking a
+   Windows host are separate rows"), and the two accounts are built differently: Fleet creates the
+   Mac's by MDM command, fleetd creates the Windows one on the device.
+
+The Version notes stamp stays at 4.90.0 deliberately. This pass added rows; it did not re-read the
+276 cells that were already there. [[a.5-notes]]
