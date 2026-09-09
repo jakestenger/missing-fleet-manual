@@ -80,6 +80,8 @@ to `main` deploys.
 
 See `CONTRIBUTING.md` before your first edit.
 
+The [Parts 0–V screenshot checklist](SCREENSHOTS.md) lists every requested capture, its chapter placement, demo setup, framing, and edition requirements. The briefs also live in HTML comments beside the relevant passages.
+
 ```sh
 cd website && npm ci && npm start     # http://localhost:3000
 ```

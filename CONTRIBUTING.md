@@ -124,6 +124,8 @@ they are not evidence, and one of them has already turned out to be wrong.
 
 ## Visuals
 
+The [Parts 0–V capture checklist](SCREENSHOTS.md) collects the structured screenshot briefs from the chapters. Edit the chapter comments first, then run `python3 build/screenshot-checklist.py` to update the list, or add `--check` to check synchronization. The command preserves checked capture IDs and Capture record notes. Screenshots are captured from a real instance; image generation is for the separate diagram and illustration briefs.
+
 Mark every place a screenshot or diagram would help, even if you cannot make the image
 (`STYLE.md` §16). Write the brief as an HTML comment, specific enough that an image model
 produces something usable:
