@@ -131,7 +131,7 @@ def transfer():
     d.path([(406,212),(994,212)])
     d.text(700,141,['Same host ID','and inventory'],32,500)
     d.path([(243,318),(243,452)],ROSE)
-    d.text(243,382,'Old scope',30,500)
+    d.text(80,382,'Old scope',30,500,anchor='start')
     d.rect(48,452,390,222,PINK,ROSE)
     d.text(80,508,'Deleted',36,600,NAVY,anchor='start')
     d.text(80,560,['fleet policy/report results','fleet label memberships'],28,anchor='start',leading=46)
