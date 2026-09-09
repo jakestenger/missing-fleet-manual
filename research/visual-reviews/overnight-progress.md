@@ -2,7 +2,7 @@
 
 Authorized by Jake on 2026-09-08: finish remaining parts and appendices; commit each completed part; review together when the entire manual is complete. He liked Part 0–1. Continue on `feature/part-0-1-visuals`; do not push.
 
-Heartbeat: `complete-fleet-manual-visuals-overnight`, every 30 minutes in this task. Pause it after completion or after all independent work is exhausted and only documented external blockers remain. Do not send routine per-part notifications.
+Heartbeat: `complete-fleet-manual-visuals-overnight`. All independent artwork is complete; pause the heartbeat for the external capture requirement and final joint review.
 
 ## Scope and workflow
 
@@ -28,11 +28,11 @@ Heartbeat: `complete-fleet-manual-visuals-overnight`, every 30 minutes in this t
 | Part VI | 11 | Completed candidates; final review pending | `2d35887` |
 | Part VII | 15 | Completed candidates; final review pending | `0e1274d` |
 | Part VIII | 15 | Completed candidates; final review pending | `bbcc437` |
-| Appendices | 10 | Completed candidates; final review pending | Appendices batch commit (see git log) |
+| Appendices | 10 | Completed candidates; final review pending | `5e0f9bc` |
 
 ## Blockers
 
-Part V’s 5.5 My Device screenshot requires an accessible, consented demo host on Fleet 4.90.0 with Fleet Desktop and self-service configured. No suitable capture was found in the repos or available app/browser surfaces, and the local Docker daemon is unavailable. `part-5/capture-blockers.json` records the checks and capture plan. Continue Parts VI–VIII and appendices; do not repeatedly retry this capture without a new source. Other legacy capture briefs still need inspection when reached.
+Part V’s 5.5 My Device screenshot requires an accessible, consented demo host on Fleet 4.90.0 with Fleet Desktop and self-service configured. No suitable capture was found in the repos or available app/browser surfaces, and the local Docker daemon is unavailable. `part-5/capture-blockers.json` records the checks and capture plan. All remaining parts and appendices are now complete. Do not retry this capture without a new source. All other pending briefs have candidates.
 
 ## Validation
 
@@ -119,3 +119,13 @@ All native figures were inspected at 720 px. Grayscale spotchecks covered file-s
 Validation passed: production website build, 83 chapter links, em-dash and whitespace checks, ten source/asset sets, SVG XML/fonts/terminology, current packaged briefs and unchanged visible chapter content. Existing nonblocking redo markers remain pending. The appendix batch is committed separately and copied to outputs.
 
 Next: final collection audit, synchronize older brief metadata, check prompt placement, then pause the existing heartbeat when only the authentic capture and joint review remain. Prepare a concise final handoff with the collection link and exact capture requirement.
+
+## Final collection audit
+
+108 unique candidates are ready: 97 editable SVG diagrams and 11 raster images across nine batches. Exactly one of the 109 pending image briefs has no candidate: Part V's authentic My Device screenshot. Every source and candidate exists, every gallery link resolves, and all packaged chapter comments match the manuscript. Parts II–IV had 31 stale `brief` fields in both package records and the remaining inventory; these now match the current chapter comments without changing or regenerating artwork.
+
+All 97 SVGs parse and use labels at least 28 px at 1400 px source width. Automated terminology checks found no old team names or capitalized fleet-group labels in native artwork. Every chapter has image comments, none lies inside a code fence, visible manuscript words match the branch base after excluding comments, and all existing published artwork is unchanged. Chapter 8.2 retains only the documented whitespace difference from relocating comments outside a shell fence. All TODO/REDO acceptance states remain pending.
+
+The final appendix production build and repository checks passed. Final metadata-only changes pass whitespace and gallery/source checks. Each part has its own commit, with a final collection-audit commit afterward. The public branch remains feature/part-0-1-visuals; no push or private-repo modification was performed by overnight production.
+
+The final review package is in outputs/manual-visuals/index.html, with REVIEW.md describing counts, commits, review scope and the capture requirement. Pause the heartbeat now: independent production is exhausted. Resume only for new capture access, joint review or requested revisions.
