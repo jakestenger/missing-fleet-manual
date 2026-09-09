@@ -18,21 +18,23 @@ feature_requests:
 
 # API access, versioning, and exposure
 
-![Reference](../_assets/icons/reference-light.svg) Fleet's request surface is easier to reason about once you stop reading it as a list of endpoints and start reading it as **callers**. Five of them share a credential Fleet's own authenticator understands. Everything else bypasses that authenticator, and **whether such a route requires anything at all has to be established route by route**: some carry a token or a certificate, and some are genuinely unauthenticated.
+![Reference](../_assets/icons/reference-light.svg) Start an API access review by identifying the caller and its credential. Fleet has five classes handled by shared authenticators. Other routes check credentials inside their own handlers or require none, so their requirements need to be checked individually.
 
-**What a caller must present is the useful grouping. What has to be reachable is a different question**, answered by capability further down, and the two do not line up neatly enough to organise one table by the other.
+Authentication and network reachability answer different questions. The caller model below explains credentials; the capability matrix later identifies the paths each workflow needs.
 
-## What this appendix carries
+<a id="what-this-appendix-carries"></a>
 
-![Reference](../_assets/icons/reference-light.svg) The caller model, the authentication rules, the versioning scheme, and the matrix of what has to be reachable from where. Those are the parts that make the request surface usable and that are not collected in one place anywhere else.
+## Coverage and related references
 
-Per-endpoint parameters, request bodies and response shapes live in Fleet's own REST API reference. **That reference is hand-maintained**, so treat it as the best available account rather than a guarantee that it matches the release you are running. This appendix points there rather than copying it.
+![Reference](../_assets/icons/reference-light.svg) This appendix covers callers, authentication, version prefixes, required network paths, and the registered route catalog.
 
-Three questions belong elsewhere and are deliberately unanswered here. **Which role may perform an action is [a.4](a.4-roles-and-permissions-matrix.md)**, which carries it action by action against all six roles at both scopes; [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) explains the model behind it. **Which interface can perform it at all is [a.5](a.5-interface-index.md)**, which carries every action against all four. How to use the API in practice is [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md), which is written.
+Use Fleet’s REST API reference for endpoint parameters, request bodies, and response fields. It is maintained separately from the code, so compare it with your server’s release when behavior differs.
+
+See [a.4](a.4-roles-and-permissions-matrix.md) for permissions, [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) for the role model, and [a.5](a.5-interface-index.md) for interface coverage. [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md) provides practical API examples.
 
 ## Who calls Fleet, and what they present
 
-![Reference](../_assets/icons/reference-light.svg) **Five shared-credential classes, and everything else.** This groups callers by what they must present. It is not a claim about how Fleet registers routes: Fleet does not pass every handler through one of six constructors, and several of the most important paths are registered directly on the root router.
+![Reference](../_assets/icons/reference-light.svg) Five classes share Fleet credential checks. The last row groups routes with separate authentication behavior, including several registered directly on the root router.
 
 | Class | Who calls it | What it presents |
 |---|---|---|
@@ -43,21 +45,21 @@ Three questions belong elsewhere and are deliberately unanswered here. **Which r
 | **fleetd certificate** | fleetd, fetching a certificate template Fleet has asked it to install and reporting the result | The **Orbit** node key, in an `Authentication` header |
 | **Route-local or protocol** | Everything that does not go through Fleet's shared authenticator. Some of these check a credential themselves; **some require none at all** | An enrollment secret, a download token, a SAML response, a query-string token, a device identity certificate, a credential inside a protocol message, or nothing |
 
-> **The last row is not a class in the sense the other five are.** It is everything left over once the shared authenticator is out of the picture, so **membership tells you nothing**: what a route requires has to be read off that route.
+> Route-local authentication varies by handler. Google’s Android callback uses a route-specific token; over-the-air enrollment uses an enroll secret; Apple MDM authenticates device identity certificates.
 >
-> Google's callback for Android events presents a route-specific token. An over-the-air enrollment presents an enroll secret. Apple's protocol paths authenticate the device by its identity certificate. Of the five Windows protocol paths, **policy and enrollment take a token in the request, and management authenticates the device inside the handler**, by a client certificate whose common name carries the device identifier or, failing that, a credential in the message itself. **Discovery and the terms-of-use page genuinely require nothing**, which is ordinary for pre-enrollment surfaces.
+> Of the five Windows protocol paths, policy and enrollment use a request token. Management checks a device certificate whose common name contains the device identifier, falling back to a credential in the message. Discovery and terms of use require no credential.
 >
-> What the row's members have in common is only that Fleet's usual authentication middleware did not run. **Fleet's registration comments describe that layer, not the route**, and one of them calls the management path unauthenticated while the handler beneath it rejects an untrusted device. Read the handler.
+> Registration comments describe the middleware layer. A management route labeled unauthenticated there can still reject an untrusted device inside its handler. Inspect that handler before classifying the route as open.
 
-The first class is the one people mean by "the Fleet API". The Host and Orbit classes are why [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) treats a host's credentials as more than one thing: they authenticate separately with separate keys, so a host can be half-working in a way a single credential could not produce.
+User authentication covers the administrator-facing REST API. Host and Orbit authentication use separate keys, so one agent channel can work while the other fails. [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md) explains those credentials.
 
-**The Device class is the one most often missed when planning exposure, and it is far larger than the page it is named after.** It authenticates the device rather than the person, and at this release it carries policies, software inventory, self-service install and uninstall, certificates, the setup-experience status, Linux escrow triggering, conditional-access bypass and MDM migration, alongside the ping and desktop calls that Fleet Desktop needs for its failing-policy count. Exposing only those two leaves most of what an end user can do unreachable, and the symptom is a device page that loads and does nothing.
+The Device class covers more than Fleet Desktop’s ping and policy count. It also serves policies, software inventory, self-service install and uninstall, certificates, setup status, Linux escrow, conditional-access bypass, and MDM migration. Exposing only ping and desktop calls can leave a device page that loads but cannot complete those actions.
 
-**The fleetd certificate class is easy to mistake for an Android class.** It is not Google calling Fleet. It is fleetd on a device, holding an Orbit node key, asking for a certificate template and reporting what it did with it. Google's own callback belongs to the route-local class.
+The fleetd certificate caller is the agent fetching certificate templates and reporting results with its Orbit node key. Google’s Android event callback uses route-local authentication instead.
 
 ## How a user request authenticates
 
-![Reference](../_assets/icons/reference-light.svg) A Fleet API token belongs to a user account, which is what makes [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md)'s advice about giving automation its own account matter: the token inherits that account's role and scope, and the activity record attributes the work to it.
+![Reference](../_assets/icons/reference-light.svg) API tokens inherit their account’s role and scope, and activities attribute work to that account. Give each automation its own account to make that attribution useful ([2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md)).
 
 Send it as a bearer token:
 
@@ -65,13 +67,15 @@ Send it as a bearer token:
 Authorization: Bearer <your token>
 ```
 
-Two ways to obtain one. Through the UI, under **My account** and **Get API token**. Or by calling the login endpoint with an email and password, which returns a token.
+Get a token through **My account → Get API token**, or through the email-and-password login endpoint.
 
-**For SSO and MFA users the second route is closed.** Email and password login is disabled for those accounts, so the token has to come from the profile page in the UI. An automation account created for API use is the usual answer, and [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) covers creating one with an explicit role.
+SSO and MFA accounts cannot use email-and-password login for this purpose; obtain their token from the UI profile page. For unattended work, create an API-only account with an explicit role ([2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md)).
 
-## Version prefixes expand for some routes and not others
+<a id="version-prefixes-expand-for-some-routes-and-not-others"></a>
 
-![Reference](../_assets/icons/reference-light.svg) **A route declared with Fleet's version placeholder** is registered under each version its own registering module declares, plus a `latest` alias. So a core route such as the host list exists at three paths at once:
+## Version prefixes and literal paths
+
+![Reference](../_assets/icons/reference-light.svg) A route using Fleet’s version placeholder expands to its module’s supported versions and a `latest` alias. A core route such as the host list therefore has three paths:
 
 ```
 /api/v1/fleet/hosts
@@ -79,29 +83,31 @@ Two ways to obtain one. Through the UI, under **My account** and **Get API token
 /api/latest/fleet/hosts
 ```
 
-`latest` is inserted into the route expression and handled directly, so nothing resolves or forwards at request time.
+`latest` is a registered route alias handled directly, without request-time redirection.
 
-> ### Three things narrow or bypass that expansion
+> ### Expansion varies by module and route
 >
-> **Each module declares its own ordered set.** The core module declares `v1` and `2022-04`. The Android module declares `v1` alone, so its versioned routes exist at `v1` and `latest` and never at `2022-04`.
+> The core module declares `v1` and `2022-04`; Android declares only `v1`. Android’s versioned routes therefore have `v1` and `latest` forms, with no `2022-04` form.
 >
-> **An individual route can narrow its module's set further**, with its own start and end boundaries. A route that ends before its module's last version does not get a `latest` alias at all.
+> A route can narrow its module’s versions with start and end bounds. If it ends before the module’s newest version, it has no `latest` alias.
 >
-> **Some paths are literal and never expand.** Fleet's own SSO initiation and callback are written as `/api/v1/fleet/sso`, fixed. So is Android's event callback. And the Apple MDM protocol paths, the SCEP service, Apple service discovery and the Platform SSO well-known document are registered directly on the root router, outside the versioned mechanism entirely.
+> Literal paths do not expand. These include `/api/v1/fleet/sso` and its callback, Android’s event callback, and root-router registrations for Apple MDM, SCEP, Apple service discovery, and the Platform SSO well-known document.
 
-That has one practical consequence worth planning around. **A proxy rule, allowlist or firewall pattern written against `/api/v1/` does not cover the rest.** Fleet's own documentation uses `/api/v1/` and `/api/latest/` in different places and both work, so matching one literal version lets some traffic through and not other traffic doing exactly the same thing.
+A proxy rule covering only `/api/v1/` misses equivalent calls using another registered prefix. Fleet’s documentation uses both `v1` and `latest`, so account for the paths your callers use.
 
-**Match the three prefixes explicitly rather than with a wildcard.** `v1`, `2022-04` and `latest` are the complete set at this release. A wildcard segment written as `/api/*/fleet/` means different things in different proxies and will accept segments you did not intend. Then handle the unversioned families separately: `/api/fleet/orbit/*`, `/api/osquery/*`, `/api/fleetd/*`, `/api/mdm/*`, `/api/setup`, and the paths outside `/api` below.
+Match the supported prefixes explicitly: `v1`, `2022-04`, and `latest`. Wildcard semantics differ by proxy and can accept unintended segments. Handle unversioned families separately: `/api/fleet/orbit/*`, `/api/osquery/*`, `/api/fleetd/*`, `/api/mdm/*`, `/api/setup`, and the root paths below.
 
-## Paths outside `/api`, a prefix, and which base URL Fleet advertises
+<a id="paths-outside-api-a-prefix-and-which-base-url-fleet-advertises"></a>
 
-![Reference](../_assets/icons/reference-light.svg) Some routes are deliberately not under `/api`, because they are not REST endpoints and are not meant for API clients or browsers. The Apple MDM protocol paths are the clearest case, along with the SCEP service, the SCEP proxy used for delivering your own certificates, and the Platform SSO well-known document.
+## Root paths, URL prefixes, and advertised hostnames
 
-A proxy configuration written on the assumption that everything Fleet serves lives under `/api` will miss them, and the symptom is device management failing while the API and UI look healthy. [2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md) covers why the set of these grows as features are enabled.
+![Reference](../_assets/icons/reference-light.svg) Fleet serves some protocol paths outside `/api`, including Apple MDM, SCEP, the custom SCEP proxy, and the Platform SSO well-known document.
 
-**A configured URL prefix is prepended to everything Fleet serves**, including the paths on the root router, because Fleet wraps the finished router and strips the prefix before dispatch. Every path in this appendix is origin-relative and assumes no prefix.
+A proxy exposing only `/api` can leave these workflows unavailable while the UI and REST calls work. Review the required paths when enabling another capability ([2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md)).
 
-**Apple device management can be given its own server URL, and that is a narrower thing than it sounds.** It does not create a second listener and it does not make any path unreachable at the main origin, which Fleet expects to resolve to the same server. What it changes is **which base URL Fleet advertises** when it builds a URL for a device or a profile:
+A configured URL prefix applies to the entire router, including root paths. Fleet strips it before dispatch. The paths in this appendix are origin-relative and assume no configured prefix.
+
+An Apple MDM server URL changes the base URL Fleet advertises in selected device and profile links. It creates no second listener and does not remove paths from the main origin; both hostnames are expected to reach the same Fleet server.
 
 | Advertised at the Apple URL | Still advertised at the main URL |
 |---|---|
@@ -110,29 +116,25 @@ A proxy configuration written on the assumption that everything Fleet serves liv
 | MDM setup SSO and account-driven enrollment | The in-house app **manifest** |
 | Generated SCEP-proxy URLs, **including the ones written into Windows profiles** | The server URL fleetd is given |
 
-**Two downloads may not be on a Fleet hostname at all.** Where a content delivery network is configured, the bootstrap package and an in-house app's **package** are handed out as signed CDN URLs. **Configured is not the same as used**: if signing fails, or the stored object cannot be confirmed, Fleet falls back and hands out a Fleet URL instead, logging the failure. The two fall back to different places, the bootstrap package to the Apple base URL and the in-house package to the main server URL.
+With a configured CDN, Fleet can issue signed URLs for bootstrap packages and in-house app packages. If signing fails or the stored object cannot be confirmed, Fleet logs the failure and falls back to its own URL: the Apple base URL for bootstrap packages, or the main server URL for in-house packages.
 
-So those two rows are conditional in a way the rest are not: **the path is registered and reachable either way, and which origin a device is sent to depends on configuration you hold and on whether signing worked at that moment.** Expose the Fleet paths regardless. The in-house app's manifest always stays on the main Fleet URL, so a manifest and its package can end up on different hosts.
+Keep those Fleet download paths reachable even when using a CDN, since the fallback can be needed for an individual request. In-house app manifests always use the main Fleet URL, so a manifest and its package may use different origins.
 
-The ingress question is therefore not "which paths moved" but **"which hostname will a device have been told to use"**, and every hostname you advertise needs to reach the same Fleet.
+For ingress planning, check the hostname actually advertised to the device. Each Fleet hostname you advertise must reach the same deployment.
 
 ## What has to be reachable, by capability
 
-![Reference](../_assets/icons/reference-light.svg) This is the matrix network reviews ask for, and the one genuinely uncollected elsewhere. **Expose only what a capability needs.**
+![Reference](../_assets/icons/reference-light.svg) Use this matrix to select the inbound paths required by each enabled capability.
 
-> ### What this matrix includes, and what it does not
+> ### Matrix scope
 >
-> **Included:** every path a caller outside the Fleet server must reach for a named capability to work. Devices, end users, administrators, and third parties calling in.
+> This matrix covers paths needed by external callers for the named capabilities: devices, end users, administrators, and third parties.
 >
-> **Excluded deliberately, each for a reason.** Fleet's health, version and metrics endpoints and its debug tree are operator surfaces rather than capability surfaces, and [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md) governs who should reach them. The metrics endpoint in particular is not mounted at all unless you either configure credentials for it or explicitly disable its basic authentication. The UI's own frontend and asset routes are excluded except where a capability's flow passes through one, which is called out where it happens.
+> Operator endpoints for health, version, metrics, and debug are covered in [7.4](../07-operate-fleet/7.4-observe-progress-and-service-health.md). Metrics is mounted only when credentials are configured or its basic authentication is explicitly disabled. General UI and asset routes are included here only when a listed workflow depends on them.
 >
-> **A capability absent from this matrix has not been assessed**, rather than been found to need nothing. The ledger records which were assessed.
->
-> **Registered is not the same as required, and that difference is most of this matrix's value.** A route registration tells you a path exists and how it matches. It does not tell you a capability needs that path open. Fleet routinely registers a route under all three version prefixes and then emits exactly one of them in the URL it hands to a device, a browser or a third party, and **the emitted one is what has to be reachable**. Several rows below name a deprecated path for that reason: the replacement is registered, and the older path is the one Fleet still sends.
->
-> Where a row names a narrower set than the prefix rules above would suggest, that is deliberate. Opening what Fleet emits is the smaller configuration; opening every registered alias is not wrong, only wider.
+> An absent capability has not been assessed. For those listed, the matrix follows the URL Fleet emits to a device or external caller. A route may be registered under several prefixes while the workflow uses only one, sometimes a deprecated form. Opening that emitted path is sufficient for that flow; opening its aliases provides broader coverage.
 
-**Four capabilities have prerequisites beyond exposure.** SCIM and the SCEP proxy are Premium. Okta conditional access is Premium **and** needs the server private key configured. Apple's root protocol services need that key too, and are not mounted at all without it.
+SCIM and custom SCEP proxying require Premium. Okta conditional access additionally requires the server private key. Apple’s root protocol services also require that key and are not mounted without it.
 
 **Baseline, for agents on devices that leave the network:**
 
@@ -142,9 +144,9 @@ The ingress question is therefore not "which paths moved" but **"which hostname 
 | `/api/fleet/orbit/*` | Orbit, including scripts and software |
 | `/api/{v1,2022-04,latest}/fleet/device/*` | **The whole Device class.** Fleet Desktop's ping and counts, and everything an end user does on their own device page |
 
-**For `fleetctl` and API clients from outside the network**, add `/api/{v1,2022-04,latest}/fleet/*`, plus `/api/setup` and `/api/v1/setup` for the initial setup flow. **Setup is not a versioned family**: there is no `/api/2022-04/setup` and no `/api/latest/setup`.
+For off-network `fleetctl` and API clients, add `/api/{v1,2022-04,latest}/fleet/*`. Initial setup uses `/api/setup` and `/api/v1/setup`; it has no `2022-04` or `latest` variant.
 
-**For identity**, Fleet's own SSO is `/api/v1/fleet/sso` and `/api/v1/fleet/sso/callback`, both literal `v1` paths reachable under **no other API-version prefix**, though a configured URL prefix still precedes them.
+Fleet account SSO uses the literal paths `/api/v1/fleet/sso` and `/api/v1/fleet/sso/callback`. Other API-version prefixes do not apply, although a configured URL prefix still does.
 
 **SCIM provisioning** is prefix-mounted at `/api/v1/fleet/scim/` and `/api/latest/fleet/scim/`, and those two are what your identity provider needs ([2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md)). One SCIM path is outside that mount: the details endpoint is an ordinary core route and therefore also exists at `2022-04`. SCIM is Premium.
 
@@ -159,11 +161,11 @@ The ingress question is therefore not "which paths moved" but **"which hostname 
 | Bootstrap package | **`/api/latest/fleet/mdm/bootstrap`**, also the deprecated form, hard-coded into the URL Fleet builds, **and used only when a CDN URL is not** (see above). Expose it either way |
 | Fleet's Platform SSO extension | `/api/mdm/apple/psso/*` and `/.well-known/apple-app-site-association` |
 
-**For any Apple device enrolled by link**, which is macOS as well as iOS and iPadOS, the chain is `/enroll`, then `/api/v1/fleet/enrollment_profiles/ota`, then **`/api/v1/fleet/ota_enrollment`**, which is where the profile the second one hands out sends the device next. The last two exist under the other prefixes and **Fleet emits `v1` at both transitions**. Omitting the third leaves an enrollment that starts and never completes. None of them is platform-specific: a reverse proxy that exposes them only for mobile will block a Mac enrolling from the **Add hosts** link ([3.2](../03-connect-devices/3.2-enroll-macos-devices.md), [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md)).
+Apple enrollment by link uses `/enroll`, `/api/v1/fleet/enrollment_profiles/ota`, then `/api/v1/fleet/ota_enrollment`. Fleet emits `v1` at both transitions, and all three paths must be reachable. This covers Macs using **Add hosts** as well as iPhones and iPads ([3.2](../03-connect-devices/3.2-enroll-macos-devices.md), [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md)).
 
-**For iOS and iPadOS specifically**, in-house app delivery adds **two** paths, and Fleet emits `latest` for both: `/api/latest/fleet/software/titles/*/in_house_app/{token}` and `/api/latest/fleet/software/titles/*/in_house_app/manifest/{token}`. A rule matching only the first serves the app and not the manifest that tells the device to install it. **The package path is the one a CDN URL can replace**; the manifest path never moves.
+For iOS/iPadOS in-house apps, expose both `/api/latest/fleet/software/titles/*/in_house_app/{token}` and `/api/latest/fleet/software/titles/*/in_house_app/manifest/{token}`. The manifest directs installation and remains on Fleet; a signed CDN URL can replace only the package download.
 
-**Account-driven user enrollment** needs each of these, and they are separate registrations rather than one family:
+Account-driven user enrollment requires these separately registered paths:
 
 | Path | For |
 |---|---|
@@ -174,19 +176,19 @@ The ingress question is therefore not "which paths moved" but **"which hostname 
 
 **For Windows device management**, add the four Microsoft protocol paths under `/api/mdm/microsoft/`, which are `management`, `discovery`, `policy` and `enroll`, plus `/api/mdm/microsoft/tos` for automatic enrollment. [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md) covers why exposing some but not all of these fails partway rather than cleanly.
 
-**For Android**, add `/enroll`, `/api/v1/fleet/android_enterprise/enrollment_token`, and the enablement callback `/api/v1/fleet/android_enterprise/connect/{token}`. **Android's module declares `v1` alone**, so its routes exist at `v1` and `latest` and nowhere else, which is why the prefix set here is shorter than everywhere above, and **Fleet emits `v1` in both the enrollment page and the signup callback it generates**. The event callback `/api/v1/fleet/android_enterprise/pubsub` is a literal `v1` path, is how Google delivers device events, and is why [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md) requires a publicly reachable server URL.
+Android uses `/enroll`, `/api/v1/fleet/android_enterprise/enrollment_token`, and `/api/v1/fleet/android_enterprise/connect/{token}` for enrollment and enablement. The module supports `v1` and `latest`, while the generated enrollment and signup links use `v1`. Google sends device events to the literal `/api/v1/fleet/android_enterprise/pubsub` callback, which requires a publicly reachable server URL ([2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md)).
 
 **For delivering your own certificates to devices**, rather than Fleet's, add `/mdm/scep/proxy/*`, which sits outside `/api`. Where fleetd fetches and reports on those certificates, add `/api/fleetd/certificates/*`. The integrations these deliver from are created and managed through the `/api/*/fleet/certificate_authorities` endpoints, which are the API behind [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md); the per-authority `request_certificate` route issues from an existing authority and is accepted only for Hydrant and custom EST authorities.
 
-**For the Google Calendar integration**, add `/api/v1/fleet/calendar/webhook/{event_uuid}`. The route is registered under all three prefixes and **the address Fleet supplies to Google is the `v1` one**, so that is the one Google will call.
+Google Calendar calls `/api/v1/fleet/calendar/webhook/{event_uuid}`. Although all three prefixes are registered, Fleet supplies Google with the `v1` address.
 
 **For Okta conditional access**, add `/api/fleet/conditional_access/scep`, `/api/fleet/conditional_access/idp/metadata` and `/api/fleet/conditional_access/idp/sso`. None of the three is versioned. **They do not all belong to the same origin**: Fleet builds the SSO URL against the conditional-access hostname, which is expected to be reached over mutual TLS, while metadata and SCEP sit on Fleet's ordinary origin. It is Premium, and requires the server private key.
 
 ## Data inventory and trust boundaries
 
-![Reference](../_assets/icons/reference-light.svg) A privacy or data-protection review asks six questions of each kind of data: where it comes from, how it travels, where it is stored, how long it is kept, who outside Fleet receives it, and which setting controls that. The manual answers all six, but per data class in the chapter that owns each one. This is the route in: it names the data Fleet holds and points each class at the chapter that governs it, the way the exposure matrix above does for network paths.
+![Reference](../_assets/icons/reference-light.svg) A data review needs to establish collection source, transport, storage, retention, external recipients, and controlling settings. Use this table to find the chapter covering each data class.
 
-**Where Fleet keeps state.** MySQL is the system of record and holds nearly everything: configuration, hosts, policies, activity, and escrowed credentials, including the Apple certificate-authority material, encrypted. Installer bytes, icons, and bootstrap packages live in file or object storage, referenced from MySQL, and where that is is a deployment choice. Redis holds transient coordination state such as live report results and pending notification sets. Some of the most sensitive material lives outside all three, in your configuration rather than the database: the server private key, the Windows enrollment identity and its key, and your other certificates. [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md) is the authority on that split and on the three separate disk-encryption escrow chains. Retention and cleanup for each class is set in the chapter that owns it.
+MySQL holds configuration, hosts, policies, activities, and escrowed credentials, including encrypted Apple certificate-authority material. File or object storage holds installers, icons, and bootstrap packages. Redis handles transient coordination such as live-report results and pending notifications. Other sensitive material remains in deployment configuration, including the server private key and Windows enrollment identity and key. [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md) covers this storage split and the three disk-encryption escrow chains; the data-specific chapters cover retention.
 
 | Data class | Held in | Governed by |
 |---|---|---|
@@ -199,7 +201,11 @@ The ingress question is therefore not "which paths moved" but **"which hostname 
 | Human and service accounts: names, emails, password hashes, sessions, API tokens | MySQL | [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) |
 | Server private key and other key material | Configuration, outside the database | [1.6](../01-foundations/1.6-the-fleet-server.md); preservation in [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md) |
 
-**What crosses a trust boundary, and to whom.** Most of the data above stays within Fleet until something is configured to move it. Activity, audit, and osquery logs go to the log destinations you set ([2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md)). Fleet authenticates outward to Apple ([2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md), [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md)), to Google for Android ([2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md)), to your certificate authorities ([2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md)), and to your identity provider ([2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md)); Fleet stores the long-lived credentials for those connections and presents each one, or a bearer token derived from it, to the remote service when it authenticates. What never leaves the server is the server private key that encrypts those stored credentials at rest ([2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md)). An enabled MCP server exposes host, software, vulnerability, and policy data to a connected AI assistant over a separate transport ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md), [A.11](a.11-mcp-tool-reference.md)). Integrations and webhooks send what each is configured to send (Part VI), and opening a support case shares whatever diagnostics you attach ([8.13](../08-troubleshooting/8.13-escalation.md)). Inbound flows are of two kinds. Fleet pulls several external data sets, each an outbound request whose response is the data that comes back: the vulnerability feed it matches software against known CVEs ([4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md)), the manifests behind Fleet-maintained software ([5.4](../05-manage-devices/5.4-manage-software-and-applications.md)), and Apple's VPP assignment and catalog sync ([2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md)). One flow is a genuine externally-initiated callback: Google pushes Android device and enterprise events to Fleet over Pub/Sub ([2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md)). The device and caller boundaries themselves, and exactly which paths cross them, are the exposure matrix above.
+Configured log destinations receive activity, audit, and osquery data ([2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md)). Integrations authenticate to Apple ([2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md), [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md)), Google ([2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md)), certificate authorities ([2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md)), and identity providers ([2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md)) using stored credentials or derived tokens. Fleet’s encryption private key remains on the server.
+
+An enabled MCP server shares selected host, software, vulnerability, and policy data with the connected assistant ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md), [A.11](a.11-mcp-tool-reference.md)). Webhooks and integrations send their configured payloads, and support cases include the diagnostics you attach ([8.13](../08-troubleshooting/8.13-escalation.md)).
+
+Fleet also fetches external data through outbound requests: vulnerability feeds ([4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md)), maintained-app manifests ([5.4](../05-manage-devices/5.4-manage-software-and-applications.md)), and Apple VPP assignments and catalogs ([2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md)). Android device and enterprise events arrive through Google’s Pub/Sub callback ([2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md)). The exposure matrix identifies the inbound paths.
 
 ## API conventions
 
@@ -213,15 +219,15 @@ An endpoint's valid `order_key` values are its own, and Fleet's reference docume
 
 ## The shared response and error contract
 
-![Reference](../_assets/icons/reference-light.svg) The catalog gives each route its method, path and authentication class, and Fleet's REST reference gives each endpoint its own fields. What every JSON route shares underneath those per-endpoint details is one envelope, and knowing its shape lets a client be written once against the contract rather than rediscovered endpoint by endpoint. Verified against Fleet 4.90.0.
+![Reference](../_assets/icons/reference-light.svg) The shared JSON response format below was verified at Fleet 4.90.0. Use it alongside the catalog’s method, path, and authentication entries and the REST reference’s endpoint-specific fields.
 
-A successful call returns a single JSON object, keyed by what it carries, not a bare array. A read returns its resource under a named field, `hosts` for a host list, `activities` for an activity list, `api_endpoints` for the catalog above; a write returns the object it created or changed under the same kind of key. A call with nothing to return answers `204 No Content` with an empty body rather than an empty object, and the rest answer `200 OK` unless the handler declares its own success status.
+Successful JSON calls return a named resource field, such as `hosts`, `activities`, or `api_endpoints`, inside an object. Writes return the created or updated resource in the same style. Responses default to `200 OK` unless the handler specifies another success status. An operation with no result body returns `204 No Content`.
 
-A list response carries paging alongside its array. A `meta` object holds `has_next_results` and `has_previous_results`, two booleans that tell a client whether another page exists in either direction without inferring it from the row count, and some list responses add a top-level `count`. This is the response side of the `page` and `per_page` request convention above; [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md#page-filter-and-order-complete-result-sets) walks a full paged sweep.
+List responses include paging information in `meta.has_next_results` and `meta.has_previous_results`; some also include a top-level `count`. Use the paging fields with `page` and `per_page` to retrieve a complete result set ([6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md#page-filter-and-order-complete-result-sets)).
 
-Where Fleet has renamed a field, the response can carry the value under both the old and the new key for a release, so a client written before the rename keeps working after it. Read the name you expect and do not assume only one is present. [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md#renamed-fields-in-request-and-response-bodies) is where this bites on a write.
+After a field rename, responses can include both current and deprecated keys. Read the expected key without assuming it is the only spelling present. [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md#renamed-fields-in-request-and-response-bodies) explains how this affects writes.
 
-A failed call replaces that envelope with a consistent one of its own: a `message` naming the class of failure, an `errors` array whose entries each carry a `name` and a `reason`, and, where the server attached one, a `uuid` you can quote in a support case to tie the response to its own log line. The `message` and the status follow the failure class rather than the endpoint.
+The error envelope contains a `message` and an `errors` array with `name` and `reason` entries. Some errors include a `uuid` that connects the response to a server log entry and can be included in a support case.
 
 | Failure | Status | `message` |
 |---|---|---|
@@ -232,31 +238,35 @@ A failed call replaces that envelope with a consistent one of its own: a `messag
 | Conflicting state | 409 | `Conflict` |
 | Malformed request | 400 | `Bad request` |
 
-Statuses raised around a handler rather than by it sit outside this table: a missing or invalid credential is a 401 and a license limit is a 402, both decided before the handler's own logic runs. [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md#handle-errors-limits-and-ambiguous-writes) reads all of these codes in practice, including the ones that turn on the route rather than the failure class.
+Authentication failures use `401`, while licence restrictions use `402`. These checks can occur outside the handler’s normal error path. [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md#handle-errors-limits-and-ambiguous-writes) explains how to handle these statuses and route-specific exceptions.
 
-## Where the rest lives
+<a id="where-the-rest-lives"></a>
 
-![Reference](../_assets/icons/reference-light.svg) This appendix gives the method, path and authentication class for each action, and the shared envelope above; it does not reproduce per-endpoint request bodies, response fields, or parameters. Fleet's own REST API reference at `fleetdm.com/docs/rest-api/rest-api` is the best available account of those, but it is hand-maintained and describes the current release rather than 4.90.0 specifically, so a mismatch against what you observe is a version question, not necessarily an error in either source; the version-pinned copy of that same reference, checked out at the tag this manual verifies against, is linked under further reading. Endpoints intended for contributors rather than administrators are documented separately in the Fleet repository.
+## Endpoint-specific documentation
+
+![Reference](../_assets/icons/reference-light.svg) Fleet’s REST reference at `fleetdm.com/docs/rest-api/rest-api` documents request bodies, response fields, and parameters. That page follows the current release; the 4.90.0 copy linked under further reading provides the baseline used here. Compare versions when a documented field differs from your deployment. Contributor-facing endpoints are documented separately in Fleet’s repository.
 
 Which actions each role may perform is [a.4](a.4-roles-and-permissions-matrix.md). Which surface can perform one at all is [a.5](a.5-interface-index.md), which carries every action against all four interfaces.
 
 ## Version notes
 
-![Reference](../_assets/icons/reference-light.svg) Verified against Fleet 4.90.0. `v1` and `2022-04` are what the **core** module declares at this release; other modules declare their own, and `latest` is added to whatever set each declares.
+![Reference](../_assets/icons/reference-light.svg) Verified against Fleet 4.90.0. The core module declares `v1` and `2022-04`; other modules declare their own version sets. Eligible routes also receive a `latest` alias.
 
-**The exposure matrix above is deliberately selective, not a complete inventory of everything Fleet serves.** The complete list of routes the server registers is the catalog at the end of this appendix. Fleet also embeds a catalogue of method-and-path entries which is sometimes mistaken for a route inventory, and it is not: **it is the allowlist consulted for API-only accounts that carry a non-empty endpoint restriction list**, and it constrains nobody else. **It also does not constrain every route those accounts can reach**: the check is wired into the API endpoint chains, so any route served outside them is beyond it. Fleet's debug tree is registered on the root with its own authentication, and the live-query results stream authenticates its own bearer inside the websocket handler, so a restricted account reaches both whether or not the list names them ([a.4](a.4-roles-and-permissions-matrix.md)). Its own validation runs in one direction, checking that every catalogue entry has a registered route, which establishes nothing about the reverse, and Fleet separately registers backward-compatible aliases the catalogue does not carry. The catalogue's size is withheld here rather than reported as though it were a route count, because deriving it honestly requires running it through Fleet's own loader rather than counting entries.
+The exposure matrix, route catalog, and API-only endpoint restriction list serve different purposes. The restriction list is consulted only for API-only accounts with a non-empty list, and only within the endpoint middleware that enforces it. Debug routes and live-query result streams use separate authentication and bypass that restriction; their own checks still apply ([a.4](a.4-roles-and-permissions-matrix.md)).
 
-**The exposure matrix is the part most likely to change between releases**, because it grows as features are enabled and as features are added. Re-check it against Fleet's own guidance when adding a capability rather than assuming this list still covers it, and re-check it after an upgrade.
+Fleet validates that restriction-catalog entries have registered routes, but that does not establish that every route appears in the list. Backward-compatible aliases can be absent. Treat the list as the accepted vocabulary for endpoint restrictions, rather than a count of all routes.
+
+Recheck required paths when enabling a feature or upgrading Fleet. New capabilities and changed emitted URLs can alter ingress requirements.
 
 ## Retrieving the endpoint catalog
 
-![How-to](../_assets/icons/howto-light.svg) Fleet serves that catalogue itself, so you do not have to transcribe method-and-path pairs by hand when building an API-only user's endpoint restriction list. One read returns every entry Fleet will accept in such a list:
+![How-to](../_assets/icons/howto-light.svg) Retrieve Fleet’s endpoint catalog to build an API-only account’s restriction list from accepted method-and-path pairs:
 
 ```
 GET /api/v1/fleet/rest_api
 ```
 
-The request authenticates as a user, presenting either a console session or an API token, and it is Premium only: on Free the same request returns a missing-license error instead of a catalogue. The caller must be a global admin or a team admin; any other role is refused, so this is an administrator's build step rather than something the restricted account can run for itself. There is no `fleetctl` command and no GitOps form, and the caller cannot reach it through the console either; the API is the only surface that answers it.
+The request requires a user session or API token with global or fleet administrator access and Premium. Free returns a missing-licence error; other roles are refused. Use the API directly, since there is no native `fleetctl` command, GitOps form, or UI control for this read.
 
 The response is a JSON object with one field, `api_endpoints`, an array whose entries each carry the `method` and `path` an allowlist entry needs, alongside a `display_name` and a `deprecated` flag:
 
@@ -268,15 +278,15 @@ The response is a JSON object with one field, `api_endpoints`, an array whose en
 }
 ```
 
-Copy the literal `method` and `path` values into the API-only user's own list, as full pairs with the `/api/v1/fleet` prefix intact, which is the shape [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md#two-starting-allowlist-profiles) submits when it attaches an allowlist to a user. This read is the authoritative source for that list: Fleet permits a restricted request only when its route appears both in this catalogue and in the user's own list, so a pair you compose by hand that this catalogue does not carry can never match. It is the same catalogue the [Version notes](#version-notes) above describe; this is how you read it, not a second list.
+Copy each required `method` and `path` pair literally, including its `/api/v1/fleet` prefix, into the API-only user’s restriction list. [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md#two-starting-allowlist-profiles) gives examples. Within the middleware enforcing restrictions, the route must appear in both this catalog and the user’s list. A hand-written pair absent from the catalog cannot match.
 
 ## The complete route catalog
 
-![Reference](../_assets/icons/reference-light.svg) Like the configuration catalog in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog), this table is generated rather than written. It is read directly from the route registrations the server makes as it builds its router, at the release this manual is pinned to, so it lists what the server actually serves rather than what the REST reference documents. Where the two disagree, the catalog is the authority, for the same reason: it is the registration the running server performs.
+![Reference](../_assets/icons/reference-light.svg) This catalog was generated from route registrations at the pinned release, alongside the [configuration catalog](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog). It records registered paths independently of the hand-maintained REST reference. The generation scope is described below.
 
-It answers a different question from the exposure matrix above. The matrix says which paths a capability requires you to reach; this says which paths exist at all, and what each one asks a caller to present. The Auth column uses the same vocabulary as the caller model at the top of this appendix: a user token, a host, orbit or device key, or nothing where the route is reached before any credential exists. The device-management protocol paths are registered directly on the router and carry their own protocol authentication; they are grouped last.
+The exposure matrix identifies paths required by a workflow; the catalog lists registered API paths and their authentication classes. Device-management protocol routes are grouped last because they register directly on the router and generally use protocol-specific authentication.
 
-Every route the server registers is listed, in three groups: the endpointer routes, the deprecated aliases still served, and the raw protocol routes. None is omitted. `_version_` stands for the API-version prefixes a route expands to, which [Version prefixes expand for some routes and not others](#version-prefixes-expand-for-some-routes-and-not-others) explains. Each route's handler and source location are kept in its HTML comment, not on the page.
+Every route the server registers is listed, in three groups: the endpointer routes, the deprecated aliases still served, and the raw protocol routes. None is omitted. `_version_` represents the prefixes described in [Version prefixes and literal paths](#version-prefixes-and-literal-paths). HTML comments retain each handler and source location for editors.
 
 <!-- To regenerate: python3 build/gen-api-catalog.py --out FILE  (FLEET_SRC overrides the source checkout). Pinned to fleet-v4.90.0 (7c428c6e46). -->
 <!-- GENERATED by build/gen-api-catalog.py; do not edit by hand.
@@ -784,8 +794,7 @@ Every route the server registers is listed, in three groups: the endpointer rout
 
 ### Deprecated path aliases
 
-Old paths still served, mapped onto the same handler as their current path by the
-server's declarative alias table.
+The server’s alias table maps these older paths to the handlers serving their current replacements.
 
 | Method | Deprecated path | Auth | Serves |
 |---|---|---|---|
@@ -850,9 +859,7 @@ server's declarative alias table.
 
 ### Raw mux routes (MDM protocol and setup)
 
-Registered directly on the router rather than through an endpointer. Each of these
-carries its own protocol authentication (a device-management certificate, a SCEP
-challenge, or pre-setup state) rather than a Fleet credential.
+These routes register directly on the router. Most check protocol credentials or state, such as a device certificate, SCEP challenge, or pre-setup state. The two service-discovery paths and app-site-association document accept any caller, as their protocols require.
 
 | Method | Path | Auth |
 |---|---|---|
