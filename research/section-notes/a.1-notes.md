@@ -657,3 +657,24 @@ frontmatter and nothing else in it. It now checks every "N outcomes" figure writ
 against the rows under the heading it sits in, group by group and lane by lane, so this class
 cannot pass again. The no-capability-row register spells its counts as words, which is what keeps
 them out of the check's scope. [[a.2-notes]] [[a.5-notes]]
+
+## Round 4 (2026-09-09, overnight campaign step 7)
+
+**The previous round's "this class cannot pass again" was too strong, and this file is the
+counter-example.** The group-summary table under "Why the eight groups are not the table of
+contents" still read 62 for group 4, and its Outcomes column summed to 383 against a 384-row
+register. Every other figure the round corrected had moved. This one did not, because the check
+added last round matches the phrase "N outcomes" and a table cell is a bare number with no phrase
+to match. That is the third consecutive round in which a figure went stale for want of a check
+that names it, and each time the check written to close it was scoped to the shape of the figure
+that had just gone stale rather than to the figure's meaning.
+
+**What the new check does differently.** `check_a1_group_table` does not look for a phrase. It
+recomputes each of the eight group sections from the `CAP-###` rows under its heading, matches
+the table's rows to those headings by number, checks each row's name against its heading's name
+so the table cannot be reordered or renamed out of step, checks each Outcomes cell against its
+own section, and asserts the column sums to the register total. If the table loses or gains a row
+it fails on the count rather than passing on the seven that remain. Proven by mutating a scratch
+copy back to 62 (both the cell check and the sum check fire), by misspelling a group name, and by
+deleting a row. The live edition only: the frozen 4.90 copy carries 58 for its own 364-row
+register and sums to 364 correctly, and was not touched. [[a.5-notes]] [[a.8-notes]]

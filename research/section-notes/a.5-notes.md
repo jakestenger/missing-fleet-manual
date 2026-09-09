@@ -737,3 +737,25 @@ which the same section's own third paragraph contradicts: on 37 of those 122 the
 rows that would actually flip, which is the figure the later paragraph already states, and keeps
 the second half as what it is: the reason a specification file's reach counts as `fleetctl`
 support at all. [[a.1-notes]] [[a.2-notes]]
+
+## Round 4 (2026-09-09, overnight campaign step 7)
+
+**The replacement sentence overreached, and the figure it needed was a different one.** Round 3
+replaced "the 122 rows it reads `Unsupported`" with "the 85 rows no specification file reaches and
+`fleetctl api` would". 85 is the right size of one set and the wrong warrant for the claim
+attached to it. Recomputed from the committed matrix this round, of the 122 rows whose `fleetctl`
+cell reads `Unsupported` the REST column is `Full` on 40, `Partial` on 34, `Read only` on 1,
+`Not established` on 10 and `Unsupported` on 37. 85 is exactly "REST is not `Unsupported`", which
+is how the third paragraph defines it and where it stays. But this table's own legend says
+`Not established` means "the sources do not settle it", so on those ten the appendix has declined
+to say whether any HTTP caller reaches the action, and it cannot then assert that `fleetctl api`
+would. 75 rows carry a settled non-`Unsupported` REST answer. The boundary sentence now says 75
+and "demonstrably could"; the third paragraph keeps 85 where it is defined, states the 75, and
+names the ten for what they are.
+
+**The check, because none of these four figures had one.** `check_a5_fleetctl_api_figures`
+recomputes 122, 85 and 75 from the matrix and the spelled remainder (ten) from the difference, so
+85 and 75 cannot drift apart and neither can drift from the table. Each regex appends a problem
+when it fails to match, so deleting a sentence fails the gate rather than passing it silently.
+Proven by mutating a scratch copy back to each stale figure, and by deleting the sentence
+outright, and watching every branch fire. [[a.1-notes]] [[a.8-notes]]

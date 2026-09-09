@@ -542,3 +542,37 @@ appears nowhere else in the appendix: the matrix's Apple entry covers hardware a
 of which is this path. The completeness paragraph now names it and says so. Giving it a matrix
 entry of its own means stating which hosts fetch it and under what conditions, which is a
 verification pass rather than a wording fix, so it is left for a later round.
+
+## Round 4 (2026-09-09, overnight campaign step 7)
+
+Two corrections, both inside the boundary paragraph the previous round rewrote. Everything
+below was read at `fleet-v4.91.0` (35fc1c0244) this round, not taken from the review.
+
+**The catalog reads six files, not five.** `HANDLER_FILES` in `build/gen-api-catalog.py` is a
+five-entry list (`server/service/handler.go` plus the android MDM, activity, ACME and chart
+module handlers), and those five supply the endpointer routes and the raw protocol routes. The
+58 deprecated-alias rows come from `ALIASES_GO` at `gen-api-catalog.py:36`, which is
+`server/service/handler_deprecated_paths.go`, parsed by a separate pass. That file is not a set
+of registrations: it declares `deprecatedPathAliases`, 47 `eu.DeprecatedPathAlias` entries whose
+own comment says each "causes the deprecated path(s) to serve the same handler as the primary
+path", and the generator copies each primary route's parsed Auth onto its aliases. So an alias
+row's Auth cell is the primary's by construction in the catalog and by behaviour in the server.
+The committed generated header already named the sixth file; only the prose above it did not.
+
+**The server private key gates four paths, not three.** `cmd/fleet/serve.go:919` opens
+`if len(config.Server.PrivateKey) > 0 {` and closes at `:940`. Inside it, in order:
+`hostidentity.RegisterSCEP` (`:924`), `condaccess.RegisterSCEP` (`:933`) and
+`condaccess.RegisterIdP` (`:938`). The `else` arm at `:941-942` logs "Host identity and
+conditional access SCEP is not available because no server private key has been set up." The two
+SCIM mounts (`scim.RegisterSCIM`, `:915`) and the SCEP proxy (`:912`) sit above that branch,
+inside `license.IsPremium()` only, so they are Premium-gated and not key-gated. The appendix had
+the precondition right for conditional access in the exposure matrix and wrong in the one place
+host identity SCEP appears at all, which is the place a reader has to take it from.
+
+**Not changed, and why.** The osquery enroll registration at `server/service/handler.go:1075`
+carries `WithAltPaths("/api/v1/osquery/enroll")`, so it renders as two rows that both name a
+handler-local credential. The `none` legend names endpoints rather than cells and states no
+number, so nothing there was false; the legend now says "on both of its paths" only because the
+round was already in the file. The gap the previous round named — `/api/fleet/orbit/host_identity/scep`
+having no exposure-matrix entry of its own — is still open and still a verification pass rather
+than a wording fix. [[a.5-notes]]

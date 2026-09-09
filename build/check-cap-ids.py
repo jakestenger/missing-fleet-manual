@@ -489,6 +489,104 @@ def check_a1_outcome_counts(a1_path, a1_rows, problems):
             )
 
 
+def check_a1_group_table(a1_path, a1_rows, problems):
+    """The group-summary table under "Why the eight groups are not the table of contents".
+    Added 2026-09-09 (overnight step 7, round 4): CAP-395 took group 4 to 63 and round 3
+    corrected the group heading above while this table's cell kept 62, so the Outcomes
+    column summed to 383 against a 384-row register and both count checks stayed green.
+    check_a1_outcome_counts matches the phrase "N outcomes" and a bare table cell has no
+    phrase to match, which is the third round running that a figure went stale for want of
+    a check that names it. Each cell is checked against its own group section and the
+    column is checked against the register total, so neither can drift alone."""
+    text = a1_path.read_text()
+    total = len(a1_rows)
+    heads = [(m.start(), m.group(1)) for m in re.finditer(r"^### (\d+\. .+)$", text, re.M)]
+    row_pos = [m.start() for m in re.finditer(r"^\|\s*\*\*CAP-\d+\*\*\s*\|", text, re.M)]
+    by_num = {}
+    for i, (pos, name) in enumerate(heads):
+        end = heads[i + 1][0] if i + 1 < len(heads) else len(text)
+        num, _, label = name.partition(". ")
+        by_num[num] = (label.strip(), sum(1 for r in row_pos if pos < r < end))
+
+    sec = re.search(r"^## Why the eight groups are not the table of contents$(.*?)^## ",
+                    text, re.M | re.S)
+    if not sec:
+        problems.append("a.1: could not find the 'Why the eight groups' section to check its table")
+        return
+    table = re.findall(r"^\|\s*(\d+)\s*\|\s*([^|]+?)\s*\|\s*[^|]*?\s*\|\s*(\d+)\s*\|\s*$",
+                       sec.group(1), re.M)
+    if len(table) != 8:
+        problems.append(
+            f"a.1: expected an eight-row group-summary table, found {len(table)} countable rows"
+        )
+        return
+    for num, label, stated in table:
+        if num not in by_num:
+            problems.append(f"a.1: group-summary table has a group {num} with no matching heading")
+            continue
+        head_label, actual = by_num[num]
+        if label != head_label:
+            problems.append(
+                f"a.1: group-summary row {num} is named '{label}' but its heading is '{head_label}'"
+            )
+        if int(stated) != actual:
+            problems.append(
+                f"a.1: the group-summary table says group {num} holds {stated} outcomes but "
+                f"that section holds {actual}"
+            )
+    stated_sum = sum(int(t[2]) for t in table)
+    if stated_sum != total:
+        problems.append(
+            f"a.1: the group-summary table's Outcomes column sums to {stated_sum} but the "
+            f"register has {total} rows"
+        )
+
+
+def check_a5_fleetctl_api_figures(cells, a5_text, problems):
+    """a.5's `fleetctl api` boundary figures, the last hand-maintained numbers in that section.
+    Added 2026-09-09 (overnight step 7, round 4) with the a.1 group table and for the same
+    reason. Round 3 replaced three underivable figures here with 122/85; round 4 found that
+    "`fleetctl api` would reach the 85" overreaches, because ten of the 85 read `Not
+    established` under REST, which is the appendix declining to say. All four figures are
+    recomputed from the matrix, and the split is asserted so 85 and 75 cannot drift apart."""
+    unsup = [r for r in cells if r[2] == "Unsupported"]            # fleetctl column
+    not_unsup = [r for r in unsup if r[1] != "Unsupported"]        # REST column
+    settled = [r for r in not_unsup if r[1] != "Not established"]
+    n122, n85, n75 = len(unsup), len(not_unsup), len(settled)
+
+    m = re.search(r"the (\d+) rows no specification file reaches and `fleetctl api` "
+                  r"demonstrably could", a5_text)
+    if not m:
+        problems.append("a.5: could not find the 'N rows no specification file reaches' sentence")
+    elif int(m.group(1)) != n75:
+        problems.append(
+            f"a.5: says the boundary decides {m.group(1)} rows `fleetctl api` demonstrably "
+            f"could reach but the matrix has {n75} with a settled REST answer"
+        )
+
+    m = re.search(r"(\d+) rows do, and on (\d+) of them the REST API column is not "
+                  r"`Unsupported`\. On (\d+) of those the REST answer is settled", a5_text)
+    if not m:
+        problems.append("a.5: could not find the '122 rows do, and on 85 of them ...' sentence")
+    else:
+        stated = [int(m.group(i)) for i in (1, 2, 3)]
+        if stated != [n122, n85, n75]:
+            problems.append(
+                f"a.5: the `fleetctl api` sentence says {stated[0]} fleetctl-Unsupported rows, "
+                f"{stated[1]} with REST not Unsupported and {stated[2]} of those settled, but "
+                f"the matrix has {n122}, {n85} and {n75}"
+            )
+
+    m = re.search(r"The other ([A-Za-z-]+) read `Not established` under REST", a5_text)
+    if not m:
+        problems.append("a.5: could not find the 'The other N read `Not established`' sentence")
+    elif m.group(1) != _words(n85 - n75):
+        problems.append(
+            f"a.5: says {m.group(1)} of those rows read `Not established` under REST but the "
+            f"matrix has {_words(n85 - n75)}"
+        )
+
+
 def check_a2_prose_count(a2_path, problems):
     """a.2's own headline row count, the a.2 half of the same 2026-09-08 gap: CAP-395 was
     added to the matrix and the "N rows" sentence above it kept 291. a.2 counts lettered
@@ -608,6 +706,12 @@ def main():
     check_a5_reach_figures(a5_cells, a5_text, problems)
     check_a1_outcome_counts(a1, a1_rows, problems)
     check_a2_prose_count(a2, problems)
+
+    # Round 4 of the same campaign: the two figures round 3's checks still could not see —
+    # a.1's group-summary table, whose cells carry no "N outcomes" phrase to match, and
+    # a.5's `fleetctl api` split, where 85 and 75 mean different things and can drift apart.
+    check_a1_group_table(a1, a1_rows, problems)
+    check_a5_fleetctl_api_figures(a5_cells, a5_text, problems)
 
     if problems:
         print(f"{len(problems)} CAP-ID problem(s):\n")
