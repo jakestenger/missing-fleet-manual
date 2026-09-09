@@ -393,3 +393,57 @@ error codes", which the new section now does at the envelope level). Pure prose 
 counted-table change, so cap-ids/register-counts untouched. Cross-refs to 6.3 anchors
 (#page-filter-and-order-complete-result-sets, #the-renamed-fields-which-will-bite-you-on-a-write,
 #handle-errors-limits-and-ambiguous-writes) validated by check-links. Full suite exit 0.
+
+## overnight step 2 (2026-09-08): route catalog regenerated against fleet-v4.91.0
+
+Re-ran `build/gen-api-catalog.py` against fleet-v4.91.0 (35fc1c0244), replacing the
+generated block that had been pinned to fleet-v4.90.0 (7c428c6e46). 562 registrations
+found, 562 parsed (496 endpointer including alt paths, 58 deprecated aliases, 8 raw mux),
+0 unparsed. Both loud-failure checks passed: the independent verb-site count matched the
+attributed count, and the repo-wide sweep found no route-registering file outside
+HANDLER_FILES. Was 560/494/58/8 at 4.90.0.
+
+Diffed old against new by (method, path) with the source comments stripped, so line-number
+churn could not hide a change. Two routes added, none removed, no auth class changed:
+
+- `POST /api/_version_/fleet/hosts/release_ab`, user (session or API token).
+  server/service/handler.go:599, registered on `ue`
+  (`newUserAuthenticatedEndpointer`, handler.go:300). Handler
+  `releaseABDevicesEndpoint` at server/service/apple_mdm.go:4560; free implementation
+  SkipAuthorization then `fleet.ErrMissingLicense` (apple_mdm.go:4569-4575), so Premium
+  only. EE ee/server/service/apple_mdm.go:387: `!user.IsAnyAdmin()` (global admin or any
+  team admin, server/fleet/users.go:129) is forbidden; >32,000 host IDs and 0 host IDs are
+  both BadRequest; per-team `ABReleaseDeviceAuthz` Authorize per distinct team in the
+  batch; ineligible hosts get a per-host error status in `results` while the rest proceed;
+  the release itself is `depClient.DisownDevices(...)` once per distinct ABM token.
+- `POST /api/fleet/orbit/managed_local_account`, orbit (orbit node key).
+  server/service/handler.go:1066, registered on `oeWindowsMDM` =
+  `oe.WithCustomMiddleware(mdmConfiguredMiddleware.VerifyWindowsMDM())` (handler.go:1063),
+  `oe` = `newOrbitAuthenticatedEndpointer` (handler.go:1045). Handler
+  `postOrbitManagedLocalAccountEndpoint` at server/service/orbit.go:1568 ->
+  `EscrowWindowsManagedLocalAccountPassword` (orbit.go:1584): SkipAuthorization (not
+  user-authenticated), host from context, then
+  `MDMWindowsGetEnrolledDeviceWithHostUUID` -> BadRequest "managed local account escrow is
+  only supported for Windows MDM hosts" when absent. A non-empty `client_error` records the
+  device-side failure and clears the escrowed flag; otherwise the password (non-empty, <=256
+  bytes) is saved and the enrollment marked escrowed, with a
+  `ActivityTypeCreatedManagedLocalAccount` activity only on first escrow.
+
+Cross-check independent of the generator: `git diff fleet-v4.90.0 fleet-v4.91.0` over all
+five HANDLER_FILES plus handler_deprecated_paths.go shows exactly these two added
+registrations (plus one comment line) and nothing removed; the other four handler files and
+the alias table are byte-identical. A repo-wide grep for endpointer constructor calls across
+server/, ee/ and cmd/ (non-test) hits only the five scanned files, so there are no
+enterprise-only routes the generator structurally cannot see. cmd/fleet/serve.go still
+mounts the same four feature modules (android, activity, acme, chart); its `extra` argument
+is `[]service.ExtraHandlerOption` (rate limits, HTTP-signature verifier), not routes.
+
+Version-prefix claims re-read at the tag and unchanged: core declares `v1`, `2022-04`
+(handler.go:296), chart the same (chart handler.go:25), android `v1` alone (android
+handler.go:40-42), activity `v1`, `latest` (activity handler.go:41-43).
+
+Left at 4.90.0 deliberately: the "Verified against Fleet 4.90.0" stamp on "The shared
+response and error contract", which was not re-verified in full this round (the envelope's
+failure-class table is unaffected by the only 4.91 change to server/fleet/errors.go, which
+adds message constants and nothing else), and the further-reading link to the version-pinned
+REST reference, which build/check-pinned-links.py holds at fleet-v4.90.0 book-wide.
