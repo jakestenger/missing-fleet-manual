@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="810" viewBox="0 0 1400 810" role="img">
+<title>The Online indicator uses osquery freshness and a new-record fallback, independently of MDM results.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="810" fill="#F9FAFC"/>
+<rect x="48" y="48" width="288" height="704" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<rect x="1048" y="48" width="304" height="704" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="192" y="112" text-anchor="middle" font-family="Inter" font-size="44" font-weight="600" fill="#192147">Host</text>
+<text x="1200" y="112" text-anchor="middle" font-family="Inter" font-size="44" font-weight="600" fill="#192147">Fleet</text>
+<rect x="124" y="362" width="136" height="88" rx="5" fill="#D3E8F3" stroke="#192147" stroke-width="3"/>
+<path d="M112 460 H272 L260 474 H124 Z" fill="#D3E8F3" stroke="#192147" stroke-width="3"/>
+<path d="M336 216 L1080 216" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="700" y="174" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">osquery check-in</text>
+<path d="M420 280 L968 280" fill="none" stroke="#8B8FA2" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M420 268 L420 292" fill="none" stroke="#8B8FA2" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M968 268 L968 292" fill="none" stroke="#8B8FA2" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="694" y="325" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Check-in window + 60 s grace</text>
+<text x="694" y="366" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#8B8FA2">Schematic timing</text>
+<rect x="1080" y="168" width="240" height="96" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1200.0" y="230.0" text-anchor="middle" font-family="Inter" font-size="40" font-weight="600" fill="#F9FAFC">Online</text>
+<rect x="1080" y="386" width="240" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1200.0" y="433.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Host record</text>
+<text x="1200.0" y="472.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">created</text>
+<path d="M1100 386 L1100 264" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 8" marker-end="url(#arrow)"/>
+<text x="1218" y="315" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Before first</text>
+<text x="1218" y="351" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">check-in</text>
+<path d="M1048 578 L336 578" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="692" y="544" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">MDM command</text>
+<path d="M336 696 L1080 696" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="692" y="662" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">MDM result</text>
+<rect x="1080" y="646" width="240" height="100" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1200.0" y="686.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Result</text>
+<text x="1200.0" y="728.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">received?</text>
+</svg>

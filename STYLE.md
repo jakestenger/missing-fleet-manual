@@ -467,6 +467,12 @@ contrasts, and slogan footers. Keep useful scope qualifiers. Place explanatory c
 outside the artwork, where they remain editable and accessible; a brief may propose that
 caption as an editor note rather than as text to render.
 
+**Image terminology, clarified by Jake 2026-09-08:** `Fleet` means the software product,
+server, or company. The groups formerly called teams are lowercase `fleets`, even in titles
+and node labels: `fleet A`, `fleet: Workstations`, `fleet-scoped role`. Do not use `teams`
+for that concept. Preserve exact code/API identifiers where the old spelling is still part
+of the literal interface; explain those in prose rather than relabelling code incorrectly.
+
 Review the rendered image, not just the prompt or SVG. Trace every arrow, check label
 padding and wrapping, and inspect at reading width, intended print size, and in grayscale.
 Compare it with an accepted figure for typography and connector consistency. Keep the
@@ -555,6 +561,8 @@ Paste this shared design block into every new or revised technical-diagram brief
 replace it with a reference to STYLE.md: extracted prompts must work without this file.
 
 > Flat vector technical diagram. Fleet is software for managing computers; draw no vehicles.
+> Use Fleet for the product, server, or company. Host groups are lowercase fleet/fleets,
+> including titles and node labels. Do not call those groups teams. Preserve literal API identifiers.
 > Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px titles,
 > 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
 > 720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="944" viewBox="0 0 1400 944" role="img">
+<title>A fleet transfer keeps identity, discards old scope results, and has separate profile and escrow consequences.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="944" fill="#F9FAFC"/>
+<rect x="48" y="48" width="390" height="270" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<rect x="962" y="48" width="390" height="270" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="243" y="110" text-anchor="middle" font-family="Inter" font-size="44" font-weight="600" fill="#192147">fleet A</text>
+<text x="1157" y="110" text-anchor="middle" font-family="Inter" font-size="44" font-weight="600" fill="#192147">fleet B</text>
+<rect x="80" y="156" width="326" height="112" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="243.0" y="226.0" text-anchor="middle" font-family="Inter" font-size="40" font-weight="600" fill="#F9FAFC">Host 42</text>
+<rect x="994" y="156" width="326" height="112" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1157.0" y="226.0" text-anchor="middle" font-family="Inter" font-size="40" font-weight="600" fill="#F9FAFC">Host 42</text>
+<path d="M406 212 L994 212" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="700" y="141" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Same host ID</text>
+<text x="700" y="183" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#515774">and inventory</text>
+<path d="M243 318 L243 452" fill="none" stroke="#D66C7B" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="243" y="382" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Old scope</text>
+<rect x="48" y="452" width="390" height="222" rx="12" fill="#F6E4E8" stroke="#D66C7B" stroke-width="2.5"/>
+<text x="80" y="508" text-anchor="start" font-family="Inter" font-size="36" font-weight="600" fill="#192147">Deleted</text>
+<text x="80" y="560" text-anchor="start" font-family="Inter" font-size="28" font-weight="400" fill="#515774">fleet policy/report results</text>
+<text x="80" y="606" text-anchor="start" font-family="Inter" font-size="28" font-weight="400" fill="#515774">fleet label memberships</text>
+<path d="M1094 318 L1094 368 L700 368 L700 544" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="762" y="442" text-anchor="start" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Profiles</text>
+<rect x="512" y="544" width="376" height="132" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="599.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Profile</text>
+<text x="700.0" y="643.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">reconciliation</text>
+<text x="700" y="722" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Deferred</text>
+<path d="M1236 318 L1236 480" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1124" y="410" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Recovery</text>
+<rect x="980" y="480" width="372" height="164" rx="12" fill="#E8F1F6" stroke="#192147" stroke-width="2.5"/>
+<text x="1166.0" y="553.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Encryption enforced</text>
+<text x="1166.0" y="592.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">in destination?</text>
+<path d="M1166 644 L1166 738" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1190" y="703" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">No</text>
+<rect x="980" y="738" width="372" height="112" rx="12" fill="#F6E4E8" stroke="#D66C7B" stroke-width="2.5"/>
+<text x="1166.0" y="783.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Active escrow</text>
+<text x="1166.0" y="827.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">key deleted</text>
+<text x="1166" y="899" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Archived-key fallback is separate</text>
+</svg>
