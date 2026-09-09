@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28" fill="none">
+  <title>Reference: book (light)</title>
+  <path d="M6 24V8a4 4 0 0 1 4-4h16v24H10a4 4 0 0 1 0-8h16" fill="none" stroke="#192147" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="12.5" cy="9.5" r="2.5" fill="#5CABDF"/>
+  <circle cx="20.5" cy="9.5" r="2.5" fill="#C98DEF"/>
+  <circle cx="12.5" cy="15.5" r="2.5" fill="#FAA669"/>
+  <circle cx="20.5" cy="15.5" r="2.5" fill="#3AEFC4"/>
+</svg>

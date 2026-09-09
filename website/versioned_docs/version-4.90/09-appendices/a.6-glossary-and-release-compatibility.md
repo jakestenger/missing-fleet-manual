@@ -10,7 +10,7 @@ verified_source: "drafted against fleet-v4.90.0 (7c428c6e46). Boundaries that Fl
 
 # Terminology and version boundaries
 
-Two jobs, and they are the same job. **This appendix translates between the words for a thing and between the versions of a thing**, so that a reader who meets an unfamiliar name or an unexplained failure can find out which they are looking at.
+![Reference](../_assets/icons/reference-light.svg) Two jobs, and they are the same job. **This appendix translates between the words for a thing and between the versions of a thing**, so that a reader who meets an unfamiliar name or an unexplained failure can find out which they are looking at.
 
 What is **not** here: which capabilities your licence includes. That is collected in [a.2](a.2-platform-capability-matrix.md), where a claim is qualified by platform and scope, and where the licence is a column rather than a cell value. A version boundary and a licence gate can converge on the same symptom, a feature that is configured and does nothing, and keeping them in one table would make each harder to rule out. Many licence gates do refuse explicitly, so silence is not universal; it is common enough that the two are worth separating.
 
@@ -204,7 +204,7 @@ A related change in the same release: `no-team.yml` in GitOps was deprecated in 
 
 ## What this manual's version pin means
 
-![Reference](../_assets/icons/reference.svg) Every chapter in this manual was verified against **Fleet 4.90.0**, and the two generated catalogs, the configuration keys in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and the routes in [a.8](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog), were read from that exact release. The pin is what lets the manual be specific: a default, a route, an edition gate or a field name is stated as a fact about a named release rather than about Fleet in general.
+![Reference](../_assets/icons/reference-light.svg) Every chapter in this manual was verified against **Fleet 4.90.0**, and the two generated catalogs, the configuration keys in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and the routes in [a.8](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog), were read from that exact release. The pin is what lets the manual be specific: a default, a route, an edition gate or a field name is stated as a fact about a named release rather than about Fleet in general.
 
 Two signals tell you a claim may no longer match the release you run. The first is the version itself: if your server is not 4.90.0, treat commands, fields, defaults and gates as version-sensitive and read the chapter's version notes, because behaviour moves between releases. The second is more precise, and it is what the catalogs are for: if a configuration default you observe on your own server differs from the registered default in a.3's catalog, the manual is describing a different binary from yours, and that key is where to look for what changed.
 
@@ -212,7 +212,7 @@ When this manual is updated for a newer Fleet release, both catalogs are regener
 
 ## Version boundaries
 
-![Reference](../_assets/icons/reference.svg) A **version boundary** is a version below which something behaves differently. They are not all floors and treating them as one list is how a diagnosis goes wrong, so each row below is one of these:
+![Reference](../_assets/icons/reference-light.svg) A **version boundary** is a version below which something behaves differently. They are not all floors and treating them as one list is how a diagnosis goes wrong, so each row below is one of these:
 
 | | |
 |---|---|

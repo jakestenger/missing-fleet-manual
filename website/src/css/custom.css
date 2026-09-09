@@ -28,3 +28,24 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* Content-type markers share a fixed optical size and sit with the first line
+   of prose. ThemedImage controls visibility; don't override its display rule. */
+.markdown img.content-kind-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  max-width: none;
+  margin-inline-end: 0.35rem;
+  vertical-align: -0.45rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* A dark-mode reader can still print legible markers on white paper. */
+@media print {
+  .markdown img.content-kind-icon {
+    filter: brightness(0);
+  }
+}

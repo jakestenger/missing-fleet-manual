@@ -16,13 +16,13 @@ feature_requests:
 
 # Roles and permissions matrix
 
-**Choose the table for your scope, find the action, then read across to your role. `Conditional` points to the condition register.**
+![Reference](../_assets/icons/reference-light.svg) **Choose the table for your scope, find the action, then read across to your role. `Conditional` points to the condition register.**
 
 **Authorisation is the intersection of an action, a role and a scope.** Licensing, platform support and interface availability are separate gates that this appendix does not answer, and a reader who conflates them will diagnose the wrong one.
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) The administrator-visible actions this appendix's research found, against all six roles, at both scopes. That is the breakdown [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) promises and the reason this appendix is the most-referenced one in the manual. **The row universe is a search result and not a proof**: it is what this appendix's research could find, so a reader who finds another route has found a gap rather than a contradiction.
+![Reference](../_assets/icons/reference-light.svg) The administrator-visible actions this appendix's research found, against all six roles, at both scopes. That is the breakdown [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) promises and the reason this appendix is the most-referenced one in the manual. **The row universe is a search result and not a proof**: it is what this appendix's research could find, so a reader who finds another route has found a gap rather than a contradiction.
 
 These tables report the result an administrator receives, which can differ from the authorization policy's own decision. The policy is the largest input, and a decision can also be made by service middleware before the policy runs, by a response having a field stripped from it after the policy allowed the whole object, or by a database query that filters the result to nothing after the request succeeded. **All four change the answer, so all four are in the cells wherever this appendix found them.**
 
@@ -32,7 +32,7 @@ Three questions belong elsewhere. **Whether the capability exists on your platfo
 
 ## The permission matrix
 
-![Reference](../_assets/icons/reference.svg) 152 administrator intents, grouped as a reader would look for them, with the policy pair underneath each so a cell can be traced.
+![Reference](../_assets/icons/reference-light.svg) 152 administrator intents, grouped as a reader would look for them, with the policy pair underneath each so a cell can be traced.
 
 ## How to read the two tables
 
@@ -501,7 +501,7 @@ The subject holds this role on fleet T and holds no global role. The cell answer
 
 ## Actions that carry a secret
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) Some of what Fleet can read is a credential, and the role names do not say so. These are the rows to decide separately when designing access, rather than assuming the answer falls out of a role:
+![Troubleshooting](../_assets/icons/troubleshooting-light.svg) Some of what Fleet can read is a credential, and the role names do not say so. These are the rows to decide separately when designing access, rather than assuming the answer falls out of a role:
 
 | What is revealed | The row that governs it |
 |---|---|
@@ -518,7 +518,7 @@ So the group is five of the six roles at either scope, and at global scope that 
 
 ## How Fleet decides
 
-![Explanation](../_assets/icons/explanation.svg) Enough of the mechanism to predict an answer this appendix does not contain.
+![Explanation](../_assets/icons/explanation-light.svg) Enough of the mechanism to predict an answer this appendix does not contain.
 
 A request carries a **subject**, which is the authenticated identity and the roles it holds. It names an **object**, which is the kind of thing being acted on and, where the thing belongs to a fleet, that fleet's identifier. And it names an **action**, one of sixteen verbs.
 
@@ -592,7 +592,7 @@ Three kinds of refusal get confused, and they fail differently:
 
 ## Service identities and endpoint restrictions
 
-![Reference](../_assets/icons/reference.svg) **API-only is a property of an account, not a seventh role.** Such an account holds one of the same six roles, and its token inherits that role and that scope. The activity record attributes its work to it, which is the argument in [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) for giving each automation its own identity rather than sharing a person's token.
+![Reference](../_assets/icons/reference-light.svg) **API-only is a property of an account, not a seventh role.** Such an account holds one of the same six roles, and its token inherits that role and that scope. The activity record attributes its work to it, which is the argument in [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) for giving each automation its own identity rather than sharing a person's token.
 
 **GitOps is intended to be API-only**, and the rule that enforces it is unreachable on the modify path: it fires only when the request carries an API-only field, and that endpoint rejects any request carrying one. So the role can be given to an ordinary interactive account, and [1.4](../01-foundations/1.4-identity-and-roles.md) covers what that account can then reach.
 
@@ -600,7 +600,7 @@ Three kinds of refusal get confused, and they fail differently:
 
 ## Version notes
 
-![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.0. The policy carries 154 rules over 49 object types and 16 actions; the 152 rows here are the administrator-facing projection of them, reconciled against the manual's shared capability register.
+![Reference](../_assets/icons/reference-light.svg) Verified against Fleet 4.90.0. The policy carries 154 rules over 49 object types and 16 actions; the 152 rows here are the administrator-facing projection of them, reconciled against the manual's shared capability register.
 
 **Ten policy grants are not published as rows**, because no administrator-facing route exercises them, and in at least one case the grant is the fossil of a route that no longer exists. **That is a search result and not a proof.** So are the row universe itself and the list of untested refusal families above: those are the three claims in this appendix that rest on having failed to find something, and all three are written that way so a reader who does find the missing thing knows which claim gave first.
 

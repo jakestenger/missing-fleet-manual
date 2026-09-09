@@ -771,17 +771,38 @@ Find them with:
 grep -rn "SCREENSHOT:\|DIAGRAM:" manual/
 ```
 
-### Category icons on every section, Parts 0 to VII
+### Category icons at useful reading boundaries
 
-Each section carries a small icon marking which of the four kinds of material it holds
-(§19): explanation, how-to, reference, or troubleshooting. They live in
-`manual/_assets/icons/` and are referenced as `../_assets/icons/<kind>.svg`.
+Use a small icon to identify the kind of guidance a reader is entering (§19):
+explanation, how-to, reference, or troubleshooting. Mark chapter introductions and
+substantial section openings in Parts 0 to VII. Add a marker within a section when
+the reader moves to a different kind of guidance, such as a diagnostic paragraph
+after an endpoint reference. Do not repeat the same marker on every paragraph or
+every short subheading. A contents list or alphabetic index needs one reference
+marker at its introduction, not one for each entry.
+
+The assets live in `manual/_assets/icons/`. Use the light variant in Markdown:
+`![How-to](../_assets/icons/howto-light.svg)`. The site image component chooses the
+matching dark variant when the reader switches Docusaurus to dark mode. Plain
+Markdown readers retain the light image. Keep both edition asset sets identical
+when changing this shared visual vocabulary.
+
+Explanation uses Fleet's official six-dot logo. How-to uses a checklist, Reference
+a book, and Troubleshooting a magnifying glass. The companion icons share Fleet's
+dot palette, rounded strokes, transparent backgrounds, and 28 px display size.
+Preserve the logo's geometry and colors. Keep light and dark companion variants
+identical except for their navy or off-white structural strokes. These are editable
+SVG assets, not image-model prompts; see the asset directory's README for provenance.
+
+Use the category name as alt text. The legend can use empty alt text because each
+image sits beside its visible category name. Meaning must remain clear from the
+shape and text, without relying on dot color.
 
 Place the badge at the **start of the section's first paragraph**, never in the heading,
 because heading text generates the anchor. Where a section opens with a list rather than a
 paragraph, put the badge on its own line above the list.
 
-**Part VIII is excluded.** It is a reference chapter whose sections are all diagnostic, so
+**Part VIII is excluded.** Its sections are all diagnostic, so
 every badge would say the same thing.
 
 Do not force an even spread. Foundations chapters come out almost entirely explanation, and

@@ -16,11 +16,11 @@ feature_requests:
 
 # Platform capability matrix
 
-**Platform support is a per-capability contract, not a property of an operating system.** Fleet does not support macOS and not support Android. It supports a particular thing on a particular platform, by a particular mechanism, sometimes on one licence and not another, and the answer changes capability by capability rather than platform by platform.
+![Reference](../_assets/icons/reference-light.svg) **Platform support is a per-capability contract, not a property of an operating system.** Fleet does not support macOS and not support Android. It supports a particular thing on a particular platform, by a particular mechanism, sometimes on one licence and not another, and the answer changes capability by capability rather than platform by platform.
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) Every device-facing capability the manual teaches, across six platform columns, with the licence and the prerequisites that change the answer.
+![Reference](../_assets/icons/reference-light.svg) Every device-facing capability the manual teaches, across six platform columns, with the licence and the prerequisites that change the answer.
 
 **Licence and prerequisite are columns, never cell values**, which is the appendix's main structural decision. Folding a licence into a cell would put this project's least reliable claim class inside its most consulted table, and it would answer two questions with one word. The rule itself is restated where you will need it, above the matrix.
 
@@ -28,7 +28,7 @@ feature_requests:
 
 ## What decides most cells
 
-![Explanation](../_assets/icons/explanation.svg) Most cells are decided by a small number of structural facts, and knowing them lets you predict a row this table does not contain.
+![Explanation](../_assets/icons/explanation-light.svg) Most cells are decided by a small number of structural facts, and knowing them lets you predict a row this table does not contain.
 
 **Whether the platform runs an agent.** macOS, Windows and Linux run fleetd. iOS, iPadOS and Android do not, so nothing that depends on running a query or a script reaches them. Which of `Unsupported` and `Not applicable` a given cell gets is decided per row rather than by the platform: where Fleet holds a target list that mobile platforms are absent from, the cell is `Unsupported` on that evidence, and where the subject simply has no mobile version, it is `Not applicable`. ChromeOS runs an extension that answers some of the same questions with none of the same machinery.
 
@@ -40,7 +40,7 @@ feature_requests:
 
 ## Three rows worth reading before you plan
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) Each of these is a place where the obvious expectation is wrong, and each is in the matrix below with its evidence.
+![Troubleshooting](../_assets/icons/troubleshooting-light.svg) Each of these is a place where the obvious expectation is wrong, and each is in the matrix below with its evidence.
 
 > ### Requiring signed host requests locks out every Mac and Windows host
 >
@@ -70,7 +70,7 @@ feature_requests:
 
 ## How to read it
 
-![Reference](../_assets/icons/reference.svg) Five values, and the distinction between three of them is the whole discipline of the appendix.
+![Reference](../_assets/icons/reference-light.svg) Five values, and the distinction between three of them is the whole discipline of the appendix.
 
 | Value | What it means |
 |---|---|
@@ -96,7 +96,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 
 ## The matrix
 
-![Reference](../_assets/icons/reference.svg) Grouped as a reader would look for a capability, 276 rows. Section rows in bold carry no cells; they mark where a family starts.
+![Reference](../_assets/icons/reference-light.svg) Grouped as a reader would look for a capability, 276 rows. Section rows in bold carry no cells; they mark where a family starts.
 
 | ID | Capability | macOS | iOS/iPadOS | Windows | Linux | Android | ChromeOS | Licence | Prerequisite |
 |---|---|---|---|---|---|---|---|---|---|
@@ -808,7 +808,7 @@ So they are carried here, one line each, grouped by the same sections as the mat
 
 ## Version notes
 
-![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.0. Every cell was read from source at that tag. **Fleet's own documentation was used to find things and never as evidence for a cell**, because this project has confirmed it wrong at this release in four separate ways, including an operating-system floor Fleet documents that nothing implements ([a.6](a.6-glossary-and-release-compatibility.md)).
+![Reference](../_assets/icons/reference-light.svg) Verified against Fleet 4.90.0. Every cell was read from source at that tag. **Fleet's own documentation was used to find things and never as evidence for a cell**, because this project has confirmed it wrong at this release in four separate ways, including an operating-system floor Fleet documents that nothing implements ([a.6](a.6-glossary-and-release-compatibility.md)).
 
 **Read `Unsupported` as a positive boundary and `Not established` as an unresolved one. Re-check either value when upgrading, especially where a platform accepts configuration but exposes no delivery path.** `Unsupported` marks a platform where Fleet enforces a real boundary against the operation; `Not established` marks a row where no delivery mechanism was found but no boundary blocks one either; `Not applicable` marks a row whose subject does not exist on the platform at all. A cell reading `Unsupported` where Fleet in fact accepts the request and the device simply never asks for it belongs in `Not established`, not `Unsupported`.
 

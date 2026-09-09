@@ -16,7 +16,7 @@ feature_requests:
 
 # Capability index
 
-**Search the last column for the word you have. Open the owning chapter. `(no)` means Fleet does not provide the capability.** The rows themselves are in [The index](#the-index); the sections after it explain where its words come from.
+![Reference](../_assets/icons/reference-light.svg) **Search the last column for the word you have. Open the owning chapter. `(no)` means Fleet does not provide the capability.** The rows themselves are in [The index](#the-index); the sections after it explain where its words come from.
 
 **Every outcome this manual teaches has one chapter that owns it, and this index gets you there from the word you would actually type.** A table of contents can only expose the manual's own vocabulary. Administrators arrive holding Apple's word, Microsoft's word, the name of the product they are migrating off, or the name Fleet itself used two releases ago, and none of those is what a chapter is called.
 
@@ -24,13 +24,13 @@ That distance is the appendix. A row earns its place when the words in its last 
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) 384 outcomes in eight groups, each with one canonical chapter, and the attested words that lead to it: Fleet's older names that still work, the vendors' names, the strings Fleet prints on screen, and the terms this manual coined. Group 8 also carries the sentences people arrive with when something has already gone wrong. The last section says where the index stops.
+![Reference](../_assets/icons/reference-light.svg) 384 outcomes in eight groups, each with one canonical chapter, and the attested words that lead to it: Fleet's older names that still work, the vendors' names, the strings Fleet prints on screen, and the terms this manual coined. Group 8 also carries the sentences people arrive with when something has already gone wrong. The last section says where the index stops.
 
 **What is not here.** Whether your platform can do it is [a.2](a.2-platform-capability-matrix.md). Which role may do it is [a.4](a.4-roles-and-permissions-matrix.md). Which interface can do it is [a.5](a.5-interface-index.md). Which configuration authority owns a key you find here, and what wins when two disagree, is [a.3](a.3-configuration-model-and-precedence.md). What a route requires is [a.8](a.8-api-action-and-endpoint-reference.md), and what a `fleetctl` command asks Fleet to do is [a.7](a.7-fleetctl-command-reference.md). What a word means is [a.6](a.6-glossary-and-release-compatibility.md), which owns meaning while this index owns routing. How to do the thing is the chapter each row names. This appendix answers where, and makes no claim about capability, licence or procedure.
 
 ## How to read a row
 
-![Reference](../_assets/icons/reference.svg) Five columns, and the last one is the reason the appendix exists.
+![Reference](../_assets/icons/reference-light.svg) Five columns, and the last one is the reason the appendix exists.
 
 | Column | What it holds |
 |---|---|
@@ -96,7 +96,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ## The index
 
-![Reference](../_assets/icons/reference.svg) 384 outcomes. Find the row by the words you would type, then open the linked chapter.
+![Reference](../_assets/icons/reference-light.svg) 384 outcomes. Find the row by the words you would type, then open the linked chapter.
 
 ### 1. Access and accountability
 
@@ -533,7 +533,7 @@ Six markers, and each changes what you do with the word next to it.
 
 #### Sentences people type
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Every sentence below is a string Fleet prints, a question Fleet's own documentation asks, or a phrasing this manual records.** The middle column is the ambiguity to resolve, not the fix.
+![Troubleshooting](../_assets/icons/troubleshooting-light.svg) **Every sentence below is a string Fleet prints, a question Fleet's own documentation asks, or a phrasing this manual records.** The middle column is the ambiguity to resolve, not the fix.
 
 | The sentence you arrive with | What it turns on | Start at |
 |---|---|---|
@@ -600,7 +600,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ## Why the eight groups are not the table of contents
 
-![Explanation](../_assets/icons/explanation.svg) **Groups shaped like the manual's parts produce a re-worded contents page**, so these are shaped like the question you are holding instead. Three of them cut across parts as a result: scope and targeting spans Parts I and V, access and accountability spans Parts I, II and VII, and the diagnosis group spans Parts VII and VIII.
+![Explanation](../_assets/icons/explanation-light.svg) **Groups shaped like the manual's parts produce a re-worded contents page**, so these are shaped like the question you are holding instead. Three of them cut across parts as a result: scope and targeting spans Parts I and V, access and accountability spans Parts I, II and VII, and the diagnosis group spans Parts VII and VIII.
 
 | | Group | The question it answers | Outcomes |
 |---|---|---|---|
@@ -621,7 +621,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ## Where the words in the last column come from
 
-![Explanation](../_assets/icons/explanation.svg) **Every word was read somewhere. None was invented**, because a synonym built from a plausible guess routes a reader to the wrong chapter with more confidence than no index at all.
+![Explanation](../_assets/icons/explanation-light.svg) **Every word was read somewhere. None was invented**, because a synonym built from a plausible guess routes a reader to the wrong chapter with more confidence than no index at all.
 
 Six places supply them.
 
@@ -642,7 +642,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Fleet's older names, and which ones still work
 
-![Reference](../_assets/icons/reference.svg) **Everything in this section is accepted at 4.90.0.** [a.6](a.6-glossary-and-release-compatibility.md) owns the rename itself and the surfaces it covered. What follows is the part you type: the spec kinds, keys, variables, flags and paths that carry the older word and still resolve.
+![Reference](../_assets/icons/reference-light.svg) **Everything in this section is accepted at 4.90.0.** [a.6](a.6-glossary-and-release-compatibility.md) owns the rename itself and the surfaces it covered. What follows is the part you type: the spec kinds, keys, variables, flags and paths that carry the older word and still resolve.
 
 **Fleet serves 47 route aliases covering 58 deprecated paths**, and accepts **44 deprecated GitOps keys**. Renamed request fields keep taking the old name in a body and answer with the new one. So a script written before March 2026 keeps working, a runbook keeps being correct, and a search of your own repository for the current word comes back empty while the deployment is running fine.
 
@@ -702,7 +702,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## The vendors' words for things Fleet renames
 
-![Reference](../_assets/icons/reference.svg) **These are the words an administrator arrives holding**, and the third column is the one that matters: how many of this manual's chapters use the word at all. Where that count is low, the index is the only route from the word to the chapter.
+![Reference](../_assets/icons/reference-light.svg) **These are the words an administrator arrives holding**, and the third column is the one that matters: how many of this manual's chapters use the word at all. Where that count is low, the index is the only route from the word to the chapter.
 
 | You arrive with | Fleet or this manual calls it | Chapters using the word | Route |
 |---|---|---|---|
@@ -734,7 +734,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Words this manual uses that Fleet does not
 
-![Reference](../_assets/icons/reference.svg) **The reverse direction, and this index is the only place it can be fixed.** A reader who has read the chapter will search for the manual's word; a reader who has not will never guess it. Both need the row.
+![Reference](../_assets/icons/reference-light.svg) **The reverse direction, and this index is the only place it can be fixed.** A reader who has read the chapter will search for the manual's word; a reader who has not will never guess it. Both need the row.
 
 | This manual's word | What Fleet calls it, if anything | Where it is defined |
 |---|---|---|
@@ -760,7 +760,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Where two live Fleet names disagree
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Fourteen places where Fleet, or this manual, uses two names for one thing and neither is marked wrong.** Each is a row in the index. Seven are defects rather than dialects: a name that Fleet prints, documents or emits where a different name is the one that actually works, so following the visible name gets you nothing and says nothing.
+![Troubleshooting](../_assets/icons/troubleshooting-light.svg) **Fourteen places where Fleet, or this manual, uses two names for one thing and neither is marked wrong.** Each is a row in the index. Seven are defects rather than dialects: a name that Fleet prints, documents or emits where a different name is the one that actually works, so following the visible name gets you nothing and says nothing.
 
 **The seven that will waste your time.**
 
@@ -796,7 +796,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Where this index ends
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Ten things a reader will search for that this index has no formal row for.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. None of the ten is a genuine unmet capability: nine are already taught or recorded and lack only a row, and the tenth, Android enrollment through a Google account, is unresolved triage vocabulary in Fleet's own notes rather than an initiated path, so read the split below rather than the headline count. Thirteen earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
+![Troubleshooting](../_assets/icons/troubleshooting-light.svg) **Ten things a reader will search for that this index has no formal row for.** They are published rather than omitted, because an index that goes quiet sends you looking for a chapter that is not there, and a stated absence takes ten seconds to act on. None of the ten is a genuine unmet capability: nine are already taught or recorded and lack only a row, and the tenth, Android enrollment through a Google account, is unresolved triage vocabulary in Fleet's own notes rather than an initiated path, so read the split below rather than the headline count. Thirteen earlier entries left the count once a chapter covered them; they close this section, with links to the coverage, rather than disappearing.
 
 **No link is invented for any of them.** A chapter owns an outcome when it explains the workflow, not when it mentions the thing in passing, and not when it explains the surrounding workflow without covering this step.
 

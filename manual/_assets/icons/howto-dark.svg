@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28" fill="none">
+  <title>How-to: checklist (dark)</title>
+  <g fill="none" stroke="#F9FAFC" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 7h13M13 16h10M14 24l4 4 8-8"/>
+  </g>
+  <circle cx="6" cy="7" r="3" fill="#5CABDF"/>
+  <circle cx="6" cy="16" r="3" fill="#C98DEF"/>
+  <circle cx="6" cy="25" r="3" fill="#3AEFC4"/>
+</svg>

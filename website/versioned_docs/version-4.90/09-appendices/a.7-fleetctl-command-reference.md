@@ -17,7 +17,7 @@ feature_requests:
 
 # fleetctl command index and behaviour
 
-**Find the command in [the index](#the-command-index) below; its row says what it asks Fleet to do, what must allow it, and what its exit status proves.**
+![Reference](../_assets/icons/reference-light.svg) **Find the command in [the index](#the-command-index) below; its row says what it asks Fleet to do, what must allow it, and what its exit status proves.**
 
 **A `fleetctl` command is a request to Fleet, and its contract is what it asks Fleet to do and what its result proves.** That is a different document from the one `--help` prints. Help tells you the flags a command accepts. It does not tell you that an invocation reaches four separate authorization decisions and that clearing the last one is not enough, that the answer changes between Fleet Free and Fleet Premium, or that a command exits zero after Fleet refused it.
 
@@ -25,7 +25,7 @@ Those three gaps are what this appendix carries, and each one is a place where a
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) Every public command and leaf subcommand in the 4.90.0 tree on macOS and Linux, and the one entry that differs on Windows, with what it asks Fleet to do, what it must be allowed to do, whether it destroys anything, whether it returns before or after Fleet acted, what its exit status proves, and the chapter that explains the workflow.
+![Reference](../_assets/icons/reference-light.svg) Every public command and leaf subcommand in the 4.90.0 tree on macOS and Linux, and the one entry that differs on Windows, with what it asks Fleet to do, what it must be allowed to do, whether it destroys anything, whether it returns before or after Fleet acted, what its exit status proves, and the chapter that explains the workflow.
 
 **Exact syntax is the installed client's job.** Run `fleetctl <command> --help` for the flag list of the client you actually have, which is the only listing guaranteed to match your binary. What is here instead is the part help does not carry: the resolution model, the per-command contract, the register of results that mislead, and the option families that widen an operation past what its name suggests.
 
@@ -33,7 +33,7 @@ Those three gaps are what this appendix carries, and each one is a place where a
 
 ## The command index
 
-![Reference](../_assets/icons/reference.svg) 70 rows, grouped by top-level family: the 69 behaviours of the macOS and Linux tree, and the one row that exists only on Windows. The eight families that hold only subcommands on macOS and Linux appear as headings with no row of their own.
+![Reference](../_assets/icons/reference-light.svg) 70 rows, grouped by top-level family: the 69 behaviours of the macOS and Linux tree, and the one row that exists only on Windows. The eight families that hold only subcommands on macOS and Linux appear as headings with no row of their own.
 
 ### How to read a row
 
@@ -244,7 +244,7 @@ Neither subcommand removes the preview directory itself: the saved configuration
 
 ## Which server and which credential an invocation selects
 
-![Reference](../_assets/icons/reference.svg) One question decides where a destructive command lands, and it is answered before any flag you typed is considered.
+![Reference](../_assets/icons/reference-light.svg) One question decides where a destructive command lands, and it is answered before any flag you typed is considered.
 
 **The client reads a configuration file holding named contexts.** Each context carries a server address, an account email, a token, and the transport settings for reaching that server: a certificate authority, a URL prefix, whether to skip verification, and any custom headers. Switching context switches all of it at once. The file is `~/.fleet/config` unless `--config` names another, and the context is `default` unless `--context` names another.
 
@@ -306,7 +306,7 @@ What Fleet's source settles is the shape of the question. For the five `mdm` sub
 
 ## What a result and an exit status prove
 
-![Reference](../_assets/icons/reference.svg) This is the legend the index is read through. **A zero exit proves that the client reached the end of its work without returning an error.** It does not prove that Fleet did the thing, that the thing reached a device, that your file was fully validated, that you were authorised, or that the flags you passed were understood.
+![Reference](../_assets/icons/reference-light.svg) This is the legend the index is read through. **A zero exit proves that the client reached the end of its work without returning an error.** It does not prove that Fleet did the thing, that the thing reached a device, that your file was fully validated, that you were authorised, or that the flags you passed were understood.
 
 **The client's own exits are zero and one.** No command distinguishes "not found" from "forbidden" from "the network is down" in its status, so a pipeline branching on the exit code is branching on one bit. Signals, panics and a launcher's own failure produce other process statuses, so this is a statement about what the program returns rather than about everything a shell can observe.
 
@@ -350,7 +350,7 @@ There is no single output-format flag. Five renderers exist and they are attache
 
 ## The exit-zero register
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Thirty-four invocations where Fleet or the client detected an adverse, incomplete or refused outcome and the command still exited zero.** This is the section to read before you run `fleetctl` unattended, because every row is a case where a pipeline that branches on the exit code branches the wrong way.
+![Troubleshooting](../_assets/icons/troubleshooting-light.svg) **Thirty-four invocations where Fleet or the client detected an adverse, incomplete or refused outcome and the command still exited zero.** This is the section to read before you run `fleetctl` unattended, because every row is a case where a pipeline that branches on the exit code branches the wrong way.
 
 **The class is stated before the rows, because a register with no inclusion rule grows without bound.** A row qualifies when the advertised outcome was materially refused, incomplete or partial, **the code detected or knew it**, and the invocation returned success anyway. Three things are deliberately outside the class:
 
@@ -421,7 +421,7 @@ There is no single output-format flag. Five renderers exist and they are attache
 
 ## Destructive commands and the flags that widen them
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) Two different things get called dangerous, and separating them is what makes this section usable. **Some invocations are dangerous in proportion to your intent**: they inherit whatever you point them at, and they announce themselves. **Others are dangerous in proportion to your mistake**: a wrong host, a stale context, or a flag whose reach is wider than its name suggests.
+![Troubleshooting](../_assets/icons/troubleshooting-light.svg) Two different things get called dangerous, and separating them is what makes this section usable. **Some invocations are dangerous in proportion to your intent**: they inherit whatever you point them at, and they announce themselves. **Others are dangerous in proportion to your mistake**: a wrong host, a stale context, or a flag whose reach is wider than its name suggests.
 
 ### The six invocations ranked
 
@@ -482,7 +482,7 @@ Ranked on five axes: whether it can be undone, how much one invocation reaches, 
 
 ## Choosing packaging options
 
-![How-to](../_assets/icons/howto.svg) `fleetctl package` never contacts your Fleet, and it is the command whose mistakes are hardest to undo, because the result is installed on hosts. **It is not the only row that never calls your Fleet**, as the fourteen listed earlier show, and it is not fully offline either: it downloads signed agent artifacts from Fleet's update server while it builds. [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md), [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) and [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) defer the option choice here rather than each carrying a flag list; run `fleetctl package --help` for the list itself, which is current for your client.
+![How-to](../_assets/icons/howto-light.svg) `fleetctl package` never contacts your Fleet, and it is the command whose mistakes are hardest to undo, because the result is installed on hosts. **It is not the only row that never calls your Fleet**, as the fourteen listed earlier show, and it is not fully offline either: it downloads signed agent artifacts from Fleet's update server while it builds. [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md), [3.4](../03-connect-devices/3.4-enroll-linux-devices.md) and [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md) defer the option choice here rather than each carrying a flag list; run `fleetctl package --help` for the list itself, which is current for your client.
 
 **Before packaging, settle five choices: server address and secret, Fleet Desktop, scripts, certificate verification, and package type. The last two are the expensive ones.**
 
@@ -502,7 +502,7 @@ Ranked on five axes: whether it can be undone, how much one invocation reaches, 
 
 ## Where the inventory came from, and why a file search under-reports it
 
-![Explanation](../_assets/icons/explanation.svg) The inventory above is the command tree Fleet assembles at 4.90.0, read from source at the release tag, because no `fleetctl` binary trustworthy as 4.90.0 was available to interrogate. That matters when your client disagrees with this table: the likely explanation is that you are running a different version, and the version notes at the end say why that is easy to do without noticing.
+![Explanation](../_assets/icons/explanation-light.svg) The inventory above is the command tree Fleet assembles at 4.90.0, read from source at the release tag, because no `fleetctl` binary trustworthy as 4.90.0 was available to interrogate. That matters when your client disagrees with this table: the likely explanation is that you are running a different version, and the version notes at the end say why that is easy to do without noticing.
 
 **Four things make the tree non-uniform**, and each defeats a naive search of the source files. They are worth knowing because they are also the four places the tree differs between two machines running the same release.
 
@@ -537,7 +537,7 @@ A floor is useful and it is a different claim from a complete list. Where this a
 
 ## Aliases, deprecated surfaces, and version notes
 
-![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.0. **Every deprecated surface below still works at this release**, and each is the older half of a rename this manual's [a.6](a.6-glossary-and-release-compatibility.md) covers in full.
+![Reference](../_assets/icons/reference-light.svg) Verified against Fleet 4.90.0. **Every deprecated surface below still works at this release**, and each is the older half of a rename this manual's [a.6](a.6-glossary-and-release-compatibility.md) covers in full.
 
 **A version mismatch between client and server produces a warning and nothing else.** There is no gate and no refusal, on any command, so a client built for another release will talk to your server and fail later in some unrelated-looking way. Pin the client to the server's release in automation ([6.4](../06-automate-fleet/6.4-use-fleetctl.md)).
 

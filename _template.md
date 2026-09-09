@@ -50,9 +50,11 @@ Sections have twice shipped carrying stamps for verification that never happened
 > register: model and decision first, not a table first), **§22** (headings name a subject,
 > not a conclusion).
 >
-> Every section opens with a category badge, at the start of its first paragraph:
-> `![Explanation](../_assets/icons/explanation.svg)` and likewise `howto`, `reference`,
-> `troubleshooting`. See §16.
+> Mark chapter introductions, substantial section openings, and changes in the kind
+> of guidance with a category badge at the start of the first paragraph:
+> `![Explanation](../_assets/icons/explanation-light.svg)` and likewise `howto`, `reference`,
+> `troubleshooting`, each with the `-light.svg` suffix. Docusaurus selects the dark
+> variant when needed. Avoid repeating a badge on every short subsection. See §16.
 
 ## Purpose and scope
 

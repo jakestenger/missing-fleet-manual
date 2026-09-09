@@ -16,11 +16,11 @@ feature_requests:
 
 # Configuration sources, scopes, and precedence
 
-The same-looking Fleet setting can come from the server, organization settings, a fleet, or the host. When two sources disagree, the winner depends on the setting. Use this appendix to find the owner and the precedence rule.
+![Reference](../_assets/icons/reference-light.svg) The same-looking Fleet setting can come from the server, organization settings, a fleet, or the host. When two sources disagree, the winner depends on the setting. Use this appendix to find the owner and the precedence rule.
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) The authorities, what each one owns, and the known rules for how collisions resolve. That is the part nothing else collects. Where a comparison has not been carried out in full, this appendix says so rather than implying a settled order.
+![Reference](../_assets/icons/reference-light.svg) The authorities, what each one owns, and the known rules for how collisions resolve. That is the part nothing else collects. Where a comparison has not been carried out in full, this appendix says so rather than implying a settled order.
 
 **It explains what nearly every setting is for, in the binary's own words rather than copied prose.** The full catalog carries each key's registered usage string (the same one-line description `fleet serve --help` prints), read mechanically from the server binary rather than transcribed from Fleet's hand-maintained reference: this project has confirmed the reference and the server disagreeing in two different ways at this release, about what a default is and about whether a documented key is bound at all. A usage string names what a setting does, not when or why you'd change it; for that, see [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md). The disagreements that change a decision are called out first; the full catalog, keys and their usage strings both generated rather than copied, closes the appendix.
 
@@ -28,7 +28,7 @@ The same-looking Fleet setting can come from the server, organization settings, 
 
 ## The authorities
 
-![Reference](../_assets/icons/reference.svg) Do not memorize the authority tables. When a value seems ignored, ask three questions in order: where was it declared, where is the live value stored, and which interface wrote that store? A source owns a runtime store. Something that only writes into another source's store is a writer, not an authority.
+![Reference](../_assets/icons/reference-light.svg) Do not memorize the authority tables. When a value seems ignored, ask three questions in order: where was it declared, where is the live value stored, and which interface wrote that store? A source owns a runtime store. Something that only writes into another source's store is a writer, not an authority.
 
 **On the server:**
 
@@ -72,7 +72,7 @@ The same-looking Fleet setting can come from the server, organization settings, 
 
 ### What the server can and cannot change on an installed host
 
-![Reference](../_assets/icons/reference.svg) **The server hands the agent a fresh configuration document on every check-in, and the useful question is not how many settings it can change but which of them survive a restart.** Four groups, and they behave differently:
+![Reference](../_assets/icons/reference-light.svg) **The server hands the agent a fresh configuration document on every check-in, and the useful question is not how many settings it can change but which of them survive a restart.** Four groups, and they behave differently:
 
 | What the server sends | What it changes, and what survives a restart |
 |---|---|
@@ -114,7 +114,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 ## Inputs that change the result without owning a value
 
-![Explanation](../_assets/icons/explanation.svg) Several things shape what a device ends up with and are **not** authorities, and treating them as peers of the list above is the commonest way to reason wrongly about this.
+![Explanation](../_assets/icons/explanation-light.svg) Several things shape what a device ends up with and are **not** authorities, and treating them as peers of the list above is the commonest way to reason wrongly about this.
 
 | | What it does |
 |---|---|
@@ -134,7 +134,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 ## How collisions resolve
 
-![Reference](../_assets/icons/reference.svg) **There is no single precedence order, and expecting one is the mistake this section exists to prevent.** Six mechanisms were observed at this release. They are **not six classes a collision falls into**: they co-occur, and a single resolution path routinely uses three or four of them at once. Read the table as a vocabulary rather than a taxonomy.
+![Reference](../_assets/icons/reference-light.svg) **There is no single precedence order, and expecting one is the mistake this section exists to prevent.** Six mechanisms were observed at this release. They are **not six classes a collision falls into**: they co-occur, and a single resolution path routinely uses three or four of them at once. Read the table as a vocabulary rather than a taxonomy.
 
 | Mechanism | What happens |
 |---|---|
@@ -232,7 +232,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 ## Where the planes cross
 
-![Reference](../_assets/icons/reference.svg) **Process configuration and stored configuration are mostly about different things, and the places they meet are the ones that waste an afternoon.** This section carries the meeting points this project has verified: **two values that resolve against each other**, and **two preconditions** where a process setting decides whether a stored value may be written at all.
+![Reference](../_assets/icons/reference-light.svg) **Process configuration and stored configuration are mostly about different things, and the places they meet are the ones that waste an afternoon.** This section carries the meeting points this project has verified: **two values that resolve against each other**, and **two preconditions** where a process setting decides whether a stored value may be written at all.
 
 > **Those are the known instances rather than a complete count, and the distinction is deliberate.** Establishing that *only* two values exist in both planes would mean comparing all 329 registered process keys against every field of the stored organisation settings, which is nineteen top-level blocks with substantial structure beneath them. **That comparison has not been done.** Treat the pair below as the ones to check first, not as a closed set.
 
@@ -257,7 +257,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 ## Agent options resolve per consumer, not once
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **This is the single most consequential precedence question in Fleet, and it has more than one answer**, because more than one consumer reads the document.
+![Troubleshooting](../_assets/icons/troubleshooting-light.svg) **This is the single most consequential precedence question in Fleet, and it has more than one answer**, because more than one consumer reads the document.
 
 **The osquery half** takes the fleet's document whole when the fleet has one, and the global document when it has none. **Never a mix.** So "a fleet with no options of its own falls back to global" is true when the fleet has no agent options at all, and false when the fleet has a document that omits a setting: the setting does not come from anywhere ([1.3](../01-foundations/1.3-hosts-fleets-labels.md)).
 
@@ -336,7 +336,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 ## What the two document writers do with what you leave out
 
-![Reference](../_assets/icons/reference.svg) **Omission is not one behaviour, and the answer depends on the writer rather than on the field.** Fleet has two document writers with different contracts, and the GitOps client changes the question before either of them sees it. Read this before assuming a value you did not mention is safe.
+![Reference](../_assets/icons/reference-light.svg) **Omission is not one behaviour, and the answer depends on the writer rather than on the field.** Fleet has two document writers with different contracts, and the GitOps client changes the question before either of them sees it. Read this before assuming a value you did not mention is safe.
 
 ### The organisation settings writer patches
 
@@ -405,7 +405,7 @@ Three further setup-experience settings, whether to release the device manually,
 
 ## Reading the effective value, and what Fleet does not keep
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) A precedence table nobody can apply to a live system is a description rather than a tool. This is where a reader with a value in front of them that is not what they set goes next.
+![Troubleshooting](../_assets/icons/troubleshooting-light.svg) A precedence table nobody can apply to a live system is a description rather than a tool. This is where a reader with a value in front of them that is not what they set goes next.
 
 | Plane | The stored intent | What is actually in force | Who changed it |
 |---|---|---|---|
@@ -456,7 +456,7 @@ Agent options are the plane where stored and in-force genuinely diverge, and Fle
 
 ## What the device says back, and what Fleet keeps of it
 
-![Explanation](../_assets/icons/explanation.svg) The last row of the table above is the one Fleet controls least, because the value in force is the device's and Fleet only holds a report of it. **The reports are not equivalent across platforms**, and treating them as one thing is how a dashboard comes to be trusted for something it cannot know.
+![Explanation](../_assets/icons/explanation-light.svg) The last row of the table above is the one Fleet controls least, because the value in force is the device's and Fleet only holds a report of it. **The reports are not equivalent across platforms**, and treating them as one thing is how a dashboard comes to be trusted for something it cannot know.
 
 **Fleet uses one vocabulary of per-profile states across all three platforms**, which is exactly what makes them look interchangeable: `pending`, `verifying`, `verified` and `failed`. **Which of them a profile can reach depends on its class as much as on its platform**, so read the row for the thing you are actually shipping rather than the row for the operating system.
 
@@ -530,7 +530,7 @@ The rest are sorted **by name, alphabetically**, and merged in that order, so **
 
 ## Where Fleet's reference and the running server disagree
 
-![Reference](../_assets/icons/reference.svg) Verified at this release, and listed because each one changes a decision or a diagnosis rather than to keep score.
+![Reference](../_assets/icons/reference-light.svg) Verified at this release, and listed because each one changes a decision or a diagnosis rather than to keep score.
 
 | Setting | The reference says | The server does |
 |---|---|---|
@@ -553,7 +553,7 @@ The rest are sorted **by name, alphabetically**, and merged in that order, so **
 
 ## Version notes
 
-![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.91.0. The server's configuration manager registers **329 distinct keys** at this release.
+![Reference](../_assets/icons/reference-light.svg) Verified against Fleet 4.91.0. The server's configuration manager registers **329 distinct keys** at this release.
 
 **Nine of those are new since 4.90.0, and nothing was removed**: `activity.fleet_initiated_release_per_minute`, `mdm.allow_custom_activations`, `mdm.allow_orbit_end_user_auth_bypass`, `s3.software_installers_signed_url`, `server.vpp_install_reap_timeout`, and the four hidden `google_workspace.max_*` limits that bound a single directory sync. **One of them is worth reading the default of before you upgrade.** `mdm.allow_orbit_end_user_auth_bypass` registers `true`, which permits an Orbit host that has not completed end-user authentication to enroll into a fleet that requires it. Setting it to `false` is what enforces that requirement strictly.
 
@@ -561,7 +561,7 @@ The rest are sorted **by name, alphabetically**, and merged in that order, so **
 
 ## The complete configuration-key catalog
 
-![Reference](../_assets/icons/reference.svg) This table is generated rather than written. It is read directly from the registration calls the server binary makes as it starts, at the release this manual is pinned to, so it records the keys the server actually binds and the defaults it registers rather than what any document says it binds. That is what makes it authoritative: where this catalog and Fleet's published configuration reference disagree, the catalog is right, because it is the code path the running server takes.
+![Reference](../_assets/icons/reference-light.svg) This table is generated rather than written. It is read directly from the registration calls the server binary makes as it starts, at the release this manual is pinned to, so it records the keys the server actually binds and the defaults it registers rather than what any document says it binds. That is what makes it authoritative: where this catalog and Fleet's published configuration reference disagree, the catalog is right, because it is the code path the running server takes.
 
 The disagreements named under [Where Fleet's reference and the running server disagree](#where-fleets-reference-and-the-running-server-disagree) are all visible in it, which is the proof that generating it matters. The reference gives the Redis host-cache lifetime as 60 seconds; `redis.host_cache_ttl` below registers 180. The reference gives `mysql.password` a default of `fleet`; below it is empty. And the per-endpoint request-size override the reference documents in full is absent from this table altogether, which is how a generated catalog says the server binds no such key: a key that is not a row here is one the binary never registers, whatever the documentation shows.
 

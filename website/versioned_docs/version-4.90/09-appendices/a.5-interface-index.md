@@ -17,13 +17,13 @@ feature_requests:
 
 # Action-to-interface index
 
-**Fleet's interfaces overlap, but they are not interchangeable.** Each administrative action has a specific set of supported control surfaces, and the overlap is wide enough to make the gaps invisible until you hit one. A runbook that says "do it with `fleetctl`" is fine for most of what you will ask for and wrong for reading the activity feed. A repository that declares everything you care about still cannot run a script. A plan that standardises on the UI cannot build an installer.
+![Reference](../_assets/icons/reference-light.svg) **Fleet's interfaces overlap, but they are not interchangeable.** Each administrative action has a specific set of supported control surfaces, and the overlap is wide enough to make the gaps invisible until you hit one. A runbook that says "do it with `fleetctl`" is fine for most of what you will ask for and wrong for reading the activity feed. A repository that declares everything you care about still cannot run a script. A plan that standardises on the UI cannot build an installer.
 
 This appendix is the lookup that tells you which of those you are about to hit.
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) Every administrator action in the manual's capability register, 362 of them, against all four operator interfaces: the Fleet UI, the REST API, `fleetctl` and GitOps. Plus a second, shorter table for a different question, which is what Fleet or an external system starts without anyone asking.
+![Reference](../_assets/icons/reference-light.svg) Every administrator action in the manual's capability register, 362 of them, against all four operator interfaces: the Fleet UI, the REST API, `fleetctl` and GitOps. Plus a second, shorter table for a different question, which is what Fleet or an external system starts without anyone asking.
 
 **What is not here is the detail of any one interface.** Which command to run and what its exit status proves is [a.7](a.7-fleetctl-command-reference.md). What a caller must present and what has to be reachable is [a.8](a.8-api-action-and-endpoint-reference.md). Which configuration authority wins when two of these disagree is [a.3](a.3-configuration-model-and-precedence.md). Which role may perform the action, once you know an interface supports it, is [a.4](a.4-roles-and-permissions-matrix.md). Which platforms it reaches is [a.2](a.2-platform-capability-matrix.md).
 
@@ -33,7 +33,7 @@ Buttons, endpoints, flags and YAML keys are deliberately absent. They change eve
 
 ## How to read it
 
-![Reference](../_assets/icons/reference.svg) Five values, and the difference between three of them is most of the work.
+![Reference](../_assets/icons/reference-light.svg) Five values, and the difference between three of them is most of the work.
 
 | Value | What it means |
 |---|---|
@@ -55,7 +55,7 @@ Four conventions decide a large number of cells, and knowing them saves reading 
 
 ## What each interface is, and the boundary that decides its column
 
-![Explanation](../_assets/icons/explanation.svg) Each column has one boundary rule that decides most of it. Learn the four and you can predict a row this table does not contain.
+![Explanation](../_assets/icons/explanation-light.svg) Each column has one boundary rule that decides most of it. Learn the four and you can predict a row this table does not contain.
 
 ### `fleetctl api` is not `fleetctl` support. `gitops`, `apply` and `delete` are
 
@@ -103,7 +103,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 ## Five boundaries worth knowing before you plan
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) Each of these is a place where the interface does less than its name suggests, and each one is in the matrix below with its answer.
+![Troubleshooting](../_assets/icons/troubleshooting-light.svg) Each of these is a place where the interface does less than its name suggests, and each one is in the matrix below with its answer.
 
 > ### Omitting a GitOps key does not mean "leave this alone"
 >
@@ -153,7 +153,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 ## What decides a `Partial` cell
 
-![Explanation](../_assets/icons/explanation.svg) `Partial` is the most common non-`Full` answer in one of the four columns (REST API); `Unsupported` and `Not established` are larger in the other three. It is still worth knowing the shapes `Partial` takes, since it appears 253 times across the four columns, rather than reading each of those boundaries one at a time.
+![Explanation](../_assets/icons/explanation-light.svg) `Partial` is the most common non-`Full` answer in one of the four columns (REST API); `Unsupported` and `Not established` are larger in the other three. It is still worth knowing the shapes `Partial` takes, since it appears 253 times across the four columns, rather than reading each of those boundaries one at a time.
 
 **In the REST API column** it is nearly always that part of the action belongs to another caller. The administrator half is there and the device, agent or protocol half is not, and the missing half is usually the one that touches the machine.
 
@@ -165,7 +165,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 ## Where exactly one interface can do it
 
-![Reference](../_assets/icons/reference.svg) Counted from the matrix below, treating `Full` and `Partial` as "can" and `Read only`, `Unsupported` and `Not established` as "cannot".
+![Reference](../_assets/icons/reference-light.svg) Counted from the matrix below, treating `Full` and `Partial` as "can" and `Read only`, `Unsupported` and `Not established` as "cannot".
 
 | Interface | Rows where it is the only one | What they are |
 |---|---|---|
@@ -178,7 +178,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 ## The matrix
 
-![Reference](../_assets/icons/reference.svg) All 362 register rows, grouped as a reader would look for an action. Section rows in bold carry no cells; they mark where a family starts. Counts by value are published after the table and were recounted from it.
+![Reference](../_assets/icons/reference-light.svg) All 362 register rows, grouped as a reader would look for an action. Section rows in bold carry no cells; they mark where a family starts. Counts by value are published after the table and were recounted from it.
 
 | ID | Action | UI | REST API | `fleetctl` | GitOps |
 |---|---|---|---|---|---|
@@ -591,7 +591,7 @@ Four things in that shape are worth reading before you use any single row.
 
 ## What Fleet or an external system starts on its own
 
-![Reference](../_assets/icons/reference.svg) A different question from the matrix, and the reason the matrix has four columns rather than five. **These actions happen without an operator invoking anything**, so no interface column can describe them, so an inventory of four control surfaces is an incomplete account of what changes an estate.
+![Reference](../_assets/icons/reference-light.svg) A different question from the matrix, and the reason the matrix has four columns rather than five. **These actions happen without an operator invoking anything**, so no interface column can describe them, so an inventory of four control surfaces is an incomplete account of what changes an estate.
 
 This is the set worth knowing about, not a catalogue. The register marks 141 rows as capable of self-initiation, most of which are ordinary periodic collection. What is below is the subset that performs an administrative action.
 
@@ -636,7 +636,7 @@ This is the set worth knowing about, not a catalogue. The register marks 141 row
 
 ## Not established, deliberately
 
-![Explanation](../_assets/icons/explanation.svg) **Sixty-nine rows carry at least one `Not established` cell, and no row carries four.** Every action in the register has at least one interface answer that rests on evidence.
+![Explanation](../_assets/icons/explanation-light.svg) **Sixty-nine rows carry at least one `Not established` cell, and no row carries four.** Every action in the register has at least one interface answer that rests on evidence.
 
 Twelve rows are unsettled in more than one column, and they fall into two groups.
 
@@ -648,7 +648,7 @@ The single largest concentration is the UI column's 69 cells, described in the c
 
 ## Where this appendix and its siblings deliberately differ
 
-![Explanation](../_assets/icons/explanation.svg) Read this before you compare a cell here against the same action in another appendix, because two of the differences are intentional.
+![Explanation](../_assets/icons/explanation-light.svg) Read this before you compare a cell here against the same action in another appendix, because two of the differences are intentional.
 
 **This appendix carries 362 rows and [a.2](a.2-platform-capability-matrix.md) carries 276.** They are projections of one register: [a.1](a.1-capability-index.md) holds 364 capabilities, and this index covers all of them except **CAP-354, connecting an AI assistant**, which is a client of the REST API rather than an interface of its own, as the note above the matrix records, and except **CAP-371, Fleet's own repair of an undecryptable FileVault key**, which no operator interface invokes at all; it is listed in the self-initiation table above instead. a.2 is a narrower projection again: it sets aside the rows that are not device-facing, because a platform matrix has nothing to say about a server setting, and it merges rows that are platform-identical, retiring an enrollment identifier this index keeps. **CAP-048 is a strict platform subset of another row for a.2's purposes, but a distinct interface action here**: the personal-link BYOD enrollment, which is not the account-driven path CAP-049 describes. Both differences are scope decisions rather than contradictions: a row present in one projection and absent from another follows from what that projection is for.
 
@@ -662,7 +662,7 @@ The single largest concentration is the UI column's 69 cells, described in the c
 
 ## Version notes
 
-![Explanation](../_assets/icons/explanation.svg) Every cell is Fleet 4.90.0. Three things move faster than the rest and are worth re-checking rather than trusting at a later release.
+![Explanation](../_assets/icons/explanation-light.svg) Every cell is Fleet 4.90.0. Three things move faster than the rest and are worth re-checking rather than trusting at a later release.
 
 **The GitOps vocabulary grows.** New keys arrive at almost every release, so a `Unsupported` in that column ages faster than any other cell in this table. The closure argument behind it stays valid; the set it closes over does not.
 

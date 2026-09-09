@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28" fill="none">
+  <title>Troubleshooting: magnifying glass (light)</title>
+  <g fill="none" stroke="#192147" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="14" cy="14" r="10"/>
+    <path d="m21.2 21.2 6.8 6.8"/>
+  </g>
+  <circle cx="10.5" cy="11" r="2.5" fill="#5CABDF"/>
+  <circle cx="17.5" cy="11" r="2.5" fill="#FAA669"/>
+  <circle cx="14" cy="18" r="2.5" fill="#D66C7B"/>
+</svg>

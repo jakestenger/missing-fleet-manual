@@ -17,7 +17,7 @@ feature_requests:
 
 # Fleet MCP tool reference
 
-![Reference](../_assets/icons/reference.svg) The exact tools the Fleet MCP server exposes to an AI assistant, and the arguments each one takes. [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) is the chapter: it explains what the server is, how to build and connect it, and the security model this reference assumes. The REST routes underneath these tools are [a.8](a.8-api-action-and-endpoint-reference.md). This appendix is the argument-level contract, grouped by the four domains the server registers: hosts, queries, policies and vulnerabilities, and inventory. Look up the tool you're calling; the tables below aren't meant to be read start to finish. The binary also carries one non-tool flag, `-seed`, a one-shot bootstrap that creates a set of standard saved reports and then exits without serving; it is not one of the tools below, and [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) covers it.
+![Reference](../_assets/icons/reference-light.svg) The exact tools the Fleet MCP server exposes to an AI assistant, and the arguments each one takes. [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) is the chapter: it explains what the server is, how to build and connect it, and the security model this reference assumes. The REST routes underneath these tools are [a.8](a.8-api-action-and-endpoint-reference.md). This appendix is the argument-level contract, grouped by the four domains the server registers: hosts, queries, policies and vulnerabilities, and inventory. Look up the tool you're calling; the tables below aren't meant to be read start to finish. The binary also carries one non-tool flag, `-seed`, a one-shot bootstrap that creates a set of standard saved reports and then exits without serving; it is not one of the tools below, and [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) covers it.
 
 Twenty tools. Sixteen read Fleet's own data; three read from outside Fleet and never reach it; and one, `run_live_query`, executes on and consumes resources on devices. The three that never touch Fleet are `get_vetted_queries`, which serves a bundled query library, and `get_osquery_schema` and `refresh_osquery_schema`, which serve the osquery schema. `refresh_osquery_schema` fetches from `raw.githubusercontent.com` and replaces the MCP server's shared in-memory schema on success, so every subsequent `get_osquery_schema` call in that process sees the new data ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)). The read/destructive marks below are the advisory annotations the server sends to a cooperating client, not a control Fleet enforces: the enforced boundary is the Fleet role of the token the server holds ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)).
 
@@ -29,7 +29,7 @@ Every tool table below has a **Fleet routes** column, for building or auditing a
 
 ## Outcome to tool
 
-![Reference](../_assets/icons/reference.svg) The fixed twenty-tool subset is not the REST API column: [a.1](a.1-capability-index.md)'s outcome rows are. This matrix keys the tools below to the [a.1](a.1-capability-index.md) capability ID whose outcome they answer, so an outcome you already have a CAP-ID for (from a.1, a.2 or a.5) resolves straight to a tool name instead of a scan of the twenty rows below. Several tools share a CAP-ID because a.1's outcome grain is coarser than the tool-argument grain this appendix carries; five resolution-only or narrower-scoped tools (`get_fleets`, `get_labels`, `get_osquery_schema`, `refresh_osquery_schema`, `get_queries`) look up ids or schema for another tool's call, or answer a narrower outcome than any CAP-ID names, so they carry no CAP-ID here. `get_queries` is one of these: it lists saved report *definitions* (its own row below), not a report's stored *results*. CAP-098 names the latter, and no tool in this reference answers it.
+![Reference](../_assets/icons/reference-light.svg) The fixed twenty-tool subset is not the REST API column: [a.1](a.1-capability-index.md)'s outcome rows are. This matrix keys the tools below to the [a.1](a.1-capability-index.md) capability ID whose outcome they answer, so an outcome you already have a CAP-ID for (from a.1, a.2 or a.5) resolves straight to a tool name instead of a scan of the twenty rows below. Several tools share a CAP-ID because a.1's outcome grain is coarser than the tool-argument grain this appendix carries; five resolution-only or narrower-scoped tools (`get_fleets`, `get_labels`, `get_osquery_schema`, `refresh_osquery_schema`, `get_queries`) look up ids or schema for another tool's call, or answer a narrower outcome than any CAP-ID names, so they carry no CAP-ID here. `get_queries` is one of these: it lists saved report *definitions* (its own row below), not a report's stored *results*. CAP-098 names the latter, and no tool in this reference answers it.
 
 | CAP-ID | Outcome ([a.1](a.1-capability-index.md)) | Tool(s) |
 |---|---|---|
@@ -44,7 +44,7 @@ Every tool table below has a **Fleet routes** column, for building or auditing a
 
 ## Arguments common to several tools
 
-![Reference](../_assets/icons/reference.svg) The host-facing tools share one filter vocabulary, resolved server-side. Learn it once and it reads across the tables below.
+![Reference](../_assets/icons/reference-light.svg) The host-facing tools share one filter vocabulary, resolved server-side. Learn it once and it reads across the tables below.
 
 | Argument | Meaning | Notes |
 |---|---|---|
@@ -60,7 +60,7 @@ Every tool table below has a **Fleet routes** column, for building or auditing a
 
 ## Hosts
 
-![Reference](../_assets/icons/reference.svg) Reading enrolled hosts, their policy results, and fleet-wide counts. All read-only.
+![Reference](../_assets/icons/reference-light.svg) Reading enrolled hosts, their policy results, and fleet-wide counts. All read-only.
 
 | Tool | What it does | Arguments | Fleet routes |
 |---|---|---|---|
@@ -76,7 +76,7 @@ Every tool table below has a **Fleet routes** column, for building or auditing a
 
 ## Queries
 
-![Reference](../_assets/icons/reference.svg) The saved-report list (`get_queries`), the osquery schema, and running live osquery. `run_live_query` is the one destructive tool; the rest are read-only.
+![Reference](../_assets/icons/reference-light.svg) The saved-report list (`get_queries`), the osquery schema, and running live osquery. `run_live_query` is the one destructive tool; the rest are read-only.
 
 | Tool | What it does | Arguments | Fleet routes |
 |---|---|---|---|
@@ -95,7 +95,7 @@ Both `prepare_live_query` and `run_live_query` also accept three undocumented le
 
 ## Policies and vulnerabilities
 
-![Reference](../_assets/icons/reference.svg) Policy pass/fail counts and the hosts on either side, and the hosts a CVE affects. All read-only. The host-listing tools here return a capped page with no running total; read a count question from the counting tools rather than the length of a list (see [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) on completeness limits).
+![Reference](../_assets/icons/reference-light.svg) Policy pass/fail counts and the hosts on either side, and the hosts a CVE affects. All read-only. The host-listing tools here return a capped page with no running total; read a count question from the counting tools rather than the length of a list (see [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) on completeness limits).
 
 | Tool | What it does | Arguments | Fleet routes |
 |---|---|---|---|
@@ -109,7 +109,7 @@ Both `prepare_live_query` and `run_live_query` also accept three undocumented le
 
 ## Inventory
 
-![Reference](../_assets/icons/reference.svg) Stored software and local user accounts, read from Fleet's cached inventory so they answer for offline hosts. Both read-only. The freshness of these answers is the last successful inventory collection, not the last check-in ([4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md), [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md)).
+![Reference](../_assets/icons/reference-light.svg) Stored software and local user accounts, read from Fleet's cached inventory so they answer for offline hosts. Both read-only. The freshness of these answers is the last successful inventory collection, not the last check-in ([4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md), [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md)).
 
 **At 4.90.0, `get_software`'s own tool description tells the assistant its data is "refreshed on each host check-in," which is not what the source does**: detail-query issuance, software included, is throttled to the configured inventory interval rather than tied to every check-in. The assistant reads that description as fact along with everything else the tool returns, so if it states a freshness guarantee for software data, don't take the assistant's word for it; check the host's own last-collection time instead. That freshness line is not the only tool description that reads simpler than the tool behaves: `get_endpoints` advertises that all its filters compose, yet `label` and `platform` do not, and setting both drops `platform` silently (the argument notes above). Read a tool's self-description as a claim to check against this reference, not a contract the server keeps.
 
@@ -122,12 +122,12 @@ Both `prepare_live_query` and `run_live_query` also accept three undocumented le
 
 ## Starting allowlist profiles
 
-![Reference](../_assets/icons/reference.svg) Two ready-made endpoint allowlists, assembled from the **Fleet routes** columns above, de-duplicated, plus the startup `GET /me`. Copy the one that matches the token's job; [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md#two-starting-allowlist-profiles) is where you attach it to the API-only user and confirm the boundary. Restore the `/api/v1/fleet` prefix on every route and submit each as a full `{"method", "path"}` pair, as the note on the routes column near the top of this appendix describes: the shorthand here cannot go into `api_endpoints` unchanged. Re-derive both lists whenever the tools change or one is added, and test the result against your own deployment rather than treating it as a quick lock-down.
+![Reference](../_assets/icons/reference-light.svg) Two ready-made endpoint allowlists, assembled from the **Fleet routes** columns above, de-duplicated, plus the startup `GET /me`. Copy the one that matches the token's job; [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md#two-starting-allowlist-profiles) is where you attach it to the API-only user and confirm the boundary. Restore the `/api/v1/fleet` prefix on every route and submit each as a full `{"method", "path"}` pair, as the note on the routes column near the top of this appendix describes: the shorthand here cannot go into `api_endpoints` unchanged. Re-derive both lists whenever the tools change or one is added, and test the result against your own deployment rather than treating it as a quick lock-down.
 
 - **Read-only** (every tool except `run_live_query`): `GET /me`, `GET /hosts`, `GET /hosts/count`, `GET /hosts/{id}`, `GET /hosts/identifier/{identifier}`, `GET /hosts/{id}/software`, `GET /host_summary`, `GET /labels`, `GET /labels/{id}/hosts`, `GET /fleets`, `GET /fleets/{id}/policies`, `GET /fleets/{id}/policies/{policy_id}`, `GET /global/policies`, `GET /global/policies/{id}`, `GET /software/titles`, `GET /software/titles/{id}`, `GET /reports`.
 - **Read plus live query**: the read-only list above, plus `POST /hosts/{id}/query` and `POST /reports/run` for running queries. It cannot add the results stream: `GET /results/websocket` sits outside the allowlist mechanism entirely (above), so anyone who can reach `POST /reports/run` can already read what it returns.
 
-![Reference](../_assets/icons/reference.svg) The server tells a cooperating client to fetch the schema before writing SQL and to confirm before running a live query, and it advertises the read/destructive annotations above. These are instructions to the assistant, not gates the server keeps: a client can ignore them, and `run_live_query` resolves its targets and validates its SQL itself at call time regardless. The controls that hold are the token's Fleet role and, on the agent, osquery's own table controls, both covered in [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
+![Reference](../_assets/icons/reference-light.svg) The server tells a cooperating client to fetch the schema before writing SQL and to confirm before running a live query, and it advertises the read/destructive annotations above. These are instructions to the assistant, not gates the server keeps: a client can ignore them, and `run_live_query` resolves its targets and validates its SQL itself at call time regardless. The controls that hold are the token's Fleet role and, on the agent, osquery's own table controls, both covered in [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
 
 <!-- IMAGE-TODO: assets/a.11-mcp-tool-route-allowlist.webp
      QUESTION: How do tool choices become an API endpoint allowlist?
