@@ -21,15 +21,15 @@ feature_requests:
 
 **A `fleetctl` command is a request to Fleet, and its contract is what it asks Fleet to do and what its result proves.** That is a different document from the one `--help` prints. Help tells you the flags a command accepts. It does not tell you that an invocation reaches four separate authorization decisions and that clearing the last one is not enough, that the answer changes between Fleet Free and Fleet Premium, or that a command exits zero after Fleet refused it.
 
-Those three gaps are what this appendix carries, and each one is a place where an operator acts on a result that means less than it appears to.
+Each of those three gaps is a place where an operator acts on a result that means less than it appears to.
 
 ## What this appendix carries
 
 ![Reference](../_assets/icons/reference.svg) Every public command and leaf subcommand in the 4.90.0 tree on macOS and Linux, and the one entry that differs on Windows, with what it asks Fleet to do, what it must be allowed to do, whether it destroys anything, whether it returns before or after Fleet acted, what its exit status proves, and the chapter that explains the workflow.
 
-**Exact syntax is the installed client's job.** Run `fleetctl <command> --help` for the flag list of the client you actually have, which is the only listing guaranteed to match your binary. What is here instead is the part help does not carry: the resolution model, the per-command contract, the register of results that mislead, and the option families that widen an operation past what its name suggests.
+**Exact syntax is the installed client's job.** Run `fleetctl <command> --help` for the flag list of the client you actually have, which is the only listing guaranteed to match your binary. Instead this appendix carries what help does not: the resolution model, the per-command contract, the register of results that mislead, and the option families that widen an operation past what its name suggests.
 
-**Three questions belong elsewhere.** Which role may perform an action, across all six roles at both scopes, is [a.4](a.4-roles-and-permissions-matrix.md). Which configuration authority wins when two disagree is [a.3](a.3-configuration-model-and-precedence.md). How to use the client in practice, meaning installation, version pinning, safe context use in CI, stream capture and worked examples, is [6.4](../06-automate-fleet/6.4-use-fleetctl.md). This appendix carries lookup contracts and links out; it reteaches none of the three.
+**Three questions belong elsewhere.** Which role may perform an action, across all six roles at both scopes, is [a.4](a.4-roles-and-permissions-matrix.md). Which configuration authority wins when two disagree is [a.3](a.3-configuration-model-and-precedence.md). How to use the client in practice, meaning installation, version pinning, safe context use in CI, stream capture and worked examples, is [6.4](../06-automate-fleet/6.4-use-fleetctl.md).
 
 ## The command index
 
@@ -37,7 +37,7 @@ Those three gaps are what this appendix carries, and each one is a place where a
 
 ### How to read a row
 
-**Access contract** is the ordered chain of authorization decisions the invocation reaches, written as `object · action` with the scope Fleet uses for that decision: `(global)` where the decision carries no fleet, `(fleet)` where it carries the object's fleet, and `(self)` where the object is your own record. **The order matters and the chain is not a union.** A role can hold the last decision in the chain and be refused by an earlier one, which is the single most useful thing this column carries, and it is why the column does not simply name the permission the command is "about".
+**Access contract** is the ordered chain of authorization decisions the invocation reaches, written as `object · action` with the scope Fleet uses for that decision: `(global)` where the decision carries no fleet, `(fleet)` where it carries the object's fleet, and `(self)` where the object is your own record. **The order matters and the chain is not a union.** A role can hold the last decision in the chain and be refused by an earlier one, which is why the column does not simply name the permission the command is "about".
 
 Five phrases replace a chain where there is nothing to chain:
 
@@ -57,7 +57,7 @@ Five phrases replace a chain where there is nothing to chain:
 
 **Result contract** is what a zero exit proves. A `Znn` reference points into the exit-zero register below.
 
-**Chapter** is the section that explains the workflow. **`None` would mean this manual does not explain that command**, a finding about the manual rather than about Fleet; at this revision no row carries it, and the section after the index records how the last of the gaps closed.
+**Chapter** is the section that explains the workflow. **`None` would mean this manual does not explain that command**, a finding about the manual rather than about Fleet. At this revision no row carries it, and the section after the index records how the last of the gaps closed.
 
 ### Top-level commands
 
@@ -150,11 +150,11 @@ Neither reaches Fleet. Both read and write the local configuration file only.
 | **`preview stop`** Stop the sandbox | `local` | Stops the containers and the sandbox agent. `local` | The stop was issued | [1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything) |
 | **`preview reset`** Delete the sandbox | `local` | Removes the sandbox's containers and Orbit's downloaded update files. **Reuses the saved private key and certificates in the config directory and leaves the named Docker volumes**, so the stored data survives and this is not a clean wipe. `local` | The sandbox was removed | [1.1](../01-foundations/1.1-what-fleet-is.md#try-fleet-without-deploying-anything) |
 
-Neither subcommand removes the preview directory itself: the saved configuration, private key and certificates, and the named database volumes all persist a reset, which is what lets a later `preview` reuse them. For a genuine clean slate, take down the Compose stacks with their volumes and delete the preview directory by hand after resetting, then start fresh.
+Neither subcommand removes the preview directory itself: the saved configuration, private key and certificates, and the named database volumes all persist a reset, so a later `preview` can reuse them. For a genuine clean slate, take down the Compose stacks with their volumes and delete the preview directory by hand after resetting, then start fresh.
 
 ### `fleetctl updates`, five subcommands on macOS and Linux and one behaviour on Windows
 
-**Present on macOS and Linux. On Windows the family is a single entry that fails on any invocation.** None of the five talks to Fleet; each operates on a local signing repository under `--path`, and each prompts for a passphrase. The parent command's description says the functionality is licensed under Fleet's enterprise licence. **Nothing in these commands could enforce it**: not one of the five contacts a Fleet server, holds a session, or reads an application configuration, so there is no channel by which a licence tier could even be learned. The sentence is a licensing statement rather than a gate.
+**Present on macOS and Linux. On Windows the family is a single entry that fails on any invocation.** None of the five talks to Fleet; each operates on a local signing repository under `--path`, and each prompts for a passphrase. The parent command's description says the functionality is licensed under Fleet's enterprise licence. **Nothing in these commands could enforce it**: not one of the five contacts a Fleet server, holds a session, or reads an application configuration, so there is no channel by which a licence tier could be learned. The sentence is a licensing statement rather than a gate.
 
 | Command and purpose | Access contract | Effect | Result contract | Chapter |
 |---|---|---|---|---|
@@ -173,7 +173,7 @@ Neither subcommand removes the preview directory itself: the saved configuration
 
 ### `fleetctl generate`, three credential-request subcommands
 
-**Each is a global write followed by a read**, which is the clearest case in the client for reading a chain in order rather than naming its last decision: a contract naming only the last would report these as a settings read when they require a global Apple MDM write. **And the write is not only a permission label.** Two of the three create key material on the Fleet server and store it there before anything reaches your disk, so a command named `generate` changes server state on its first successful run.
+**Each is a global write followed by a read**, and a contract naming only the last decision would report these as a settings read when they require a global Apple MDM write. **The write is not only a permission label.** Two of the three create key material on the Fleet server and store it there before anything reaches your disk, so a command named `generate` changes server state on its first successful run.
 
 | Command and purpose | Access contract | Effect | Result contract | Chapter |
 |---|---|---|---|---|
@@ -183,9 +183,9 @@ Neither subcommand removes the preview directory itself: the saved configuration
 
 ### `fleetctl mdm`, five device-action subcommands
 
-**This is the most destructive family in the client, and the family where the edition split bites hardest.** Four of the five share a client preflight that resolves the host and turns a permission refusal into a readable message; that preflight contributes the first two decisions of each chain, **and it contributes them on both editions**, which is why the Free answer below is about a service node rather than about the command.
+**This is the most destructive family in the client, and the family where the edition split matters most.** Four of the five share a client preflight that resolves the host and turns a permission refusal into a readable message; that preflight contributes the first two decisions of each chain, **and it contributes them on both editions**, which is why the Free answer below is about a service node rather than about the command.
 
-**The third decision is the one that catches people.** On Premium, `lock`, `unlock` and `wipe` require a **broad, global** `host · list` in addition to the selective host decisions before them, and `clear-passcode` requires a broad, global `host · read`. A role granted the selective host actions instead of the broad ones clears the first two decisions, holds `mdm_command · write` for the host's fleet, and is still refused.
+**The third decision is broader than the two before it.** On Premium, `lock`, `unlock` and `wipe` require a **broad, global** `host · list` in addition to the selective host decisions before them, and `clear-passcode` requires a broad, global `host · read`. A role granted the selective host actions instead of the broad ones clears the first two decisions, holds `mdm_command · write` for the host's fleet, and is still refused.
 
 | Command and purpose | Access contract | Effect | Result contract | Chapter |
 |---|---|---|---|---|
@@ -201,9 +201,9 @@ Neither subcommand removes the preview directory itself: the saved configuration
 
 **Two kinds, and they behave differently:**
 
-**The community build evaluates no permission at that service node and returns a licence error.** Twelve rows. **The Free chain takes no decision at that node, rather than taking a smaller one**, which is a different kind of answer. **It is a claim about the node and not about the whole command**: `mdm lock`, `unlock` and `clear-passcode` resolve the host first and take two host decisions on both editions, and only the final node skips. `run-script` against a named fleet is the same shape from the other direction: the client's preflights run on both editions, and the server skips authorization and refuses for the licence **before** it reaches either of the two decisions that row lists. What a refusal at that node tells the operator about the permissions behind it is nothing, and moving to Premium can then refuse them again on grounds they have not yet seen.
+**The community build evaluates no permission at that service node and returns a licence error.** Twelve rows. **The Free chain takes no decision at that node, rather than taking a smaller one**, which is a different kind of answer. **It is a claim about the node and not about the whole command**: `mdm lock`, `unlock` and `clear-passcode` resolve the host first and take two host decisions on both editions, and only the final node skips. `run-script` against a named fleet is the same shape from the other direction: the client's preflights run on both editions, and the server skips authorization and refuses for the licence **before** it reaches either of the two decisions that row lists. A refusal at that node tells the operator nothing about the permissions behind it, and moving to Premium can then refuse them again on grounds they have not yet seen.
 
-**The decisions are the same on both editions and a licence check is added.** Seven rows. **Two rows appear in both kinds**, `apply -f` and `gitops`, because each carries nodes of both shapes, which is how twelve and seven cover seventeen rows rather than nineteen. **Where that check sits is the useful part**, and it differs: `mdm wipe` takes every permission decision and then checks the licence, while `mdm run-command` authorizes the whole target set up front and refuses only where the payload names a request type Free does not carry. `user create` charges the permission before the licence refusal, so a Premium-only role requested on Free is refused for the licence rather than for permission. `get labels --fleet` and `get software --fleet` are the same shape as `user create`: authorized first, refused for the licence afterwards.
+**The decisions are the same on both editions and a licence check is added.** Seven rows. **Two rows appear in both kinds**, `apply -f` and `gitops`, because each carries nodes of both shapes, which is how twelve and seven cover seventeen rows rather than nineteen. **Where that check sits differs**: `mdm wipe` takes every permission decision and then checks the licence, while `mdm run-command` authorizes the whole target set up front and refuses only where the payload names a request type Free does not carry. `user create` charges the permission before the licence refusal, so a Premium-only role requested on Free is refused for the licence rather than for permission. `get labels --fleet` and `get software --fleet` are the same shape as `user create`: authorized first, refused for the licence afterwards.
 
 | Row | Kind | What differs |
 |---|---|---|
@@ -252,7 +252,7 @@ Neither subcommand removes the preview directory itself: the saved configuration
 
 **Writes to it are whole-file and unlocked**, so two `fleetctl` processes changing configuration at the same time lose one of the two changes and both exit zero. [6.4](../06-automate-fleet/6.4-use-fleetctl.md) covers giving each automation job its own file, which removes the class of problem rather than narrowing it.
 
-Five situations produce answers worth knowing in advance:
+Five situations produce answers to know in advance:
 
 | Situation | What happens |
 |---|---|
@@ -271,7 +271,7 @@ Five situations produce answers worth knowing in advance:
 | **First** | `version · read` (global) | **Ends the command.** Any error, a permission error included, returns before your work begins. This call doubles as the check that your token is still valid |
 | **Second** | `app_config · read` (global) | **Tolerated when it is a permission refusal**, fatal otherwise. The tolerance is what lets a low-privilege automation identity, such as one holding the GitOps role, use the client at all |
 
-**The 51 rows that carry the prefix state only the suffix after those two.** It is stated once here rather than in 51 rows, and a row that shows an application-configuration read is showing a second, command-specific one. The other eighteen rows are the subject of the paragraph below, and one of them has authorization of its own that this prefix does not describe.
+**The 51 rows that carry the prefix state only the suffix after those two.** A row that shows an application-configuration read is showing a second, command-specific one.
 
 **Eighteen of the 69 rows do not carry the prefix, and seventeen of those eighteen reach no Fleet authorization at all.** The two counts differ by one row and the row is `preview`. Fourteen make no call to any Fleet: `convert`, `package`, `new`, `vulnerability-data-stream`, `prepare`, `preview stop`, `preview reset`, both `config` subcommands and the five update-repository subcommands. Three reach Fleet without a credential: `setup`, `login` and `debug connection`.
 
@@ -292,7 +292,7 @@ Five situations produce answers worth knowing in advance:
 
 **Not every command declares all four.** `package` declares none of `--config`, `--context` or `--debug`, and carries an unrelated `--debug` of its own that turns on agent debug logging in the package it builds. `new` declares none of them. The five `mdm` subcommands and the three `generate` subcommands declare `--context` and `--debug` but not `--config`. So a claim that a flag is available on every subcommand is true of the `debug` family and untrue of the client.
 
-**Most of the client's environment variables are unprefixed, which is the sharpest option-resolution hazard here.** Fleet's server variables all begin `FLEET_`. The client's flag variables mostly do not, and the set includes `TOKEN`, `PASSWORD`, `INSECURE`, `FORCE`, `DRY_RUN`, `DEBUG`, `QUIET`, `TIMEOUT`, `NAME`, `DIR`, `HOSTS`, `QUERY`, `EMAIL`, `FILENAME` and `DELETE_OTHER_FLEETS`. Several of those are names a CI runner or a shell profile sets for unrelated reasons. An exported `DEBUG=1` makes every `fleetctl` call **that declares the standard debug flag** dump request bodies, which is most of them and not all: `new`, `convert`, the two `config` subcommands, `prepare` and the update-repository commands do not declare it and ignore the variable, and `package`'s `--debug` is a different flag that reads no environment variable at all. An exported `INSECURE=1` makes `fleetctl config set` disable certificate verification for the context it writes. `fleetctl package` prefixes its own variables `FLEETCTL_`, which is a good indication that the unprefixed set is inherited rather than intended.
+**Most of the client's environment variables are unprefixed.** Fleet's server variables all begin `FLEET_`. The client's flag variables mostly do not, and the set includes `TOKEN`, `PASSWORD`, `INSECURE`, `FORCE`, `DRY_RUN`, `DEBUG`, `QUIET`, `TIMEOUT`, `NAME`, `DIR`, `HOSTS`, `QUERY`, `EMAIL`, `FILENAME` and `DELETE_OTHER_FLEETS`. Several of those are names a CI runner or a shell profile sets for unrelated reasons. An exported `DEBUG=1` makes every `fleetctl` call **that declares the standard debug flag** dump request bodies, which is most of them and not all: `new`, `convert`, the two `config` subcommands, `prepare` and the update-repository commands do not declare it and ignore the variable, and `package`'s `--debug` is a different flag that reads no environment variable at all. An exported `INSECURE=1` makes `fleetctl config set` disable certificate verification for the context it writes. `fleetctl package` prefixes its own variables `FLEETCTL_`, which is a good indication that the unprefixed set is inherited rather than intended.
 
 **In automation, pass the flags explicitly** and give each job its own configuration file.
 
@@ -348,7 +348,7 @@ What Fleet's source settles is the shape of the question. For the five `mdm` sub
 
 ## What a result and an exit status prove
 
-![Reference](../_assets/icons/reference.svg) This is the legend the index is read through. **A zero exit proves that the client reached the end of its work without returning an error.** It does not prove that Fleet did the thing, that the thing reached a device, that your file was fully validated, that you were authorised, or that the flags you passed were understood.
+![Reference](../_assets/icons/reference.svg) **A zero exit proves that the client reached the end of its work without returning an error.** It does not prove that Fleet did the thing, that the thing reached a device, that your file was fully validated, that you were authorised, or that the flags you passed were understood.
 
 **The client's own exits are zero and one.** No command distinguishes "not found" from "forbidden" from "the network is down" in its status, so a pipeline branching on the exit code is branching on one bit. Signals, panics and a launcher's own failure produce other process statuses, so this is a statement about what the program returns rather than about everything a shell can observe.
 
@@ -358,7 +358,7 @@ What Fleet's source settles is the shape of the question. For the five `mdm` sub
 
 ### Four things exit zero can mean
 
-Read a row's result contract as one of these four. The fourth is why this appendix has a register.
+Read a row's result contract as one of these four.
 
 **The request completed and Fleet returned success.** The ordinary case, and what most rows carry.
 
@@ -366,7 +366,7 @@ Read a row's result contract as one of these four. The fourth is why this append
 
 **The client's work completed and the outcome is in the text rather than in the status.** `run-script` waiting for its result exits zero whatever the script returned, and the script's own exit code is a line of output that `--quiet` removes. `report` exits zero when it stops on a timeout.
 
-**The advertised outcome was refused, incomplete or partial, and the status does not say so.** That is the register below. **Most of those cases print something**, a warning line or an advisory, so the shared property is not silence: it is that the exit status is zero either way, and nothing a script can branch on records the refusal.
+**The advertised outcome was refused, incomplete or partial, and the status does not say so.** That is the register below. **Most of those cases print something**, a warning line or an advisory. The shared property is the exit status: it is zero either way, and nothing a script can branch on records the refusal.
 
 ### Output modes, and where structured output is absent
 
@@ -384,7 +384,7 @@ There is no single output-format flag. Five renderers exist and they are attache
 
 **A large part of the client has no structured output on the terminal.** Every `mdm` subcommand, `run-script`, `trigger`, `gitops`, `apply`, `delete`, `upgrade-packs`, `get mdm-command-results`, `package`, `new`, the update-repository subcommands, and every `debug` subcommand **but one**, print prose to your screen. **The exception is `debug errors --stdout`**, which streams Fleet's error store to the terminal as JSON. Anything parsing that is parsing sentences, and sentences change between releases without a deprecation.
 
-**Several of them do write structured output, to a file rather than to your terminal**, and that is the distinction the sentence above hides. `upgrade-packs` requires an output path and writes report YAML into it. `new` writes a whole YAML repository. Four `debug` subcommands write JSON: `errors`, which `--stdout` sends to the terminal instead, as above, and the three database diagnostics, which `debug archive` then bundles alongside the profiling files. `get mdm-command-results` is the opposite case: it has no structured mode at all, and the payload and result cells inside its text blocks are XML.
+**Several of them do write structured output, to a file rather than to your terminal.** `upgrade-packs` requires an output path and writes report YAML into it. `new` writes a whole YAML repository. Four `debug` subcommands write JSON: `errors`, which `--stdout` sends to the terminal instead, as above, and the three database diagnostics, which `debug archive` then bundles alongside the profiling files. `get mdm-command-results` is the opposite case: it has no structured mode at all, and the payload and result cells inside its text blocks are XML.
 
 **Four commands declare a `--yaml` flag that nothing in them reads**: `hosts transfer`, `goquery`, `user create` and `user delete`. The declaration carries no destination, no environment variable and no action of its own, so the only route to the value is the invocation's own context, and none of the four takes it: the query shell is handed a client and never sees the context at all. What the framework does with a declared flag nobody reads is a question about the framework.
 
@@ -400,7 +400,7 @@ There is no single output-format flag. Five renderers exist and they are attache
 - **Asynchronous acceptance.** A command that returns when Fleet accepted a request rather than when a device acted. That is a real property, it belongs in the index's result column, and it is there.
 - **Results that have not arrived yet.** The same shape at a different layer.
 
-**Every row below exits zero**, so there is no status column. **Z8 is the one row where a command prints its success line for work that did not happen**, and it is the one to read first. **Five rows print nothing at all**: Z20, Z23, Z24, Z28 and Z31, where the only evidence that anything went wrong is the object the command was supposed to produce.
+**Every row below exits zero**, so there is no status column. **Z8 is the one row where a command prints its success line for work that did not happen.** **Five rows print nothing at all**: Z20, Z23, Z24, Z28 and Z31, where the only evidence that anything went wrong is the object the command was supposed to produce.
 
 | ID | Invocation | What was detected | What you see | What to check instead |
 |---|---|---|---|---|
@@ -447,7 +447,7 @@ There is no single output-format flag. Five renderers exist and they are attache
 
 **Four are a file whose final write or close failure is discarded**, in `debug archive`, `get carve`, `convert` and `updates add`. **None of the four establishes that the file is bad**, only that the command cannot tell you if it is, which is why the check in each case is the file itself.
 
-**Five are in commands run against production hosts**: `mdm run-command`, `run-script`, `apply --dry-run`, `delete -f`, and `gitops` against a Free server. Those are the five worth encoding into whatever runs `fleetctl` for you.
+**Five are in commands run against production hosts**: `mdm run-command`, `run-script`, `apply --dry-run`, `delete -f`, and `gitops` against a Free server. Encode those five into whatever runs `fleetctl` for you.
 
 > ### A path with no exit status at all
 >
@@ -457,13 +457,13 @@ There is no single output-format flag. Five renderers exist and they are attache
 
 ### Why the register is a floor
 
-**Three places a thirty-fifth case could hide**, each stated so a later pass knows where to look. A failure detected inside a helper that returns success to a caller which then prints nothing leaves no trace at either end. The two most consequential rows here, `trigger` and `mdm run-command`, were found by reading Fleet's responses against what the client does with them, which is work no search performs. And the client library paths were audited where the commands reach them rather than in full.
+**Three places a thirty-fifth case could hide**, each stated so a later pass knows where to look. A failure detected inside a helper that returns success to a caller which then prints nothing leaves no trace at either end. The two most consequential rows here, `trigger` and `mdm run-command`, were found by reading Fleet's responses against what the client does with them, which is work no search performs. The client library paths were audited where the commands reach them rather than in full.
 
 **The class is bounded and the enumeration is a floor.** Treat an absence from this register as "not found" rather than as "does not happen".
 
 ## Destructive commands and the flags that widen them
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) Two different things get called dangerous, and separating them is what makes this section usable. **Some invocations are dangerous in proportion to your intent**: they inherit whatever you point them at, and they announce themselves. **Others are dangerous in proportion to your mistake**: a wrong host, a stale context, or a flag whose reach is wider than its name suggests.
+![Troubleshooting](../_assets/icons/troubleshooting.svg) Two different things get called dangerous, and they need separating. **Some invocations are dangerous in proportion to your intent**: they inherit whatever you point them at, and they announce themselves. **Others are dangerous in proportion to your mistake**: a wrong host, a stale context, or a flag whose reach is wider than its name suggests.
 
 ### The six invocations ranked
 
@@ -478,7 +478,7 @@ Ranked on five axes: whether it can be undone, how much one invocation reaches, 
 | **`mdm wipe --host`** | Irreversible, one host, one required flag, no prompt. What it leaves on the disk is the platform's answer rather than Fleet's |
 | **`gitops --delete-other-fleets`** | On Premium, and not on a dry run, deletes the fleets not named in the run. A dry run exists and covers it, **and the flag defaults to on in the pipeline scaffold `fleetctl new` generates** ([6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md)) |
 
-**The last two come last on the ranking and are still the two most often named as footguns.** That is the correct result rather than an argument against it: the first four inherit their reach from what you asked for, and the last two are the ones a wrong flag or a stale context turns into an incident.
+**The last two come last on the ranking and are still the two most often named as footguns.** The first four inherit their reach from what you asked for, and the last two are the ones a wrong flag or a stale context turns into an incident.
 
 ### Flags that widen what is destroyed
 
@@ -520,7 +520,7 @@ Ranked on five axes: whether it can be undone, how much one invocation reaches, 
 
 **None of the ten is a confirmation before a destructive act.** `mdm wipe`, `hosts transfer`, `user delete-users`, `gitops --delete-other-fleets` and `api` with a delete verb declare no `--yes`, and four of the five have no dry run either. `gitops` is the one that has one.
 
-**The bound on that claim, stated rather than hidden.** The ten were enumerated from the mechanisms the client can prompt with, and none of the files holding those five invocations uses one of them. A prompt built on something outside that set would not have been found, so **whether any of the five confirms by some other means is not established, and this appendix does not claim that none does**. What is established is where the client is known to read from the terminal, and none of those places is one of the five.
+**The bound on that claim.** The ten were enumerated from the mechanisms the client can prompt with, and none of the files holding those five invocations uses one of them. A prompt built on something outside that set would not have been found, so **whether any of the five confirms by some other means is not established, and this appendix does not claim that none does**. What is established is where the client is known to read from the terminal, and none of those places is one of the five.
 
 ## Choosing packaging options
 
@@ -546,7 +546,7 @@ Ranked on five axes: whether it can be undone, how much one invocation reaches, 
 
 ![Explanation](../_assets/icons/explanation.svg) The inventory above is the command tree Fleet assembles at 4.90.0, read from source at the release tag, because no `fleetctl` binary trustworthy as 4.90.0 was available to interrogate. That matters when your client disagrees with this table: the likely explanation is that you are running a different version, and the version notes at the end say why that is easy to do without noticing.
 
-**Four things make the tree non-uniform**, and each defeats a naive search of the source files. They are worth knowing because they are also the four places the tree differs between two machines running the same release.
+**Four things make the tree non-uniform**, and each defeats a naive search of the source files. They are also the four places the tree differs between two machines running the same release.
 
 **One command is wired in at run time.** The interactive query shell is always present in the tree, and its implementation is supplied by the program that builds the client. A binary that embeds Fleet's client library without supplying it still shows the command, which then reports that the support is not built in.
 
@@ -573,7 +573,7 @@ Ranked on five axes: whether it can be undone, how much one invocation reaches, 
 
 ### Two enumerations here are floors rather than inventories
 
-**The permission chains are established by reading each command through to the authorization decisions it reaches**, so a decision taken in middleware, in a wrapper this verification did not assemble, or on a branch it did not reach would not appear. **The exit-zero register is bounded by a stated class and enumerated by search**, and its two most consequential rows were found by reading rather than by searching, which is a fair warning about what a search alone returns.
+**The permission chains are established by reading each command through to the authorization decisions it reaches**, so a decision taken in middleware, in a wrapper this verification did not assemble, or on a branch it did not reach would not appear. **The exit-zero register is bounded by a stated class and enumerated by search**, and its two most consequential rows were found by reading rather than by searching.
 
 A floor is useful and it is a different claim from a complete list. Where this appendix has a complete list, such as the 27 top-level names, it says so.
 
@@ -607,17 +607,17 @@ A floor is useful and it is a different claim from a complete list. Where this a
 
 **Nineteen client-side deprecation notices exist. Fourteen are gated on the `deprecated-field-names` logging topic and five are not**, so `--disable-log-topics=deprecated-field-names` and its environment variable cannot silence those five. **Four of the five are on `apply` and `gitops`**, which are the two commands most likely to be running unattended with their output parsed.
 
-Two further asymmetries are worth knowing before you build anything on that flag:
+Two further asymmetries limit that flag:
 
 **The topic flags exist on four surfaces only**: the `get` family, `apply`, `gitops` and `report`. Everywhere else `--disable-log-topics` is an unknown flag. One gated notice, on `generate mdm-apple-bm`, therefore sits behind a gate nothing in its own invocation can reach.
 
 **On `apply`, one notice fires before the flag is applied.** The deprecated-flag notice runs in the command's setup and the topic setting is applied at the start of its work, so `apply --policies-team X --disable-log-topics=deprecated-field-names` prints the notice anyway. `gitops`, `report` and the `get` family apply the setting first.
 
-**And `delete -f` prints none of the spec-file notices that `apply -f` prints for the same file.** Both hand the file to the same parser and the notices are the parser's, not the command's; `apply` gives it somewhere to write them and `delete` gives it nowhere, which leaves it no way to say anything at all. The same YAML fed to the two commands that both accept it warns in one and is silent in the other, so a `delete -f` run against a legacy file looks clean whatever it contains.
+**`delete -f` prints none of the spec-file notices that `apply -f` prints for the same file.** Both hand the file to the same parser and the notices are the parser's, not the command's; `apply` gives it somewhere to write them and `delete` gives it nowhere, which leaves it no way to say anything at all. The same YAML fed to the two commands that both accept it warns in one and is silent in the other, so a `delete -f` run against a legacy file looks clean whatever it contains.
 
 ### Deprecated forms that are errors rather than warnings
 
-Four compatibility conditions fail outright rather than warning, which is the good case and worth knowing so the failure is recognised:
+Four compatibility conditions fail outright rather than warning:
 
 - `gitops` refuses a repository holding both `no-team.yml` and `unassigned.yml` in one run.
 - Specifying both a deprecated GitOps key and its replacement is fatal, for any of the 44 renamed key pairs.
