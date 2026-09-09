@@ -24,9 +24,9 @@ Heartbeat: `complete-fleet-manual-visuals-overnight`, every 30 minutes in this t
 | Part II | 14 | Completed candidates; final review pending | `d857e42` |
 | Part III | 10 | Completed candidates; final review pending | `b3cdd13` |
 | Part IV | 7 | Completed candidates; final review pending | `e1f047e` |
-| Part V | 18 | 17 candidates ready; 1 authentic capture outstanding | Part V batch commit (see git log) |
-| Part VI | 11 | Next batch | — |
-| Part VII | 15 | Pending | — |
+| Part V | 18 | 17 candidates ready; 1 authentic capture outstanding | `6b173c1` |
+| Part VI | 11 | Completed candidates; final review pending | Part VI batch commit (see git log) |
+| Part VII | 15 | Next batch | — |
 | Part VIII | 15 | Pending | — |
 | Appendices | 10 | Pending | — |
 
@@ -75,3 +75,15 @@ Native candidates were inspected at 720 px, with grayscale spot checks for Windo
 `package-review.py` now accepts a part-local `capture-blockers.json` solely for genuine screenshot briefs with documented missing access. It packages available candidates, preserves the outstanding brief, and flags the capture in both galleries. It also keeps the current chapter prompt in inventory/brief records, including production corrections. Do not use blockers to skip ordinary diagram work.
 
 Next: Part VI’s eleven briefs, then VII (15), VIII (15), and appendices (10). Keep the heartbeat active while this independent work remains. Commit each batch and maintain the output copy. No routine per-part notification; final joint review follows the whole collection.
+
+## Part VI handoff
+
+Completed eleven candidates: ten new native SVG diagrams and one built-in raster replacement for the seven-sender comparison. The collection now contains 68 candidates. All Part VI work is packaged and checked; continue Part VII next, then VIII and appendices. The only established capture blocker remains Part V’s My Device screenshot. Keep independent work moving.
+
+The GitOps legacy brief now describes ordered phases with independent API requests rather than suggesting per-file atomicity. The prefix brief focuses on core and activities examples, checked directly in the fleet-v4.90.0 source registration code. The fleetctl outcome brief explicitly detaches ignored delete kinds as a client-only exception, outside its illustrative server-backed lifecycle. Assignment-loss wording clarifies that assignment lists are temporarily cleared under the new-fleet condition. Receiver logic now explicitly decides whether a side effect is needed, while MCP client-access and Fleet API credentials remain separate.
+
+All ten native candidates were inspected at 720 px. Grayscale spot checks covered assignment loss, prefix modules and MCP. Native layout corrections removed crossing labels and cursor/error-route overlaps; the raster was refined to keep ownership bands around the receiver, remove duplicate labels, and preserve exact request/response directions with optional polling separate. Tall native layouts and raster print typography remain part of joint review.
+
+Validation passed: website production build, all 83 chapter links, em-dash and whitespace checks, eleven candidate/source pairs, current packaged briefs, native SVG XML/minimum-font/terminology checks, unchanged visible chapter prose, and gallery links. No assets are installed or marked OK. The repository is ready to continue on the same branch.
+
+Next: Part VII (15 briefs), Part VIII (15), appendices (10), then resolve or hand off authentic captures and perform the final collection audit. Commit each batch and copy the review tree to outputs. The heartbeat remains ACTIVE; do not create another automation or ask for another interim review.

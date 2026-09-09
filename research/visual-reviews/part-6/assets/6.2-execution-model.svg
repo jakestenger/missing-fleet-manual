@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="2480" viewBox="0 0 1400 2480" role="img">
+<title>fleetctl GitOps performs client-side preflight then ordered API phases; a failure preserves earlier changes and skips later work.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="2480" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">A GitOps invocation commits through separate requests</text>
+<rect x="48" y="152" width="620" height="416" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="210" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Configuration repository</text>
+<text x="80" y="270" text-anchor="start" font-family="Roboto Mono" font-size="30" font-weight="400" fill="#515774">default.yml</text>
+<text x="80" y="334" text-anchor="start" font-family="Roboto Mono" font-size="30" font-weight="400" fill="#515774">fleets/workstations.yml</text>
+<text x="80" y="398" text-anchor="start" font-family="Roboto Mono" font-size="30" font-weight="400" fill="#515774">fleets/servers.yml</text>
+<text x="80" y="462" text-anchor="start" font-family="Roboto Mono" font-size="30" font-weight="400" fill="#515774">fleets/unassigned.yml</text>
+<text x="80" y="506" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">unassigned.yml may be absent;</text>
+<text x="80" y="542" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">that changes behavior</text>
+<path d="M668 360 L764 360" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="764" y="152" width="588" height="416" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1058" y="220" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">fleetctl gitops</text>
+<text x="1058" y="267" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Client-side orchestrator</text>
+<text x="796" y="334" text-anchor="start" font-family="Inter" font-size="30" font-weight="400" fill="#F9FAFC">Parse all supplied YAML</text>
+<text x="796" y="388" text-anchor="start" font-family="Inter" font-size="30" font-weight="400" fill="#F9FAFC">Resolve environment and files</text>
+<text x="796" y="442" text-anchor="start" font-family="Inter" font-size="30" font-weight="400" fill="#F9FAFC">Read current Fleet state</text>
+<text x="796" y="496" text-anchor="start" font-family="Inter" font-size="30" font-weight="400" fill="#F9FAFC">Compute operations</text>
+<path d="M1058 568 L1058 600 L24 600 L24 780 L160 780" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="48" y="650" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Fleet API · ordered phases</text>
+<text x="48" y="706" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Each API request commits independently; a file can require several requests</text>
+<rect x="272" y="780" width="1080" height="144" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="304" y="834" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">1  Global configuration, forced first</text>
+<text x="304" y="890" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Some unassigned.yml controls are folded into this phase</text>
+<rect x="272" y="976" width="1080" height="144" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="304" y="1030" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">2  First named fleet file</text>
+<text x="304" y="1086" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Remaining supplied files follow invocation order</text>
+<rect x="272" y="1172" width="1080" height="144" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="304" y="1226" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Second named fleet file: failure</text>
+<text x="304" y="1282" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Earlier changes remain applied</text>
+<rect x="272" y="1368" width="1080" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="304" y="1422" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Explicit unassigned.yml, wherever supplied</text>
+<text x="304" y="1478" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Not reached in this example; never automatically moved last</text>
+<rect x="272" y="1564" width="1080" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="304" y="1618" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">3  Restore ABM / App Store assignments</text>
+<text x="304" y="1674" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">New fleet referenced; Premium multi-file run; deferred apps follow</text>
+<rect x="272" y="1760" width="1080" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="304" y="1814" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">4  Delete absent fleets (optional)</text>
+<text x="304" y="1870" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Compare live fleets with files supplied in this invocation</text>
+<rect x="272" y="1956" width="1080" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="304" y="2010" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">5  Synthesized empty Unassigned apply</text>
+<text x="304" y="2066" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Conditional alternative: global file, no explicit unassigned.yml</text>
+<rect x="272" y="2152" width="1080" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="304" y="2206" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">6  Deferred label and certificate-authority deletions</text>
+<text x="304" y="2262" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Not reached in this failed invocation</text>
+<path d="M160 780 L160 1244" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M160 1244 L160 2224" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M160 852 L272 852" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="218" y="842" width="20" height="20" rx="0" fill="#009A7D" stroke="#009A7D" stroke-width="2.5"/>
+<path d="M160 1048 L272 1048" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="218" y="1038" width="20" height="20" rx="0" fill="#009A7D" stroke="#009A7D" stroke-width="2.5"/>
+<path d="M160 1244 L272 1244" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M212 1232 L236 1256" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M212 1256 L236 1232" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M160 1440 L272 1440" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M160 1636 L272 1636" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M160 1832 L272 1832" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M160 2028 L272 2028" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M160 2224 L272 2224" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<text x="96" y="1450" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Not</text>
+<text x="96" y="1488" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">reached</text>
+<text x="700" y="2372" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">No transaction / no automatic rollback</text>
+<text x="700" y="2411" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">No server-side GitOps run record</text>
+</svg>
