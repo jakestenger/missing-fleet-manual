@@ -183,7 +183,7 @@ The MCP server has no delete-host tool, generic REST passthrough, or configurati
 >
 > Native client workflows cover installer builds, enabling scripts at packaging time, hardware-backed host identity certificates, Windows install-time URL and secret inputs, local update channels, disabling agent updates, macOS packages without credentials, a self-hosted agent update repository, and GitOps CI scaffolding. These build and setup actions have no matching UI, REST, or GitOps surface.
 >
-> An agent packaged with updates disabled or certificate verification skipped retains that behavior until its package is replaced on the host.
+> Fleet cannot remotely reverse packaged update-disable or verification settings. For certificate verification, you can also clear the installed service setting locally with administrator rights and restart the agent; rebuilding and reinstalling is the approach for changing it across hosts ([a.7](a.7-fleetctl-command-reference.md#choosing-packaging-options)).
 >
 > The Docker Compose command is more limited: it starts an evaluation sandbox at a fixed local address. It is not a general deployment-management command.
 
