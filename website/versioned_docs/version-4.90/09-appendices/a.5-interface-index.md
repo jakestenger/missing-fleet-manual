@@ -25,15 +25,15 @@ This appendix is the lookup that tells you which of those you are about to hit.
 
 ![Reference](../_assets/icons/reference.svg) Every administrator action in the manual's capability register, 362 of them, against all four operator interfaces: the Fleet UI, the REST API, `fleetctl` and GitOps. Plus a second, shorter table for a different question, which is what Fleet or an external system starts without anyone asking.
 
-**What is not here is the detail of any one interface.** Which command to run and what its exit status proves is [a.7](a.7-fleetctl-command-reference.md). What a caller must present and what has to be reachable is [a.8](a.8-api-action-and-endpoint-reference.md). Which configuration authority wins when two of these disagree is [a.3](a.3-configuration-model-and-precedence.md). Which role may perform the action, once you know an interface supports it, is [a.4](a.4-roles-and-permissions-matrix.md). Which platforms it reaches is [a.2](a.2-platform-capability-matrix.md).
+**This appendix does not carry the detail of any one interface.** Which command to run and what its exit status proves is [a.7](a.7-fleetctl-command-reference.md). What a caller must present and what has to be reachable is [a.8](a.8-api-action-and-endpoint-reference.md). Which configuration authority wins when two of these disagree is [a.3](a.3-configuration-model-and-precedence.md). Which role may perform the action, once you know an interface supports it, is [a.4](a.4-roles-and-permissions-matrix.md). Which platforms it reaches is [a.2](a.2-platform-capability-matrix.md).
 
 **Interface support and permission are separate gates and this appendix only opens the first one.** A `Full` cell means the interface can perform the action. It does not mean your account may.
 
-Buttons, endpoints, flags and YAML keys are deliberately absent. They change every release, Fleet already enumerates them, and copying them here would produce a table that is wrong at the next tag. What is here instead is the shape of each interface's reach, which is stable, and the boundaries that shape produces.
+Buttons, endpoints, flags and YAML keys are deliberately absent. They change every release, Fleet already enumerates them, and copying them here would produce a table that is wrong at the next tag. This appendix carries the shape of each interface's reach instead, which is stable, and the boundaries that shape produces.
 
 ## How to read it
 
-![Reference](../_assets/icons/reference.svg) Five values, and the difference between three of them is most of the work.
+![Reference](../_assets/icons/reference.svg) Five values.
 
 | Value | What it means |
 |---|---|
@@ -43,7 +43,7 @@ Buttons, endpoints, flags and YAML keys are deliberately absent. They change eve
 | **Unsupported** | The interface refuses or has no surface, and a positive boundary was found: a rendered refusal, a closed command tree, a closed request surface, a closed key vocabulary, or a route behind a credential an administrator does not hold. |
 | **Not established** | The sources do not settle it. The record of what was searched is in the appendix's notes. |
 
-Four conventions decide a large number of cells, and knowing them saves reading the boundary twice.
+Four conventions decide a large number of cells.
 
 **A read served completely is `Full`, not `Read only`.** Where the action itself is a read, an interface that returns the thing has performed the action. `Read only` is reserved for a row whose action includes changing something and where the interface can only report the current state. **All four columns are held to this.**
 
@@ -55,17 +55,17 @@ Four conventions decide a large number of cells, and knowing them saves reading 
 
 ## What each interface is, and the boundary that decides its column
 
-![Explanation](../_assets/icons/explanation.svg) Each column has one boundary rule that decides most of it. Learn the four and you can predict a row this table does not contain.
+![Explanation](../_assets/icons/explanation.svg) Each column has one boundary rule that decides most of it. The four rules extend to rows this table does not contain.
 
 ### `fleetctl api` is not `fleetctl` support. `gitops`, `apply` and `delete` are
 
-**This decision alone decides 148 rows**, which is why it is stated before the matrix rather than inside it.
+**This decision alone decides 148 rows.**
 
 `fleetctl api` builds an arbitrary HTTP request from a URI you type. It carries no Fleet vocabulary: it does not know what a fleet is, what a policy is, or what any response means. **Counting it as `fleetctl` support would make the `fleetctl` column a transcription of the REST API column**, since anything the API can do it can technically reach. So it does not count. Forty-seven rows have no native command and are reachable only that way, and each is `Unsupported` here.
 
-`fleetctl gitops`, `fleetctl apply` and `fleetctl delete` do count, for three reasons that all point the same way. They are registered commands in the client's own tree. The client does the work, because **there is no server-side GitOps engine**: the client parses the YAML, decides what changed, and drives ordinary endpoints. And `apply` reaches two specification kinds the GitOps vocabulary cannot express at all, so scoring it as GitOps would lose real reach. One hundred and one rows depend on one of those three commands.
+`fleetctl gitops`, `fleetctl apply` and `fleetctl delete` do count, for three reasons. They are registered commands in the client's own tree. The client does the work, because **there is no server-side GitOps engine**: the client parses the YAML, decides what changed, and drives ordinary endpoints. `apply` reaches two specification kinds the GitOps vocabulary cannot express at all, so scoring it as GitOps would lose real reach. One hundred and one rows depend on one of those three commands.
 
-**The asymmetry is deliberate and it is the whole point.** `gitops` and `apply` are Fleet semantics executed by the client. `api` is an HTTP request executed by you. The difference is not how much typing each saves. It is whether the client understands what it is sending.
+**The asymmetry is deliberate.** `gitops` and `apply` are Fleet semantics executed by the client. `api` is an HTTP request executed by you. The difference is not how much typing each saves. It is whether the client understands what it is sending.
 
 Because `gitops` counts, the `fleetctl` column is `Full` on many rows whose only path is a specification file, and **the operator experience on those rows is writing YAML, not typing a command**. [6.4](../06-automate-fleet/6.4-use-fleetctl.md) covers the client in practice and [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md) covers the repository workflow.
 
@@ -85,13 +85,13 @@ The web interface issues requests from a closed set of endpoints and renders fro
 
 ### GitOps has no read direction at all
 
-`fleetctl gitops` writes an apply log and two status lines. **There is no read command, no export and no report**, so a cell meaning "you can look but not change" cannot arise on this interface: **GitOps has zero `Read only` cells**, because it has no read direction to put one in.
+`fleetctl gitops` writes an apply log and two status lines. **There is no read command, no export and no report**, so a cell meaning "you can look but not change" cannot arise on this interface: **GitOps has zero `Read only` cells**.
 
 That is not the same claim as "every row the other three columns call `Read only` is `Unsupported` here." Eighteen rows carry `Read only` in the UI, REST API, or `fleetctl` column. Twelve of them are `Unsupported` for GitOps too, because nothing about the underlying data has a declarative form.
 
 The other six are independently writable through GitOps despite no interface exposing a matching read: collecting local accounts (CAP-088), collecting software inventory and turning it on per fleet (CAP-122, CAP-123), confining a label to one fleet (CAP-143), and prompting users on older Macs to update (CAP-206) are all `Full` for GitOps against a `Read only` UI cell; buying and distributing App Store apps (CAP-275) is `Partial` for GitOps against a `Read only` `fleetctl` cell. A `Read only` cell elsewhere is a hint GitOps might be `Unsupported`, not a guarantee.
 
-The vocabulary is closed in the other direction too. Exactly ten top-level keys are valid and anything else is a hard error. Below the top level every key is checked against the schema at every depth, with a spelling suggestion offered when it fails. `--allow-unknown-keys` downgrades those errors to warnings and **does not make the keys mean anything**: they are dropped. That closure is what makes `Unsupported` in this column a boundary rather than an absence, and it is why 203 rows carry it.
+The vocabulary is closed in the other direction too. Exactly ten top-level keys are valid and anything else is a hard error. Below the top level every key is checked against the schema at every depth, with a spelling suggestion offered when it fails. `--allow-unknown-keys` downgrades those errors to warnings and **does not make the keys mean anything**: they are dropped. That closure makes `Unsupported` in this column a boundary rather than an absence, and it is why 203 rows carry it.
 
 **Reads and imperative acts are the two families it excludes.** Locking a device, running a script, erasing a phone and signing in are acts rather than states, and a declarative repository has nothing to say about them. That accounts for the whole of section N, where GitOps supports none of the 23 rows.
 
@@ -113,9 +113,9 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 >
 > **Omitting other keys turns features on.** Leave out `features.enable_software_inventory`, `enable_host_users` or the historical-data keys and Fleet writes `true` for all of them on every apply. For vulnerability history that is the reverse of a destructive toggle: turning it off scrubs the stored rows, and omitting it turns collection back on without restoring anything. `controls.macos_updates.update_new_hosts` is derived rather than defaulted, so omitting it turns the behaviour on whenever a minimum version and a deadline are both set.
 >
-> **And omitting a third group genuinely leaves things alone**, because a missing key inside `org_settings` is merged over the stored configuration. **There is no way to tell which of the three rules applies to a given key except by reading the client**, and the exceptions are exactly the blocks the client fabricates when they are absent.
+> **Omitting a third group genuinely leaves things alone**, because a missing key inside `org_settings` is merged over the stored configuration. **There is no way to tell which of the three rules applies to a given key except by reading the client**, and the exceptions are exactly the blocks the client fabricates when they are absent.
 >
-> Four more that do not fit the pattern. **`labels[].hosts` is the only key in the whole vocabulary where absent and explicit null differ**: absent preserves membership, null clears it. **A `$FLEET_SECRET_` value is never deleted**, because the save is upsert-only, so a secret that stops being referenced stays in Fleet's store with no declarative way to remove it, and its value is transmitted even on a dry run. And **supplying a global file without an unassigned-scope file resets the unassigned scope**, by synthesising an empty configuration and applying it. Finally, **omitting `agent_options` is a hard error, not a clearing**, in a global or named-fleet file, because the client requires the key there; in an unassigned-scope file the key is unsupported, so a supplied value is ignored with a warning and an omission changes nothing.
+> Four more that do not fit the pattern. **`labels[].hosts` is the only key in the whole vocabulary where absent and explicit null differ**: absent preserves membership, null clears it. **A `$FLEET_SECRET_` value is never deleted**, because the save is upsert-only, so a secret that stops being referenced stays in Fleet's store with no declarative way to remove it, and its value is transmitted even on a dry run. **Supplying a global file without an unassigned-scope file resets the unassigned scope**, by synthesising an empty configuration and applying it. Finally, **omitting `agent_options` is a hard error, not a clearing**, in a global or named-fleet file, because the client requires the key there; in an unassigned-scope file the key is unsupported, so a supplied value is ignored with a warning and an omission changes nothing.
 >
 > A dry run does not protect you from most of this. Reports, labels, packs, policies and user roles are not validated at all, **which means a dry run cannot catch the most destructive thing a GitOps run does**.
 
@@ -123,7 +123,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 >
 > Ten rows have exactly one supported interface and it is `fleetctl`. **Nine of them are one story**: the decisions that are baked into an agent at build time, the agent update repository you host yourself, and the scaffolding for a GitOps repository have no other surface anywhere in Fleet.
 >
-> Building an installer for a platform, enabling scripts at packaging time, giving a host a hardware-backed identity certificate, supplying a Windows host's URL and secret at install time, setting an agent's update channel on the host, stopping an agent updating at all, building a macOS package that carries no URL or secret, publishing agent versions from your own repository, and generating a CI pipeline for GitOps. **That is the list, and no button, endpoint or YAML key reaches any of it.**
+> Building an installer for a platform, enabling scripts at packaging time, giving a host a hardware-backed identity certificate, supplying a Windows host's URL and secret at install time, setting an agent's update channel on the host, stopping an agent updating at all, building a macOS package that carries no URL or secret, publishing agent versions from your own repository, and generating a CI pipeline for GitOps. **No button, endpoint or YAML key reaches any of it.**
 >
 > **Two of those decisions cannot be undone from Fleet afterwards.** An agent built with updates disabled and an agent built to skip certificate verification both stay that way until you replace the package on the host.
 >
@@ -145,7 +145,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 > ### Every Apple credential renewal is half automatable
 >
-> `fleetctl` can request the push-certificate signing request and the Apple Business public key. **It has no upload counterpart for either, and none for a Volume Purchasing token.** So the half that can be scripted is the half that produces a file, and the half that is left is the half that must be done in a browser, on Apple's site, before an expiry date.
+> `fleetctl` can request the push-certificate signing request and the Apple Business public key. **It has no upload counterpart for either, and none for a Volume Purchasing token.** So the scriptable half is the half that produces a file. The rest must be done in a browser, on Apple's site, before an expiry date.
 >
 > GitOps inverts the same boundary rather than closing it: it assigns an already-uploaded token's default fleets and cannot upload, renew or delete the token. **In GitOps you can only do the part after the token.**
 >
@@ -153,7 +153,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 ## What decides a `Partial` cell
 
-![Explanation](../_assets/icons/explanation.svg) `Partial` is the most common non-`Full` answer in one of the four columns (REST API); `Unsupported` and `Not established` are larger in the other three. It is still worth knowing the shapes `Partial` takes, since it appears 253 times across the four columns, rather than reading each of those boundaries one at a time.
+![Explanation](../_assets/icons/explanation.svg) `Partial` is the most common non-`Full` answer in one of the four columns (REST API); `Unsupported` and `Not established` are larger in the other three. It appears 253 times across the four columns, and these are the shapes it takes.
 
 **In the REST API column** it is nearly always that part of the action belongs to another caller. The administrator half is there and the device, agent or protocol half is not, and the missing half is usually the one that touches the machine.
 
@@ -178,7 +178,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 
 ## The matrix
 
-![Reference](../_assets/icons/reference.svg) All 362 register rows, grouped as a reader would look for an action. Section rows in bold carry no cells; they mark where a family starts. Counts by value are published after the table and were recounted from it.
+![Reference](../_assets/icons/reference.svg) All 362 register rows, grouped for lookup. Section rows in bold carry no cells; they mark where a family starts. Counts by value are published after the table and were recounted from it.
 
 | ID | Action | UI | REST API | `fleetctl` | GitOps |
 |---|---|---|---|---|---|
@@ -579,7 +579,7 @@ There is no delete-host tool, no generic REST passthrough and no config-writing 
 | **Not established** | 69 | 12 | 1 | 0 |
 | **Total** | **362** | **362** | **362** | **362** |
 
-Four things in that shape are worth reading before you use any single row.
+Four things follow from that shape.
 
 **The REST API reaches more actions than any other interface**, 292 at `Full` or `Partial` against 254 for the UI, 238 for `fleetctl` and 159 for GitOps. The other three are clients of it, so its reach is the ceiling theirs are measured against.
 
@@ -587,13 +587,13 @@ Four things in that shape are worth reading before you use any single row.
 
 **GitOps is `Unsupported` on 105 rows the UI and the REST API can both perform.** That is not a defect in GitOps. It is the closed vocabulary and the missing read direction working as designed, and it is the number that bounds how much of Fleet a repository can manage.
 
-**Eighty-five rows are `Full` in all four columns and 106 rows have all four columns agreeing.** The overlap is real. It is just not where the planning risk is.
+**Eighty-five rows are `Full` in all four columns and 106 rows have all four columns agreeing.** That overlap is not where the planning risk is.
 
 ## What Fleet or an external system starts on its own
 
 ![Reference](../_assets/icons/reference.svg) A different question from the matrix, and the reason the matrix has four columns rather than five. **These actions happen without an operator invoking anything**, so no interface column can describe them, so an inventory of four control surfaces is an incomplete account of what changes an estate.
 
-This is the set worth knowing about, not a catalogue. The register marks 141 rows as capable of self-initiation, most of which are ordinary periodic collection. What is below is the subset that performs an administrative action.
+The register marks 141 rows as capable of self-initiation, most of which are ordinary periodic collection. Below is the subset that performs an administrative action.
 
 | ID | Action | Initiator | What triggers it | Material gate |
 |---|---|---|---|---|
@@ -662,7 +662,7 @@ The single largest concentration is the UI column's 69 cells, described in the c
 
 ## Version notes
 
-![Explanation](../_assets/icons/explanation.svg) Every cell is Fleet 4.90.0. Three things move faster than the rest and are worth re-checking rather than trusting at a later release.
+![Explanation](../_assets/icons/explanation.svg) Every cell is Fleet 4.90.0. Three things move faster than the rest. Re-check them at a later release rather than trusting the cell.
 
 **The GitOps vocabulary grows.** New keys arrive at almost every release, so a `Unsupported` in that column ages faster than any other cell in this table. The closure argument behind it stays valid; the set it closes over does not.
 
