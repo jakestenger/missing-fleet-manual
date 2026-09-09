@@ -327,9 +327,9 @@ grep -rinw book manual/ website/versioned_docs/ \
 That returns nothing. A bare `grep -riw book` does not, and never will, because of the two
 exceptions above.
 
-### Carry the opening voice into Parts I through V
+### Carry the opening voice into Parts I through VII
 
-Jake's direction, 2026-09-09: use the approved company and product introductions as
+Jake's direction, 2026-09-09, extended through 7.6 in the subsequent voice pass: use the approved company and product introductions as
 the voice reference for the remaining narrative chapters. Begin with the work a reader
 wants to do and the value the capability provides. Explain the mechanism after the reader
 has that context, with concrete examples and enough transitions to connect the steps.
