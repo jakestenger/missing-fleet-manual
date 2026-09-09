@@ -84,7 +84,7 @@ The distinction decides where you look. A script that has run is in the first an
 
 **DEP**, the Device Enrollment Program, is the same thing under its older name. Apple renamed the programme; the acronym did not go away, because it is still the word in Apple's own API and therefore in Fleet's code and database. You will meet ADE in the console and DEP in the tables: `host_dep_assignments`, `nano_dep_names`, `host_dep_assignments.profile_uuid`, the DEP sync cursor, and the `apple_mdm_dep_profile_assigner` schedule.
 
-**Treat them as one concept with two vocabularies**, in the same way [8.6](../08-troubleshooting/8.6-server-state.md#one-status-three-vocabularies) treats MDM status. A query written from something you read on screen will not find a table called `ade_anything`.
+**Treat them as one concept with two vocabularies**, in the same way [8.6](../08-troubleshooting/8.6-server-state.md#enrolment-values-in-storage-display-and-filters) treats MDM status. A query written from something you read on screen will not find a table called `ade_anything`.
 
 ### SCEP
 
