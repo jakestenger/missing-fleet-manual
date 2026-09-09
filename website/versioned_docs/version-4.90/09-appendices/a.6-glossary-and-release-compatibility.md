@@ -10,17 +10,17 @@ verified_source: "drafted against fleet-v4.90.0 (7c428c6e46). Boundaries that Fl
 
 # Terminology and version boundaries
 
-Two jobs, and they are the same job. **This appendix translates between the words for a thing and between the versions of a thing**, so that a reader who meets an unfamiliar name or an unexplained failure can find out which they are looking at.
+**This appendix translates between the words for a thing and between the versions of a thing**, so that a reader who meets an unfamiliar name or an unexplained failure can find out which they are looking at.
 
-What is **not** here: which capabilities your licence includes. That is collected in [a.2](a.2-platform-capability-matrix.md), where a claim is qualified by platform and scope, and where the licence is a column rather than a cell value. A version boundary and a licence gate can converge on the same symptom, a feature that is configured and does nothing, and keeping them in one table would make each harder to rule out. Many licence gates do refuse explicitly, so silence is not universal; it is common enough that the two are worth separating.
+Which capabilities your licence includes is **not** here. That is collected in [a.2](a.2-platform-capability-matrix.md), where a claim is qualified by platform and scope, and where the licence is a column rather than a cell value. A version boundary and a licence gate can converge on the same symptom, a feature that is configured and does nothing, and keeping them in one table would make each harder to rule out. Many licence gates do refuse explicitly, so silence is not universal; it is common enough to keep the two apart.
 
 ## Terminology
 
-Entries are added as chapters need them. A term earns one when its competing meanings or names would otherwise make an administrator act or search incorrectly, which is why several entries below are pairs of words for one thing rather than definitions.
+Entries are added as chapters need them. A term earns one when its competing meanings or names would otherwise make an administrator act or search incorrectly, so several entries below are pairs of words for one thing rather than definitions.
 
 ### fleetd, Orbit, osquery, Fleet Desktop
 
-**fleetd is the bundle, and it has no version line of its own.** What ships to a host is several programs with separate version numbers. **What Fleet shows you as the fleetd or agent version is Orbit's**, which is why the boundaries later in this appendix name Orbit where they mean the supervisor and osquery where they mean the query engine. Knowing which one a number refers to is the difference between a useful check and upgrading the wrong thing.
+**fleetd is the bundle, and it has no version line of its own.** Several programs ship to a host, each with its own version number. **Fleet shows Orbit's version as the fleetd or agent version**, so the boundaries later in this appendix name Orbit where they mean the supervisor and osquery where they mean the query engine.
 
 | | What it is | Whose version |
 |---|---|---|
@@ -33,7 +33,7 @@ Entries are added as chapters need them. A term earns one when its competing mea
 
 ### AB token, ABM token, and DEP token
 
-**Three names for one credential**, and you will meet all three in one afternoon. The interface says **AB token**. Fleet's server code and most of its documentation say **ABM token**. The underlying library, and some database and log material, says **DEP**, for the same reason the [ADE and DEP](#ade-and-dep) entry below exists.
+**Three names for one credential.** The interface says **AB token**. Fleet's server code and most of its documentation say **ABM token**. The underlying library, and some database and log material, says **DEP**, for the same reason the [ADE and DEP](#ade-and-dep) entry below exists.
 
 It is the token that authorises Fleet to talk to Apple Business Manager on your behalf, and it expires on its own schedule, separately from the push certificate and separately from the Apps and Books token ([7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md)).
 
@@ -57,11 +57,11 @@ It is the token that authorises Fleet to talk to Apple Business Manager on your 
 
 That is three of five. The complete set also carries an enrolled personal state and a pending one, and the mapping for those is in Fleet's own interface definitions.
 
-This is the strongest case in this appendix for looking a term up before using it. A value Fleet does not recognise is rejected with a `400`, so typing what you read on screen fails loudly, which is the good case. **The bad case is a value that is recognised and means something else than you meant.**
+A value Fleet does not recognise is rejected with a `400`, so typing what you read on screen fails loudly, which is the good case. **The bad case is a value that is recognised and means something else than you meant.**
 
 ### MIA, and missing
 
-**Identical, and one is deprecated.** Both name a host that has not communicated for thirty days, and Fleet's own source says they are the same thing with `mia` marked deprecated. Both work at this release. **Fleet has published no date and it has published a version**: the source says `mia` was deprecated in 4.15 and will be removed in **Fleet 5.0**. So `missing` is not merely the tidier name, it is the one that survives a major release.
+**Identical, and one is deprecated.** Both name a host that has not communicated for thirty days, and Fleet's own source says they are the same thing with `mia` marked deprecated. Both work at this release. **Fleet has published no date and it has published a version**: the source says `mia` was deprecated in 4.15 and will be removed in **Fleet 5.0**. So `missing` is the name that survives a major release.
 
 ### pack, and scheduled report
 
@@ -76,7 +76,7 @@ This is the strongest case in this appendix for looking a term up before using i
 | What somebody did | The past-activity tables | The audit record, written after the fact ([1.5](../01-foundations/1.5-audit-and-activity.md)) |
 | What is queued for a host | The upcoming-activity tables | Work Fleet has accepted and not yet completed ([8.6](../08-troubleshooting/8.6-server-state.md)) |
 
-The distinction decides where you look. A script that has run is in the first and has left the second. A script that has not run yet is in the second, **and may already have left a trace in the first**, because scheduling something is itself an action somebody took and Fleet records batch scheduling as an activity. So the queue is the authority on what is pending; the audit stream is the authority on what was asked for.
+A script that has run is in the first and has left the second. A script that has not run yet is in the second, **and may already have left a trace in the first**, because scheduling something is itself an action somebody took and Fleet records batch scheduling as an activity. So the queue is the authority on what is pending; the audit stream is the authority on what was asked for.
 
 ### ADE, and DEP
 
@@ -90,7 +90,7 @@ The distinction decides where you look. A script that has run is in the first an
 
 **Simple Certificate Enrollment Protocol.** The protocol by which a device asks a server for a certificate, presenting a shared challenge as its proof of entitlement. Apple MDM uses it to give each enrolled device the identity certificate it authenticates its management sessions with, so Fleet runs a SCEP service as part of Apple MDM.
 
-Two SCEPs are easy to confuse and the manual keeps them apart. **Fleet's own MDM SCEP** issues the device identity certificate at enrollment and is not optional. **Custom SCEP proxying**, where Fleet forwards certificate requests to a certificate authority you already run, is a separate feature for delivering your organisation's certificates to devices.
+Two SCEPs are easy to confuse. **Fleet's own MDM SCEP** issues the device identity certificate at enrollment and is not optional. **Custom SCEP proxying**, where Fleet forwards certificate requests to a certificate authority you already run, is a separate feature for delivering your organisation's certificates to devices.
 
 The Windows counterpart is WSTEP, which does the same job over Microsoft's protocol ([8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md#898-wstep-device-identity-certificates)).
 
@@ -110,7 +110,7 @@ Like DEP, the retired name is the one in the code and the settings. The console 
 
 **The credential a host uses on the osquery and Orbit channels after enrollment.** The enroll secret authenticates the enrollment itself and nothing afterwards; what the host gets back is a node key, and that is what it presents from then on. **Not every request from a device uses one**: Fleet Desktop and the device page authenticate with a separate per-device token instead.
 
-A fleetd host holds **two** of them, and confusing them costs time:
+A fleetd host holds **two** of them:
 
 | Key | Used by | Stored on the host as |
 |---|---|---|
@@ -123,19 +123,19 @@ Fleet also treats the osquery node key as the unique identifier for a host row, 
 
 **Go's profiling format, and the endpoints that produce it.** A pprof profile is a sample of what a Go process was doing: CPU time, heap allocations, goroutines, blocking, mutex contention. Fleet exposes them because it is a Go program, and `fleetctl debug` fetches them ([8.5](../08-troubleshooting/8.5-fleetctl-debug.md)).
 
-The output is not readable by eye. It is a binary file you open with `go tool pprof`, which is why the manual treats a profile as something you collect and attach rather than something you interpret in place.
+The output is not readable by eye. It is a binary file you open with `go tool pprof`, so a profile is something you collect and attach rather than something you interpret in place.
 
 ### file carving
 
 **osquery's mechanism for collecting whole files off a host**, rather than facts about them. You run a report against the `carves` table with a path, osquery reads the file, splits it into blocks, and uploads them; Fleet reassembles them and stores the metadata in MySQL and the block bytes in MySQL by default, or in S3/GCS when a carves bucket is configured.
 
-It is the **purpose-built** path for getting a file's contents off a host through osquery, which makes it both the answer to "I need to see that file" and a capability worth knowing is enabled. It is not the only such path: osquery can read a file line by line, and Fleet's own disk-encryption query does exactly that to ingest a key file. Blocks and their ceilings are configuration, and the per-carve size limit is in [8.14](../08-troubleshooting/8.14-degradation.md).
+It is the **purpose-built** path for getting a file's contents off a host through osquery, which makes it both the answer to "I need to see that file" and a capability to know the state of. It is not the only such path: osquery can read a file line by line, and Fleet's own disk-encryption query does exactly that to ingest a key file. Blocks and their ceilings are configuration, and the per-carve size limit is in [8.14](../08-troubleshooting/8.14-degradation.md).
 
 ### dead lettering
 
 **What a message queue does with a message it could not deliver**: rather than dropping it or retrying forever, it moves it to a separate queue for inspection. The term belongs to the queueing systems Fleet delivers logs into rather than to Fleet, and it appears in this manual only where a log destination's own behaviour decides what happens to a record Fleet could not hand over ([8.2](../08-troubleshooting/8.2-log-surfaces.md)).
 
-Fleet itself has no dead-letter queue. A record Fleet fails to write is gone, which is the point [8.2](../08-troubleshooting/8.2-log-surfaces.md) makes about which surfaces are durable.
+Fleet itself has no dead-letter queue. A record Fleet fails to write is gone ([8.2](../08-troubleshooting/8.2-log-surfaces.md) on which surfaces are durable).
 
 ### report, and query
 
@@ -143,7 +143,7 @@ Fleet itself has no dead-letter queue. A record Fleet fails to write is gone, wh
 
 **A query is osquery's mechanism**, and also plain SQL. osquery runs queries: on a schedule, or on demand through its distributed channel.
 
-The two words describe different layers of the same action. Running a live report in Fleet causes osquery to execute a query on each targeted host. Both terms are correct, and which one is right depends on the layer you are talking about.
+The two words describe different layers of the same action, and both are correct at their own layer. Running a live report in Fleet causes osquery to execute a query on each targeted host.
 
 | You mean | Say | Because |
 |---|---|---|
@@ -155,7 +155,7 @@ The two words describe different layers of the same action. Running a live repor
 | The Redis key prefix | `livequery:` | Internal naming was not renamed |
 | SQL text | query | Generic |
 
-Part VIII works at all of these layers at once, which is why both words appear there. Its opening section carries a note explaining the split in context.
+Part VIII works at all of these layers at once, so both words appear there, and its opening section carries a note on the split in context.
 
 ### Terms the manual uses across chapters
 
@@ -204,15 +204,15 @@ A related change in the same release: `no-team.yml` in GitOps was deprecated in 
 
 ## What this manual's version pin means
 
-![Reference](../_assets/icons/reference.svg) Every chapter in this manual was verified against **Fleet 4.90.0**, and the two generated catalogs, the configuration keys in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and the routes in [a.8](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog), were read from that exact release. The pin is what lets the manual be specific: a default, a route, an edition gate or a field name is stated as a fact about a named release rather than about Fleet in general.
+![Reference](../_assets/icons/reference.svg) Every chapter in this manual was verified against **Fleet 4.90.0**, and the two generated catalogs, the configuration keys in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and the routes in [a.8](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog), were read from that exact release. The pin lets the manual be specific: a default, a route, an edition gate or a field name is stated as a fact about a named release rather than about Fleet in general.
 
-Two signals tell you a claim may no longer match the release you run. The first is the version itself: if your server is not 4.90.0, treat commands, fields, defaults and gates as version-sensitive and read the chapter's version notes, because behaviour moves between releases. The second is more precise, and it is what the catalogs are for: if a configuration default you observe on your own server differs from the registered default in a.3's catalog, the manual is describing a different binary from yours, and that key is where to look for what changed.
+Two signals tell you a claim may no longer match the release you run. The first is the version itself: if your server is not 4.90.0, treat commands, fields, defaults and gates as version-sensitive and read the chapter's version notes, because behaviour moves between releases. The second is more precise, and the catalogs are there for it: if a configuration default you observe on your own server differs from the registered default in a.3's catalog, the manual is describing a different binary from yours, and that key is where to look for what changed.
 
 When this manual is updated for a newer Fleet release, both catalogs are regenerated against that release's tag, so they keep describing the version each chapter names rather than a fixed snapshot.
 
 ## Version boundaries
 
-![Reference](../_assets/icons/reference.svg) A **version boundary** is a version below which something behaves differently. They are not all floors and treating them as one list is how a diagnosis goes wrong, so each row below is one of these:
+![Reference](../_assets/icons/reference.svg) A **version boundary** is a version below which something behaves differently. They are not all floors, and treating them as one list will misdirect a diagnosis, so each row below is one of these:
 
 | | |
 |---|---|
@@ -223,13 +223,13 @@ When this manual is updated for a newer Fleet release, both catalogs are regener
 | **Dependency constraint** | A floor or a ceiling on something Fleet runs on |
 | **Runtime-fetched** | The binary is pinned to a release, but a specific input inside it is re-fetched on a schedule from somewhere that is not that release, so what it validates against can drift while the version number does not move |
 
-Only cross-cutting boundaries are collected here. One that a single chapter needs and no one would plan an estate around stays in that chapter.
+Only cross-cutting boundaries are collected here. One that a single chapter needs and that would not shape an estate's plan stays in that chapter.
 
 ### What Fleet enforces, and what it only negotiates
 
 **Fleet 4.90.0 declares and enforces no global minimum agent version.** Neither enrollment path reads one, and the agent's enrollment record has no version field, so a version mismatch is never the reason an agent is refused.
 
-What happens instead is not one mechanism but four, and telling them apart is what makes a symptom diagnosable:
+Four mechanisms operate instead, and a symptom is diagnosable only once you tell them apart:
 
 | | What it means | What you see |
 |---|---|---|
@@ -246,7 +246,7 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 
 **Compatibility is asymmetric, and Fleet says so.** A new agent against an older server is a requirement its engineering process treats as a must. **An older agent against a new server is only a nice to have**, with a minimum named in the release notes when it breaks. That is a rollout rule: move the server first and the agents after, and read the release notes before assuming the reverse is safe.
 
-**Upgrades follow semantic versioning with three stated exceptions**: experimental features, security fixes, and changes to default values. All three can break a minor or patch upgrade, and all three are called out in the version notes, which is the practical reason [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) asks you to read them rather than diff the version number.
+**Upgrades follow semantic versioning with three stated exceptions**: experimental features, security fixes, and changes to default values. All three can break a minor or patch upgrade, and all three are called out in the version notes, so [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) asks you to read them rather than diff the version number.
 
 ### Agent floors
 
@@ -298,7 +298,7 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 
 ### Published host baselines
 
-**This is a snapshot of what Fleet published at 4.90.0, and it is the kind of list this appendix warns about.** It has moved before and it will move again, so read it as where the baseline stood at this release and check Fleet's own current table before planning against it.
+**This is a snapshot of what Fleet published at 4.90.0.** It has moved before and it will move again, so read it as where the baseline stood at this release and check Fleet's own current table before planning against it.
 
 **No global admission gate enforces this matrix.** Fleet does not refuse an enrollment for being below a line here. Individual features do have their own gates, several of them in the table above, so "unsupported" here means untested rather than blocked:
 
@@ -311,7 +311,7 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 | ChromeOS | 112.0.5615.134 and later |
 | Android | 14 and later |
 
-Fleet's own qualification is worth carrying: it may work partially or fully below these, and it does not test there or pursue bugs there. **Full Windows MDM on Windows 11 25H2 additionally needs Fleet server 4.89.1**, and that one does fail outright rather than silently.
+Fleet's own qualification: it may work partially or fully below these, and it does not test there or pursue bugs there. **Full Windows MDM on Windows 11 25H2 additionally needs Fleet server 4.89.1**, and that one does fail outright rather than silently.
 
 ### Server floors
 
@@ -344,7 +344,7 @@ These are the server side of the capabilities above, **including the two web set
 
 ### Runtime-fetched moving inputs
 
-**A version pin covers the binary, not necessarily everything the binary reads at runtime.** The manual's one example is the Fleet MCP server's osquery schema ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)): the binary is built from the 4.90.0 tag and serves the schema embedded in it at startup, but a background refresh then attempts to replace that snapshot with the file from Fleet's `main` branch, roughly two seconds after startup and every 24 hours after by default. Only a successful fetch replaces it; a failed one keeps the copy already in memory, so the schema it validates queries against can end up newer than the tag rather than always being so.
+**A version pin covers the binary, not necessarily everything the binary reads at runtime.** One example is the Fleet MCP server's osquery schema ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)). The binary is built from the 4.90.0 tag and serves the schema embedded in it at startup. A background refresh then attempts to replace that snapshot with the file from Fleet's `main` branch, roughly two seconds after startup and every 24 hours after by default. Only a successful fetch replaces it; a failed one keeps the copy already in memory. So the schema it validates queries against can end up newer than the tag rather than always being so.
 
 | | |
 |---|---|
@@ -370,9 +370,9 @@ These are the server side of the capabilities above, **including the two web set
 
 **That is not the same as nothing being unsupported.** A release that is not the latest is outside the scope for fixes, and on Free a previous major version is outside the scope for troubleshooting too. Premium's all-versions troubleshooting promise is about help, not about fixes or indefinite compatibility.
 
-So there are two planning questions rather than one. **Plan remediation around being on the latest release**, because that is what a fix requires. **Plan support access around the troubleshooting scope**, which depends on your tier and your major version. What you cannot plan around is a date, because none was found to plan against.
+So there are two planning questions. **Plan remediation around being on the latest release**, because that is what a fix requires. **Plan support access around the troubleshooting scope**, which depends on your tier and your major version. You cannot plan around a date, because none was found to plan against.
 
-One practical note: **this policy lives in Fleet's company handbook rather than its documentation**, so a reader working through the product docs will not meet it.
+**This policy lives in Fleet's company handbook rather than its documentation**, so a reader working through the product docs will not meet it.
 
 **There is no constrained upgrade path within version 4.** Fleet's own guidance says skipping versions is fine and nothing in the server enforces an ordering. The exception is the agent, where the update server migration makes one release a stepping stone ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
 
