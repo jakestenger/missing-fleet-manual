@@ -594,7 +594,7 @@ These restrictions produce different errors:
 | **Licence-gated** | Technician, Observer+ or GitOps on Free | A licence error, not a permission error |
 | **Ordinary denial** | Observer trying to write a policy | A `403` from the policy |
 
-The create and modify account routes enforce licence and API-only restrictions. The bulk role-spec route performs neither check, so a global administrator can assign Premium-only roles on Free through that route. Its separate permissions appear in the accounts group; other roles cannot reach it.
+Licence and API-only checks are implemented in the account creation and modification paths, with the GitOps-role exception described below. The bulk role-spec route performs neither check, so a global administrator can assign Premium-only roles on Free through that route. Its separate permissions appear in the accounts group; other roles cannot reach it.
 
 ## Service identities and endpoint restrictions
 
