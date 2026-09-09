@@ -20,9 +20,9 @@ Heartbeat: `complete-fleet-manual-visuals-overnight`, every 30 minutes in this t
 
 | Batch | Pending comments | Status | Commit |
 |---|---:|---|---|
-| Part 0–1 | 9 | Completed baseline; direction approved | Baseline commit immediately after this file |
-| Part II | 14 | In progress | — |
-| Part III | 10 | Pending | — |
+| Part 0–1 | 9 | Completed baseline; direction approved | `2a1c793` |
+| Part II | 14 | Completed candidates; final review pending | Part II batch commit (see git log) |
+| Part III | 10 | Next batch | — |
 | Part IV | 7 | Pending | — |
 | Part V | 18 | Pending | — |
 | Part VI | 11 | Pending | — |
@@ -37,3 +37,11 @@ None established yet. A My Device screenshot and some older capture briefs requi
 ## Validation
 
 Baseline: production website build, all 83 chapter link checks, em-dash check, and diff whitespace check passed. Native SVG XML and terminology checks passed. Nine redo markers across the collection remain intentionally pending.
+
+## Part II handoff
+
+Completed 14 candidates: 13 native SVG diagrams and one built-in imagegen Apple credential renewal replacement. Sources and gallery are in `part-2/`. `package-review.py part-2 02 "Part II"` packages chapter comments, briefs, the collection gallery and output copy; this utility never installs or approves art. Use it only after actual inspection.
+
+The ingress brief was corrected against appendix a.8 so Windows protocol paths under /api are admitted by an /api-only rule; uncovered Apple paths are stopped. All 14 assets/sources exist; native SVG XML, minimum 28 px labels and terminology checks pass; visible chapter prose equals the prior commit after stripping HTML comments. Website build, 83 chapter link checks, em-dash check and diff whitespace check passed.
+
+Next: Part III's 10 TODO/REDO comments. Read the chapter-local prompts and evidence. Inspect the legacy comments as well as the new one-per-chapter briefs. Continue without waiting for another review. A whole-manual gallery now exists at `research/visual-reviews/index.html`, copied to `/Users/jake/Documents/Codex/2026-09-08/ca/outputs/manual-visuals/index.html`. It currently contains 23 candidates.

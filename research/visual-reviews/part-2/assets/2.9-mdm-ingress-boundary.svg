@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="886" viewBox="0 0 1400 886" role="img">
+<title>An api-only ingress rule admits api paths but misses Apple protocol endpoints outside api; feature paths need explicit coverage.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="886" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Ingress must cover the device protocols</text>
+<rect x="48" y="188" width="220" height="502" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="158" y="258" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Device</text>
+<text x="158" y="300" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">outside the</text>
+<text x="158" y="342" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">organization</text>
+<rect x="644" y="148" width="220" height="582" rx="12" fill="#F9FAFC" stroke="#192147" stroke-width="2.5"/>
+<text x="754" y="214" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#192147">Reverse</text>
+<text x="754" y="258" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#192147">proxy</text>
+<rect x="1132" y="188" width="220" height="502" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1242" y="260" text-anchor="middle" font-family="Inter" font-size="40" font-weight="600" fill="#192147">Fleet</text>
+<path d="M268 350 L1132 350" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M268 622 L1132 622" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M268 486 L644 486" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M658 472 L686 500" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M658 500 L686 472" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M864 486 L1132 486" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+<text x="444" y="313" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">REST API paths</text>
+<text x="450" y="440" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Apple protocol</text>
+<text x="450" y="476" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">paths outside /api</text>
+<text x="450" y="572" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Windows management /</text>
+<text x="450" y="608" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">enrollment: under /api</text>
+<text x="754" y="292" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">/api-only</text>
+<text x="754" y="328" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">rule</text>
+<text x="754" y="540" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Not covered</text>
+<path d="M1040 622 L1040 770 L540 770" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<text x="700" y="827" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Feature-dependent paths: check exact routes and auth in a.8</text>
+</svg>

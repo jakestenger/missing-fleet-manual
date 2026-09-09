@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="926" viewBox="0 0 1400 926" role="img">
+<title>An ownership record links responsibilities to named owners, backups and escalation paths.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="926" fill="#F9FAFC"/>
+<rect x="432" y="48" width="536" height="110" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="700.0" y="115.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Management connection fails</text>
+<path d="M700 158 L700 208 L240 208 L240 272" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 158 L700 208 L700 208 L700 272" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 158 L700 208 L1160 208 L1160 272" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="272" width="384" height="248" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="240" y="336" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#192147">Fleet</text>
+<text x="240" y="383" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#192147">administrator</text>
+<text x="240" y="446" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Configuration and</text>
+<text x="240" y="485" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">device scope</text>
+<path d="M240 520 L240 568" fill="none" stroke="#515774" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="100" y="568" width="280" height="82" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="240.0" y="620.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Named backup</text>
+<path d="M240 650 L240 728" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="508" y="272" width="384" height="248" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700" y="336" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#192147">Infrastructure</text>
+<text x="700" y="383" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#192147">owner</text>
+<text x="700" y="446" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Self-hosted service</text>
+<text x="700" y="485" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">and ingress</text>
+<path d="M700 520 L700 568" fill="none" stroke="#515774" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="560" y="568" width="280" height="82" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="620.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Named backup</text>
+<path d="M700 650 L700 728" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="968" y="272" width="384" height="248" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160" y="336" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#192147">External account</text>
+<text x="1160" y="383" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#192147">owner</text>
+<text x="1160" y="446" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Vendor console</text>
+<text x="1160" y="485" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">and renewal</text>
+<path d="M1160 520 L1160 568" fill="none" stroke="#515774" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1020" y="568" width="280" height="82" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160.0" y="620.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Named backup</text>
+<path d="M1160 650 L1160 728" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="48" y="728" width="1304" height="140" rx="12" fill="#F9FAFC" stroke="#192147" stroke-width="2.5"/>
+<text x="80" y="778" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Shared ownership record</text>
+<text x="80" y="829" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Owner · backup · review date · escalation</text>
+</svg>
