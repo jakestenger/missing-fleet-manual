@@ -31,8 +31,8 @@ groups. Resolve a contradiction against the chapter's evidence before accepting 
 
 | Chapter | Brief | Reader question |
 |---|---|---|
-| 0.1 | [0.1-new-reader-route.webp](../manual/00-Introduction/0.1-how-to-use-this-manual.md) | Which chapters get a first deployment to a handoff? |
-| 0.2 | [0.2-release-maintenance-vignette.webp](../manual/00-Introduction/0.2-changelog.md) | Can the release ledger have a quiet visual opening without inventing a feature story? |
+| 0.3 | [0.1-new-reader-route.webp](../manual/00-Introduction/0.3-how-to-use-this-manual.md) | Which chapters get a first deployment to a handoff? |
+| 0.4 | [0.2-release-maintenance-vignette.webp](../manual/00-Introduction/0.4-changelog.md) | Can the release ledger have a quiet visual opening without inventing a feature story? |
 | 1.1 | [1.1-fleet-environment-boundaries.webp](../manual/01-foundations/1.1-what-fleet-is.md) | Where does Fleet fit among the systems an organization already runs? |
 | 1.2 | [1.2-online-evidence-boundary.webp](../manual/01-foundations/1.2-how-fleet-reaches-a-device.md) | What evidence does the Online badge actually provide? |
 | 1.3 | [1.3-host-transfer-state.webp](../manual/01-foundations/1.3-hosts-fleets-labels.md) | What survives a fleet transfer, and what must be checked beforehand? |

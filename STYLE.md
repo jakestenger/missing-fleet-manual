@@ -280,12 +280,24 @@ feature branch sitting 425 commits behind `main`. Confirm the ref first, every t
 
 ## 10. Voice
 
-Direct, second person, no marketing register. Assume a competent platform engineer
-who is short on time and has already tried the obvious thing.
+Write as a knowledgeable colleague helping an administrator. Use direct, warm explanations,
+concrete examples, and enough connective prose to make the reasoning easy to follow.
+Concision should remove repetition, not the context a reader needs. Vary sentence length;
+a run of clipped declarations can make a correct explanation feel abrupt.
+
+Part 0 welcomes readers who may be evaluating Fleet for the first time. Its product
+overview can use a benefits-led, lightly promotional voice grounded in real daily work.
+Its company introduction describes Fleet's public ethos and values with public sources.
+Keep detailed mechanisms, licence matrices, flags, and edge cases in their owning
+chapters; the reading guide routes readers there. Use light technical context where it
+helps an overview, without turning each benefit into a stack of qualifications. This
+opening-chapter guidance is Jake's direction of 2026-09-09 and takes precedence over
+the depth and procedure defaults in §§3 and 19. Preserve the technical material elsewhere
+in the manual when moving it out of an introduction.
 
 Avoid "simply", "just", "easy", "seamless", "powerful", "robust". If a thing is
-finicky, say it's finicky. Short declarative sentences. Tables for anything
-enumerable. Real runnable commands — never pseudo-commands.
+finicky, say it's finicky. Use complete, connected explanations. Tables suit comparisons and lookups;
+prose suits a relationship or a sequence the reader is learning. Real runnable commands — never pseudo-commands.
 
 **Call it "the manual", never "a book" (Jake, 2026-09-08).** In rendered content
 (everything under `manual/` and the versioned snapshots), the artifact refers to itself
@@ -888,6 +900,7 @@ which one is authoritative.
 
 | Layer | Owns |
 |---|---|
+| Introduction (0) | Company context, a product overview, reading paths, and the evaluation preview |
 | Foundations (I) | The mental model. What the concept is and how it relates to the others |
 | Administration (II) | Organization-wide setup and ownership. Standing the service up |
 | Platform (III) | Prerequisites, enrollment, and per-platform differences |

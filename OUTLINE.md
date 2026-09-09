@@ -42,8 +42,19 @@ it actually work?"
 
 | # | Section | File | Pri | Status |
 |---|---|---|---|---|
-| 0.1 | How to use this manual | `0.1-how-to-use-this-manual.md` | ★ | ◐ |
-| 0.2 | What changed, by release | `0.2-changelog.md` | ★ | ◐ |
+| 0.1 | Who Fleet is | `0.1-who-fleet-is.md` | ★ | ● |
+| 0.2 | What Fleet is | `0.2-what-fleet-is.md` | ★ | ● |
+| 0.3 | How to use this manual | `0.3-how-to-use-this-manual.md` | ★ | ● |
+| 0.4 | What changed, by release | `0.4-changelog.md` | ★ | ● |
+
+**Opening sequence, 2026-09-09 (Jake's direction).** Part 0 introduces the company,
+then the product through an administrator's daily work, then helps readers choose a path.
+0.2 is a benefits-led overview with light technical context. 0.3 owns task-to-chapter
+navigation and the local preview procedure. Deeper mechanics stay in Part I and the
+owning feature chapters. The former 1.1 filename remains the home of the technical
+primer, now titled *How Fleet works*, to preserve its published URL. Accepted image
+filenames are retained for provenance; the lifecycle figure and its brief now live in
+0.2, and the Cloud City welcome illustration and its brief live in 0.1.
 
 ## Part I — Foundations
 
@@ -53,7 +64,7 @@ How Fleet is put together, and the vocabulary the rest of the book assumes.
 
 | # | Section | File | Pri | Status |
 |---|---|---|---|---|
-| 1.1 | What Fleet is | `1.1-what-fleet-is.md` | ★★★ | ◐ |
+| 1.1 | How Fleet works | `1.1-what-fleet-is.md` | ★★★ | ◐ |
 | 1.2 | How Fleet reaches a device | `1.2-how-fleet-reaches-a-device.md` | ★★★ | ◐ **salvage available** |
 | 1.3 | Hosts, fleets, labels, and targeting | `1.3-hosts-fleets-labels.md` | ★★★ | ◐ **salvage available** |
 | 1.4 | Identity and roles | `1.4-identity-and-roles.md` | ★★ | ◐ |
