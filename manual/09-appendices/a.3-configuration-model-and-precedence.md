@@ -24,7 +24,7 @@ The same-looking Fleet setting can come from the server, organization settings, 
 
 **It explains what nearly every setting is for, in the binary's own words rather than copied prose.** The full catalog carries each key's registered usage string (the same one-line description `fleet serve --help` prints), read mechanically from the server binary rather than transcribed from Fleet's hand-maintained reference: this project has confirmed the reference and the server disagreeing in two different ways at this release, about what a default is and about whether a documented key is bound at all. A usage string names what a setting does, not when or why you'd change it; for that, see [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md). The disagreements that change a decision are called out first; the full catalog, keys and their usage strings both generated rather than copied, closes the appendix.
 
-**The boundary with [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md)** is worth stating because the two are adjacent. If the question is *why, when, or how to choose* a particular setting, that is 2.7's. If it is *which source controls a class of values, or how competing sources resolve*, it is this appendix's.
+**The boundary with [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md)**, which sits next to it: if the question is *why, when, or how to choose* a particular setting, that is 2.7's. If it is *which source controls a class of values, or how competing sources resolve*, it is this appendix's.
 
 ## The authorities
 
@@ -58,7 +58,7 @@ The same-looking Fleet setting can come from the server, organization settings, 
 | **Direct agent environment reads** | A variable the agent reads itself. No flag form, no entry in its help output | The process environment | Varies |
 | **Trailing osquery arguments** | Whatever follows the separator on the agent's own command line | The argument list handed to osquery | Every osquery start |
 
-**The packager, the installer's properties, a host edit and Fleet's own delivery are writers into those rows rather than rows of their own.** That is worth stating for the server in particular: what Fleet delivers has no runtime storage on the host until a receiver writes it into one of the files above, which is why a host keeps obeying the last delivery after the server becomes unreachable.
+**The packager, the installer's properties, a host edit and Fleet's own delivery are writers into those rows rather than rows of their own.** The server's case is the one to be clear about: what Fleet delivers has no runtime storage on the host until a receiver writes it into one of the files above, which is why a host keeps obeying the last delivery after the server becomes unreachable.
 
 > ### The last two rows are the ones nothing in Fleet will show you
 >
@@ -72,7 +72,7 @@ The same-looking Fleet setting can come from the server, organization settings, 
 
 ### What the server can and cannot change on an installed host
 
-![Reference](../_assets/icons/reference.svg) **The server hands the agent a fresh configuration document on every check-in, and the useful question is not how many settings it can change but which of them survive a restart.** Four groups, and they behave differently:
+![Reference](../_assets/icons/reference.svg) **The server hands the agent a fresh configuration document on every check-in, and the settings in it differ in whether they survive a restart.** Four groups, and they behave differently:
 
 | What the server sends | What it changes, and what survives a restart |
 |---|---|
@@ -81,9 +81,9 @@ The same-looking Fleet setting can come from the server, organization settings, 
 | **osquery startup flags, osquery extensions, the Nudge configuration** | Written into files in the agent's root directory, and these do survive a restart. **They configure the components the agent supervises rather than the agent itself** |
 | **Twelve notifications** | Instructions to act now: rotate a disk encryption key, run a pending script, start the setup experience. **Not configuration at all** |
 
-**So the three update channels are what the server *persists*, which is a narrower claim than what it changes.** The debug level and the script execution timeout are genuinely agent settings and genuinely server-controlled; they simply leave nothing on disk. Read a host's files to audit the first group, and expect the second to be invisible there.
+**So the three update channels are what the server *persists*, which is a narrower claim than what it changes.** The debug level and the script execution timeout are agent settings and are server-controlled; they simply leave nothing on disk. Read a host's files to audit the first group, and expect the second to be invisible there.
 
-Four further claims get run together, and separating them is what makes the boundary usable:
+Four further claims get run together:
 
 | | What is actually true |
 |---|---|
@@ -96,7 +96,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 > ### The asset store outranks the server's own configuration, and only warns you
 >
-> The device-management asset store, the last row of the server table above, inverts the usual direction. **The material in it is not one class, and treating it as one is the mistake to avoid**: three kinds sit there and they arrive by three different routes.
+> The device-management asset store, the last row of the server table above, inverts the usual direction. **The material in it is not one class**: three kinds sit there and they arrive by three different routes.
 >
 > | Material | How it gets there |
 > |---|---|
@@ -110,11 +110,11 @@ Four further claims get run together, and separating them is what makes the boun
 >
 > **The SCEP enrollment challenge is the one that says nothing at all.** Once a challenge is stored, the configured value is never read again and **no warning is logged on any ordinary boot**. An administrator who rotates that environment variable gets no feedback whatever that Fleet kept the old value.
 >
-> **Apple Business Manager breaks the pattern in the other direction, and the asymmetry is the useful part.** Its certificate, key and token are parsed *before* the database is consulted, so a broken path or a conflicting pair is **fatal at start for good**, even though the parsed value is then discarded in favour of the stored one. The push and SCEP certificates are the opposite: their files are read only when the database has nothing to offer. **So a moved Business Manager token file stops the server starting and a moved push certificate file does not.** Removing the Business Manager settings from the process configuration entirely is what lets the server boot from the stored token.
+> **Apple Business Manager breaks the pattern in the other direction.** Its certificate, key and token are parsed *before* the database is consulted, so a broken path or a conflicting pair is **fatal at start for good**, even though the parsed value is then discarded in favour of the stored one. The push and SCEP certificates are the opposite: their files are read only when the database has nothing to offer. **So a moved Business Manager token file stops the server starting and a moved push certificate file does not.** Removing the Business Manager settings from the process configuration entirely is what lets the server boot from the stored token.
 
 ## Inputs that change the result without owning a value
 
-![Explanation](../_assets/icons/explanation.svg) Several things shape what a device ends up with and are **not** authorities, and treating them as peers of the list above is the commonest way to reason wrongly about this.
+![Explanation](../_assets/icons/explanation.svg) Several things shape what a device ends up with and are **not** authorities. They are not peers of the list above.
 
 | | What it does |
 |---|---|
@@ -134,7 +134,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 ## How collisions resolve
 
-![Reference](../_assets/icons/reference.svg) **There is no single precedence order, and expecting one is the mistake this section exists to prevent.** Six mechanisms were observed at this release. They are **not six classes a collision falls into**: they co-occur, and a single resolution path routinely uses three or four of them at once. Read the table as a vocabulary rather than a taxonomy.
+![Reference](../_assets/icons/reference.svg) **There is no single precedence order.** Six mechanisms were observed at this release. They are **not six classes a collision falls into**: they co-occur, and a single resolution path routinely uses three or four of them at once. Read the table as a vocabulary rather than a taxonomy.
 
 | Mechanism | What happens |
 |---|---|
@@ -145,7 +145,7 @@ Four further claims get run together, and separating them is what makes the boun
 | **Mutual exclusion** | Setting both is a fatal error. There is no winner |
 | **Channel disabled** | One setting removes the channel by which the other would arrive, so no comparison ever happens |
 
-**The last one is categorically different and worth its own sentence.** Nothing is compared and no value loses: the receiver is never registered, so the server's value never reaches the host at all.
+**The last one is categorically different.** Nothing is compared and no value loses: the receiver is never registered, so the server's value never reaches the host at all.
 
 **Within the server's process configuration the order is stable**, and it is the one place a simple rule holds. **Fleet states it itself**, in the help text of its own configuration dump: command-line flags, then environment variables, then the configuration file, then the built-in defaults.
 
@@ -167,17 +167,17 @@ Four further claims get run together, and separating them is what makes the boun
 
 > **The two host-side rows bite hardest during a migration**, because `--insecure` is exactly what an operator reaches for when a certificate is the thing that is broken. Removing the certificate flag is the fix. Adding `--insecure` beside it stops the agent from starting at all.
 
-> **Two things about the first row are worth knowing before you debug it.** The path and inline forms exist only for device-management material. The server's own TLS certificate and key have no inline form, so the rule never applies to them, and neither does it apply to the object-store or licence settings.
+> **The path and inline forms exist only for device-management material.** The server's own TLS certificate and key have no inline form, so the rule never applies to them, and neither does it apply to the object-store or licence settings.
 >
-> **When the check runs depends on the family, and this is where a plausible simplification goes wrong.** For the push certificate and the SCEP certificate authority, the parse is skipped once the database holds **every** one of those assets, so a conflicting pair stops being reported after first boot. **Store only some of them and the parse still happens and the conflict is still fatal.**
+> **When the check runs depends on the family.** For the push certificate and the SCEP certificate authority, the parse is skipped once the database holds **every** one of those assets, so a conflicting pair stops being reported after first boot. **Store only some of them and the parse still happens and the conflict is still fatal.**
 >
 > **Apple Business Manager and the Windows identity certificate never stop being checked.** Business Manager parses before it consults the database, and the Windows certificate is never stored as an asset at all, so **a conflicting pair in either of those is fatal on every boot, forever.** The asset store above is why the first two differ.
 
 ### Where several mechanisms meet
 
-**Agent credentials use four mechanisms at once**, and they are worth setting out in full, because this is the only place in the agent where a remote authority overrides a locally supplied credential. There are two orders, selected by whether the agent was installed to read the macOS configuration profile.
+**Agent credentials use four mechanisms at once**, and this is the only place in the agent where a remote authority overrides a locally supplied credential. There are two orders, selected by whether the agent was installed to read the macOS configuration profile.
 
-**Without the profile the two credentials do not behave alike**, and assuming they do is the easy mistake:
+**Without the profile the two credentials do not behave alike:**
 
 | Credential | How it resolves |
 |---|---|
@@ -199,7 +199,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 ### The update channel exception, and why that file is not what it looks like
 
-**Update channels combine write-through with a disabled channel, and then add an exception worth planning a rollout around.**
+**Update channels combine write-through with a disabled channel, and then add an exception.**
 
 **At start**, the persisted overrides file overwrites both the flag and the environment for the three channels it holds. **At check-in**, the agent decides whether to rewrite that file by comparing what the server sent against *the file*, never against what the package was built with, and **an absent value on either side is read as `stable`.**
 
@@ -232,7 +232,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 ## Where the planes cross
 
-![Reference](../_assets/icons/reference.svg) **Process configuration and stored configuration are mostly about different things, and the places they meet are the ones that waste an afternoon.** This section carries the meeting points this project has verified: **two values that resolve against each other**, and **two preconditions** where a process setting decides whether a stored value may be written at all.
+![Reference](../_assets/icons/reference.svg) **Process configuration and stored configuration are mostly about different things.** This section carries the meeting points this project has verified: **two values that resolve against each other**, and **two preconditions** where a process setting decides whether a stored value may be written at all.
 
 > **Those are the known instances rather than a complete count, and the distinction is deliberate.** Establishing that *only* two values exist in both planes would mean comparing all 329 registered process keys against every field of the stored organisation settings, which is nineteen top-level blocks with substantial structure beneath them. **That comparison has not been done.** Treat the pair below as the ones to check first, not as a closed set.
 
@@ -265,7 +265,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 **The Orbit half is a separate path with a different rule.** Update channels, command-line flags and extensions are read from the fleet's own document with **no fallback at all**, not even when the fleet has no document. Only the script execution timeout falls back, which Fleet's source states in words, and its condition tests for zero, so an explicit zero is indistinguishable from unset.
 
-**Two settings compose rather than resolve.** The macOS profile may *enable* scripts and cannot disable a locally enabled value. And a locally set debug flag cannot be lowered by the server sending false: the local value is a floor.
+**Two settings compose rather than resolve.** The macOS profile may *enable* scripts and cannot disable a locally enabled value. A locally set debug flag cannot be lowered by the server sending false: the local value is a floor.
 
 ### The per-host debug window is a merge, and it loses to an explicit value
 
@@ -281,7 +281,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 ### Absent and empty mean different things for osquery startup flags
 
-**This is the distinction that decides whether a host keeps its locally maintained flag file**, and Fleet's own source states it in words rather than leaving it to be inferred:
+**This is the distinction that decides whether a host keeps its locally maintained flag file**, and Fleet's own source states it in words:
 
 | `command_line_flags` in agent options | What the agent does |
 |---|---|
@@ -290,7 +290,7 @@ Four further claims get run together, and separating them is what makes the boun
 | **Set to a value that differs from the file** | **Replaces the file wholesale** and restarts osquery |
 | **Set to a value matching the file** | Nothing. Re-applying unchanged configuration causes no restart |
 
-**Replacement is wholesale, so a hand-maintained flag file does not survive the first non-empty value**, comments included. It does not lose a merge, because there is no merge. **And clearing the key afterwards does not restore it**, because absent means "leave alone" rather than "undo": the file keeps whatever Fleet last wrote. If you maintain osquery flags locally, keep them in your packaging inputs, not only on the host ([8.11](../08-troubleshooting/8.11-reproducing-and-isolating.md)).
+**Replacement is wholesale, so a hand-maintained flag file does not survive the first non-empty value**, comments included. It does not lose a merge, because there is no merge. **Clearing the key afterwards does not restore it**, because absent means "leave alone" rather than "undo": the file keeps whatever Fleet last wrote. If you maintain osquery flags locally, keep them in your packaging inputs, not only on the host ([8.11](../08-troubleshooting/8.11-reproducing-and-isolating.md)).
 
 
 <!-- IMAGE-TODO: assets/a.3-startup-flags-file-lifecycle.webp
@@ -342,7 +342,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 **It reads the stored document, applies your body on top and writes the result.** Anything you omit keeps its stored value, so you never have to send the whole document to change one setting.
 
-**Six things do not survive that patch anyway**, and they are worth knowing precisely because they defeat the rule above:
+**Six things do not survive that patch anyway**, because they defeat the rule above:
 
 | What you omit or send | What the writer does |
 |---|---|
@@ -383,7 +383,7 @@ Four further claims get run together, and separating them is what makes the boun
 
 **Three of those four are plain booleans on the wire, which is exactly why they cannot tell absent from false**: end-user authentication and the two software requirements. Turn end-user authentication on in the interface, then apply a fleet spec that does not mention it, and it is off again, with no error and no warning.
 
-**`lock_end_user_info` reaches the same result by a different route**, and the difference matters when you are trying to set it. It is an optional boolean that **can** tell absent from an explicit false. Set it explicitly and your value is kept. Omit it and Fleet deliberately makes it follow end-user authentication, preserving how it behaved before it was configurable at all. **So an explicit `false` is honoured here, where on the other three it is indistinguishable from silence.**
+**`lock_end_user_info` reaches the same result by a different route.** It is an optional boolean that **can** tell absent from an explicit false. Set it explicitly and your value is kept. Omit it and Fleet deliberately makes it follow end-user authentication, preserving how it behaved before it was configurable at all. **So an explicit `false` is honoured here, where on the other three it is indistinguishable from silence.**
 
 Three further setup-experience settings, whether to release the device manually, whether to create a local administrator account, and what type that account is, are defaulted only when the stored value was never explicitly set. **That is a migration default rather than a clobber**, and it fires once.
 
@@ -394,7 +394,7 @@ Three further setup-experience settings, whether to release the device manually,
 | Omitted from a GitOps file | Result |
 |---|---|
 | `yara_rules` | **Cleared.** The client sends an explicit empty list |
-| `certificate_authorities` | **Cleared, by a route worth knowing.** The run queues a second pass that re-applies the empty grouping with deletion enabled, so the emptiness is acted on after the main apply rather than during it. Global files only, never a dry run, and a silent no-op on Free |
+| `certificate_authorities` | **Cleared, by an indirect route.** The run queues a second pass that re-applies the empty grouping with deletion enabled, so the emptiness is acted on after the main apply rather than during it. Global files only, never a dry run, and a silent no-op on Free |
 | `custom_host_vitals` | **Cleared** |
 | `features`, `webhook_settings`, `integrations`, and most of the `mdm` block | **Reset or cleared**, field by field |
 | `controls` | **Named-fleet omission resets it.** Across the global and unassigned files exactly one must define it: setting both is an error, setting neither is an error, and the unassigned file's controls are applied to the global scope when the global file omits them |
@@ -405,7 +405,7 @@ Three further setup-experience settings, whether to release the device manually,
 
 ## Reading the effective value, and what Fleet does not keep
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) A precedence table nobody can apply to a live system is a description rather than a tool. This is where a reader with a value in front of them that is not what they set goes next.
+![Troubleshooting](../_assets/icons/troubleshooting.svg) Start here when the value in front of you is not the one you set.
 
 | Plane | The stored intent | What is actually in force | Who changed it |
 |---|---|---|---|
@@ -416,9 +416,9 @@ Three further setup-experience settings, whether to release the device manually,
 | **Host-local** | The host's own files | The host | Not retained |
 | **Enforced on the device** | Fleet's desired state | The device's report | Per platform ([a.6](a.6-glossary-and-release-compatibility.md)) |
 
-> **The server-process row is the one to read twice.** The configuration dump does not introspect the running server: it starts a fresh process and dumps what *that* process loads. So it can differ silently from what is in force after a configuration file or deployment definition has changed, and it omits every setting read directly from the environment rather than through the configuration manager.
+> **The configuration dump does not introspect the running server**: it starts a fresh process and dumps what *that* process loads. So it can differ silently from what is in force after a configuration file or deployment definition has changed, and it omits every setting read directly from the environment rather than through the configuration manager.
 >
-> **What the running server does report is a real subset, and knowing its edges is the difference between a two-minute check and an afternoon.** The configuration API returns these **taken live from the running service rather than from the database**:
+> **The running server does report a real subset.** The configuration API returns these **taken live from the running service rather than from the database**:
 >
 > | Section | What it actually covers |
 > |---|---|
@@ -434,21 +434,21 @@ Three further setup-experience settings, whether to release the device manually,
 
 > **Stored and in force differ by a cache on both settings planes, and the caches are per instance.** Each Fleet instance holds its own copy, so straight after a change two hosts checking in against two instances can legitimately be given different answers, for about a second on organisation settings and about a minute on a fleet's. **Your own read-back is not a fair test of this**, because the write path reads the stored document directly and bypasses the cache. Wait out the longer period before concluding a change did not apply ([1.6](../01-foundations/1.6-the-fleet-server.md)).
 >
-> **The device-management asset store behaves better and it is worth knowing why**, because it is the one place the obvious worry does not apply. Its cache key includes the asset's current checksum, and that checksum is read fresh on every lookup, so a rotated certificate is picked up on the next use rather than after an expiry. The stale copy merely lingers in memory until it ages out.
+> **The device-management asset store behaves better**, because it is the one place the obvious worry does not apply. Its cache key includes the asset's current checksum, and that checksum is read fresh on every lookup, so a rotated certificate is picked up on the next use rather than after an expiry. The stale copy merely lingers in memory until it ages out.
 
 Agent options are the plane where stored and in-force genuinely diverge, and Fleet publishes no reconciliation. Reading what is in force means observing each consumer on the host, and no single question answers it: a live query reaches the osquery half, while update channels, extensions, debug state and script behaviour each need their own host file, process state or log.
 
-**Fleet asks for a configuration hash it then throws away, and it asks only the hosts that run osquery.** The detail query selects the whole introspection row and keeps only the version, discarding the hash that would answer the question directly. **This is a mechanism of the osquery path rather than a universal one**, so hosts Fleet manages without osquery, iOS and iPadOS devices and Android devices among them, never contribute it at all and never could. Note too that it happens on a **detail cycle rather than on every poll**: Fleet skips detail queries until the detail interval comes round or a refetch forces them, so even where the evidence is collected and discarded, it is periodic rather than continuous.
+**Fleet asks for a configuration hash it then throws away, and it asks only the hosts that run osquery.** The detail query selects the whole introspection row and keeps only the version, discarding the hash that would answer the question directly. **This is a mechanism of the osquery path rather than a universal one**, so hosts Fleet manages without osquery, iOS and iPadOS devices and Android devices among them, never contribute it at all and never could. It also happens on a **detail cycle rather than on every poll**: Fleet skips detail queries until the detail interval comes round or a refetch forces them, so even where the evidence is collected and discarded, it is periodic rather than continuous.
 
 ### The audit trail is by exception
 
-**Forty-two distinct activity types are reachable from a change to the organisation settings document.** That is a count of types rather than of changes, and the difference matters in both directions: agent options are a single type covering the whole block however much of it you edit, while the Entra identifier types fire once per identifier added or removed. Among the forty-two are disk encryption on and off, Windows device management, the minimum operating system versions, the Google Workspace integration, conditional access, the historical datasets and GitOps mode.
+**Forty-two distinct activity types are reachable from a change to the organisation settings document.** That is a count of types rather than of changes, and it runs both ways: agent options are a single type covering the whole block however much of it you edit, while the Entra identifier types fire once per identifier added or removed. Among the forty-two are disk encryption on and off, Windows device management, the minimum operating system versions, the Google Workspace integration, conditional access, the historical datasets and GitOps mode.
 
 **Enrolment secrets are not one of them.** They are edited through their own route and write their own activity, and that activity appears only when the *set* of secret values actually changed, so re-submitting the same secrets in a different order writes nothing.
 
 **Neither are the forty-two a partition of the feed, and the overlap is large: twenty of them are also emitted elsewhere.** The fleet writer emits the same types for the minimum operating system versions on all three Apple platforms, the macOS and Windows update settings, disk encryption on and off, recovery-lock passwords, conditional access, agent options and the historical datasets. The setup-experience authentication pair and the managed-local-account pair come from the Apple setup writer. The deleted organisation logo has its own endpoint. **So seeing one of those twenty establishes only that something changed somewhere, not that the organisation settings document is what changed.** The remaining twenty-two, among them the Windows device-management types, the Entra identifier types and the GitOps-mode types, are written on this path alone.
 
-> **Disk encryption is the worst case and worth naming**, because it has several other emitters and they do not behave alike. The fleet writer and the Apple disk-encryption path each produce both halves, enabled and disabled. **Uploading an Apple push certificate produces only the enabled half**, and it produces one for the unassigned fleet and one for every fleet already enforcing encryption. **So a single certificate upload can fill the feed with enabled events for scopes nobody touched.** An activity saying disk encryption was enabled identifies neither the scope nor the writer.
+> **Disk encryption is the worst case**, because it has several other emitters and they do not behave alike. The fleet writer and the Apple disk-encryption path each produce both halves, enabled and disabled. **Uploading an Apple push certificate produces only the enabled half**, and it produces one for the unassigned fleet and one for every fleet already enforcing encryption. **So a single certificate upload can fill the feed with enabled events for scopes nobody touched.** An activity saying disk encryption was enabled identifies neither the scope nor the writer.
 
 **Three of the forty-two are best effort.** The deleted organisation logo, and both historical-dataset types, are written on a path that logs a failure and carries on, so the request can succeed with no activity behind it. **Absence of one of those three is not evidence that the change did not happen.** The other thirty-nine fail the request rather than lose the record.
 
@@ -456,9 +456,9 @@ Agent options are the plane where stored and in-force genuinely diverge, and Fle
 
 ## What the device says back, and what Fleet keeps of it
 
-![Explanation](../_assets/icons/explanation.svg) The last row of the table above is the one Fleet controls least, because the value in force is the device's and Fleet only holds a report of it. **The reports are not equivalent across platforms**, and treating them as one thing is how a dashboard comes to be trusted for something it cannot know.
+![Explanation](../_assets/icons/explanation.svg) The last row of the table above is the one Fleet controls least, because the value in force is the device's and Fleet only holds a report of it. **The reports are not equivalent across platforms**, so a dashboard that treats them as one thing can end up trusted for something it cannot know.
 
-**Fleet uses one vocabulary of per-profile states across all three platforms**, which is exactly what makes them look interchangeable: `pending`, `verifying`, `verified` and `failed`. **Which of them a profile can reach depends on its class as much as on its platform**, so read the row for the thing you are actually shipping rather than the row for the operating system.
+**Fleet uses one vocabulary of per-profile states across all three platforms**, which is what makes them look interchangeable: `pending`, `verifying`, `verified` and `failed`. **Which of them a profile can reach depends on its class as much as on its platform**, so read the row for the thing you are actually shipping rather than the row for the operating system.
 
 | Platform and class | How it reaches `verified`, and what happens after |
 |---|---|
@@ -484,13 +484,13 @@ Agent options are the plane where stored and in-force genuinely diverge, and Fle
 >
 > **In this class `failed` is not final either.** Where the certificate turns up later, the profile heals back to `verified` on its own.
 
-**Two removal behaviours are worth carrying**, because they explain result lists that otherwise look wrong. **Windows counts several not-found responses as a successful removal**, on the reasoning that a profile which is not there has been removed. **And a successful Apple removal deletes the record rather than setting a state**, so the profile leaves the host's list instead of coming to rest at `verified`.
+Two removal behaviours explain result lists that otherwise look wrong. **Windows counts several not-found responses as a successful removal**, on the reasoning that a profile which is not there has been removed. **A successful Apple removal deletes the record rather than setting a state**, so the profile leaves the host's list instead of coming to rest at `verified`.
 
-**What Apple and Windows genuinely have in common is narrower than it looks: neither has a separate acceptance tier for an external policy provider.** Fleet is the management authority for both, so no third party sits between Fleet's intent and the device's report whose acceptance could be recorded. **That is the correct observation, and it is not the same as saying acceptance and enforcement are one report**, which holds for Windows and fails for macOS.
+**What Apple and Windows have in common is narrower than it looks: neither has a separate acceptance tier for an external policy provider.** Fleet is the management authority for both, so no third party sits between Fleet's intent and the device's report whose acceptance could be recorded. **That is the correct observation, and it is not the same as saying acceptance and enforcement are one report**, which holds for Windows and fails for macOS.
 
 ### Android retains four things and publishes one of them
 
-**Fleet exposes derived per-profile progress for Android through the ordinary configuration-profile API**, in the same shape as the other platforms, so a device part-way through *is* distinguishable from one that has not started. What is retained internally and never published is a different and more interesting list:
+**Fleet exposes derived per-profile progress for Android through the ordinary configuration-profile API**, in the same shape as the other platforms, so a device part-way through *is* distinguishable from one that has not started. What is retained internally and never published is a different list:
 
 | Retained | Exposed through an API |
 |---|---|
@@ -503,9 +503,9 @@ Agent options are the plane where stored and in-force genuinely diverge, and Fle
 
 ### Two collision rules at the device boundary
 
-**Android merges a host's *eligible* profiles into a single policy, and a collision costs you a profile.** Eligible is doing real work in that sentence: **a profile whose network configuration references a certificate that has not yet reached a terminal state**, verified or finally failed, **is withheld from the merge entirely**, held at `pending`, and re-sent once the certificate resolves either way, since a finally failed certificate releases it too. **The reason is written into the profile's detail**, which says it is waiting for the named certificate to be installed, and that detail is the only thing distinguishing it from an ordinary pending profile. Withheld profiles never reach the collision rule.
+**Android merges a host's *eligible* profiles into a single policy, and a collision costs you a profile.** Eligible is narrow: **a profile whose network configuration references a certificate that has not yet reached a terminal state**, verified or finally failed, **is withheld from the merge entirely**, held at `pending`, and re-sent once the certificate resolves either way, since a finally failed certificate releases it too. **The reason is written into the profile's detail**, which says it is waiting for the named certificate to be installed, and that detail is the only thing distinguishing it from an ordinary pending profile. Withheld profiles never reach the collision rule.
 
-The rest are sorted **by name, alphabetically**, and merged in that order, so **where two of them set the same top-level field, the alphabetically later name wins.** The loser is not silently overridden: **it is marked `failed`**, with a message naming the fields it lost. Two consequences follow that are easy to miss. Renaming a profile can change which one wins. And adding a profile can fail an existing one that was working yesterday.
+The rest are sorted **by name, alphabetically**, and merged in that order, so **where two of them set the same top-level field, the alphabetically later name wins.** The loser is not silently overridden: **it is marked `failed`**, with a message naming the fields it lost. Two consequences follow. Renaming a profile can change which one wins, and adding a profile can fail an existing one that was working before.
 
 **Windows refuses a custom profile that collides with Fleet's own operating-system update settings.** Where a fleet or the organisation has Windows updates configured through settings, uploading a profile that targets the same area is rejected with a message saying operating-system updates are already configured. **The gate has three parts**: managing updates by profile is Premium-only, the settings must be clear, and a second profile targeting that area is rejected even when they are. Turn the settings off first if you intend to manage updates by profile.
 
@@ -549,13 +549,13 @@ The rest are sorted **by name, alphabetically**, and merged in that order, so **
 | **Stored settings**, organisation and fleet | **Read it back**, allowing for the cache periods above. The API returns what the server stored, so a difference from what you sent is real and worth investigating |
 | **Server process configuration** | **Partly.** For the live subset the configuration API reports, named above, read the running value back and trust it. **For everything else there is no read-back**: the configuration dump starts a fresh process and reports what *that* invocation would load, which need not match what the running server holds, and it omits every setting read directly from the environment. **Control the input instead**: pin the deployment definition, keep one source of truth for it, and treat a restart as the only thing that changes it |
 
-**Outside that subset the discipline is to make the input auditable, because Fleet gives you no way to observe the output.** That is the most consequential limitation in this appendix, and it is why the reference disagreements above matter more than their number suggests: for a key the configuration API does not return, a wrong published default is not something you can catch by looking at the running server.
+**Outside that subset the discipline is to make the input auditable, because Fleet gives you no way to observe the output.** It is also why the reference disagreements above matter more than their number suggests: for a key the configuration API does not return, a wrong published default is not something you can catch by looking at the running server.
 
 ## Version notes
 
 ![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.91.0. The server's configuration manager registers **329 distinct keys** at this release.
 
-**Nine of those are new since 4.90.0, and nothing was removed**: `activity.fleet_initiated_release_per_minute`, `mdm.allow_custom_activations`, `mdm.allow_orbit_end_user_auth_bypass`, `s3.software_installers_signed_url`, `server.vpp_install_reap_timeout`, and the four hidden `google_workspace.max_*` limits that bound a single directory sync. **One of them is worth reading the default of before you upgrade.** `mdm.allow_orbit_end_user_auth_bypass` registers `true`, which permits an Orbit host that has not completed end-user authentication to enroll into a fleet that requires it. Setting it to `false` is what enforces that requirement strictly.
+**Nine of those are new since 4.90.0, and nothing was removed**: `activity.fleet_initiated_release_per_minute`, `mdm.allow_custom_activations`, `mdm.allow_orbit_end_user_auth_bypass`, `s3.software_installers_signed_url`, `server.vpp_install_reap_timeout`, and the four hidden `google_workspace.max_*` limits that bound a single directory sync. **Check one default before you upgrade.** `mdm.allow_orbit_end_user_auth_bypass` registers `true`, which permits an Orbit host that has not completed end-user authentication to enroll into a fleet that requires it. Setting it to `false` is what enforces that requirement strictly.
 
 **This appendix deliberately publishes no count of how many of those Fleet documents.** "Documented" is not defined consistently enough for that comparison to mean anything: a setting can have its own reference section, be described in prose under another, or appear only in an example. **The count of registered keys is derived and stated; the comparison is not, until it can be produced reproducibly.**
 
@@ -563,7 +563,7 @@ The rest are sorted **by name, alphabetically**, and merged in that order, so **
 
 ![Reference](../_assets/icons/reference.svg) This table is generated rather than written. It is read directly from the registration calls the server binary makes as it starts, at the release this manual is pinned to, so it records the keys the server actually binds and the defaults it registers rather than what any document says it binds. That is what makes it authoritative: where this catalog and Fleet's published configuration reference disagree, the catalog is right, because it is the code path the running server takes.
 
-The disagreements named under [Where Fleet's reference and the running server disagree](#where-fleets-reference-and-the-running-server-disagree) are all visible in it, which is the proof that generating it matters. The reference gives the Redis host-cache lifetime as 60 seconds; `redis.host_cache_ttl` below registers 180. The reference gives `mysql.password` a default of `fleet`; below it is empty. And the per-endpoint request-size override the reference documents in full is absent from this table altogether, which is how a generated catalog says the server binds no such key: a key that is not a row here is one the binary never registers, whatever the documentation shows.
+The disagreements named under [Where Fleet's reference and the running server disagree](#where-fleets-reference-and-the-running-server-disagree) are all visible in it. The reference gives the Redis host-cache lifetime as 60 seconds; `redis.host_cache_ttl` below registers 180. The reference gives `mysql.password` a default of `fleet`; below it is empty. And the per-endpoint request-size override the reference documents in full is absent from this table altogether, which is how a generated catalog says the server binds no such key: a key that is not a row here is one the binary never registers, whatever the documentation shows.
 
 Read the columns as the key, the environment variable that sets it, the type, the default the server registers, and what it's for. A key marked *(hidden)* is bound and functional but kept out of `fleet serve --help`. A default marked *(computed)* is derived when the server starts rather than being a fixed literal, so the cell shows the value it resolves to, which for a few paths is relative to a directory the operating system chooses at runtime.
 
