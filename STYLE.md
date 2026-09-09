@@ -327,6 +327,23 @@ grep -rinw book manual/ website/versioned_docs/ \
 That returns nothing. A bare `grep -riw book` does not, and never will, because of the two
 exceptions above.
 
+### Carry the opening voice into Parts I through V
+
+Jake's direction, 2026-09-09: use the approved company and product introductions as
+the voice reference for the remaining narrative chapters. Begin with the work a reader
+wants to do and the value the capability provides. Explain the mechanism after the reader
+has that context, with concrete examples and enough transitions to connect the steps.
+Retain procedures, important limits, platform differences, and evidence requirements.
+A warmer chapter can be longer when the added explanation helps the reader understand it.
+
+For screenshots, add a structured `SCREENSHOT:` HTML comment with a stable `SS-` ID,
+a purpose, preparation, exact capture, framing, edition, and proposed filename. Keep the
+capture checklist in `SCREENSHOTS.md` synchronized with those comments. Use
+`SCREENSHOT-REUSE:` when an existing capture illustrates another passage. Request an
+actual UI screenshot only when it teaches something the reader benefits from seeing;
+commands, configuration, and architectural relationships may be clearer as text or diagrams.
+Screenshots must come from real application state, with sensitive values kept out of view.
+
 ## 11. Don't slot-fill the template
 
 `_template.md` is a checklist of things worth considering, not a form. Drop
