@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" role="img">
+<title>Potential data loss and recovery duration are distinct windows with separately recorded targets and rehearsal results.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1000" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Measure data loss and recovery duration separately</text>
+<text x="48" y="156" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Schematic time · intervals are not to scale</text>
+<path d="M176 316 L176 432" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="176" y="242" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">Latest recoverable</text>
+<text x="176" y="284" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">data</text>
+<path d="M700 316 L700 432" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="700" y="242" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">Incident</text>
+<text x="700" y="284" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">onset</text>
+<path d="M1224 316 L1224 432" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1224" y="242" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">Service verified</text>
+<text x="1224" y="284" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">restored</text>
+<path d="M176 376 L416 376" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M448 376 L936 376" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M968 376 L1224 376" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M422 364 L434 388" fill="none" stroke="#192147" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M942 364 L954 388" fill="none" stroke="#192147" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M176 464 L176 480 L700 480 L700 464" fill="none" stroke="#FAA669" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="438.0" y="528" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Potential data-loss window</text>
+<path d="M700 464 L700 480 L1224 480 L1224 464" fill="none" stroke="#5CABDF" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="962.0" y="528" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Recovery duration</text>
+<rect x="48" y="624" width="616" height="236" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="680" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Data-loss objective</text>
+<text x="80" y="740" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Target</text>
+<path d="M368 740 L616 740" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="80" y="808" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Rehearsed result</text>
+<path d="M368 808 L616 808" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="736" y="624" width="616" height="236" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="768" y="680" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Recovery-time objective</text>
+<text x="768" y="740" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Target</text>
+<path d="M1056 740 L1304 740" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="768" y="808" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Rehearsed result</text>
+<path d="M1056 808 L1304 808" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="48" y="904" width="36" height="36" rx="4" fill="#FBEBDC" stroke="#FAA669" stroke-width="2.5"/>
+<text x="108" y="932" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Record a gap when the measured result exceeds its target</text>
+</svg>

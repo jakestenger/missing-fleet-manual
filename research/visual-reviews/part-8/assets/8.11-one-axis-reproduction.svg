@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1272" viewBox="0 0 1400 1272" role="img">
+<title>A controlled host comparison holds version, payload, fleet scope and network constant; different or matching outcomes provide provisional evidence while uncontrolled differences remain.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1272" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Change one axis in a controlled comparison</text>
+<rect x="48" y="176" width="1304" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="243.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Held constant · version, payload, fleet scope, network conditions</text>
+<path d="M244 288 L244 392" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1156 288 L1156 392" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="48" y="392" width="392" height="248" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244" y="456" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#192147">Control</text>
+<rect x="80" y="504" width="328" height="104" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="244.0" y="568.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Host A</text>
+<rect x="960" y="392" width="392" height="248" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156" y="456" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#192147">Comparison</text>
+<rect x="992" y="504" width="328" height="104" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1156.0" y="568.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Host B</text>
+<path d="M244 640 L244 716 L700 716 L700 780" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1156 640 L1156 716 L700 716" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="480" y="780" width="440" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="848.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Compare outcomes</text>
+<path d="M480 836 L244 836 L244 976" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="332" y="804" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Different</text>
+<path d="M920 836 L1156 836 L1156 976" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1040" y="804" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Same</text>
+<rect x="48" y="976" width="568" height="128" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="332.0" y="1029.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Investigate host-specific</text>
+<text x="332.0" y="1073.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">differences</text>
+<rect x="784" y="976" width="568" height="128" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1068.0" y="1029.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Host-specific cause</text>
+<text x="1068.0" y="1073.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">less likely</text>
+<text x="700" y="1176" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Uncontrolled differences remain · interpretation is provisional</text>
+<text x="700" y="1232" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Other single axes: platform · fleet scope · Fleet version · network</text>
+</svg>

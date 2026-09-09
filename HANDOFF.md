@@ -82,6 +82,14 @@ shared design block in the HTML comment because a downstream tool may receive on
 comment. Do not send a bare reference to STYLE.md and expect the renderer to have the file.
 The automation should extract the whole comment, including WHY, PROMPT, DESIGN, and NOTE.
 
+Use `Fleet` for the product, server, and company; use lowercase `fleet`/`fleets` for host
+groups, including titles and node labels. The former name `teams` is obsolete for that
+concept. Preserve exact code/API identifiers. Include this rule in extracted image briefs.
+
+The Part 0–1 candidate batch is in `research/visual-reviews/part-0-1/index.html` on
+`feature/part-0-1-visuals`. These candidates await joint review with Jake. Their chapter
+markers remain pending; use the gallery and editable sources when refining this batch.
+
 New briefs also include a `QUESTION:` identifying the reader's need. The `PROMPT:` starts
 with `DIAGRAM:`, `ILLUSTRATION:`, or `SCREENSHOT:`. Route screenshots to a real demo capture;
 do not send them to an image model to invent a product screen. Use the chapter's pinned

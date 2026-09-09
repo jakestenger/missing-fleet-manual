@@ -1,0 +1,9 @@
+[
+  {
+    "asset": "7.3-rollback-boundary",
+    "selected_source": "/Users/jake/.codex/generated_images/01a082f6-7912-7fb1-a751-64760cf7c976/exec-9de0c1f1-b5ff-4e8c-b29f-5cc348d5318e.png",
+    "method": "built-in image generation",
+    "iterations": 3,
+    "review": "All labels and recovery decision paths checked; return path originates only at database restore. Final page typography remains for joint review."
+  }
+]

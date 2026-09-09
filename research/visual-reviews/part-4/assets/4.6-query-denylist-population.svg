@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1264" viewBox="0 0 1400 1264" role="img">
+<title>The same query may complete on one host and be denylisted on another, leaving coverage gaps while other queries continue.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1264" fill="#F9FAFC"/>
+<rect x="448" y="48" width="504" height="128" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="700.0" y="101.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">One query</text>
+<text x="700.0" y="145.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">denylist: true</text>
+<text x="700" y="1220" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Schematic: available resources differ; hardware age alone is not decisive</text>
+<rect x="48" y="288" width="620" height="682" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<rect x="732" y="288" width="620" height="682" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="350" text-anchor="start" font-family="Inter" font-size="38" font-weight="500" fill="#515774">Host A</text>
+<text x="764" y="350" text-anchor="start" font-family="Inter" font-size="38" font-weight="500" fill="#515774">Host B</text>
+<path d="M560 176 L560 248 L358 248 L358 410" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M840 176 L840 248 L1042 248 L1042 410" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="100" y="410" width="516" height="116" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="358.0" y="482.0" text-anchor="middle" font-family="Inter" font-size="40" font-weight="500" fill="#192147">Completes</text>
+<rect x="784" y="410" width="516" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1042.0" y="479.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Watchdog limits exceeded</text>
+<path d="M1042 526 L1042 582" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="784" y="582" width="516" height="100" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1042.0" y="644.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Worker restarts</text>
+<path d="M1042 682 L1042 740" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="784" y="740" width="516" height="128" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1042.0" y="793.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Repeated stops:</text>
+<text x="1042.0" y="837.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">query denylisted on B</text>
+<text x="1042" y="927" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Later runs skipped; other queries continue</text>
+<path d="M358 526 L358 718" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="100" y="718" width="516" height="150" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="358.0" y="805.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Rows contributed</text>
+<path d="M358 868 L358 1060" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="1060" width="620" height="112" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="358.0" y="1127.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">Report collector: A’s rows</text>
+<path d="M1042 970 L1042 1060" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="732" y="1060" width="620" height="112" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1042.0" y="1127.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Coverage gap: B supplies no rows</text>
+</svg>

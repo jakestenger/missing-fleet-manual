@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1088" viewBox="0 0 1400 1088" role="img">
+<title>A Fleet handover carries ongoing storage, credential, trust, upgrade and scheduled-work obligations beyond the URL and administrative login.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1088" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Hand over the ongoing operating responsibilities</text>
+<rect x="48" y="444" width="328" height="144" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="212.0" y="505.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">Fleet URL +</text>
+<text x="212.0" y="549.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">admin login</text>
+<path d="M376 516 L496 516" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="528" y="168" width="824" height="824" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="568" y="238" text-anchor="start" font-family="Inter" font-size="38" font-weight="500" fill="#515774">Standing obligations</text>
+<rect x="568" y="296" width="12" height="12" rx="6" fill="#5CABDF" stroke="#5CABDF" stroke-width="2.5"/>
+<text x="616" y="320" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Three stores</text>
+<text x="616" y="368" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">More than one can lose unrecoverable data</text>
+<rect x="568" y="432" width="12" height="12" rx="6" fill="#5CABDF" stroke="#5CABDF" stroke-width="2.5"/>
+<text x="616" y="456" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Expiring credentials</text>
+<text x="616" y="504" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Renewal schedules belong to other organizations</text>
+<rect x="568" y="568" width="12" height="12" rx="6" fill="#5CABDF" stroke="#5CABDF" stroke-width="2.5"/>
+<text x="616" y="592" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Certificate rotation</text>
+<text x="616" y="640" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Order preserves agent connectivity</text>
+<rect x="568" y="704" width="12" height="12" rx="6" fill="#5CABDF" stroke="#5CABDF" stroke-width="2.5"/>
+<text x="616" y="728" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Upgrades</text>
+<text x="616" y="776" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">The documented procedure stops service</text>
+<rect x="568" y="840" width="12" height="12" rx="6" fill="#5CABDF" stroke="#5CABDF" stroke-width="2.5"/>
+<text x="616" y="864" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Periodic jobs</text>
+<text x="616" y="912" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Can stop without reporting an error</text>
+<path d="M520 168 L496 168 L496 992 L520 992" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>

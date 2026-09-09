@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1136" viewBox="0 0 1400 1136" role="img">
+<title>An Apple MDM command can remain queued while offline and execute after reconnection; custom commands have no administrator recall.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1136" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">A queued Apple MDM command survives an offline gap</text>
+<rect x="48" y="152" width="320" height="108" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="208.0" y="217.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Operator</text>
+<path d="M208 260 L208 1060" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="540" y="152" width="320" height="108" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="217.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Fleet MDM queue</text>
+<path d="M700 260 L700 1060" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="1032" y="152" width="320" height="108" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1192.0" y="217.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Apple device</text>
+<path d="M1192 260 L1192 1060" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M208 356 L700 356" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="454" y="322" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Send command</text>
+<rect x="524" y="400" width="352" height="112" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="700.0" y="467.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">Command queued</text>
+<rect x="1056" y="352" width="272" height="112" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1192.0" y="420.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Offline</text>
+<rect x="500" y="520" width="400" height="100" rx="12" fill="#F9FAFC" stroke="#F9FAFC" stroke-width="2.5"/>
+<text x="700" y="558" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">No administrator recall</text>
+<text x="700" y="597" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">for custom commands</text>
+<path d="M196 628 L220 608" fill="none" stroke="#192147" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M196 646 L220 626" fill="none" stroke="#192147" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M688 628 L712 608" fill="none" stroke="#192147" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M688 646 L712 626" fill="none" stroke="#192147" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1180 628 L1204 608" fill="none" stroke="#192147" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1180 646 L1204 626" fill="none" stroke="#192147" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="454" y="640" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Unspecified time gap</text>
+<rect x="1032" y="692" width="320" height="80" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1192.0" y="742.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Device reconnects</text>
+<path d="M700 848 L1192 848" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="946" y="814" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Collects queued command</text>
+<rect x="1056" y="896" width="272" height="80" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1192.0" y="947.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Executes</text>
+<path d="M1192 1032 L700 1032" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="946" y="1000" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Returns result</text>
+</svg>

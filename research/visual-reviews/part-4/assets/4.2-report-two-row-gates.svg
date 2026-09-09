@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1072" viewBox="0 0 1400 1072" role="img">
+<title>A fixed per-host threshold rejects oversized result sets before storage; report_cap later trims estate-wide rows by insertion recency.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1072" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Reject a host result or trim stored rows later</text>
+<text x="48" y="172" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Path A · report_cap = 2,000</text>
+<rect x="48" y="212" width="304" height="208" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="200" y="260" text-anchor="middle" font-family="Inter" font-size="36" font-weight="400" fill="#515774">Host returns</text>
+<text x="200" y="307" text-anchor="middle" font-family="Inter" font-size="36" font-weight="400" fill="#515774">1,001 rows</text>
+<path d="M96 348 L292 348" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M96 366 L292 366" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M96 384 L292 384" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M352 292 L480 292" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="480" y="212" width="384" height="160" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="672.0" y="281.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Fixed per-host</text>
+<text x="672.0" y="325.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">threshold: 1,000</text>
+<path d="M864 292 L984 292" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M927 279 L953 305" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M927 305 L953 279" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="1016" y="212" width="336" height="160" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1184.0" y="305.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">Stored rows: 0</text>
+<text x="496" y="423" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Entire host result rejected</text>
+<text x="48" y="522" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Path B · report_cap = 500</text>
+<rect x="48" y="564" width="304" height="208" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="200" y="612" text-anchor="middle" font-family="Inter" font-size="36" font-weight="400" fill="#515774">Host returns</text>
+<text x="200" y="659" text-anchor="middle" font-family="Inter" font-size="36" font-weight="400" fill="#515774">800 rows</text>
+<path d="M96 700 L292 700" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M96 718 L292 718" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M96 736 L292 736" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M352 644 L480 644" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="480" y="564" width="384" height="160" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="672.0" y="633.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Per-host gate</text>
+<text x="672.0" y="680.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">800 ≤ 1,000</text>
+<path d="M864 644 L1016 644" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1016" y="564" width="336" height="160" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1184.0" y="633.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Insert succeeds</text>
+<text x="1184.0" y="677.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">800 rows</text>
+<path d="M1184 724 L1184 782 L672 782 L672 854" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="720" y="826" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Later cleanup · across hosts</text>
+<rect x="480" y="854" width="384" height="160" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="672.0" y="923.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Estate-wide cap</text>
+<text x="672.0" y="967.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">report_cap: 500</text>
+<path d="M864 934 L1016 934" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1016" y="854" width="336" height="160" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1184.0" y="924.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Newest rows kept</text>
+<text x="1184.0" y="966.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Clipped</text>
+</svg>

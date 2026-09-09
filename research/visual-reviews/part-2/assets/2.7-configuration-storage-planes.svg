@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="992" viewBox="0 0 1400 992" role="img">
+<title>Organization settings apply at runtime; process settings resolve at startup with flag, environment and file precedence.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="992" fill="#F9FAFC"/>
+<rect x="48" y="48" width="620" height="884" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<rect x="732" y="48" width="620" height="884" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="112" text-anchor="start" font-family="Inter" font-size="38" font-weight="500" fill="#515774">Organization settings</text>
+<text x="764" y="112" text-anchor="start" font-family="Inter" font-size="38" font-weight="500" fill="#515774">Server settings</text>
+<rect x="100" y="176" width="516" height="108" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="358.0" y="243.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">UI / API / GitOps</text>
+<path d="M358 284 L358 374" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="100" y="374" width="516" height="150" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="358.0" y="438.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Stored organization</text>
+<text x="358.0" y="485.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">configuration</text>
+<text x="358" y="580" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Some enablement fields</text>
+<text x="358" y="616" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">are restored by Fleet</text>
+<path d="M358 524 L358 542 L640 542 L640 672 L358 672 L358 710" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="100" y="710" width="516" height="100" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="358.0" y="773.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="600" fill="#F9FAFC">Running Fleet</text>
+<text x="358" y="870" text-anchor="middle" font-family="Inter" font-size="34" font-weight="400" fill="#515774">Apply while running</text>
+<rect x="784" y="176" width="516" height="348" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1042" y="228" text-anchor="middle" font-family="Inter" font-size="30" font-weight="600" fill="#192147">Precedence</text>
+<text x="1042" y="290" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Flags</text>
+<text x="1042" y="332" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">↓</text>
+<text x="1042" y="374" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Environment</text>
+<text x="1042" y="416" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">↓</text>
+<text x="1042" y="458" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Config file</text>
+<path d="M1042 524 L1042 710" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1160" y="582" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">MySQL /</text>
+<text x="1160" y="621" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">TLS</text>
+<rect x="784" y="710" width="516" height="100" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1042.0" y="772.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Fleet process startup</text>
+<text x="1042" y="870" text-anchor="middle" font-family="Inter" font-size="34" font-weight="400" fill="#515774">Restart to change</text>
+<text x="120" y="320" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Branding /</text>
+<text x="120" y="356" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">retention</text>
+</svg>

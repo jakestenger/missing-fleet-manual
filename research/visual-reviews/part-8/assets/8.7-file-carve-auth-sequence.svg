@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="2064" viewBox="0 0 1400 2064" role="img">
+<title>The begin request uses the osquery node key; ordered block authentication depends on body-auth fallback configuration, with header and ownership checks when disabled.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="2064" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">File-carve authentication changes after the begin request</text>
+<rect x="48" y="168" width="336" height="96" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="216.0" y="228.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">osquery host</text>
+<path d="M216 264 L216 1384" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="720" y="168" width="336" height="96" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="888.0" y="228.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Fleet</text>
+<path d="M888 264 L888 1384" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M216 400 L888 400" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="552" y="332" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Begin · node key</text>
+<text x="552" y="374" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Declared size + block count</text>
+<rect x="1032" y="324" width="320" height="160" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1192.0" y="375.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Validate declared</text>
+<text x="1192.0" y="414.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">size and blocks</text>
+<text x="1192.0" y="453.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Record session</text>
+<path d="M888 400 L1032 400" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M888 568 L216 568" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="552" y="530" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Return session identifiers</text>
+<path d="M216 736 L888 736" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="552" y="696" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Block 1</text>
+<path d="M216 896 L888 896" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="552" y="856" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Block 2</text>
+<path d="M216 1056 L888 1056" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="552" y="1016" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Final block</text>
+<rect x="1032" y="656" width="320" height="480" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1192" y="728" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Ordered blocks</text>
+<text x="1192" y="767" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Within declared</text>
+<text x="1192" y="806" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">size</text>
+<path d="M888 896 L1032 896" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="720" y="1256" width="336" height="112" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="888.0" y="1302.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#F9FAFC">Reassemble</text>
+<text x="888.0" y="1344.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#F9FAFC">and store</text>
+<path d="M888 1056 L888 1256" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="1424" width="1304" height="80" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700" y="1476" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Block authentication is selected by server configuration</text>
+<rect x="48" y="1560" width="608" height="400" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="352" y="1624" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#192147">Fallback on · default</text>
+<rect x="744" y="1560" width="608" height="400" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1048" y="1624" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#192147">Fallback off</text>
+<text x="352" y="1704" text-anchor="middle" font-family="Roboto Mono" font-size="30" font-weight="400" fill="#515774">session_id + request_id</text>
+<text x="1048" y="1704" text-anchor="middle" font-family="Roboto Mono" font-size="30" font-weight="400" fill="#515774">session_id + request_id</text>
+<text x="352" y="1800" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Session identifiers authenticate blocks</text>
+<text x="352" y="1836" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">No node-key / ownership check</text>
+<text x="1048" y="1776" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Also require Authorization node key</text>
+<text x="1048" y="1812" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">and host ownership match</text>
+<text x="700" y="2032" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">The two configurations are alternatives; begin authentication stays the same</text>
+</svg>

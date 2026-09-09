@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1160" viewBox="0 0 1400 1160" role="img">
+<title>Build a credential-free MSI with sentinel values, then supply different real deployment secrets through installer properties.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1160" fill="#F9FAFC"/>
+<rect x="48" y="48" width="1304" height="312" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="110" text-anchor="start" font-family="Inter" font-size="38" font-weight="500" fill="#515774">Build</text>
+<text x="92" y="174" text-anchor="start" font-family="Roboto Mono" font-size="30" font-weight="500" fill="#192147">--fleet-url=dummy</text>
+<text x="92" y="222" text-anchor="start" font-family="Roboto Mono" font-size="30" font-weight="500" fill="#192147">--enroll-secret=dummy</text>
+<path d="M530 214 L704 214" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="704" y="132" width="592" height="164" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1000.0" y="203.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">Credential-free MSI</text>
+<text x="1000.0" y="247.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">Secret-file reading enabled</text>
+<text x="80" y="330" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">One reusable artifact</text>
+<text x="48" y="446" text-anchor="start" font-family="Inter" font-size="38" font-weight="500" fill="#515774">Install</text>
+<rect x="48" y="482" width="620" height="638" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<rect x="732" y="482" width="620" height="638" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<path d="M1000 296 L1000 402 L358 402 L358 482" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1000 402 L1042 402 L1042 482" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="80" y="538" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Deployment group A</text>
+<text x="80" y="599" text-anchor="start" font-family="Roboto Mono" font-size="28" font-weight="500" fill="#192147">FLEET_URL</text>
+<text x="80" y="641" text-anchor="start" font-family="Roboto Mono" font-size="28" font-weight="500" fill="#192147">FLEET_SECRET = &lt;secret A&gt;</text>
+<rect x="164" y="708" width="388" height="100" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="358.0" y="769.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">MSI on the host</text>
+<path d="M358 654 L358 708" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M358 808 L358 844" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="80" y="874" width="252" height="98" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="206.0" y="933.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">secret.txt</text>
+<rect x="396" y="874" width="240" height="98" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="516.0" y="914.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Agent reads</text>
+<text x="516.0" y="953.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">the file</text>
+<path d="M358 844 L206 844 L206 874" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M332 923 L396 923" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="72" y="984" width="572" height="104" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<path d="M90 1010 L110 1030" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M90 1030 L110 1010" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="128" y="1014" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Empty / sentinel install secret:</text>
+<text x="128" y="1050" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">file not written</text>
+<text x="764" y="538" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Deployment group B</text>
+<text x="764" y="599" text-anchor="start" font-family="Roboto Mono" font-size="28" font-weight="500" fill="#192147">FLEET_URL</text>
+<text x="764" y="641" text-anchor="start" font-family="Roboto Mono" font-size="28" font-weight="500" fill="#192147">FLEET_SECRET = &lt;secret B&gt;</text>
+<rect x="848" y="708" width="388" height="100" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1042.0" y="769.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">MSI on the host</text>
+<path d="M1042 654 L1042 708" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1042 808 L1042 844" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="764" y="874" width="252" height="98" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="890.0" y="933.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">secret.txt</text>
+<rect x="1080" y="874" width="240" height="98" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1200.0" y="914.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Agent reads</text>
+<text x="1200.0" y="953.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">the file</text>
+<path d="M1042 844 L890 844 L890 874" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1016 923 L1080 923" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="756" y="984" width="572" height="104" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<path d="M774 1010 L794 1030" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M774 1030 L794 1010" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="812" y="1014" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Empty / sentinel install secret:</text>
+<text x="812" y="1050" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">file not written</text>
+</svg>

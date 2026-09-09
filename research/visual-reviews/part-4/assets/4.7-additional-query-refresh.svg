@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1052" viewBox="0 0 1400 1052" role="img">
+<title>Ordinary detail refresh includes named additional queries; critical-only refetch skips them and leaves the prior custom-field timestamp unchanged.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1052" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">A custom field follows the detail-refresh path</text>
+<rect x="452" y="162" width="480" height="716" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="692" y="222" text-anchor="middle" font-family="Inter" font-size="40" font-weight="600" fill="#192147">Host</text>
+<rect x="48" y="258" width="340" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="218.0" y="305.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Ordinary</text>
+<text x="218.0" y="352.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">detail refresh</text>
+<rect x="500" y="276" width="384" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="692.0" y="339.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Built-in details</text>
+<rect x="500" y="444" width="384" height="128" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="692" y="492" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Additional query</text>
+<text x="692" y="540" text-anchor="middle" font-family="Roboto Mono" font-size="30" font-weight="500" fill="#192147">asset_tag</text>
+<path d="M388 316 L420 316 L420 328 L500 328" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M420 328 L420 508 L500 508" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1020" y="422" width="332" height="172" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1186.0" y="499.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="600" fill="#F9FAFC">host.additional</text>
+<text x="1186.0" y="538.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="600" fill="#F9FAFC">asset_tag</text>
+<path d="M884 508 L1020 508" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="954" y="470" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Result</text>
+<rect x="48" y="700" width="340" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="218.0" y="747.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Critical-only</text>
+<text x="218.0" y="794.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">refetch</text>
+<rect x="500" y="700" width="384" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="692.0" y="747.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Critical built-ins</text>
+<text x="692.0" y="794.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">only</text>
+<path d="M388 758 L500 758" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1020" y="684" width="332" height="194" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1186" y="734" text-anchor="middle" font-family="Roboto Mono" font-size="30" font-weight="500" fill="#192147">asset_tag</text>
+<text x="1186" y="787" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Prior timestamp</text>
+<text x="1186" y="826" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">unchanged</text>
+<path d="M884 758 L984 758" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M972 746 L996 770" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M972 770 L996 746" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="700" y="936" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">Critical-only refetch skips the additional query</text>
+<text x="700" y="998" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Example name: asset_tag · Author handles platform compatibility</text>
+</svg>

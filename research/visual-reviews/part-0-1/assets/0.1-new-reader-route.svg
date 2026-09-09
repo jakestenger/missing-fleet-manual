@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="868" viewBox="0 0 1400 868" role="img">
+<title>A deployment reading route with separate production handoff prerequisites.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="868" fill="#F9FAFC"/>
+<path d="M268 126 L332 126" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M572 126 L868 126" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="720" y="98" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Managed Fleet</text>
+<path d="M452 184 L452 292" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="468" y="246" text-anchor="start" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Self-hosted</text>
+<path d="M572 352 L636 352" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1036 352 L1070 352 L1070 202 L976 202 L976 184" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1084 126 L1148 126" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1250 184 L1250 478" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1250 588 L1250 618 L684 618 L684 672" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M880 728 L1032 728" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M352 728 L410 728 L410 824 L1192 824 L1192 784" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="8 8" marker-end="url(#arrow)"/>
+<rect x="48" y="64" width="220" height="120" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="158.0" y="113.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Part I</text>
+<text x="158.0" y="157.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Foundations</text>
+<rect x="332" y="64" width="240" height="120" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="452.0" y="115.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">2.1</text>
+<text x="452.0" y="154.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Choose hosting</text>
+<rect x="868" y="64" width="216" height="120" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="976.0" y="115.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">2.5 onward</text>
+<text x="976.0" y="154.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Administration</text>
+<rect x="1148" y="64" width="204" height="120" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1250.0" y="114.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Part III</text>
+<text x="1250.0" y="156.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Enrollment</text>
+<rect x="332" y="292" width="240" height="120" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="452.0" y="341.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">2.2</text>
+<text x="452.0" y="385.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Architecture</text>
+<rect x="636" y="270" width="400" height="164" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="836" y="316" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Choose a deployment path</text>
+<text x="836" y="362" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">2.3  AWS / GCP</text>
+<text x="836" y="407" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">2.4  Containers / VMs</text>
+<rect x="1076" y="478" width="276" height="110" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1214.0" y="522.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Working</text>
+<text x="1214.0" y="569.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">deployment</text>
+<rect x="48" y="672" width="304" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="200.0" y="719.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Parts II + VII</text>
+<text x="200.0" y="758.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Prerequisite reading</text>
+<rect x="488" y="672" width="392" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="684.0" y="717.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Operating +</text>
+<text x="684.0" y="761.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">rehearsal evidence</text>
+<rect x="1032" y="672" width="320" height="112" rx="12" fill="#EAE4F1" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1192.0" y="717.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">7.7</text>
+<text x="1192.0" y="761.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Production handoff</text>
+</svg>

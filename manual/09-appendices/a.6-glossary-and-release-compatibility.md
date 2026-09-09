@@ -258,6 +258,9 @@ What happens instead is not one mechanism but four, and telling them apart is wh
      lanes independent, and note osquery protocol has no capability header. The single persisted
      Windows sync capability can be a small storage tag on the negotiated lane, not a universal
      capability inventory.
+     TERMINOLOGY: Fleet is the company, product, or server. Host groups are lowercase
+     fleet/fleets, including headings and labels. Do not call these groups teams. Preserve
+     exact code/API identifiers. These instructions are not text to render.
      DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
      vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
      titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
@@ -279,6 +282,8 @@ What happens instead is not one mechanism but four, and telling them apart is wh
      direction-of-compatibility qualifications, and the native mechanism table. Keep current prose
      and this TODO until the actual image is reviewed. Then check alt text against the artwork and
      retain an accessible summary plus all required technical qualifications.
+     CANDIDATE: ../../research/visual-reviews/appendices/assets/a.6-agent-feature-compatibility.webp
+     Rendered and inspected for the overnight batch; awaiting final joint review.
 -->
 
 <!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1480" viewBox="0 0 1400 1480" role="img">
+<title>Local stdio is a launched subprocess; remote SSE crosses a TLS boundary with client access distinct from Fleet API credentials.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1480" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Local stdio and remote SSE have different boundaries</text>
+<rect x="48" y="168" width="968" height="520" rx="12" fill="#F9FAFC" stroke="#192147" stroke-width="2.5"/>
+<text x="80" y="232" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Local machine</text>
+<rect x="80" y="292" width="328" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244.0" y="375.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Assistant client</text>
+<rect x="552" y="292" width="400" height="144" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="752.0" y="353.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Fleet MCP</text>
+<text x="752.0" y="400.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">subprocess</text>
+<path d="M408 364 L552 364" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="480" y="320" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">stdio</text>
+<text x="480" y="480" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Launches</text>
+<rect x="1104" y="292" width="248" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1228.0" y="378.0" text-anchor="middle" font-family="Inter" font-size="40" font-weight="500" fill="#192147">Fleet</text>
+<path d="M952 364 L1104 364" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="552" y="524" width="400" height="112" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="752.0" y="590.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Fleet API credential</text>
+<path d="M752 524 L752 436" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="80" y="548" text-anchor="start" font-family="Roboto Mono" font-size="28" font-weight="400" fill="#515774">MCP_AUTH_TOKEN:</text>
+<text x="80" y="584" text-anchor="start" font-family="Inter" font-size="28" font-weight="400" fill="#515774">startup guard only;</text>
+<text x="80" y="620" text-anchor="start" font-family="Inter" font-size="28" font-weight="400" fill="#515774">not stdio authentication</text>
+<text x="48" y="812" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Remote SSE</text>
+<path d="M336 900 L336 1308" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<text x="392" y="876" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Network / TLS boundary</text>
+<rect x="48" y="956" width="248" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="172.0" y="1018.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Assistant</text>
+<text x="172.0" y="1060.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">client</text>
+<rect x="384" y="956" width="248" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="508.0" y="1039.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">TLS proxy</text>
+<rect x="720" y="956" width="296" height="144" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="868.0" y="1018.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#F9FAFC">Fleet MCP</text>
+<text x="868.0" y="1060.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#F9FAFC">SSE listener</text>
+<rect x="1104" y="956" width="248" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1228.0" y="1039.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Fleet</text>
+<path d="M296 1028 L384 1028" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M632 1028 L720 1028" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1016 1028 L1104 1028" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="1192" width="248" height="144" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="172.0" y="1255.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Client access</text>
+<text x="172.0" y="1294.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">credential</text>
+<path d="M172 1192 L172 1100" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="720" y="1192" width="296" height="144" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="868.0" y="1255.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Fleet API</text>
+<text x="868.0" y="1294.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">credential</text>
+<path d="M868 1192 L868 1100" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="510" y="1170" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">HTTPS / SSE</text>
+<text x="510" y="1206" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">MCP checks bearer</text>
+<text x="510" y="1242" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">on MCP requests</text>
+<text x="700" y="1432" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Transport depends on client capability and topology, not brand</text>
+</svg>

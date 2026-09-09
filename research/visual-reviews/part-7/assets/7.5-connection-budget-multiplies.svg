@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1664" viewBox="0 0 1400 1664" role="img">
+<title>Each Fleet instance has independent writer and replica connection ceilings; configured replica loss can remove every instance from a health-check-based load balancer.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1664" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Connection budgets multiply independently</text>
+<rect x="48" y="168" width="336" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="216.0" y="236.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Load balancer</text>
+<rect x="528" y="168" width="232" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="644.0" y="234.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Fleet instance</text>
+<rect x="824" y="168" width="232" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="940.0" y="234.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Fleet instance</text>
+<rect x="1120" y="168" width="232" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1236.0" y="234.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Fleet instance</text>
+<path d="M384 224 L432 224 L432 136 L1236 136" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M644 136 L644 168" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M940 136 L940 168" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1236 136 L1236 168" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="940" y="344" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">N instances</text>
+<path d="M644 280 L644 392" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="48" y="392" width="680" height="568" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="452" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">One representative Fleet instance</text>
+<rect x="80" y="520" width="584" height="136" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="372.0" y="579.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Writer pool</text>
+<text x="372.0" y="618.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Maximum W concurrent connections</text>
+<path d="M664 588 L1016 588" fill="none" stroke="#009A7D" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1016" y="520" width="336" height="136" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1184.0" y="577.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">Writable primary</text>
+<text x="1184.0" y="621.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">Exactly one</text>
+<rect x="80" y="784" width="584" height="136" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="372.0" y="843.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Replica pool</text>
+<text x="372.0" y="882.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Maximum R concurrent connections</text>
+<path d="M664 852 L1016 852" fill="none" stroke="#5CABDF" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1016" y="784" width="336" height="136" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1184.0" y="863.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Read replica</text>
+<path d="M1302 794 L1322 814" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1302 814 L1322 794" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="48" y="1056" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">At primary: N × W maximum concurrent connections</text>
+<path d="M48 1084 L920 1084" fill="none" stroke="#009A7D" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M920 1064 L920 1104" fill="none" stroke="#FAA669" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="968" y="1068" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Primary’s own</text>
+<text x="968" y="1104" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">connection limit</text>
+<text x="48" y="1184" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">At replica: N × R maximum concurrent connections</text>
+<path d="M48 1212 L920 1212" fill="none" stroke="#5CABDF" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M920 1192 L920 1232" fill="none" stroke="#FAA669" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="968" y="1196" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Replica’s own</text>
+<text x="968" y="1232" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">connection limit</text>
+<text x="700" y="1320" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Ceilings on concurrent connections; not connections held at rest</text>
+<rect x="48" y="1436" width="392" height="128" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244.0" y="1491.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Configured read</text>
+<text x="244.0" y="1530.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">replica unavailable</text>
+<rect x="504" y="1436" width="392" height="128" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1491.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Health check fails</text>
+<text x="700.0" y="1530.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">on every instance</text>
+<rect x="960" y="1436" width="392" height="128" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156.0" y="1491.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Load balancer removes</text>
+<text x="1156.0" y="1530.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">every instance</text>
+<path d="M440 1500 L504 1500" fill="none" stroke="#D66C7B" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M896 1500 L960 1500" fill="none" stroke="#D66C7B" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="700" y="1620" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Health-check-based removal · no fallback to the writer</text>
+</svg>

@@ -98,12 +98,15 @@ The vocabulary is closed in the other direction too. Exactly ten top-level keys 
 
 <!-- IMAGE-TODO: assets/a.5-gitops-interface-direction.webp
      QUESTION: What does a GitOps apply write, and where must an operator go to read state?
-     PROMPT: DIAGRAM: Repository desired configuration flows through fleetctl gitops into Fleet. A
-     separate return arrow to the process is labelled Apply log / status, ending outside any Live
-     state export box. For inspection, a separate Operator read request enters REST API / UI /
+     PROMPT: DIAGRAM: Repository desired configuration flows through fleetctl gitops into Fleet. Show API responses returning from Fleet to fleetctl gitops, and the client producing
+     Apply log / status in a separate output card. Keep that card separate from a dashed Live
+     state export box labelled No GitOps read/export interface. For inspection, a separate Operator read request enters REST API / UI /
      dedicated fleetctl read command and returns current state, with Per-action support varies. Put
      imperative device actions in a separate branch outside GitOps. Do not say GitOps never performs
      internal reads; the boundary is its operator-facing absence of a read/export interface.
+     TERMINOLOGY: Fleet is the company, product, or server. Host groups are lowercase
+     fleet/fleets, including headings and labels. Do not call these groups teams. Preserve
+     exact code/API identifiers. These instructions are not text to render.
      DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
      vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
      titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
@@ -125,6 +128,8 @@ The vocabulary is closed in the other direction too. Exactly ten top-level keys 
      allow-unknown-keys behavior, and the enumerated exceptions. Keep current prose and this TODO
      until the actual image is reviewed. Then check alt text against the artwork and retain an
      accessible summary plus all required technical qualifications.
+     CANDIDATE: ../../research/visual-reviews/appendices/assets/a.5-gitops-interface-direction.webp
+     Rendered and inspected for the overnight batch; awaiting final joint review.
 -->
 
 <!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1312" viewBox="0 0 1400 1312" role="img">
+<title>An activated activity survives a Fleet restart and blocks later work on that host until a result or cancellation arrives; there is no age-based reaper.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1312" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">An activated item can keep a host’s queue blocked</text>
+<text x="48" y="160" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">One host · queued activities</text>
+<rect x="48" y="216" width="392" height="120" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="244.0" y="287.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">A · Activated</text>
+<rect x="504" y="216" width="392" height="120" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="287.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">B · Waiting</text>
+<rect x="960" y="216" width="392" height="120" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156.0" y="287.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">C · Waiting</text>
+<path d="M440 276 L504 276" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M896 276 L960 276" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M48 424 L1352 424" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="8 8"/>
+<text x="1080" y="404" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Fleet restart</text>
+<path d="M244 336 L244 536" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="536" width="520" height="152" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="308.0" y="601.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">A remains activated</text>
+<text x="308.0" y="648.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Can be fetched again</text>
+<path d="M568 612 L712 612" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="712" y="520" width="640" height="184" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1032.0" y="600.8" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">Result or cancellation</text>
+<text x="1032.0" y="649.8" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">received?</text>
+<path d="M928 704 L928 856 L700 856" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="824" y="820" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Yes</text>
+<rect x="48" y="796" width="652" height="120" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="374.0" y="869.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">Advance to B</text>
+<path d="M1200 704 L1200 996 L700 996" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1236" y="864" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">No</text>
+<rect x="48" y="948" width="652" height="152" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="374.0" y="1013.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">B and C keep waiting</text>
+<text x="374.0" y="1060.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">No age-based reaper</text>
+<text x="700" y="1224" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">The active item’s result or cancellation releases this host’s later work</text>
+</svg>

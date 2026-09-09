@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1656" viewBox="0 0 1400 1656" role="img">
+<title>Investigate stalled work first, then sustained pressure and the constrained component; reclaim headroom before expanding capacity.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1656" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Find the constrained component before scaling</text>
+<rect x="48" y="176" width="632" height="128" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="364.0" y="252.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Slow progress</text>
+<rect x="48" y="380" width="632" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="364.0" y="456.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Stalled work?</text>
+<rect x="48" y="624" width="632" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="364.0" y="700.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Sustained pressure?</text>
+<rect x="48" y="868" width="632" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="364.0" y="944.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Identify constrained component</text>
+<path d="M364 304 L364 380" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M364 508 L364 624" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M364 752 L364 868" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="410" y="578" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">No</text>
+<text x="410" y="822" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Yes</text>
+<path d="M680 444 L936 444" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="808" y="408" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Yes</text>
+<rect x="936" y="380" width="416" height="128" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1144.0" y="435.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Investigate queue,</text>
+<text x="1144.0" y="474.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">schedule and replica state</text>
+<path d="M680 688 L936 688" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="808" y="652" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">No</text>
+<rect x="936" y="624" width="416" height="128" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1144.0" y="679.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Observe spike</text>
+<text x="1144.0" y="718.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">against baseline</text>
+<rect x="48" y="1100" width="1304" height="492" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="1160" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Component-specific remedy</text>
+<path d="M364 996 L364 1040 L700 1040 L700 1100" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M212 1192 L1196 1192" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M212 1192 L212 1220" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="80" y="1220" width="264" height="96" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="212.0" y="1279.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Application</text>
+<path d="M540 1192 L540 1220" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="408" y="1220" width="264" height="96" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="540.0" y="1279.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">MySQL</text>
+<path d="M868 1192 L868 1220" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="736" y="1220" width="264" height="96" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="868.0" y="1279.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Redis</text>
+<path d="M1196 1192 L1196 1220" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1064" y="1220" width="264" height="96" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1196.0" y="1279.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Storage</text>
+<text x="700" y="1400" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#192147">Tune / reclaim headroom</text>
+<path d="M700 1424 L700 1480" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="320" y="1480" width="760" height="80" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1531.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Expand the constrained component as needed</text>
+</svg>

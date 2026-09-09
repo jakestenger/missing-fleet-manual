@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1320" viewBox="0 0 1400 1320" role="img">
+<title>Agent-first Windows enrollment and Entra MDM-first enrollment require independent confirmation of both agent and MDM state.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1320" fill="#F9FAFC"/>
+<rect x="48" y="48" width="620" height="1112" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<rect x="732" y="48" width="620" height="1112" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="112" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Agent-first</text>
+<text x="764" y="112" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Entra MDM-first</text>
+<rect x="80" y="164" width="556" height="188" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="108" y="211" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Windows MDM enabled; automatic</text>
+<text x="108" y="252" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">enrollment allowed; eligible host</text>
+<text x="108" y="309" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Exclude Server; check old MDM / migration</text>
+<rect x="100" y="410" width="516" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="358.0" y="479.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Deploy fleetd</text>
+<rect x="100" y="580" width="516" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="358.0" y="649.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">osquery enrolls</text>
+<rect x="100" y="750" width="516" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="358.0" y="797.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Orbit config check-in:</text>
+<text x="358.0" y="841.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">registration instruction</text>
+<rect x="100" y="952" width="516" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="358.0" y="999.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Windows performs</text>
+<text x="358.0" y="1043.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">MDM enrollment</text>
+<path d="M358 526 L358 580" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M358 696 L358 750" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M358 866 L358 952" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="784" y="180" width="516" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1042.0" y="228.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Entra enrollment</text>
+<text x="1042.0" y="270.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">with user principal name</text>
+<rect x="784" y="370" width="516" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1042.0" y="439.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Management session</text>
+<rect x="784" y="552" width="516" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1042.0" y="600.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">No sufficiently recent</text>
+<text x="1042.0" y="642.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">agent check-in</text>
+<rect x="784" y="750" width="516" height="158" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1042" y="790" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Fleet queues</text>
+<text x="1042" y="832" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">fleetd install</text>
+<text x="1042" y="882" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Global enroll secret required</text>
+<rect x="784" y="952" width="516" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1042.0" y="1000.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Agent enrolls</text>
+<text x="1042.0" y="1042.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">New host: Unassigned</text>
+<path d="M1042 296 L1042 370" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1042 486 L1042 552" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1042 668 L1042 750" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1042 908 L1042 952" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M358 1068 L358 1192 L700 1192 L700 1220" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1042 1068 L1042 1192 L700 1192" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="280" y="1220" width="840" height="76" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="700.0" y="1270.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Verify agent and MDM separately</text>
+</svg>

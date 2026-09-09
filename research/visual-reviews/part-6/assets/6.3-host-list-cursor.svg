@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1088" viewBox="0 0 1400 1088" role="img">
+<title>The host list can be traversed by ascending ID with explicit page size; a top-level page error rejects the whole page and live changes still require reconciliation.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1088" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Walk the host list by ascending identifier</text>
+<text x="48" y="150" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Illustrative error-free pages · page size 3 · host-list endpoint</text>
+<rect x="48" y="232" width="416" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="256.0" y="287.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Start</text>
+<text x="256.0" y="326.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Page size 3 + ID ascending</text>
+<path d="M464 296 L608 296" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="608" y="232" width="520" height="128" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="868.0" y="308.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">11, 18, 24</text>
+<path d="M1128 296 L1168 296" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="48" y="492" width="416" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="256.0" y="547.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">After 24</text>
+<text x="256.0" y="586.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Page size 3 + ID ascending</text>
+<path d="M464 556 L608 556" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="608" y="492" width="520" height="128" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="868.0" y="568.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">31, 40, 57</text>
+<path d="M1128 556 L1168 556" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="48" y="752" width="416" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="256.0" y="807.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">After 57</text>
+<text x="256.0" y="846.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Page size 3 + ID ascending</text>
+<path d="M464 816 L608 816" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="608" y="752" width="520" height="128" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="868.0" y="828.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">63 · short page: stop</text>
+<path d="M1128 816 L1168 816" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M868 360 L868 410 L256 410 L256 492" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M868 620 L868 670 L256 670 L256 752" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1168" y="192" width="184" height="752" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1260" y="318" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Top-level</text>
+<text x="1260" y="354" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">error?</text>
+<text x="1260" y="456" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Reject</text>
+<text x="1260" y="492" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">the whole</text>
+<text x="1260" y="528" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">page</text>
+<path d="M48 976 L1352 976" fill="none" stroke="#C5C7D1" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="700" y="1032" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">Live dataset changes → reconcile if exactness matters</text>
+</svg>

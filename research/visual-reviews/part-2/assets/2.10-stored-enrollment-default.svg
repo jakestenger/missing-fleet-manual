@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="912" viewBox="0 0 1400 912" role="img">
+<title>An upgrade changes the Fleet binary but preserves stored enrollment defaults captured on first registration.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="912" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Same Fleet release, different stored enrollment defaults</text>
+<text x="48" y="168" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Long-running instance</text>
+<rect x="48" y="214" width="360" height="132" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="228.0" y="270.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Initial registration</text>
+<text x="228.0" y="312.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">captures Default A</text>
+<path d="M408 280 L520 280" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="520" y="214" width="344" height="132" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="692.0" y="270.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Upgrade</text>
+<text x="692.0" y="312.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">changes binary</text>
+<path d="M864 280 L976 280" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="976" y="214" width="376" height="132" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1164.0" y="270.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#F9FAFC">Current release</text>
+<text x="1164.0" y="312.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#F9FAFC">Stored Default A</text>
+<text x="48" y="438" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Fresh instance</text>
+<rect x="48" y="484" width="816" height="132" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="456.0" y="539.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Initial registration on the current release</text>
+<text x="456.0" y="583.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">captures Default B</text>
+<path d="M864 550 L976 550" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="976" y="484" width="376" height="132" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1164.0" y="540.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#F9FAFC">Current release</text>
+<text x="1164.0" y="582.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#F9FAFC">Stored Default B</text>
+<text x="700" y="682" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">A and B are illustrative defaults</text>
+<rect x="48" y="754" width="384" height="110" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="240.0" y="799.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Inspect current</text>
+<text x="240.0" y="841.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">defaults</text>
+<rect x="508" y="754" width="384" height="110" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="799.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Author custom</text>
+<text x="700.0" y="841.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">profile</text>
+<rect x="968" y="754" width="384" height="110" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160.0" y="799.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Upload custom</text>
+<text x="1160.0" y="841.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">profile</text>
+<path d="M432 809 L508 809" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M892 809 L968 809" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+</svg>

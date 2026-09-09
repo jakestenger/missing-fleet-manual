@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="746" viewBox="0 0 1400 746" role="img">
+<title>Fleet retains its accounts and roles alongside identity, configuration management and exported data.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="746" fill="#F9FAFC"/>
+<path d="M338 222 L564 222" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="452" y="167" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Sign-in</text>
+<text x="452" y="206" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">identity</text>
+<path d="M884 164 L1052 164" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="968" y="146" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Results</text>
+<path d="M884 240 L1052 240" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="968" y="222" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Status</text>
+<path d="M884 316 L1052 316" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="968" y="298" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Audit</text>
+<path d="M724 530 L724 376" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="752" y="452" text-anchor="start" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Observe</text>
+<path d="M438 608 L580 608" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="509" y="460" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">System</text>
+<text x="509" y="496" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">configuration</text>
+<rect x="48" y="146" width="290" height="152" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="193.0" y="211.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Identity</text>
+<text x="193.0" y="258.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">provider</text>
+<rect x="564" y="64" width="320" height="312" rx="12" fill="#E8F1F6" stroke="#192147" stroke-width="2.5"/>
+<rect x="588" y="88" width="272" height="92" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="724.0" y="149.4" text-anchor="middle" font-family="Inter" font-size="44" font-weight="600" fill="#F9FAFC">Fleet</text>
+<text x="724" y="254" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Accounts and roles</text>
+<text x="724" y="293" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Stored in Fleet</text>
+<rect x="1052" y="104" width="300" height="310" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1202.0" y="247.0" text-anchor="middle" font-family="Inter" font-size="40" font-weight="500" fill="#192147">SIEM /</text>
+<text x="1202.0" y="299.0" text-anchor="middle" font-family="Inter" font-size="40" font-weight="500" fill="#192147">data lake</text>
+<text x="1202" y="465" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Audit: Premium,</text>
+<text x="1202" y="501" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">opt-in</text>
+<rect x="48" y="532" width="390" height="152" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="243.0" y="597.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Existing configuration</text>
+<text x="243.0" y="641.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">management</text>
+<rect x="580" y="530" width="288" height="156" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="724.0" y="621.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">Linux host</text>
+</svg>

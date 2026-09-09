@@ -299,9 +299,12 @@ Four further claims get run together, and separating them is what makes the boun
      command_line_flags with a differing value replaces the whole file and restarts osquery. A later
      configuration that omits the key leaves that replacement untouched, with No restoration of
      original file. Branch separately from the original input: explicit {} or null clears the file
-     and restarts; matching value leaves it unchanged. Use small representative flag lines, not real
-     configuration secrets. Absent, Empty, Changed, and Matching must have distinct labels; no merge
+     and restarts; matching value leaves it unchanged. Use file-state cards rather than reproducing
+     configuration contents. Absent, Empty, Changed, and Matching must have distinct labels; no merge
      arrow.
+     TERMINOLOGY: Fleet is the company, product, or server. Host groups are lowercase
+     fleet/fleets, including headings and labels. Do not call these groups teams. Preserve
+     exact code/API identifiers. These instructions are not text to render.
      DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
      vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
      titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
@@ -323,6 +326,8 @@ Four further claims get run together, and separating them is what makes the boun
      packaging-input preservation advice. Keep current prose and this TODO until the actual image is
      reviewed. Then check alt text against the artwork and retain an accessible summary plus all
      required technical qualifications.
+     CANDIDATE: ../../research/visual-reviews/appendices/assets/a.3-startup-flags-file-lifecycle.webp
+     Rendered and inspected for the overnight batch; awaiting final joint review.
 -->
 
 <!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.

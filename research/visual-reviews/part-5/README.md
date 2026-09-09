@@ -1,0 +1,15 @@
+# Part V visual candidates
+
+Seventeen candidates: thirteen new editable SVG diagrams and four built-in image-generation replacements. The eighteenth brief requires an authentic My Device screenshot and remains outstanding; capture-blockers.json records the missing source and a concrete capture plan. All artwork awaits the final manual-wide review. Published prose and images are unchanged.
+
+Run `python3 research/visual-reviews/part-5/render-diagrams.py` to render native diagrams using the Part 0–1 primitives. Requires Inter, Roboto Mono, rsvg-convert and cwebp. Complete raster generation and correction prompts are in raster-prompt-history.json; selected raster sources are recorded in raster-selections.json. Chapter prompts and editorial payoffs are in briefs.json.
+
+The figures were checked against the surrounding manuscript. They preserve the activation boundary, secret-reference resolution, script idempotence as an authoring responsibility, package-selection asymmetry, Windows blocking-enrollment conditions, distributed setup evidence, overlapping update clocks, offline Apple command persistence, isolated recovery testing, archived-key fallback, and policy-result trigger rules. This is a manuscript-based visual check, not a fresh release audit.
+
+The profile-status brief was corrected because its generic “Fleet confirmed the profile” overstated ordinary Windows evidence. The candidate now says that the platform verification criterion was met and includes the chapter's distinctions: macOS inventory confirmation, iOS/iPadOS installation acknowledgement, ordinary Windows reported write success, and Fleet-proxied SCEP certificate observation. Later macOS inventory remains capable of changing a recorded status.
+
+The OS-update flow uses a numbered, folded two-row path to fit readable labels; its evidence rungs reference stage numbers rather than crossing the process with long pointers. The two-audience figure uses a taller canvas to keep its distributed administrator evidence readable. Both chapter prompts record these layout changes. Other proposed prose reductions remain deferred until acceptance.
+
+Native diagrams were inspected at 720 px; grayscale checks covered the Windows deadline, disk-encryption signals and policy trigger traces. Corrections removed connector/label collisions, moved the repeated-invocation path to an outer gutter, and preserved the recovery-test question's complete isolation. Raster review corrected false sequencing between asynchronous setup tasks and policy-response summaries, distinguished queued work from execution, separated Android's no-remote-unlock annotation from its local recovery path, removed a misleading Windows success mark, and repaired the profile subtitle. Raster typography should also be checked at final print size during joint review.
+
+Validation: production website build, all 83 chapter links, em-dash and diff whitespace checks, seventeen candidate/source pairs, native SVG XML and minimum 28 px typography, terminology, and unchanged visible chapter prose. Packaging explicitly lists unresolved real-capture requirements instead of fabricating or silently dropping them.

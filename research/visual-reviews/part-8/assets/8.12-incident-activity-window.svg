@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1552" viewBox="0 0 1400 1552" role="img">
+<title>An illustrative two-hour activity window separates Fleet-attributed automation and examines remaining actor fields; a zero automation flag is not a human attribution.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1552" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Narrow the activity window, then resolve attribution</text>
+<rect x="176" y="208" width="680" height="176" rx="0" fill="#D3E8F3" stroke="#D3E8F3" stroke-width="2.5"/>
+<path d="M48 320 L1352 320" fill="none" stroke="#192147" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M176 292 L176 344" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="176" y="426" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">onset - 2h</text>
+<path d="M856 292 L856 344" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="856" y="426" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">onset</text>
+<text x="516" y="262" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Illustrative two-hour lookback</text>
+<text x="924" y="234" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">First bad observation</text>
+<text x="924" y="273" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">at onset</text>
+<path d="M924 272 L856 292" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="280" y="306" width="20" height="28" rx="0" fill="#E8F1F6" stroke="#192147" stroke-width="2.5"/>
+<rect x="424" y="306" width="20" height="28" rx="0" fill="#E8F1F6" stroke="#192147" stroke-width="2.5"/>
+<rect x="644" y="306" width="20" height="28" rx="0" fill="#E8F1F6" stroke="#192147" stroke-width="2.5"/>
+<rect x="792" y="306" width="20" height="28" rx="0" fill="#E8F1F6" stroke="#192147" stroke-width="2.5"/>
+<path d="M516 384 L516 488" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="272" y="488" width="624" height="112" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="584.0" y="555.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">Group by activity_type</text>
+<path d="M428 600 L428 620 L260 620 L260 640" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M740 600 L740 620 L1064 620 L1064 640" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="640" width="424" height="76" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="260.0" y="688" text-anchor="middle" font-family="Roboto Mono" font-size="28" font-weight="500" fill="#192147">fleet_initiated = 1</text>
+<path d="M260.0 716 L260.0 748" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="776" y="640" width="576" height="76" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1064.0" y="688" text-anchor="middle" font-family="Roboto Mono" font-size="28" font-weight="500" fill="#192147">fleet_initiated = 0</text>
+<path d="M1064.0 716 L1064.0 748" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="748" width="424" height="160" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="260.0" y="817.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Fleet-attributed</text>
+<text x="260.0" y="861.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">automation</text>
+<rect x="776" y="748" width="576" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1064.0" y="816.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Remaining records</text>
+<path d="M1064 860 L1064 936" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="776" y="936" width="576" height="112" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1064.0" y="1003.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">Read actor fields</text>
+<path d="M936 1048 L936 1096 L756 1096 L756 1144" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1192 1048 L1192 1144" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="552" y="1144" width="408" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="756.0" y="1206.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Human / service</text>
+<text x="756.0" y="1248.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">identity</text>
+<rect x="992" y="1144" width="360" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1172.0" y="1207.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">System / device /</text>
+<text x="1172.0" y="1246.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">unattributed</text>
+<path d="M260 908 L260 1392 L700 1392 L700 1432" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M756 1288 L756 1352 L700 1352 L700 1432" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1172 1288 L1172 1392 L700 1392" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="328" y="1432" width="744" height="88" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1487.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Correlate with affected scope</text>
+</svg>

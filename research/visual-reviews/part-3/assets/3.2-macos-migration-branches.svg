@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1144" viewBox="0 0 1400 1144" role="img">
+<title>Fleet signals an external MDM release and detects the unmanaged Mac before choosing one of three re-enrollment experiences.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1144" fill="#F9FAFC"/>
+<rect x="48" y="48" width="384" height="704" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<rect x="508" y="48" width="384" height="704" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<rect x="968" y="48" width="384" height="704" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="108" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Person / Fleet Desktop</text>
+<text x="540" y="108" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Fleet</text>
+<text x="1000" y="108" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">External migration</text>
+<text x="1000" y="147" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">automation</text>
+<rect x="80" y="202" width="320" height="108" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="240.0" y="269.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">Start</text>
+<rect x="540" y="202" width="320" height="108" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="267.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Migration request</text>
+<path d="M400 256 L540 256" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 310 L700 370" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="540" y="370" width="320" height="104" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="700.0" y="434.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Webhook</text>
+<path d="M860 422 L1000 422" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1000" y="358" width="320" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160.0" y="411.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Release</text>
+<text x="1160.0" y="458.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">old MDM</text>
+<path d="M1160 486 L1160 644 L860 644" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+<rect x="540" y="590" width="320" height="108" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="655.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Detect unmanaged</text>
+<text x="700" y="520" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">3-minute detection /</text>
+<text x="700" y="556" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">request-suppression window</text>
+<text x="1160" y="704" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Fleet observes</text>
+<text x="1160" y="740" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">the release</text>
+<path d="M700 698 L700 794 L240 794 L240 850" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 698 L700 794 L700 794 L700 850" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 698 L700 794 L1160 794 L1160 850" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="850" width="384" height="98" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="240.0" y="910.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Manual migration</text>
+<path d="M240 948 L240 1010" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="508" y="850" width="384" height="98" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="910.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">ADE · macOS 14+</text>
+<path d="M700 948 L700 1010" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="968" y="850" width="384" height="98" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160.0" y="910.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">ADE · macOS ≤13</text>
+<path d="M1160 948 L1160 1010" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="1010" width="384" height="86" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="240.0" y="1063.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">My Device instructions</text>
+<rect x="508" y="1010" width="384" height="86" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1064.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Remote Management</text>
+<rect x="968" y="1010" width="384" height="86" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160.0" y="1063.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">My Device instructions</text>
+</svg>

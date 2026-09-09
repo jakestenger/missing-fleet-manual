@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="968" viewBox="0 0 1400 968" role="img">
+<title>A stored profile has a host variable and secret reference; delivery resolves them using host facts and secret storage.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="968" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Resolve per-host values when delivering the profile</text>
+<rect x="48" y="192" width="480" height="380" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="288" y="252" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#192147">Stored profile template</text>
+<rect x="80" y="292" width="416" height="96" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="288.0" y="351.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Host / identity variable</text>
+<rect x="80" y="424" width="416" height="96" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="288.0" y="483.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Named secret reference</text>
+<text x="288" y="630" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Actual secret value absent</text>
+<text x="288" y="669" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">from stored profile content</text>
+<rect x="676" y="192" width="288" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="820.0" y="260.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Host facts</text>
+<rect x="676" y="424" width="288" height="144" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="820.0" y="485.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Resolution</text>
+<text x="820.0" y="532.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">at delivery</text>
+<rect x="676" y="730" width="288" height="144" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="820.0" y="791.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Fleet secret</text>
+<text x="820.0" y="835.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">storage</text>
+<path d="M820 304 L820 424" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M820 730 L820 568" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M528 496 L676 496" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M964 496 L1040 496" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1040" y="392" width="312" height="208" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1196.0" y="485.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Device-specific</text>
+<text x="1196.0" y="529.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">payload</text>
+<text x="1196" y="666" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">May contain</text>
+<text x="1196" y="705" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">sensitive values</text>
+<text x="700" y="930" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Certificate issuance and Platform SSO fetch-time tokens are outside this example</text>
+</svg>

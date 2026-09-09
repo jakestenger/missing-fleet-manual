@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1304" viewBox="0 0 1400 1304" role="img">
+<title>Two jobs can read the same configuration snapshot and overwrite one another; separate files remove their shared write edge.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1304" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Concurrent fleetctl configuration writes can lose changes</text>
+<text x="48" y="156" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Shared file · illustrative time runs downward</text>
+<rect x="48" y="196" width="320" height="96" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="208.0" y="255.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Job A</text>
+<path d="M208 292 L208 784" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="540" y="196" width="320" height="96" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="255.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Shared config</text>
+<path d="M700 292 L700 784" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="1032" y="196" width="320" height="96" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1192.0" y="255.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Job B</text>
+<path d="M1192 292 L1192 784" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M700 376 L208 376" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 376 L1192 376" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="454" y="340" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Read revision 0</text>
+<text x="946" y="340" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Read revision 0</text>
+<path d="M208 500 L700 500" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="454" y="464" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Write A’s context change</text>
+<path d="M1192 636 L700 636" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="946" y="600" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Write B’s whole-file snapshot</text>
+<rect x="524" y="712" width="352" height="112" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="779.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">A’s change lost</text>
+<text x="700" y="892" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">Both commands may exit successfully</text>
+<text x="48" y="990" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Isolated files · one per job</text>
+<rect x="48" y="1052" width="216" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="156.0" y="1119.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Job A</text>
+<rect x="352" y="1052" width="280" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="492.0" y="1119.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Config A</text>
+<path d="M264 1108 L352 1108" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="312" y="1080" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Write</text>
+<rect x="768" y="1052" width="216" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="876.0" y="1119.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Job B</text>
+<rect x="1072" y="1052" width="280" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1212.0" y="1119.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Config B</text>
+<path d="M984 1108 L1072 1108" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1032" y="1080" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Write</text>
+<text x="700" y="1252" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Separate files do not correct credentials or server selection</text>
+</svg>

@@ -1,0 +1,20 @@
+[
+  {
+    "asset": "assets/5.5-my-device-self-service.webp",
+    "chapter": "manual/05-manage-devices/5.5-design-setup-and-self-service-experiences.md",
+    "reason": "A genuine My Device capture requires an accessible, consented demo host running the chapter\u2019s pinned Fleet 4.90.0 release with Fleet Desktop and self-service configured. No suitable capture source was identified in this session.",
+    "observed": [
+      "No existing My Device/self-service screenshot found in public manuscript assets or private authoring repo file inventory.",
+      "Available computer-use surfaces listed no Fleet Desktop app and no open in-app browser tab.",
+      "Docker CLI is installed, but its daemon is unavailable; no running local Fleet demo could be inspected.",
+      "No demo endpoint, demo host identity or authenticated demo session was supplied."
+    ],
+    "capture_plan": [
+      "Use a non-production host and Fleet 4.90.0; record the actual server version and observed UI state.",
+      "Open My Device through Fleet Desktop, show the real device summary and Self-service content.",
+      "Crop browser chrome and the full device-token URL; use demo identity and software and exclude tokens, keys, serial numbers and private organization data.",
+      "Include encryption availability only if visible in that same real state, or capture separately. Never reveal a decrypted key.",
+      "Save original capture and a lossless WebP candidate, then inspect at reading size and add to this gallery."
+    ]
+  }
+]

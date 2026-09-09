@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1560" viewBox="0 0 1400 1560" role="img">
+<title>A hypothetical pending-profile incident links scope, queue and absent results to the next untested MDM boundary, while a successful live report proves only the osquery distributed path.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1560" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Make the escalation’s evidence chain checkable</text>
+<text x="48" y="152" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Example · hypothetical profile incident</text>
+<rect x="48" y="232" width="928" height="1184" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="296" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">MDM evidence</text>
+<text x="80" y="360" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">1 · Claim</text>
+<rect x="336" y="316" width="608" height="136" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="640.0" y="395.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Profiles pending on 41/44 hosts</text>
+<path d="M640 452 L640 524" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="80" y="568" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">2 · Observation</text>
+<rect x="336" y="524" width="608" height="136" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="640.0" y="603.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Affected OS version differs</text>
+<path d="M640 660 L640 732" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="80" y="776" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">2 · Observation</text>
+<rect x="336" y="732" width="608" height="136" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="640.0" y="811.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">MDM queue rows present</text>
+<path d="M640 868 L640 940" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="80" y="984" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">3 · Limit</text>
+<rect x="336" y="940" width="608" height="136" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="640.0" y="1019.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">No command results</text>
+<path d="M640 1076 L640 1148" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="80" y="1192" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">4 · Next check</text>
+<rect x="336" y="1148" width="608" height="136" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="640.0" y="1206.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#F9FAFC">Push / device check-in boundary</text>
+<text x="640.0" y="1248.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#F9FAFC">Still untested</text>
+<rect x="1040" y="232" width="312" height="752" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1196" y="306" text-anchor="middle" font-family="Inter" font-size="30" font-weight="600" fill="#192147">Separate</text>
+<text x="1196" y="345" text-anchor="middle" font-family="Inter" font-size="30" font-weight="600" fill="#192147">observation</text>
+<rect x="1064" y="416" width="264" height="160" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1196.0" y="486.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Live report</text>
+<text x="1196.0" y="528.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">succeeds</text>
+<path d="M1196 576 L1196 700" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1064" y="700" width="264" height="200" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1196.0" y="769.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">osquery</text>
+<text x="1196.0" y="811.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">distributed</text>
+<text x="1196.0" y="853.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">path</text>
+<path d="M1064 936 L1328 936" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="700" y="1504" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">The live report result supplies no MDM delivery evidence</text>
+</svg>

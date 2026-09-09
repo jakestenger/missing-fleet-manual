@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1560" viewBox="0 0 1400 1560" role="img">
+<title>A changed command_line_flags replaces the entire local file; later absence leaves the replacement, while empty clears and matching values preserve the file.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1560" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">A later omission keeps the file Fleet last wrote</text>
+<rect x="376" y="152" width="648" height="160" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="700.0" y="221.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Local flags and comments</text>
+<text x="700.0" y="268.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Illustrative file</text>
+<text x="700" y="376" text-anchor="middle" font-family="Roboto Mono" font-size="30" font-weight="500" fill="#192147">command_line_flags in received configuration</text>
+<path d="M700 312 L700 328" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M700 416 L700 440 L256 440 L256 504" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 440 L1144 440 L1144 504" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 440 L700 504" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="504" width="408" height="96" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="252.0" y="563.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Changed</text>
+<rect x="496" y="504" width="408" height="96" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="563.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Empty · {} or null</text>
+<rect x="944" y="504" width="408" height="96" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1148.0" y="563.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Matching</text>
+<path d="M252 600 L252 712" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="712" width="408" height="192" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="252.0" y="777.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Replace whole file</text>
+<text x="252.0" y="819.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Comments are removed</text>
+<text x="252.0" y="861.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Restart osquery</text>
+<path d="M700 600 L700 712" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="496" y="712" width="408" height="192" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="798.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Clear file</text>
+<text x="700.0" y="840.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Restart osquery</text>
+<path d="M1148 600 L1148 712" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="944" y="712" width="408" height="192" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1148.0" y="798.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">File unchanged</text>
+<text x="1148.0" y="840.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">No restart</text>
+<path d="M252 904 L252 1016" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="1016" width="408" height="128" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="252.0" y="1070.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Later configuration</text>
+<text x="252.0" y="1112.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Absent key</text>
+<path d="M252 1144 L252 1248" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="1248" width="608" height="168" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="352.0" y="1321.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Replacement remains</text>
+<text x="352.0" y="1365.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Original file is not restored</text>
+<rect x="752" y="1040" width="600" height="304" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1052" y="1104" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Absent on any receipt</text>
+<text x="1052" y="1172" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Leaves the current file untouched</text>
+<text x="1052" y="1211" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">A local file stays local until</text>
+<text x="1052" y="1250" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">a changed or empty value arrives</text>
+</svg>

@@ -1,0 +1,10 @@
+[
+  {
+    "asset": "a.10-index-reading-vignette",
+    "tool": "built-in imagegen",
+    "prompt": "Create a new small horizontal Fleet Cloud City vignette for the opening of an alphabetical subject index in a technical manual. Use the attached approved illustration ONLY as a style reference. New scene: one pale floating reading platform holds a few orderly blank index cards and an open field guide; a modest glass walkway leads toward a second smaller quiet platform, suggesting finding a route through information. One tiny swan silhouette near still water. Generous whitespace, restrained navy outlines, pale blue surfaces, quiet delicate illustrated treatment consistent with reference. Shallow horizontal composition about 3:1, visual weight balanced, no towering architecture; subject occupies low center so this remains a compact visual pause. Background #F9FAFC, navy #192147, slate #515774, pale surfaces #D3E8F3 and #E8F1F6. No rendered text whatsoever: no letters, alphabet, labels, arrows, UI, charts, floating paragraphs, links, logos, watermark. No technical claims. No vehicles. Atmosphere only. Do not copy the maintenance workbench or tools from reference; the book and index cards must visibly be blank. Full clean standalone illustration.",
+    "reference": "../part-0-1/assets/0.2-release-maintenance-vignette.png",
+    "selected_source": "/Users/jake/.codex/generated_images/01a082f6-7912-7fb1-a751-64760cf7c976/exec-a80ded46-7f2f-44dd-92fc-be215f3e30ef.png",
+    "inspection": "Selected initial candidate: blank book and cards, connected quiet platforms, single small swan, no rendered text or technical claims."
+  }
+]

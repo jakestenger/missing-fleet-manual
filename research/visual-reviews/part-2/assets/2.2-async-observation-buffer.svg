@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" role="img">
+<title>Optional async processing buffers four observations in Redis; acknowledgement can precede the batch write.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1000" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Host observation writes</text>
+<text x="48" y="136" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Four observations: last-seen · label membership · policy membership</text>
+<text x="48" y="180" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Scheduled query statistics</text>
+<rect x="48" y="388" width="260" height="136" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="178.0" y="445.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">Host</text>
+<text x="178.0" y="492.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">check-in</text>
+<rect x="1092" y="388" width="260" height="136" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1222.0" y="445.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">MySQL</text>
+<text x="1222.0" y="492.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">writer</text>
+<path d="M308 426 L356 426 L356 282 L460 282" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M924 282 L1000 282 L1000 426 L1092 426" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="460" y="228" width="464" height="108" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="692.0" y="294.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Observations inline</text>
+<text x="460" y="208" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Default: synchronous</text>
+<path d="M308 482 L356 482 L356 588 L460 588" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="460" y="536" width="220" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="570.0" y="577.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Redis</text>
+<text x="570.0" y="621.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">buffer</text>
+<path d="M680 588 L752 588" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="752" y="536" width="220" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="862.0" y="599.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Collector</text>
+<path d="M972 588 L1036 588 L1036 482 L1092 482" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="460" y="502" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Optional: asynchronous</text>
+<text x="200" y="694" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Redis memory cost</text>
+<text x="862" y="694" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Batch writes</text>
+<path d="M570 640 L570 780 L178 780 L178 524" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+<text x="612" y="778" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Check-in can finish before the batch write</text>
+<rect x="460" y="828" width="892" height="120" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="492" y="874" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Off by default · Free and Premium</text>
+<text x="492" y="919" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Lag varies with collection interval and backlog</text>
+</svg>

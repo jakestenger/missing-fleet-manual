@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="2000" viewBox="0 0 1400 2000" role="img">
+<title>A database and Redis check can stay green while five service outcomes fail; the metrics endpoint, export pipeline and operational reads provide distinct evidence.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="2000" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Observe each service outcome independently</text>
+<rect x="48" y="152" width="424" height="136" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="260.0" y="209.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Fleet health check</text>
+<text x="260.0" y="253.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Database + Redis</text>
+<text x="256" y="356" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Green can persist</text>
+<text x="256" y="392" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">through every failure below</text>
+<text x="568" y="216" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">A failed health response does not</text>
+<text x="568" y="255" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">identify which check failed.</text>
+<text x="48" y="444" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Independent failure lanes · illustrative, not a timing chart</text>
+<text x="48" y="530" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Administrative access</text>
+<path d="M48 582 L448 582" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M195 569 L221 595" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M195 595 L221 569" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="560" y="532" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Request success / latency</text>
+<text x="560" y="582" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Metrics endpoint + export pipeline</text>
+<text x="48" y="706" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Agent reporting</text>
+<path d="M48 758 L448 758" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M323 745 L349 771" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M323 771 L349 745" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="560" y="708" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Host check-in freshness</text>
+<text x="560" y="758" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Read Fleet state</text>
+<text x="48" y="882" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Device-management delivery</text>
+<path d="M48 934 L448 934" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M243 921 L269 947" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M243 947 L269 921" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="560" y="884" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Per-host queue age</text>
+<text x="560" y="934" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Read the host’s own view</text>
+<text x="48" y="1058" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Scheduled processing</text>
+<path d="M48 1110 L448 1110" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M371 1097 L397 1123" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M371 1123 L397 1097" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="560" y="1060" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Freshness of expected output</text>
+<text x="560" y="1110" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Maintained / purchased apps: not established</text>
+<text x="48" y="1234" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Data freshness</text>
+<path d="M48 1286 L448 1286" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M291 1273 L317 1299" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M291 1299 L317 1273" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="560" y="1236" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Per-host update times</text>
+<text x="560" y="1286" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Read Fleet state</text>
+<text x="48" y="1420" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Separate evidence sources</text>
+<rect x="48" y="1460" width="392" height="328" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244" y="1524" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#192147">Metrics endpoint</text>
+<text x="244" y="1596" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Request-level metrics</text>
+<text x="244" y="1640" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">No business metrics</text>
+<rect x="504" y="1460" width="392" height="328" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700" y="1524" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#192147">Export pipeline</text>
+<text x="700" y="1596" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Traces + metrics</text>
+<text x="700" y="1640" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Pool statistics, errors</text>
+<text x="700" y="1684" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">and cache counters</text>
+<text x="700" y="1728" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Export pipeline only</text>
+<rect x="960" y="1460" width="392" height="328" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156" y="1524" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#192147">Operational reads</text>
+<text x="1156" y="1596" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Check-in freshness</text>
+<text x="1156" y="1640" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Per-host queue age</text>
+<text x="1156" y="1684" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Per-host update times</text>
+<text x="700" y="1852" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Metrics and export coverage overlap; neither contains the other</text>
+<rect x="48" y="1896" width="1304" height="72" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1942.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Object storage · no Fleet-side signal · monitor the storage provider</text>
+</svg>

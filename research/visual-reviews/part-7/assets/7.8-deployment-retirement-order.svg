@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1592" viewBox="0 0 1400 1592" role="img">
+<title>Release devices and external dependencies, revoke credentials and preserve a final keyed backup before shutting down; deletion follows retention policy.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1592" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Release dependencies before decommissioning Fleet</text>
+<rect x="48" y="176" width="136" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="116.0" y="246.7" text-anchor="middle" font-family="Inter" font-size="42" font-weight="500" fill="#192147">1</text>
+<rect x="304" y="176" width="744" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="676.0" y="244.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Export required records</text>
+<path d="M184 232 L304 232" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M676 288 L676 380" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="380" width="136" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="116.0" y="450.7" text-anchor="middle" font-family="Inter" font-size="42" font-weight="500" fill="#192147">2</text>
+<rect x="304" y="380" width="744" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="676.0" y="448.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Release or migrate devices</text>
+<path d="M184 436 L304 436" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M676 492 L676 584" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="584" width="136" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="116.0" y="654.7" text-anchor="middle" font-family="Inter" font-size="42" font-weight="500" fill="#192147">3</text>
+<rect x="304" y="584" width="744" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="676.0" y="652.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Release external assignments</text>
+<path d="M184 640 L304 640" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M676 696 L676 788" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="788" width="136" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="116.0" y="858.7" text-anchor="middle" font-family="Inter" font-size="42" font-weight="500" fill="#192147">4</text>
+<rect x="304" y="788" width="744" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="676.0" y="856.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Revoke credentials</text>
+<path d="M184 844 L304 844" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M676 900 L676 992" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="992" width="136" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="116.0" y="1062.7" text-anchor="middle" font-family="Inter" font-size="42" font-weight="500" fill="#192147">5</text>
+<rect x="304" y="992" width="744" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="676.0" y="1060.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Final backup with key material</text>
+<path d="M184 1048 L304 1048" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M676 1104 L676 1196" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+<rect x="48" y="1196" width="136" height="112" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="116.0" y="1266.7" text-anchor="middle" font-family="Inter" font-size="42" font-weight="600" fill="#F9FAFC">6</text>
+<rect x="304" y="1196" width="744" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="676.0" y="1264.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Decommission</text>
+<path d="M184 1252 L304 1252" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1112 176 L1144 176 L1144 1104 L1112 1104" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1232" y="520" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Fleet still</text>
+<text x="1232" y="556" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">available</text>
+<text x="1232" y="592" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">where</text>
+<text x="1232" y="628" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">required</text>
+<path d="M48 1144 L1352 1144" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="8 8"/>
+<text x="1104" y="1132" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Shutdown boundary</text>
+<path d="M676 1308 L676 1384" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+<rect x="304" y="1384" width="744" height="112" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="676.0" y="1451.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Retention-based deletion</text>
+</svg>

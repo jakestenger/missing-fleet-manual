@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="814" viewBox="0 0 1400 814" role="img">
+<title>SSO deprovisioning and owner-led account review follow separate paths.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="814" fill="#F9FAFC"/>
+<text x="48" y="60" text-anchor="start" font-family="Inter" font-size="30" font-weight="400" fill="#515774">SSO authenticates · JIT creates</text>
+<text x="48" y="134" text-anchor="start" font-family="Inter" font-size="38" font-weight="600" fill="#192147">Eligible SSO accounts</text>
+<path d="M320 238 L384 238" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M558 238 L640 238" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M870 238 L958 238 L958 190 L1066 190" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="956" y="158" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#515774">No</text>
+<path d="M755 320 L755 362 L1066 362" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="942" y="344" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Yes</text>
+<rect x="48" y="182" width="272" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="184.0" y="229.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">IdP deletion /</text>
+<text x="184.0" y="268.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">deactivation</text>
+<rect x="384" y="182" width="174" height="112" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="471.0" y="250.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="600" fill="#F9FAFC">SCIM</text>
+<rect x="640" y="158" width="230" height="162" rx="12" fill="#E8F1F6" stroke="#192147" stroke-width="2.5"/>
+<text x="755.0" y="230.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Last global</text>
+<text x="755.0" y="269.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">admin?</text>
+<rect x="1066" y="138" width="286" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1209.0" y="180.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Fleet account</text>
+<text x="1209.0" y="222.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">removed</text>
+<rect x="1066" y="316" width="286" height="92" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1209.0" y="373.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Protected</text>
+<text x="471" y="352" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Premium at</text>
+<text x="471" y="388" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">server startup</text>
+<path d="M48 454 L1352 454" fill="none" stroke="#C5C7D1" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="48" y="512" text-anchor="start" font-family="Inter" font-size="38" font-weight="600" fill="#192147">Password and API-only accounts</text>
+<path d="M318 626 L384 626" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M754 626 L890 626 L890 579 L1020 579" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M890 626 L890 719 L1020 719" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="574" width="270" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="183.0" y="637.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Named owner</text>
+<rect x="384" y="574" width="370" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="569.0" y="615.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Scheduled</text>
+<text x="569.0" y="659.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">access review</text>
+<rect x="1020" y="534" width="332" height="90" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1186.0" y="589.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Keep + review date</text>
+<rect x="1020" y="674" width="332" height="90" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1186.0" y="730.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Revoke / remove</text>
+</svg>

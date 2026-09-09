@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1496" viewBox="0 0 1400 1496" role="img">
+<title>A node-specific context selects the intended Fleet node for an archive; a load-balancer context samples one unknown node and does not aggregate nodes.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1496" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Choose the node before capturing its profile or archive</text>
+<rect x="48" y="152" width="1304" height="96" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="211.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Prerequisites · hostname, TLS trust and valid credentials</text>
+<rect x="48" y="356" width="352" height="128" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="224.0" y="433.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="600" fill="#F9FAFC">Operator</text>
+<rect x="560" y="356" width="504" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="812.0" y="431.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Load-balancer context</text>
+<rect x="560" y="724" width="504" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="812.0" y="799.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Node-specific context</text>
+<path d="M400 396 L560 396" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M400 444 L448 444 L448 788 L560 788" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M812 484 L812 512" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M716 540 L716 512 L1228 512 L1228 540" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M972 512 L972 540" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="592" y="540" width="248" height="96" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="716.0" y="599.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Node A</text>
+<rect x="848" y="540" width="248" height="96" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="972.0" y="599.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Node B</text>
+<rect x="1104" y="540" width="248" height="96" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1228.0" y="599.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Node C</text>
+<text x="956" y="684" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">One node · unknown selection</text>
+<path d="M812 852 L812 928" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="624" y="928" width="376" height="112" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="812.0" y="997.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="600" fill="#F9FAFC">Node B</text>
+<path d="M812 1040 L812 1128" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="624" y="1128" width="376" height="144" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="812.0" y="1191.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Archive B</text>
+<text x="812.0" y="1230.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Node B + capture time</text>
+<rect x="48" y="1128" width="424" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="260.0" y="1191.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Intentional capture of A</text>
+<text x="260.0" y="1230.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Archive A + capture time</text>
+<path d="M472 1200 L624 1200" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<text x="548" y="1328" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Compare separate captures</text>
+<text x="700" y="1424" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">Each archive describes the answering node</text>
+</svg>

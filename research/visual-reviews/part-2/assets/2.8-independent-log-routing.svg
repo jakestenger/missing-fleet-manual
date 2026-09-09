@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1084" viewBox="0 0 1400 1084" role="img">
+<title>Activity audit, osquery results and osquery status use independent controls and destinations.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1084" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Three independent log routes</text>
+<path d="M296 238 L380 238" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M704 238 L784 238" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1024 238 L1100 238" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M296 494 L380 494" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M704 494 L784 494" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1024 494 L1100 494" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="182" width="248" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="172.0" y="227.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Activity</text>
+<text x="172.0" y="271.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">audit</text>
+<rect x="380" y="182" width="324" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="542.0" y="249.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Enable audit</text>
+<rect x="784" y="182" width="240" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="904.0" y="227.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Audit</text>
+<text x="904.0" y="271.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">plugin</text>
+<rect x="1100" y="182" width="252" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1226.0" y="228.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Audit</text>
+<text x="1226.0" y="270.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">destination</text>
+<text x="542" y="350" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Premium · off by default</text>
+<rect x="48" y="438" width="248" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="172.0" y="483.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">osquery</text>
+<text x="172.0" y="527.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">results</text>
+<rect x="380" y="438" width="324" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="542.0" y="483.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Automations</text>
+<text x="542.0" y="527.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">enabled?</text>
+<rect x="784" y="438" width="240" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="904.0" y="483.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Result</text>
+<text x="904.0" y="527.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">plugin</text>
+<rect x="1100" y="438" width="252" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1226.0" y="484.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Result</text>
+<text x="1226.0" y="526.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">destination</text>
+<text x="542" y="410" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Normal per-report gate</text>
+<text x="744" y="472" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Yes</text>
+<path d="M340 494 L340 716 L444 716" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+<rect x="444" y="632" width="580" height="168" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="734.0" y="706.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Stored reporting disabled</text>
+<text x="734.0" y="748.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">or unrecognized report</text>
+<path d="M1024 716 L1060 716 L1060 596 L904 596 L904 550" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+<text x="690" y="842" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Bypass the per-report gate</text>
+<rect x="48" y="858" width="248" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="172.0" y="903.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">osquery</text>
+<text x="172.0" y="947.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">status</text>
+<path d="M296 914 L784 914" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1024 914 L1100 914" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="784" y="858" width="240" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="904.0" y="903.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Status</text>
+<text x="904.0" y="947.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">plugin</text>
+<rect x="1100" y="858" width="252" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1226.0" y="904.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Status</text>
+<text x="1226.0" y="946.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">destination</text>
+<text x="700" y="1032" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">osquery destinations are independent; filesystem is the default</text>
+</svg>

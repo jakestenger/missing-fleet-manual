@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1320" viewBox="0 0 1400 1320" role="img">
+<title>Independent database and object captures can leave missing bytes or unreferenced objects that cleanup may delete.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1320" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Separate captures leave two possible consistency gaps</text>
+<text x="340" y="174" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#192147">Database capture</text>
+<path d="M104 224 L576 224" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1052" y="174" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#192147">Storage capture</text>
+<path d="M816 224 L1288 224" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M224 208 L224 240" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1104 208 L1104 240" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="700" y="294" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Independent moments · no atomic snapshot or capture order implied</text>
+<text x="48" y="398" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Case A · referenced bytes are absent</text>
+<rect x="48" y="448" width="472" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="284.0" y="523.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Row references installer X</text>
+<rect x="760" y="448" width="592" height="128" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1056.0" y="524.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Storage lacks X</text>
+<path d="M520 512 L760 512" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M635 499 L661 525" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M635 525 L661 499" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1056" y="638" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">Missing bytes</text>
+<text x="48" y="768" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Case B · storage is newer than the restored database</text>
+<rect x="48" y="820" width="472" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="284.0" y="874.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Older database</text>
+<text x="284.0" y="916.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">No row for Y</text>
+<rect x="760" y="820" width="592" height="128" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1056.0" y="873.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Object Y exists</text>
+<text x="1056.0" y="917.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Unreferenced</text>
+<path d="M520 884 L760 884" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<path d="M635 871 L661 897" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M635 897 L661 871" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1056 948 L1056 1036" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+<text x="1112" y="1004" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Cleanup</text>
+<rect x="760" y="1036" width="592" height="112" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1056.0" y="1104.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Deletion candidate</text>
+<text x="700" y="1244" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Storage versioning may permit recovery; it is not guaranteed</text>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1064" viewBox="0 0 1400 1064" role="img">
+<title>GitOps, fleetctl and custom clients converge on the REST API; events travel outward through webhooks.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1064" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Clients reach one Fleet control plane</text>
+<rect x="48" y="180" width="320" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="208.0" y="233.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Configuration</text>
+<text x="208.0" y="277.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">repository</text>
+<path d="M368 244 L448 244" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="448" y="180" width="296" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="596.0" y="255.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">fleetctl gitops</text>
+<rect x="48" y="412" width="320" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="208.0" y="465.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Operator or</text>
+<text x="208.0" y="509.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">pipeline</text>
+<path d="M368 476 L448 476" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="448" y="412" width="296" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="596.0" y="487.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">fleetctl</text>
+<rect x="48" y="644" width="320" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="208.0" y="719.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Custom client</text>
+<path d="M744 244 L816 244 L816 360 L904 360" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M744 476 L816 476 L816 440 L904 440" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M368 708 L816 708 L816 520 L904 520" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="904" y="300" width="448" height="264" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1128.0" y="420.8" text-anchor="middle" font-family="Inter" font-size="38" font-weight="600" fill="#F9FAFC">Fleet REST API</text>
+<text x="1128.0" y="469.8" text-anchor="middle" font-family="Inter" font-size="38" font-weight="600" fill="#F9FAFC">One control plane</text>
+<text x="632" y="820" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">No field ownership</text>
+<text x="632" y="859" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">or stale-write check</text>
+<rect x="904" y="644" width="448" height="160" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1128" y="704" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">Fleet configuration</text>
+<text x="1128" y="746" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">Queued device actions</text>
+<path d="M1128 564 L1128 644" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="912" width="392" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244.0" y="979.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Fleet events</text>
+<rect x="504" y="912" width="392" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="979.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Outbound webhook</text>
+<rect x="960" y="912" width="392" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156.0" y="958.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">External receiver</text>
+<text x="1156.0" y="1000.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">or workflow</text>
+<path d="M440 968 L504 968" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M896 968 L960 968" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+</svg>
