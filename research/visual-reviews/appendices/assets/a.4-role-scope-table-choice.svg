@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1336" viewBox="0 0 1400 1336" role="img">
+<title>An identity has either a global role or concrete fleet roles. Fleet roles cannot reach Unassigned, while action permission still depends on the relevant table.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1336" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Choose the permission table from the identity’s scope</text>
+<rect x="468" y="168" width="464" height="112" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="700.0" y="237.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="600" fill="#F9FAFC">One identity</text>
+<text x="700" y="352" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Global and fleet roles cannot be held together</text>
+<path d="M700 280 L700 304 L308 304 L308 448" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 304 L1100 304 L1100 448" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="448" width="520" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="308.0" y="516.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Global role</text>
+<rect x="832" y="448" width="520" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1092.0" y="516.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">fleet-scoped roles</text>
+<path d="M308 560 L308 672" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="672" width="520" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="308.0" y="739.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Global permission table</text>
+<path d="M1092 560 L1092 672" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="832" y="672" width="520" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1092.0" y="739.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">fleet permission table</text>
+<path d="M308 784 L308 896" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1092 784 L1092 896" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="896" width="520" height="256" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="308" y="952" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Organization resources</text>
+<rect x="80" y="992" width="456" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="308.0" y="1059.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Including Unassigned</text>
+<rect x="832" y="896" width="520" height="256" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1092" y="952" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Concretely assigned fleets</text>
+<rect x="856" y="992" width="224" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="968.0" y="1039.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">fleet A</text>
+<text x="968.0" y="1078.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Admin</text>
+<rect x="1104" y="992" width="224" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1216.0" y="1039.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">fleet B</text>
+<text x="1216.0" y="1078.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Observer</text>
+<path d="M832 1056 L716 1056" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="8 8"/>
+<path d="M682 1038 L718 1074" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M682 1074 L718 1038" fill="none" stroke="#D66C7B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M680 1056 L536 1056" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="8 8"/>
+<text x="700" y="1000" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Blocked</text>
+<rect x="48" y="1216" width="1304" height="80" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1267.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Reachable scope still requires permission for the specific action</text>
+</svg>

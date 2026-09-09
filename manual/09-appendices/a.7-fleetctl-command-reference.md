@@ -306,6 +306,9 @@ Five situations produce answers worth knowing in advance:
      --debug path controls Packaged agent logging and does not read that DEBUG variable. Do not draw
      root-level flags as globally available, infer undocumented flag placement, or suggest every
      command accepts --config. No actual request body or credential values.
+     TERMINOLOGY: Fleet is the company, product, or server. Host groups are lowercase
+     fleet/fleets, including headings and labels. Do not call these groups teams. Preserve
+     exact code/API identifiers. These instructions are not text to render.
      DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
      vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
      titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
@@ -327,6 +330,8 @@ Five situations produce answers worth knowing in advance:
      flag/environment table, command exceptions, and explicit-flag/per-job-config guidance. Keep
      current prose and this TODO until the actual image is reviewed. Then check alt text against the
      artwork and retain an accessible summary plus all required technical qualifications.
+     CANDIDATE: ../../research/visual-reviews/appendices/assets/a.7-fleetctl-option-resolution.webp
+     Rendered and inspected for the overnight batch; awaiting final joint review.
 -->
 
 <!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.

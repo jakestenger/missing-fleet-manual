@@ -48,6 +48,9 @@ feature_requests:
      fleetd. Finish at Read the specific cell and condition register, not an automatically
      calculated Yes. Use diagrammatic layers rather than copying any matrix row. Do not equate
      Unsupported with Not applicable or treat mobile's small certificate app as full fleetd.
+     TERMINOLOGY: Fleet is the company, product, or server. Host groups are lowercase
+     fleet/fleets, including headings and labels. Do not call these groups teams. Preserve
+     exact code/API identifiers. These instructions are not text to render.
      DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
      vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
      titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
@@ -69,6 +72,8 @@ feature_requests:
      qualifications as searchable Markdown. Keep current prose and this TODO until the actual image
      is reviewed. Then check alt text against the artwork and retain an accessible summary plus all
      required technical qualifications.
+     CANDIDATE: ../../research/visual-reviews/appendices/assets/a.2-capability-condition-layers.webp
+     Rendered and inspected for the overnight batch; awaiting final joint review.
 -->
 
 <!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.

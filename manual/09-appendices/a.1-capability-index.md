@@ -62,6 +62,9 @@ Six markers, and each changes what you do with the word next to it.
      administrator intents; no row-for-row CAP ID join. Add a.2 may split an ID and Some IDs are
      handled separately as two small exception notes, not a giant exception inventory. This is a
      navigation map; keep all real links in Markdown.
+     TERMINOLOGY: Fleet is the company, product, or server. Host groups are lowercase
+     fleet/fleets, including headings and labels. Do not call these groups teams. Preserve
+     exact code/API identifiers. These instructions are not text to render.
      DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
      vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
      titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
@@ -83,6 +86,8 @@ Six markers, and each changes what you do with the word next to it.
      instructions in the native reference text. Keep current prose and this TODO until the actual
      image is reviewed. Then check alt text against the artwork and retain an accessible summary
      plus all required technical qualifications.
+     CANDIDATE: ../../research/visual-reviews/appendices/assets/a.1-reference-index-navigation.webp
+     Rendered and inspected for the overnight batch; awaiting final joint review.
 -->
 
 <!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.

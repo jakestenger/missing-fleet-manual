@@ -26,6 +26,9 @@ A cross-reference of the form "see X" means the book files the concept under X, 
      generous whitespace, navy outlines and pale-blue surfaces. No letters, alphabet, labels,
      arrows, invented UI, charts, floating paragraphs, or faux hyperlinks. Keep it low and calm so
      the first alphabetical heading remains close to the introduction.
+     TERMINOLOGY: Fleet is the company, product, or server. Host groups are lowercase
+     fleet/fleets, including headings and labels. Do not call these groups teams. Preserve
+     exact code/API identifiers. These instructions are not text to render.
      DESIGN: Fleet is software for managing computers; draw no vehicles. Use the established Cloud
      City illustration treatment consistently: #F9FAFC background, #192147 navy, #515774 slate, and
      #D3E8F3 / #E8F1F6 pale-blue surfaces. Keep large areas quiet and the composition balanced at
@@ -37,6 +40,8 @@ A cross-reference of the form "see X" means the book files the concept under X, 
      instructions intact; do not interrupt letter groups with decoration. Keep current prose and
      this TODO until the actual image is reviewed. Then check alt text against the artwork and
      retain an accessible summary plus all required technical qualifications.
+     CANDIDATE: ../../research/visual-reviews/appendices/assets/a.10-index-reading-vignette.webp
+     Rendered and inspected for the overnight batch; awaiting final joint review.
 -->
 
 <!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.

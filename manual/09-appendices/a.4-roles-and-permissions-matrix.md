@@ -541,11 +541,14 @@ That is why there are two tables rather than one with twelve columns. **You are 
      QUESTION: Which permission table applies, and why is Unassigned unreachable to fleet-scoped
      roles?
      PROMPT: DIAGRAM: One identity enters an exclusive fork: Global role → Global permission table →
-     organization resources including Unassigned; Fleet-scoped roles → Fleet permission table → only
-     concretely assigned fleets. The fleet branch may show different roles for Fleet A and Fleet B,
+     organization resources including Unassigned; fleet-scoped roles → fleet permission table → only
+     concretely assigned fleets. The fleet branch may show different roles for fleet A and fleet B,
      but its connector to Unassigned is visibly blocked. Put Cannot hold global and fleet roles
      together beside the initial fork. Do not imply every action is permitted merely because its
      scope is reachable; table conditions still decide the action.
+     TERMINOLOGY: Fleet is the company, product, or server. Host groups are lowercase
+     fleet/fleets, including headings and labels. Do not call these groups teams. Preserve
+     exact code/API identifiers. These instructions are not text to render.
      DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
      vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
      titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
@@ -567,6 +570,8 @@ That is why there are two tables rather than one with twelve columns. **You are 
      conditions, and service-identity restrictions. Keep current prose and this TODO until the
      actual image is reviewed. Then check alt text against the artwork and retain an accessible
      summary plus all required technical qualifications.
+     CANDIDATE: ../../research/visual-reviews/appendices/assets/a.4-role-scope-table-choice.webp
+     Rendered and inspected for the overnight batch; awaiting final joint review.
 -->
 
 <!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.

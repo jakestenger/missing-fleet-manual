@@ -132,12 +132,16 @@ Both `prepare_live_query` and `run_live_query` also accept three undocumented le
 <!-- IMAGE-TODO: assets/a.11-mcp-tool-route-allowlist.webp
      QUESTION: How do tool choices become an API endpoint allowlist?
      PROMPT: DIAGRAM: Selected assistant tasks → Chosen MCP tools → Each tool's Fleet routes →
-     Deduplicate and add startup GET /me → Full method/path allowlist → Test with the intended role
+     Deduplicate and add startup GET /me → Full method/path allowlist (restore the /api/v1/fleet prefix on every shorthand
+     route, and include its HTTP method) → Test with the intended role
      and scope. Show Read plus live query as an explicit expansion, adding POST /hosts/{id}/query
      and POST /reports/run. Put GET /results/websocket in a separate boundary note Outside this
      allowlist mechanism, not an entry granted by the list. Client confirmation/schema instructions
      sit outside the authorization gate, labelled Advisory. No invented tool-level server
      enforcement.
+     TERMINOLOGY: Fleet is the company, product, or server. Host groups are lowercase
+     fleet/fleets, including headings and labels. Do not call these groups teams. Preserve
+     exact code/API identifiers. These instructions are not text to render.
      DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
      vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
      titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
@@ -159,6 +163,8 @@ Both `prepare_live_query` and `run_live_query` also accept three undocumented le
      method/path format, route exception, and role requirements. Keep current prose and this TODO
      until the actual image is reviewed. Then check alt text against the artwork and retain an
      accessible summary plus all required technical qualifications.
+     CANDIDATE: ../../research/visual-reviews/appendices/assets/a.11-mcp-tool-route-allowlist.webp
+     Rendered and inspected for the overnight batch; awaiting final joint review.
 -->
 
 <!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.

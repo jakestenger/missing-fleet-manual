@@ -27,8 +27,8 @@ Heartbeat: `complete-fleet-manual-visuals-overnight`, every 30 minutes in this t
 | Part V | 18 | 17 candidates ready; 1 authentic capture outstanding | `6b173c1` |
 | Part VI | 11 | Completed candidates; final review pending | `2d35887` |
 | Part VII | 15 | Completed candidates; final review pending | `0e1274d` |
-| Part VIII | 15 | Completed candidates; final review pending | Part VIII batch commit (see git log) |
-| Appendices | 10 | Next batch | — |
+| Part VIII | 15 | Completed candidates; final review pending | `bbcc437` |
+| Appendices | 10 | Completed candidates; final review pending | Appendices batch commit (see git log) |
 
 ## Blockers
 
@@ -109,3 +109,13 @@ Brief corrections qualify the UUID-present error example, scope half-enrollment 
 Validation passed: production website build, all 83 chapter links, em-dash and diff whitespace checks, fifteen complete native source/asset sets, SVG XML/minimum fonts/terminology, and current briefs. The image-redo checker reports nine intentional nonblocking pending markers. Tall figure placement remains for joint review. Part VIII is packaged separately, with the review tree copied to outputs.
 
 Next: ten appendix briefs, then final collection audit and genuine capture handoff. Reconcile older inventory brief text and check all image comments for accidental placement inside code fences. The only external blocker remains the My Device capture. Keep the existing heartbeat active while independent work remains.
+
+## Appendices handoff
+
+Completed ten candidates: nine native SVG diagrams and one built-in Cloud City subject-index illustration. The collection now contains 108 candidates. All independent artwork is complete; the sole missing asset is the authentic My Device screenshot in Part V.
+
+All native figures were inspected at 720 px. Grayscale spotchecks covered file-state replacement, role scope and endpoint allowlists. Corrections removed overlapping labels and clarified that API responses return from Fleet while the client generates GitOps apply output. Briefs preserve lowercase fleet scope and restore full method/path prefixes for the MCP allowlist. The illustration uses the approved Part 0 reference with no text or technical claims.
+
+Validation passed: production website build, 83 chapter links, em-dash and whitespace checks, ten source/asset sets, SVG XML/fonts/terminology, current packaged briefs and unchanged visible chapter content. Existing nonblocking redo markers remain pending. The appendix batch is committed separately and copied to outputs.
+
+Next: final collection audit, synchronize older brief metadata, check prompt placement, then pause the existing heartbeat when only the authentic capture and joint review remain. Prepare a concise final handoff with the collection link and exact capture requirement.

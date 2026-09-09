@@ -78,6 +78,9 @@ Two ways to obtain one. Through the UI, under **My account** and **Get API token
      <token> → Fleet user account → Role + scope checks. Use a dedicated API-only account as the
      automation example, not a shared personal identity. This covers user-authenticated API calls
      only; do not apply the bearer-token model to device, osquery, or MDM protocol endpoints.
+     TERMINOLOGY: Fleet is the company, product, or server. Host groups are lowercase
+     fleet/fleets, including headings and labels. Do not call these groups teams. Preserve
+     exact code/API identifiers. These instructions are not text to render.
      DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
      vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
      titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
@@ -99,6 +102,8 @@ Two ways to obtain one. Through the UI, under **My account** and **Get API token
      endpoint authentication catalog, and automation-account instructions. Keep current prose and
      this TODO until the actual image is reviewed. Then check alt text against the artwork and
      retain an accessible summary plus all required technical qualifications.
+     CANDIDATE: ../../research/visual-reviews/appendices/assets/a.8-api-token-entry-points.webp
+     Rendered and inspected for the overnight batch; awaiting final joint review.
 -->
 
 <!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.

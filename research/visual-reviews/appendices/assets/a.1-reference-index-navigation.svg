@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1320" viewBox="0 0 1400 1320" role="img">
+<title>A capability ID connects the capability, platform and interface indexes; chapter links lead to explanations while permissions use a separate coarser lookup.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1320" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Use a capability ID to navigate the reference</text>
+<rect x="376" y="168" width="648" height="112" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="700.0" y="237.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="600" fill="#F9FAFC">Reader’s desired outcome</text>
+<path d="M700 280 L700 384" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="376" y="384" width="648" height="280" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700" y="456" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">a.1 · Capability row</text>
+<rect x="408" y="512" width="272" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="544.0" y="575.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Capability ID</text>
+<rect x="712" y="512" width="280" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="852.0" y="575.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Chapter link</text>
+<path d="M544 616 L544 736 L256 736 L256 816" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M544 736 L704 736 L704 816" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M852 616 L852 704 L1156 704 L1156 816" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="816" width="416" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="256.0" y="877.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">a.2</text>
+<text x="256.0" y="921.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Platform support</text>
+<rect x="496" y="816" width="416" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="704.0" y="877.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">a.5</text>
+<text x="704.0" y="921.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Interface support</text>
+<rect x="944" y="816" width="408" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1148.0" y="877.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Owning chapter</text>
+<text x="1148.0" y="921.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Explanation</text>
+<text x="48" y="1032" text-anchor="start" font-family="Inter" font-size="30" font-weight="400" fill="#515774">a.2 may split an ID</text>
+<text x="48" y="1071" text-anchor="start" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Some IDs are handled separately</text>
+<rect x="744" y="1040" width="608" height="200" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5" stroke-dasharray="8 8"/>
+<text x="1048" y="1096" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Related lookup · a.4 Permissions</text>
+<text x="1048" y="1148" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Coarser administrator intents</text>
+<text x="1048" y="1198" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">No row-for-row capability ID join</text>
+</svg>
