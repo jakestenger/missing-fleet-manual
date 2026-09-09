@@ -21,9 +21,9 @@ Heartbeat: `complete-fleet-manual-visuals-overnight`, every 30 minutes in this t
 | Batch | Pending comments | Status | Commit |
 |---|---:|---|---|
 | Part 0–1 | 9 | Completed baseline; direction approved | `2a1c793` |
-| Part II | 14 | Completed candidates; final review pending | Part II batch commit (see git log) |
-| Part III | 10 | Next batch | — |
-| Part IV | 7 | Pending | — |
+| Part II | 14 | Completed candidates; final review pending | `d857e42` |
+| Part III | 10 | Completed candidates; final review pending | Part III batch commit (see git log) |
+| Part IV | 7 | Next batch | — |
 | Part V | 18 | Pending | — |
 | Part VI | 11 | Pending | — |
 | Part VII | 15 | Pending | — |
@@ -45,3 +45,13 @@ Completed 14 candidates: 13 native SVG diagrams and one built-in imagegen Apple 
 The ingress brief was corrected against appendix a.8 so Windows protocol paths under /api are admitted by an /api-only rule; uncovered Apple paths are stopped. All 14 assets/sources exist; native SVG XML, minimum 28 px labels and terminology checks pass; visible chapter prose equals the prior commit after stripping HTML comments. Website build, 83 chapter link checks, em-dash check and diff whitespace check passed.
 
 Next: Part III's 10 TODO/REDO comments. Read the chapter-local prompts and evidence. Inspect the legacy comments as well as the new one-per-chapter briefs. Continue without waiting for another review. A whole-manual gallery now exists at `research/visual-reviews/index.html`, copied to `/Users/jake/Documents/Codex/2026-09-08/ca/outputs/manual-visuals/index.html`. It currently contains 23 candidates.
+
+## Part III handoff
+
+Completed 10 candidates: nine new native diagrams and one built-in imagegen update-check replacement. `part-3/` contains the gallery, editable SVG sources, raster master, prompts and before-image comparison. The collection now contains 33 candidates. The iOS/iPadOS brief now explicitly applies Premium to lock and wipe wherever supported, including company-owned URL wipe, matching the current chapter.
+
+Review fixed crossing labels, ChromeOS credential/reporting path separation, MSI sentinel failure presentation, the migration observation annotation, and the required verification checkpoint between Orbit rollouts. Native diagrams were inspected at 720 px; grayscale spot checks covered migration, MSI, iOS/iPadOS and ChromeOS. The raster update-check replacement uses a non-causal annotation leader to distinguish an immediate check from entering the scheduled wait.
+
+Validation: website production build passed; all 83 chapter links passed; em-dash and diff whitespace checks passed; ten candidate/source pairs exist; native SVG XML, minimum 28 px fonts, and Fleet/fleets terminology checks passed; visible chapter content is unchanged after stripping HTML comments.
+
+Next: Part IV's seven pending briefs. Continue from the chapter comments and current evidence. No new blockers were found in Part III. Keep working through the remaining parts and appendices, committing each completed batch and saving the output copy. No routine per-part notification to Jake.

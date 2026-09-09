@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1200" viewBox="0 0 1400 1200" role="img">
+<title>Orbit chooses silent snapd recovery-key escrow, interactive LUKS passphrase escrow, or failure when snapd metadata cannot be read.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1200" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Orbit checks snapd metadata</text>
+<rect x="444" y="132" width="512" height="108" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="700.0" y="200.0" text-anchor="middle" font-family="Inter" font-size="40" font-weight="600" fill="#F9FAFC">Metadata check</text>
+<path d="M700 240 L700 292 L240 292 L240 358" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 240 L700 292 L700 292 L700 358" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 240 L700 292 L1160 292 L1160 358" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="358" width="384" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="240.0" y="405.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">snapd-managed</text>
+<text x="240.0" y="449.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">TPM FDE</text>
+<rect x="508" y="358" width="384" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="405.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Confirmed other</text>
+<text x="700.0" y="449.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">LUKS setup</text>
+<rect x="968" y="358" width="384" height="116" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160.0" y="405.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Metadata check</text>
+<text x="1160.0" y="449.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">error</text>
+<path d="M240 474 L240 564" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="564" width="384" height="120" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="240.0" y="613.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Read recovery key</text>
+<text x="240.0" y="657.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">via snapd</text>
+<path d="M240 684 L240 966" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="274" y="774" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">No person</text>
+<text x="274" y="813" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">needed</text>
+<rect x="508" y="548" width="384" height="108" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="592.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Prompt using</text>
+<text x="700.0" y="634.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">zenity / kdialog</text>
+<rect x="508" y="704" width="384" height="108" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="748.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Validate existing</text>
+<text x="700.0" y="790.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">passphrase</text>
+<rect x="508" y="860" width="384" height="108" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="904.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Add Fleet key</text>
+<text x="700.0" y="946.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">in separate slot</text>
+<path d="M700 474 L700 548" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 656 L700 704" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 812 L700 860" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 968 L700 1008" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="966" width="384" height="100" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="240.0" y="1029.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">Escrow</text>
+<rect x="508" y="1008" width="384" height="100" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1071.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">Escrow</text>
+<path d="M1160 474 L1160 564" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="968" y="564" width="384" height="120" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160.0" y="636.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Escrow fails</text>
+<text x="1160" y="758" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">No passphrase</text>
+<text x="1160" y="797" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">fallback</text>
+<text x="48" y="1154" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">cryptsetup required on both paths · No Fleet Desktop requirement</text>
+</svg>

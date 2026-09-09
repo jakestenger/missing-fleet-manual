@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1076" viewBox="0 0 1400 1076" role="img">
+<title>Unenrolling a personal Android phone removes its work profile; company-owned wipe resets the whole device.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1076" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Android ownership sets the removal boundary</text>
+<text x="48" y="174" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Personal phone</text>
+<rect x="80" y="214" width="280" height="350" rx="28" fill="#F9FAFC" stroke="#192147" stroke-width="3"/>
+<path d="M182 238 L258 238" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="100" y="278" width="240" height="108" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="220.0" y="343.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Personal</text>
+<rect x="100" y="414" width="240" height="108" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="220.0" y="479.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Work profile</text>
+<path d="M360 390 L544 390" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="450" y="352" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Unenroll</text>
+<rect x="544" y="214" width="280" height="350" rx="28" fill="#F9FAFC" stroke="#192147" stroke-width="3"/>
+<path d="M646 238 L722 238" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="564" y="278" width="240" height="108" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="684.0" y="343.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Personal</text>
+<text x="864" y="372" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Work profile removed</text>
+<text x="864" y="416" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Personal remains</text>
+<text x="48" y="638" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Company-owned phone</text>
+<rect x="80" y="680" width="280" height="350" rx="28" fill="#F9FAFC" stroke="#192147" stroke-width="3"/>
+<path d="M182 704 L258 704" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="100" y="744" width="240" height="224" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="220.0" y="846.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Managed</text>
+<text x="220.0" y="888.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">device</text>
+<path d="M360 855 L544 855" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="450" y="817" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Wipe</text>
+<rect x="544" y="680" width="280" height="350" rx="28" fill="#F9FAFC" stroke="#192147" stroke-width="3"/>
+<path d="M646 704 L722 704" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="564" y="744" width="240" height="224" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="684.0" y="867.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Reset device</text>
+<text x="864" y="695" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Initial-setup QR enrollment</text>
+<text x="864" y="750" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Fresh or factory-reset</text>
+<text x="864" y="789" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">device required</text>
+<text x="864" y="876" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Lock: Premium,</text>
+<text x="864" y="915" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">both paths</text>
+<text x="864" y="973" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Company-owned wipe:</text>
+<text x="864" y="1012" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Free and Premium</text>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="956" viewBox="0 0 1400 956" role="img">
+<title>Fleet can remotely lock iOS and iPadOS devices only through ADE; lock and wipe require Premium wherever supported.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="956" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Choose enrollment for iOS / iPadOS</text>
+<rect x="436" y="150" width="528" height="120" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="700.0" y="224.0" text-anchor="middle" font-family="Inter" font-size="40" font-weight="600" fill="#F9FAFC">Need remote lock?</text>
+<path d="M436 210 L240 210 L240 398" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="296" y="178" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">Yes</text>
+<path d="M964 210 L1030 210 L1030 330" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1000" y="178" text-anchor="middle" font-family="Inter" font-size="32" font-weight="400" fill="#515774">No</text>
+<rect x="780" y="330" width="500" height="90" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1030.0" y="386.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Choose enrollment</text>
+<path d="M1030 420 L1030 454 L700 454 L700 500" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1030 454 L1160 454 L1160 500" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="398" width="384" height="110" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="240.0" y="467.0" text-anchor="middle" font-family="Inter" font-size="40" font-weight="500" fill="#192147">ADE</text>
+<text x="240" y="562" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Premium prerequisite</text>
+<rect x="508" y="500" width="384" height="132" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="555.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Company-owned</text>
+<text x="700.0" y="599.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">enrollment URL</text>
+<rect x="968" y="500" width="384" height="132" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160.0" y="557.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Personal enrollment</text>
+<text x="1160.0" y="596.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">URL / account-driven</text>
+<rect x="48" y="694" width="384" height="88" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="240.0" y="750.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Lock + wipe</text>
+<rect x="508" y="694" width="384" height="88" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="750.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Wipe only</text>
+<rect x="968" y="694" width="384" height="88" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1160.0" y="750.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Neither</text>
+<text x="700" y="844" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Lock and wipe: Premium wherever supported</text>
+<text x="700" y="909" text-anchor="middle" font-family="Inter" font-size="34" font-weight="400" fill="#515774">Changing these rights requires re-enrollment</text>
+</svg>
