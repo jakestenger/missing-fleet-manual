@@ -12,7 +12,7 @@ verified_source: "reference aid, not a behaviour claim. Each entry was checked t
 
 An A-Z of the concepts, components, and named artifacts a reader looks up by name: APNs, Redis, the node key, a work profile. Each entry points at the chapter that defines or explains the thing, not at every chapter that mentions it.
 
-This is the noun counterpart to the [capability index](a.1-capability-index.md), which starts from an outcome you want, a verb. Start here when you have met a word and want to know what it is; start there when you know the job and want the chapter that does it. Where a term also carries a short definition in the [glossary](a.6-glossary-and-release-compatibility.md), that is noted, because the glossary is where a renamed or easily-confused term is pinned down.
+This is the noun counterpart to the [capability index](a.1-capability-index.md), which starts from a verb: an outcome you want. Start here when you have met a word and want to know what it is; start there when you know the job and want the chapter that does it. Where a term also carries a short definition in the [glossary](a.6-glossary-and-release-compatibility.md), the entry says so; the glossary is where a renamed or easily-confused term is pinned down.
 
 A cross-reference of the form "see X" means the manual files the concept under X, because Fleet renamed it or because one name is the expansion of another.
 
@@ -68,7 +68,7 @@ A cross-reference of the form "see X" means the manual files the concept under X
 - **Apps and Books**, see VPP.
 - **async host processing:** the experimental `osquery_enable_async_host_processing` mode, which moves label, policy and last-seen writes through Redis, is [8.14](../08-troubleshooting/8.14-degradation.md); its use as a capacity lever is [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md).
 - **asset** (Apple DDM), see declaration asset.
-- **Autopilot:** Microsoft's zero-touch Windows provisioning path is set up for enrollment in [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) and diagnosed, including why Fleet never talks to it, in [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md).
+- **Autopilot:** Microsoft's zero-touch Windows provisioning path is set up for enrollment in [3.3](../03-connect-devices/3.3-enroll-windows-devices.md) and diagnosed in [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md), which also covers why Fleet never talks to it.
 
 ## B
 
@@ -84,7 +84,7 @@ A cross-reference of the form "see X" means the manual files the concept under X
 - **carve**, see file carving.
 - **certificate authority** (CA): [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 - **CIS benchmarks** (the Premium policy library implementing the Center for Internet Security benchmarks, published as files you import rather than shipped in the product, and revised for macOS in Fleet 4.91): [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md#the-cis-benchmark-policy-library).
-- **certificate renewal:** the recurring operational calendar, and the difference between renewing a certificate and replacing key material, is [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md); the four Apple credentials with their own renewal stories are [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md).
+- **certificate renewal:** the recurring operational calendar, and the difference between renewing a certificate and replacing key material, is [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md); how each of the four Apple credentials renews is [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md).
 - **certificate resend** (resending one certificate a profile issued, per host, separate from resending the profile): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#changing-resending-and-removing).
 - **Chromebook**, see ChromeOS.
 - **ChromeOS extension:** [3.7](../03-connect-devices/3.7-enroll-chromeos-devices.md).
@@ -101,7 +101,7 @@ A cross-reference of the form "see X" means the manual files the concept under X
 - **data inventory and trust boundaries** (what data Fleet holds, where it lives, and what crosses a boundary, for a privacy review): [A.8](a.8-api-action-and-endpoint-reference.md#data-inventory-and-trust-boundaries).
 - **DDM** (Declarative Device Management): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); diagnosing declaration delivery is [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md).
 - **dead lettering:** defined in the [glossary](a.6-glossary-and-release-compatibility.md).
-- **declaration asset** (the Premium Apple DDM `com.apple.asset.*` object a declaration references for large or binary content, with its own upload, uniqueness and delete rules, and a Fleet-Free GitOps licence trap): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#declaration-assets); the device requests that follow are [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md#888-ddm-declarations).
+- **declaration asset** (the Premium Apple DDM `com.apple.asset.*` object a declaration references for large or binary content, with its own upload, uniqueness and delete rules, and a licence difference on Fleet Free between the interactive routes and GitOps): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#declaration-assets); the device requests that follow are [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md#888-ddm-declarations).
 - **declarative settings**, see DDM.
 - **default fleet (Windows)** (the fleet a user-driven Windows MDM enrollment is assigned to, before the Autopilot Enrollment Status Page runs; Premium, new in Fleet 4.91): [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md#where-automatically-enrolled-windows-hosts-land). The Apple per-platform equivalent is [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md).
 - **`dep_device_error`** (the human-readable reason a host's Apple Business device lookup failed, returned from Fleet 4.91 on `GET /hosts/:id/dep_assignment`): [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md#why-apple-is-not-answering-from-fleet-491).
@@ -117,7 +117,7 @@ A cross-reference of the form "see X" means the manual files the concept under X
 
 - **egress destinations** (the outbound map for a firewall review): [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md).
 - **endpoint allowlist** (the Premium restriction narrowing an API-only user's routes below what its role allows): [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md); the route set per tool is [A.11](a.11-mcp-tool-reference.md).
-- **endpoint catalogue** (the Premium read that returns every method-and-path pair an allowlist will accept): retrieving it is [A.8](a.8-api-action-and-endpoint-reference.md#retrieving-the-endpoint-catalog); what it constrains is the endpoint allowlist above.
+- **endpoint catalogue** (the Premium read that returns every method-and-path pair an allowlist will accept): retrieving it is [A.8](a.8-api-action-and-endpoint-reference.md#retrieving-the-endpoint-catalog); it constrains the endpoint allowlist above.
 - **enroll secret:** [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md).
 - **enrollment profile:** [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md); the macOS route that uses it is [3.2](../03-connect-devices/3.2-enroll-macos-devices.md).
 - **Entra** (Microsoft Entra ID): as an identity provider it is [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md); its part in Windows automatic enrollment is [3.3](../03-connect-devices/3.3-enroll-windows-devices.md).
@@ -252,7 +252,7 @@ A cross-reference of the form "see X" means the manual files the concept under X
 - **secret variables:** [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); their use in version-controlled configuration is [6.2](../06-automate-fleet/6.2-manage-fleet-with-gitops.md).
 - **seed mode** (the `fleet-mcp -seed` flag that creates the four standard saved reports against Fleet, then exits without serving): [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
 - **self-service:** [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
-- **server logs:** what Fleet's own process logs actually tell you is [8.3](../08-troubleshooting/8.3-server-logs.md); the full set of log surfaces (agent, server, and MDM protocol) is [8.2](../08-troubleshooting/8.2-log-surfaces.md); delivering them onward is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md).
+- **server logs:** what Fleet's own process logs tell you is [8.3](../08-troubleshooting/8.3-server-logs.md); the full set of log surfaces (agent, server, and MDM protocol) is [8.2](../08-troubleshooting/8.2-log-surfaces.md); delivering them onward is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md).
 - **server URL** (the Fleet server's own address, `server_url`): [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
 - **service identity** (a non-human, API-only user for automation): [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md); scoping its token to one fleet or a named list of endpoints is [1.4](../01-foundations/1.4-identity-and-roles.md).
 - **setup assistant:** [3.2](../03-connect-devices/3.2-enroll-macos-devices.md); the wider setup experience is [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
@@ -272,7 +272,7 @@ A cross-reference of the form "see X" means the manual files the concept under X
 ## T
 
 - **team**, see fleet.
-- **Technician** (a role defined by what it can change: run scripts, install or uninstall software, with read access much wider than that summary suggests, including recovery secrets; Premium): choosing between Fleet's roles is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md).
+- **Technician** (a role defined by what it can change: run scripts, install or uninstall software; its read access is much wider, and includes recovery secrets; Premium): choosing between Fleet's roles is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md).
 - **Terraform:** the AWS reference architecture module is [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
 - **TLS:** the certificate that protects communication with the service, and the server private key it depends on, is [1.6](../01-foundations/1.6-the-fleet-server.md); planning the DNS name and certificate as server settings is [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
 - **`token_invalid`** (the Apple Business token flag, new in Fleet 4.91, meaning Apple rejected the token or reported its signature invalid; false means "not known to be rejected" rather than "checked and healthy"): [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md#why-apple-is-not-answering-from-fleet-491).
