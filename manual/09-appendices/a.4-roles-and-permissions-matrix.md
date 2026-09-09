@@ -22,7 +22,7 @@ feature_requests:
 
 ## What this appendix carries
 
-![Reference](../_assets/icons/reference.svg) The administrator-visible actions this appendix's research found, against all six roles, at both scopes. That is the breakdown [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) promises and the reason this appendix is the most-referenced one in the book. **The row universe is a search result and not a proof**: it is what this appendix's research could find, so a reader who finds another route has found a gap rather than a contradiction.
+![Reference](../_assets/icons/reference.svg) The administrator-visible actions this appendix's research found, against all six roles, at both scopes. That is the breakdown [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) promises and the reason this appendix is the most-referenced one in the manual. **The row universe is a search result and not a proof**: it is what this appendix's research could find, so a reader who finds another route has found a gap rather than a contradiction.
 
 These tables report the result an administrator receives, which can differ from the authorization policy's own decision. The policy is the largest input, and a decision can also be made by service middleware before the policy runs, by a response having a field stripped from it after the policy allowed the whole object, or by a database query that filters the result to nothing after the request succeeded. **All four change the answer, so all four are in the cells wherever this appendix found them.**
 
@@ -526,7 +526,7 @@ A request carries a **subject**, which is the authenticated identity and the rol
 
 **Sixteen actions, not two.** Reading and writing are the common pair, and the rest exist because Fleet needed to give one role one verb without the general one. Running a report is not writing it. Transferring a host between fleets is not writing the host. Reading a secret is not reading the object that holds it. **A matrix built on read and write would be wrong**, and it would be wrong in the permissive direction, which is why this one is not built that way.
 
-> **Two vocabularies for one idea.** This book says *fleet*, which is Fleet's current product term. **Fleet's authorization vocabulary still says *team***, and so do the API fields, the object type printed under each action in the tables, and the role a fleet membership records. The two words mean the same thing, and a reader who traces a cell into the API or into a GitOps file will meet the older one.
+> **Two vocabularies for one idea.** This manual says *fleet*, which is Fleet's current product term. **Fleet's authorization vocabulary still says *team***, and so do the API fields, the object type printed under each action in the tables, and the role a fleet membership records. The two words mean the same thing, and a reader who traces a cell into the API or into a GitOps file will meet the older one.
 
 ### Role and scope combine, and are exclusive
 
@@ -535,6 +535,43 @@ A request carries a **subject**, which is the authenticated identity and the rol
 That is why there are two tables rather than one with twelve columns. **You are always in exactly one of them.**
 
 **A fleet-scoped role is scoped to a concrete fleet.** Most fleet-scoped rules are keyed on the object's fleet identifier and guarded against a null, and the helper that resolves a subject's role for a fleet is undefined when there is no such fleet. **So no fleet-scoped role of any kind reaches the Unassigned fleet**, whatever its role name suggests. Only a global role does. That single structural fact accounts for a large share of the conditional cells in the tables, and it is the answer to a question that otherwise looks like a bug: a fleet administrator who can see an Unassigned host in a list and can do none of this appendix's host operations to it.
+
+
+<!-- IMAGE-TODO: assets/a.4-role-scope-table-choice.webp
+     QUESTION: Which permission table applies, and why is Unassigned unreachable to fleet-scoped
+     roles?
+     PROMPT: DIAGRAM: One identity enters an exclusive fork: Global role → Global permission table →
+     organization resources including Unassigned; Fleet-scoped roles → Fleet permission table → only
+     concretely assigned fleets. The fleet branch may show different roles for Fleet A and Fleet B,
+     but its connector to Unassigned is visibly blocked. Put Cannot hold global and fleet roles
+     together beside the initial fork. Do not imply every action is permitted merely because its
+     scope is reachable; table conditions still decide the action.
+     DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
+     vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
+     titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
+     720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px node
+     padding, and consistent corner radii. Center short node names; left-align multiline
+     explanations. Never shrink text to fit. Use #F9FAFC background, #192147 headings and primary
+     connectors, #515774 text, #8B8FA2 secondary connectors, #C5C7D1 borders, and #D3E8F3 or #E8F1F6
+     quiet fills. Use #5CABDF and #C98DEF for named categories, #3AEFC4 for labelled positive
+     outcomes, #D66C7B for labelled failures, and #FAA669 for labelled cautions. Tint large panels
+     to 20 to 25 percent; full strength is for small marks. Keep text navy or slate, or off-white on
+     a navy anchor. Never rely on colour alone. Use one arrowhead shape, consistent stroke weights,
+     box-edge termination, and labelled branches and return paths. Keep connectors clear of text. No
+     gradients, shadows, decorative icons, logo, watermark, em-dashes, or slogan footer. Render only
+     the specified reader-facing labels. Choose orientation to fit the relationship, not a default
+     poster. Keep captions outside the artwork. If labels crowd, split the figure before shrinking
+     them. Keep editable SVG when the production method supports it.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Reduce the
+     table-selection and Unassigned explanation. Keep the complete permission matrices, per-action
+     conditions, and service-identity restrictions. Keep current prose and this TODO until the
+     actual image is reviewed. Then check alt text against the artwork and retain an accessible
+     summary plus all required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![An identity uses either global or fleet-scoped permission tables; fleet-scoped roles cannot act on Unassigned hosts.](assets/a.4-role-scope-table-choice.webp)
+-->
 
 ### Combinations Fleet refuses, and where it does not
 

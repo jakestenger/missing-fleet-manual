@@ -3,9 +3,9 @@ title: "Terminology and version boundaries"
 chapter: "Appendices and indexes"
 section: "A.6"
 sidebar_position: 6
-verified_against: Fleet 4.90.0
-verified_on: 2026-08-29
-verified_source: "drafted against fleet-v4.90.0 (7c428c6e46). Boundaries that Fleet enforces were read from the gate; the version at which a capability was introduced is derived from release history rather than from the tag, and the ledger marks which is which. Citation ledger at research/section-notes/a.6-notes.md"
+verified_against: Fleet 4.91.0
+verified_on: 2026-09-08
+verified_source: "drafted against fleet-v4.90.0 (7c428c6e46). Boundaries that Fleet enforces were read from the gate; the version at which a capability was introduced is derived from release history rather than from the tag, and the ledger marks which is which. Citation ledger at research/section-notes/a.6-notes.md. The end-user-authentication agent-floor row was amended 2026-09-08 for the 4.91 `mdm.allow_orbit_end_user_auth_bypass` setting, verified against fleet-v4.91.0 (35fc1c0244). Corrected 2026-09-08 (overnight campaign step 7), verified at fleet-v4.91.0 (35fc1c0244): the end-user authentication floor read Orbit 1.50.0, a release that appears nowhere in `orbit/CHANGELOG.md`. The entry that added end-user authentication before enrolling Windows and Linux devices is 1.50.1 (Nov 27, 2025), so the row now says 1.50.1. Found while checking a different version claim; the code citation at `server/service/orbit.go` was unaffected and unchanged. Amended again 2026-09-08 (overnight campaign step 7, round-3 review finding 2), verified at the orbit release tags in the same checkout: the 1.50.1 correction above was itself wrong and is reverted. `orbit-v1.50.0` exists as a tag (`b3ca45564a`, 2025-11-12), `CapabilityEndUserAuth` is absent from `orbit-v1.49.1:server/fleet/capabilities.go` and present at `orbit-v1.50.0:server/fleet/capabilities.go:99` where `GetOrbitClientCapabilities()` advertises it unconditionally, and the entire `orbit-v1.50.0..orbit-v1.50.1` diff is one file refactoring how Orbit opens a browser window. `orbit/CHANGELOG.md` files the feature under 1.50.1 only because the pending entry `orbit/changes/34528-support-end-user-auth`, present in the 1.50.0 tree, was folded in at the next cut. An absent changelog section is not evidence that a release does not exist, so the agent-floors row reads Orbit 1.50.0 again; the row's evidence kind is a tag reading rather than the release history this frontmatter warns about, and the `server/service/orbit.go` citation is again unaffected"
 ---
 
 # Terminology and version boundaries
@@ -157,13 +157,13 @@ The two words describe different layers of the same action. Running a live repor
 
 Part VIII works at all of these layers at once, which is why both words appear there. Its opening section carries a note explaining the split in context.
 
-### Terms the book uses across chapters
+### Terms the manual uses across chapters
 
-These are not naming collisions; they are specialist words the book uses as house vocabulary and defines once here rather than in every chapter that reaches for them. Where a term has an owning chapter, it is named.
+These are not naming collisions; they are specialist words the manual uses as house vocabulary and defines once here rather than in every chapter that reaches for them. Where a term has an owning chapter, it is named.
 
-**Blast radius.** Borrowed from incident response: how far the effect of an action or a failure reaches if it goes wrong, measured by what it touches rather than by whether it succeeds. The book uses it to frame destructive commands, over-broad queries and credential exposure ([8.1](../08-troubleshooting/8.1-diagnostic-method.md) turns it into a diagnostic question).
+**Blast radius.** Borrowed from incident response: how far the effect of an action or a failure reaches if it goes wrong, measured by what it touches rather than by whether it succeeds. The manual uses it to frame destructive commands, over-broad queries and credential exposure ([8.1](../08-troubleshooting/8.1-diagnostic-method.md) turns it into a diagnostic question).
 
-**Estate.** The whole population of devices one Fleet deployment manages. The book reaches for it where "your hosts" is too small a word, because capacity, rollout and policy decisions are made against the population rather than a single machine.
+**Estate.** The whole population of devices one Fleet deployment manages. The manual reaches for it where "your hosts" is too small a word, because capacity, rollout and policy decisions are made against the population rather than a single machine.
 
 **Idempotency.** A property of an action that is safe to repeat: running it twice leaves the same result as running it once. It matters for scripts, software installs and automated remediation, where Fleet may retry or a policy may fire more than once. Fleet offers no idempotency guarantee of its own ([6.1](../06-automate-fleet/6.1-automation-design-and-change-control.md)), so the safety has to be built into what you send.
 
@@ -202,13 +202,13 @@ This is why documentation, forum posts, and scripts written before March 2026 us
 A related change in the same release: `no-team.yml` in GitOps was deprecated in favour of `unassigned.yml`.
 
 
-## What this book's version pin means
+## What this manual's version pin means
 
-![Reference](../_assets/icons/reference.svg) Every chapter in this book was verified against **Fleet 4.90.0**, and the two generated catalogs, the configuration keys in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and the routes in [a.8](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog), were read from that exact release. The pin is what lets the book be specific: a default, a route, an edition gate or a field name is stated as a fact about a named release rather than about Fleet in general.
+![Reference](../_assets/icons/reference.svg) This edition of the manual is checked against **Fleet 4.91.0**; most chapters were verified at 4.90.0 and carried forward, with the sections 4.91 changed re-verified against 4.91.0, and the two generated catalogs, the configuration keys in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and the routes in [a.8](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog), read from that release. Each chapter's own `verified_against` frontmatter is the exact record for that chapter. The pin is what lets the manual be specific: a default, a route, an edition gate or a field name is stated as a fact about a named release rather than about Fleet in general.
 
-Two signals tell you a claim may no longer match the release you run. The first is the version itself: if your server is not 4.90.0, treat commands, fields, defaults and gates as version-sensitive and read the chapter's version notes, because behaviour moves between releases. The second is more precise, and it is what the catalogs are for: if a configuration default you observe on your own server differs from the registered default in a.3's catalog, the book is describing a different binary from yours, and that key is where to look for what changed.
+Two signals tell you a claim may no longer match the release you run. The first is the version itself: if your server is not on this edition's release line, treat commands, fields, defaults and gates as version-sensitive and read the chapter's version notes, because behaviour moves between releases. The second is more precise, and it is what the catalogs are for: if a configuration default you observe on your own server differs from the registered default in a.3's catalog, the manual is describing a different binary from yours, and that key is where to look for what changed.
 
-When this book is updated for a newer Fleet release, both catalogs are regenerated against that release's tag, so they keep describing the version each chapter names rather than a fixed snapshot.
+When this manual is updated for a newer Fleet release, both catalogs are regenerated against that release's tag, so they keep describing the version each chapter names rather than a fixed snapshot.
 
 ## Version boundaries
 
@@ -248,6 +248,43 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 
 **Upgrades follow semantic versioning with three stated exceptions**: experimental features, security fixes, and changes to default values. All three can break a minor or patch upgrade, and all three are called out in the version notes, which is the practical reason [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) asks you to read them rather than diff the version number.
 
+
+<!-- IMAGE-TODO: assets/a.6-agent-feature-compatibility.webp
+     QUESTION: Why can an agent enroll successfully and still lack one feature?
+     PROMPT: DIAGRAM: Separate Enrollment accepted from four feature paths. Named capability
+     advertised → server selects branch; Ungated setting sent → older agent may ignore it;
+     Agent/tool local decision → feature choice; Explicit version comparison → Linux passphrase
+     escrow gate. Do not place a universal Minimum agent version gate before enrollment. Keep the
+     lanes independent, and note osquery protocol has no capability header. The single persisted
+     Windows sync capability can be a small storage tag on the negotiated lane, not a universal
+     capability inventory.
+     DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
+     vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
+     titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
+     720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px node
+     padding, and consistent corner radii. Center short node names; left-align multiline
+     explanations. Never shrink text to fit. Use #F9FAFC background, #192147 headings and primary
+     connectors, #515774 text, #8B8FA2 secondary connectors, #C5C7D1 borders, and #D3E8F3 or #E8F1F6
+     quiet fills. Use #5CABDF and #C98DEF for named categories, #3AEFC4 for labelled positive
+     outcomes, #D66C7B for labelled failures, and #FAA669 for labelled cautions. Tint large panels
+     to 20 to 25 percent; full strength is for small marks. Keep text navy or slate, or off-white on
+     a navy anchor. Never rely on colour alone. Use one arrowhead shape, consistent stroke weights,
+     box-edge termination, and labelled branches and return paths. Keep connectors clear of text. No
+     gradients, shadows, decorative icons, logo, watermark, em-dashes, or slogan footer. Render only
+     the specified reader-facing labels. Choose orientation to fit the relationship, not a default
+     poster. Keep captions outside the artwork. If labels crowd, split the figure before shrinking
+     them. Keep editable SVG when the production method supports it.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Reduce the paragraph
+     introducing compatibility mechanisms. Retain all version floors, exact feature exceptions,
+     direction-of-compatibility qualifications, and the native mechanism table. Keep current prose
+     and this TODO until the actual image is reviewed. Then check alt text against the artwork and
+     retain an accessible summary plus all required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![Enrollment acceptance is separate from feature negotiation, ignored settings, local decisions, and the explicit Linux escrow version check.](assets/a.6-agent-feature-compatibility.webp)
+-->
+
 ### Agent floors
 
 | Capability | Agent | Server | Kind |
@@ -260,7 +297,7 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 | macOS ADE **setup experience** | Orbit 1.35.0 | 4.60.0 | **Fallback.** An older agent is released by the older worker-based path instead, which is a different mechanism rather than an absence |
 | **Web setup experience, Linux** | Orbit 1.48.0 | 4.74.0 | Silent. **The agent refuses to start the flow** when the server does not declare the capability, which is the reverse of every other row |
 | **Web setup experience, Windows** | Orbit 1.49.0 | 4.75.0 | Silent, as above. The two platforms arrived a release apart and are separate boundaries |
-| **End-user authentication** at enrollment, Linux and Windows | Orbit 1.50.0 | 4.77.0 | **Silent, and it fails open.** Below it Fleet allows the enrollment unauthenticated. There is a warning in the server's process log and nothing in Fleet, so an unauthenticated enrollment looks like an ordinary one |
+| **End-user authentication** at enrollment, Linux and Windows | Orbit 1.50.0 | 4.77.0 | **Silent, and it fails open by default.** Below it Fleet allows the enrollment unauthenticated. There is a warning in the server's process log and nothing in Fleet, so an unauthenticated enrollment looks like an ordinary one. **From server 4.91.0 this is a choice**: `mdm.allow_orbit_end_user_auth_bypass` defaults to true, preserving the fail-open, and set to false it refuses these hosts instead ([5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#end-user-authentication)) |
 | Windows on-demand sync, the relaxed poll | Orbit 1.57.0 | 4.87.0 | Fallback. Negotiated, cadence only, and **the one capability flag Fleet persists** |
 | `python_packages` in software inventory | osquery 5.16.0 | not applicable | Fallback, chosen locally. Two complementary queries, so both sides work, and the boundary changes whether packages in user directories are found |
 | `END_USER_EMAIL` as an installer property | Orbit 1.28.0 **when the package is built** | not applicable | Fallback. Falls back to the service command line |
@@ -344,7 +381,7 @@ These are the server side of the capabilities above, **including the two web set
 
 ### Runtime-fetched moving inputs
 
-**A version pin covers the binary, not necessarily everything the binary reads at runtime.** The book's one example is the Fleet MCP server's osquery schema ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)): the binary is built from the 4.90.0 tag and serves the schema embedded in it at startup, but a background refresh then attempts to replace that snapshot with the file from Fleet's `main` branch, roughly two seconds after startup and every 24 hours after by default. Only a successful fetch replaces it; a failed one keeps the copy already in memory, so the schema it validates queries against can end up newer than the tag rather than always being so.
+**A version pin covers the binary, not necessarily everything the binary reads at runtime.** The manual's one example is the Fleet MCP server's osquery schema ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)): the binary is built from the 4.90.0 tag and serves the schema embedded in it at startup, but a background refresh then attempts to replace that snapshot with the file from Fleet's `main` branch, roughly two seconds after startup and every 24 hours after by default. Only a successful fetch replaces it; a failed one keeps the copy already in memory, so the schema it validates queries against can end up newer than the tag rather than always being so.
 
 | | |
 |---|---|

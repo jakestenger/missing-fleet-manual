@@ -165,8 +165,14 @@ verified at the tag, and checked for the claims it makes. `scratchpad/imagepromp
 of that request. Do not hand-edit a prompt and consider it done; a hand-edited prompt is a new claim
 like any other correction, and this project's whole record says those need checking.
 
-Use the Fleet brand palette, in hex, and Cloud City for illustration. Both are in
-`STYLE.md` §13.
+Use `STYLE.md` §13 for the shared visual design rules and the current diagram-production
+section of `HANDOFF.md` for the generation workflow. Include the shared design block in
+each revised HTML prompt so an extracted comment is self-contained. Historical pilot prompts
+in the private companion are examples, not overriding design instructions.
+
+Prompt edits remain editorial drafts until their technical claims and rendered result are
+checked. Preserve current artwork while replacement is pending, then update its alt text
+and retain the editable SVG if one was produced. Mark it `IMAGE-OK` only after rendered review.
 
 New artwork arrives as PNG and gets converted before commit:
 

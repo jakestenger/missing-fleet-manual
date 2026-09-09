@@ -73,9 +73,33 @@ CONSTRUCTOR_CLASS = {
 #   /results/ : the live-query results websocket reads a user token in the
 #   handler (server/service/endpoint_campaigns.go: conn.ReadAuthToken ->
 #   auth.AuthViewer -> reject !vc.CanPerformActions()), not via middleware.
+#   /api/osquery/enroll : the handler skips authorization but will not enroll
+#   without a valid enroll secret (server/service/osquery.go: EnrollOsquery ->
+#   ds.VerifyEnrollSecret, and an HTTP message signature too where the host
+#   already holds an identity certificate).
+#   android_enterprise/pubsub : the handler skips authorization but verifies the
+#   token Google presents against the stored MDMAssetAndroidPubSubToken
+#   (server/mdm/android/service/pubsub.go: authenticatePubSub).
 HANDLER_LOCAL_AUTH = {
     ("GET", "/api/_version_/fleet/results/"):
         "user (session or API token), authenticated inside the websocket handler",
+    ("POST", "/api/osquery/enroll"):
+        "enroll secret, verified inside the handler",
+    ("POST", "/api/v1/fleet/android_enterprise/pubsub"):
+        "Pub/Sub token, verified inside the handler",
+}
+
+# Raw mux routes that install no authentication of any kind. The group's own
+# prose says each raw route carries its own protocol authentication, which is
+# true of the SCEP, MDM and setup routes and false of these: the service
+# discovery handler builds a URL from the path and returns it unconditionally
+# (server/service/handler.go:1375 registerMDMServiceDiscovery), and the
+# apple-app-site-association document is fetched by Apple's CDN with no
+# credential at all (server/service/apple_psso.go:198 pssoAASAHandler).
+RAW_PUBLIC = {
+    "/mdm/apple/service_discovery/{token}",
+    "/mdm/apple/service_discovery",
+    "/.well-known/apple-app-site-association",
 }
 VERBS = ("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD")
 
@@ -541,15 +565,18 @@ for method, path, auth, target, rel, lineno, _ in alias_rows:
 out.append("")
 out.append("## Raw mux routes (MDM protocol and setup)")
 out.append("")
-out.append("Registered directly on the router rather than through an endpointer. Each of these")
-out.append("carries its own protocol authentication (a device-management certificate, a SCEP")
-out.append("challenge, or pre-setup state) rather than a Fleet credential.")
+out.append("Registered directly on the router rather than through an endpointer. Most carry their")
+out.append("own protocol authentication (a device-management certificate, a SCEP challenge, or")
+out.append("pre-setup state) rather than a Fleet credential. Three do not: the two service")
+out.append("discovery paths and the app-site-association document answer any caller, which is what")
+out.append("the protocols that fetch them require, and their rows say so.")
 out.append("")
 out.append("| Method | Path | Auth |")
 out.append("|---|---|---|")
 for method, path, group, hname, rel, lineno, _ in raw_rows:
     comment = f"<!-- {rel}:{lineno}; {group}; handler {hname} -->"
-    out.append(f"| {method} | `{path}` | route-local or protocol {comment}|")
+    label = "none (public)" if path in RAW_PUBLIC else "route-local or protocol"
+    out.append(f"| {method} | `{path}` | {label} {comment}|")
 out.append("")
 if unparsed:
     out.append("## UNPARSED registrations")

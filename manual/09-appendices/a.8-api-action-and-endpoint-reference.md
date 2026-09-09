@@ -3,9 +3,9 @@ title: "API access, versioning, and exposure"
 chapter: "Appendices and indexes"
 section: "A.8"
 sidebar_position: 8
-verified_against: Fleet 4.90.0
-verified_on: 2026-08-29
-verified_source: "drafted against fleet-v4.90.0 (7c428c6e46), with every path in the exposure matrix read from the server's own route registrations rather than from the published reference. Citation ledger at research/section-notes/a.8-notes.md, which records the evidence class of every path and distinguishes the routes Fleet registers from the ones it emits"
+verified_against: Fleet 4.91.0
+verified_on: 2026-09-09
+verified_source: "drafted against fleet-v4.90.0 (7c428c6e46), with every path in the exposure matrix read from the server's own route registrations rather than from the published reference. The complete route catalog was regenerated against fleet-v4.91.0 (35fc1c0244) with build/gen-api-catalog.py, taking the appendix from 560 registered routes to 562; both additions were read back from server/service/handler.go and their handlers at that tag, and cross-checked against the diff of every route-registering file between the two tags, rather than taken from the generator. Citation ledger at research/section-notes/a.8-notes.md, which records the evidence class of every path and distinguishes the routes Fleet registers from the ones it emits. Corrected 2026-09-08 (overnight campaign step 7, round-2 review blocker 1), verified at fleet-v4.91.0 (35fc1c0244): the catalog claimed none of the server's routes is omitted, which `cmd/fleet/serve.go` disproves with eleven root-mux registrations the generator never scans, among them `/enroll`, the over-the-air enrollment page this appendix's own Android baseline tells you to open. The completeness sentence is now scoped to the API router and names what sits above it. Three auth cells were wrong and were fixed in the generator so they cannot drift back: `/api/osquery/enroll` and its alt path verify an enroll secret in the handler (`server/service/osquery.go:112`), the Android Pub/Sub callback verifies Google's token against the stored asset (`server/mdm/android/service/pubsub.go:80-95`), and the two service-discovery paths and the app-site-association document are genuinely public rather than protocol-authenticated (`server/service/handler.go:1375-1400`, `server/service/apple_psso.go:198-217`). Row counts unchanged at 562 registrations, 496 endpointer, 58 aliases, 8 raw mux. Amended again 2026-09-08 (overnight campaign step 7, round-3 review findings 1 and 5), verified at fleet-v4.91.0 (35fc1c0244): the scope sentence written above named the API router as the catalog's boundary, and that is not the boundary it draws. The raw protocol group is bound on the root mux too (`cmd/fleet/serve.go:893,912` hand `rootMux` to registrars in `server/service/handler.go`), and six root-mux paths registered from the Premium tree were in neither the table nor the exclusion list: `/api/v1/fleet/scim/` and `/api/latest/fleet/scim/` (`ee/server/scim/scim.go:283-284`), `/api/fleet/orbit/host_identity/scep` (`ee/server/service/hostidentity/scep.go:103`), `/api/fleet/conditional_access/scep` (`ee/server/service/condaccess/scep.go:85`) and `/api/fleet/conditional_access/idp/metadata` and `/idp/sso` (`ee/server/service/condaccess/idp.go:156-157`). The paragraph now states the real boundary, which is which files the generator reads, and enumerates all fifteen root-mux paths outside it; those are every `rootMux` mount in `serve.go` and every `mux.Handle` in `ee/` at the tag, checked by grep. Also, the `none` legend promised that a row names any handler-local credential, which the invitation and EULA token rows disprove (`server/service/invites.go:332`, `ee/server/service/mdm.go:461,606` all skip authorization and rely on a path token while reading a bare `none`); the legend now says a bare `none` may still require a route-specific token and that the three named cells were read by hand rather than audited. The generated rows are unchanged. Amended again 2026-09-09 (overnight campaign step 7, round-4 review findings 1 and 2), both in the boundary paragraph round 3 rewrote. The catalog was said to read `server/service/handler.go` and four feature-module files and to list every registration found there in three groups, but the deprecated-alias group comes from a sixth file, `server/service/handler_deprecated_paths.go`, read through a separate constant and a separate pass (`build/gen-api-catalog.py:36` and the alias block below it), which the generated header three lines under the prose already named; the paragraph now attributes each group to its own source and says an alias carries the authentication of the path it aliases, which is what both the generator and Fleet's own `deprecatedPathAliases` comment describe. And the 'where a server private key is configured' qualifier governed three paths but gates four: `cmd/fleet/serve.go:919` opens one branch holding `hostidentity.RegisterSCEP`, `condaccess.RegisterSCEP` and `condaccess.RegisterIdP`, whose `else` arm logs that host identity and conditional access SCEP are both unavailable without the key, while the two SCIM mounts above it are Premium-gated only. The qualifier now covers host identity SCEP too, which matters because this paragraph is the only place in the appendix that path appears. The `none` legend also now says the osquery enroll endpoint serves both of its paths (`WithAltPaths` at `server/service/handler.go:1075`). The generated rows are unchanged"
 further_reading:
   - https://fleetdm.com/docs/rest-api/rest-api
   - https://github.com/fleetdm/fleet/blob/fleet-v4.90.0/docs/REST%20API/rest-api.md
@@ -68,6 +68,42 @@ Authorization: Bearer <your token>
 Two ways to obtain one. Through the UI, under **My account** and **Get API token**. Or by calling the login endpoint with an email and password, which returns a token.
 
 **For SSO and MFA users the second route is closed.** Email and password login is disabled for those accounts, so the token has to come from the profile page in the UI. An automation account created for API use is the usual answer, and [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) covers creating one with an explicit role.
+
+
+<!-- IMAGE-TODO: assets/a.8-api-token-entry-points.webp
+     QUESTION: How does a user obtain a token, and which account's permissions does it carry?
+     PROMPT: DIAGRAM: Two token-acquisition paths: Signed-in profile page → Get API token; Eligible
+     email/password login → Returned token. Mark SSO/MFA accounts as using the profile-page route,
+     with the email/password route closed for them. Both paths converge on Authorization: Bearer
+     <token> → Fleet user account → Role + scope checks. Use a dedicated API-only account as the
+     automation example, not a shared personal identity. This covers user-authenticated API calls
+     only; do not apply the bearer-token model to device, osquery, or MDM protocol endpoints.
+     DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
+     vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
+     titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
+     720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px node
+     padding, and consistent corner radii. Center short node names; left-align multiline
+     explanations. Never shrink text to fit. Use #F9FAFC background, #192147 headings and primary
+     connectors, #515774 text, #8B8FA2 secondary connectors, #C5C7D1 borders, and #D3E8F3 or #E8F1F6
+     quiet fills. Use #5CABDF and #C98DEF for named categories, #3AEFC4 for labelled positive
+     outcomes, #D66C7B for labelled failures, and #FAA669 for labelled cautions. Tint large panels
+     to 20 to 25 percent; full strength is for small marks. Keep text navy or slate, or off-white on
+     a navy anchor. Never rely on colour alone. Use one arrowhead shape, consistent stroke weights,
+     box-edge termination, and labelled branches and return paths. Keep connectors clear of text. No
+     gradients, shadows, decorative icons, logo, watermark, em-dashes, or slogan footer. Render only
+     the specified reader-facing labels. Choose orientation to fit the relationship, not a default
+     poster. Keep captions outside the artwork. If labels crowd, split the figure before shrinking
+     them. Keep editable SVG when the production method supports it.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Condense the two
+     token-acquisition paragraphs and account/credential distinction. Keep the exact header example,
+     endpoint authentication catalog, and automation-account instructions. Keep current prose and
+     this TODO until the actual image is reviewed. Then check alt text against the artwork and
+     retain an accessible summary plus all required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![Profile-page and eligible password-login paths issue a token belonging to a Fleet account; SSO and MFA users use the profile-page path.](assets/a.8-api-token-entry-points.webp)
+-->
 
 ## Version prefixes expand for some routes and not others
 
@@ -184,7 +220,7 @@ The ingress question is therefore not "which paths moved" but **"which hostname 
 
 ## Data inventory and trust boundaries
 
-![Reference](../_assets/icons/reference.svg) A privacy or data-protection review asks six questions of each kind of data: where it comes from, how it travels, where it is stored, how long it is kept, who outside Fleet receives it, and which setting controls that. The book answers all six, but per data class in the chapter that owns each one. This is the route in: it names the data Fleet holds and points each class at the chapter that governs it, the way the exposure matrix above does for network paths.
+![Reference](../_assets/icons/reference.svg) A privacy or data-protection review asks six questions of each kind of data: where it comes from, how it travels, where it is stored, how long it is kept, who outside Fleet receives it, and which setting controls that. The manual answers all six, but per data class in the chapter that owns each one. This is the route in: it names the data Fleet holds and points each class at the chapter that governs it, the way the exposure matrix above does for network paths.
 
 **Where Fleet keeps state.** MySQL is the system of record and holds nearly everything: configuration, hosts, policies, activity, and escrowed credentials, including the Apple certificate-authority material, encrypted. Installer bytes, icons, and bootstrap packages live in file or object storage, referenced from MySQL, and where that is is a deployment choice. Redis holds transient coordination state such as live report results and pending notification sets. Some of the most sensitive material lives outside all three, in your configuration rather than the database: the server private key, the Windows enrollment identity and its key, and your other certificates. [7.2](../07-operate-fleet/7.2-back-up-and-restore-service-state.md) is the authority on that split and on the three separate disk-encryption escrow chains. Retention and cleanup for each class is set in the chapter that owns it.
 
@@ -236,13 +272,15 @@ Statuses raised around a handler rather than by it sit outside this table: a mis
 
 ## Where the rest lives
 
-![Reference](../_assets/icons/reference.svg) This appendix gives the method, path and authentication class for each action, and the shared envelope above; it does not reproduce per-endpoint request bodies, response fields, or parameters. Fleet's own REST API reference at `fleetdm.com/docs/rest-api/rest-api` is the best available account of those, but it is hand-maintained and describes the current release rather than 4.90.0 specifically, so a mismatch against what you observe is a version question, not necessarily an error in either source; the version-pinned copy of that same reference, checked out at the tag this book verifies against, is linked under further reading. Endpoints intended for contributors rather than administrators are documented separately in the Fleet repository.
+![Reference](../_assets/icons/reference.svg) This appendix gives the method, path and authentication class for each action, and the shared envelope above; it does not reproduce per-endpoint request bodies, response fields, or parameters. Fleet's own REST API reference at `fleetdm.com/docs/rest-api/rest-api` is the best available account of those, but it is hand-maintained and describes the current release rather than 4.90.0 specifically, so a mismatch against what you observe is a version question, not necessarily an error in either source; the version-pinned copy of that same reference, checked out at fleet-v4.90.0, is linked under further reading. Endpoints intended for contributors rather than administrators are documented separately in the Fleet repository.
 
 Which actions each role may perform is [a.4](a.4-roles-and-permissions-matrix.md). Which surface can perform one at all is [a.5](a.5-interface-index.md), which carries every action against all four interfaces.
 
 ## Version notes
 
-![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.90.0. `v1` and `2022-04` are what the **core** module declares at this release; other modules declare their own, and `latest` is added to whatever set each declares.
+![Reference](../_assets/icons/reference.svg) Verified against Fleet 4.91.0. `v1` and `2022-04` are what the **core** module declares at this release; other modules declare their own, and `latest` is added to whatever set each declares.
+
+**The catalog at the end of this appendix carries 562 routes at this release, two more than 4.90.0, and nothing was removed.** `POST /api/_version_/fleet/hosts/release_ab` takes a list of host IDs and releases those devices from Apple Business, calling Apple's disown operation once per ABM token the batch touches. It authenticates as a user, requires a global or team admin, is Premium only, and caps a single call at 32,000 host IDs. Its response carries a status per host, so an ineligible device reports its own reason and the rest of the batch still runs. `POST /api/fleet/orbit/managed_local_account` is how fleetd escrows the password it generated for a Windows managed local account, or reports that it could not create one. It authenticates with the orbit node key and is registered behind the Windows MDM check, so it fails fast when Windows MDM is not configured and refuses a host that is not enrolled into it.
 
 **The exposure matrix above is deliberately selective, not a complete inventory of everything Fleet serves.** The complete list of routes the server registers is the catalog at the end of this appendix. Fleet also embeds a catalogue of method-and-path entries which is sometimes mistaken for a route inventory, and it is not: **it is the allowlist consulted for API-only accounts that carry a non-empty endpoint restriction list**, and it constrains nobody else. **It also does not constrain every route those accounts can reach**: the check is wired into the API endpoint chains, so any route served outside them is beyond it. Fleet's debug tree is registered on the root with its own authentication, and the live-query results stream authenticates its own bearer inside the websocket handler, so a restricted account reaches both whether or not the list names them ([a.4](a.4-roles-and-permissions-matrix.md)). Its own validation runs in one direction, checking that every catalogue entry has a registered route, which establishes nothing about the reverse, and Fleet separately registers backward-compatible aliases the catalogue does not carry. The catalogue's size is withheld here rather than reported as though it were a route count, because deriving it honestly requires running it through Fleet's own loader rather than counting entries.
 
@@ -272,16 +310,22 @@ Copy the literal `method` and `path` values into the API-only user's own list, a
 
 ## The complete route catalog
 
-![Reference](../_assets/icons/reference.svg) Like the configuration catalog in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog), this table is generated rather than written. It is read directly from the route registrations the server makes as it builds its router, at the release this book is pinned to, so it lists what the server actually serves rather than what the REST reference documents. Where the two disagree, the catalog is the authority, for the same reason: it is the registration the running server performs.
+![Reference](../_assets/icons/reference.svg) Like the configuration catalog in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog), this table is generated rather than written. It is read directly from the route registrations the server makes as it builds its router, at the release this manual is pinned to, so it lists what the server actually serves rather than what the REST reference documents. Where the two disagree, the catalog is the authority, for the same reason: it is the registration the running server performs.
 
-It answers a different question from the exposure matrix above. The matrix says which paths a capability requires you to reach; this says which paths exist at all, and what each one asks a caller to present. The Auth column uses the same vocabulary as the caller model at the top of this appendix: a user token, a host, orbit or device key, or nothing where the route is reached before any credential exists. The device-management protocol paths are registered directly on the router and carry their own protocol authentication; they are grouped last.
+It answers a different question from the exposure matrix above. The matrix says which paths a capability requires you to reach; this says which paths the API surface serves, and what each one asks a caller to present. The Auth column uses the same vocabulary as the caller model at the top of this appendix: a user token, a host, orbit or device key, or nothing where the route is reached before any credential exists. The device-management protocol paths are registered directly on the router and mostly carry their own protocol authentication; they are grouped last.
 
-Every route the server registers is listed, in three groups: the endpointer routes, the deprecated aliases still served, and the raw protocol routes. None is omitted. `_version_` stands for the API-version prefixes a route expands to, which [Version prefixes expand for some routes and not others](#version-prefixes-expand-for-some-routes-and-not-others) explains. Each route's handler and source location are kept in its HTML comment, not on the page.
+**`none` in the Auth column means the router installs no Fleet credential check, not that the route is open.** Several of those routes verify a credential of their own inside the handler, and a bare `none` does not tell you which. The commonest shape is a one-time token carried in the path, as an end-user EULA, invitation or installer-download link does: those rows read `none` like any other, and the handler is what checks the token and its expiry. Where the Auth column does name a handler-local credential, as it does for the live-query results websocket, the osquery enroll endpoint on both of its paths and the Android Pub/Sub callback, that is a route read by hand rather than the product of an audit of every `none`. **Treat `none` as a question to answer at the handler, not as an answer.**
 
-<!-- To regenerate: python3 build/gen-api-catalog.py --out FILE  (FLEET_SRC overrides the source checkout). Pinned to fleet-v4.90.0 (7c428c6e46). -->
+**What decides whether a route is in this table is which file registers it, not which router it lands on.** The catalog reads six files, and its three groups do not all come from the same ones. The endpointer routes and the raw protocol routes are every registration made in `server/service/handler.go` and the four feature-module handler files the generated header below names. The deprecated aliases still served come from a sixth file, `server/service/handler_deprecated_paths.go`, which is not a set of registrations at all but a table mapping each retired path onto the current one that answers for it, so an alias row carries the authentication of the path it aliases. The raw protocol routes are the reason the router is not the boundary: `/mdm/apple/scep`, `/mdm/apple/mdm`, `/mdm/scep/proxy/` and their neighbours are bound on the server's root mux rather than under `/api/`, and they are in the table because `handler.go` is what binds them.
+
+**What the catalog therefore misses is everything bound on that root mux from somewhere else, which at this release is fifteen paths.** Nine come from `cmd/fleet/serve.go`, which mounts the whole API under `/api/` and beside it registers the operator surfaces this appendix excludes by policy (`/healthz`, `/version`, `/metrics`, `/debug/`), the web interface and its assets (`/`, `/assets/`), the two literal `scim/details` shims that let a more specific pattern win, and **`/enroll`, the end-user over-the-air enrollment page the Android baseline above tells you to open**. The other six come from Fleet's Premium tree, which the generator does not read at all: SCIM provisioning at `/api/v1/fleet/scim/` and `/api/latest/fleet/scim/`, and, **where a server private key is configured**, host identity SCEP at `/api/fleet/orbit/host_identity/scep` and conditional access at `/api/fleet/conditional_access/scep`, `/api/fleet/conditional_access/idp/metadata` and `/api/fleet/conditional_access/idp/sso`. Those last four are registered in the same branch, so without the key none of them exists and the server says so in its startup log rather than failing later at the path. Five of the six are named in [What has to be reachable, by capability](#what-has-to-be-reachable-by-capability) above, which is where a reader opening a firewall needs them: the two SCIM mounts and the three conditional-access paths. The host identity SCEP path is named nowhere else in this appendix, so a deployment using host identity certificates has to take it from here. None of the six is in the table below.
+
+`_version_` stands for the API-version prefixes a route expands to, which [Version prefixes expand for some routes and not others](#version-prefixes-expand-for-some-routes-and-not-others) explains. Each route's handler and source location are kept in its HTML comment, not on the page.
+
+<!-- To regenerate: python3 build/gen-api-catalog.py --out FILE  (FLEET_SRC overrides the source checkout). Pinned to fleet-v4.91.0 (35fc1c0244). -->
 <!-- GENERATED by build/gen-api-catalog.py; do not edit by hand.
-     source: server/service/handler.go, server/mdm/android/service/handler.go, server/activity/internal/service/handler.go, server/mdm/acme/internal/service/handler.go, server/chart/internal/service/handler.go + handler_deprecated_paths.go @ 7c428c6e467d4dd642b0375350eecca7138746d1
-     registrations found: 560; routes parsed: 560 (494 endpointer incl. alt paths, 58 deprecated aliases, 8 raw mux); unparsed: 0 -->
+     source: server/service/handler.go, server/mdm/android/service/handler.go, server/activity/internal/service/handler.go, server/mdm/acme/internal/service/handler.go, server/chart/internal/service/handler.go + handler_deprecated_paths.go @ 35fc1c0244907c157a64d05d4ec291c0a3a20e32
+     registrations found: 562; routes parsed: 562 (496 endpointer incl. alt paths, 58 deprecated aliases, 8 raw mux); unparsed: 0 -->
 
 ### API endpoints
 
@@ -518,253 +562,255 @@ Every route the server registers is listed, in three groups: the endpointer rout
 | POST | `/api/_version_/fleet/hosts/{id:[0-9]+}/recovery_lock_password/rotate` | user (session or API token) <!-- server/service/handler.go:596; handler rotateRecoveryLockPasswordEndpoint -->|
 | GET | `/api/_version_/fleet/hosts/{id:[0-9]+}/managed_account_password` | user (session or API token) <!-- server/service/handler.go:597; handler getHostManagedAccountPasswordEndpoint -->|
 | POST | `/api/_version_/fleet/hosts/{id:[0-9]+}/managed_account_password/rotate` | user (session or API token) <!-- server/service/handler.go:598; handler rotateManagedLocalAccountPasswordEndpoint -->|
-| POST | `/api/_version_/fleet/autofill/policy` | user (session or API token) <!-- server/service/handler.go:601; handler autofillPoliciesEndpoint -->|
-| PUT | `/api/_version_/fleet/spec/secret_variables` | user (session or API token) <!-- server/service/handler.go:604; handler createSecretVariablesEndpoint -->|
-| POST | `/api/_version_/fleet/custom_variables` | user (session or API token) <!-- server/service/handler.go:605; handler createSecretVariableEndpoint -->|
-| GET | `/api/_version_/fleet/custom_variables` | user (session or API token) <!-- server/service/handler.go:606; handler listSecretVariablesEndpoint -->|
-| DELETE | `/api/_version_/fleet/custom_variables/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:607; handler deleteSecretVariableEndpoint -->|
-| GET | `/api/_version_/fleet/custom_host_vitals` | user (session or API token) <!-- server/service/handler.go:610; handler listCustomHostVitalsEndpoint -->|
-| POST | `/api/_version_/fleet/custom_host_vitals` | user (session or API token) <!-- server/service/handler.go:611; handler createCustomHostVitalEndpoint -->|
-| PATCH | `/api/_version_/fleet/custom_host_vitals/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:612; handler updateCustomHostVitalEndpoint -->|
-| DELETE | `/api/_version_/fleet/custom_host_vitals/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:613; handler deleteCustomHostVitalEndpoint -->|
-| PUT | `/api/_version_/fleet/hosts/{host_id:[0-9]+}/custom_host_vitals/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:614; handler setHostCustomHostVitalValueEndpoint -->|
-| PUT | `/api/_version_/fleet/spec/custom_host_vitals` | user (session or API token) <!-- server/service/handler.go:615; handler upsertCustomHostVitalsEndpoint -->|
-| GET | `/api/_version_/fleet/rest_api` | user (session or API token) <!-- server/service/handler.go:618; handler listAPIEndpointsEndpoint -->|
-| GET | `/api/_version_/fleet/scim/details` | user (session or API token) <!-- server/service/handler.go:621; handler getScimDetailsEndpoint -->|
-| POST | `/api/_version_/fleet/conditional-access/microsoft` | user (session or API token) <!-- server/service/handler.go:624; handler conditionalAccessMicrosoftCreateEndpoint -->|
-| POST | `/api/_version_/fleet/conditional-access/microsoft/confirm` | user (session or API token) <!-- server/service/handler.go:625; handler conditionalAccessMicrosoftConfirmEndpoint -->|
-| DELETE | `/api/_version_/fleet/conditional-access/microsoft` | user (session or API token) <!-- server/service/handler.go:626; handler conditionalAccessMicrosoftDeleteEndpoint -->|
-| GET | `/api/_version_/fleet/conditional_access/idp/signing_cert` | user (session or API token) <!-- server/service/handler.go:629; handler conditionalAccessGetIdPSigningCertEndpoint -->|
-| GET | `/api/_version_/fleet/conditional_access/idp/apple/profile` | user (session or API token) <!-- server/service/handler.go:630; handler conditionalAccessGetIdPAppleProfileEndpoint -->|
-| PATCH | `/api/_version_/fleet/mdm/apple/setup` | user (session or API token) <!-- server/service/handler.go:634; handler updateMDMAppleSetupEndpoint -->|
-| PATCH | `/api/_version_/fleet/setup_experience` | user (session or API token) <!-- server/service/handler.go:635; handler updateMDMAppleSetupEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/apple/enqueue` | user (session or API token) <!-- server/service/handler.go:649; handler enqueueMDMAppleCommandEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/commandresults` | user (session or API token) <!-- server/service/handler.go:653; handler getMDMAppleCommandResultsEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/commands` | user (session or API token) <!-- server/service/handler.go:657; handler listMDMAppleCommandsEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/profiles/{profile_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:661; handler getMDMAppleConfigProfileEndpoint -->|
-| DELETE | `/api/_version_/fleet/mdm/apple/profiles/{profile_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:662; handler deleteMDMAppleConfigProfileEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/apple/profiles` | user (session or API token) <!-- server/service/handler.go:663; handler newMDMAppleConfigProfileEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/profiles` | user (session or API token) <!-- server/service/handler.go:664; handler listMDMAppleConfigProfilesEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/filevault/summary` | user (session or API token) <!-- server/service/handler.go:669; handler getMdmAppleFileVaultSummaryEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/profiles/summary` | user (session or API token) <!-- server/service/handler.go:674; handler getMDMAppleProfilesSummaryEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/apple/enrollment_profile` | user (session or API token) <!-- server/service/handler.go:678; handler createMDMAppleSetupAssistantEndpoint -->|
-| POST | `/api/_version_/fleet/enrollment_profiles/automatic` | user (session or API token) <!-- server/service/handler.go:679; handler createMDMAppleSetupAssistantEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/enrollment_profile` | user (session or API token) <!-- server/service/handler.go:683; handler getMDMAppleSetupAssistantEndpoint -->|
-| GET | `/api/_version_/fleet/enrollment_profiles/automatic` | user (session or API token) <!-- server/service/handler.go:684; handler getMDMAppleSetupAssistantEndpoint -->|
-| GET | `/api/_version_/fleet/enrollment_profiles/automatic/default` | user (session or API token) <!-- server/service/handler.go:685; handler getDefaultMDMAppleSetupAssistantProfileEndpoint -->|
-| DELETE | `/api/_version_/fleet/mdm/apple/enrollment_profile` | user (session or API token) <!-- server/service/handler.go:689; handler deleteMDMAppleSetupAssistantEndpoint -->|
-| DELETE | `/api/_version_/fleet/enrollment_profiles/automatic` | user (session or API token) <!-- server/service/handler.go:690; handler deleteMDMAppleSetupAssistantEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/apple/installers` | user (session or API token) <!-- server/service/handler.go:695; handler uploadAppleInstallerEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/installers/{installer_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:696; handler getAppleInstallerEndpoint -->|
-| DELETE | `/api/_version_/fleet/mdm/apple/installers/{installer_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:697; handler deleteAppleInstallerEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/installers` | user (session or API token) <!-- server/service/handler.go:698; handler listMDMAppleInstallersEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/devices` | user (session or API token) <!-- server/service/handler.go:699; handler listMDMAppleDevicesEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/manual_enrollment_profile` | user (session or API token) <!-- server/service/handler.go:704; handler getManualEnrollmentProfileEndpoint -->|
-| GET | `/api/_version_/fleet/enrollment_profiles/manual` | user (session or API token) <!-- server/service/handler.go:705; handler getManualEnrollmentProfileEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/bootstrap` | user (session or API token) <!-- server/service/handler.go:712; handler uploadBootstrapPackageEndpoint -->|
-| POST | `/api/_version_/fleet/bootstrap` | user (session or API token) <!-- server/service/handler.go:713; handler uploadBootstrapPackageEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/bootstrap/{fleet_id:[0-9]+}/metadata` | user (session or API token) <!-- server/service/handler.go:717; handler bootstrapPackageMetadataEndpoint -->|
-| GET | `/api/_version_/fleet/bootstrap/{fleet_id:[0-9]+}/metadata` | user (session or API token) <!-- server/service/handler.go:718; handler bootstrapPackageMetadataEndpoint -->|
-| DELETE | `/api/_version_/fleet/mdm/bootstrap/{fleet_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:722; handler deleteBootstrapPackageEndpoint -->|
-| DELETE | `/api/_version_/fleet/bootstrap/{fleet_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:723; handler deleteBootstrapPackageEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/bootstrap/summary` | user (session or API token) <!-- server/service/handler.go:727; handler getMDMAppleBootstrapPackageSummaryEndpoint -->|
-| GET | `/api/_version_/fleet/bootstrap/summary` | user (session or API token) <!-- server/service/handler.go:728; handler getMDMAppleBootstrapPackageSummaryEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/apple/bootstrap` | user (session or API token) <!-- server/service/handler.go:732; handler uploadBootstrapPackageEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/bootstrap/{fleet_id:[0-9]+}/metadata` | user (session or API token) <!-- server/service/handler.go:734; handler bootstrapPackageMetadataEndpoint -->|
-| DELETE | `/api/_version_/fleet/mdm/apple/bootstrap/{fleet_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:736; handler deleteBootstrapPackageEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/bootstrap/summary` | user (session or API token) <!-- server/service/handler.go:738; handler getMDMAppleBootstrapPackageSummaryEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/hosts/{id:[0-9]+}/lock` | user (session or API token) <!-- server/service/handler.go:744; handler deviceLockEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/hosts/{id:[0-9]+}/wipe` | user (session or API token) <!-- server/service/handler.go:745; handler deviceWipeEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/hosts/{id:[0-9]+}/profiles` | user (session or API token) <!-- server/service/handler.go:749; handler getHostProfilesEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple` | user (session or API token) <!-- server/service/handler.go:753; handler getAppleMDMEndpoint -->|
-| GET | `/api/_version_/fleet/apns` | user (session or API token) <!-- server/service/handler.go:754; handler getAppleMDMEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/setup/eula` | user (session or API token) <!-- server/service/handler.go:760; handler createMDMEULAEndpoint -->|
-| POST | `/api/_version_/fleet/setup_experience/eula` | user (session or API token) <!-- server/service/handler.go:761; handler createMDMEULAEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/setup/eula/metadata` | user (session or API token) <!-- server/service/handler.go:765; handler getMDMEULAMetadataEndpoint -->|
-| GET | `/api/_version_/fleet/setup_experience/eula/metadata` | user (session or API token) <!-- server/service/handler.go:766; handler getMDMEULAMetadataEndpoint -->|
-| DELETE | `/api/_version_/fleet/mdm/setup/eula/{token}` | user (session or API token) <!-- server/service/handler.go:770; handler deleteMDMEULAEndpoint -->|
-| DELETE | `/api/_version_/fleet/setup_experience/eula/{token}` | user (session or API token) <!-- server/service/handler.go:771; handler deleteMDMEULAEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/apple/setup/eula` | user (session or API token) <!-- server/service/handler.go:774; handler createMDMEULAEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/setup/eula/metadata` | user (session or API token) <!-- server/service/handler.go:776; handler getMDMEULAMetadataEndpoint -->|
-| DELETE | `/api/_version_/fleet/mdm/apple/setup/eula/{token}` | user (session or API token) <!-- server/service/handler.go:778; handler deleteMDMEULAEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/apple/profiles/preassign` | user (session or API token) <!-- server/service/handler.go:780; handler preassignMDMAppleProfileEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/apple/profiles/match` | user (session or API token) <!-- server/service/handler.go:781; handler matchMDMApplePreassignmentEndpoint -->|
-| GET | `/api/_version_/fleet/assets` | user (session or API token) <!-- server/service/handler.go:784; handler listAppleDDMAssetsEndpoint -->|
-| GET | `/api/_version_/fleet/assets/{asset_uuid}` | user (session or API token) <!-- server/service/handler.go:785; handler getAppleDDMAssetEndpoint -->|
-| POST | `/api/_version_/fleet/assets` | user (session or API token) <!-- server/service/handler.go:786; handler createAppleDDMAssetEndpoint -->|
-| DELETE | `/api/_version_/fleet/assets/{asset_uuid}` | user (session or API token) <!-- server/service/handler.go:787; handler deleteAppleDDMAssetEndpoint -->|
-| POST | `/api/_version_/fleet/assets/batch` | user (session or API token) <!-- server/service/handler.go:788; handler batchSetAppleDDMAssetsEndpoint -->|
-| GET | `/api/_version_/fleet/hosts/{id:[0-9]+}/configuration_profiles` | user (session or API token) <!-- server/service/handler.go:792; handler getHostProfilesEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/commands/run` | user (session or API token) <!-- server/service/handler.go:796; handler runMDMCommandEndpoint -->|
-| POST | `/api/_version_/fleet/commands/run` | user (session or API token) <!-- server/service/handler.go:797; handler runMDMCommandEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/commandresults` | user (session or API token) <!-- server/service/handler.go:801; handler getMDMCommandResultsEndpoint -->|
-| GET | `/api/_version_/fleet/commands/results` | user (session or API token) <!-- server/service/handler.go:802; handler getMDMCommandResultsEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/commands` | user (session or API token) <!-- server/service/handler.go:806; handler listMDMCommandsEndpoint -->|
-| GET | `/api/_version_/fleet/commands` | user (session or API token) <!-- server/service/handler.go:807; handler listMDMCommandsEndpoint -->|
-| PATCH | `/api/_version_/fleet/mdm/hosts/{id:[0-9]+}/unenroll` | user (session or API token) <!-- server/service/handler.go:811; handler mdmUnenrollEndpoint -->|
-| DELETE | `/api/_version_/fleet/hosts/{id:[0-9]+}/mdm` | user (session or API token) <!-- server/service/handler.go:812; handler mdmUnenrollEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/disk_encryption/summary` | user (session or API token) <!-- server/service/handler.go:816; handler getMDMDiskEncryptionSummaryEndpoint -->|
-| GET | `/api/_version_/fleet/disk_encryption` | user (session or API token) <!-- server/service/handler.go:817; handler getMDMDiskEncryptionSummaryEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/hosts/{id:[0-9]+}/encryption_key` | user (session or API token) <!-- server/service/handler.go:821; handler getHostEncryptionKey -->|
-| GET | `/api/_version_/fleet/hosts/{id:[0-9]+}/encryption_key` | user (session or API token) <!-- server/service/handler.go:822; handler getHostEncryptionKey -->|
-| GET | `/api/_version_/fleet/mdm/profiles/summary` | user (session or API token) <!-- server/service/handler.go:826; handler getMDMProfilesSummaryEndpoint -->|
-| GET | `/api/_version_/fleet/configuration_profiles/summary` | user (session or API token) <!-- server/service/handler.go:827; handler getMDMProfilesSummaryEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/profiles/{profile_uuid}` | user (session or API token) <!-- server/service/handler.go:831; handler getMDMConfigProfileEndpoint -->|
-| GET | `/api/_version_/fleet/configuration_profiles/{profile_uuid}` | user (session or API token) <!-- server/service/handler.go:832; handler getMDMConfigProfileEndpoint -->|
-| DELETE | `/api/_version_/fleet/mdm/profiles/{profile_uuid}` | user (session or API token) <!-- server/service/handler.go:836; handler deleteMDMConfigProfileEndpoint -->|
-| DELETE | `/api/_version_/fleet/configuration_profiles/{profile_uuid}` | user (session or API token) <!-- server/service/handler.go:837; handler deleteMDMConfigProfileEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/profiles` | user (session or API token) <!-- server/service/handler.go:841; handler listMDMConfigProfilesEndpoint -->|
-| GET | `/api/_version_/fleet/configuration_profiles` | user (session or API token) <!-- server/service/handler.go:842; handler listMDMConfigProfilesEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/profiles` | user (session or API token) <!-- server/service/handler.go:846; handler newMDMConfigProfileEndpoint -->|
-| POST | `/api/_version_/fleet/configuration_profiles` | user (session or API token) <!-- server/service/handler.go:847; handler newMDMConfigProfileEndpoint -->|
-| PATCH | `/api/_version_/fleet/configuration_profiles/{profile_uuid}` | user (session or API token) <!-- server/service/handler.go:848; handler updateMDMConfigProfileEndpoint -->|
-| POST | `/api/_version_/fleet/configuration_profiles/batch` | user (session or API token) <!-- server/service/handler.go:850; handler batchModifyMDMConfigProfilesEndpoint -->|
-| POST | `/api/_version_/fleet/hosts/{host_id:[0-9]+}/configuration_profiles/resend/{profile_uuid}` | user (session or API token) <!-- server/service/handler.go:854; handler resendHostMDMProfileEndpoint -->|
-| POST | `/api/_version_/fleet/hosts/{host_id:[0-9]+}/configuration_profiles/{profile_uuid}/resend` | user (session or API token) <!-- server/service/handler.go:855; handler resendHostMDMProfileEndpoint -->|
-| POST | `/api/_version_/fleet/hosts/{host_id:[0-9]+}/name_template/resend` | user (session or API token) <!-- server/service/handler.go:856; handler resendHostNameTemplateEndpoint -->|
-| POST | `/api/_version_/fleet/configuration_profiles/resend/batch` | user (session or API token) <!-- server/service/handler.go:857; handler batchResendMDMProfileToHostsEndpoint -->|
-| GET | `/api/_version_/fleet/configuration_profiles/{profile_uuid}/status` | user (session or API token) <!-- server/service/handler.go:858; handler getMDMConfigProfileStatusEndpoint -->|
-| PATCH | `/api/_version_/fleet/mdm/apple/settings` | user (session or API token) <!-- server/service/handler.go:862; handler updateMDMAppleSettingsEndpoint -->|
-| POST | `/api/_version_/fleet/disk_encryption` | user (session or API token) <!-- server/service/handler.go:863; handler updateDiskEncryptionEndpoint -->|
-| POST | `/api/_version_/fleet/host_name_template` | user (session or API token) <!-- server/service/handler.go:864; handler updateHostNameTemplateEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/apple/request_csr` | user (session or API token) <!-- server/service/handler.go:871; handler requestMDMAppleCSREndpoint -->|
-| POST | `/api/_version_/fleet/mdm/apple/dep/key_pair` | user (session or API token) <!-- server/service/handler.go:874; handler newMDMAppleDEPKeyPairEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/ab_public_key` | user (session or API token) <!-- server/service/handler.go:875; handler generateABMKeyPairEndpoint -->|
-| POST | `/api/_version_/fleet/ab_tokens` | user (session or API token) <!-- server/service/handler.go:876; handler uploadABMTokenEndpoint -->|
-| DELETE | `/api/_version_/fleet/ab_tokens/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:877; handler deleteABMTokenEndpoint -->|
-| GET | `/api/_version_/fleet/ab_tokens` | user (session or API token) <!-- server/service/handler.go:878; handler listABMTokensEndpoint -->|
-| GET | `/api/_version_/fleet/ab_tokens/count` | user (session or API token) <!-- server/service/handler.go:879; handler countABMTokensEndpoint -->|
-| PATCH | `/api/_version_/fleet/ab_tokens/{id:[0-9]+}/fleets` | user (session or API token) <!-- server/service/handler.go:880; handler updateABMTokenTeamsEndpoint -->|
-| PATCH | `/api/_version_/fleet/ab_tokens/{id:[0-9]+}/renew` | user (session or API token) <!-- server/service/handler.go:881; handler renewABMTokenEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/request_csr` | user (session or API token) <!-- server/service/handler.go:883; handler getMDMAppleCSREndpoint -->|
-| POST | `/api/_version_/fleet/mdm/apple/apns_certificate` | user (session or API token) <!-- server/service/handler.go:884; handler uploadMDMAppleAPNSCertEndpoint -->|
-| DELETE | `/api/_version_/fleet/mdm/apple/apns_certificate` | user (session or API token) <!-- server/service/handler.go:885; handler deleteMDMAppleAPNSCertEndpoint -->|
-| GET | `/api/_version_/fleet/vpp_tokens` | user (session or API token) <!-- server/service/handler.go:888; handler getVPPTokens -->|
-| POST | `/api/_version_/fleet/vpp_tokens` | user (session or API token) <!-- server/service/handler.go:889; handler uploadVPPTokenEndpoint -->|
-| PATCH | `/api/_version_/fleet/vpp_tokens/{id}/fleets` | user (session or API token) <!-- server/service/handler.go:890; handler patchVPPTokensTeams -->|
-| PATCH | `/api/_version_/fleet/vpp_tokens/{id}/renew` | user (session or API token) <!-- server/service/handler.go:891; handler patchVPPTokenRenewEndpoint -->|
-| DELETE | `/api/_version_/fleet/vpp_tokens/{id}` | user (session or API token) <!-- server/service/handler.go:892; handler deleteVPPToken -->|
-| POST | `/api/_version_/fleet/software/app_store_apps/batch` | user (session or API token) <!-- server/service/handler.go:895; handler batchAssociateAppStoreAppsEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple_bm` | user (session or API token) <!-- server/service/handler.go:899; handler getAppleBMEndpoint -->|
-| GET | `/api/_version_/fleet/abm` | user (session or API token) <!-- server/service/handler.go:901; handler getAppleBMEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/apple/profiles/batch` | user (session or API token) <!-- server/service/handler.go:910; handler batchSetMDMAppleProfilesEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/profiles/batch` | user (session or API token) <!-- server/service/handler.go:915; handler batchSetMDMProfilesEndpoint -->|
-| POST | `/api/_version_/fleet/certificate_authorities` | user (session or API token) <!-- server/service/handler.go:918; handler createCertificateAuthorityEndpoint -->|
-| GET | `/api/_version_/fleet/certificate_authorities` | user (session or API token) <!-- server/service/handler.go:919; handler listCertificateAuthoritiesEndpoint -->|
-| GET | `/api/_version_/fleet/certificate_authorities/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:920; handler getCertificateAuthorityEndpoint -->|
-| DELETE | `/api/_version_/fleet/certificate_authorities/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:921; handler deleteCertificateAuthorityEndpoint -->|
-| PATCH | `/api/_version_/fleet/certificate_authorities/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:922; handler updateCertificateAuthorityEndpoint -->|
-| POST | `/api/_version_/fleet/certificate_authorities/{id:[0-9]+}/request_certificate` | user (session or API token) <!-- server/service/handler.go:923; handler requestCertificateEndpoint -->|
-| POST | `/api/_version_/fleet/spec/certificate_authorities` | user (session or API token) <!-- server/service/handler.go:924; handler batchApplyCertificateAuthoritiesEndpoint -->|
-| GET | `/api/_version_/fleet/spec/certificate_authorities` | user (session or API token) <!-- server/service/handler.go:925; handler getCertificateAuthoritiesSpecEndpoint -->|
-| POST | `/api/_version_/fleet/software/web_apps` | user (session or API token) <!-- server/service/handler.go:928; handler createAndroidWebAppEndpoint -->|
-| GET | `/api/_version_/fleet/device/{token}` | device (device token) <!-- server/service/handler.go:939; handler getDeviceHostEndpoint -->|
-| GET | `/api/_version_/fleet/device/{token}/desktop` | device (device token) <!-- server/service/handler.go:940; handler getFleetDesktopEndpoint -->|
-| HEAD | `/api/_version_/fleet/device/{token}/ping` | device (device token) <!-- server/service/handler.go:941; handler devicePingEndpoint -->|
-| POST | `/api/_version_/fleet/device/{token}/refetch` | device (device token) <!-- server/service/handler.go:942; handler refetchDeviceHostEndpoint -->|
-| GET | `/api/_version_/fleet/device/{token}/device_mapping` | device (device token) <!-- server/service/handler.go:944; handler listDeviceHostDeviceMappingEndpoint -->|
-| GET | `/api/_version_/fleet/device/{token}/macadmins` | device (device token) <!-- server/service/handler.go:945; handler getDeviceMacadminsDataEndpoint -->|
-| GET | `/api/_version_/fleet/device/{token}/policies` | device (device token) <!-- server/service/handler.go:946; handler listDevicePoliciesEndpoint -->|
-| GET | `/api/_version_/fleet/device/{token}/transparency` | device (device token) <!-- server/service/handler.go:947; handler transparencyURL -->|
-| POST | `/api/_version_/fleet/device/{token}/debug/errors` | device (device token) <!-- server/service/handler.go:948; handler fleetdError -->|
-| GET | `/api/_version_/fleet/device/{token}/software` | device (device token) <!-- server/service/handler.go:949; handler getDeviceSoftwareEndpoint -->|
-| POST | `/api/_version_/fleet/device/{token}/software/install/{software_title_id}` | device (device token) <!-- server/service/handler.go:950; handler submitSelfServiceSoftwareInstall -->|
-| POST | `/api/_version_/fleet/device/{token}/software/install_all` | device (device token) <!-- server/service/handler.go:951; handler submitSelfServiceSoftwareInstallAll -->|
-| POST | `/api/_version_/fleet/device/{token}/software/uninstall/{software_title_id}` | device (device token) <!-- server/service/handler.go:952; handler submitDeviceSoftwareUninstall -->|
-| GET | `/api/_version_/fleet/device/{token}/software/install/{install_uuid}/results` | device (device token) <!-- server/service/handler.go:953; handler getDeviceSoftwareInstallResultsEndpoint -->|
-| GET | `/api/_version_/fleet/device/{token}/software/uninstall/{execution_id}/results` | device (device token) <!-- server/service/handler.go:954; handler getDeviceSoftwareUninstallResultsEndpoint -->|
-| GET | `/api/_version_/fleet/device/{token}/software/self_service_categories` | device (device token) <!-- server/service/handler.go:955; handler getDeviceSelfServiceCategoriesEndpoint -->|
-| GET | `/api/_version_/fleet/device/{token}/certificates` | device (device token) <!-- server/service/handler.go:956; handler listDeviceCertificatesEndpoint -->|
-| POST | `/api/_version_/fleet/device/{token}/setup_experience/status` | device (device token) <!-- server/service/handler.go:957; handler getDeviceSetupExperienceStatusEndpoint -->|
-| GET | `/api/_version_/fleet/device/{token}/software/titles/{software_title_id}/icon` | device (device token) <!-- server/service/handler.go:958; handler getDeviceSoftwareIconEndpoint -->|
-| POST | `/api/_version_/fleet/device/{token}/mdm/linux/trigger_escrow` | device (device token) <!-- server/service/handler.go:959; handler triggerLinuxDiskEncryptionEscrowEndpoint -->|
-| POST | `/api/_version_/fleet/device/{token}/bypass_conditional_access` | device (device token) <!-- server/service/handler.go:960; handler bypassConditionalAccessEndpoint -->|
-| GET | `/api/_version_/fleet/device/{token}/mdm/apple/manual_enrollment_profile` | device (device token) <!-- server/service/handler.go:963; handler getDeviceMDMManualEnrollProfileEndpoint -->|
-| GET | `/api/_version_/fleet/device/{token}/software/commands/{command_uuid}/results` | device (device token) <!-- server/service/handler.go:964; handler getDeviceMDMCommandResultsEndpoint -->|
-| POST | `/api/_version_/fleet/device/{token}/configuration_profiles/{profile_uuid}/resend` | device (device token) <!-- server/service/handler.go:965; handler resendDeviceConfigurationProfileEndpoint -->|
-| POST | `/api/_version_/fleet/device/{token}/migrate_mdm` | device (device token) <!-- server/service/handler.go:966; handler migrateMDMDeviceEndpoint -->|
-| POST | `/api/osquery/config` | host (osquery node key) <!-- server/service/handler.go:998; handler getClientConfigEndpoint -->|
-| POST | `/api/v1/osquery/config` | host (osquery node key) <!-- server/service/handler.go:998; alt path of /api/osquery/config; handler getClientConfigEndpoint -->|
-| POST | `/api/osquery/distributed/read` | host (osquery node key) <!-- server/service/handler.go:1000; handler getDistributedQueriesEndpoint -->|
-| POST | `/api/v1/osquery/distributed/read` | host (osquery node key) <!-- server/service/handler.go:1000; alt path of /api/osquery/distributed/read; handler getDistributedQueriesEndpoint -->|
-| POST | `/api/osquery/distributed/write` | host (osquery node key) <!-- server/service/handler.go:1027; handler submitDistributedQueryResultsEndpoint -->|
-| POST | `/api/v1/osquery/distributed/write` | host (osquery node key) <!-- server/service/handler.go:1027; alt path of /api/osquery/distributed/write; handler submitDistributedQueryResultsEndpoint -->|
-| POST | `/api/osquery/carve/begin` | host (osquery node key) <!-- server/service/handler.go:1029; handler carveBeginEndpoint -->|
-| POST | `/api/v1/osquery/carve/begin` | host (osquery node key) <!-- server/service/handler.go:1029; alt path of /api/osquery/carve/begin; handler carveBeginEndpoint -->|
-| POST | `/api/osquery/log` | host (osquery node key) <!-- server/service/handler.go:1031; handler submitLogsEndpoint -->|
-| POST | `/api/v1/osquery/log` | host (osquery node key) <!-- server/service/handler.go:1031; alt path of /api/osquery/log; handler submitLogsEndpoint -->|
-| POST | `/api/osquery/yara/{name}` | host (osquery node key) <!-- server/service/handler.go:1033; handler getYaraEndpoint -->|
-| POST | `/api/v1/osquery/yara/{name}` | host (osquery node key) <!-- server/service/handler.go:1033; alt path of /api/osquery/yara/{name}; handler getYaraEndpoint -->|
-| GET | `/api/fleetd/certificates/{id:[0-9]+}` | android (orbit node key) <!-- server/service/handler.go:1040; handler getDeviceCertificateTemplateEndpoint -->|
-| PUT | `/api/fleetd/certificates/{id:[0-9]+}/status` | android (orbit node key) <!-- server/service/handler.go:1041; handler updateCertificateStatusEndpoint -->|
-| POST | `/api/fleet/orbit/device_token` | orbit (orbit node key) <!-- server/service/handler.go:1045; handler setOrUpdateDeviceTokenEndpoint -->|
-| POST | `/api/fleet/orbit/config` | orbit (orbit node key) <!-- server/service/handler.go:1046; handler getOrbitConfigEndpoint -->|
-| POST | `/api/fleet/orbit/scripts/request` | orbit (orbit node key) <!-- server/service/handler.go:1049; handler getOrbitScriptEndpoint -->|
-| POST | `/api/fleet/orbit/scripts/result` | orbit (orbit node key) <!-- server/service/handler.go:1050; handler postOrbitScriptResultEndpoint -->|
-| PUT | `/api/fleet/orbit/device_mapping` | orbit (orbit node key) <!-- server/service/handler.go:1051; handler putOrbitDeviceMappingEndpoint -->|
-| POST | `/api/fleet/orbit/software_install/result` | orbit (orbit node key) <!-- server/service/handler.go:1052; handler postOrbitSoftwareInstallResultEndpoint -->|
-| POST | `/api/fleet/orbit/software_install/package` | orbit (orbit node key) <!-- server/service/handler.go:1053; handler orbitDownloadSoftwareInstallerEndpoint -->|
-| POST | `/api/fleet/orbit/software_install/details` | orbit (orbit node key) <!-- server/service/handler.go:1054; handler getOrbitSoftwareInstallDetails -->|
-| POST | `/api/fleet/orbit/setup_experience/init` | orbit (orbit node key) <!-- server/service/handler.go:1055; handler orbitSetupExperienceInitEndpoint -->|
-| POST | `/api/fleet/orbit/setup_experience/status` | orbit (orbit node key) <!-- server/service/handler.go:1060; handler getOrbitSetupExperienceStatusEndpoint -->|
-| POST | `/api/fleet/orbit/disk_encryption_key` | orbit (orbit node key) <!-- server/service/handler.go:1063; handler postOrbitDiskEncryptionKeyEndpoint -->|
-| POST | `/api/fleet/orbit/luks_data` | orbit (orbit node key) <!-- server/service/handler.go:1065; handler postOrbitLUKSEndpoint -->|
-| POST | `/api/osquery/enroll` | none <!-- server/service/handler.go:1073; handler enrollAgentEndpoint -->|
-| POST | `/api/v1/osquery/enroll` | none <!-- server/service/handler.go:1073; alt path of /api/osquery/enroll; handler enrollAgentEndpoint -->|
-| GET | `/api/mdm/apple/enroll` | none <!-- server/service/handler.go:1082; handler mdmAppleEnrollEndpoint -->|
-| POST | `/api/mdm/apple/enroll` | none <!-- server/service/handler.go:1083; handler mdmAppleEnrollEndpoint -->|
-| GET | `/api/mdm/apple/installer` | none <!-- server/service/handler.go:1085; handler mdmAppleGetInstallerEndpoint -->|
-| HEAD | `/api/mdm/apple/installer` | none <!-- server/service/handler.go:1086; handler mdmAppleHeadInstallerEndpoint -->|
-| POST | `/api/_version_/fleet/ota_enrollment` | none <!-- server/service/handler.go:1087; handler mdmAppleOTAEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/bootstrap` | none <!-- server/service/handler.go:1091; handler downloadBootstrapPackageEndpoint -->|
-| GET | `/api/_version_/fleet/bootstrap` | none <!-- server/service/handler.go:1092; handler downloadBootstrapPackageEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/bootstrap` | none <!-- server/service/handler.go:1095; handler downloadBootstrapPackageEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/setup/eula/{token}` | none <!-- server/service/handler.go:1099; handler getMDMEULAEndpoint -->|
-| GET | `/api/_version_/fleet/setup_experience/eula/{token}` | none <!-- server/service/handler.go:1100; handler getMDMEULAEndpoint -->|
-| GET | `/api/_version_/fleet/mdm/apple/setup/eula/{token}` | none <!-- server/service/handler.go:1103; handler getMDMEULAEndpoint -->|
-| GET | `/api/_version_/fleet/enrollment_profiles/ota` | none <!-- server/service/handler.go:1106; handler getOTAProfileEndpoint -->|
-| POST | `/api/mdm/apple/account_driven_enroll/{token}` | none <!-- server/service/handler.go:1109; handler mdmAppleAccountEnrollEndpoint -->|
-| POST | `/api/mdm/apple/account_driven_enroll` | none <!-- server/service/handler.go:1111; handler mdmAppleAccountEnrollEndpoint -->|
-| POST | `/api/mdm/apple/psso/nonce` | none <!-- server/service/handler.go:1120; handler pssoNonceEndpoint -->|
-| POST | `/api/mdm/apple/psso/registration` | none <!-- server/service/handler.go:1121; handler pssoRegistrationEndpoint -->|
-| POST | `/api/mdm/apple/psso/token` | none <!-- server/service/handler.go:1122; handler pssoTokenEndpoint -->|
-| GET | `/api/mdm/apple/psso/jwks` | none <!-- server/service/handler.go:1123; handler pssoJWKSEndpoint -->|
-| POST | `/api/mdm/microsoft/discovery` | none <!-- server/service/handler.go:1132; handler mdmMicrosoftDiscoveryEndpoint -->|
-| POST | `/api/mdm/microsoft/policy` | none <!-- server/service/handler.go:1135; handler mdmMicrosoftPolicyEndpoint -->|
-| POST | `/api/mdm/microsoft/enroll` | none <!-- server/service/handler.go:1138; handler mdmMicrosoftEnrollEndpoint -->|
-| POST | `/api/mdm/microsoft/management` | none <!-- server/service/handler.go:1142; handler mdmMicrosoftManagementEndpoint -->|
-| GET | `/api/mdm/microsoft/tos` | none <!-- server/service/handler.go:1145; handler mdmMicrosoftTOSEndpoint -->|
-| POST | `/api/fleet/orbit/enroll` | none (orbit enroll) <!-- server/service/handler.go:1149; handler enrollOrbitEndpoint -->|
-| GET | `/api/_version_/fleet/software/titles/{title_id:[0-9]+}/in_house_app/{token:[a-f0-9-]+}` | none <!-- server/service/handler.go:1153; handler getInHouseAppPackageEndpoint -->|
-| GET | `/api/_version_/fleet/software/titles/{title_id:[0-9]+}/in_house_app/manifest/{token:[a-f0-9-]+}` | none <!-- server/service/handler.go:1154; handler getInHouseAppManifestEndpoint -->|
-| POST | `/api/osquery/carve/block` | none <!-- server/service/handler.go:1173; handler carveBlockEndpoint -->|
-| POST | `/api/v1/osquery/carve/block` | none <!-- server/service/handler.go:1173; alt path of /api/osquery/carve/block; handler carveBlockEndpoint -->|
-| GET | `/api/_version_/fleet/software/titles/{title_id:[0-9]+}/package/token/{token}` | none <!-- server/service/handler.go:1175; handler downloadSoftwareInstallerEndpoint -->|
-| POST | `/api/_version_/fleet/perform_required_password_reset` | none <!-- server/service/handler.go:1178; handler performRequiredPasswordResetEndpoint -->|
-| POST | `/api/_version_/fleet/users` | none <!-- server/service/handler.go:1179; handler createUserFromInviteEndpoint -->|
-| GET | `/api/_version_/fleet/invites/{token}` | none <!-- server/service/handler.go:1180; handler verifyInviteEndpoint -->|
-| POST | `/api/_version_/fleet/reset_password` | none <!-- server/service/handler.go:1181; handler resetPasswordEndpoint -->|
-| POST | `/api/_version_/fleet/logout` | none <!-- server/service/handler.go:1182; handler logoutEndpoint -->|
-| GET | `/api/_version_/fleet/logo` | none <!-- server/service/handler.go:1189; handler getOrgLogoEndpoint -->|
-| POST | `/api/v1/fleet/sso` | none <!-- server/service/handler.go:1217; handler initiateSSOEndpoint -->|
-| POST | `/api/v1/fleet/sso/callback` | none <!-- server/service/handler.go:1222; handler makeCallbackSSOEndpoint -->|
-| GET | `/api/v1/fleet/sso` | none <!-- server/service/handler.go:1223; handler settingsSSOEndpoint -->|
-| GET | `/api/_version_/fleet/results/` | user (session or API token), authenticated inside the websocket handler <!-- server/service/handler.go:1230; path prefix, not exact match; handler makeStreamDistributedQueryCampaignResultsHandler -->|
-| POST | `/api/_version_/fleet/forgot_password` | none <!-- server/service/handler.go:1236; handler forgotPasswordEndpoint -->|
-| POST | `/api/_version_/fleet/login` | none <!-- server/service/handler.go:1239; handler loginEndpoint -->|
-| POST | `/api/_version_/fleet/sessions` | none <!-- server/service/handler.go:1241; handler sessionCreateEndpoint -->|
-| HEAD | `/api/fleet/device/ping` | none <!-- server/service/handler.go:1243; handler devicePingEndpoint -->|
-| HEAD | `/api/fleet/orbit/ping` | none <!-- server/service/handler.go:1245; handler orbitPingEndpoint -->|
-| POST | `/api/_version_/fleet/calendar/webhook/{event_uuid}` | none <!-- server/service/handler.go:1248; handler calendarWebhookEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/sso` | none <!-- server/service/handler.go:1251; handler initiateMDMSSOEndpoint -->|
-| POST | `/api/_version_/fleet/mdm/sso/callback` | none <!-- server/service/handler.go:1256; handler callbackMDMSSOEndpoint -->|
+| POST | `/api/_version_/fleet/hosts/release_ab` | user (session or API token) <!-- server/service/handler.go:599; handler releaseABDevicesEndpoint -->|
+| POST | `/api/_version_/fleet/autofill/policy` | user (session or API token) <!-- server/service/handler.go:602; handler autofillPoliciesEndpoint -->|
+| PUT | `/api/_version_/fleet/spec/secret_variables` | user (session or API token) <!-- server/service/handler.go:605; handler createSecretVariablesEndpoint -->|
+| POST | `/api/_version_/fleet/custom_variables` | user (session or API token) <!-- server/service/handler.go:606; handler createSecretVariableEndpoint -->|
+| GET | `/api/_version_/fleet/custom_variables` | user (session or API token) <!-- server/service/handler.go:607; handler listSecretVariablesEndpoint -->|
+| DELETE | `/api/_version_/fleet/custom_variables/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:608; handler deleteSecretVariableEndpoint -->|
+| GET | `/api/_version_/fleet/custom_host_vitals` | user (session or API token) <!-- server/service/handler.go:611; handler listCustomHostVitalsEndpoint -->|
+| POST | `/api/_version_/fleet/custom_host_vitals` | user (session or API token) <!-- server/service/handler.go:612; handler createCustomHostVitalEndpoint -->|
+| PATCH | `/api/_version_/fleet/custom_host_vitals/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:613; handler updateCustomHostVitalEndpoint -->|
+| DELETE | `/api/_version_/fleet/custom_host_vitals/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:614; handler deleteCustomHostVitalEndpoint -->|
+| PUT | `/api/_version_/fleet/hosts/{host_id:[0-9]+}/custom_host_vitals/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:615; handler setHostCustomHostVitalValueEndpoint -->|
+| PUT | `/api/_version_/fleet/spec/custom_host_vitals` | user (session or API token) <!-- server/service/handler.go:616; handler upsertCustomHostVitalsEndpoint -->|
+| GET | `/api/_version_/fleet/rest_api` | user (session or API token) <!-- server/service/handler.go:619; handler listAPIEndpointsEndpoint -->|
+| GET | `/api/_version_/fleet/scim/details` | user (session or API token) <!-- server/service/handler.go:622; handler getScimDetailsEndpoint -->|
+| POST | `/api/_version_/fleet/conditional-access/microsoft` | user (session or API token) <!-- server/service/handler.go:625; handler conditionalAccessMicrosoftCreateEndpoint -->|
+| POST | `/api/_version_/fleet/conditional-access/microsoft/confirm` | user (session or API token) <!-- server/service/handler.go:626; handler conditionalAccessMicrosoftConfirmEndpoint -->|
+| DELETE | `/api/_version_/fleet/conditional-access/microsoft` | user (session or API token) <!-- server/service/handler.go:627; handler conditionalAccessMicrosoftDeleteEndpoint -->|
+| GET | `/api/_version_/fleet/conditional_access/idp/signing_cert` | user (session or API token) <!-- server/service/handler.go:630; handler conditionalAccessGetIdPSigningCertEndpoint -->|
+| GET | `/api/_version_/fleet/conditional_access/idp/apple/profile` | user (session or API token) <!-- server/service/handler.go:631; handler conditionalAccessGetIdPAppleProfileEndpoint -->|
+| PATCH | `/api/_version_/fleet/mdm/apple/setup` | user (session or API token) <!-- server/service/handler.go:635; handler updateMDMAppleSetupEndpoint -->|
+| PATCH | `/api/_version_/fleet/setup_experience` | user (session or API token) <!-- server/service/handler.go:636; handler updateMDMAppleSetupEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/apple/enqueue` | user (session or API token) <!-- server/service/handler.go:650; handler enqueueMDMAppleCommandEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/commandresults` | user (session or API token) <!-- server/service/handler.go:654; handler getMDMAppleCommandResultsEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/commands` | user (session or API token) <!-- server/service/handler.go:658; handler listMDMAppleCommandsEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/profiles/{profile_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:662; handler getMDMAppleConfigProfileEndpoint -->|
+| DELETE | `/api/_version_/fleet/mdm/apple/profiles/{profile_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:663; handler deleteMDMAppleConfigProfileEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/apple/profiles` | user (session or API token) <!-- server/service/handler.go:664; handler newMDMAppleConfigProfileEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/profiles` | user (session or API token) <!-- server/service/handler.go:665; handler listMDMAppleConfigProfilesEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/filevault/summary` | user (session or API token) <!-- server/service/handler.go:670; handler getMdmAppleFileVaultSummaryEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/profiles/summary` | user (session or API token) <!-- server/service/handler.go:675; handler getMDMAppleProfilesSummaryEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/apple/enrollment_profile` | user (session or API token) <!-- server/service/handler.go:679; handler createMDMAppleSetupAssistantEndpoint -->|
+| POST | `/api/_version_/fleet/enrollment_profiles/automatic` | user (session or API token) <!-- server/service/handler.go:680; handler createMDMAppleSetupAssistantEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/enrollment_profile` | user (session or API token) <!-- server/service/handler.go:684; handler getMDMAppleSetupAssistantEndpoint -->|
+| GET | `/api/_version_/fleet/enrollment_profiles/automatic` | user (session or API token) <!-- server/service/handler.go:685; handler getMDMAppleSetupAssistantEndpoint -->|
+| GET | `/api/_version_/fleet/enrollment_profiles/automatic/default` | user (session or API token) <!-- server/service/handler.go:686; handler getDefaultMDMAppleSetupAssistantProfileEndpoint -->|
+| DELETE | `/api/_version_/fleet/mdm/apple/enrollment_profile` | user (session or API token) <!-- server/service/handler.go:690; handler deleteMDMAppleSetupAssistantEndpoint -->|
+| DELETE | `/api/_version_/fleet/enrollment_profiles/automatic` | user (session or API token) <!-- server/service/handler.go:691; handler deleteMDMAppleSetupAssistantEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/apple/installers` | user (session or API token) <!-- server/service/handler.go:696; handler uploadAppleInstallerEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/installers/{installer_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:697; handler getAppleInstallerEndpoint -->|
+| DELETE | `/api/_version_/fleet/mdm/apple/installers/{installer_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:698; handler deleteAppleInstallerEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/installers` | user (session or API token) <!-- server/service/handler.go:699; handler listMDMAppleInstallersEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/devices` | user (session or API token) <!-- server/service/handler.go:700; handler listMDMAppleDevicesEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/manual_enrollment_profile` | user (session or API token) <!-- server/service/handler.go:705; handler getManualEnrollmentProfileEndpoint -->|
+| GET | `/api/_version_/fleet/enrollment_profiles/manual` | user (session or API token) <!-- server/service/handler.go:706; handler getManualEnrollmentProfileEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/bootstrap` | user (session or API token) <!-- server/service/handler.go:713; handler uploadBootstrapPackageEndpoint -->|
+| POST | `/api/_version_/fleet/bootstrap` | user (session or API token) <!-- server/service/handler.go:714; handler uploadBootstrapPackageEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/bootstrap/{fleet_id:[0-9]+}/metadata` | user (session or API token) <!-- server/service/handler.go:718; handler bootstrapPackageMetadataEndpoint -->|
+| GET | `/api/_version_/fleet/bootstrap/{fleet_id:[0-9]+}/metadata` | user (session or API token) <!-- server/service/handler.go:719; handler bootstrapPackageMetadataEndpoint -->|
+| DELETE | `/api/_version_/fleet/mdm/bootstrap/{fleet_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:723; handler deleteBootstrapPackageEndpoint -->|
+| DELETE | `/api/_version_/fleet/bootstrap/{fleet_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:724; handler deleteBootstrapPackageEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/bootstrap/summary` | user (session or API token) <!-- server/service/handler.go:728; handler getMDMAppleBootstrapPackageSummaryEndpoint -->|
+| GET | `/api/_version_/fleet/bootstrap/summary` | user (session or API token) <!-- server/service/handler.go:729; handler getMDMAppleBootstrapPackageSummaryEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/apple/bootstrap` | user (session or API token) <!-- server/service/handler.go:733; handler uploadBootstrapPackageEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/bootstrap/{fleet_id:[0-9]+}/metadata` | user (session or API token) <!-- server/service/handler.go:735; handler bootstrapPackageMetadataEndpoint -->|
+| DELETE | `/api/_version_/fleet/mdm/apple/bootstrap/{fleet_id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:737; handler deleteBootstrapPackageEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/bootstrap/summary` | user (session or API token) <!-- server/service/handler.go:739; handler getMDMAppleBootstrapPackageSummaryEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/hosts/{id:[0-9]+}/lock` | user (session or API token) <!-- server/service/handler.go:745; handler deviceLockEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/hosts/{id:[0-9]+}/wipe` | user (session or API token) <!-- server/service/handler.go:746; handler deviceWipeEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/hosts/{id:[0-9]+}/profiles` | user (session or API token) <!-- server/service/handler.go:750; handler getHostProfilesEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple` | user (session or API token) <!-- server/service/handler.go:754; handler getAppleMDMEndpoint -->|
+| GET | `/api/_version_/fleet/apns` | user (session or API token) <!-- server/service/handler.go:755; handler getAppleMDMEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/setup/eula` | user (session or API token) <!-- server/service/handler.go:761; handler createMDMEULAEndpoint -->|
+| POST | `/api/_version_/fleet/setup_experience/eula` | user (session or API token) <!-- server/service/handler.go:762; handler createMDMEULAEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/setup/eula/metadata` | user (session or API token) <!-- server/service/handler.go:766; handler getMDMEULAMetadataEndpoint -->|
+| GET | `/api/_version_/fleet/setup_experience/eula/metadata` | user (session or API token) <!-- server/service/handler.go:767; handler getMDMEULAMetadataEndpoint -->|
+| DELETE | `/api/_version_/fleet/mdm/setup/eula/{token}` | user (session or API token) <!-- server/service/handler.go:771; handler deleteMDMEULAEndpoint -->|
+| DELETE | `/api/_version_/fleet/setup_experience/eula/{token}` | user (session or API token) <!-- server/service/handler.go:772; handler deleteMDMEULAEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/apple/setup/eula` | user (session or API token) <!-- server/service/handler.go:775; handler createMDMEULAEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/setup/eula/metadata` | user (session or API token) <!-- server/service/handler.go:777; handler getMDMEULAMetadataEndpoint -->|
+| DELETE | `/api/_version_/fleet/mdm/apple/setup/eula/{token}` | user (session or API token) <!-- server/service/handler.go:779; handler deleteMDMEULAEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/apple/profiles/preassign` | user (session or API token) <!-- server/service/handler.go:781; handler preassignMDMAppleProfileEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/apple/profiles/match` | user (session or API token) <!-- server/service/handler.go:782; handler matchMDMApplePreassignmentEndpoint -->|
+| GET | `/api/_version_/fleet/assets` | user (session or API token) <!-- server/service/handler.go:785; handler listAppleDDMAssetsEndpoint -->|
+| GET | `/api/_version_/fleet/assets/{asset_uuid}` | user (session or API token) <!-- server/service/handler.go:786; handler getAppleDDMAssetEndpoint -->|
+| POST | `/api/_version_/fleet/assets` | user (session or API token) <!-- server/service/handler.go:787; handler createAppleDDMAssetEndpoint -->|
+| DELETE | `/api/_version_/fleet/assets/{asset_uuid}` | user (session or API token) <!-- server/service/handler.go:788; handler deleteAppleDDMAssetEndpoint -->|
+| POST | `/api/_version_/fleet/assets/batch` | user (session or API token) <!-- server/service/handler.go:789; handler batchSetAppleDDMAssetsEndpoint -->|
+| GET | `/api/_version_/fleet/hosts/{id:[0-9]+}/configuration_profiles` | user (session or API token) <!-- server/service/handler.go:793; handler getHostProfilesEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/commands/run` | user (session or API token) <!-- server/service/handler.go:797; handler runMDMCommandEndpoint -->|
+| POST | `/api/_version_/fleet/commands/run` | user (session or API token) <!-- server/service/handler.go:798; handler runMDMCommandEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/commandresults` | user (session or API token) <!-- server/service/handler.go:802; handler getMDMCommandResultsEndpoint -->|
+| GET | `/api/_version_/fleet/commands/results` | user (session or API token) <!-- server/service/handler.go:803; handler getMDMCommandResultsEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/commands` | user (session or API token) <!-- server/service/handler.go:807; handler listMDMCommandsEndpoint -->|
+| GET | `/api/_version_/fleet/commands` | user (session or API token) <!-- server/service/handler.go:808; handler listMDMCommandsEndpoint -->|
+| PATCH | `/api/_version_/fleet/mdm/hosts/{id:[0-9]+}/unenroll` | user (session or API token) <!-- server/service/handler.go:812; handler mdmUnenrollEndpoint -->|
+| DELETE | `/api/_version_/fleet/hosts/{id:[0-9]+}/mdm` | user (session or API token) <!-- server/service/handler.go:813; handler mdmUnenrollEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/disk_encryption/summary` | user (session or API token) <!-- server/service/handler.go:817; handler getMDMDiskEncryptionSummaryEndpoint -->|
+| GET | `/api/_version_/fleet/disk_encryption` | user (session or API token) <!-- server/service/handler.go:818; handler getMDMDiskEncryptionSummaryEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/hosts/{id:[0-9]+}/encryption_key` | user (session or API token) <!-- server/service/handler.go:822; handler getHostEncryptionKey -->|
+| GET | `/api/_version_/fleet/hosts/{id:[0-9]+}/encryption_key` | user (session or API token) <!-- server/service/handler.go:823; handler getHostEncryptionKey -->|
+| GET | `/api/_version_/fleet/mdm/profiles/summary` | user (session or API token) <!-- server/service/handler.go:827; handler getMDMProfilesSummaryEndpoint -->|
+| GET | `/api/_version_/fleet/configuration_profiles/summary` | user (session or API token) <!-- server/service/handler.go:828; handler getMDMProfilesSummaryEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/profiles/{profile_uuid}` | user (session or API token) <!-- server/service/handler.go:832; handler getMDMConfigProfileEndpoint -->|
+| GET | `/api/_version_/fleet/configuration_profiles/{profile_uuid}` | user (session or API token) <!-- server/service/handler.go:833; handler getMDMConfigProfileEndpoint -->|
+| DELETE | `/api/_version_/fleet/mdm/profiles/{profile_uuid}` | user (session or API token) <!-- server/service/handler.go:837; handler deleteMDMConfigProfileEndpoint -->|
+| DELETE | `/api/_version_/fleet/configuration_profiles/{profile_uuid}` | user (session or API token) <!-- server/service/handler.go:838; handler deleteMDMConfigProfileEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/profiles` | user (session or API token) <!-- server/service/handler.go:842; handler listMDMConfigProfilesEndpoint -->|
+| GET | `/api/_version_/fleet/configuration_profiles` | user (session or API token) <!-- server/service/handler.go:843; handler listMDMConfigProfilesEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/profiles` | user (session or API token) <!-- server/service/handler.go:847; handler newMDMConfigProfileEndpoint -->|
+| POST | `/api/_version_/fleet/configuration_profiles` | user (session or API token) <!-- server/service/handler.go:848; handler newMDMConfigProfileEndpoint -->|
+| PATCH | `/api/_version_/fleet/configuration_profiles/{profile_uuid}` | user (session or API token) <!-- server/service/handler.go:849; handler updateMDMConfigProfileEndpoint -->|
+| POST | `/api/_version_/fleet/configuration_profiles/batch` | user (session or API token) <!-- server/service/handler.go:851; handler batchModifyMDMConfigProfilesEndpoint -->|
+| POST | `/api/_version_/fleet/hosts/{host_id:[0-9]+}/configuration_profiles/resend/{profile_uuid}` | user (session or API token) <!-- server/service/handler.go:855; handler resendHostMDMProfileEndpoint -->|
+| POST | `/api/_version_/fleet/hosts/{host_id:[0-9]+}/configuration_profiles/{profile_uuid}/resend` | user (session or API token) <!-- server/service/handler.go:856; handler resendHostMDMProfileEndpoint -->|
+| POST | `/api/_version_/fleet/hosts/{host_id:[0-9]+}/name_template/resend` | user (session or API token) <!-- server/service/handler.go:857; handler resendHostNameTemplateEndpoint -->|
+| POST | `/api/_version_/fleet/configuration_profiles/resend/batch` | user (session or API token) <!-- server/service/handler.go:858; handler batchResendMDMProfileToHostsEndpoint -->|
+| GET | `/api/_version_/fleet/configuration_profiles/{profile_uuid}/status` | user (session or API token) <!-- server/service/handler.go:859; handler getMDMConfigProfileStatusEndpoint -->|
+| PATCH | `/api/_version_/fleet/mdm/apple/settings` | user (session or API token) <!-- server/service/handler.go:863; handler updateMDMAppleSettingsEndpoint -->|
+| POST | `/api/_version_/fleet/disk_encryption` | user (session or API token) <!-- server/service/handler.go:864; handler updateDiskEncryptionEndpoint -->|
+| POST | `/api/_version_/fleet/host_name_template` | user (session or API token) <!-- server/service/handler.go:865; handler updateHostNameTemplateEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/apple/request_csr` | user (session or API token) <!-- server/service/handler.go:872; handler requestMDMAppleCSREndpoint -->|
+| POST | `/api/_version_/fleet/mdm/apple/dep/key_pair` | user (session or API token) <!-- server/service/handler.go:875; handler newMDMAppleDEPKeyPairEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/ab_public_key` | user (session or API token) <!-- server/service/handler.go:876; handler generateABMKeyPairEndpoint -->|
+| POST | `/api/_version_/fleet/ab_tokens` | user (session or API token) <!-- server/service/handler.go:877; handler uploadABMTokenEndpoint -->|
+| DELETE | `/api/_version_/fleet/ab_tokens/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:878; handler deleteABMTokenEndpoint -->|
+| GET | `/api/_version_/fleet/ab_tokens` | user (session or API token) <!-- server/service/handler.go:879; handler listABMTokensEndpoint -->|
+| GET | `/api/_version_/fleet/ab_tokens/count` | user (session or API token) <!-- server/service/handler.go:880; handler countABMTokensEndpoint -->|
+| PATCH | `/api/_version_/fleet/ab_tokens/{id:[0-9]+}/fleets` | user (session or API token) <!-- server/service/handler.go:881; handler updateABMTokenTeamsEndpoint -->|
+| PATCH | `/api/_version_/fleet/ab_tokens/{id:[0-9]+}/renew` | user (session or API token) <!-- server/service/handler.go:882; handler renewABMTokenEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/request_csr` | user (session or API token) <!-- server/service/handler.go:884; handler getMDMAppleCSREndpoint -->|
+| POST | `/api/_version_/fleet/mdm/apple/apns_certificate` | user (session or API token) <!-- server/service/handler.go:885; handler uploadMDMAppleAPNSCertEndpoint -->|
+| DELETE | `/api/_version_/fleet/mdm/apple/apns_certificate` | user (session or API token) <!-- server/service/handler.go:886; handler deleteMDMAppleAPNSCertEndpoint -->|
+| GET | `/api/_version_/fleet/vpp_tokens` | user (session or API token) <!-- server/service/handler.go:889; handler getVPPTokens -->|
+| POST | `/api/_version_/fleet/vpp_tokens` | user (session or API token) <!-- server/service/handler.go:890; handler uploadVPPTokenEndpoint -->|
+| PATCH | `/api/_version_/fleet/vpp_tokens/{id}/fleets` | user (session or API token) <!-- server/service/handler.go:891; handler patchVPPTokensTeams -->|
+| PATCH | `/api/_version_/fleet/vpp_tokens/{id}/renew` | user (session or API token) <!-- server/service/handler.go:892; handler patchVPPTokenRenewEndpoint -->|
+| DELETE | `/api/_version_/fleet/vpp_tokens/{id}` | user (session or API token) <!-- server/service/handler.go:893; handler deleteVPPToken -->|
+| POST | `/api/_version_/fleet/software/app_store_apps/batch` | user (session or API token) <!-- server/service/handler.go:896; handler batchAssociateAppStoreAppsEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple_bm` | user (session or API token) <!-- server/service/handler.go:900; handler getAppleBMEndpoint -->|
+| GET | `/api/_version_/fleet/abm` | user (session or API token) <!-- server/service/handler.go:902; handler getAppleBMEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/apple/profiles/batch` | user (session or API token) <!-- server/service/handler.go:911; handler batchSetMDMAppleProfilesEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/profiles/batch` | user (session or API token) <!-- server/service/handler.go:916; handler batchSetMDMProfilesEndpoint -->|
+| POST | `/api/_version_/fleet/certificate_authorities` | user (session or API token) <!-- server/service/handler.go:919; handler createCertificateAuthorityEndpoint -->|
+| GET | `/api/_version_/fleet/certificate_authorities` | user (session or API token) <!-- server/service/handler.go:920; handler listCertificateAuthoritiesEndpoint -->|
+| GET | `/api/_version_/fleet/certificate_authorities/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:921; handler getCertificateAuthorityEndpoint -->|
+| DELETE | `/api/_version_/fleet/certificate_authorities/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:922; handler deleteCertificateAuthorityEndpoint -->|
+| PATCH | `/api/_version_/fleet/certificate_authorities/{id:[0-9]+}` | user (session or API token) <!-- server/service/handler.go:923; handler updateCertificateAuthorityEndpoint -->|
+| POST | `/api/_version_/fleet/certificate_authorities/{id:[0-9]+}/request_certificate` | user (session or API token) <!-- server/service/handler.go:924; handler requestCertificateEndpoint -->|
+| POST | `/api/_version_/fleet/spec/certificate_authorities` | user (session or API token) <!-- server/service/handler.go:925; handler batchApplyCertificateAuthoritiesEndpoint -->|
+| GET | `/api/_version_/fleet/spec/certificate_authorities` | user (session or API token) <!-- server/service/handler.go:926; handler getCertificateAuthoritiesSpecEndpoint -->|
+| POST | `/api/_version_/fleet/software/web_apps` | user (session or API token) <!-- server/service/handler.go:929; handler createAndroidWebAppEndpoint -->|
+| GET | `/api/_version_/fleet/device/{token}` | device (device token) <!-- server/service/handler.go:940; handler getDeviceHostEndpoint -->|
+| GET | `/api/_version_/fleet/device/{token}/desktop` | device (device token) <!-- server/service/handler.go:941; handler getFleetDesktopEndpoint -->|
+| HEAD | `/api/_version_/fleet/device/{token}/ping` | device (device token) <!-- server/service/handler.go:942; handler devicePingEndpoint -->|
+| POST | `/api/_version_/fleet/device/{token}/refetch` | device (device token) <!-- server/service/handler.go:943; handler refetchDeviceHostEndpoint -->|
+| GET | `/api/_version_/fleet/device/{token}/device_mapping` | device (device token) <!-- server/service/handler.go:945; handler listDeviceHostDeviceMappingEndpoint -->|
+| GET | `/api/_version_/fleet/device/{token}/macadmins` | device (device token) <!-- server/service/handler.go:946; handler getDeviceMacadminsDataEndpoint -->|
+| GET | `/api/_version_/fleet/device/{token}/policies` | device (device token) <!-- server/service/handler.go:947; handler listDevicePoliciesEndpoint -->|
+| GET | `/api/_version_/fleet/device/{token}/transparency` | device (device token) <!-- server/service/handler.go:948; handler transparencyURL -->|
+| POST | `/api/_version_/fleet/device/{token}/debug/errors` | device (device token) <!-- server/service/handler.go:949; handler fleetdError -->|
+| GET | `/api/_version_/fleet/device/{token}/software` | device (device token) <!-- server/service/handler.go:950; handler getDeviceSoftwareEndpoint -->|
+| POST | `/api/_version_/fleet/device/{token}/software/install/{software_title_id}` | device (device token) <!-- server/service/handler.go:951; handler submitSelfServiceSoftwareInstall -->|
+| POST | `/api/_version_/fleet/device/{token}/software/install_all` | device (device token) <!-- server/service/handler.go:952; handler submitSelfServiceSoftwareInstallAll -->|
+| POST | `/api/_version_/fleet/device/{token}/software/uninstall/{software_title_id}` | device (device token) <!-- server/service/handler.go:953; handler submitDeviceSoftwareUninstall -->|
+| GET | `/api/_version_/fleet/device/{token}/software/install/{install_uuid}/results` | device (device token) <!-- server/service/handler.go:954; handler getDeviceSoftwareInstallResultsEndpoint -->|
+| GET | `/api/_version_/fleet/device/{token}/software/uninstall/{execution_id}/results` | device (device token) <!-- server/service/handler.go:955; handler getDeviceSoftwareUninstallResultsEndpoint -->|
+| GET | `/api/_version_/fleet/device/{token}/software/self_service_categories` | device (device token) <!-- server/service/handler.go:956; handler getDeviceSelfServiceCategoriesEndpoint -->|
+| GET | `/api/_version_/fleet/device/{token}/certificates` | device (device token) <!-- server/service/handler.go:957; handler listDeviceCertificatesEndpoint -->|
+| POST | `/api/_version_/fleet/device/{token}/setup_experience/status` | device (device token) <!-- server/service/handler.go:958; handler getDeviceSetupExperienceStatusEndpoint -->|
+| GET | `/api/_version_/fleet/device/{token}/software/titles/{software_title_id}/icon` | device (device token) <!-- server/service/handler.go:959; handler getDeviceSoftwareIconEndpoint -->|
+| POST | `/api/_version_/fleet/device/{token}/mdm/linux/trigger_escrow` | device (device token) <!-- server/service/handler.go:960; handler triggerLinuxDiskEncryptionEscrowEndpoint -->|
+| POST | `/api/_version_/fleet/device/{token}/bypass_conditional_access` | device (device token) <!-- server/service/handler.go:961; handler bypassConditionalAccessEndpoint -->|
+| GET | `/api/_version_/fleet/device/{token}/mdm/apple/manual_enrollment_profile` | device (device token) <!-- server/service/handler.go:964; handler getDeviceMDMManualEnrollProfileEndpoint -->|
+| GET | `/api/_version_/fleet/device/{token}/software/commands/{command_uuid}/results` | device (device token) <!-- server/service/handler.go:965; handler getDeviceMDMCommandResultsEndpoint -->|
+| POST | `/api/_version_/fleet/device/{token}/configuration_profiles/{profile_uuid}/resend` | device (device token) <!-- server/service/handler.go:966; handler resendDeviceConfigurationProfileEndpoint -->|
+| POST | `/api/_version_/fleet/device/{token}/migrate_mdm` | device (device token) <!-- server/service/handler.go:967; handler migrateMDMDeviceEndpoint -->|
+| POST | `/api/osquery/config` | host (osquery node key) <!-- server/service/handler.go:999; handler getClientConfigEndpoint -->|
+| POST | `/api/v1/osquery/config` | host (osquery node key) <!-- server/service/handler.go:999; alt path of /api/osquery/config; handler getClientConfigEndpoint -->|
+| POST | `/api/osquery/distributed/read` | host (osquery node key) <!-- server/service/handler.go:1001; handler getDistributedQueriesEndpoint -->|
+| POST | `/api/v1/osquery/distributed/read` | host (osquery node key) <!-- server/service/handler.go:1001; alt path of /api/osquery/distributed/read; handler getDistributedQueriesEndpoint -->|
+| POST | `/api/osquery/distributed/write` | host (osquery node key) <!-- server/service/handler.go:1028; handler submitDistributedQueryResultsEndpoint -->|
+| POST | `/api/v1/osquery/distributed/write` | host (osquery node key) <!-- server/service/handler.go:1028; alt path of /api/osquery/distributed/write; handler submitDistributedQueryResultsEndpoint -->|
+| POST | `/api/osquery/carve/begin` | host (osquery node key) <!-- server/service/handler.go:1030; handler carveBeginEndpoint -->|
+| POST | `/api/v1/osquery/carve/begin` | host (osquery node key) <!-- server/service/handler.go:1030; alt path of /api/osquery/carve/begin; handler carveBeginEndpoint -->|
+| POST | `/api/osquery/log` | host (osquery node key) <!-- server/service/handler.go:1032; handler submitLogsEndpoint -->|
+| POST | `/api/v1/osquery/log` | host (osquery node key) <!-- server/service/handler.go:1032; alt path of /api/osquery/log; handler submitLogsEndpoint -->|
+| POST | `/api/osquery/yara/{name}` | host (osquery node key) <!-- server/service/handler.go:1034; handler getYaraEndpoint -->|
+| POST | `/api/v1/osquery/yara/{name}` | host (osquery node key) <!-- server/service/handler.go:1034; alt path of /api/osquery/yara/{name}; handler getYaraEndpoint -->|
+| GET | `/api/fleetd/certificates/{id:[0-9]+}` | android (orbit node key) <!-- server/service/handler.go:1041; handler getDeviceCertificateTemplateEndpoint -->|
+| PUT | `/api/fleetd/certificates/{id:[0-9]+}/status` | android (orbit node key) <!-- server/service/handler.go:1042; handler updateCertificateStatusEndpoint -->|
+| POST | `/api/fleet/orbit/device_token` | orbit (orbit node key) <!-- server/service/handler.go:1046; handler setOrUpdateDeviceTokenEndpoint -->|
+| POST | `/api/fleet/orbit/config` | orbit (orbit node key) <!-- server/service/handler.go:1047; handler getOrbitConfigEndpoint -->|
+| POST | `/api/fleet/orbit/scripts/request` | orbit (orbit node key) <!-- server/service/handler.go:1050; handler getOrbitScriptEndpoint -->|
+| POST | `/api/fleet/orbit/scripts/result` | orbit (orbit node key) <!-- server/service/handler.go:1051; handler postOrbitScriptResultEndpoint -->|
+| PUT | `/api/fleet/orbit/device_mapping` | orbit (orbit node key) <!-- server/service/handler.go:1052; handler putOrbitDeviceMappingEndpoint -->|
+| POST | `/api/fleet/orbit/software_install/result` | orbit (orbit node key) <!-- server/service/handler.go:1053; handler postOrbitSoftwareInstallResultEndpoint -->|
+| POST | `/api/fleet/orbit/software_install/package` | orbit (orbit node key) <!-- server/service/handler.go:1054; handler orbitDownloadSoftwareInstallerEndpoint -->|
+| POST | `/api/fleet/orbit/software_install/details` | orbit (orbit node key) <!-- server/service/handler.go:1055; handler getOrbitSoftwareInstallDetails -->|
+| POST | `/api/fleet/orbit/setup_experience/init` | orbit (orbit node key) <!-- server/service/handler.go:1056; handler orbitSetupExperienceInitEndpoint -->|
+| POST | `/api/fleet/orbit/setup_experience/status` | orbit (orbit node key) <!-- server/service/handler.go:1061; handler getOrbitSetupExperienceStatusEndpoint -->|
+| POST | `/api/fleet/orbit/disk_encryption_key` | orbit (orbit node key) <!-- server/service/handler.go:1064; handler postOrbitDiskEncryptionKeyEndpoint -->|
+| POST | `/api/fleet/orbit/managed_local_account` | orbit (orbit node key) <!-- server/service/handler.go:1066; handler postOrbitManagedLocalAccountEndpoint -->|
+| POST | `/api/fleet/orbit/luks_data` | orbit (orbit node key) <!-- server/service/handler.go:1068; handler postOrbitLUKSEndpoint -->|
+| POST | `/api/osquery/enroll` | enroll secret, verified inside the handler <!-- server/service/handler.go:1076; handler enrollAgentEndpoint -->|
+| POST | `/api/v1/osquery/enroll` | enroll secret, verified inside the handler <!-- server/service/handler.go:1076; alt path of /api/osquery/enroll; handler enrollAgentEndpoint -->|
+| GET | `/api/mdm/apple/enroll` | none <!-- server/service/handler.go:1085; handler mdmAppleEnrollEndpoint -->|
+| POST | `/api/mdm/apple/enroll` | none <!-- server/service/handler.go:1086; handler mdmAppleEnrollEndpoint -->|
+| GET | `/api/mdm/apple/installer` | none <!-- server/service/handler.go:1088; handler mdmAppleGetInstallerEndpoint -->|
+| HEAD | `/api/mdm/apple/installer` | none <!-- server/service/handler.go:1089; handler mdmAppleHeadInstallerEndpoint -->|
+| POST | `/api/_version_/fleet/ota_enrollment` | none <!-- server/service/handler.go:1090; handler mdmAppleOTAEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/bootstrap` | none <!-- server/service/handler.go:1094; handler downloadBootstrapPackageEndpoint -->|
+| GET | `/api/_version_/fleet/bootstrap` | none <!-- server/service/handler.go:1095; handler downloadBootstrapPackageEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/bootstrap` | none <!-- server/service/handler.go:1098; handler downloadBootstrapPackageEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/setup/eula/{token}` | none <!-- server/service/handler.go:1102; handler getMDMEULAEndpoint -->|
+| GET | `/api/_version_/fleet/setup_experience/eula/{token}` | none <!-- server/service/handler.go:1103; handler getMDMEULAEndpoint -->|
+| GET | `/api/_version_/fleet/mdm/apple/setup/eula/{token}` | none <!-- server/service/handler.go:1106; handler getMDMEULAEndpoint -->|
+| GET | `/api/_version_/fleet/enrollment_profiles/ota` | none <!-- server/service/handler.go:1109; handler getOTAProfileEndpoint -->|
+| POST | `/api/mdm/apple/account_driven_enroll/{token}` | none <!-- server/service/handler.go:1112; handler mdmAppleAccountEnrollEndpoint -->|
+| POST | `/api/mdm/apple/account_driven_enroll` | none <!-- server/service/handler.go:1114; handler mdmAppleAccountEnrollEndpoint -->|
+| POST | `/api/mdm/apple/psso/nonce` | none <!-- server/service/handler.go:1123; handler pssoNonceEndpoint -->|
+| POST | `/api/mdm/apple/psso/registration` | none <!-- server/service/handler.go:1124; handler pssoRegistrationEndpoint -->|
+| POST | `/api/mdm/apple/psso/token` | none <!-- server/service/handler.go:1125; handler pssoTokenEndpoint -->|
+| GET | `/api/mdm/apple/psso/jwks` | none <!-- server/service/handler.go:1126; handler pssoJWKSEndpoint -->|
+| POST | `/api/mdm/microsoft/discovery` | none <!-- server/service/handler.go:1135; handler mdmMicrosoftDiscoveryEndpoint -->|
+| POST | `/api/mdm/microsoft/policy` | none <!-- server/service/handler.go:1138; handler mdmMicrosoftPolicyEndpoint -->|
+| POST | `/api/mdm/microsoft/enroll` | none <!-- server/service/handler.go:1141; handler mdmMicrosoftEnrollEndpoint -->|
+| POST | `/api/mdm/microsoft/management` | none <!-- server/service/handler.go:1145; handler mdmMicrosoftManagementEndpoint -->|
+| GET | `/api/mdm/microsoft/tos` | none <!-- server/service/handler.go:1148; handler mdmMicrosoftTOSEndpoint -->|
+| POST | `/api/fleet/orbit/enroll` | none (orbit enroll) <!-- server/service/handler.go:1152; handler enrollOrbitEndpoint -->|
+| GET | `/api/_version_/fleet/software/titles/{title_id:[0-9]+}/in_house_app/{token:[a-f0-9-]+}` | none <!-- server/service/handler.go:1156; handler getInHouseAppPackageEndpoint -->|
+| GET | `/api/_version_/fleet/software/titles/{title_id:[0-9]+}/in_house_app/manifest/{token:[a-f0-9-]+}` | none <!-- server/service/handler.go:1157; handler getInHouseAppManifestEndpoint -->|
+| POST | `/api/osquery/carve/block` | none <!-- server/service/handler.go:1176; handler carveBlockEndpoint -->|
+| POST | `/api/v1/osquery/carve/block` | none <!-- server/service/handler.go:1176; alt path of /api/osquery/carve/block; handler carveBlockEndpoint -->|
+| GET | `/api/_version_/fleet/software/titles/{title_id:[0-9]+}/package/token/{token}` | none <!-- server/service/handler.go:1178; handler downloadSoftwareInstallerEndpoint -->|
+| POST | `/api/_version_/fleet/perform_required_password_reset` | none <!-- server/service/handler.go:1181; handler performRequiredPasswordResetEndpoint -->|
+| POST | `/api/_version_/fleet/users` | none <!-- server/service/handler.go:1182; handler createUserFromInviteEndpoint -->|
+| GET | `/api/_version_/fleet/invites/{token}` | none <!-- server/service/handler.go:1183; handler verifyInviteEndpoint -->|
+| POST | `/api/_version_/fleet/reset_password` | none <!-- server/service/handler.go:1184; handler resetPasswordEndpoint -->|
+| POST | `/api/_version_/fleet/logout` | none <!-- server/service/handler.go:1185; handler logoutEndpoint -->|
+| GET | `/api/_version_/fleet/logo` | none <!-- server/service/handler.go:1192; handler getOrgLogoEndpoint -->|
+| POST | `/api/v1/fleet/sso` | none <!-- server/service/handler.go:1220; handler initiateSSOEndpoint -->|
+| POST | `/api/v1/fleet/sso/callback` | none <!-- server/service/handler.go:1225; handler makeCallbackSSOEndpoint -->|
+| GET | `/api/v1/fleet/sso` | none <!-- server/service/handler.go:1226; handler settingsSSOEndpoint -->|
+| GET | `/api/_version_/fleet/results/` | user (session or API token), authenticated inside the websocket handler <!-- server/service/handler.go:1233; path prefix, not exact match; handler makeStreamDistributedQueryCampaignResultsHandler -->|
+| POST | `/api/_version_/fleet/forgot_password` | none <!-- server/service/handler.go:1239; handler forgotPasswordEndpoint -->|
+| POST | `/api/_version_/fleet/login` | none <!-- server/service/handler.go:1242; handler loginEndpoint -->|
+| POST | `/api/_version_/fleet/sessions` | none <!-- server/service/handler.go:1244; handler sessionCreateEndpoint -->|
+| HEAD | `/api/fleet/device/ping` | none <!-- server/service/handler.go:1246; handler devicePingEndpoint -->|
+| HEAD | `/api/fleet/orbit/ping` | none <!-- server/service/handler.go:1248; handler orbitPingEndpoint -->|
+| POST | `/api/_version_/fleet/calendar/webhook/{event_uuid}` | none <!-- server/service/handler.go:1251; handler calendarWebhookEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/sso` | none <!-- server/service/handler.go:1254; handler initiateMDMSSOEndpoint -->|
+| POST | `/api/_version_/fleet/mdm/sso/callback` | none <!-- server/service/handler.go:1259; handler callbackMDMSSOEndpoint -->|
 | GET | `/api/_version_/fleet/android_enterprise/signup_url` | user (session or API token) <!-- server/mdm/android/service/handler.go:25; handler enterpriseSignupEndpoint -->|
 | GET | `/api/_version_/fleet/android_enterprise` | user (session or API token) <!-- server/mdm/android/service/handler.go:26; handler getEnterpriseEndpoint -->|
 | DELETE | `/api/_version_/fleet/android_enterprise` | user (session or API token) <!-- server/mdm/android/service/handler.go:27; handler deleteEnterpriseEndpoint -->|
 | GET | `/api/_version_/fleet/android_enterprise/signup_sse` | user (session or API token) <!-- server/mdm/android/service/handler.go:28; handler enterpriseSSE -->|
 | GET | `/api/_version_/fleet/android_enterprise/connect/{token}` | none <!-- server/mdm/android/service/handler.go:35; handler enterpriseSignupCallbackEndpoint -->|
 | GET | `/api/_version_/fleet/android_enterprise/enrollment_token` | none <!-- server/mdm/android/service/handler.go:36; handler enrollmentTokenEndpoint -->|
-| POST | `/api/v1/fleet/android_enterprise/pubsub` | none <!-- server/mdm/android/service/handler.go:37; handler pubSubPushEndpoint -->|
+| POST | `/api/v1/fleet/android_enterprise/pubsub` | Pub/Sub token, verified inside the handler <!-- server/mdm/android/service/handler.go:37; handler pubSubPushEndpoint -->|
 | GET | `/api/_version_/fleet/activities` | user (session or API token) <!-- server/activity/internal/service/handler.go:28; handler listActivitiesEndpoint -->|
 | GET | `/api/_version_/fleet/hosts/{id:[0-9]+}/activities` | user (session or API token) <!-- server/activity/internal/service/handler.go:29; handler listHostPastActivitiesEndpoint -->|
 | GET | `/api/mdm/acme/{identifier}/new_nonce` | none (protocol auth in handler) <!-- server/mdm/acme/internal/service/handler.go:37; handler getNewNonceEndpoint -->|
@@ -850,17 +896,19 @@ server's declarative alias table.
 
 ### Raw mux routes (MDM protocol and setup)
 
-Registered directly on the router rather than through an endpointer. Each of these
-carries its own protocol authentication (a device-management certificate, a SCEP
-challenge, or pre-setup state) rather than a Fleet credential.
+Registered directly on the router rather than through an endpointer. Most carry their
+own protocol authentication (a device-management certificate, a SCEP challenge, or
+pre-setup state) rather than a Fleet credential. Three do not: the two service discovery
+paths and the app-site-association document answer any caller, which is what the protocols
+that fetch them require, and their rows say so.
 
 | Method | Path | Auth |
 |---|---|---|
-| ANY | `/api/v1/setup` | route-local or protocol <!-- server/service/handler.go:1276; raw: WithSetup; handler srv -->|
-| ANY | `/api/setup` | route-local or protocol <!-- server/service/handler.go:1277; raw: WithSetup; handler srv -->|
-| ANY | `/mdm/apple/service_discovery/{token}` | route-local or protocol <!-- server/service/handler.go:1399; raw: registerMDMServiceDiscovery; handler otel.WrapHandler -->|
-| ANY | `/mdm/apple/service_discovery` | route-local or protocol <!-- server/service/handler.go:1400; raw: registerMDMServiceDiscovery; handler otel.WrapHandler -->|
-| ANY | `/.well-known/apple-app-site-association` | route-local or protocol <!-- server/service/handler.go:1416; raw: registerPSSO; handler otel.WrapHandler -->|
-| ANY | `/mdm/apple/scep` | route-local or protocol <!-- server/service/handler.go:1457; raw: registerSCEP; handler otel.WrapHandler -->|
-| ANY | `/mdm/scep/proxy/` | route-local or protocol <!-- server/service/handler.go:1483; raw: RegisterSCEPProxy; handler scepHandler -->|
-| ANY | `/mdm/apple/mdm` | route-local or protocol <!-- server/service/handler.go:1554; raw: registerMDM; handler otel.WrapHandler -->|
+| ANY | `/api/v1/setup` | route-local or protocol <!-- server/service/handler.go:1279; raw: WithSetup; handler srv -->|
+| ANY | `/api/setup` | route-local or protocol <!-- server/service/handler.go:1280; raw: WithSetup; handler srv -->|
+| ANY | `/mdm/apple/service_discovery/{token}` | none (public) <!-- server/service/handler.go:1402; raw: registerMDMServiceDiscovery; handler otel.WrapHandler -->|
+| ANY | `/mdm/apple/service_discovery` | none (public) <!-- server/service/handler.go:1403; raw: registerMDMServiceDiscovery; handler otel.WrapHandler -->|
+| ANY | `/.well-known/apple-app-site-association` | none (public) <!-- server/service/handler.go:1419; raw: registerPSSO; handler otel.WrapHandler -->|
+| ANY | `/mdm/apple/scep` | route-local or protocol <!-- server/service/handler.go:1460; raw: registerSCEP; handler otel.WrapHandler -->|
+| ANY | `/mdm/scep/proxy/` | route-local or protocol <!-- server/service/handler.go:1486; raw: RegisterSCEPProxy; handler scepHandler -->|
+| ANY | `/mdm/apple/mdm` | route-local or protocol <!-- server/service/handler.go:1557; raw: registerMDM; handler otel.WrapHandler -->|

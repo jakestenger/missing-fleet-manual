@@ -393,3 +393,186 @@ error codes", which the new section now does at the envelope level). Pure prose 
 counted-table change, so cap-ids/register-counts untouched. Cross-refs to 6.3 anchors
 (#page-filter-and-order-complete-result-sets, #the-renamed-fields-which-will-bite-you-on-a-write,
 #handle-errors-limits-and-ambiguous-writes) validated by check-links. Full suite exit 0.
+
+## overnight step 2 (2026-09-08): route catalog regenerated against fleet-v4.91.0
+
+Re-ran `build/gen-api-catalog.py` against fleet-v4.91.0 (35fc1c0244), replacing the
+generated block that had been pinned to fleet-v4.90.0 (7c428c6e46). 562 registrations
+found, 562 parsed (496 endpointer including alt paths, 58 deprecated aliases, 8 raw mux),
+0 unparsed. Both loud-failure checks passed: the independent verb-site count matched the
+attributed count, and the repo-wide sweep found no route-registering file outside
+HANDLER_FILES. Was 560/494/58/8 at 4.90.0.
+
+Diffed old against new by (method, path) with the source comments stripped, so line-number
+churn could not hide a change. Two routes added, none removed, no auth class changed:
+
+- `POST /api/_version_/fleet/hosts/release_ab`, user (session or API token).
+  server/service/handler.go:599, registered on `ue`
+  (`newUserAuthenticatedEndpointer`, handler.go:300). Handler
+  `releaseABDevicesEndpoint` at server/service/apple_mdm.go:4560; free implementation
+  SkipAuthorization then `fleet.ErrMissingLicense` (apple_mdm.go:4569-4575), so Premium
+  only. EE ee/server/service/apple_mdm.go:387: `!user.IsAnyAdmin()` (global admin or any
+  team admin, server/fleet/users.go:129) is forbidden; >32,000 host IDs and 0 host IDs are
+  both BadRequest; per-team `ABReleaseDeviceAuthz` Authorize per distinct team in the
+  batch; ineligible hosts get a per-host error status in `results` while the rest proceed;
+  the release itself is `depClient.DisownDevices(...)` once per distinct ABM token.
+- `POST /api/fleet/orbit/managed_local_account`, orbit (orbit node key).
+  server/service/handler.go:1066, registered on `oeWindowsMDM` =
+  `oe.WithCustomMiddleware(mdmConfiguredMiddleware.VerifyWindowsMDM())` (handler.go:1063),
+  `oe` = `newOrbitAuthenticatedEndpointer` (handler.go:1045). Handler
+  `postOrbitManagedLocalAccountEndpoint` at server/service/orbit.go:1568 ->
+  `EscrowWindowsManagedLocalAccountPassword` (orbit.go:1584): SkipAuthorization (not
+  user-authenticated), host from context, then
+  `MDMWindowsGetEnrolledDeviceWithHostUUID` -> BadRequest "managed local account escrow is
+  only supported for Windows MDM hosts" when absent. A non-empty `client_error` records the
+  device-side failure and clears the escrowed flag; otherwise the password (non-empty, <=256
+  bytes) is saved and the enrollment marked escrowed, with a
+  `ActivityTypeCreatedManagedLocalAccount` activity only on first escrow.
+
+Cross-check independent of the generator: `git diff fleet-v4.90.0 fleet-v4.91.0` over all
+five HANDLER_FILES plus handler_deprecated_paths.go shows exactly these two added
+registrations (plus one comment line) and nothing removed; the other four handler files and
+the alias table are byte-identical. A repo-wide grep for endpointer constructor calls across
+server/, ee/ and cmd/ (non-test) hits only the five scanned files, so there are no
+enterprise-only routes the generator structurally cannot see. cmd/fleet/serve.go still
+mounts the same four feature modules (android, activity, acme, chart); its `extra` argument
+is `[]service.ExtraHandlerOption` (rate limits, HTTP-signature verifier), not routes.
+
+Version-prefix claims re-read at the tag and unchanged: core declares `v1`, `2022-04`
+(handler.go:296), chart the same (chart handler.go:25), android `v1` alone (android
+handler.go:40-42), activity `v1`, `latest` (activity handler.go:41-43).
+
+Left at 4.90.0 deliberately: the "Verified against Fleet 4.90.0" stamp on "The shared
+response and error contract", which was not re-verified in full this round (the envelope's
+failure-class table is unaffected by the only 4.91 change to server/fleet/errors.go, which
+adds message constants and nothing else), and the further-reading link to the version-pinned
+REST reference, which build/check-pinned-links.py holds at fleet-v4.90.0 book-wide.
+
+## overnight step 7 (2026-09-08): the catalog's scope, and three auth cells corrected
+
+Round 2's blocker and the step-6 worker's own W2 landed on the same defect from different
+directions, and both are right: the catalog's "None is omitted" was false. The generator
+reads five `handler.go` files under `server/`; it never opens `cmd/fleet/serve.go`, which
+binds eleven handlers on the root mux above the API router. Read at fleet-v4.91.0:
+`/healthz` (844), `/version` (845), `/assets/` (846), `/metrics` (948 and 956, the
+basic-auth and no-basic-auth variants), the `/api/` catch-all that mounts everything this
+catalog does list (971), `/api/v1/fleet/scim/details` and `/api/latest/fleet/scim/details`
+(975-976, literal shims so the more specific Go mux pattern beats the SCIM base path — see
+the comment at 972-974), `/enroll` (978), `/` (979) and `/debug/` (984).
+
+Corrected the sentence rather than widening the generator, deliberately. The operator
+surfaces are already excluded from the exposure matrix by policy and with a reason stated
+there; regenerating 562 verified rows into a larger unreviewed set on the night the branch
+ships trades a known-true table for an unknown one. `/enroll` is the one omission that
+misled a reader, because this appendix's own Android baseline tells you to open it, so the
+new prose names it explicitly. Widening the generator to cover `cmd/` and `ee/`
+registrations remains worth doing as its own pass.
+
+Three auth cells were wrong, and these were fixed in the generator so they cannot drift back:
+
+- `POST /api/osquery/enroll` (and its `/api/v1/` alt path) read `none`. The endpointer
+  installs no auth, but `EnrollOsquery` refuses without a valid enroll secret
+  (`server/service/osquery.go:112` `ds.VerifyEnrollSecret`), and where the host already
+  holds an identity certificate it also requires a matching HTTP message signature
+  (`:117-133`). Now "enroll secret, verified inside the handler", via the existing
+  `HANDLER_LOCAL_AUTH` table that already carried the live-query websocket.
+- `POST /api/v1/fleet/android_enterprise/pubsub` read `none`. `authenticatePubSub`
+  (`server/mdm/android/service/pubsub.go:80-95`) skips authorization and then verifies
+  Google's token against the stored `MDMAssetAndroidPubSubToken`. Now "Pub/Sub token,
+  verified inside the handler".
+- The raw mux group's prose said each of its routes "carries its own protocol
+  authentication". False for three of the eight. `registerMDMServiceDiscovery`
+  (`server/service/handler.go:1375-1400`) builds an enrollment URL from the path value and
+  returns it with status 200, checking nothing, on both `/mdm/apple/service_discovery` and
+  `/mdm/apple/service_discovery/{token}`; `pssoAASAHandler`
+  (`server/service/apple_psso.go:198-217`) serves the app-site-association document to any
+  GET or HEAD, which is what Apple's CDN requires. Those three now read "none (public)" and
+  the group's prose says three do not carry protocol authentication.
+
+Also added, because the misreading is the point: `none` in the Auth column means the router
+installs no Fleet credential check, not that the path is open. Many `none` rows carry a
+one-time token in the path (EULA, invitation, installer download), which is visible in the
+path and needed no per-row note.
+
+Regenerated output was diffed row-for-row against the committed appendix: 562 rows both
+sides, exactly six differing, all six intended. Registration counts unchanged at
+562/496/58/8, source commit 35fc1c024490.
+
+## overnight step 7 (2026-09-08): the catalog's real boundary, and what `none` does not promise
+
+Round 3's blocker and its finding 5, both against sentences the previous step wrote. Every path
+below was read at fleet-v4.91.0 (35fc1c0244).
+
+**The boundary.** The scope sentence said the catalog lists "every route the server registers *on
+its API router*". That is not the line the generator draws, in either direction:
+
+| Read | Source |
+|---|---|
+| The raw protocol group is bound on the root mux, not under `/api/` | `cmd/fleet/serve.go:893` hands `rootMux` to `service.RegisterAppleMDMProtocolServices` and `:912` to `service.RegisterSCEPProxy`; both live in `server/service/handler.go`, which is why their eight routes are in the table |
+| Six root-mux paths registered from `ee/` are in neither the table nor the exclusion list | `ee/server/scim/scim.go:283-284` (`/api/v1/fleet/scim/`, `/api/latest/fleet/scim/`), `ee/server/service/hostidentity/scep.go:103` (`/api/fleet/orbit/host_identity/scep`), `ee/server/service/condaccess/scep.go:85` (`/api/fleet/conditional_access/scep`), `ee/server/service/condaccess/idp.go:156-157` (`/api/fleet/conditional_access/idp/metadata`, `/idp/sso`); handed `rootMux` at `serve.go:915,924,933,938` |
+| Those six are the whole of what `ee/` binds | `git grep -n 'mux\.Handle' fleet-v4.91.0 -- ee/ cmd/` returns exactly those six plus two separate binaries (`cmd/android-amapi-mock`, `cmd/fleet-mcp`), neither of which is the Fleet server's mux |
+| `serve.go`'s own mounts beside `/api/` are nine | `rootMux.Handle`/`HandleFunc` at `:844,845,846,948,956,971,975,976,978,979,984`: `/healthz`, `/version`, `/assets/`, `/metrics` (twice, one path), `/api/`, the two `scim/details` shims, `/enroll`, `/`, `/debug/` |
+
+So the paragraph now says the boundary is which files the generator reads, names the raw group as
+the reason the router is not it, and enumerates all fifteen root-mux paths outside the table.
+Nine plus six is exhaustive at this tag, which is why it is stated as a count.
+
+**Why the wording rather than the generator, again.** The same reasoning as the previous step:
+widening `gen-api-catalog.py` into `ee/` would replace a catalog verified three times with a
+larger unreviewed one, and the six paths are Premium, conditionally registered (SCIM needs
+Premium; host identity and conditional access additionally need a server private key), and
+already named in the exposure matrix where a reader opening a firewall needs them. **Alternative
+if a later round disagrees:** widen the generator and re-review the result as a step of its own.
+
+**What `none` does not promise.** The legend said "where they do, the row says which one". The
+rows disprove it: `GET /api/_version_/fleet/invites/{token}` reads a bare `none` while
+`server/service/invites.go:332` skips authorization and then requires an exact token match and an
+expiry check, and the EULA and bootstrap-package token reads do the same
+(`ee/server/service/mdm.go:461,606`, both "skipauth: ... gated by token"). The generator's
+`HANDLER_LOCAL_AUTH` map holds three entries, and those three are hand-read rather than the output
+of an audit. The legend now says so, and tells the reader to treat `none` as a question to answer
+at the handler. **Alternative:** add every path-token route to `HANDLER_LOCAL_AUTH` and
+regenerate, which is a full audit of the 60 `none` rows and a pass of its own. [[a.3-notes]]
+
+**One gap this round names rather than closes.** Of the six `ee/` root-mux paths, five are already
+in the exposure matrix (`/api/v1/fleet/scim/` and `/api/latest/fleet/scim/` at the SCIM entry,
+the three conditional-access paths at the Okta entry). `/api/fleet/orbit/host_identity/scep`
+appears nowhere else in the appendix: the matrix's Apple entry covers hardware attestation through
+`/api/mdm/acme/*` and its certificate entry covers the SCEP proxy at `/mdm/scep/proxy/*`, neither
+of which is this path. The completeness paragraph now names it and says so. Giving it a matrix
+entry of its own means stating which hosts fetch it and under what conditions, which is a
+verification pass rather than a wording fix, so it is left for a later round.
+
+## Round 4 (2026-09-09, overnight campaign step 7)
+
+Two corrections, both inside the boundary paragraph the previous round rewrote. Everything
+below was read at `fleet-v4.91.0` (35fc1c0244) this round, not taken from the review.
+
+**The catalog reads six files, not five.** `HANDLER_FILES` in `build/gen-api-catalog.py` is a
+five-entry list (`server/service/handler.go` plus the android MDM, activity, ACME and chart
+module handlers), and those five supply the endpointer routes and the raw protocol routes. The
+58 deprecated-alias rows come from `ALIASES_GO` at `gen-api-catalog.py:36`, which is
+`server/service/handler_deprecated_paths.go`, parsed by a separate pass. That file is not a set
+of registrations: it declares `deprecatedPathAliases`, 47 `eu.DeprecatedPathAlias` entries whose
+own comment says each "causes the deprecated path(s) to serve the same handler as the primary
+path", and the generator copies each primary route's parsed Auth onto its aliases. So an alias
+row's Auth cell is the primary's by construction in the catalog and by behaviour in the server.
+The committed generated header already named the sixth file; only the prose above it did not.
+
+**The server private key gates four paths, not three.** `cmd/fleet/serve.go:919` opens
+`if len(config.Server.PrivateKey) > 0 {` and closes at `:940`. Inside it, in order:
+`hostidentity.RegisterSCEP` (`:924`), `condaccess.RegisterSCEP` (`:933`) and
+`condaccess.RegisterIdP` (`:938`). The `else` arm at `:941-942` logs "Host identity and
+conditional access SCEP is not available because no server private key has been set up." The two
+SCIM mounts (`scim.RegisterSCIM`, `:915`) and the SCEP proxy (`:912`) sit above that branch,
+inside `license.IsPremium()` only, so they are Premium-gated and not key-gated. The appendix had
+the precondition right for conditional access in the exposure matrix and wrong in the one place
+host identity SCEP appears at all, which is the place a reader has to take it from.
+
+**Not changed, and why.** The osquery enroll registration at `server/service/handler.go:1075`
+carries `WithAltPaths("/api/v1/osquery/enroll")`, so it renders as two rows that both name a
+handler-local credential. The `none` legend names endpoints rather than cells and states no
+number, so nothing there was false; the legend now says "on both of its paths" only because the
+round was already in the file. The gap the previous round named — `/api/fleet/orbit/host_identity/scep`
+having no exposure-matrix entry of its own — is still open and still a verification pass rather
+than a wording fix. [[a.5-notes]]

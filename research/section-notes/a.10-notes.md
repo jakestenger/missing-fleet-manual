@@ -73,3 +73,24 @@ setup only, MJ-H). links=0, crossrefs/headings=0.
 - MIN8-10 (Preview under-routed): the **Preview** entry pointed only to a.7 command contracts. Added the
   1.1 route first (`#try-fleet-without-deploying-anything`, the conceptual "try Fleet without deploying"
   section), keeping the a.7 contracts pointer second. Pure routing, no product claim. links=0.
+
+## 2026-09-08 4.91.0 campaign step 3: one subject entry per 4.91.0 feature
+
+Twenty-five entries added, one per `### IT Admins` and `### Security Engineers` feature in the
+4.91.0 changelog, filed under the existing letters rather than under any new heading. Every term
+was checked at fleet-v4.91.0 (35fc1c0244) before it was written down; the source citations are
+per-feature in [[a.1-notes]].
+
+Nineteen of the twenty-five also earned a capability row in a.1. The other six are routed here and
+carry their words on an existing capability row instead, because the outcome was already
+registered: "Added to Fleet" (CAP-083), nested Entra groups (CAP-292), software inventory per
+fleet (CAP-123), `mdm_enrolled` on the host timeline (CAP-016), the vulnerability-scanning
+exclusion (CAP-124), and custom host vitals in a host name template, which stays in a.1's
+no-capability-row register with the template itself. **A reader reaching one of those six through
+this index still lands on the section that teaches it**, which is the test that matters here;
+a.1's register grain is a separate question and is argued in its own ledger.
+
+Two entries deliberately carry a caution rather than only a route, because the name misleads:
+"Added to Fleet" holds `last_enrolled_at` and moves on every re-enrollment, and `token_invalid`
+reading false means "not known to be rejected" rather than "checked and healthy". Both restate
+what the owning section establishes rather than adding a claim. links=0, headings=0.

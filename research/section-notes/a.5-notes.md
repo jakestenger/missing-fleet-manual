@@ -609,3 +609,153 @@ forbids resolving on neighbour evidence under the part agreement. Closing those 
 per-cell frontend absence-proof or would inject probably-wrong values into a reference, so the
 appendix keeps recording the uncertainty. The one cell pair that decisive source could close, it
 closed.
+
+## 2026-09-08 4.91.0 campaign step 3: nineteen rows, and every derived figure recounted
+
+a.1 gained nineteen rows for Fleet 4.91.0 (per-row source citations in [[a.1-notes]]), and
+`build/check-cap-ids.py` requires a.5 to carry each of them or name it as a documented exclusion.
+None qualified as an exclusion, so all nineteen became matrix rows: 362 to 381, 1,448 cells to
+1,524.
+
+**UI cells were decided by finding the rendered surface, never by assuming one.** The components
+found at fleet-v4.91.0 (35fc1c0244): `WindowsAccountSection.tsx` (CAP-374), `WindowsMdmPage.tsx`
+(CAP-375), `AppleOSTargetForm.tsx` (CAP-376), `ManageHostsPage.tsx` (CAP-377),
+`FleetAppDetailsForm.tsx` and `DeployModal.tsx` (CAP-378), the `adobe_plugins` to
+`Plugin (Adobe)` mapping in `frontend/interfaces/software.ts` (CAP-380), `ReleaseFromABModal.tsx`
+(CAP-383), `PlatformField.tsx` (CAP-387, whose six options match 1.3's table exactly),
+`MDMStatusModal.tsx` (CAP-390), and `GlobalActivityItem.tsx` (CAP-391 and CAP-392).
+
+**Three rows read against the grain and are worth stating.**
+
+- **CAP-393 (CIS benchmarks) is `Unsupported` in the UI.** Nothing under
+  `frontend/pages/policies/` mentions CIS, and the published sets are applied as specs; the UI
+  creates policies one at a time and imports no set.
+- **CAP-384 and CAP-389 are `Unsupported` in all four columns**, taking the all-`Unsupported`
+  group from nine rows to eleven and the no-supported-interface group from 48 to 50. Both are
+  `fleet serve` process configuration (`server/config/config.go`), so the value never enters the
+  configuration response the browser reads and no request writes it. This is the same shape as
+  the existing process-configuration rows, except that those read `Not established` in the UI
+  column; these two read `Unsupported` because the boundary is positive rather than unsearched.
+- **CAP-383 and CAP-390 are `Unsupported` for `fleetctl`.** There is no `release_ab` or
+  `dep_assignment` command anywhere under `cmd/fleetctl/` at the tag. The three host reads
+  (CAP-380, CAP-381, CAP-382) are `Full` there instead, because `fleetctl get hosts <id>` prints
+  the full `HostDetailResponse` (`cmd/fleetctl/fleetctl/get.go:165, 1135`).
+
+**Every derived figure was recounted from the matrix by script**, not adjusted by hand: the
+five-value table, the reach figures (308 / 269 / 251 / 168), the `Partial` total (255), all-four-
+`Full` (91) and all-four-agree (114), GitOps `Unsupported` where the UI and REST API can both
+perform (112), and the UI `Not established` breakdown (36 in the three server sections, 21 where
+the other three columns all read `Unsupported`). `check-register-counts.py` and
+`check-cap-ids.py` both pass.
+
+**Two figures no check recomputes were re-derived by hand and are the weakest numbers in this
+pass**: the `fleetctl api` narrative counts. Rows reachable only through `fleetctl api` went 47 to
+51 (CAP-383, CAP-390, CAP-391, CAP-392); rows depending on `gitops`, `apply` or `delete` went 101
+to 109 (CAP-374, CAP-375, CAP-376, CAP-377, CAP-378, CAP-385, CAP-387, CAP-393); the headline
+went 148 to 160. CAP-379 was deliberately left out of the second group because
+`fleetctl run-script` reaches it natively. If a later round wants these mechanically checked, that
+is a new assertion in `check-register-counts.py` rather than a correction here. [[a.2-notes]]
+
+## overnight step 7 (2026-09-08): the three `fleetctl api` figures, replaced rather than re-derived
+
+The previous pass flagged 51 / 109 / 160 as the weakest numbers in this appendix and asked a
+later round to spot-check them. Round 2 did, parsed all 381 matrix rows, and could not
+reproduce either 51 or 109 under any reading. Nor could this pass. The nearest candidates for
+51 were 39, 40, 73 and 84; for 109 they were 130, 133, 166 and 167. Note also that this file's
+own ledger row for the decision has said 145 (45 + 100) since first drafting, against the
+appendix's 148, so the two records of the same figure never agreed.
+
+That is not evidence the numbers are wrong. Neither is derivable from the matrix: "has no
+native command" and "depends on `gitops`, `apply` or `delete`" are per-row facts about *which*
+command reaches a row, and the matrix stores only how well each interface does. The defect is
+that three prominent figures could not be checked by a reader, by a build gate, or by the next
+worker, and the campaign record says two of them were adjusted by hand rather than recounted.
+
+So they were replaced with figures the matrix does yield, recomputed here against the 382-row
+matrix and re-checkable by anyone who parses it:
+
+- 122 rows read `Unsupported` in the `fleetctl` column (was the home of "fifty-one rows have no
+  native command").
+- 85 of those 122 have a REST API column that is not `Unsupported` — the exact set counting
+  `fleetctl api` as support would have flipped, which is the point the passage is making.
+- 168 rows read `Full` or `Partial` in the GitOps column, and `fleetctl gitops` executes every
+  one of them, there being no server-side GitOps engine. `apply` and `delete` reach more than
+  that; the sentence now says so without putting a number on it.
+
+The headline "decides 160 rows" became a statement of which rows the decision decides rather
+than a total, because the two groups it summed are not disjoint and no derivation was recorded.
+If a later round wants the original per-row facts counted, that needs a per-row `[api-reachable]`
+/ `[spec-file]` annotation carried in the matrix, and then an assertion in
+`check-register-counts.py` — a new column, not a corrected number. [[a.1-notes]]
+
+## overnight step 7 (2026-09-08): CAP-395 added
+
+Round 2 finding 6: CAP-083, "See what a device is and what is on it", had absorbed the new
+sortable **Added to Fleet** column during step 3, and that made a.5's `fleetctl Full` on
+CAP-083 read as though `fleetctl` could sort by enrollment date. It cannot. Read at
+fleet-v4.91.0: `getHostsCommand` (`cmd/fleetctl/fleetctl/get.go:1027-1052`) declares
+`--fleet`, `--json`, `--yaml`, `--mdm`, `--mdm-pending` and the common config flags, and no
+ordering option of any kind; the request it builds sets `additional_info_filters` and at most
+`fleet_id`. The UI column is sortable (`HostTableConfig.tsx:735-765`: an `accessor` and `id` of
+`last_enrolled_at` with a `HeaderCell` carrying `isSortedDesc`, and no `disableSortBy`), and
+the REST API accepts it as an order key (`server/datastore/mysql/hosts.go:74` maps
+`last_enrolled_at` to `h.last_enrolled_at` in the sortable-column table). GitOps has no
+reading vocabulary at all.
+
+So sorting is a separate outcome from seeing, exactly as CAP-127 ("Filter and sort by those
+fields") is separate from the vulnerability rows it sorts — this register already draws that
+line. CAP-395 was minted rather than 386 or 394, which step 3 retired deliberately and which
+stay retired. Scored `Full | Full | Unsupported | Unsupported`. In a.2 it is `Supported` on all
+six platforms with no prerequisite: the sort reads a column every enrolled host carries and has
+no platform branch anywhere in the query builder. Every count this touched was recomputed from
+the matrix, not adjusted: a.5's stated row count (381 to 382), cell count (1,524 to 1,528),
+the `Full` row of the count table (213/201/194/133 to 214/202/194/133), the `Unsupported` row
+(31/55/121/213 to 31/55/122/214), a.1's register size (383 to 384) and a.2's (291 to 292).
+`check-cap-ids.py` and `check-register-counts.py` both agree with the prose.
+
+## overnight step 7 (2026-09-08), round 3: four stale figures and one sentence that outran its own paragraph
+
+**The figures.** CAP-395's row was scored into the matrix and the five value rows of the count
+table were recomputed, but four figures below them were not. Every replacement here was recomputed
+by parsing the committed matrix, not adjusted by hand:
+
+| Figure | Was | Is |
+|---|---|---|
+| Count table **Total** row, all four columns | 381 | **382** |
+| REST API at `Full` or `Partial` | 308 | **309** |
+| UI at `Full` or `Partial` | 269 | **270** |
+| GitOps `Unsupported` where UI and REST can both act | 112 | **113** |
+
+`fleetctl` 251 and GitOps 168 were already right and did not move, as were the 122/85/168 figures
+this round confirmed. `check-cap-ids.py` now recomputes the Total row and both reach sentences;
+it previously walked a fixed list of the five value names and never read the row beneath them.
+
+**The sentence.** The boundary section opened with "This decision alone decides the `fleetctl`
+column on the 122 rows it reads `Unsupported` and on every row a specification file reaches",
+which the same section's own third paragraph contradicts: on 37 of those 122 the REST column is
+`Unsupported` too, so no policy about `fleetctl api` could have changed them. It now names the 85
+rows that would actually flip, which is the figure the later paragraph already states, and keeps
+the second half as what it is: the reason a specification file's reach counts as `fleetctl`
+support at all. [[a.1-notes]] [[a.2-notes]]
+
+## Round 4 (2026-09-09, overnight campaign step 7)
+
+**The replacement sentence overreached, and the figure it needed was a different one.** Round 3
+replaced "the 122 rows it reads `Unsupported`" with "the 85 rows no specification file reaches and
+`fleetctl api` would". 85 is the right size of one set and the wrong warrant for the claim
+attached to it. Recomputed from the committed matrix this round, of the 122 rows whose `fleetctl`
+cell reads `Unsupported` the REST column is `Full` on 40, `Partial` on 34, `Read only` on 1,
+`Not established` on 10 and `Unsupported` on 37. 85 is exactly "REST is not `Unsupported`", which
+is how the third paragraph defines it and where it stays. But this table's own legend says
+`Not established` means "the sources do not settle it", so on those ten the appendix has declined
+to say whether any HTTP caller reaches the action, and it cannot then assert that `fleetctl api`
+would. 75 rows carry a settled non-`Unsupported` REST answer. The boundary sentence now says 75
+and "demonstrably could"; the third paragraph keeps 85 where it is defined, states the 75, and
+names the ten for what they are.
+
+**The check, because none of these four figures had one.** `check_a5_fleetctl_api_figures`
+recomputes 122, 85 and 75 from the matrix and the spelled remainder (ten) from the difference, so
+85 and 75 cannot drift apart and neither can drift from the table. Each regex appends a problem
+when it fails to match, so deleting a sentence fails the gate rather than passing it silently.
+Proven by mutating a scratch copy back to each stale figure, and by deleting the sentence
+outright, and watching every branch fire. [[a.1-notes]] [[a.8-notes]]

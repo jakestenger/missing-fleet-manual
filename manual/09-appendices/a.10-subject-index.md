@@ -3,9 +3,9 @@ title: "Subject index"
 chapter: "Appendices and indexes"
 section: "A.10"
 sidebar_position: 10
-verified_against: Fleet 4.90.0
-verified_on: 2026-09-03
-verified_source: "reference aid, not a behaviour claim. Each entry was checked to resolve to a section that defines or explains the term at fleet-v4.90.0; the terms themselves are grounded in the chapters they point at. Extended 2026-09-03 (round6 M16) with host display name template, name template and device name routes to 5.2's new 'Naming hosts from a template' section"
+verified_against: Fleet 4.91.0
+verified_on: 2026-09-08
+verified_source: "reference aid, not a behaviour claim. Each entry was checked to resolve to a section that defines or explains the term at fleet-v4.90.0; the terms themselves are grounded in the chapters they point at. Extended 2026-09-03 (round6 M16) with host display name template, name template and device name routes to 5.2's new 'Naming hosts from a template' section. Extended 2026-09-08 (overnight campaign step 3) with twenty-five entries, one per Fleet 4.91.0 feature, each pointing at the section that now teaches it and each term checked against fleet-v4.91.0 (35fc1c0244) rather than taken from the release notes: the entries name `last_enrolled_at`, `adobe_plugins` and its `Plugin (Adobe)` label, `mdm.allow_orbit_end_user_auth_bypass`, `--bypass-end-user-auth`, `$FLEET_HOST_VITAL_<id>`, `mdm.windows_automatic_enrollment.default_fleet`, `dep_device_error`, `$FLEET_VAR_*`, `hardware_marketing_name`, `host_activities_webhook`, the twenty-nine iOS and iPadOS vitals, the `linux` label platform, `minimum_version: latest` with `deadline_days`, nested Entra groups, `patch_when_closed`, `s3_software_installers_signed_url`, `released_from_ab`, `created_setup_experience_script`, `deleted_setup_experience_script`, `enable_software_inventory`, `token_invalid`, `user_mfa_requested`, `mdm_enrolled` and the Windows `_fleetadmin` account"
 ---
 
 # Subject index
@@ -14,11 +14,41 @@ An A-Z of the concepts, components, and named artifacts a reader looks up by nam
 
 This is the noun counterpart to the [capability index](a.1-capability-index.md), which starts from an outcome you want, a verb. Start here when you have met a word and want to know what it is; start there when you know the job and want the chapter that does it. Where a term also carries a short definition in the [glossary](a.6-glossary-and-release-compatibility.md), that is noted, because the glossary is where a renamed or easily-confused term is pinned down.
 
-A cross-reference of the form "see X" means the book files the concept under X, because Fleet renamed it or because one name is the expansion of another.
+A cross-reference of the form "see X" means the manual files the concept under X, because Fleet renamed it or because one name is the expansion of another.
+
+
+<!-- IMAGE-TODO: assets/a.10-index-reading-vignette.webp
+     QUESTION: Can the alphabetical index get a visual resting point without obstructing lookup?
+     PROMPT: ILLUSTRATION: A small horizontal Fleet Cloud City vignette for the opening of an
+     alphabetical index. One pale floating reading platform holds a few orderly blank index cards
+     and an open field guide; a modest glass walkway leads toward a second quiet platform,
+     suggesting finding a route through information. Use one tiny swan silhouette near still water,
+     generous whitespace, navy outlines and pale-blue surfaces. No letters, alphabet, labels,
+     arrows, invented UI, charts, floating paragraphs, or faux hyperlinks. Keep it low and calm so
+     the first alphabetical heading remains close to the introduction.
+     DESIGN: Fleet is software for managing computers; draw no vehicles. Use the established Cloud
+     City illustration treatment consistently: #F9FAFC background, #192147 navy, #515774 slate, and
+     #D3E8F3 / #E8F1F6 pale-blue surfaces. Keep large areas quiet and the composition balanced at
+     720 px reading width. Use a shallow horizontal crop. No photorealistic elements mixed with flat
+     artwork, product logo, watermark, rendered text, em-dashes, or technical claims. Do not imitate
+     a diagram.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Atmosphere only.
+     Keep all alphabetical entries, real links, see references, and noun-versus-outcome navigation
+     instructions intact; do not interrupt letter groups with decoration. Keep current prose and
+     this TODO until the actual image is reviewed. Then check alt text against the artwork and
+     retain an accessible summary plus all required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![Blank index cards and an open field guide on a quiet floating reading platform.](assets/a.10-index-reading-vignette.webp)
+-->
 
 ## A
 
 - **ABM**, see Apple Business Manager.
+- **"Added to Fleet"** (the hosts-list column, sortable from Fleet 4.91, and the matching Vitals field: it holds `last_enrolled_at`, the last time the host enrolled, not the first time Fleet saw it): [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md#added-to-fleet-dates-the-last-enrollment-not-the-first).
+- **Adobe plugins** (Creative Cloud CEP and UXP extensions, collected on macOS and Windows from Fleet 4.91 and listed with the software type "Plugin (Adobe)"): [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md#adobe-creative-cloud-plugins); why they never carry a vulnerability finding is [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md#a-sixth-emptiness-software-fleet-never-scans).
+- **`allow_orbit_end_user_auth_bypass`** (`mdm.allow_orbit_end_user_auth_bypass`, the server setting that from Fleet 4.91 decides whether a Linux or Windows agent which does not complete end-user authentication may enroll into a fleet that requires it; on by default): [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#end-user-authentication).
 - **account lifecycle** (of a person's Fleet account), see user account.
 - **account provisioning** (creating a Mac's local account and syncing its password with the identity provider through Platform SSO, Premium and macOS-only; the `fpsso` settings-search term): [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#provision-and-sync-the-local-account-with-platform-sso). This is not the Fleet-console account [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) provisions.
 - **activity and audit log:** the record of what changed and who caused it is defined in [1.5](../01-foundations/1.5-audit-and-activity.md); where those records are delivered is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md); reading them during an investigation is [8.12](../08-troubleshooting/8.12-audit-logs.md).
@@ -41,16 +71,19 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **batch script** (running one saved script across many hosts at once): [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md).
 - **BitLocker:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md); the Windows escrow key it depends on is the WSTEP certificate, [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md).
 - **BitLocker startup PIN:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
+- **`--bypass-end-user-auth`** (the `fleetctl package` flag, new in Fleet 4.91, that builds a fleetd installer which skips the end-user authentication prompt on Linux and Windows; the server still decides whether such a host may enroll): [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#end-user-authentication).
 - **bootstrap reports** (the standard saved reports `fleet-mcp -seed` creates), see seed mode.
 
 ## C
 
 - **carve**, see file carving.
 - **certificate authority** (CA): [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
+- **CIS benchmarks** (the Premium policy library implementing the Center for Internet Security benchmarks, published as files you import rather than shipped in the product, and revised for macOS in Fleet 4.91): [4.3](../04-know-your-devices/4.3-use-policies-for-compliance.md#the-cis-benchmark-policy-library).
 - **certificate renewal:** the recurring operational calendar, and the difference between renewing a certificate and replacing key material, is [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md); the four Apple credentials with their own renewal stories are [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md).
 - **certificate resend** (resending one certificate a profile issued, per host, separate from resending the profile): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#changing-resending-and-removing).
 - **Chromebook**, see ChromeOS.
 - **ChromeOS extension:** [3.7](../03-connect-devices/3.7-enroll-chromeos-devices.md).
+- **custom host vital** (`$FLEET_HOST_VITAL_<id>`, a value you record against a host yourself and reference by its numeric identifier, not its name): defining one and setting a host's value is [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md); using one in a configuration profile, a declaration or Android managed app configuration is [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#variables-and-secrets), in a host name template [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#naming-hosts-from-a-template), and in a script or a software title's lifecycle scripts [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md#secrets-and-per-host-values). Android and host name templates both arrived in Fleet 4.91.
 - **conditional access:** the feature and its proxy-trust security boundary are [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md); [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md) points to it from the identity-provider side.
 - **configuration profile:** [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 - **`cron_stats`:** the table that records whether a scheduled job ran is in [8.6](../08-troubleshooting/8.6-server-state.md).
@@ -65,6 +98,8 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **dead lettering:** defined in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **declaration asset** (the Premium Apple DDM `com.apple.asset.*` object a declaration references for large or binary content, with its own upload, uniqueness and delete rules, and a Fleet-Free GitOps licence trap): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#declaration-assets); the device requests that follow are [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md#888-ddm-declarations).
 - **declarative settings**, see DDM.
+- **default fleet (Windows)** (the fleet a user-driven Windows MDM enrollment is assigned to, before the Autopilot Enrollment Status Page runs; Premium, new in Fleet 4.91): [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md#where-automatically-enrolled-windows-hosts-land). The Apple per-platform equivalent is [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md).
+- **`dep_device_error`** (the human-readable reason a host's Apple Business device lookup failed, returned from Fleet 4.91 on `GET /hosts/:id/dep_assignment`): [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md#why-apple-is-not-answering-from-fleet-491).
 - **decommissioning**, see retirement.
 - **device channel:** the default declaration and profile delivery target, [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md); contrasted with the user channel there.
 - **device name**, see host display name template.
@@ -93,6 +128,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **first-run setup** (creating the first administrator on a new server, before anyone can sign in; the setup screen, and what "initialize the server" means): [2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md#complete-first-run-setup).
 - **fleet** (the scoping construct, renamed from team): [1.3](../01-foundations/1.3-hosts-fleets-labels.md); the rename is recorded in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Fleet Desktop:** introduced as one of the host-side components in [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md); its end-user surface is designed in [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
+- **Fleet variables** (`$FLEET_VAR_*`, the built-in per-host substitutions Fleet resolves as it delivers): in configuration profiles they are [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#variables-and-secrets); the eight supported in scripts and in a software title's install, post-install and uninstall scripts, Premium and new in Fleet 4.91, are [5.3](../05-manage-devices/5.3-run-and-manage-scripts.md#secrets-and-per-host-values).
 - **Fleet-maintained apps** (FMA): the curated catalogue is defined in [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md); installing one is [5.4](../05-manage-devices/5.4-manage-software-and-applications.md).
 - **fleetd:** the host-side bundle is defined in [1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md); keeping it current is [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md).
 
@@ -107,6 +143,8 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **handoff and handover** (handing a running deployment to the team that will operate it), see production readiness.
 - **healthz** (the `/healthz` endpoint): what it checks and returns is [8.14](../08-troubleshooting/8.14-degradation.md); reading its failure in the server log is [8.3](../08-troubleshooting/8.3-server-logs.md).
 - **Helm** (the Kubernetes chart): [2.4](../02-administer-and-deploy-fleet/2.4-deploy-with-containers-or-virtual-machines.md).
+- **hardware marketing name** (`hardware_marketing_name`, the human-readable Apple model name Fleet 4.91 and later shows in place of the raw identifier it still stores): [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md#identity-operating-system-and-network).
+- **host activities webhook** (the Premium per-fleet activity webhook, new in Fleet 4.91, which fires only for activities linked to that fleet's hosts): its contract is [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md#the-activity-webhook-global-or-per-fleet); how it sits beside the organization-wide one is [1.5](../01-foundations/1.5-audit-and-activity.md).
 - **host display name template** (the per-scope, per-host template that sets the display name an Apple device reports, Premium): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md#naming-hosts-from-a-template).
 - **host identity certificate:** [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md); which platforms support it is a row in the [platform capability matrix](a.2-platform-capability-matrix.md).
 - **host vitals:** [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md).
@@ -114,18 +152,21 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 
 ## I
 
-- **idempotency** (an action safe to repeat): defined in [a.6](a.6-glossary-and-release-compatibility.md#terms-the-book-uses-across-chapters); why Fleet gives no guarantee of its own is [6.1](../06-automate-fleet/6.1-automation-design-and-change-control.md).
+- **idempotency** (an action safe to repeat): defined in [a.6](a.6-glossary-and-release-compatibility.md#terms-the-manual-uses-across-chapters); why Fleet gives no guarantee of its own is [6.1](../06-automate-fleet/6.1-automation-design-and-change-control.md).
+- **iOS and iPadOS device vitals** (the 29 fields a company-owned iPhone or iPad reports from Fleet 4.91, on the device-information request Fleet already makes, behind the host's **View all** button; a personally owned device is not asked for 26 of them): [4.1](../04-know-your-devices/4.1-understand-hosts-vitals-and-inventory.md#what-an-iphone-or-ipad-reports-and-what-a-personally-owned-one-does-not).
 - **initialize the server**, see first-run setup.
-- **IRSA** (IAM Roles for Service Accounts): defined in [a.6](a.6-glossary-and-release-compatibility.md#terms-the-book-uses-across-chapters); using it with Fleet's S3 client on AWS is [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
+- **IRSA** (IAM Roles for Service Accounts): defined in [a.6](a.6-glossary-and-release-compatibility.md#terms-the-manual-uses-across-chapters); using it with Fleet's S3 client on AWS is [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
 
 ## J
 
-- **JSON-RPC** (the request and response protocol MCP speaks): defined in [a.6](a.6-glossary-and-release-compatibility.md#terms-the-book-uses-across-chapters); smoke-testing the Fleet MCP server over it is [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
+- **JSON-RPC** (the request and response protocol MCP speaks): defined in [a.6](a.6-glossary-and-release-compatibility.md#terms-the-manual-uses-across-chapters); smoke-testing the Fleet MCP server over it is [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
 
 ## L
 
 - **label:** [1.3](../01-foundations/1.3-hosts-fleets-labels.md).
-- **LAPS and the managed local administrator account:** [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
+- **label platform** (the optional platform a dynamic label's query is restricted to, fixed when the label is created; `linux`, which matches any distribution, was added in Fleet 4.91): [1.3](../01-foundations/1.3-hosts-fleets-labels.md#a-dynamic-label-can-be-restricted-to-a-platform).
+- **`latest`** (as a `minimum_version`, with `deadline_days`, which keeps macOS, iOS and iPadOS hosts on the newest release their own hardware can run; Premium, new in Fleet 4.91): [5.6](../05-manage-devices/5.6-control-operating-system-updates.md#enforce-the-latest-version-with-a-rolling-deadline).
+- **LAPS and the managed local administrator account:** [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md); the Windows account, built a different way and added in Fleet 4.91, is [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#the-windows-managed-local-admin-account).
 - **licence** (Fleet Premium, licence key, and licence expiry): [7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md); choosing a licence tier is [2.1](../02-administer-and-deploy-fleet/2.1-administration-model-and-deployment-choices.md).
 - **license**, see licence.
 - **live query**, see report.
@@ -136,6 +177,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## M
 
 - **managed local account**, see LAPS and the managed local administrator account.
+- **`mdm_enrolled`** (the enrollment activity, which from Fleet 4.91 carries `host_id` and `host_serial` for Apple enrollments and appears on the host's own timeline): [8.12](../08-troubleshooting/8.12-audit-logs.md#8122-the-table).
 - **MCP** (Model Context Protocol) and the **Fleet MCP server**: connecting an AI assistant to Fleet is [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md); the fixed twenty-tool list it exposes is [A.11](a.11-mcp-tool-reference.md); the term is glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **MDM enrollment:** the model is [2.9](../02-administer-and-deploy-fleet/2.9-mdm-architecture-and-foundations.md); the status values are pinned down in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **MFA** (multi-factor authentication), see two-factor authentication.
@@ -145,6 +187,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## N
 
 - **name template** (host display name), see host display name template.
+- **nested groups** (a group provisioned as a member of another group in Entra; from Fleet 4.91 Fleet resolves a user's effective membership by walking upward, so a label on a parent group matches): [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md#connect-scim).
 - **NDES:** the Microsoft SCEP proxy, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 - **node key:** [3.1](../03-connect-devices/3.1-enrollment-design-and-host-lifecycle.md); also glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **Nudge:** [5.6](../05-manage-devices/5.6-control-operating-system-updates.md).
@@ -163,6 +206,8 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 ## P
 
 - **pack:** the legacy 2017 query pack is covered in [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md) and glossed in the [glossary](a.6-glossary-and-release-compatibility.md).
+- **patch when closed** (the patch-policy install option, new in Fleet 4.91, that installs only while the app is not running on the host, and which requires continuous automations): [5.9](../05-manage-devices/5.9-automate-remediation-with-policies.md#patch-a-fleet-maintained-app-only-when-it-is-closed).
+- **presigned URL** (`s3_software_installers_signed_url`, new in Fleet 4.91, which serves software installer, in-house app and bootstrap package downloads straight from Google Cloud Storage instead of through the Fleet server): [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md#object-storage-on-gcp-works-despite-what-the-architecture-page-says).
 - **password sync** (keeping a Mac's local-account password in step with the identity provider, through Platform SSO in Password mode, Premium and macOS-only): [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#provision-and-sync-the-local-account-with-platform-sso).
 - **`PayloadScope`** (the declaration key choosing System or User channel delivery): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 - **personal data**, see data inventory and trust boundaries.
@@ -184,6 +229,7 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **readiness** (production go-live), see production readiness.
 - **recovery key escrow:** [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
 - **Recovery Lock** (the Apple silicon firmware password): [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md).
+- **release from Apple Business** (the Premium, irreversible action that removes a device from your Apple Business organization; not the same as unenrolling it, and added in Fleet 4.91): [2.10](../02-administer-and-deploy-fleet/2.10-apple-mdm-configuration.md#releasing-a-device-from-apple-business); what a released device's lookup reports afterwards is [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md#why-apple-is-not-answering-from-fleet-491).
 - **Redis:** what it holds, and what its loss does and does not cost, is [1.6](../01-foundations/1.6-the-fleet-server.md).
 - **report and live report** (renamed from query and live query in 4.82.0): [4.2](../04-know-your-devices/4.2-run-queries-and-reports.md); a live report used as an introspection tool is [8.7](../08-troubleshooting/8.7-live-query-introspection.md). The rename is in the [glossary](a.6-glossary-and-release-compatibility.md).
 - **REST API:** using it is [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md); the indexed route and endpoint reference is [A.8](a.8-api-action-and-endpoint-reference.md).
@@ -205,10 +251,12 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **server URL** (the Fleet server's own address, `server_url`): [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
 - **service identity** (a non-human, API-only user for automation): [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md); scoping its token to one fleet or a named list of endpoints is [1.4](../01-foundations/1.4-identity-and-roles.md).
 - **setup assistant:** [3.2](../03-connect-devices/3.2-enroll-macos-devices.md); the wider setup experience is [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md).
+- **setup experience script** (the Premium script that runs during setup; from Fleet 4.91 adding, replacing or removing it is audited as `created_setup_experience_script` and `deleted_setup_experience_script`): running one is [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md); the audit record is [8.12](../08-troubleshooting/8.12-audit-logs.md#8124-activity-types-the-categories).
 - **setup screen** (the first-run screen that creates the first administrator), see first-run setup.
 - **SIEM** (security information and event management): sending Fleet's activity and audit logs to one is [2.8](../02-administer-and-deploy-fleet/2.8-activity-audit-logs-and-log-delivery.md).
 - **Smallstep:** one of the six certificate authority types, [2.13](../02-administer-and-deploy-fleet/2.13-connect-certificate-authorities.md).
 - **software installer:** [5.4](../05-manage-devices/5.4-manage-software-and-applications.md).
+- **software inventory** (what Fleet collects about installed software, and the per-fleet switch that turns it on, settable from Fleet 4.91 over `PATCH /api/v1/fleet/fleets/{id}` as well as through GitOps): [4.4](../04-know-your-devices/4.4-understand-software-and-vulnerabilities.md#turning-software-inventory-on-and-what-off-looks-like).
 - **SSE** (Server-Sent Events, one of the two MCP transports): [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md).
 - **SSO and SAML:** [2.5](../02-administer-and-deploy-fleet/2.5-identity-providers-sso-scim-and-role-sync.md).
 - **standard saved reports** (the four global reports `fleet-mcp -seed` bootstraps: macOS admin users, Windows update failures, Linux running containers, universal OS version), see seed mode.
@@ -222,13 +270,15 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **Technician** (a role defined by what it can change: run scripts, install or uninstall software, with read access much wider than that summary suggests, including recovery secrets; Premium): choosing between Fleet's roles is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md).
 - **Terraform:** the AWS reference architecture module is [2.3](../02-administer-and-deploy-fleet/2.3-deploy-on-aws-or-gcp.md).
 - **TLS:** the certificate that protects communication with the service, and the server private key it depends on, is [1.6](../01-foundations/1.6-the-fleet-server.md); planning the DNS name and certificate as server settings is [2.7](../02-administer-and-deploy-fleet/2.7-organization-and-server-settings.md).
+- **`token_invalid`** (the Apple Business token flag, new in Fleet 4.91, meaning Apple rejected the token or reported its signature invalid; false means "not known to be rejected" rather than "checked and healthy"): [8.8](../08-troubleshooting/8.8-apple-mdm-diagnostics.md#why-apple-is-not-answering-from-fleet-491).
 - **trust boundary**, see data inventory and trust boundaries.
-- **TUF** (The Update Framework): defined in [a.6](a.6-glossary-and-release-compatibility.md#terms-the-book-uses-across-chapters); the update repository is [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md); confirming what a host is running is [8.4](../08-troubleshooting/8.4-host-side-investigation.md).
+- **TUF** (The Update Framework): defined in [a.6](a.6-glossary-and-release-compatibility.md#terms-the-manual-uses-across-chapters); the update repository is [3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md); confirming what a host is running is [8.4](../08-troubleshooting/8.4-host-side-investigation.md).
 - **two-factor authentication** (Fleet's own email-delivered second factor, Premium): enabling it per account is [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md); why it leaves almost no trace in the activity record is [1.5](../01-foundations/1.5-audit-and-activity.md).
 
 ## U
 
 - **user account** (creating or inviting a person, editing their role and scope, forcing a password reset, ending their sessions, deleting them): [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md).
+- **`user_mfa_requested`** (the activity, new in Fleet 4.91, written when a valid password is submitted for an account with a second factor and the verification email is sent; it records that a valid password was used, not that anyone signed in): [8.12](../08-troubleshooting/8.12-audit-logs.md#8124-activity-types-the-categories); the recording gap it partly closes is [1.5](../01-foundations/1.5-audit-and-activity.md).
 - **user channel** (the macOS-only, sign-in-gated declaration delivery target; exists only for hosts that automatically enrolled): [5.2](../05-manage-devices/5.2-manage-configuration-profiles-and-declarative-settings.md).
 
 ## V
@@ -242,4 +292,5 @@ A cross-reference of the form "see X" means the book files the concept under X, 
 - **webhook:** [6.5](../06-automate-fleet/6.5-integrations-webhooks-and-external-workflows.md).
 - **wipe and lock:** [5.7](../05-manage-devices/5.7-control-devices-and-send-mdm-commands.md).
 - **work profile:** [3.6](../03-connect-devices/3.6-enroll-android-devices.md); the enterprise binding behind it is [2.12](../02-administer-and-deploy-fleet/2.12-bind-android-enterprise.md).
+- **Windows managed local admin account** (the `_fleetadmin` administrator fleetd creates, hides and escrows on a Windows host from Fleet 4.91; Premium, revealed the same way as the macOS account and never rotated): [5.5](../05-manage-devices/5.5-design-setup-and-self-service-experiences.md#the-windows-managed-local-admin-account).
 - **WSTEP:** the Windows enrollment certificate, which also serves as Fleet's Windows disk-encryption escrow key, is [2.11](../02-administer-and-deploy-fleet/2.11-configure-windows-management.md); Windows MDM diagnostics are [8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md).

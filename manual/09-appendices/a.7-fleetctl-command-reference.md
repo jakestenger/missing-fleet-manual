@@ -296,6 +296,43 @@ Five situations produce answers worth knowing in advance:
 
 **In automation, pass the flags explicitly** and give each job its own configuration file.
 
+
+<!-- IMAGE-TODO: assets/a.7-fleetctl-option-resolution.webp
+     QUESTION: Why can an unrelated shell variable change a fleetctl command's behavior?
+     PROMPT: DIAGRAM: A command's own Declared options acts as a gate between incoming values and
+     the invocation. Show explicit command flags, matching environment variables, and documented
+     defaults feeding only options that command declares. A focused example DEBUG=1 reaches Standard
+     client debug on commands declaring it, exposing request bodies in stderr; a separate package
+     --debug path controls Packaged agent logging and does not read that DEBUG variable. Do not draw
+     root-level flags as globally available, infer undocumented flag placement, or suggest every
+     command accepts --config. No actual request body or credential values.
+     DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
+     vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
+     titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
+     720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px node
+     padding, and consistent corner radii. Center short node names; left-align multiline
+     explanations. Never shrink text to fit. Use #F9FAFC background, #192147 headings and primary
+     connectors, #515774 text, #8B8FA2 secondary connectors, #C5C7D1 borders, and #D3E8F3 or #E8F1F6
+     quiet fills. Use #5CABDF and #C98DEF for named categories, #3AEFC4 for labelled positive
+     outcomes, #D66C7B for labelled failures, and #FAA669 for labelled cautions. Tint large panels
+     to 20 to 25 percent; full strength is for small marks. Keep text navy or slate, or off-white on
+     a navy anchor. Never rely on colour alone. Use one arrowhead shape, consistent stroke weights,
+     box-edge termination, and labelled branches and return paths. Keep connectors clear of text. No
+     gradients, shadows, decorative icons, logo, watermark, em-dashes, or slogan footer. Render only
+     the specified reader-facing labels. Choose orientation to fit the relationship, not a default
+     poster. Keep captions outside the artwork. If labels crowd, split the figure before shrinking
+     them. Keep editable SVG when the production method supports it.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Replace the
+     environment-variable hazard explanation with the contrasting debug example. Keep the full
+     flag/environment table, command exceptions, and explicit-flag/per-job-config guidance. Keep
+     current prose and this TODO until the actual image is reviewed. Then check alt text against the
+     artwork and retain an accessible summary plus all required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![Only options a command declares consume their matching environment variables; client debug and packaged-agent debug are different options.](assets/a.7-fleetctl-option-resolution.webp)
+-->
+
 ### What is not established about flag placement
 
 **Whether `--config` is accepted after a subcommand that does not declare it is not established at this release**, and the index above is laid out so as to imply neither answer.
