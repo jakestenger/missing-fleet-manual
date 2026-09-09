@@ -69,6 +69,42 @@ Two ways to obtain one. Through the UI, under **My account** and **Get API token
 
 **For SSO and MFA users the second route is closed.** Email and password login is disabled for those accounts, so the token has to come from the profile page in the UI. An automation account created for API use is the usual answer, and [2.6](../02-administer-and-deploy-fleet/2.6-user-accounts-roles-and-service-identities.md) covers creating one with an explicit role.
 
+
+<!-- IMAGE-TODO: assets/a.8-api-token-entry-points.webp
+     QUESTION: How does a user obtain a token, and which account's permissions does it carry?
+     PROMPT: DIAGRAM: Two token-acquisition paths: Signed-in profile page → Get API token; Eligible
+     email/password login → Returned token. Mark SSO/MFA accounts as using the profile-page route,
+     with the email/password route closed for them. Both paths converge on Authorization: Bearer
+     <token> → Fleet user account → Role + scope checks. Use a dedicated API-only account as the
+     automation example, not a shared personal identity. This covers user-authenticated API calls
+     only; do not apply the bearer-token model to device, osquery, or MDM protocol endpoints.
+     DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
+     vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
+     titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
+     720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px node
+     padding, and consistent corner radii. Center short node names; left-align multiline
+     explanations. Never shrink text to fit. Use #F9FAFC background, #192147 headings and primary
+     connectors, #515774 text, #8B8FA2 secondary connectors, #C5C7D1 borders, and #D3E8F3 or #E8F1F6
+     quiet fills. Use #5CABDF and #C98DEF for named categories, #3AEFC4 for labelled positive
+     outcomes, #D66C7B for labelled failures, and #FAA669 for labelled cautions. Tint large panels
+     to 20 to 25 percent; full strength is for small marks. Keep text navy or slate, or off-white on
+     a navy anchor. Never rely on colour alone. Use one arrowhead shape, consistent stroke weights,
+     box-edge termination, and labelled branches and return paths. Keep connectors clear of text. No
+     gradients, shadows, decorative icons, logo, watermark, em-dashes, or slogan footer. Render only
+     the specified reader-facing labels. Choose orientation to fit the relationship, not a default
+     poster. Keep captions outside the artwork. If labels crowd, split the figure before shrinking
+     them. Keep editable SVG when the production method supports it.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Condense the two
+     token-acquisition paragraphs and account/credential distinction. Keep the exact header example,
+     endpoint authentication catalog, and automation-account instructions. Keep current prose and
+     this TODO until the actual image is reviewed. Then check alt text against the artwork and
+     retain an accessible summary plus all required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![Profile-page and eligible password-login paths issue a token belonging to a Fleet account; SSO and MFA users use the profile-page path.](assets/a.8-api-token-entry-points.webp)
+-->
+
 ## Version prefixes expand for some routes and not others
 
 ![Reference](../_assets/icons/reference.svg) **A route declared with Fleet's version placeholder** is registered under each version its own registering module declares, plus a `latest` alias. So a core route such as the host list exists at three paths at once:

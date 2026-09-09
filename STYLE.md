@@ -389,17 +389,25 @@ just read does not.
 8.1 is the hardest case in the book (it *is* about method), is knowingly over-long, and
 gets a tightening pass later.
 
-## 13. Diagrams in explanatory chapters, tables in reference chapters
+## 13. Choosing and designing visuals
 
-**Reference material (Part VIII and the appendices):** tables are right. A reader
-mid-incident scans a table, and in an appendix the table is the thing they came for. Keep
-them.
+**Choose by the reader's question, in every part of the book.** Use native tables for
+lookups and comparisons, diagrams for relationships, and screenshots for recognizing an
+interface or locating evidence. A sequence diagram can help diagnosis in Part VIII while
+the adjacent table supplies exact commands and observation points.
 
-**Explanatory chapters (Parts 0 to VII):** use a diagram when it makes a relationship
-easier to understand than prose would. Not everything with a shape earns one, and a diagram
-that restates a paragraph costs the reader time.
+**Prefer visuals that carry some of the explanation.** Look for sequences, boundaries,
+overlapping clocks, and decisions that currently take several paragraphs to describe.
+After artwork is accepted, shorten the prose that walks through the same relationship.
+Keep exact syntax, reference tables, prerequisites, exceptions, and operational steps as
+selectable text. Do not turn a lookup table into an image to meet a visual quota.
 
-Four kinds earn their place:
+**A chapter can also benefit from atmosphere.** A small Cloud City opening illustration
+can establish tone or give the reader a visual pause, especially in a dense reference
+section. Name that purpose in the brief. Keep it compact, outside procedures and lookup
+groups, and free of implied technical claims. Prefer a useful diagram when one is available.
+
+These visual forms earn their place when their geometry helps explain the subject:
 
 | Kind | Use it for |
 |---|---|
@@ -407,15 +415,19 @@ Four kinds earn their place:
 | Scope | Global versus fleet configuration, label reach, role boundaries |
 | Architecture | Fleet server, devices and infrastructure, and what connects them |
 | Platform comparison | Only where a picture simplifies a real decision the reader faces |
+| Timing and state | Independent clocks, delayed observations, retries, and state transitions |
 
-If a candidate diagram fits none of these, write the prose instead.
+State the reader question before choosing the form. If the reader must read every box to
+understand the point, consider whether prose or a native table would do the job better.
+Keep a reference table as text rather than generating a picture of it.
 
 ### You do not draw the diagram. You write the brief for it.
 
 Jake generates the images separately. Your job is to mark the spot and specify the picture
 precisely enough that an image model produces something usable without further context.
 
-**Use the HTML comment from §16:** `<!-- DIAGRAM: ... -->`.
+**Use the state-marked HTML comment from §16:** `<!-- IMAGE-TODO: assets/name.webp` with
+a `PROMPT: DIAGRAM:`, `PROMPT: SCREENSHOT:`, or `PROMPT: ILLUSTRATION:` field.
 
 An earlier version of this section put a `> **DIAGRAM PLACEHOLDER**` blockquote in the text.
 That is superseded. A blockquote renders on the site, so the reader sees our scaffolding; an
@@ -428,10 +440,64 @@ Rules for the brief:
   layout, and the reading order. An image model cannot infer what matters.
 - **Specify the words that must appear**, verbatim. Diagrams fail most often on wrong or
   invented labels.
-- **State the style** once: flat vector, clean, generous whitespace, legible at half width.
+- **Make the brief self-contained.** The production tool may receive only the extracted
+  comment. Include exact labels, scope, topology, and the shared design block below.
 - **One idea per diagram.** Two diagrams beat one crowded one.
-- Keep the surrounding prose complete on its own. The diagram is an aid, not a dependency,
-  and the airplane test still applies if the image is missing.
+- **Name the editorial payoff.** Include a reader question and a NOTE naming the prose that
+  can be shortened after acceptance, or explain the atmospheric purpose. Preserve a short
+  accessible explanation and meaningful alt text so the airplane test still applies when
+  the image is missing; this does not require duplicating the full visual walkthrough.
+- Keep the existing explanation until the new artwork is accepted. A pending prompt is
+  not a substitute for published prose.
+
+### Geometry makes claims
+
+An arrow asserts direction or order; containment asserts scope; shared axes and aligned
+milestones assert comparable time. Check these claims against the chapter and its evidence.
+Never turn asynchronous work into a sequence to make the layout tidy. Label branches and
+return paths. State when a diagram shows selected transitions or selected platforms.
+
+Give independent clocks separate axes. Use proportional spacing on measured timelines;
+label a schematic as not to scale. A decorative timeline must not assign dates or durations
+that the chapter does not establish. Put conditions beside the element they qualify.
+
+### A shared layout system
+
+Design for a 720 px reading width and check the intended print size too. At a 1400 px source
+width, use 48 px titles, 36 px body labels, and no secondary text below 28 px. Scale those
+values with the source width. These are book production defaults, not Fleet brand mandates.
+If the labels do not fit, shorten them without losing conditions, enlarge the layout, or
+split the figure. Never solve overflow by shrinking essential text.
+
+Use Inter for prose labels and Roboto Mono for literal identifiers, following Fleet's
+typography. Use a 32 px spacing grid and at least 24 px node padding at that source width.
+Keep corner radii, font weights, arrowheads, and border weights consistent across figures.
+Center short node names; left-align multiline explanations. Size related nodes as a family,
+with room for the longest label. Balance visual weight without forcing artificial symmetry.
+
+Choose landscape, portrait, or a compact square to suit the relationship. Do not default
+to a tall poster or squeeze a wide sequence into a narrow column. Put forward connectors
+on clear routes and return connectors in separate labelled lanes; curved returns are fine.
+Use navy for primary paths and slate for secondary paths, with a visible arrowhead and
+consistent box-edge termination. Borders may be lighter than essential connectors.
+
+### Text and acceptance
+
+Apply the prose voice rules to labels. Remove announcements of importance, decorative
+contrasts, and slogan footers. Keep useful scope qualifiers. Place explanatory captions
+outside the artwork, where they remain editable and accessible; a brief may propose that
+caption as an editor note rather than as text to render.
+
+Review the rendered image, not just the prompt or SVG. Trace every arrow, check label
+padding and wrapping, and inspect at reading width, intended print size, and in grayscale.
+Compare it with an accepted figure for typography and connector consistency. Keep the
+editable SVG beside the WebP when the production method creates one. Never use an automatic
+render or a successful generation call as evidence that the image is accepted.
+
+An editorial brief revision is not technical re-verification. Keep uncertain behavior
+flagged, and resolve it against the chapter's evidence before accepting replacement art.
+Regeneration must also update alt text if the composition or scope changes. Until then,
+the existing alt text describes the existing image, not a promised replacement.
 
 ### Use the Fleet brand palette, and no other colours
 
@@ -488,10 +554,12 @@ perfectly. Area is the variable, not the colour.
 panels, two of which had nothing inside them. Colour has to carry meaning; an empty coloured
 box is noise.
 
-**Use them for categories, not decoration.** One colour per thing a reader has to tell apart,
-used consistently within the image, and only as many as there are categories. Five channels
-gets five dots. Four items do not get six colours to look lively. If nothing in the picture
-needs distinguishing, use none and let the structure set carry it.
+**Use colour consistently across the book.** Sky blue and lavender can distinguish named
+categories. Reserve mint for positive outcomes, rose for failures, and apricot for cautions
+when a figure encodes status. An Allow and a Block outcome must not both look like failures.
+Use text labels or shapes as well as colour, so the meaning survives grayscale. A legend
+or nearby label must explain a colour whose meaning is not otherwise clear. Use only the
+colours the figure needs; ordinary categories can remain neutral.
 
 This is the correction to an earlier over-reaction. A diagram once came back using eight
 invented hues, and the response here was "exactly one accent, no other hues at all", which
@@ -504,13 +572,23 @@ At least one element per diagram should be a solid filled shape rather than an o
 the composition has an anchor. Vary stroke weight so the primary flow reads heavier than the
 scaffolding.
 
-Paste this into every brief:
+Paste this shared design block into every new or revised technical-diagram brief. Do not
+replace it with a reference to STYLE.md: extracted prompts must work without this file.
 
-> Fleet brand palette only: off-white `#F9FAFC` background; `#192147` headings and key
-> linework; `#515774` labels; `#8B8FA2` and `#C5C7D1` secondary strokes; optional pale blue
-> fills `#E8F1F6` or `#D3E8F3`; at most one `#009A7D` Fleet Green accent. Flat vector,
-> generous whitespace, no gradients or drop shadows, no logo or watermark, legible at half
-> page width.
+> Flat vector technical diagram. Fleet is software for managing computers; draw no vehicles.
+> Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px titles,
+> 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
+> 720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px
+> node padding, and consistent corner radii. Center short node names; left-align multiline
+> explanations. Never shrink text to fit. Use #F9FAFC background, #192147 headings and
+> primary connectors, #515774 text, #8B8FA2 secondary connectors, #C5C7D1 borders, and
+> #D3E8F3 or #E8F1F6 quiet fills. Use #5CABDF and #C98DEF for named categories, #3AEFC4
+> for labelled positive outcomes, #D66C7B for labelled failures, and #FAA669 for labelled
+> cautions. Tint large panels to 20 to 25 percent; full strength is for small marks. Keep
+> text navy or slate, or off-white on a navy anchor. Never rely on colour alone. Use one
+> arrowhead shape, consistent stroke weights, box-edge termination, and labelled branches
+> and return paths. Keep connectors clear of text. No gradients, shadows, decorative icons,
+> logo, watermark, em-dashes, or slogan footer. Render only the specified reader-facing labels.
 
 ### Cloud City, for illustration rather than diagrams
 
@@ -520,6 +598,10 @@ with each island independent yet interoperable.
 
 Use it for hero and section-opening imagery where the job is tone rather than information.
 Do not use it inside an explanatory diagram, where it would compete with the content.
+
+For this book, an intentional visual pause is a valid editorial purpose. Use a shallow
+vignette instead of another full-page hero, with no labels or architectural meaning assigned
+to scenery. Match the established illustration treatment and palette across the collection.
 
 Fleet's handbook also says plainly: **do not use graphics as decoration without purpose**,
 do not mix flat and photorealistic styles, and do not introduce visual styles outside the
@@ -617,9 +699,9 @@ scope boundary, an architecture.
 Write the comment as a usable brief: name what is in frame, the labels verbatim, and what to
 emphasise. Jake generates the images separately, so a vague note means a wrong picture.
 
-Diagram briefs should describe one of the four kinds in §13. Screenshot briefs are for the
-Fleet UI and have no such restriction: any procedure the reader performs in the console is
-a candidate.
+Diagram briefs should use a visual form that answers the reader's question (§13).
+Screenshot briefs are for the Fleet UI: any procedure the reader performs in the console
+is a candidate.
 
 ### The comment outlives the image
 
@@ -668,7 +750,7 @@ what it wants done. Three markers, all greppable:
 
 | Marker | Means |
 |---|---|
-| `IMAGE-TODO:` | No image exists yet. Generate one from the prompt below |
+| `IMAGE-TODO:` | No accepted image exists yet. Produce artwork or capture the screenshot specified in the prompt |
 | `IMAGE-REDO:` | An image exists and should be replaced. A `WHY:` line says what is wrong with it, then the corrected prompt |
 | `IMAGE-OK:` | Reviewed and kept. **Do not delete this comment**; the prompt is retained so the image can be regenerated later |
 
@@ -683,6 +765,13 @@ Format:
 ```
 
 Find outstanding work with `grep -rn "IMAGE-REDO:\|IMAGE-TODO:" manual/`.
+
+For new briefs, the `PROMPT:` field starts with `DIAGRAM:`, `SCREENSHOT:`, or `ILLUSTRATION:`
+so production can choose the right method. A `SCREENSHOT:` requests capture from a running
+demo of the pinned release, never an image-model reconstruction. Do not fabricate controls
+or combine UI states that cannot coexist. Crop credentials and private data; use demo data
+from the start. Record the actual release and UI state when accepting the capture. The
+diagram typography rules apply to added callouts, not to redrawing the product's own UI.
 
 **`IMAGE-OK` exists because these comments keep getting deleted.** They render as nothing,
 so an edit pass loses them silently, and the 1.6 prompts were removed three separate times

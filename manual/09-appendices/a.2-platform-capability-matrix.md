@@ -38,6 +38,43 @@ feature_requests:
 
 **Whether ownership changes the answer.** Personally owned and company-owned devices differ, most sharply on Android, and that difference is a condition rather than a platform column.
 
+
+<!-- IMAGE-TODO: assets/a.2-capability-condition-layers.webp
+     QUESTION: Why does platform alone fail to determine whether a capability is available?
+     PROMPT: DIAGRAM: A capability question passes through layered checks: Provider operation
+     exists, Fleet implements a delivery path, Platform/enrollment supports it, Ownership and other
+     row conditions satisfied. Display Agent and Native management/API as alternative mechanisms
+     feeding the delivery-path layer, including ChromeOS extension as its own path rather than
+     fleetd. Finish at Read the specific cell and condition register, not an automatically
+     calculated Yes. Use diagrammatic layers rather than copying any matrix row. Do not equate
+     Unsupported with Not applicable or treat mobile's small certificate app as full fleetd.
+     DESIGN: Flat vector technical diagram. Fleet is software for managing computers; draw no
+     vehicles. Use Inter labels and Roboto Mono identifiers. At 1400 px source width use 48 px
+     titles, 36 px body labels, and at least 28 px secondary text; scale proportionally. Check at
+     720 px reading width and intended print size. Use a 32 px spacing grid, at least 24 px node
+     padding, and consistent corner radii. Center short node names; left-align multiline
+     explanations. Never shrink text to fit. Use #F9FAFC background, #192147 headings and primary
+     connectors, #515774 text, #8B8FA2 secondary connectors, #C5C7D1 borders, and #D3E8F3 or #E8F1F6
+     quiet fills. Use #5CABDF and #C98DEF for named categories, #3AEFC4 for labelled positive
+     outcomes, #D66C7B for labelled failures, and #FAA669 for labelled cautions. Tint large panels
+     to 20 to 25 percent; full strength is for small marks. Keep text navy or slate, or off-white on
+     a navy anchor. Never rely on colour alone. Use one arrowhead shape, consistent stroke weights,
+     box-edge termination, and labelled branches and return paths. Keep connectors clear of text. No
+     gradients, shadows, decorative icons, logo, watermark, em-dashes, or slogan footer. Render only
+     the specified reader-facing labels. Choose orientation to fit the relationship, not a default
+     poster. Keep captions outside the artwork. If labels crowd, split the figure before shrinking
+     them. Keep editable SVG when the production method supports it.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Reduce the
+     structural overview above the matrix. Keep all cells, condition IDs, definitions, and version
+     qualifications as searchable Markdown. Keep current prose and this TODO until the actual image
+     is reviewed. Then check alt text against the artwork and retain an accessible summary plus all
+     required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![Provider support, delivery mechanism, platform, enrollment, and ownership conditions jointly shape each capability cell.](assets/a.2-capability-condition-layers.webp)
+-->
+
 ## Three rows worth reading before you plan
 
 ![Troubleshooting](../_assets/icons/troubleshooting.svg) Each of these is a place where the obvious expectation is wrong, and each is in the matrix below with its evidence.

@@ -16,6 +16,33 @@ This is the noun counterpart to the [capability index](a.1-capability-index.md),
 
 A cross-reference of the form "see X" means the manual files the concept under X, because Fleet renamed it or because one name is the expansion of another.
 
+
+<!-- IMAGE-TODO: assets/a.10-index-reading-vignette.webp
+     QUESTION: Can the alphabetical index get a visual resting point without obstructing lookup?
+     PROMPT: ILLUSTRATION: A small horizontal Fleet Cloud City vignette for the opening of an
+     alphabetical index. One pale floating reading platform holds a few orderly blank index cards
+     and an open field guide; a modest glass walkway leads toward a second quiet platform,
+     suggesting finding a route through information. Use one tiny swan silhouette near still water,
+     generous whitespace, navy outlines and pale-blue surfaces. No letters, alphabet, labels,
+     arrows, invented UI, charts, floating paragraphs, or faux hyperlinks. Keep it low and calm so
+     the first alphabetical heading remains close to the introduction.
+     DESIGN: Fleet is software for managing computers; draw no vehicles. Use the established Cloud
+     City illustration treatment consistently: #F9FAFC background, #192147 navy, #515774 slate, and
+     #D3E8F3 / #E8F1F6 pale-blue surfaces. Keep large areas quiet and the composition balanced at
+     720 px reading width. Use a shallow horizontal crop. No photorealistic elements mixed with flat
+     artwork, product logo, watermark, rendered text, em-dashes, or technical claims. Do not imitate
+     a diagram.
+     NOTE: Proposed 2026-09-08; editorial brief, not technical re-verification. Atmosphere only.
+     Keep all alphabetical entries, real links, see references, and noun-versus-outcome navigation
+     instructions intact; do not interrupt letter groups with decoration. Keep current prose and
+     this TODO until the actual image is reviewed. Then check alt text against the artwork and
+     retain an accessible summary plus all required technical qualifications.
+-->
+
+<!-- IMAGE PENDING. Install reviewed artwork, then activate the image line below.
+![Blank index cards and an open field guide on a quiet floating reading platform.](assets/a.10-index-reading-vignette.webp)
+-->
+
 ## A
 
 - **ABM**, see Apple Business Manager.
