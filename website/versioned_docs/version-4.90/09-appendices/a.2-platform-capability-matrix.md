@@ -16,21 +16,21 @@ feature_requests:
 
 # Platform capability matrix
 
-**Platform support is a per-capability contract, not a property of an operating system.** Fleet does not support macOS and not support Android. It supports a particular thing on a particular platform, by a particular mechanism, sometimes on one licence and not another, and the answer changes capability by capability rather than platform by platform.
+**Platform support is a per-capability contract, not a property of an operating system.** Fleet does not support macOS and not support Android. It supports a particular thing on a particular platform, by a particular mechanism, and sometimes on one licence and not another. The answer changes capability by capability rather than platform by platform.
 
 ## What this appendix carries
 
 ![Reference](../_assets/icons/reference.svg) Every device-facing capability the manual teaches, across six platform columns, with the licence and the prerequisites that change the answer.
 
-**Licence and prerequisite are columns, never cell values**, which is the appendix's main structural decision. Folding a licence into a cell would put this project's least reliable claim class inside its most consulted table, and it would answer two questions with one word. The rule itself is restated where you will need it, above the matrix.
+**Licence and prerequisite are columns, never cell values.** Folding a licence into a cell would put this project's least reliable claim class inside its most consulted table, and it would answer two questions with one word.
 
-**What is not here.** Operating system versions and floors are [a.6](a.6-glossary-and-release-compatibility.md). Which role may do it is [a.4](a.4-roles-and-permissions-matrix.md). Which interface can do it is [a.5](a.5-interface-index.md). And how the thing actually works is the chapter that owns it: this appendix answers whether, not how, and does not repeat a chapter's explanation. Use [a.1](a.1-capability-index.md) to get from a capability to its chapter.
+**What is not here.** Operating system versions and floors are [a.6](a.6-glossary-and-release-compatibility.md). Which role may do it is [a.4](a.4-roles-and-permissions-matrix.md). Which interface can do it is [a.5](a.5-interface-index.md). How the thing actually works is the chapter that owns it: this appendix answers whether, not how, and does not repeat a chapter's explanation. Use [a.1](a.1-capability-index.md) to get from a capability to its chapter.
 
 ## What decides most cells
 
 ![Explanation](../_assets/icons/explanation.svg) Most cells are decided by a small number of structural facts, and knowing them lets you predict a row this table does not contain.
 
-**Whether the platform runs an agent.** macOS, Windows and Linux run fleetd. iOS, iPadOS and Android do not, so nothing that depends on running a query or a script reaches them. Which of `Unsupported` and `Not applicable` a given cell gets is decided per row rather than by the platform: where Fleet holds a target list that mobile platforms are absent from, the cell is `Unsupported` on that evidence, and where the subject simply has no mobile version, it is `Not applicable`. ChromeOS runs an extension that answers some of the same questions with none of the same machinery.
+**Whether the platform runs an agent.** macOS, Windows and Linux run fleetd. iOS, iPadOS and Android do not, so nothing that depends on running a query or a script reaches them. Whether a cell gets `Unsupported` or `Not applicable` is decided per row rather than by the platform: where Fleet holds a target list that mobile platforms are absent from, the cell is `Unsupported` on that evidence, and where the subject simply has no mobile version, it is `Not applicable`. ChromeOS runs an extension that answers some of the same questions with none of the same machinery.
 
 **Whether Fleet holds a management channel, and whose it is.** Apple's protocol, Microsoft's, and Google's management API differ in what they will carry, so the same administrator intent arrives by three mechanisms with three sets of failure modes ([1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md)).
 
@@ -54,11 +54,11 @@ feature_requests:
 
 > ### Downgrading to Free does not stop disk encryption escrow
 >
-> What Free refuses is narrow: a write that **switches disk encryption on**. Everything downstream of that switch is gated on the stored setting rather than on the licence.
+> Free refuses one narrow thing: a write that **switches disk encryption on**. Everything downstream of that switch is gated on the stored setting rather than on the licence.
 >
 > So a deployment that ran Premium with encryption enforced, and then drops to Free, does not stop. The stored setting is still on, because nothing clears it, and Fleet **goes on collecting and storing new recovery keys from Windows hosts**. Reading a key was never licence-gated at all, so it also goes on surrendering every key it holds, to every role that can read the host ([a.4](a.4-roles-and-permissions-matrix.md)).
 >
-> **Linux is narrower and worth stating exactly**, because the difference is the kind a reader would otherwise generalise wrongly. Free refuses to start a new Linux escrow outright. What it will do is finish one that was already pending when the licence changed, and accept that upload without checking the licence again.
+> **Linux is narrower.** Free refuses to start a new Linux escrow outright. It will finish one that was already pending when the licence changed, and accept that upload without checking the licence again.
 >
 > There is a second effect that is easier to hit and harder to diagnose. Because the refusal fires on any write whose new value is on, **a downgraded deployment cannot save any device-management setting** until it first turns disk encryption off, and the error names the encryption field rather than the change you were making.
 
@@ -66,7 +66,7 @@ feature_requests:
 >
 > One administrator intent, three outcomes. On Free, only a company-owned Android device can be wiped; every other platform gets a licence error before Fleet looks at the platform at all. On Premium, macOS, iPhone and iPad, Windows, Linux and Android all work. **ChromeOS works on neither**, because the Premium path rejects it by name as an unsupported platform.
 >
-> A reader who learns the licence answer on one platform will get it wrong on the others, which is the whole argument for this appendix being organised the way it is.
+> A reader who learns the licence answer on one platform will get it wrong on the others.
 
 ## How to read it
 
@@ -80,11 +80,9 @@ feature_requests:
 | **Not applicable** | The row's subject does not exist on this platform. This is a statement about the platform, not about Fleet. |
 | **Not established (Enn)** | No boundary was found in either direction. The record says what was searched. |
 
-Four habits of this table are worth knowing before you use it.
-
 **Absence is never evidence of a refusal.** `Unsupported` always rests on something Fleet actually does to say no. Where the only finding was that no code path exists, the answer is `Not established`, which is an honest answer rather than a failure.
 
-**Fleet does not always refuse out loud**, and this is the one shape the five values cannot name: the request is accepted, returns success, and the thing you asked for is then thrown away, so nothing reaches the device and nothing tells you. The appendix records that as `Unsupported`, because a branch that names the platform and discards the value is a boundary in the same way an error arm is. What it is not is a loud one, so **an `Unsupported` cell promises that Fleet will not do the thing, never that you will be told.** Configuring a managed application on a Mac is the case worth knowing: the configuration is accepted when the application is added and again when it is edited, cleared on every macOS path, and no error is returned at any point. **There is a second instance, and it decides for you rather than dropping what you sent.** Offering a Play application as self-service is not refused: adding the application overwrites whatever you asked for with self-service on, and editing it afterwards ignores the value you supply and keeps the stored one. Either way the answer you sent is gone and nothing says so. The distinction that keeps this honest is whether Fleet's own code names the platform. Where it does, the cell is `Unsupported`. Where nothing names the platform and the only finding is that the device never asks, the cell is `Not established`, which is why the Chromebook agent-options rows read that way instead.
+**Fleet does not always refuse out loud**, and this is the one shape the five values cannot name: the request is accepted, returns success, and the thing you asked for is then thrown away, so nothing reaches the device and nothing tells you. The appendix records that as `Unsupported`, because a branch that names the platform and discards the value is a boundary in the same way an error arm is. It is not a loud one, so **an `Unsupported` cell promises that Fleet will not do the thing, never that you will be told.** Configuring a managed application on a Mac is one such case: the configuration is accepted when the application is added and again when it is edited, cleared on every macOS path, and no error is returned at any point. **There is a second instance, and it decides for you rather than dropping what you sent.** Offering a Play application as self-service is not refused: adding the application overwrites whatever you asked for with self-service on, and editing it afterwards ignores the value you supply and keeps the stored one. Either way the answer you sent is gone and nothing says so. The distinction is whether Fleet's own code names the platform. Where it does, the cell is `Unsupported`. Where nothing names the platform and the only finding is that the device never asks, the cell is `Not established`, which is why the Chromebook agent-options rows read that way instead.
 
 **Licence and prerequisite are columns, not cell values.** A Premium capability is `Supported` with `Premium` in the licence column. A capability that needs MDM configured first is `Supported` with that named as its prerequisite. Neither ever appears as `Conditional`, because neither is a condition on whether Fleet does the thing, only on whether you may ask or on what you must have in place first.
 
@@ -399,7 +397,7 @@ No cell holds two values. Where a cell needs explaining, that is what a conditio
 
 ## The condition register
 
-Every `Conditional` cell in the matrix, with both of its branches: what makes Fleet do the thing on that platform, and what makes it not. **A cell is conditional only when one of its branches is Fleet doing the thing**, so a record that could state no such branch has been retired rather than kept, and the numbering skips the identifiers those records held rather than renumbering ones a reader may already have cited. 101 condition records, serving 102 conditional cells: one condition governs two rows, because an end user's self-service uninstall runs the same machinery as an administrator's.
+Every `Conditional` cell in the matrix, with both of its branches: what makes Fleet do the thing on that platform, and what makes it not. **A cell is conditional only when one of its branches is Fleet doing the thing**, so a record that could state no such branch has been retired rather than kept. The numbering skips the identifiers those records held rather than renumbering ones a reader may already have cited. 101 condition records, serving 102 conditional cells: one condition governs two rows, because an end user's self-service uninstall runs the same machinery as an administrator's.
 
 **C001** CAP-022, macOS. Supported when the preserve setting is on for the host's scope and the Mac reaches Setup Assistant on the first check-in of the new enrollment: past activity survives. Not supported when the setting is off, in which case past activity and the pending command queue are both cleared. On macOS only, a migration already in progress skips the reset entirely, so history survives whatever the setting says.
 
@@ -605,11 +603,11 @@ Every `Conditional` cell in the matrix, with both of its branches: what makes Fl
 
 ## Rows that are not platform-scoped
 
-92 rows have no platform answer. Most are about the Fleet server rather than a device: server configuration, a server-side store, an identity operation, or a property of how the deployment is run. **A few are not server-side and still have no platform answer**, which is why the section is named for what is true of all of them rather than for the common case. An automation interface is one, and a commercial arrangement with no corresponding mode in the software is another.
+92 rows have no platform answer. Most are about the Fleet server rather than a device: server configuration, a server-side store, an identity operation, or a property of how the deployment is run. **A few are not server-side and still have no platform answer.** An automation interface is one, and a commercial arrangement with no corresponding mode in the software is another.
 
 Carrying all 92 as six `Not applicable` cells each would add 552 cells that say nothing and would distort every per-platform count. Omitting them would be worse, because a reader who looked one up and found nothing could not tell whether a.2 does not cover it or whether it simply has no platform answer.
 
-So they are carried here, one line each, grouped by the same sections as the matrix. The role answer for these rows is in a.4 and the interface answer is in a.5, which is where they genuinely resolve.
+So they are carried here, one line each, grouped by the same sections as the matrix. The role answer for these rows is in a.4 and the interface answer is in a.5.
 
 
 **A. Identity, access, and governance**
@@ -739,7 +737,7 @@ So they are carried here, one line each, grouped by the same sections as the mat
 
 ## Not established
 
-**28 records for 28 cells**, each one a place where no boundary was found in either direction. Twenty-seven are platform cells. **One is a licence answer**, which is the only one in the matrix, and it is here because the decision is made by something outside the deployment rather than by Fleet. Each record says what was searched, which is the part a later pass needs.
+**28 records for 28 cells**, each one a place where no boundary was found in either direction. Twenty-seven are platform cells. **One is a licence answer**, which is the only one in the matrix, and it is here because the decision is made by something outside the deployment rather than by Fleet. Each record says what was searched.
 
 **E01** CAP-034, ChromeOS. Whether an end user's identity can be attached to a Chromebook at enrollment. The extension enrolls through the ordinary agent enrollment endpoint, and that handler has no end-user-authentication branch, but absence from one path is not a boundary. Searched: the end-user-authentication flag, the over-the-air authentication requirement, the identity-required error, and the word identity, across the enrollment handler; and ChromeOS crossed with identity, end user and authentication across the server and the extension. No hits in either direction. Every other platform on this row is established.
 
@@ -814,8 +812,8 @@ So they are carried here, one line each, grouped by the same sections as the mat
 
 **A refusal can guard a different operation than the one a cell is checking, and that mistake is easy to carry into a cell.** For example, the filter that governs which platform you may name when *listing* saved Chromebook reports says nothing about *creating* or *delivering* one: Fleet's write path accepts ChromeOS as a report platform outright, so a listing refusal is not evidence that ChromeOS reporting is unsupported.
 
-**Checking which operation a refusal guards is part of the work rather than a refinement of it**, and it is the most expensive check to skip, because a sweep that skips it still reports itself as coverage.
+**Checking which operation a refusal guards is the most expensive check to skip**, because a sweep that skips it still reports itself as coverage.
 
-**The catalogue rows were corrected twice, in opposite directions, and both corrections are worth knowing.** They had been left `Unsupported` with a note admitting the answer rested on Fleet describing its catalogue as covering two platforms rather than on anything enforcing it. A description is not a boundary. The search that was owed found that Fleet takes the catalogue from a list held outside the deployment, accepts whatever platform that list names, and applies no platform limit when it shows you what is in it, so those cells became `Not established`.
+**The catalogue rows were corrected twice, in opposite directions.** They had been left `Unsupported` with a note admitting the answer rested on Fleet describing its catalogue as covering two platforms rather than on anything enforcing it. A description is not a boundary. The search that was owed found that Fleet takes the catalogue from a list held outside the deployment, accepts whatever platform that list names, and applies no platform limit when it shows you what is in it, so those cells became `Not established`.
 
 **Then one row went too far the other way.** Holding a catalogue application at a version was swept along with its neighbours, when the operation is **provably platform-blind once the row's own prerequisite holds**: with a cached version in hand, Fleet checks that the title is one of its own maintained applications and nothing else, then changes which installer is active. That row reads `Supported` on all six platforms. **A wrong `Not established` is a failure in the same way a wrong `Unsupported` is**, because it sends a reader to establish something this release already settles.
