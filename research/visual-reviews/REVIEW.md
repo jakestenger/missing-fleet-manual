@@ -1,6 +1,6 @@
 # Fleet manual artwork review
 
-Current installation status (2026-09-09): seven figures are installed in chapters 0.1, 0.2 and 1.1–1.4 in both editions. Another 101 candidates await installation. See [installation progress](installation-progress.md). The production record below describes the earlier gallery-only handoff.
+Current installation status (2026-09-09): fifteen figures are installed in chapters 0.1, 0.2, 1.1–1.6, 2.1 and 2.10–2.13 in both editions. Another 93 candidates await installation. See [installation progress](installation-progress.md). The production record below describes the earlier gallery-only handoff.
 
 108 candidates are ready: 97 editable SVG diagrams and 11 raster images. Open `index.html` to browse by part at 720 px, compare replaced images, inspect full-size sources, or switch to grayscale.
 

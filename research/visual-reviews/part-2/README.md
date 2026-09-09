@@ -1,5 +1,7 @@
 # Part II visual candidates
 
+Current status (2026-09-09): six figures are installed in chapters 2.1 and 2.10–2.13 in both editions; eight remain pending. See [installation progress](../installation-progress.md). The notes below record the original production handoff.
+
 Thirteen new diagrams and one Apple credential renewal replacement. All fourteen were rendered and inspected against their chapter briefs; the new diagrams were checked at 720 px. Candidate status remains pending the final joint review.
 
 The native diagrams reuse the Part 0–1 drawing primitives; run `python3 research/visual-reviews/part-2/render-diagrams.py` from the repository. It requires the sibling Part 0–1 source, Inter, Roboto Mono, rsvg-convert, and cwebp. The Apple credential replacement used the built-in image-generation tool; its complete production/edit prompts are recorded in raster-prompt-history.json.

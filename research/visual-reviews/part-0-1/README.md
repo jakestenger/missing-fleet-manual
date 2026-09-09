@@ -2,7 +2,7 @@
 
 Prepared 2026-09-08 on `feature/part-0-1-visuals`, branched from `feature/visual-brief-refinement` at `702a5a5`.
 
-Open `index.html` for all nine candidates at 720 px reading width. It includes a grayscale toggle, expanded view, and the previous labels diagram for comparison. As of 2026-09-09, seven figures are installed in chapters 0.1, 0.2 and 1.1–1.4 in both editions. The two candidates for 1.5 and 1.6 remain pending. See [installation progress](../installation-progress.md).
+Open `index.html` for all nine candidates at 720 px reading width. It includes a grayscale toggle, expanded view, and the previous labels diagram for comparison. As of 2026-09-09, all nine figures are installed in chapters 0.1, 0.2 and 1.1–1.6 in both editions. See [installation progress](../installation-progress.md).
 
 Seven new technical diagrams were authored as editable SVG from the chapter briefs. `render-diagrams.py` regenerates their PNG and lossless WebP exports using Inter, Roboto Mono, `rsvg-convert`, and `cwebp`. The maintenance illustration and existing labels-diagram replacement used the built-in image-generation tool; their PNG masters and lossless WebP exports are included. The illustration uses the existing introduction hero as a visual reference. `briefs.json` records the self-contained chapter briefs and editorial payoffs; `raster-prompt-history.json` records available image-tool prompts for the selected raster work.
 
