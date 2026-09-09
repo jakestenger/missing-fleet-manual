@@ -26,9 +26,9 @@ Heartbeat: `complete-fleet-manual-visuals-overnight`, every 30 minutes in this t
 | Part IV | 7 | Completed candidates; final review pending | `e1f047e` |
 | Part V | 18 | 17 candidates ready; 1 authentic capture outstanding | `6b173c1` |
 | Part VI | 11 | Completed candidates; final review pending | `2d35887` |
-| Part VII | 15 | Completed candidates; final review pending | Part VII batch commit (see git log) |
-| Part VIII | 15 | Next batch | — |
-| Appendices | 10 | Pending | — |
+| Part VII | 15 | Completed candidates; final review pending | `0e1274d` |
+| Part VIII | 15 | Completed candidates; final review pending | Part VIII batch commit (see git log) |
+| Appendices | 10 | Next batch | — |
 
 ## Blockers
 
@@ -99,3 +99,13 @@ All fourteen native diagrams were inspected at 720 px; grayscale spotchecks cove
 Validation passed: website production build, all 83 chapter links, em-dash and diff whitespace checks, fifteen candidate/source pairs, fourteen valid SVGs with minimum 28 px labels, terminology, current chapter comments in packaged briefs, gallery links, and unchanged visible chapter text. All published assets and IMAGE-OK states remain untouched. Part VII is committed separately and the review tree is copied to outputs.
 
 Next: Part VIII (15), appendices (10), final collection audit, then obtain or hand off the genuine capture requirement. During the final audit, reconcile older inventory `brief` text with current chapter comments where needed; Parts II–IV were packaged before the utility began updating this field. Do not regenerate from stale inventory wording. Keep the existing heartbeat active while independent work remains, with no routine per-part notifications.
+
+## Part VIII handoff
+
+Completed fifteen native SVG candidates. The collection now contains 98 candidates. Every figure was inspected at 720 px, with grayscale spotchecks for Windows polling/wake, incident attribution and file-carve authentication. Native refinements kept APNs outside the command path, separated branch labels and restart annotations, and distinguished possible load-balancer destinations from the selected node.
+
+Brief corrections qualify the UUID-present error example, scope half-enrollment to macOS with confirmed absent fleetd, move file-carve authentication cards below the sequence, specify later Idle eligibility after NotNow, and keep fleet scope lowercase. Chapter 8.2's image comments were accidentally inside a shell fence; they now sit before the relevant debug subsection. Shell commands and visible words are unchanged; only whitespace differs after stripping comments.
+
+Validation passed: production website build, all 83 chapter links, em-dash and diff whitespace checks, fifteen complete native source/asset sets, SVG XML/minimum fonts/terminology, and current briefs. The image-redo checker reports nine intentional nonblocking pending markers. Tall figure placement remains for joint review. Part VIII is packaged separately, with the review tree copied to outputs.
+
+Next: ten appendix briefs, then final collection audit and genuine capture handoff. Reconcile older inventory brief text and check all image comments for accidental placement inside code fences. The only external blocker remains the My Device capture. Keep the existing heartbeat active while independent work remains.

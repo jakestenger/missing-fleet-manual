@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1632" viewBox="0 0 1400 1632" role="img">
+<title>A reproduced failed request lands on one Fleet node; its error UUID, when present, locates that node’s log while startup instanceID is a separate identity mapping.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1632" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Match the failed request to the node that handled it</text>
+<text x="48" y="150" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Illustrative error response with a UUID present</text>
+<rect x="48" y="220" width="328" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="212.0" y="288.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Client request</text>
+<path d="M376 276 L528 276" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="528" y="220" width="344" height="112" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="288.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Load balancer</text>
+<rect x="280" y="488" width="392" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="476.0" y="565.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="500" fill="#192147">Node A</text>
+<rect x="960" y="488" width="392" height="128" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1156.0" y="565.3" text-anchor="middle" font-family="Inter" font-size="38" font-weight="600" fill="#F9FAFC">Node B</text>
+<path d="M700 332 L700 412 L1156 412 L1156 488" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1012" y="384" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">This request</text>
+<text x="476" y="444" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Idle for this request</text>
+<path d="M1156 616 L1156 728" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="960" y="728" width="392" height="144" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156.0" y="789.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Local log</text>
+<text x="1156.0" y="833.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Matching UUID</text>
+<rect x="280" y="728" width="392" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="476.0" y="791.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Local log</text>
+<text x="476.0" y="830.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">No event for this request</text>
+<rect x="48" y="944" width="368" height="136" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="232.0" y="1001.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Error response</text>
+<text x="232.0" y="1045.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">UUID</text>
+<path d="M1352 552 L1380 552 L1380 1112 L232 1112 L232 1080" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+<rect x="568" y="944" width="464" height="136" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="800.0" y="1023.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Search all nodes’ logs</text>
+<path d="M416 1012 L568 1012" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M800 944 L800 900 L476 900 L476 872" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+<path d="M800 900 L1156 900 L1156 872" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+<text x="48" y="1184" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Separate node-identity mapping</text>
+<rect x="48" y="1240" width="272" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="184.0" y="1302.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Host/pod A</text>
+<rect x="416" y="1240" width="240" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="536.0" y="1301.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">instanceID: A1</text>
+<path d="M320 1292 L416 1292" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="744" y="1240" width="272" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="880.0" y="1302.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Host/pod B</text>
+<rect x="1112" y="1240" width="240" height="104" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1232.0" y="1301.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">instanceID: B1</text>
+<path d="M1016 1292 L1112 1292" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1232 1344 L1232 1424" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1072" y="1392" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Restart</text>
+<rect x="1112" y="1424" width="240" height="96" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1232.0" y="1481.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">instanceID: B2</text>
+<text x="828" y="1480" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Host/pod B stays the same</text>
+<text x="700" y="1580" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Request UUID and startup instanceID identify different things</text>
+</svg>

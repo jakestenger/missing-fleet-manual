@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1192" viewBox="0 0 1400 1192" role="img">
+<title>Queued is a remote request observation, pending means execution started, and terminal statuses have different writers; completed still needs errors inspected.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1192" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Read cron status together with its writer and errors</text>
+<text x="48" y="152" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Observations across stages · not a guaranteed single-row lifecycle</text>
+<text x="48" y="260" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Request</text>
+<text x="512" y="260" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Execution</text>
+<rect x="48" y="312" width="392" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244.0" y="373.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">queued</text>
+<text x="244.0" y="420.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Waiting for owner</text>
+<rect x="512" y="312" width="392" height="144" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="708.0" y="373.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">pending</text>
+<text x="708.0" y="420.1" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Run started</text>
+<path d="M440 384 L512 384" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<text x="48" y="516" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Observe terminal status</text>
+<path d="M708 456 L708 556 L244 556 L244 656" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M708 556 L708 656" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M708 556 L1156 556 L1156 656" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="48" y="656" width="392" height="160" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244.0" y="727.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">completed</text>
+<text x="244.0" y="766.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Inspect errors</text>
+<rect x="512" y="656" width="392" height="160" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="708.0" y="727.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">canceled</text>
+<text x="708.0" y="766.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Writer stopped run</text>
+<rect x="960" y="656" width="392" height="160" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156.0" y="727.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">expired</text>
+<text x="1156.0" y="766.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Cleanup reaped stale state</text>
+<path d="M1156 816 L1156 920" fill="none" stroke="#8B8FA2" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="960" y="920" width="392" height="216" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156.0" y="1001.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Can mark a</text>
+<text x="1156.0" y="1037.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">still-running job</text>
+<text x="1156.0" y="1073.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Lock-name exceptions apply</text>
+</svg>

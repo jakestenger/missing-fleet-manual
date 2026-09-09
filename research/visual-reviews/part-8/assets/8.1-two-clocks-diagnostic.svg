@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1312" viewBox="0 0 1400 1312" role="img">
+<title>Individual record and arrival timestamps give different investigative leads for buffered delivery and stale consumption.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1312" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Compare record time with arrival time</text>
+<rect x="48" y="136" width="28" height="28" rx="0" fill="#D3E8F3" stroke="#192147" stroke-width="2.5"/>
+<text x="104" y="162" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Record produced</text>
+<circle cx="588" cy="150" r="15" fill="#F9FAFC" stroke="#192147" stroke-width="3"/>
+<text x="628" y="162" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Destination receives</text>
+<text x="48" y="244" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Schematic time · broken axes · inspect individual timestamps</text>
+<text x="48" y="348" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">A · old record, recent arrival</text>
+<path d="M112 492 L676 492" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M716 492 L1280 492" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M678 482 L690 502" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M698 482 L710 502" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="164" y="478" width="28" height="28" rx="0" fill="#D3E8F3" stroke="#192147" stroke-width="2.5"/>
+<circle cx="1168" cy="492" r="16" fill="#F9FAFC" stroke="#192147" stroke-width="3"/>
+<text x="178" y="446" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Old</text>
+<text x="1168" y="446" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Recent</text>
+<text x="1280" y="562" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Now</text>
+<path d="M216 544 L216 564 L1080 564 L1080 544" fill="none" stroke="#FAA669" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="648" y="612" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Host buffering / delivery delay to investigate</text>
+<rect x="48" y="664" width="1304" height="88" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="719.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Check host buffering and recent reconnection</text>
+<text x="48" y="824" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">B · old record, old arrival</text>
+<path d="M112 968 L676 968" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M716 968 L1280 968" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M678 958 L690 978" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M698 958 L710 978" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="164" y="954" width="28" height="28" rx="0" fill="#D3E8F3" stroke="#192147" stroke-width="2.5"/>
+<circle cx="456" cy="968" r="16" fill="#F9FAFC" stroke="#192147" stroke-width="3"/>
+<text x="178" y="922" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Old</text>
+<text x="456" y="922" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Old</text>
+<text x="1280" y="1038" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Now</text>
+<text x="984" y="1104" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">No recent arrival observed</text>
+<rect x="48" y="1156" width="1304" height="88" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1211.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Check whether the destination is rereading old data</text>
+</svg>
