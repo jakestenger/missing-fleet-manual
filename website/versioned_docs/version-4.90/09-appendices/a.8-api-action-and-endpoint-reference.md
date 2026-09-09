@@ -219,7 +219,7 @@ A successful call returns a single JSON object, keyed by what it carries, not a 
 
 A list response carries paging alongside its array. A `meta` object holds `has_next_results` and `has_previous_results`, two booleans that tell a client whether another page exists in either direction without inferring it from the row count, and some list responses add a top-level `count`. This is the response side of the `page` and `per_page` request convention above; [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md#page-filter-and-order-complete-result-sets) walks a full paged sweep.
 
-Where Fleet has renamed a field, the response can carry the value under both the old and the new key for a release, so a client written before the rename keeps working after it. Read the name you expect and do not assume only one is present. [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md#the-renamed-fields-which-will-bite-you-on-a-write) is where this bites on a write.
+Where Fleet has renamed a field, the response can carry the value under both the old and the new key for a release, so a client written before the rename keeps working after it. Read the name you expect and do not assume only one is present. [6.3](../06-automate-fleet/6.3-use-the-fleet-rest-api.md#renamed-fields-in-request-and-response-bodies) is where this bites on a write.
 
 A failed call replaces that envelope with a consistent one of its own: a `message` naming the class of failure, an `errors` array whose entries each carry a `name` and a `reason`, and, where the server attached one, a `uuid` you can quote in a support case to tie the response to its own log line. The `message` and the status follow the failure class rather than the endpoint.
 
