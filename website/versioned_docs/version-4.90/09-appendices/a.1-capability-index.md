@@ -18,7 +18,7 @@ feature_requests:
 
 **Search the last column for the word you have. Open the owning chapter. `(no)` means Fleet does not provide the capability.** The rows themselves are in [The index](#the-index); the sections after it explain where its words come from.
 
-**Every outcome this manual teaches has one chapter that owns it, and this index gets you there from the word you would actually type.** A table of contents can only expose the manual's own vocabulary. Administrators arrive holding Apple's word, Microsoft's word, the name of the product they are migrating off, or the name Fleet itself used two releases ago, and none of those is what a chapter is called.
+**Every outcome this manual teaches has one chapter that owns it, and this index gets you there from the word you would type.** A table of contents can only expose the manual's own vocabulary. Administrators arrive holding Apple's word, Microsoft's word, the name of the product they are migrating off, or the name Fleet itself used two releases ago, and none of those is what a chapter is called.
 
 That distance is the appendix. A row earns its place when the words in its last column are words the contents page would not have given you.
 
@@ -30,7 +30,7 @@ That distance is the appendix. A row earns its place when the words in its last 
 
 ## How to read a row
 
-![Reference](../_assets/icons/reference.svg) Five columns, and the last one is the reason the appendix exists.
+![Reference](../_assets/icons/reference.svg) Five columns, and the last one carries the search words.
 
 | Column | What it holds |
 |---|---|
@@ -253,7 +253,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ### 5. Changing a device
 
-**Writing state, split by the mechanism that carries it.** 107 outcomes, in the three lanes [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) teaches: settings that persist, work that runs once, and experiences. If you know which lane you are in, you know which sub-table to scan.
+**Writing state, split by the mechanism that carries it.** 107 outcomes, in the three lanes [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) teaches: settings that persist, work that runs once, and experiences.
 
 #### Settings that persist
 
@@ -469,7 +469,7 @@ Six markers, and each changes what you do with the word next to it.
 
 ### 8. When it did not work
 
-**Symptoms, and the surfaces that answer them.** 21 outcomes, plus the sentences people actually arrive with. This is the group that cannot be reconstructed from the table of contents, because nobody types a capability name when something is broken.
+**Symptoms, and the surfaces that answer them.** 21 outcomes, plus the sentences people arrive with. This is the group that cannot be reconstructed from the table of contents, because a capability name is not what you have when something is broken.
 
 #### Sentences people type
 
@@ -552,9 +552,9 @@ Six markers, and each changes what you do with the word next to it.
 | 7 | Running the service | Deploying, upgrading, backing up, sizing, monitoring, and keeping credentials alive | 46 |
 | 8 | When it did not work | Symptoms, and the surfaces that answer them | 21 |
 
-**Group 5 gets one level of sub-grouping and no more**, along the line [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) already teaches: settings that persist, work that runs once, and experiences. Every reader of Part V has met that distinction, so it costs nothing to reuse and it splits the largest group along a boundary people already hold.
+**Group 5 gets one level of sub-grouping and no more**, along the line [5.1](../05-manage-devices/5.1-plan-target-and-govern-device-changes.md) already teaches: settings that persist, work that runs once, and experiences. Every reader of Part V has met that distinction, so it costs nothing to reuse, and it splits the largest group along a boundary Part V has already drawn.
 
-**One outcome, one group.** A row appears once and is reached from elsewhere through its `Also` column. Duplicating a row is how two projections of the same set of capabilities drift apart, and this manual has already paid for that once.
+**One outcome, one group.** A row appears once and is reached from elsewhere through its `Also` column. Duplicating a row lets two projections of the same set of capabilities drift apart, and this manual has already paid for that once.
 
 **Outcomes Fleet refuses keep their rows.** Enforcing a Linux operating system version, releasing a locked Android device, rotating an API token, backing Fleet up with Fleet's own tooling, and keeping a restored copy from acting on the real world are all things people search for and Fleet does not do. Each keeps a row, marked **(no)**, pointing at the chapter that records the refusal. An index that leaves them out sends you off to look for them.
 
@@ -573,17 +573,17 @@ Six places supply them.
 
 ### Fleet ships its own synonym index and does not publish it
 
-**The command palette in Fleet's web interface matches on 98 hand-written keyword lists**, one per capability, and they are the closest thing Fleet has to an answer to the question this appendix asks. They carry `filevault2`, `laps`, `ade`, `dep`, `win10`, `win11`, `fma`, `pki`, `est`, `zero trust`, `azure ad`, `ldap`, `tag`, `endpoints`, `machines`, `computers`, `ad hoc`, `tarballs` and `service account`. Fleet's own engineers wrote them, for exactly the reason this index exists: after a rename, people go on typing the old word for a long time.
+**The command palette in Fleet's web interface matches on 98 hand-written keyword lists**, one per capability, and they are the closest thing Fleet has to an answer to the question this appendix asks. They carry `filevault2`, `laps`, `ade`, `dep`, `win10`, `win11`, `fma`, `pki`, `est`, `zero trust`, `azure ad`, `ldap`, `tag`, `endpoints`, `machines`, `computers`, `ad hoc`, `tarballs` and `service account`. Fleet's own engineers wrote them, for the reason this index exists: after a rename, people go on typing the old word for a long time.
 
-**They also index things this manual routes differently**, which makes them a source of rows rather than only of words. Fleet keeps `filevault`, `filevault2`, `bitlocker` and `recovery key` in one list under disk encryption. This manual splits that outcome across five rows and argues at [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) that "the BitLocker key" is the wrong name for what Windows actually escrows. So `bitlocker key` is a phrase this index has to carry **because** the manual refuses it, not in spite of that.
+**They also index things this manual routes differently**, which makes them a source of rows rather than only of words. Fleet keeps `filevault`, `filevault2`, `bitlocker` and `recovery key` in one list under disk encryption. This manual splits that outcome across five rows and argues at [5.8](../05-manage-devices/5.8-enforce-disk-encryption-and-manage-recovery-credentials.md) that "the BitLocker key" is the wrong name for what Windows escrows. So `bitlocker key` is a phrase this index has to carry **because** the manual refuses it.
 
 The lists are reachable only by typing into the search box of a running Fleet. They are not in Fleet's documentation, and they are not in its API.
 
 ## Fleet's older names, and which ones still work
 
-![Reference](../_assets/icons/reference.svg) **Everything in this section is accepted at 4.90.0.** [a.6](a.6-glossary-and-release-compatibility.md) owns the rename itself and the surfaces it covered. What follows is the part you type: the spec kinds, keys, variables, flags and paths that carry the older word and still resolve.
+![Reference](../_assets/icons/reference.svg) **Everything in this section is accepted at 4.90.0.** [a.6](a.6-glossary-and-release-compatibility.md) owns the rename itself and the surfaces it covered. This section is the part you type: the spec kinds, keys, variables, flags and paths that carry the older word and still resolve.
 
-**Fleet serves 47 route aliases covering 58 deprecated paths**, and accepts **44 deprecated GitOps keys**. Renamed request fields keep taking the old name in a body and answer with the new one. So a script written before March 2026 keeps working, a runbook keeps being correct, and a search of your own repository for the current word comes back empty while the deployment is running fine.
+**Fleet serves 47 route aliases covering 58 deprecated paths**, and accepts **44 deprecated GitOps keys**. Renamed request fields keep taking the old name in a body and answer with the new one. A script written before March 2026 keeps working, a runbook keeps being correct, and a search of your own repository for the current word comes back empty while the deployment is running fine.
 
 ### The fleet and report family
 
@@ -641,7 +641,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## The vendors' words for things Fleet renames
 
-![Reference](../_assets/icons/reference.svg) **These are the words an administrator arrives holding**, and the third column is the one that matters: how many of this manual's chapters use the word at all. Where that count is low, the index is the only route from the word to the chapter.
+![Reference](../_assets/icons/reference.svg) **These are the words an administrator arrives holding**, and the third column counts how many of this manual's chapters use the word at all. Where that count is low, the index is the only route from the word to the chapter.
 
 | You arrive with | Fleet or this manual calls it | Chapters using the word | Route |
 |---|---|---|---|
@@ -699,7 +699,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ## Where two live Fleet names disagree
 
-![Troubleshooting](../_assets/icons/troubleshooting.svg) **Fourteen places where Fleet, or this manual, uses two names for one thing and neither is marked wrong.** Each is a row in the index. Seven are defects rather than dialects: a name that Fleet prints, documents or emits where a different name is the one that actually works, so following the visible name gets you nothing and says nothing.
+![Troubleshooting](../_assets/icons/troubleshooting.svg) **Fourteen places where Fleet, or this manual, uses two names for one thing and neither is marked wrong.** Each is a row in the index. Seven are defects rather than dialects: a name that Fleet prints, documents or emits where a different name is the one that works, so following the visible name gets you nothing and says nothing.
 
 **The seven that will waste your time.**
 
@@ -743,7 +743,7 @@ The lists are reachable only by typing into the search box of a running Fleet. T
 
 ### Ten things with no capability row
 
-These outcomes are attested somewhere in Fleet but carry no capability row, so they never appear in the index above. The attestation is not all of one kind: most rest on the product surface, while the Android Google-account route rests only on Fleet's own triage notes, so read "attested" as "found in Fleet's source" rather than "offered as a described capability". They are not equally uncovered, and that is the point of listing them apart. **Only the first, Android enrollment through a Google account, also has no owning chapter,** but it is not a genuine missing capability either: it is a term that surfaces in Fleet's own triage notes with no initiated path behind it (the Android enrollment service registers only an enrollment secret, a fully-managed flag, and an optional identity-provider account, no third executed route), so it is unresolved triage vocabulary rather than the one gap. The other nine are already taught or recorded and wait only on a formal row. The table has eight rows for ten outcomes, because the Chromebook lock, unlock and wipe share one row.
+These outcomes are attested somewhere in Fleet but carry no capability row, so they never appear in the index above. The attestation is not all of one kind: most rest on the product surface, while the Android Google-account route rests only on Fleet's own triage notes, so read "attested" as "found in Fleet's source" rather than "offered as a described capability". They are not equally uncovered, which is why they are listed apart. **Only the first, Android enrollment through a Google account, also has no owning chapter,** but it is not a genuine missing capability either: it is a term that surfaces in Fleet's own triage notes with no initiated path behind it (the Android enrollment service registers only an enrollment secret, a fully-managed flag, and an optional identity-provider account, no third executed route), so it is unresolved triage vocabulary rather than the one gap. The other nine are already taught or recorded and wait only on a formal row. The table has eight rows for ten outcomes, because the Chromebook lock, unlock and wipe share one row.
 
 | Outcome | Owning chapter | Where else it is met, and why it still has no row |
 |---|---|---|
