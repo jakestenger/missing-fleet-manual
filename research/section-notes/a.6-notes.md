@@ -58,7 +58,7 @@ Each row's gate cited in the research at
 | `update_channels`, fleetd 1.20.0, **nothing checks**; the server sends the block unconditionally | `server/service/orbit.go:752,833`; only gate is licence, `server/fleet/agent_options.go:118` |
 | FileVault rotation, fleetd 1.30.0, capability, **no fallback** | `server/service/orbit.go:937` |
 | ADE setup experience, fleetd 1.35.0, capability, with a fallback for older agents | `server/service/orbit.go:542,838` |
-| End-user auth, fleetd 1.50.0, and **below it Fleet allows the enrollment unauthenticated** | `server/service/orbit.go:259` |
+| End-user auth, fleetd 1.50.1, and **below it Fleet allows the enrollment unauthenticated** | `server/service/orbit.go:259` |
 | `EUA_TOKEN` packaging property, orbit 1.55.0, **no fallback branch** | `orbit/pkg/packaging/windows.go:107-109` |
 
 ### Operating system boundaries

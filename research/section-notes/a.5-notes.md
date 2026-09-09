@@ -655,3 +655,60 @@ to 109 (CAP-374, CAP-375, CAP-376, CAP-377, CAP-378, CAP-385, CAP-387, CAP-393);
 went 148 to 160. CAP-379 was deliberately left out of the second group because
 `fleetctl run-script` reaches it natively. If a later round wants these mechanically checked, that
 is a new assertion in `check-register-counts.py` rather than a correction here. [[a.2-notes]]
+
+## overnight step 7 (2026-09-09): the three `fleetctl api` figures, replaced rather than re-derived
+
+The previous pass flagged 51 / 109 / 160 as the weakest numbers in this appendix and asked a
+later round to spot-check them. Round 2 did, parsed all 381 matrix rows, and could not
+reproduce either 51 or 109 under any reading. Nor could this pass. The nearest candidates for
+51 were 39, 40, 73 and 84; for 109 they were 130, 133, 166 and 167. Note also that this file's
+own ledger row for the decision has said 145 (45 + 100) since first drafting, against the
+appendix's 148, so the two records of the same figure never agreed.
+
+That is not evidence the numbers are wrong. Neither is derivable from the matrix: "has no
+native command" and "depends on `gitops`, `apply` or `delete`" are per-row facts about *which*
+command reaches a row, and the matrix stores only how well each interface does. The defect is
+that three prominent figures could not be checked by a reader, by a build gate, or by the next
+worker, and the campaign record says two of them were adjusted by hand rather than recounted.
+
+So they were replaced with figures the matrix does yield, recomputed here against the 382-row
+matrix and re-checkable by anyone who parses it:
+
+- 122 rows read `Unsupported` in the `fleetctl` column (was the home of "fifty-one rows have no
+  native command").
+- 85 of those 122 have a REST API column that is not `Unsupported` — the exact set counting
+  `fleetctl api` as support would have flipped, which is the point the passage is making.
+- 168 rows read `Full` or `Partial` in the GitOps column, and `fleetctl gitops` executes every
+  one of them, there being no server-side GitOps engine. `apply` and `delete` reach more than
+  that; the sentence now says so without putting a number on it.
+
+The headline "decides 160 rows" became a statement of which rows the decision decides rather
+than a total, because the two groups it summed are not disjoint and no derivation was recorded.
+If a later round wants the original per-row facts counted, that needs a per-row `[api-reachable]`
+/ `[spec-file]` annotation carried in the matrix, and then an assertion in
+`check-register-counts.py` — a new column, not a corrected number. [[a.1-notes]]
+
+## overnight step 7 (2026-09-09): CAP-395 added
+
+Round 2 finding 6: CAP-083, "See what a device is and what is on it", had absorbed the new
+sortable **Added to Fleet** column during step 3, and that made a.5's `fleetctl Full` on
+CAP-083 read as though `fleetctl` could sort by enrollment date. It cannot. Read at
+fleet-v4.91.0: `getHostsCommand` (`cmd/fleetctl/fleetctl/get.go:1027-1052`) declares
+`--fleet`, `--json`, `--yaml`, `--mdm`, `--mdm-pending` and the common config flags, and no
+ordering option of any kind; the request it builds sets `additional_info_filters` and at most
+`fleet_id`. The UI column is sortable (`HostTableConfig.tsx:735-765`: an `accessor` and `id` of
+`last_enrolled_at` with a `HeaderCell` carrying `isSortedDesc`, and no `disableSortBy`), and
+the REST API accepts it as an order key (`server/datastore/mysql/hosts.go:74` maps
+`last_enrolled_at` to `h.last_enrolled_at` in the sortable-column table). GitOps has no
+reading vocabulary at all.
+
+So sorting is a separate outcome from seeing, exactly as CAP-127 ("Filter and sort by those
+fields") is separate from the vulnerability rows it sorts — this register already draws that
+line. CAP-395 was minted rather than 386 or 394, which step 3 retired deliberately and which
+stay retired. Scored `Full | Full | Unsupported | Unsupported`. In a.2 it is `Supported` on all
+six platforms with no prerequisite: the sort reads a column every enrolled host carries and has
+no platform branch anywhere in the query builder. Every count this touched was recomputed from
+the matrix, not adjusted: a.5's stated row count (381 to 382), cell count (1,524 to 1,528),
+the `Full` row of the count table (213/201/194/133 to 214/202/194/133), the `Unsupported` row
+(31/55/121/213 to 31/55/122/214), a.1's register size (383 to 384) and a.2's (291 to 292).
+`check-cap-ids.py` and `check-register-counts.py` both agree with the prose.

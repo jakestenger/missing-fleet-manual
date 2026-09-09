@@ -4,8 +4,8 @@ chapter: "Appendices and indexes"
 section: "A.8"
 sidebar_position: 8
 verified_against: Fleet 4.91.0
-verified_on: 2026-09-08
-verified_source: "drafted against fleet-v4.90.0 (7c428c6e46), with every path in the exposure matrix read from the server's own route registrations rather than from the published reference. The complete route catalog was regenerated against fleet-v4.91.0 (35fc1c0244) with build/gen-api-catalog.py, taking the appendix from 560 registered routes to 562; both additions were read back from server/service/handler.go and their handlers at that tag, and cross-checked against the diff of every route-registering file between the two tags, rather than taken from the generator. Citation ledger at research/section-notes/a.8-notes.md, which records the evidence class of every path and distinguishes the routes Fleet registers from the ones it emits"
+verified_on: 2026-09-09
+verified_source: "drafted against fleet-v4.90.0 (7c428c6e46), with every path in the exposure matrix read from the server's own route registrations rather than from the published reference. The complete route catalog was regenerated against fleet-v4.91.0 (35fc1c0244) with build/gen-api-catalog.py, taking the appendix from 560 registered routes to 562; both additions were read back from server/service/handler.go and their handlers at that tag, and cross-checked against the diff of every route-registering file between the two tags, rather than taken from the generator. Citation ledger at research/section-notes/a.8-notes.md, which records the evidence class of every path and distinguishes the routes Fleet registers from the ones it emits. Corrected 2026-09-09 (overnight campaign step 7, round-2 review blocker 1), verified at fleet-v4.91.0 (35fc1c0244): the catalog claimed none of the server's routes is omitted, which `cmd/fleet/serve.go` disproves with eleven root-mux registrations the generator never scans, among them `/enroll`, the over-the-air enrollment page this appendix's own Android baseline tells you to open. The completeness sentence is now scoped to the API router and names what sits above it. Three auth cells were wrong and were fixed in the generator so they cannot drift back: `/api/osquery/enroll` and its alt path verify an enroll secret in the handler (`server/service/osquery.go:112`), the Android Pub/Sub callback verifies Google's token against the stored asset (`server/mdm/android/service/pubsub.go:80-95`), and the two service-discovery paths and the app-site-association document are genuinely public rather than protocol-authenticated (`server/service/handler.go:1375-1400`, `server/service/apple_psso.go:198-217`). Row counts unchanged at 562 registrations, 496 endpointer, 58 aliases, 8 raw mux"
 further_reading:
   - https://fleetdm.com/docs/rest-api/rest-api
   - https://github.com/fleetdm/fleet/blob/fleet-v4.90.0/docs/REST%20API/rest-api.md
@@ -312,9 +312,13 @@ Copy the literal `method` and `path` values into the API-only user's own list, a
 
 ![Reference](../_assets/icons/reference.svg) Like the configuration catalog in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog), this table is generated rather than written. It is read directly from the route registrations the server makes as it builds its router, at the release this manual is pinned to, so it lists what the server actually serves rather than what the REST reference documents. Where the two disagree, the catalog is the authority, for the same reason: it is the registration the running server performs.
 
-It answers a different question from the exposure matrix above. The matrix says which paths a capability requires you to reach; this says which paths exist at all, and what each one asks a caller to present. The Auth column uses the same vocabulary as the caller model at the top of this appendix: a user token, a host, orbit or device key, or nothing where the route is reached before any credential exists. The device-management protocol paths are registered directly on the router and carry their own protocol authentication; they are grouped last.
+It answers a different question from the exposure matrix above. The matrix says which paths a capability requires you to reach; this says which paths the API surface serves, and what each one asks a caller to present. The Auth column uses the same vocabulary as the caller model at the top of this appendix: a user token, a host, orbit or device key, or nothing where the route is reached before any credential exists. The device-management protocol paths are registered directly on the router and mostly carry their own protocol authentication; they are grouped last.
 
-Every route the server registers is listed, in three groups: the endpointer routes, the deprecated aliases still served, and the raw protocol routes. None is omitted. `_version_` stands for the API-version prefixes a route expands to, which [Version prefixes expand for some routes and not others](#version-prefixes-expand-for-some-routes-and-not-others) explains. Each route's handler and source location are kept in its HTML comment, not on the page.
+**`none` in the Auth column means the router installs no Fleet credential check, not that the route is open.** Several of those routes verify a credential of their own inside the handler, and where they do, the row says which one. The commonest shape is a one-time token carried in the path, as an end-user EULA, invitation or installer-download link does.
+
+Every route the server registers *on its API router* is listed, in three groups: the endpointer routes, the deprecated aliases still served, and the raw protocol routes. **A handful of paths are bound above that router and so are not in this table.** `cmd/fleet/serve.go` mounts the whole API under `/api/`, and beside it registers the operator surfaces this appendix excludes by policy (`/healthz`, `/version`, `/metrics`, `/debug/`), the web interface and its assets (`/`, `/assets/`), the two literal `scim/details` shims that let a more specific pattern win, and **`/enroll`, the end-user over-the-air enrollment page the Android baseline above tells you to open**. The generated header below names exactly which files were read.
+
+`_version_` stands for the API-version prefixes a route expands to, which [Version prefixes expand for some routes and not others](#version-prefixes-expand-for-some-routes-and-not-others) explains. Each route's handler and source location are kept in its HTML comment, not on the page.
 
 <!-- To regenerate: python3 build/gen-api-catalog.py --out FILE  (FLEET_SRC overrides the source checkout). Pinned to fleet-v4.91.0 (35fc1c0244). -->
 <!-- GENERATED by build/gen-api-catalog.py; do not edit by hand.
@@ -749,8 +753,8 @@ Every route the server registers is listed, in three groups: the endpointer rout
 | POST | `/api/fleet/orbit/disk_encryption_key` | orbit (orbit node key) <!-- server/service/handler.go:1064; handler postOrbitDiskEncryptionKeyEndpoint -->|
 | POST | `/api/fleet/orbit/managed_local_account` | orbit (orbit node key) <!-- server/service/handler.go:1066; handler postOrbitManagedLocalAccountEndpoint -->|
 | POST | `/api/fleet/orbit/luks_data` | orbit (orbit node key) <!-- server/service/handler.go:1068; handler postOrbitLUKSEndpoint -->|
-| POST | `/api/osquery/enroll` | none <!-- server/service/handler.go:1076; handler enrollAgentEndpoint -->|
-| POST | `/api/v1/osquery/enroll` | none <!-- server/service/handler.go:1076; alt path of /api/osquery/enroll; handler enrollAgentEndpoint -->|
+| POST | `/api/osquery/enroll` | enroll secret, verified inside the handler <!-- server/service/handler.go:1076; handler enrollAgentEndpoint -->|
+| POST | `/api/v1/osquery/enroll` | enroll secret, verified inside the handler <!-- server/service/handler.go:1076; alt path of /api/osquery/enroll; handler enrollAgentEndpoint -->|
 | GET | `/api/mdm/apple/enroll` | none <!-- server/service/handler.go:1085; handler mdmAppleEnrollEndpoint -->|
 | POST | `/api/mdm/apple/enroll` | none <!-- server/service/handler.go:1086; handler mdmAppleEnrollEndpoint -->|
 | GET | `/api/mdm/apple/installer` | none <!-- server/service/handler.go:1088; handler mdmAppleGetInstallerEndpoint -->|
@@ -804,7 +808,7 @@ Every route the server registers is listed, in three groups: the endpointer rout
 | GET | `/api/_version_/fleet/android_enterprise/signup_sse` | user (session or API token) <!-- server/mdm/android/service/handler.go:28; handler enterpriseSSE -->|
 | GET | `/api/_version_/fleet/android_enterprise/connect/{token}` | none <!-- server/mdm/android/service/handler.go:35; handler enterpriseSignupCallbackEndpoint -->|
 | GET | `/api/_version_/fleet/android_enterprise/enrollment_token` | none <!-- server/mdm/android/service/handler.go:36; handler enrollmentTokenEndpoint -->|
-| POST | `/api/v1/fleet/android_enterprise/pubsub` | none <!-- server/mdm/android/service/handler.go:37; handler pubSubPushEndpoint -->|
+| POST | `/api/v1/fleet/android_enterprise/pubsub` | Pub/Sub token, verified inside the handler <!-- server/mdm/android/service/handler.go:37; handler pubSubPushEndpoint -->|
 | GET | `/api/_version_/fleet/activities` | user (session or API token) <!-- server/activity/internal/service/handler.go:28; handler listActivitiesEndpoint -->|
 | GET | `/api/_version_/fleet/hosts/{id:[0-9]+}/activities` | user (session or API token) <!-- server/activity/internal/service/handler.go:29; handler listHostPastActivitiesEndpoint -->|
 | GET | `/api/mdm/acme/{identifier}/new_nonce` | none (protocol auth in handler) <!-- server/mdm/acme/internal/service/handler.go:37; handler getNewNonceEndpoint -->|
@@ -890,17 +894,19 @@ server's declarative alias table.
 
 ### Raw mux routes (MDM protocol and setup)
 
-Registered directly on the router rather than through an endpointer. Each of these
-carries its own protocol authentication (a device-management certificate, a SCEP
-challenge, or pre-setup state) rather than a Fleet credential.
+Registered directly on the router rather than through an endpointer. Most carry their
+own protocol authentication (a device-management certificate, a SCEP challenge, or
+pre-setup state) rather than a Fleet credential. Three do not: the two service discovery
+paths and the app-site-association document answer any caller, which is what the protocols
+that fetch them require, and their rows say so.
 
 | Method | Path | Auth |
 |---|---|---|
 | ANY | `/api/v1/setup` | route-local or protocol <!-- server/service/handler.go:1279; raw: WithSetup; handler srv -->|
 | ANY | `/api/setup` | route-local or protocol <!-- server/service/handler.go:1280; raw: WithSetup; handler srv -->|
-| ANY | `/mdm/apple/service_discovery/{token}` | route-local or protocol <!-- server/service/handler.go:1402; raw: registerMDMServiceDiscovery; handler otel.WrapHandler -->|
-| ANY | `/mdm/apple/service_discovery` | route-local or protocol <!-- server/service/handler.go:1403; raw: registerMDMServiceDiscovery; handler otel.WrapHandler -->|
-| ANY | `/.well-known/apple-app-site-association` | route-local or protocol <!-- server/service/handler.go:1419; raw: registerPSSO; handler otel.WrapHandler -->|
+| ANY | `/mdm/apple/service_discovery/{token}` | none (public) <!-- server/service/handler.go:1402; raw: registerMDMServiceDiscovery; handler otel.WrapHandler -->|
+| ANY | `/mdm/apple/service_discovery` | none (public) <!-- server/service/handler.go:1403; raw: registerMDMServiceDiscovery; handler otel.WrapHandler -->|
+| ANY | `/.well-known/apple-app-site-association` | none (public) <!-- server/service/handler.go:1419; raw: registerPSSO; handler otel.WrapHandler -->|
 | ANY | `/mdm/apple/scep` | route-local or protocol <!-- server/service/handler.go:1460; raw: registerSCEP; handler otel.WrapHandler -->|
 | ANY | `/mdm/scep/proxy/` | route-local or protocol <!-- server/service/handler.go:1486; raw: RegisterSCEPProxy; handler scepHandler -->|
 | ANY | `/mdm/apple/mdm` | route-local or protocol <!-- server/service/handler.go:1557; raw: registerMDM; handler otel.WrapHandler -->|

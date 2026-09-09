@@ -447,3 +447,53 @@ response and error contract", which was not re-verified in full this round (the 
 failure-class table is unaffected by the only 4.91 change to server/fleet/errors.go, which
 adds message constants and nothing else), and the further-reading link to the version-pinned
 REST reference, which build/check-pinned-links.py holds at fleet-v4.90.0 book-wide.
+
+## overnight step 7 (2026-09-09): the catalog's scope, and three auth cells corrected
+
+Round 2's blocker and the step-6 worker's own W2 landed on the same defect from different
+directions, and both are right: the catalog's "None is omitted" was false. The generator
+reads five `handler.go` files under `server/`; it never opens `cmd/fleet/serve.go`, which
+binds eleven handlers on the root mux above the API router. Read at fleet-v4.91.0:
+`/healthz` (844), `/version` (845), `/assets/` (846), `/metrics` (948 and 956, the
+basic-auth and no-basic-auth variants), the `/api/` catch-all that mounts everything this
+catalog does list (971), `/api/v1/fleet/scim/details` and `/api/latest/fleet/scim/details`
+(975-976, literal shims so the more specific Go mux pattern beats the SCIM base path — see
+the comment at 972-974), `/enroll` (978), `/` (979) and `/debug/` (984).
+
+Corrected the sentence rather than widening the generator, deliberately. The operator
+surfaces are already excluded from the exposure matrix by policy and with a reason stated
+there; regenerating 562 verified rows into a larger unreviewed set on the night the branch
+ships trades a known-true table for an unknown one. `/enroll` is the one omission that
+misled a reader, because this appendix's own Android baseline tells you to open it, so the
+new prose names it explicitly. Widening the generator to cover `cmd/` and `ee/`
+registrations remains worth doing as its own pass.
+
+Three auth cells were wrong, and these were fixed in the generator so they cannot drift back:
+
+- `POST /api/osquery/enroll` (and its `/api/v1/` alt path) read `none`. The endpointer
+  installs no auth, but `EnrollOsquery` refuses without a valid enroll secret
+  (`server/service/osquery.go:112` `ds.VerifyEnrollSecret`), and where the host already
+  holds an identity certificate it also requires a matching HTTP message signature
+  (`:117-133`). Now "enroll secret, verified inside the handler", via the existing
+  `HANDLER_LOCAL_AUTH` table that already carried the live-query websocket.
+- `POST /api/v1/fleet/android_enterprise/pubsub` read `none`. `authenticatePubSub`
+  (`server/mdm/android/service/pubsub.go:80-95`) skips authorization and then verifies
+  Google's token against the stored `MDMAssetAndroidPubSubToken`. Now "Pub/Sub token,
+  verified inside the handler".
+- The raw mux group's prose said each of its routes "carries its own protocol
+  authentication". False for three of the eight. `registerMDMServiceDiscovery`
+  (`server/service/handler.go:1375-1400`) builds an enrollment URL from the path value and
+  returns it with status 200, checking nothing, on both `/mdm/apple/service_discovery` and
+  `/mdm/apple/service_discovery/{token}`; `pssoAASAHandler`
+  (`server/service/apple_psso.go:198-217`) serves the app-site-association document to any
+  GET or HEAD, which is what Apple's CDN requires. Those three now read "none (public)" and
+  the group's prose says three do not carry protocol authentication.
+
+Also added, because the misreading is the point: `none` in the Auth column means the router
+installs no Fleet credential check, not that the path is open. Many `none` rows carry a
+one-time token in the path (EULA, invitation, installer download), which is visible in the
+path and needed no per-row note.
+
+Regenerated output was diffed row-for-row against the committed appendix: 562 rows both
+sides, exactly six differing, all six intended. Registration counts unchanged at
+562/496/58/8, source commit 35fc1c024490.

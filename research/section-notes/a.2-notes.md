@@ -207,3 +207,18 @@ because each could reasonably have gone the other way:
 
 The Version notes stamp stays at 4.90.0 deliberately. This pass added rows; it did not re-read the
 276 cells that were already there. [[a.5-notes]]
+
+## overnight step 7 (2026-09-09): CAP-395 added, CAP-385 relabelled
+
+CAP-395, sorting the host list by when a host last enrolled, scored `Supported` on all six
+platforms, Free, prerequisite `None`. The evidence for a uniform row rather than a per-platform
+one is that there is no per-platform branch to find: the order key resolves through the
+sortable-column map at `server/datastore/mysql/hosts.go:74`, which maps `last_enrolled_at` to
+`h.last_enrolled_at`, a column on the hosts table every enrolled host carries whatever channel
+enrolled it. Nothing in the list query switches on `platform` for ordering. Matrix 291 to 292
+rows; the bullet list of not-platform-scoped outcomes is unchanged.
+
+CAP-385's label was already the correct, narrower one here ("Fill in a custom host vital in a
+profile or a managed app configuration") and its cells were scored for exactly that. a.1 was the
+file carrying the wider wording, and it was brought into line. No cell in this file changed.
+[[a.1-notes]]

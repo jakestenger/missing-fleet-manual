@@ -605,3 +605,41 @@ a.5, so nineteen new rows in a.1 necessarily meant nineteen in a.5 and fifteen r
 bullets in a.2. The runbook's step 3 named only a.1 and a.10; leaving the other two behind would
 have shipped a red gate to main. See [[a.2-notes]] and [[a.5-notes]]. All fourteen build checks
 pass. [[a.10-notes]]
+
+## overnight step 7 (2026-09-09): CAP-385 narrowed, CAP-395 minted
+
+**CAP-385.** Round 2 finding 2. Step 3 wrote the outcome as "Put a custom host vital into a
+profile, an app configuration or a host name" while a.2 and a.5 both wrote "Fill in a custom
+host vital in a profile or a managed app configuration", and scored it Free and supported on
+Windows and Android. Read at fleet-v4.91.0, those cells are right for what they cover and wrong
+for host names:
+
+| Claim | Where |
+|---|---|
+| Apple, Windows and Android profiles all expand `$FLEET_HOST_VITAL_` at delivery | `server/service/mdm.go:2633-2640`, and the comment above the shared validation says so in as many words |
+| Host name templates are delivered by Apple `DeviceName` MDM commands | `server/service/apple_device_names.go:211` `commander.DeviceNameSettingWithoutNotifications` |
+| Host name templates are Premium | `server/service/appconfig.go:2044-2046`, `mdm.name_template` appends `ErrMissingLicense` without a Premium licence |
+
+So the row could not honestly carry both halves: one is Free and multi-platform, the other
+Premium and Apple-only. The fix keeps this file consistent with its two projections and with
+its own no-capability-row register, where **the host display name template** has lived since
+round 6 M16 and where its Premium, Apple-only scope is already stated. No new row was minted
+for host naming, because that would contradict the register entry rather than the sibling
+appendices. CAP-385's search terms now point there.
+
+**CAP-395.** Round 2 finding 6. Step 3 folded the sortable **Added to Fleet** column into
+CAP-083 as attested words rather than a row, on the "one outcome, one group" rule. That was the
+wrong call, and a.5 is where it shows: CAP-083 reads `fleetctl Full`, which is true of seeing a
+device and false of sorting by enrollment date. `getHostsCommand`
+(`cmd/fleetctl/fleetctl/get.go:1027-1052`) declares `--fleet`, `--json`, `--yaml`, `--mdm`,
+`--mdm-pending` and the common config flags and nothing that orders anything; the query it
+builds sets `additional_info_filters` and at most `fleet_id`. The UI column carries an
+`accessor` and `id` of `last_enrolled_at` with a sortable `HeaderCell`
+(`HostTableConfig.tsx:735-765`), and `server/datastore/mysql/hosts.go:74` puts
+`last_enrolled_at` in the sortable-column map the list endpoint's order key is checked against.
+
+Sorting is a separate outcome from seeing, which this register already accepts: CAP-127
+("Filter and sort by those fields") sits beside the vulnerability rows it sorts rather than
+inside them. CAP-395 rather than 386 or 394: both were retired deliberately in step 3 and the
+flagged decision says the gap is not a mistake, so reusing them would erase that record.
+Register 383 to 384 rows. [[a.5-notes]] [[a.2-notes]]
