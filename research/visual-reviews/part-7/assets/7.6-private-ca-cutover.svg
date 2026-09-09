@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1432" viewBox="0 0 1400 1432" role="img">
+<title>A private trust-root cutover waits for verified distribution to representative agents before the server presents the new chain; retain hostname continuity.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1432" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Verify private-root distribution before cutover</text>
+<rect x="48" y="144" width="1304" height="80" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="195.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Same hostname throughout · a hostname change is a migration</text>
+<text x="48" y="318" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Operator / Fleet server</text>
+<path d="M332 360 L332 1120" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<text x="776" y="318" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Representative agents</text>
+<path d="M1060 360 L1060 1120" fill="none" stroke="#8B8FA2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7"/>
+<rect x="48" y="408" width="568" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="332.0" y="483.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Distribute new private root</text>
+<path d="M616 472 L776 472" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="776" y="408" width="576" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1064.0" y="483.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Receive new root</text>
+<rect x="776" y="652" width="576" height="168" rx="12" fill="#192147" stroke="#192147" stroke-width="2.5"/>
+<text x="1064.0" y="725.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">Verify trust</text>
+<text x="1064.0" y="769.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="600" fill="#F9FAFC">on representative platforms</text>
+<path d="M1064 536 L1064 652" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M776 736 L332 736 L332 940" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="400" y="870" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Trust verified</text>
+<rect x="48" y="940" width="568" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="332.0" y="1016.6" text-anchor="middle" font-family="Inter" font-size="36" font-weight="500" fill="#192147">Switch served chain</text>
+<path d="M616 1004 L776 1004" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="776" y="940" width="576" height="128" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1064.0" y="1015.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Confirm agent check-ins</text>
+<text x="1064" y="1160" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Browser-only check:</text>
+<text x="1064" y="1199" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">insufficient evidence</text>
+<text x="700" y="1352" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Keep old-root overlap until the transition is tested</text>
+</svg>

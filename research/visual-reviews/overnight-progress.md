@@ -25,9 +25,9 @@ Heartbeat: `complete-fleet-manual-visuals-overnight`, every 30 minutes in this t
 | Part III | 10 | Completed candidates; final review pending | `b3cdd13` |
 | Part IV | 7 | Completed candidates; final review pending | `e1f047e` |
 | Part V | 18 | 17 candidates ready; 1 authentic capture outstanding | `6b173c1` |
-| Part VI | 11 | Completed candidates; final review pending | Part VI batch commit (see git log) |
-| Part VII | 15 | Next batch | — |
-| Part VIII | 15 | Pending | — |
+| Part VI | 11 | Completed candidates; final review pending | `2d35887` |
+| Part VII | 15 | Completed candidates; final review pending | Part VII batch commit (see git log) |
+| Part VIII | 15 | Next batch | — |
 | Appendices | 10 | Pending | — |
 
 ## Blockers
@@ -87,3 +87,15 @@ All ten native candidates were inspected at 720 px. Grayscale spot checks covere
 Validation passed: website production build, all 83 chapter links, em-dash and whitespace checks, eleven candidate/source pairs, current packaged briefs, native SVG XML/minimum-font/terminology checks, unchanged visible chapter prose, and gallery links. No assets are installed or marked OK. The repository is ready to continue on the same branch.
 
 Next: Part VII (15 briefs), Part VIII (15), appendices (10), then resolve or hand off authentic captures and perform the final collection audit. Commit each batch and copy the review tree to outputs. The heartbeat remains ACTIVE; do not create another automation or ask for another interim review.
+
+## Part VII handoff
+
+Completed fifteen candidates: fourteen new native SVG diagrams and one built-in raster upgrade-recovery replacement. The collection now contains 83 candidates. Continue Part VIII's fifteen briefs, then the ten appendices briefs. The only documented external blocker remains the authentic Part V My Device capture.
+
+Six legacy prompts were rewritten around the inspected layouts while retaining their technical scope: outcome measurement costs, escrow backup dependencies, independent health signals, per-endpoint connection budgets, certificate renewal consequences, and handover responsibilities. Dense comparisons use taller canvases with readable type. Native inspection corrected arrows crossing labels, kept the three escrow chains separate, and sent unresolved handoff evidence back to the review gate instead of a particular rehearsal.
+
+All fourteen native diagrams were inspected at 720 px; grayscale spotchecks covered outcome costs, connection budgets and renewal. The raster required two corrections to separate its dashed database-restore return from the common acceptance-check connector. Every label and recovery branch was checked at native resolution. Its final page typography, and placement of tall native figures, remain for joint review.
+
+Validation passed: website production build, all 83 chapter links, em-dash and diff whitespace checks, fifteen candidate/source pairs, fourteen valid SVGs with minimum 28 px labels, terminology, current chapter comments in packaged briefs, gallery links, and unchanged visible chapter text. All published assets and IMAGE-OK states remain untouched. Part VII is committed separately and the review tree is copied to outputs.
+
+Next: Part VIII (15), appendices (10), final collection audit, then obtain or hand off the genuine capture requirement. During the final audit, reconcile older inventory `brief` text with current chapter comments where needed; Parts II–IV were packaged before the utility began updating this field. Do not regenerate from stale inventory wording. Keep the existing heartbeat active while independent work remains, with no routine per-part notifications.

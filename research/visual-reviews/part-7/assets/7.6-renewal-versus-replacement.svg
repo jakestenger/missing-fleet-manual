@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1656" viewBox="0 0 1400 1656" role="img">
+<title>Existing escrow retrieval depends on different keys and certificates by platform; only macOS supports certificate rollover with its authority key retained.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1656" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Certificate renewal has different escrow consequences</text>
+<text x="48" y="150" text-anchor="start" font-family="Inter" font-size="30" font-weight="500" fill="#515774">Existing escrow retrieved through a working Fleet configuration</text>
+<rect x="48" y="204" width="392" height="856" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244" y="270" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#192147">macOS FileVault</text>
+<rect x="504" y="204" width="392" height="856" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700" y="270" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#192147">Windows BitLocker</text>
+<rect x="960" y="204" width="392" height="856" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156" y="270" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" fill="#192147">Linux LUKS</text>
+<rect x="80" y="328" width="328" height="112" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244.0" y="374.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Fleet server</text>
+<text x="244.0" y="416.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">private key</text>
+<path d="M112 552 L112 440" fill="none" stroke="#192147" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="152" y="490" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Protects authority</text>
+<text x="152" y="526" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">material</text>
+<rect x="80" y="552" width="328" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244.0" y="634.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Apple authority key</text>
+<rect x="80" y="744" width="328" height="80" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244.0" y="793.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Current certificate</text>
+<rect x="80" y="844" width="328" height="80" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244.0" y="893.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Historical certificates</text>
+<rect x="536" y="552" width="328" height="168" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="605.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Current enrolment</text>
+<text x="700.0" y="647.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">certificate + key</text>
+<text x="700.0" y="689.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Only</text>
+<text x="700" y="812" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">No historical fallback</text>
+<text x="700" y="848" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">Certificate participates</text>
+<text x="700" y="884" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">in retrieval</text>
+<rect x="992" y="552" width="328" height="144" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156.0" y="614.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Fleet server</text>
+<text x="1156.0" y="656.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">private key</text>
+<text x="1156" y="808" text-anchor="middle" font-family="Inter" font-size="28" font-weight="400" fill="#515774">No certificate in this path</text>
+<rect x="80" y="952" width="328" height="80" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244.0" y="1002.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">FileVault escrow</text>
+<rect x="536" y="952" width="328" height="80" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1002.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">BitLocker escrow</text>
+<rect x="992" y="952" width="328" height="80" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156.0" y="1002.5" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">LUKS escrow</text>
+<path d="M112 952 L112 924 L56 924 L56 624 L80 624" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M700 952 L700 924 L888 924 L888 636 L864 636" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M1156 952 L1156 900 L1336 900 L1336 624 L1320 624" fill="none" stroke="#8B8FA2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="48" y="1136" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Renew certificate</text>
+<rect x="48" y="1176" width="392" height="128" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244.0" y="1231.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Survivable if the</text>
+<text x="244.0" y="1270.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">authority key is retained</text>
+<rect x="504" y="1176" width="392" height="128" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1231.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Not survivable, even</text>
+<text x="700.0" y="1270.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">with the same key pair</text>
+<rect x="960" y="1176" width="392" height="128" rx="12" fill="#E8F1F6" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156.0" y="1231.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">Not applicable</text>
+<text x="1156.0" y="1270.0" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" fill="#192147">No certificate</text>
+<text x="48" y="1380" text-anchor="start" font-family="Inter" font-size="36" font-weight="500" fill="#515774">Replace the decrypting key</text>
+<rect x="48" y="1416" width="392" height="80" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="244.0" y="1467.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Not survivable</text>
+<rect x="504" y="1416" width="392" height="80" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700.0" y="1467.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Not survivable</text>
+<rect x="960" y="1416" width="392" height="80" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1156.0" y="1467.2" text-anchor="middle" font-family="Inter" font-size="32" font-weight="500" fill="#192147">Not survivable</text>
+<rect x="48" y="1544" width="1304" height="80" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="700" y="1595" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Windows: Fleet still reports credentials available after the certificate changes</text>
+</svg>

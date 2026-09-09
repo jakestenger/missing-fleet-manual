@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1744" viewBox="0 0 1400 1744" role="img">
+<title>Five independent service outcomes have different measurement costs; the database and Redis health check does not measure them.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1400" height="1744" fill="#F9FAFC"/>
+<text x="48" y="80" text-anchor="start" font-family="Inter" font-size="40" font-weight="500" fill="#515774">Match service objectives to available evidence</text>
+<rect x="888" y="144" width="464" height="144" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="1120.0" y="205.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Fleet health check</text>
+<text x="1120.0" y="249.9" text-anchor="middle" font-family="Inter" font-size="34" font-weight="500" fill="#192147">Database + Redis</text>
+<text x="48" y="196" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Five independent outcomes</text>
+<text x="48" y="238" text-anchor="start" font-family="Inter" font-size="32" font-weight="500" fill="#515774">Measurement cost varies by question</text>
+<rect x="48" y="364" width="1304" height="164" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="418" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Administrative access</text>
+<rect x="80" y="446" width="312" height="64" rx="12" fill="#D8FBEF" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="236.0" y="487.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Cheap / direct</text>
+<text x="424" y="488" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Request success and latency</text>
+<rect x="48" y="560" width="1304" height="164" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="614" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Agent reporting</text>
+<rect x="80" y="642" width="312" height="64" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="236.0" y="683.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Cheap / partial</text>
+<text x="424" y="684" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Oldest check-in in a filterable population</text>
+<rect x="48" y="756" width="1304" height="292" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="810" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Device-management delivery</text>
+<rect x="80" y="838" width="312" height="64" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="236.0" y="879.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Cheap / partial</text>
+<text x="424" y="880" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Queue age from one host’s own view</text>
+<rect x="80" y="962" width="312" height="64" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="236.0" y="1003.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Expensive</text>
+<text x="424" y="1004" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Estate-wide queue age requires enumeration</text>
+<rect x="48" y="1080" width="1304" height="164" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="1134" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Scheduled processing</text>
+<rect x="80" y="1162" width="312" height="64" rx="12" fill="#F6E4E8" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="236.0" y="1203.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Not available</text>
+<text x="424" y="1204" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Supported current schedule-status surface</text>
+<rect x="48" y="1276" width="1304" height="292" rx="12" fill="#F9FAFC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="80" y="1330" text-anchor="start" font-family="Inter" font-size="34" font-weight="500" fill="#515774">Data freshness</text>
+<rect x="80" y="1358" width="312" height="64" rx="12" fill="#D3E8F3" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="236.0" y="1399.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Cheap / partial</text>
+<text x="424" y="1400" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Maximum staleness: one ordered read in a filterable population</text>
+<rect x="80" y="1482" width="312" height="64" rx="12" fill="#FBEBDC" stroke="#C5C7D1" stroke-width="2.5"/>
+<text x="236.0" y="1523.8" text-anchor="middle" font-family="Inter" font-size="28" font-weight="500" fill="#192147">Expensive</text>
+<text x="424" y="1524" text-anchor="start" font-family="Inter" font-size="28" font-weight="500" fill="#515774">Share past an arbitrary age: enumerate the population</text>
+<text x="700" y="1644" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">Maximum age needs one ordered read; a share needs enumeration.</text>
+<text x="700" y="1683" text-anchor="middle" font-family="Inter" font-size="30" font-weight="400" fill="#515774">There is no staleness-threshold filter.</text>
+</svg>
