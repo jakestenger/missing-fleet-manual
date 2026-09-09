@@ -10,17 +10,17 @@ verified_source: "drafted against fleet-v4.90.0 (7c428c6e46). Boundaries that Fl
 
 # Terminology and version boundaries
 
-![Reference](../_assets/icons/reference-light.svg) Two jobs, and they are the same job. **This appendix translates between the words for a thing and between the versions of a thing**, so that a reader who meets an unfamiliar name or an unexplained failure can find out which they are looking at.
+![Reference](../_assets/icons/reference-light.svg) Use this appendix to translate unfamiliar names and check version requirements. It connects the terms you see in the UI with those used in code, APIs, and older documentation, then lists the version changes that can affect a deployment.
 
-What is **not** here: which capabilities your licence includes. That is collected in [a.2](a.2-platform-capability-matrix.md), where a claim is qualified by platform and scope, and where the licence is a column rather than a cell value. A version boundary and a licence gate can converge on the same symptom, a feature that is configured and does nothing, and keeping them in one table would make each harder to rule out. Many licence gates do refuse explicitly, so silence is not universal; it is common enough that the two are worth separating.
+For licence requirements, see [a.2](a.2-platform-capability-matrix.md). Version and licence restrictions can produce similar symptoms, so check both when a configured feature does not work. Some restrictions return explicit errors; others leave only a log message or no visible indication.
 
 ## Terminology
 
-Entries are added as chapters need them. A term earns one when its competing meanings or names would otherwise make an administrator act or search incorrectly, which is why several entries below are pairs of words for one thing rather than definitions.
+These entries explain names that can affect a search or an administrative decision. Several map current product terms to older names still used in storage or integrations.
 
 ### fleetd, Orbit, osquery, Fleet Desktop
 
-**fleetd is the bundle, and it has no version line of its own.** What ships to a host is several programs with separate version numbers. **What Fleet shows you as the fleetd or agent version is Orbit's**, which is why the boundaries later in this appendix name Orbit where they mean the supervisor and osquery where they mean the query engine. Knowing which one a number refers to is the difference between a useful check and upgrading the wrong thing.
+fleetd bundles programs with separate version numbers. The fleetd or agent version displayed by Fleet is Orbit’s version. The tables below name Orbit for the supervisor and osquery for the query engine so you can check or upgrade the relevant component.
 
 | | What it is | Whose version |
 |---|---|---|
@@ -29,25 +29,25 @@ Entries are added as chapters need them. A term earns one when its competing mea
 | **Fleet Desktop** | The menu-bar or tray application the end user sees | Its own |
 | **Fleetd for Chrome** | A Chrome extension, on ChromeOS, with no osquery at all | Its own |
 
-[1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md) is the canonical explanation of how they divide the work.
+[1.2](../01-foundations/1.2-how-fleet-reaches-a-device.md) explains how these components divide the work.
 
 ### AB token, ABM token, and DEP token
 
-**Three names for one credential**, and you will meet all three in one afternoon. The interface says **AB token**. Fleet's server code and most of its documentation say **ABM token**. The underlying library, and some database and log material, says **DEP**, for the same reason the [ADE and DEP](#ade-and-dep) entry below exists.
+These names refer to the same credential. The interface uses **AB token**; server code and much of the documentation use **ABM token**. The underlying library and some database and log entries use **DEP token**, reflecting Apple’s older terminology ([ADE and DEP](#ade-and-dep)).
 
 It is the token that authorises Fleet to talk to Apple Business Manager on your behalf, and it expires on its own schedule, separately from the push certificate and separately from the Apps and Books token ([7.6](../07-operate-fleet/7.6-maintain-credentials-certificates-and-access.md)).
 
 ### Unassigned, No team, and a null fleet
 
-**Two vocabularies, and several storage representations.** Hosts that belong to no named fleet are shown as **Unassigned** in the interface. GitOps used to call the same thing **No team**, in a file named `no-team.yml`, now deprecated in favour of `unassigned.yml`.
+Hosts outside a named fleet appear as **Unassigned** in the interface. GitOps formerly called this **No team**, using `no-team.yml`; that filename is deprecated in favor of `unassigned.yml`.
 
-**Underneath, how it is stored depends on what is being stored, and you cannot assume one shape.** A host carries a null fleet identifier. Some scoped resources pair a nullable identifier with a zero, and where a resource can also mean *all fleets*, a null can mean all fleets while an explicit zero means Unassigned. Read the table you are querying rather than carrying one rule between them.
+Storage representation varies by resource. A host uses a null fleet identifier. Other scoped resources distinguish null from zero; where a resource can cover all fleets, null may mean all fleets and zero may mean Unassigned. Check the table’s meaning before writing a query.
 
-**One consequence holds across all of them**: a fleet-scoped role is scoped to a *concrete* fleet, and the authorization rules reject both a null and a zero, so **fleet-scoped roles do not reach Unassigned at all** ([a.4](a.4-roles-and-permissions-matrix.md)).
+Most fleet-scoped authorization rules require a concrete fleet identifier and reject Unassigned objects. Host listing has a broader rule, so visibility in a list does not establish permission to open or act on the host ([a.4](a.4-roles-and-permissions-matrix.md)).
 
 ### MDM enrollment status, on screen and in a filter
 
-**The word on screen is not the word to search with.** Fleet renamed the displayed statuses and kept the API values for compatibility, so a filter written from what you read will not match:
+Fleet renamed some displayed enrollment statuses while retaining API values for compatibility. Use the API value when filtering:
 
 | On screen | In the API and as a filter |
 |---|---|
@@ -55,48 +55,48 @@ It is the token that authorises Fleet to talk to Apple Business Manager on your 
 | On (manual) | `On (manual)`, filtered as `manual` |
 | Off | filtered as `unenrolled` |
 
-That is three of five. The complete set also carries an enrolled personal state and a pending one, and the mapping for those is in Fleet's own interface definitions.
+The full set also includes enrolled-personal and pending states. Fleet’s interface definitions provide those mappings.
 
-This is the strongest case in this appendix for looking a term up before using it. A value Fleet does not recognise is rejected with a `400`, so typing what you read on screen fails loudly, which is the good case. **The bad case is a value that is recognised and means something else than you meant.**
+Check the accepted filter value before using a displayed label. Unknown values return `400`; a recognized value with a different meaning can instead return an unexpected set of hosts.
 
 ### MIA, and missing
 
-**Identical, and one is deprecated.** Both name a host that has not communicated for thirty days, and Fleet's own source says they are the same thing with `mia` marked deprecated. Both work at this release. **Fleet has published no date and it has published a version**: the source says `mia` was deprecated in 4.15 and will be removed in **Fleet 5.0**. So `missing` is not merely the tidier name, it is the one that survives a major release.
+Both names mean a host that has not communicated for thirty days. At this release, both work, but `mia` is deprecated. Fleet’s source records deprecation in 4.15 and planned removal in Fleet 5.0, without a calendar date. Use `missing` in new filters.
 
 ### pack, and scheduled report
 
-**A pack is the older container for scheduled queries**, and it still exists. Schedules were folded into saved queries, which this release calls reports, so current and older configuration describe overlapping objects in different words. **Meeting a pack does not prove you are looking at something old**: the pack specification endpoint still accepts new ones at this release. It does mean you are looking at the older of two ways to say the same thing.
+A pack is the older container for scheduled queries. Current reports include scheduling directly, but the pack specification endpoint still accepts new packs at this release. Older and current configuration can therefore describe overlapping scheduling workflows.
 
 ### activity, which means two different things
 
-**The audit stream and the work queue are both called activities**, and they are different tables with different lifetimes.
+Fleet uses “activity” for both audit records and queued host work. They live in different tables and have different lifetimes:
 
 | You mean | Where it lives | What it is |
 |---|---|---|
 | What somebody did | The past-activity tables | The audit record, written after the fact ([1.5](../01-foundations/1.5-audit-and-activity.md)) |
 | What is queued for a host | The upcoming-activity tables | Work Fleet has accepted and not yet completed ([8.6](../08-troubleshooting/8.6-server-state.md)) |
 
-The distinction decides where you look. A script that has run is in the first and has left the second. A script that has not run yet is in the second, **and may already have left a trace in the first**, because scheduling something is itself an action somebody took and Fleet records batch scheduling as an activity. So the queue is the authority on what is pending; the audit stream is the authority on what was asked for.
+Use the upcoming-activity queue to check what is pending. An audit entry may already exist for work that has not run, since Fleet records actions such as batch scheduling. Completed scripts leave the queue and appear in past activity records.
 
 ### ADE, and DEP
 
 **Automated Device Enrollment** is Apple's mechanism for a device enrolling into MDM during Setup Assistant, before anyone has logged in, because the device was bought into Apple Business and assigned to an MDM server there. It is what [3.2](../03-connect-devices/3.2-enroll-macos-devices.md) and [3.5](../03-connect-devices/3.5-enroll-ios-and-ipados-devices.md) call the company-owned path.
 
-**DEP**, the Device Enrollment Program, is the same thing under its older name. Apple renamed the programme; the acronym did not go away, because it is still the word in Apple's own API and therefore in Fleet's code and database. You will meet ADE in the console and DEP in the tables: `host_dep_assignments`, `nano_dep_names`, `host_dep_assignments.profile_uuid`, the DEP sync cursor, and the `apple_mdm_dep_profile_assigner` schedule.
+DEP, the Device Enrollment Program, is the older name for ADE. The acronym remains in Apple’s API and Fleet’s storage and code: `host_dep_assignments`, `nano_dep_names`, `host_dep_assignments.profile_uuid`, the DEP sync cursor, and the `apple_mdm_dep_profile_assigner` schedule.
 
-**Treat them as one concept with two vocabularies**, in the same way [8.6](../08-troubleshooting/8.6-server-state.md#enrolment-values-in-storage-display-and-filters) treats MDM status. A query written from something you read on screen will not find a table called `ade_anything`.
+Use ADE when describing the workflow and the literal DEP identifiers when querying storage. [8.6](../08-troubleshooting/8.6-server-state.md#enrolment-values-in-storage-display-and-filters) covers similar differences between displayed and stored MDM status.
 
 ### SCEP
 
 **Simple Certificate Enrollment Protocol.** The protocol by which a device asks a server for a certificate, presenting a shared challenge as its proof of entitlement. Apple MDM uses it to give each enrolled device the identity certificate it authenticates its management sessions with, so Fleet runs a SCEP service as part of Apple MDM.
 
-Two SCEPs are easy to confuse and the manual keeps them apart. **Fleet's own MDM SCEP** issues the device identity certificate at enrollment and is not optional. **Custom SCEP proxying**, where Fleet forwards certificate requests to a certificate authority you already run, is a separate feature for delivering your organisation's certificates to devices.
+Fleet’s built-in MDM SCEP service issues the device identity certificate at enrollment and is required for Apple MDM. Custom SCEP proxying is a separate feature that forwards requests to your own certificate authority to deliver organisational certificates.
 
 The Windows counterpart is WSTEP, which does the same job over Microsoft's protocol ([8.9](../08-troubleshooting/8.9-windows-mdm-diagnostics.md#898-wstep-device-identity-certificates)).
 
 ### MCP, and the Fleet MCP server
 
-**Model Context Protocol.** An open standard for how an AI assistant discovers and calls external tools, so a client such as Claude operates a system through named, typed tools rather than raw API calls. **The Fleet MCP server** is Fleet's implementation: a small server that ships in the Fleet repository, holds one Fleet API token, and exposes selected Fleet reads and live osquery to an MCP-capable assistant. Keep five things apart, because the security model turns on the difference: the protocol, the MCP client inside the assistant, the model service the assistant runs on, the Fleet MCP server, and the Fleet REST API it proxies. [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) is the chapter.
+**Model Context Protocol** is an open standard through which an AI assistant discovers and calls named, typed tools. The Fleet MCP server ships in Fleet’s repository, holds one API token, and exposes selected reads and live osquery operations. Its security model involves five components: the protocol, the assistant’s MCP client, the model service, the Fleet MCP server, and the REST API it calls. [6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md) explains their roles and setup.
 
 ### VPP
 
@@ -108,9 +108,9 @@ Like DEP, the retired name is the one in the code and the settings. The console 
 
 ### node key
 
-**The credential a host uses on the osquery and Orbit channels after enrollment.** The enroll secret authenticates the enrollment itself and nothing afterwards; what the host gets back is a node key, and that is what it presents from then on. **Not every request from a device uses one**: Fleet Desktop and the device page authenticate with a separate per-device token instead.
+A node key authenticates a host on the osquery or Orbit channel after enrollment. The enroll secret authenticates enrollment, which returns the node key for subsequent requests. Fleet Desktop and the device page use a separate per-device token.
 
-A fleetd host holds **two** of them, and confusing them costs time:
+A fleetd host holds two node keys:
 
 | Key | Used by | Stored on the host as |
 |---|---|---|
@@ -123,19 +123,19 @@ Fleet also treats the osquery node key as the unique identifier for a host row, 
 
 **Go's profiling format, and the endpoints that produce it.** A pprof profile is a sample of what a Go process was doing: CPU time, heap allocations, goroutines, blocking, mutex contention. Fleet exposes them because it is a Go program, and `fleetctl debug` fetches them ([8.5](../08-troubleshooting/8.5-fleetctl-debug.md)).
 
-The output is not readable by eye. It is a binary file you open with `go tool pprof`, which is why the manual treats a profile as something you collect and attach rather than something you interpret in place.
+Open the binary profile with `go tool pprof`, or attach it to a support investigation. It cannot be interpreted as an ordinary text log.
 
 ### file carving
 
-**osquery's mechanism for collecting whole files off a host**, rather than facts about them. You run a report against the `carves` table with a path, osquery reads the file, splits it into blocks, and uploads them; Fleet reassembles them and stores the metadata in MySQL and the block bytes in MySQL by default, or in S3/GCS when a carves bucket is configured.
+File carving collects whole files through osquery. A report against the `carves` table supplies a path; osquery reads the file, splits it into blocks, and uploads them. Fleet reassembles the blocks and stores metadata in MySQL. Block data also uses MySQL by default, or S3/GCS when a carves bucket is configured.
 
-It is the **purpose-built** path for getting a file's contents off a host through osquery, which makes it both the answer to "I need to see that file" and a capability worth knowing is enabled. It is not the only such path: osquery can read a file line by line, and Fleet's own disk-encryption query does exactly that to ingest a key file. Blocks and their ceilings are configuration, and the per-carve size limit is in [8.14](../08-troubleshooting/8.14-degradation.md).
+Use carving when you need a file’s contents. It is one of several ways osquery can read file data; Fleet’s disk-encryption query, for example, reads a key file line by line. [8.14](../08-troubleshooting/8.14-degradation.md) covers the per-carve size limit and related configuration.
 
 ### dead lettering
 
-**What a message queue does with a message it could not deliver**: rather than dropping it or retrying forever, it moves it to a separate queue for inspection. The term belongs to the queueing systems Fleet delivers logs into rather than to Fleet, and it appears in this manual only where a log destination's own behaviour decides what happens to a record Fleet could not hand over ([8.2](../08-troubleshooting/8.2-log-surfaces.md)).
+Dead lettering moves an undeliverable message to a separate queue for inspection. In this manual, the term describes behavior of external log destinations. Their queueing rules determine what happens after Fleet hands over a record ([8.2](../08-troubleshooting/8.2-log-surfaces.md)).
 
-Fleet itself has no dead-letter queue. A record Fleet fails to write is gone, which is the point [8.2](../08-troubleshooting/8.2-log-surfaces.md) makes about which surfaces are durable.
+Fleet has no dead-letter queue of its own. A failed log write has no such recovery path; [8.2](../08-troubleshooting/8.2-log-surfaces.md) describes the durability of each log surface.
 
 ### report, and query
 
@@ -143,7 +143,7 @@ Fleet itself has no dead-letter queue. A record Fleet fails to write is gone, wh
 
 **A query is osquery's mechanism**, and also plain SQL. osquery runs queries: on a schedule, or on demand through its distributed channel.
 
-The two words describe different layers of the same action. Running a live report in Fleet causes osquery to execute a query on each targeted host. Both terms are correct, and which one is right depends on the layer you are talking about.
+Running a live report in Fleet causes osquery to execute a query on each targeted host. Use the term that matches the layer you are describing.
 
 | You mean | Say | Because |
 |---|---|---|
@@ -159,15 +159,15 @@ Part VIII works at all of these layers at once, which is why both words appear t
 
 ### Terms the manual uses across chapters
 
-These are not naming collisions; they are specialist words the manual uses as house vocabulary and defines once here rather than in every chapter that reaches for them. Where a term has an owning chapter, it is named.
+These terms appear across the manual. The linked chapters explain their practical use.
 
-**Blast radius.** Borrowed from incident response: how far the effect of an action or a failure reaches if it goes wrong, measured by what it touches rather than by whether it succeeds. The manual uses it to frame destructive commands, over-broad queries and credential exposure ([8.1](../08-troubleshooting/8.1-diagnostic-method.md) turns it into a diagnostic question).
+**Blast radius.** The scope affected by an action or failure, such as the hosts reached by a command or data exposed through a credential. [8.1](../08-troubleshooting/8.1-diagnostic-method.md) uses this idea when choosing a diagnostic step.
 
-**Estate.** The whole population of devices one Fleet deployment manages. The manual reaches for it where "your hosts" is too small a word, because capacity, rollout and policy decisions are made against the population rather than a single machine.
+**Estate.** All devices managed by one Fleet deployment. The term is used for capacity, rollout, and policy decisions that concern the whole population.
 
-**Idempotency.** A property of an action that is safe to repeat: running it twice leaves the same result as running it once. It matters for scripts, software installs and automated remediation, where Fleet may retry or a policy may fire more than once. Fleet offers no idempotency guarantee of its own ([6.1](../06-automate-fleet/6.1-automation-design-and-change-control.md)), so the safety has to be built into what you send.
+**Idempotency.** Repeating an operation produces the same result as performing it once. This matters when scripts, installations, or remediation may be retried. Design that behavior into the work you send; Fleet does not provide a general idempotency guarantee ([6.1](../06-automate-fleet/6.1-automation-design-and-change-control.md)).
 
-**Fan-out.** One request that expands into many: a live query dispatched to hundreds of hosts at once, or an assistant question that becomes one API call per fleet. The cost and the failure modes live in the many rather than the one ([1.6](../01-foundations/1.6-the-fleet-server.md) on the Redis side, [a.11](a.11-mcp-tool-reference.md) on the assistant side).
+**Fan-out.** One request expands into many, such as a live query sent to hundreds of hosts or an assistant making one API call per fleet. Account for the combined cost and possible partial failures ([1.6](../01-foundations/1.6-the-fleet-server.md), [a.11](a.11-mcp-tool-reference.md)).
 
 **JSON-RPC.** The request and response protocol the Model Context Protocol speaks: named methods with typed parameters, carried over the Fleet MCP server's stdio or SSE transport ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)).
 
@@ -185,9 +185,9 @@ Released 11 March 2026. From the release notes:
 >
 > Deprecated certain API field names to reflect the renaming of "teams" to "fleets" and "queries" to "reports".
 
-**Certain** renamed field names are deprecated rather than removed, so integrations written against those earlier names continue to work. The deprecation is per field rather than a blanket promise about every old name, so check the field you depend on. New work should use the current names.
+Some renamed API fields remain accepted under their deprecated names. Check each field your integration uses; this is not a blanket compatibility promise for every old name. Use current names for new work.
 
-**The rename covered the surfaces administrators touch, and stopped there.** Storage and internal naming kept the original words:
+Administrator-facing names changed, while storage and internal identifiers retained older terms:
 
 | Surface | Current | Notes |
 |---|---|---|
@@ -204,15 +204,15 @@ A related change in the same release: `no-team.yml` in GitOps was deprecated in 
 
 ## What this manual's version pin means
 
-![Reference](../_assets/icons/reference-light.svg) This edition of the manual is checked against **Fleet 4.91.0**; most chapters were verified at 4.90.0 and carried forward, with the sections 4.91 changed re-verified against 4.91.0, and the two generated catalogs, the configuration keys in [a.3](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and the routes in [a.8](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog), read from that release. Each chapter's own `verified_against` frontmatter is the exact record for that chapter. The pin is what lets the manual be specific: a default, a route, an edition gate or a field name is stated as a fact about a named release rather than about Fleet in general.
+![Reference](../_assets/icons/reference-light.svg) This edition covers Fleet 4.91.0. Most chapters were verified at 4.90.0 and carried forward; sections affected by 4.91 were checked against 4.91.0. The generated [configuration catalog](a.3-configuration-model-and-precedence.md#the-complete-configuration-key-catalog) and [route catalog](a.8-api-action-and-endpoint-reference.md#the-complete-route-catalog) come from 4.91.0. Each chapter’s `verified_against` frontmatter records its verification version.
 
-Two signals tell you a claim may no longer match the release you run. The first is the version itself: if your server is not on this edition's release line, treat commands, fields, defaults and gates as version-sensitive and read the chapter's version notes, because behaviour moves between releases. The second is more precise, and it is what the catalogs are for: if a configuration default you observe on your own server differs from the registered default in a.3's catalog, the manual is describing a different binary from yours, and that key is where to look for what changed.
+If your server is outside this edition’s release line, review the chapter’s version notes before relying on commands, fields, defaults, or licence gates. A difference in a registered default is a useful clue to a version change; first distinguish that default from an explicitly configured value using [a.3](a.3-configuration-model-and-precedence.md).
 
 When this manual is updated for a newer Fleet release, both catalogs are regenerated against that release's tag, so they keep describing the version each chapter names rather than a fixed snapshot.
 
 ## Version boundaries
 
-![Reference](../_assets/icons/reference-light.svg) A **version boundary** is a version below which something behaves differently. They are not all floors and treating them as one list is how a diagnosis goes wrong, so each row below is one of these:
+![Reference](../_assets/icons/reference-light.svg) A version boundary marks a change in availability, behavior, or dependency support. The tables distinguish six kinds:
 
 | | |
 |---|---|
@@ -223,13 +223,15 @@ When this manual is updated for a newer Fleet release, both catalogs are regener
 | **Dependency constraint** | A floor or a ceiling on something Fleet runs on |
 | **Runtime-fetched** | The binary is pinned to a release, but a specific input inside it is re-fetched on a schedule from somewhere that is not that release, so what it validates against can drift while the version number does not move |
 
-Only cross-cutting boundaries are collected here. One that a single chapter needs and no one would plan an estate around stays in that chapter.
+This appendix collects boundaries that affect deployment planning across chapters. Feature-specific limits also appear in their owning chapters.
 
-### What Fleet enforces, and what it only negotiates
+<a id="what-fleet-enforces-and-what-it-only-negotiates"></a>
 
-**Fleet 4.90.0 declares and enforces no global minimum agent version.** Neither enrollment path reads one, and the agent's enrollment record has no version field, so a version mismatch is never the reason an agent is refused.
+### Enforced requirements and capability negotiation
 
-What happens instead is not one mechanism but four, and telling them apart is what makes a symptom diagnosable:
+Fleet 4.90.0 has no global minimum agent version enforced at enrollment. Neither enrollment path checks one, and the agent’s enrollment record has no version field. Individual features can still have version requirements.
+
+Feature compatibility follows four mechanisms:
 
 | | What it means | What you see |
 |---|---|---|
@@ -238,15 +240,15 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 | **Chosen locally** | The agent decides from its own osquery version, or `fleetctl` decides while building a package | Nothing on the server |
 | **Compared** | The server compares the reported agent version | An error the administrator can see. **There is exactly one of these** |
 
-**The single comparison is the Linux passphrase escrow gate.** Everywhere else, an incompatibility degrades one feature rather than refusing anything, and most of that degradation is invisible from the console.
+The explicit agent-version comparison covers Linux passphrase escrow. Other compatibility checks can limit individual features without rejecting enrollment, often without a console-visible error.
 
-> **The negotiation is the Orbit and device protocols, not every Fleet request.** osquery's own protocol carries no capability header, so an osquery-side boundary is never negotiated: it is chosen locally or it is ungated.
+> Capability negotiation belongs to the Orbit and device protocols. osquery’s protocol has no capability header; its version-dependent behavior is chosen locally or left ungated.
 
-**Fleet cannot tell you which hosts lack a capability.** Only one negotiated capability is persisted anywhere, the Windows on-demand sync flag, so for every other boundary the agent-version column on the hosts page is the practical proxy.
+Fleet persists only one negotiated capability, the Windows on-demand sync flag. For the others, use reported agent versions as a practical proxy when identifying hosts that may lack support.
 
-**Compatibility is asymmetric, and Fleet says so.** A new agent against an older server is a requirement its engineering process treats as a must. **An older agent against a new server is only a nice to have**, with a minimum named in the release notes when it breaks. That is a rollout rule: move the server first and the agents after, and read the release notes before assuming the reverse is safe.
+Fleet’s engineering guidance requires newer agents to work with older servers. Support for older agents against newer servers is a weaker expectation, with minimums called out in release notes when compatibility breaks. Check those notes and the rollout procedure in [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) before choosing an upgrade order.
 
-**Upgrades follow semantic versioning with three stated exceptions**: experimental features, security fixes, and changes to default values. All three can break a minor or patch upgrade, and all three are called out in the version notes, which is the practical reason [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) asks you to read them rather than diff the version number.
+Fleet follows semantic versioning with three exceptions: experimental features, security fixes, and changed defaults can introduce breaking changes in minor or patch releases. Review the version notes for those changes as part of the upgrade procedure ([7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md)).
 
 
 <!-- IMAGE-TODO: assets/a.6-agent-feature-compatibility.webp
@@ -310,11 +312,11 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 | Following an update channel to a current release | **Orbit 1.38.0 in the code, 1.38.1 as the bridge** | not applicable | Silent in Fleet. The failure is in the agent's own log on the host, and nothing in the console says the estate has stopped updating. See below |
 | Enrolling and talking to a 4.90.0 server | **no minimum** | not applicable | **No boundary**, listed because its absence is the useful fact |
 
-> **The update-server migration has two numbers and they answer different questions.** The rewrite to the new update server is in the code from **1.38.0**. **1.38.1** is what Fleet's own configuration reference names as the stepping stone, it shipped three days later, and Fleet also shipped a rollback with 1.38.0 in case one was needed. **Step through 1.38.1** ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
+> The update-server migration uses two relevant versions. The rewrite arrived in Orbit 1.38.0; Fleet’s configuration reference specifies 1.38.1, released three days later, as the bridge release. A rollback also shipped with 1.38.0. Use 1.38.1 as the stepping stone ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
 
-> **`update_channels` is the one to know**, because it fails in the shape most likely to be misread. An agent below 1.20.0 ignores the channel you set. Fleet accepts the configuration, stores it, shows it back, and the host keeps running whatever it was running. There is no error and no log line, so the estate looks pinned and is not ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
+> Agents below Orbit 1.20.0 ignore `update_channels`. Fleet can accept and display the configuration while those hosts continue using their previous channels, without an error or log line. Confirm agent versions before relying on remote channel control ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
 
-**The two packaging floors behave differently from the rest**, because they bind when the installer is built rather than when the host runs. An old `fleetctl` produces a package that cannot carry the property, and no later upgrade of the agent fixes it. Rebuild the package instead.
+The two installer-property floors apply when the package is built. Upgrading an already-installed agent does not add a property that an older `fleetctl` omitted from the installer; rebuild the package.
 
 ### Operating system boundaries
 
@@ -322,27 +324,27 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 |---|---|---|---|---|
 | ACME device identity for Apple enrollment | **macOS 14.0, and Apple Silicon, and a DEP-assigned serial** | macOS | A server-side check before the profile is built | **Fallback.** Fleet issues the SCEP profile instead, with an info log and nothing in the console |
 | Which OS-update mechanism is used | macOS 14.0.0 | macOS | A server-side version comparison | **Routing.** Both mechanisms exist and the version picks one |
-| **Delivery** of the OS-update declaration | macOS 14 | macOS | A dynamic label computed from a report, not a version comparison | **Silent floor**, and a trap. See below |
-| **Delivery** of the OS-update declaration | **iOS 17 and iPadOS 17** | iOS, iPadOS | **Nowhere.** The built-in labels carry no version predicate | **Published baseline only**, and a trap. See below |
+| **Delivery** of the OS-update declaration | macOS 14 | macOS | A dynamic label computed from a report, not a version comparison | **Silent floor.** Delivery also depends on the label behavior below |
+| **Delivery** of the OS-update declaration | **iOS 17 and iPadOS 17** | iOS, iPadOS | **Nowhere.** The built-in labels carry no version predicate | **Published baseline only.** See the targeting behavior below |
 | Manual, non-ADE migration eligibility | macOS **strictly above** 14.0.0 | macOS | A server-side comparison | **Silent floor** on the notification path. Loud only when a user triggers it themselves |
 | Discovery request version | Protocol version 4.0 | Windows | A server-side check on the request | **Silent floor.** Fleet writes a debug line and returns a fault to the device; nothing reaches the console. The device reports the failure locally, so the evidence is on the machine rather than in Fleet |
 | Full support for Windows 11 25H2 | **Fleet server 4.89.1** | Windows | Documented, and the enrollment fails | **Silent floor.** The enrollment fails outright rather than degrading, and the device reports error `80180006`; in Fleet it is a host that never appeared |
-| Hardware-backed host identity | TPM 2.0 | Linux | Implicit. Fleet opens the TPM 2.0 resource-manager device node, so a kernel without it cannot serve this. **Which kernel that is, is Linux's fact rather than Fleet's**, and this appendix does not assert a number | **Silent floor** in Fleet |
+| Hardware-backed host identity | TPM 2.0 | Linux | Implicit. Fleet opens the TPM 2.0 resource-manager device node, so a kernel without it cannot serve this. No minimum kernel version is established here | **Silent floor** in Fleet |
 | Enrolling an Apple device in MDM at all | **none** | Apple | Nothing checks | **No boundary**, listed because its absence is the useful fact |
 
-> ### Two of these are traps rather than boundaries
+> ### OS-update delivery also depends on targeting
 >
-> **The macOS 14 OS-update boundary is a dynamic label computed from report results**, so it depends on the agent rather than on the version. **A Mac that has never produced osquery results cannot enter that label**, and the older enforcement path needs the agent too, so a newly MDM-enrolled Mac with no fleetd receives neither the declaration nor the older mechanism.
+> The macOS 14 update label is computed from osquery results. A newly MDM-enrolled Mac that has never reported through fleetd cannot join it, and the older enforcement path also needs the agent. It therefore receives neither mechanism until the required agent data is available.
 >
-> **Losing fleetd later is a different case.** Dynamic membership is removed only when a later result is definitively false, and an error leaves it alone, so a Mac that joined the label before its agent disappeared can keep its membership and keep receiving enforcement over MDM. Stale membership is the normal outcome there, not loss of enforcement.
+> A Mac that loses fleetd after joining the label can retain membership and continue receiving MDM enforcement. Dynamic membership is removed by a later false result; an error preserves it.
 >
-> **The iOS and iPadOS 17 boundary is not enforced at all.** The built-in labels for those platforms are platform-only with an empty query, so they carry no version predicate and the declaration goes to every iPhone and iPad regardless. Fleet documents a baseline; nothing implements one.
+> The built-in iOS and iPadOS labels have no version predicate. They target all devices on those platforms, so the published iOS/iPadOS 17 baseline does not gate declaration delivery.
 
 ### Published host baselines
 
-**This is a snapshot of what Fleet published at 4.90.0, and it is the kind of list this appendix warns about.** It has moved before and it will move again, so read it as where the baseline stood at this release and check Fleet's own current table before planning against it.
+These are Fleet’s published host baselines at 4.90.0. Check the current supported-platform table before planning a deployment on a later release.
 
-**No global admission gate enforces this matrix.** Fleet does not refuse an enrollment for being below a line here. Individual features do have their own gates, several of them in the table above, so "unsupported" here means untested rather than blocked:
+Fleet has no global enrollment gate enforcing this table. It describes the tested support baseline, while individual features have their own checks, including those listed above.
 
 | Platform | Baseline |
 |---|---|
@@ -353,11 +355,11 @@ What happens instead is not one mechanism but four, and telling them apart is wh
 | ChromeOS | 112.0.5615.134 and later |
 | Android | 14 and later |
 
-Fleet's own qualification is worth carrying: it may work partially or fully below these, and it does not test there or pursue bugs there. **Full Windows MDM on Windows 11 25H2 additionally needs Fleet server 4.89.1**, and that one does fail outright rather than silently.
+Below these baselines, Fleet may work partially or fully, but Fleet does not test or pursue bugs there. Windows 11 25H2 MDM additionally requires server 4.89.1; an older server can fail enrollment outright.
 
 ### Server floors
 
-These are the server side of the capabilities above, **including the two web setup rows, which run the other way**: there the agent refuses to start unless the server declares the capability. They matter when you are the one running the old version.
+These server floors complement the agent requirements above. For Linux and Windows web setup, the agent checks that the server declares the capability before starting the flow.
 
 | Capability | Server floor |
 |---|---|
@@ -372,21 +374,23 @@ These are the server side of the capabilities above, **including the two web set
 | Full Windows 11 25H2 support | 4.89.1 |
 | Linux snapd recovery-key escrow | 4.90.0 |
 
-**One floor runs in both directions**, and Fleet's own source says so where none of the others do. A current agent talking to a server without the snapd escrow capability has its payload rejected, so the agent gates on the capability rather than retrying, because retrying would churn the key slot on the device.
+Snapd recovery-key escrow requires compatibility in both directions. A current agent checks for the server capability before sending an escrow payload; repeatedly trying an unsupported server would churn the device’s key slot.
 
 ### Dependency floors
 
-**MySQL 8.0.44.** Tested against 8.0.44, 8.4.8 and 9.5.0, with 9.6.0 currently incompatible. The floor moved from 8.0.36 during the 4.83 line ([2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md) has the operational consequence, which is that a newer MySQL is not automatically a safer one).
+**MySQL 8.0.44.** Tested against 8.0.44, 8.4.8, and 9.5.0; 9.6.0 is incompatible at the reviewed release. The minimum moved from 8.0.36 during the 4.83 line. Check the supported versions before upgrading the database ([2.2](../02-administer-and-deploy-fleet/2.2-self-hosting-architecture-and-capacity.md)).
 
 **Redis 6.2.** Required by the host-lookup cache on the agent authentication paths, which arrived in the 4.86 line. Fleet is actively tested against 6.2 and 7.
 
-**Aurora MySQL 3.10.3**, where you are running Aurora rather than MySQL. It is the same class of constraint as the two above and is stated in the same place.
+**Aurora MySQL 3.10.3.** This is the published minimum when using Aurora.
 
-**`fleetctl` against the server: no enforced floor.** The client compares its version with the server's and, when they differ, **prints a warning and continues**. So a mismatched client is a caution rather than a refusal, and a command that behaves oddly against a server of a different version will not tell you that is why ([6.4](../06-automate-fleet/6.4-use-fleetctl.md) on pinning it in automation).
+**`fleetctl` has no enforced server-version floor.** A mismatch produces a warning and the client continues. Pin the client version in automation and check compatibility when a command behaves unexpectedly ([6.4](../06-automate-fleet/6.4-use-fleetctl.md)).
 
-### Runtime-fetched moving inputs
+<a id="runtime-fetched-moving-inputs"></a>
 
-**A version pin covers the binary, not necessarily everything the binary reads at runtime.** The manual's one example is the Fleet MCP server's osquery schema ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)): the binary is built from the 4.90.0 tag and serves the schema embedded in it at startup, but a background refresh then attempts to replace that snapshot with the file from Fleet's `main` branch, roughly two seconds after startup and every 24 hours after by default. Only a successful fetch replaces it; a failed one keeps the copy already in memory, so the schema it validates queries against can end up newer than the tag rather than always being so.
+### Inputs refreshed at runtime
+
+A pinned binary can still fetch newer runtime data. The Fleet MCP server built from 4.90.0 initially uses its embedded osquery schema, then attempts a refresh from Fleet’s `main` branch about two seconds after startup and every 24 hours by default. A successful fetch replaces the in-memory schema; failure retains the current copy ([6.6](../06-automate-fleet/6.6-connect-fleet-to-an-ai-assistant.md)).
 
 | | |
 |---|---|
@@ -395,27 +399,29 @@ These are the server side of the capabilities above, **including the two web set
 | **Failure behavior** | An unset or unparseable interval falls back to the 24-hour default rather than failing startup; the variable is read once at startup, so a change needs a restart |
 | **Inspection** | Compare a column or table you rely on against the schema shipped in the 4.90.0 tag if you need to know whether it moved |
 | **Pin the automatic refresh** | Set `FLEET_MCP_SCHEMA_REFRESH_DISABLE` to any non-empty value to stop the startup/periodic fetch and serve only the embedded snapshot, for a strictly release-pinned deployment |
-| **Manual refresh still reaches out** | The variable above does not cover the `refresh_osquery_schema` tool: it calls the same GitHub fetch unconditionally whenever the assistant invokes it. For a genuinely air-gapped deployment, also block outbound access to `raw.githubusercontent.com` |
+| **Manual refresh still reaches out** | The variable above does not cover the `refresh_osquery_schema` tool: it calls the same GitHub fetch unconditionally whenever the assistant invokes it. To prevent all schema fetches, also block outbound access to `raw.githubusercontent.com` |
 
-**Treat this as a second version to track, not a defect in the first one.** A server pinned to 4.90.0 and an MCP server built from the same tag can still validate queries against a schema newer than either, and nothing about the release pin says so on its own.
+Track the MCP schema separately when reproducing a query-validation result. Fleet and the MCP server can share a release tag while the MCP server uses a newer schema.
 
-### Fleet publishes support scopes, and no dated end of life
+<a id="fleet-publishes-support-scopes-and-no-dated-end-of-life"></a>
 
-**No dated end-of-life policy was found anywhere in the 4.90.0 repository.** What Fleet publishes there is two release-relative scopes:
+### Published support scopes
+
+The 4.90.0 repository review found these release-relative support scopes and no dated end-of-life policy:
 
 | | Bug fixes | Troubleshooting help |
 |---|---|---|
 | **Free** | Latest version only | Current major version |
 | **Premium** | Latest version only | All versions |
 
-**There are no backports to either tier.** A fix lands in the latest release and nowhere else, so the only supported response to a bug that is hitting you is to upgrade.
+Bug fixes are delivered in the latest release for both tiers, without backports. Applying a fix therefore requires an upgrade to the release containing it.
 
-**That is not the same as nothing being unsupported.** A release that is not the latest is outside the scope for fixes, and on Free a previous major version is outside the scope for troubleshooting too. Premium's all-versions troubleshooting promise is about help, not about fixes or indefinite compatibility.
+Older releases are outside the scope for fixes. On Free, previous major versions are also outside the troubleshooting scope. Premium’s all-version troubleshooting coverage provides help without promising backports or indefinite compatibility.
 
-So there are two planning questions rather than one. **Plan remediation around being on the latest release**, because that is what a fix requires. **Plan support access around the troubleshooting scope**, which depends on your tier and your major version. What you cannot plan around is a date, because none was found to plan against.
+Plan remediation around the latest release and support access around your tier’s troubleshooting coverage. The reviewed policy provides no retirement date to schedule against.
 
-One practical note: **this policy lives in Fleet's company handbook rather than its documentation**, so a reader working through the product docs will not meet it.
+This policy is published in Fleet’s company handbook.
 
-**There is no constrained upgrade path within version 4.** Fleet's own guidance says skipping versions is fine and nothing in the server enforces an ordering. The exception is the agent, where the update server migration makes one release a stepping stone ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
+Fleet’s guidance permits skipping server versions within version 4, and the server enforces no intermediate-release sequence. Agent updates have a separate exception: the update-server migration requires a bridge release ([3.8](../03-connect-devices/3.8-manage-fleetd-orbit-and-updates.md)).
 
 Fleet's cadence, for planning: one minor and one patch release every three weeks, with scheduled patches weekly in between and immediate patches for critical bugs. [7.3](../07-operate-fleet/7.3-upgrade-fleet-and-fleetd.md) turns that into a release-review rhythm.
