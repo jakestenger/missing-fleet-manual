@@ -202,6 +202,15 @@ consts = {}
 for m in re.finditer(r'^\s*(\w+)\s*=\s*"([^"]*)"\s*$', stripped_file, re.M):
     consts[m.group(1)] = m.group(2)
 
+# The same, for integer constants used as registered defaults (e.g.
+# DefaultGoogleWorkspaceMaxUsers = 500_000). Read from the declaration in this same
+# file, so an integer default given by name is still a fixed literal the generator can
+# state exactly -- not a runtime computation to be marked *(computed)*. Go's digit
+# separators are dropped; anything but a bare integer literal is left unresolved.
+int_consts = {}
+for m in re.finditer(r"^\s*(\w+)\s*=\s*(-?[\d_]+)\s*$", stripped_file, re.M):
+    int_consts[m.group(1)] = m.group(2).replace("_", "")
+
 # Extract the addConfigs() body with real line numbers.
 body_start = None
 for idx, line in enumerate(lines):
@@ -316,7 +325,11 @@ def parse_default(kind, expr):
                 return ('"' + g + '"', False)
         return (expr, True)
     if kind == "Int":
-        return (expr, False) if re.match(r"^-?\d+$", expr) else (expr, True)
+        if re.match(r"^-?\d+$", expr):
+            return (expr, False)
+        if expr in int_consts:
+            return (int_consts[expr], False)
+        return (expr, True)
     if kind == "Bool":
         return (expr, False) if expr in ("true", "false") else (expr, True)
     return None
