@@ -93,7 +93,9 @@ def a5_documented_exclusions(a5_text):
     """CAP-IDs a.5's own prose names as deliberately outside its matrix, e.g. "this index
     covers all of them except **CAP-354, connecting an AI assistant**". A row named here is
     a claim, not a fact; callers reconcile it against what the matrix actually contains."""
-    return {"CAP-" + m.group(1) for m in re.finditer(r"except \*\*CAP-(\d+)", a5_text)}
+    legacy = {"CAP-" + m.group(1) for m in re.finditer(r"except \*\*CAP-(\d+)", a5_text)}
+    current = re.search(r"matrix omits (CAP-\d+),[^\n]+?and places (CAP-\d+),", a5_text)
+    return legacy | (set(current.groups()) if current else set())
 
 
 def check_reverse_coverage(a1_rows, a5_rows, a5_text, problems):
@@ -136,7 +138,7 @@ def check_a1_frontmatter_count(a1_path, a1_rows, problems):
 
 def check_a5_prose_count(a5_path, a5_rows, problems):
     text = a5_path.read_text()
-    m = re.search(r"This appendix carries (\d+) rows", text)
+    m = re.search(r"(?:This appendix carries|This index has) (\d+) rows", text)
     if not m:
         problems.append("a.5: could not find the 'This appendix carries N rows' claim")
         return
@@ -148,8 +150,8 @@ def check_a5_prose_count(a5_path, a5_rows, problems):
         )
     # The two other headline row-count mentions must agree with the same actual count too.
     for label, pattern in (
-        ("'carries N of them, against all four'", r"capability register, (\d+) of them, against"),
-        ("'All N register rows'", r"All (\d+) register rows, grouped"),
+        ("'carries N of them, against all four'", r"(?:capability register, |matrix maps )(\d+)(?: of them, against| administrator actions)"),
+        ("'All N register rows'", r"(?:All |The )(\d+)(?: register rows, grouped| rows below are grouped)"),
         ("'N rows, 1,'", r"\*\*(\d+) rows, [\d,]+ cells"),
     ):
         m2 = re.search(pattern, text)
@@ -164,7 +166,7 @@ def check_a5_prose_count(a5_path, a5_rows, problems):
 
 def a7_index_segment(text):
     start = text.index("### Top-level commands")
-    end = text.index("### The seventeen rows")
+    end = re.search(r"^### (?:The seventeen rows|Known access differences)", text, re.M).start()
     return text[start:end]
 
 
@@ -193,8 +195,9 @@ def a7_command_rows(text):
 
 def a7_audit_table(text):
     """command name -> chapter citation, from 'Which commands have an owning chapter'."""
-    start = text.index("### Which commands have an owning chapter")
-    end = text.index("###", start + 1)
+    start = re.search(r"^### (?:Which commands have an owning chapter|Workflow chapters)", text, re.M).start()
+    next_heading = re.search(r"\n#{2,3} ", text[start:])
+    end = start + next_heading.start() if next_heading else len(text)
     segment = text[start:end]
     out = {}
     for line in segment.split("\n"):
@@ -259,8 +262,8 @@ def check_a7_prefix_arithmetic(a7_path, problems):
             f"Windows-only row) is {stated_tree + 1}"
         )
 
-    m2 = re.search(r"for the (\d+) rows that carry it", text)
-    m3 = re.search(r"Eighteen of the (\d+) rows do not carry the prefix", text)
+    m2 = re.search(r"(?:for the |For )(\d+) rows(?: that carry it|, the listed chain)", text)
+    m3 = re.search(r"Eighteen of the (\d+)(?: rows do not carry the prefix| macOS/Linux rows omit the prefix)", text)
     if not (m2 and m3):
         problems.append("a.7: could not find both halves of the shared-prefix-contract count")
         return
@@ -409,8 +412,8 @@ def check_a5_reach_figures(cells, a5_text, problems):
     can = ("Full", "Partial")
     reach = [sum(1 for r in cells if r[i] in can) for i in range(4)]  # UI, REST, fleetctl, GitOps
     m = re.search(
-        r"(\d+) at `Full` or `Partial` against (\d+) for the UI, (\d+) for `fleetctl` and "
-        r"(\d+) for GitOps", a5_text)
+        r"(?:REST has `Full` or `Partial` support for )?(\d+)(?: at `Full` or `Partial` against | actions, compared with )"
+        r"(\d+) for the UI, (\d+) for `fleetctl`,? and (\d+) for GitOps", a5_text)
     if not m:
         problems.append("a.5: could not find the 'N at `Full` or `Partial` against ...' reach sentence")
     else:
@@ -423,7 +426,7 @@ def check_a5_reach_figures(cells, a5_text, problems):
             )
 
     both = sum(1 for r in cells if r[3] == "Unsupported" and r[0] in can and r[1] in can)
-    m = re.search(r"GitOps is `Unsupported` on (\d+) rows the UI and the REST API can both perform", a5_text)
+    m = re.search(r"GitOps is (?:`Unsupported`|unsupported) on (\d+) (?:rows the UI and the REST API can both perform|actions available through both the UI and REST)", a5_text)
     if not m:
         problems.append("a.5: could not find the 'GitOps is `Unsupported` on N rows' sentence")
     elif int(m.group(1)) != both:
@@ -508,7 +511,7 @@ def check_a1_group_table(a1_path, a1_rows, problems):
         num, _, label = name.partition(". ")
         by_num[num] = (label.strip(), sum(1 for r in row_pos if pos < r < end))
 
-    sec = re.search(r"^## Why the eight groups are not the table of contents$(.*?)^## ",
+    sec = re.search(r"^## (?:Why the eight groups are not the table of contents|How the groups relate to the chapters)$(.*?)^## ",
                     text, re.M | re.S)
     if not sec:
         problems.append("a.1: could not find the 'Why the eight groups' section to check its table")
@@ -554,6 +557,20 @@ def check_a5_fleetctl_api_figures(cells, a5_text, problems):
     settled = [r for r in not_unsup if r[1] != "Not established"]
     n122, n85, n75 = len(unsup), len(not_unsup), len(settled)
 
+    current = re.search(
+        r"Here, (\d+) rows lack native `fleetctl` support\. Of those, (\d+) have "
+        r"established REST support and ([A-Za-z-]+) have a REST answer that remains `Not established`",
+        a5_text,
+    )
+    if current:
+        total, settled_count, unresolved = current.groups()
+        if (int(total), int(settled_count), unresolved.lower()) != (n122, n75, _words(n85 - n75)):
+            problems.append(
+                f"a.5: fleetctl/REST coverage says {total} unsupported, {settled_count} settled, "
+                f"{unresolved} unresolved; matrix has {n122}, {n75}, {_words(n85 - n75)}"
+            )
+        return
+
     m = re.search(r"the (\d+) rows no specification file reaches and `fleetctl api` "
                   r"demonstrably could", a5_text)
     if not m:
@@ -593,7 +610,7 @@ def check_a2_prose_count(a2_path, problems):
     split rows (CAP-244a and friends) as rows of its own, so this counts them too."""
     text = a2_path.read_text()
     actual = len(re.findall(r"^\|\s*\*\*CAP-\d+[a-z]?\*\*\s*\|", text, re.M))
-    m = re.search(r"Grouped as a reader would look for a capability, (\d+) rows", text)
+    m = re.search(r"(?:Grouped as a reader would look for a capability, |matrix contains )(\d+) (?:rows|capability rows)", text)
     if not m:
         problems.append("a.2: could not find the 'Grouped as a reader would look ..., N rows' claim")
         return
@@ -614,9 +631,9 @@ def check_a5_prose_cross_counts(cells, a5_text, problems):
     n = len(no_iface)
 
     checks = [
-        (r"([A-Za-z-]+) rows have no supported interface", _words(n), "rows with no supported interface"),
-        (r"([A-Za-z-]+) rows have no `Full` and no `Partial`", _words(n), "rows with no Full and no Partial"),
-        (r"([A-Za-z-]+) rows are `Full` in all four columns", _words(sum(1 for r in cells if set(r) == {"Full"})), "rows Full in all four columns"),
+        (r"([A-Za-z-]+) rows have no (?:supported interface|`Full` or `Partial` interface)", _words(n), "rows with no supported interface"),
+        (r"([A-Za-z-]+) rows have no `Full` (?:and no|or) `Partial`(?: cell)?", _words(n), "rows with no Full and no Partial"),
+        (r"([A-Za-z-]+) rows are `Full` (?:in|across) all four columns", _words(sum(1 for r in cells if set(r) == {"Full"})), "rows Full in all four columns"),
     ]
     for pattern, expected_word, label in checks:
         m = re.search(pattern, a5_text)
@@ -627,11 +644,13 @@ def check_a5_prose_cross_counts(cells, a5_text, problems):
                 f"a.5: prose says '{m.group(1)}' {label} but the matrix has {expected_word}"
             )
 
-    m = re.search(r"([A-Za-z]+) of the (\d+) are readable", a5_text)
+    m = re.search(r"([A-Za-z]+) of the (\d+|[A-Za-z-]+) (?:are readable|can be read through an interface)", a5_text)
     if not m:
         problems.append("a.5: could not find the 'N of the M are readable' figure")
     else:
-        if int(m.group(2)) != n:
+        denominator = int(m.group(2)) if m.group(2).isdigit() else next(
+            (value for value in range(1000) if _words(value) == m.group(2).lower()), None)
+        if denominator != n:
             problems.append(
                 f"a.5: 'of the {m.group(2)} are readable' but the matrix has {n} no-interface rows"
             )
@@ -640,7 +659,7 @@ def check_a5_prose_cross_counts(cells, a5_text, problems):
                 f"a.5: '{m.group(1)} of the {n} are readable' but the matrix has {readable} readable"
             )
 
-    m = re.search(r"(\d+) rows have all four columns agreeing", a5_text)
+    m = re.search(r"(\d+) (?:rows have all four columns agreeing|have the same answer in every column)", a5_text)
     agree = sum(1 for r in cells if len(set(r)) == 1)
     if not m:
         problems.append("a.5: could not find the 'N rows have all four columns agreeing' figure")

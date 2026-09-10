@@ -123,7 +123,7 @@ def _check_stated(text, pattern, expected, label, problems, group=1):
 
 def check_partial_total(cells, text, problems):
     total = sum(c == "Partial" for row in cells for c in row)
-    _check_stated(text, r"appears (\d+|[A-Za-z-]+) times across the four columns",
+    _check_stated(text, r"(?:appears |matrix has )(\d+|[A-Za-z-]+)(?: times across the four columns| `Partial` cells)",
                   total, "`Partial` total across the four columns", problems)
 
 
@@ -165,9 +165,9 @@ def check_not_established_rows(cells, text, problems):
     ge2 = sum(sum(c == "Not established" for c in row) >= 2 for row in cells)
     all4 = sum(all(c == "Not established" for c in row) for row in cells)
 
-    _check_stated(text, r"([A-Za-z-]+) rows carry at least one `Not established` cell",
+    _check_stated(text, r"([A-Za-z-]+) rows (?:carry|contain) at least one `Not established` cell",
                   ge1, "rows with at least one `Not established` cell", problems)
-    if "and no row carries four" not in text:
+    if not re.search(r"(?:and no row carries four|No row has four)", text):
         problems.append("a.5: could not find the 'no row carries four' claim to check")
     elif all4 != 0:
         problems.append(
@@ -179,7 +179,7 @@ def check_not_established_rows(cells, text, problems):
 
 def check_ui_not_established(cells, text, problems):
     ui_ne = sum(row[0] == "Not established" for row in cells)
-    _check_stated(text, r"UI column's (\d+|[A-Za-z-]+) cells",
+    _check_stated(text, r"(?:UI column's |UI has )(\d+|[A-Za-z-]+) (?:cells|unresolved cells)",
                   ui_ne, "UI column's `Not established` cell count", problems)
 
 
@@ -196,7 +196,10 @@ def check_section_n(text, problems):
         )
 
     n_rows = by_letter.get("N", [])
-    _check_stated(text, r"section N, where GitOps supports none of the (\d+|[A-Za-z-]+) rows",
+    pattern = (r"All (\d+|[A-Za-z-]+) rows in section N fall outside its supported operations"
+               if "rows in section N" in text else
+               r"section N, where GitOps supports none of the (\d+|[A-Za-z-]+) rows")
+    _check_stated(text, pattern,
                   len(n_rows), "section N row count", problems)
     gitops_can = sum(1 for row in n_rows if row[3] in CAN)
     if gitops_can != 0:
