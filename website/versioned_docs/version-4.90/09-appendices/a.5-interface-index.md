@@ -344,7 +344,7 @@ Forty-eight rows have no `Full` or `Partial` interface. Most concern server proc
 | **CAP-134** | Read how many hosts are low on disk | Full | Partial | Unsupported | Unsupported |
 | **CAP-135** | See how many automated enrollments are not healthy | Full | Full | Unsupported | Unsupported |
 | **CAP-136** | See which hosts were online over time | Full | Full | Unsupported | Unsupported |
-| **CAP-137** | Hand a population to somebody who does not use Fleet | Full | Full | Unsupported | Unsupported |
+| **CAP-137** | Export a host list for use outside Fleet | Full | Full | Unsupported | Unsupported |
 | **CAP-138** | Read the host list programmatically | Full | Partial | Partial | Unsupported |
 | **CAP-139** | Be told when too much of the estate goes quiet | Full | Full | Full | Full |
 | **CAP-140** | Select hosts by a query that keeps itself current | Full | Full | Full | Full |
@@ -415,7 +415,7 @@ Forty-eight rows have no `Full` or `Partial` interface. Most concern server proc
 | **CAP-197** | Push an app to an Android device at enrollment | Full | Full | Full | Full |
 | **CAP-198** | Install setup software only on devices that need it | Not established | Full | Full | Full |
 | **CAP-199** | Stop setup when a piece of software fails | Full | Full | Full | Full |
-| **CAP-200** | Take release of a Mac or iPhone into your own hands | Full | Full | Full | Full |
+| **CAP-200** | Control when a Mac or iPhone is released | Full | Full | Full | Full |
 | **CAP-201** | Retry only the setup steps that failed | Not established | Unsupported | Unsupported | Unsupported |
 | **CAP-202** | Offer software for people to install themselves | Full | Full | Full | Full |
 | **CAP-203** | Group a large self-service catalogue | Full | Full | Full | Full |
